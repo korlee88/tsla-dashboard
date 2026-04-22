@@ -547,52 +547,59 @@ async function collectTodayNews(apiKey) {
   return items.slice(0, 5).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
 
-// ─── PRNG + 주봉 시뮬레이션 ───────────────────────────────────────────────
+// ─── 실시간 TSLA 52주 주봉 (Yahoo Finance) ───────────────────────────────
 
-function mulberry32(a) {
-  return () => {
-    a |= 0; a = a + 0x6D2B79F5 | 0;
-    let t = Math.imul(a ^ a >>> 15, 1 | a);
-    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
+async function fetchTSLAWeeklyData() {
+  const DIRECT = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1wk&range=1y&includePrePost=false';
+  const PROXY  = 'https://corsproxy.io/?' + encodeURIComponent(DIRECT);
+
+  async function parse(res) {
+    const data = await res.json();
+    const r = data.chart?.result?.[0];
+    if (!r) throw new Error('Yahoo 응답 파싱 실패');
+    const { timestamp, indicators, meta } = r;
+    const q = indicators.quote[0];
+    const items = (timestamp || []).map((ts, i) => ({
+      open:  q.open[i],
+      high:  q.high[i],
+      low:   q.low[i],
+      close: q.close[i],
+      date:  new Date(ts * 1000),
+    })).filter(d => d.open != null && d.close != null && d.high != null && d.low != null);
+    const currentPrice = Math.round((meta.regularMarketPrice || items[items.length - 1]?.close || 247) * 100) / 100;
+    return { items, currentPrice };
+  }
+
+  // 직접 호출 시도
+  try {
+    const res = await fetch(DIRECT, { cache: 'no-store' });
+    if (res.ok) return await parse(res);
+  } catch {}
+
+  // CORS 프록시 fallback
+  const res = await fetch(PROXY, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Yahoo Finance HTTP ${res.status}`);
+  return await parse(res);
 }
-
-const WEEKLY_DATA = (() => {
-  const rand = mulberry32(20260421);
-  const base = new Date(2026, 3, 21);
-  const N = 52;
-  let price = 185;
-  return Array.from({ length: N }, (_, i) => {
-    const d = new Date(base);
-    d.setDate(d.getDate() - (N - 1 - i) * 7);
-    const bias = i < 10 ? 0.48 : i < 25 ? 0.52 : i < 40 ? 0.495 : 0.50;
-    const change = (rand() - bias) * price * (0.043 + rand() * 0.018);
-    const open = price;
-    price = Math.max(90, price + change);
-    const hi = Math.max(open, price) * (1 + rand() * 0.021);
-    const lo = Math.min(open, price) * (1 - rand() * 0.021);
-    return { open, high: hi, low: lo, close: price, date: d };
-  });
-})();
 
 // ─── 포캐스트 API ──────────────────────────────────────────────────────────
 
 const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
 
-const FORECAST_PROMPT = `You are a quantitative Tesla (TSLA) stock strategist.
+function makeForecastPrompt(currentPrice) {
+  return `You are a quantitative Tesla (TSLA) stock strategist.
 Given multiple news impact analyses, synthesize them into investment forecasts across 5 time horizons.
-Assume current TSLA price is approximately $247 USD (as of April 2026).
+Current TSLA price is $${currentPrice} USD (real-time from Yahoo Finance).
 
 Return ONLY valid JSON in this exact format:
 {
-  "current_price": 247,
+  "current_price": ${currentPrice},
   "forecasts": [
     { "label": "1W",  "period": "단기 1주",   "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
-    { "label": "1M",  "period": "단기 1개월", ... },
-    { "label": "3M",  "period": "중기 3개월", ... },
-    { "label": "6M",  "period": "장기 6개월", ... },
-    { "label": "1Y",  "period": "최장기 1년", ... }
+    { "label": "1M",  "period": "단기 1개월", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
+    { "label": "3M",  "period": "중기 3개월", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
+    { "label": "6M",  "period": "장기 6개월", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
+    { "label": "1Y",  "period": "최장기 1년", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" }
   ],
   "overall_signal": "<적극매수|매수|관망|매도|적극매도>",
   "risk_level": "<low|medium|high|very_high>",
@@ -601,15 +608,16 @@ Return ONLY valid JSON in this exact format:
   "analyst_consensus": "<Strong Buy|Buy|Hold|Sell|Strong Sell>"
 }
 buy_index: 0-20=적극매도, 21-40=매도, 41-60=관망, 61-80=매수, 81-100=적극매수
-Price targets must be realistic relative to $247. ONLY return JSON.`;
+Price targets must be realistic relative to $${currentPrice}. ONLY return JSON.`;
+}
 
-async function generateForecast(apiKey, items) {
+async function generateForecast(apiKey, items, currentPrice = 247) {
   const summary = items.map(it =>
     `• "${it.title}"\n  Score:${it.result.impact_score} Dir:${it.result.direction} Rules:[${it.result.triggered_rules?.join(',')}] Conf:${it.result.confidence}\n  ${it.result.reasoning}`
   ).join('\n\n');
 
   const body = {
-    system_instruction: { parts: [{ text: FORECAST_PROMPT }] },
+    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice) }] },
     contents: [{ role: 'user', parts: [{ text: `Synthesize these TSLA analyses into forecasts:\n\n${summary}` }] }],
     generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.3, thinkingConfig: { thinkingBudget: 0 } },
   };
@@ -729,7 +737,7 @@ const RISK_CFG = {
   very_high: { color: '#ef4444', label: '매우 높음' },
 };
 
-function ForecastPanel({ forecast, loading, error, onRetry }) {
+function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLoading, weeklyError }) {
   if (loading) return (
     <div className="rounded-xl p-8 border mt-6 flex items-center justify-center gap-3"
       style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
@@ -761,7 +769,9 @@ function ForecastPanel({ forecast, loading, error, onRetry }) {
           </div>
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-xs px-2 py-1 rounded" style={{ background: '#14171e', border: '1px solid #2A2D35', color: '#94a3b8' }}>
-              현재가 추정 <strong className="text-white">${forecast.current_price}</strong>
+              {weeklyData ? '실시간 현재가' : '현재가 추정'}{' '}
+              <strong className="text-white">${weeklyData ? weeklyData[weeklyData.length-1]?.close?.toFixed(2) : forecast.current_price}</strong>
+              {weeklyData && <span className="text-gray-600 ml-1 text-xs">Yahoo Finance</span>}
             </span>
             <span className="text-sm font-bold px-3 py-1.5 rounded-lg"
               style={{ color: oSig.color, background: oSig.bg, border: `1px solid ${oSig.color}40` }}>
@@ -780,9 +790,24 @@ function ForecastPanel({ forecast, loading, error, onRetry }) {
 
       {/* 52주 주봉 */}
       <div className="px-5 pt-4">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">TSLA 52주 주봉 시뮬레이션</p>
+        <div className="flex items-center gap-2 mb-2">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TSLA 52주 실제 주봉</p>
+          {weeklyLoading && <span className="text-xs text-blue-400 animate-pulse">Yahoo Finance 로딩 중…</span>}
+          {weeklyError && <span className="text-xs text-yellow-500">⚠ {weeklyError} (Yahoo Finance 연결 실패)</span>}
+          {weeklyData && <span className="text-xs text-gray-600">출처: Yahoo Finance</span>}
+        </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <WeeklyCandlestickChart data={WEEKLY_DATA} />
+          {weeklyLoading
+            ? <div className="flex items-center justify-center h-24 gap-2 text-xs text-gray-500">
+                <span className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full spinning" />
+                실시간 주가 데이터 로딩 중…
+              </div>
+            : weeklyData
+              ? <WeeklyCandlestickChart data={weeklyData} />
+              : <div className="flex items-center justify-center h-24 text-xs text-gray-600">
+                  주가 데이터를 불러올 수 없습니다 (API Key 확인 또는 새로고침)
+                </div>
+          }
         </div>
       </div>
 
@@ -1089,6 +1114,10 @@ function App() {
   const [forecast, setForecast]               = useState(() => { try { return JSON.parse(localStorage.getItem(FORECAST_CACHE_KEY) || 'null'); } catch { return null; } });
   const [forecastLoading, setForecastLoading] = useState(false);
   const [forecastError, setForecastError]     = useState(null);
+  const [weeklyData,    setWeeklyData]    = useState(null);
+  const [weeklyLoading, setWeeklyLoading] = useState(false);
+  const [weeklyError,   setWeeklyError]   = useState(null);
+  const [currentPrice,  setCurrentPrice]  = useState(247);
   const sessionIdRef    = useRef(null);
   const sessionSavedRef = useRef(false);
 
@@ -1108,12 +1137,12 @@ function App() {
     setForecastLoading(true); setForecastError(null);
     try {
       const items = currentNews.filter(n => results[n.id]).map(n => ({ title: n.title, result: results[n.id] }));
-      const f = await generateForecast(apiKey, items);
+      const f = await generateForecast(apiKey, items, currentPrice);
       setForecast(f);
       try { localStorage.setItem(FORECAST_CACHE_KEY, JSON.stringify(f)); } catch {}
     } catch (e) { setForecastError(e.message); }
     finally { setForecastLoading(false); }
-  }, [apiKey, currentNews, results, forecastLoading]);
+  }, [apiKey, currentNews, results, forecastLoading, currentPrice]);
 
   useEffect(() => {
     if (currentNews.every(n => results[n.id]) && !forecast && !forecastLoading && apiKey) {
@@ -1150,6 +1179,19 @@ function App() {
 
   useEffect(() => {
     try { const s = localStorage.getItem('tsla_api_key'); if (s) { setApiKey(s); setKeyInput(s); } } catch {}
+  }, []);
+
+  // ─── 앱 시작 시 Yahoo Finance 실시간 주가 fetch ─────────────────────────
+  useEffect(() => {
+    setWeeklyLoading(true); setWeeklyError(null);
+    fetchTSLAWeeklyData()
+      .then(({ items, currentPrice: cp }) => {
+        setWeeklyData(items);
+        setCurrentPrice(cp);
+        setWeeklyError(null);
+      })
+      .catch(e => setWeeklyError(e.message))
+      .finally(() => setWeeklyLoading(false));
   }, []);
 
   const saveKey = () => {
@@ -1307,7 +1349,8 @@ function App() {
       {hasAnyResult && <SummaryPanel results={results} />}
 
       {(forecast || forecastLoading || forecastError) && (
-        <ForecastPanel forecast={forecast} loading={forecastLoading} error={forecastError} onRetry={runForecast} />
+        <ForecastPanel forecast={forecast} loading={forecastLoading} error={forecastError} onRetry={runForecast}
+          weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError} />
       )}
 
       {isSaved && (
