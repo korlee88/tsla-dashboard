@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tesla TSLA 주가 영향 분석 대시보드</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tesla: { red: '#E31937', dark: '#171A20', card: '#1C1F26', border: '#2A2D35' },
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #0D0F14; font-family: 'Inter', -apple-system, sans-serif; }
+    .gauge-track { background: linear-gradient(to right, #ef4444 0%, #f97316 20%, #eab308 40%, #22c55e 60%, #10b981 80%, #06b6d4 100%); }
+    .card-glow-bull { box-shadow: 0 0 20px rgba(34,197,94,0.15); }
+    .card-glow-bear { box-shadow: 0 0 20px rgba(239,68,68,0.15); }
+    .card-glow-neu  { box-shadow: 0 0 20px rgba(100,116,139,0.1); }
+    .spinning { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .score-flash { animation: scoreFlash 0.6s ease-out; }
+    @keyframes scoreFlash {
+      0%   { transform: scale(1.4); opacity: 0.5; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+    .badge-rule {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 2px 6px; border-radius: 4px; border: 1px solid;
+    }
+    .summary-meter-fill { transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1C1F26; }
+    ::-webkit-scrollbar-thumb { background: #2A2D35; border-radius: 3px; }
+  </style>
+</head>
+<body class="dark min-h-screen text-gray-100">
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useCallback, useRef, useEffect } = React;
+
+// ─── 상수 ──────────────────────────────────────────────────────────────────
+
+const SYSTEM_PROMPT = `You are a financial analyst specializing in Tesla (TSLA) stock impact assessment.
+Analyze the given news and return ONLY valid JSON in this exact format:
+{
+  "impact_score": <integer -5 to +5>,
+  "direction": "<bullish|bearish|neutral>",
+  "confidence": "<high|medium|low>",
+  "triggered_rules": ["R01","R02"],
+  "reasoning": "<one sentence explanation in Korean>",
+  "key_factors": ["<factor1>", "<factor2>"]
+}
+
+Rule reference (use these codes in triggered_rules):
+R01=delivery miss(>5%), R02=EPS miss(>10%), R03=guidance cut, R04=recall(>50K),
+R05=SEC/DOJ investigation, R06=major competitor EV launch, R07=factory shutdown/fire,
+R08=musk SNS controversy(DOGE/politics), R09=subsidy reduction/removal, R10=price cut(>5%),
+R11=delivery beat(>5%), R12=EPS beat(>10%), R13=new product/FSD milestone,
+R14=EV incentive expansion, R15=large energy storage deal, R16=new market entry(India/SEA),
+R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buyback/positive statement,
+R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
+R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE)
+
+Score guidelines:
+±5: Extreme event (existential risk or revolutionary breakthrough)
+±3~4: Major event (earnings beat/miss, delivery numbers, FSD milestone)
+±1~2: Minor/incremental event (analyst note, macro signal)
+0: Neutral or irrelevant news
+
+CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
+
+const RULES_META = {
+  R01:{cat:'Delivery',label:'인도 미스',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
+  R02:{cat:'Earnings',label:'EPS 미스',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
+  R03:{cat:'Guidance',label:'가이던스 하향',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+  R04:{cat:'Safety',label:'리콜',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+  R05:{cat:'Regulatory',label:'SEC/DOJ',color:'#dc2626',bg:'rgba(220,38,38,0.15)'},
+  R06:{cat:'Competition',label:'경쟁사 출시',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+  R07:{cat:'Operations',label:'공장 중단',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
+  R08:{cat:'Musk',label:'SNS 논란',color:'#f59e0b',bg:'rgba(245,158,11,0.15)'},
+  R09:{cat:'Policy',label:'보조금 삭감',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+  R10:{cat:'Price',label:'가격 인하',color:'#eab308',bg:'rgba(234,179,8,0.15)'},
+  R11:{cat:'Delivery',label:'인도 서프라이즈',color:'#22c55e',bg:'rgba(34,197,94,0.15)'},
+  R12:{cat:'Earnings',label:'EPS 서프라이즈',color:'#22c55e',bg:'rgba(34,197,94,0.15)'},
+  R13:{cat:'Product',label:'신제품/FSD',color:'#06b6d4',bg:'rgba(6,182,212,0.15)'},
+  R14:{cat:'Policy',label:'EV 인센티브',color:'#10b981',bg:'rgba(16,185,129,0.15)'},
+  R15:{cat:'Energy',label:'에너지 계약',color:'#10b981',bg:'rgba(16,185,129,0.15)'},
+  R16:{cat:'Market',label:'신시장 진출',color:'#06b6d4',bg:'rgba(6,182,212,0.15)'},
+  R17:{cat:'Analyst',label:'목표가 상향',color:'#22c55e',bg:'rgba(34,197,94,0.15)'},
+  R18:{cat:'Macro',label:'금리 인하',color:'#10b981',bg:'rgba(16,185,129,0.15)'},
+  R19:{cat:'Musk',label:'자사주 매입',color:'#22c55e',bg:'rgba(34,197,94,0.15)'},
+  R20:{cat:'China',label:'중국 성장',color:'#06b6d4',bg:'rgba(6,182,212,0.15)'},
+  R21:{cat:'Legal',label:'소송 승소',color:'#10b981',bg:'rgba(16,185,129,0.15)'},
+  R22:{cat:'Short',label:'공매도 보고서',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
+  R23:{cat:'Macro',label:'경기침체',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
+  R24:{cat:'Musk',label:'사업 리스크',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+};
+
+const SAMPLE_NEWS = [
+  {
+    id: 1,
+    title: 'Tesla Q1 2025 Deliveries Miss Estimates by 13%',
+    summary: 'Tesla delivered 336,681 vehicles in Q1 2025, missing analyst estimates of 386,000 by 13%. Demand weakness cited in China and Europe. Management blamed "adverse macroeconomic conditions" and competitor price pressure.',
+    source: 'Reuters',
+    date: '2025-04-02',
+    category: 'Earnings',
+  },
+  {
+    id: 2,
+    title: 'Elon Musk Sells $2.1B in TSLA Shares to Fund DOGE Operations',
+    summary: 'SEC filings show Elon Musk sold 9.3 million Tesla shares worth approximately $2.1 billion. The proceeds are reportedly directed toward his DOGE (Department of Government Efficiency) initiative and X platform investments. Tesla board has not commented.',
+    source: 'Bloomberg',
+    date: '2025-03-28',
+    category: 'Insider',
+  },
+  {
+    id: 3,
+    title: 'Tesla FSD v13 Achieves Zero Human Intervention Coast-to-Coast Drive',
+    summary: 'Tesla\'s Full Self-Driving v13 successfully completed a 2,847-mile autonomous drive from Los Angeles to New York with zero interventions. Elon Musk confirmed Robotaxi launch in Austin set for June 2025. Analysts project FSD revenue could reach $5B annually by 2027.',
+    source: 'Tesla IR',
+    date: '2025-04-10',
+    category: 'Technology',
+  },
+  {
+    id: 4,
+    title: 'China EV Price War Escalates: BYD Slashes Prices Up to 15%',
+    summary: 'BYD announced sweeping price cuts of 10-15% across its EV lineup in China, triggering a renewed price war. Tesla holds 8% market share in China vs BYD\'s 35%. Analysts fear Tesla may be forced to match cuts, compressing already thin margins in its largest growth market.',
+    source: 'Nikkei Asia',
+    date: '2025-04-15',
+    category: 'Competition',
+  },
+  {
+    id: 5,
+    title: 'Federal Reserve Signals Three Rate Cuts in H2 2025, Markets Rally',
+    summary: 'Fed Chair Jerome Powell indicated at the April FOMC meeting that three 25bp rate cuts are on track for the second half of 2025, citing cooling inflation. Growth stocks including Tesla surged on the news. Lower rates reduce discount rates on future EV market cash flows.',
+    source: 'WSJ',
+    date: '2025-04-17',
+    category: 'Macro',
+  },
+];
+
+// ─── 유틸 ──────────────────────────────────────────────────────────────────
+
+function scoreToColor(s) {
+  if (s >= 3)  return '#22c55e';
+  if (s >= 1)  return '#86efac';
+  if (s === 0) return '#94a3b8';
+  if (s >= -2) return '#f97316';
+  return '#ef4444';
+}
+
+function scoreToPercent(s) {
+  return ((s + 5) / 10) * 100;
+}
+
+function directionLabel(d) {
+  if (d === 'bullish')  return { text: '강세 (Bullish)', color: '#22c55e', bg: 'rgba(34,197,94,0.15)' };
+  if (d === 'bearish')  return { text: '약세 (Bearish)', color: '#ef4444', bg: 'rgba(239,68,68,0.15)' };
+  return { text: '중립 (Neutral)', color: '#94a3b8', bg: 'rgba(148,163,184,0.1)' };
+}
+
+function confidenceDot(c) {
+  if (c === 'high')   return { color: '#22c55e', label: '신뢰도 높음' };
+  if (c === 'medium') return { color: '#f59e0b', label: '신뢰도 보통' };
+  return { color: '#ef4444', label: '신뢰도 낮음 ⚠ 수동 검토 필요' };
+}
+
+// ─── 캐시 유틸 ────────────────────────────────────────────────────────────
+
+const CACHE_KEY = 'tsla_analysis_cache_v1';
+
+function loadCache() {
+  try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); } catch { return {}; }
+}
+
+function saveCache(results) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify(results)); } catch {}
+}
+
+// ─── API 호출 ─────────────────────────────────────────────────────────────
+
+async function analyzeNews(apiKey, newsItem) {
+  const userContent = `Analyze this Tesla-related news for TSLA stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
+
+  const body = {
+    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+    contents: [{ role: 'user', parts: [{ text: userContent }] }],
+    generationConfig: {
+      responseMimeType: 'application/json',
+      maxOutputTokens: 8192,
+      temperature: 0.2,
+      thinkingConfig: { thinkingBudget: 0 },
+    },
+  };
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+    {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${res.status}`);
+  }
+
+  const data = await res.json();
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+  // JSON 파싱 — responseMimeType=application/json 이지만 방어적으로 처리
+  const cleaned = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('JSON 파싱 실패: ' + raw.slice(0, 100));
+  return JSON.parse(jsonMatch[0]);
+}
+
+// ─── 컴포넌트: ImpactGauge ─────────────────────────────────────────────────
+
+function ImpactGauge({ score }) {
+  const pct = scoreToPercent(score);
+  const col = scoreToColor(score);
+  return (
+    <div className="mt-3">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs text-gray-500 font-mono">−5</span>
+        <span className="text-xs font-bold" style={{ color: col }}>
+          Impact: {score > 0 ? '+' : ''}{score}
+        </span>
+        <span className="text-xs text-gray-500 font-mono">+5</span>
+      </div>
+      {/* track */}
+      <div className="relative h-3 rounded-full overflow-hidden" style={{ background: '#1e222a' }}>
+        {/* gradient background */}
+        <div className="absolute inset-0 gauge-track opacity-20 rounded-full" />
+        {/* neutral line */}
+        <div className="absolute top-0 bottom-0 w-px bg-gray-500 opacity-40" style={{ left: '50%' }} />
+        {/* fill */}
+        <div
+          className="absolute top-0 bottom-0 rounded-full transition-all duration-700"
+          style={{
+            background: col,
+            left: score >= 0 ? '50%' : `${pct}%`,
+            width: `${Math.abs(score) * 10}%`,
+            boxShadow: `0 0 8px ${col}80`,
+          }}
+        />
+        {/* needle */}
+        <div
+          className="absolute top-0 bottom-0 w-0.5 rounded-full transition-all duration-700"
+          style={{ left: `calc(${pct}% - 1px)`, background: col, boxShadow: `0 0 6px ${col}` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ─── 컴포넌트: RuleBadges ──────────────────────────────────────────────────
+
+function RuleBadges({ rules }) {
+  if (!rules || rules.length === 0) return null;
+  return (
+    <div className="flex flex-wrap gap-1 mt-2">
+      {rules.map(r => {
+        const meta = RULES_META[r];
+        if (!meta) return null;
+        return (
+          <span
+            key={r}
+            className="badge-rule"
+            title={`${r}: ${meta.label} (${meta.cat})`}
+            style={{ color: meta.color, borderColor: meta.color, background: meta.bg }}
+          >
+            {r} · {meta.label}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── 컴포넌트: NewsCard ────────────────────────────────────────────────────
+
+function NewsCard({ news, result, loading, error }) {
+  const glowClass = !result ? '' : result.direction === 'bullish' ? 'card-glow-bull' : result.direction === 'bearish' ? 'card-glow-bear' : 'card-glow-neu';
+  const dir = result ? directionLabel(result.direction) : null;
+  const conf = result ? confidenceDot(result.confidence) : null;
+
+  return (
+    <div
+      className={`rounded-xl p-4 border transition-all duration-300 ${glowClass}`}
+      style={{ background: '#1C1F26', borderColor: result ? (result.direction === 'bullish' ? 'rgba(34,197,94,0.3)' : result.direction === 'bearish' ? 'rgba(239,68,68,0.3)' : '#2A2D35') : '#2A2D35' }}
+    >
+      {/* header */}
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex-1">
+          <h3 className="text-sm font-semibold leading-snug text-gray-100">{news.title}</h3>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-xs text-gray-500">{news.source}</span>
+            <span className="text-gray-700 text-xs">·</span>
+            <span className="text-xs text-gray-500">{news.date}</span>
+            <span className="text-xs px-1.5 py-0.5 rounded text-gray-400" style={{ background: '#252830', border: '1px solid #2A2D35' }}>{news.category}</span>
+          </div>
+        </div>
+        {result && (
+          <span
+            className="text-xs font-bold px-2 py-1 rounded-lg shrink-0 score-flash"
+            style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40` }}
+          >
+            {result.direction.toUpperCase()}
+          </span>
+        )}
+        {loading && (
+          <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full spinning shrink-0 mt-0.5" />
+        )}
+      </div>
+
+      {/* summary */}
+      <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">{news.summary}</p>
+
+      {/* result section */}
+      {result && (
+        <div className="mt-3 pt-3 border-t border-gray-800">
+          <ImpactGauge score={result.impact_score} />
+          <RuleBadges rules={result.triggered_rules} />
+
+          {/* reasoning */}
+          <p className="text-xs text-gray-300 mt-2 leading-relaxed italic">
+            "{result.reasoning}"
+          </p>
+
+          {/* key factors + confidence */}
+          <div className="flex items-start justify-between mt-2 gap-2">
+            <div className="flex flex-wrap gap-1">
+              {result.key_factors?.map((f, i) => (
+                <span key={i} className="text-xs px-1.5 py-0.5 rounded text-gray-400" style={{ background: '#252830', border: '1px solid #2A2D35' }}>
+                  {f}
+                </span>
+              ))}
+            </div>
+            <span className="text-xs shrink-0 flex items-center gap-1" style={{ color: conf.color }}>
+              <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: conf.color }} />
+              {conf.label}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {error && (
+        <div className="mt-3 pt-3 border-t border-red-900">
+          <p className="text-xs text-red-400">⚠ 분석 오류: {error}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── 컴포넌트: SummaryPanel ────────────────────────────────────────────────
+
+function SummaryPanel({ results }) {
+  const done = Object.values(results).filter(r => r && r.impact_score !== undefined);
+  if (done.length === 0) return null;
+
+  const avg = done.reduce((s, r) => s + r.impact_score, 0) / done.length;
+  const bullish = done.filter(r => r.direction === 'bullish').length;
+  const bearish = done.filter(r => r.direction === 'bearish').length;
+  const neutral = done.filter(r => r.direction === 'neutral').length;
+  const overall = avg >= 1 ? 'bullish' : avg <= -1 ? 'bearish' : 'neutral';
+  const dir = directionLabel(overall);
+
+  // 평균 게이지
+  const avgPct = scoreToPercent(Math.round(avg));
+  const avgCol = scoreToColor(avg);
+
+  // 룰 집계
+  const allRules = {};
+  done.forEach(r => r.triggered_rules?.forEach(rule => { allRules[rule] = (allRules[rule] || 0) + 1; }));
+  const topRules = Object.entries(allRules).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+  return (
+    <div className="rounded-xl p-5 border mt-6" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-bold text-gray-200 uppercase tracking-wider">종합 분석 결과</h2>
+        <span
+          className="text-sm font-bold px-3 py-1 rounded-lg"
+          style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}50` }}
+        >
+          {dir.text}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        {/* avg score */}
+        <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <p className="text-xs text-gray-500 mb-1">평균 Impact Score</p>
+          <p className="text-2xl font-bold" style={{ color: avgCol }}>
+            {avg >= 0 ? '+' : ''}{avg.toFixed(1)}
+          </p>
+          <div className="mt-2 h-2 rounded-full overflow-hidden" style={{ background: '#1e222a' }}>
+            <div
+              className="h-full rounded-full summary-meter-fill"
+              style={{
+                marginLeft: avg >= 0 ? '50%' : `${avgPct}%`,
+                width: `${Math.abs(avg) * 10}%`,
+                background: avgCol,
+              }}
+            />
+          </div>
+        </div>
+
+        {/* direction counts */}
+        <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <p className="text-xs text-gray-500 mb-2">방향성 분포</p>
+          <div className="space-y-1.5">
+            {[['Bullish', bullish, '#22c55e'], ['Bearish', bearish, '#ef4444'], ['Neutral', neutral, '#94a3b8']].map(([label, cnt, col]) => (
+              <div key={label} className="flex items-center gap-2">
+                <span className="text-xs w-14" style={{ color: col }}>{label}</span>
+                <div className="flex-1 h-1.5 rounded-full" style={{ background: '#2A2D35' }}>
+                  <div className="h-full rounded-full" style={{ width: `${(cnt / done.length) * 100}%`, background: col }} />
+                </div>
+                <span className="text-xs text-gray-400 w-4 text-right">{cnt}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* top rules */}
+        <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <p className="text-xs text-gray-500 mb-2">주요 트리거 룰</p>
+          <div className="flex flex-wrap gap-1">
+            {topRules.map(([rule, cnt]) => {
+              const meta = RULES_META[rule];
+              return meta ? (
+                <span key={rule} className="badge-rule" style={{ color: meta.color, borderColor: meta.color, background: meta.bg }}>
+                  {rule} ×{cnt}
+                </span>
+              ) : null;
+            })}
+            {topRules.length === 0 && <span className="text-xs text-gray-600">없음</span>}
+          </div>
+        </div>
+      </div>
+
+      {/* disclaimer */}
+      <div className="rounded-lg p-3 text-xs text-gray-500 leading-relaxed" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+        ⚠ <strong className="text-gray-400">주의:</strong> 본 도구는 보조 분석 도구이며 투자 조언이 아닙니다.
+        AI 판정 오류 가능성이 있으며, <strong className="text-yellow-600">confidence=low</strong> 뉴스는 수동 검토가 필요합니다.
+        실시간 주가 데이터 연동을 위해서는 별도의 Yahoo Finance 또는 Alpha Vantage API 연동이 필요합니다.
+      </div>
+    </div>
+  );
+}
+
+// ─── 컴포넌트: RuleEnginePanel ─────────────────────────────────────────────
+
+function RuleEnginePanel({ open, onToggle }) {
+  return (
+    <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+      <button
+        className="w-full flex items-center justify-between px-4 py-3 text-xs text-gray-400 hover:text-gray-200 transition-colors"
+        onClick={onToggle}
+      >
+        <span className="font-semibold uppercase tracking-wider">룰 엔진 R01~R24 참조표</span>
+        <span>{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 grid grid-cols-2 md:grid-cols-4 gap-1.5">
+          {Object.entries(RULES_META).map(([r, meta]) => (
+            <div key={r} className="flex items-center gap-1.5 p-1.5 rounded" style={{ background: '#14171e' }}>
+              <span className="badge-rule" style={{ color: meta.color, borderColor: meta.color, background: meta.bg }}>{r}</span>
+              <span className="text-xs text-gray-400 truncate">{meta.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── DB (localStorage) ────────────────────────────────────────────────────
+
+const NEWS_DB_KEY = 'tsla_news_db_v1';
+
+function getNewsDB() {
+  try { return JSON.parse(localStorage.getItem(NEWS_DB_KEY) || '{"sessions":[]}'); }
+  catch { return { sessions: [] }; }
+}
+function saveNewsDB(db) {
+  try { localStorage.setItem(NEWS_DB_KEY, JSON.stringify(db)); } catch {}
+}
+function saveSession(session) {
+  const db = getNewsDB();
+  const idx = db.sessions.findIndex(s => s.id === session.id);
+  if (idx >= 0) db.sessions[idx] = session; else db.sessions.unshift(session);
+  db.sessions = db.sessions.slice(0, 60);
+  saveNewsDB(db);
+}
+function newSessionId() { return new Date().toISOString().replace(/[:.]/g, '-'); }
+function getTopRules(analyses) {
+  const cnt = {};
+  analyses.forEach(a => a?.triggered_rules?.forEach(r => { cnt[r] = (cnt[r] || 0) + 1; }));
+  return Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([r]) => r);
+}
+
+// ─── 뉴스 수집 API (Google Search Grounding) ──────────────────────────────
+
+async function collectTodayNews(apiKey) {
+  const today = new Date().toISOString().split('T')[0];
+  const body = {
+    tools: [{ google_search: {} }],
+    contents: [{
+      role: 'user',
+      parts: [{ text: `Search for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nReturn ONLY a JSON array of exactly 5 most market-impactful items:\n[{"id":1,"title":"...","summary":"2-3 sentence English summary","source":"publisher name","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\nReturn ONLY the JSON array.` }]
+    }],
+    generationConfig: { maxOutputTokens: 2000, temperature: 0.1 }
+  };
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+    { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
+  );
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+  const data = await res.json();
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const cleaned = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+  const start = cleaned.indexOf('[');
+  const end   = cleaned.lastIndexOf(']');
+  if (start === -1 || end === -1) throw new Error('뉴스 JSON 파싱 실패: ' + raw.slice(0, 120));
+  const items = JSON.parse(cleaned.slice(start, end + 1));
+  return items.slice(0, 5).map((n, i) => ({ ...n, id: Date.now() + i }));
+}
+
+// ─── PRNG + 주봉 시뮬레이션 ───────────────────────────────────────────────
+
+function mulberry32(a) {
+  return () => {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+const WEEKLY_DATA = (() => {
+  const rand = mulberry32(20260421);
+  const base = new Date(2026, 3, 21);
+  const N = 52;
+  let price = 185;
+  return Array.from({ length: N }, (_, i) => {
+    const d = new Date(base);
+    d.setDate(d.getDate() - (N - 1 - i) * 7);
+    const bias = i < 10 ? 0.48 : i < 25 ? 0.52 : i < 40 ? 0.495 : 0.50;
+    const change = (rand() - bias) * price * (0.043 + rand() * 0.018);
+    const open = price;
+    price = Math.max(90, price + change);
+    const hi = Math.max(open, price) * (1 + rand() * 0.021);
+    const lo = Math.min(open, price) * (1 - rand() * 0.021);
+    return { open, high: hi, low: lo, close: price, date: d };
+  });
+})();
+
+// ─── 포캐스트 API ──────────────────────────────────────────────────────────
+
+const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
+
+const FORECAST_PROMPT = `You are a quantitative Tesla (TSLA) stock strategist.
+Given multiple news impact analyses, synthesize them into investment forecasts across 5 time horizons.
+Assume current TSLA price is approximately $247 USD (as of April 2026).
+
+Return ONLY valid JSON in this exact format:
+{
+  "current_price": 247,
+  "forecasts": [
+    { "label": "1W",  "period": "단기 1주",   "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
+    { "label": "1M",  "period": "단기 1개월", ... },
+    { "label": "3M",  "period": "중기 3개월", ... },
+    { "label": "6M",  "period": "장기 6개월", ... },
+    { "label": "1Y",  "period": "최장기 1년", ... }
+  ],
+  "overall_signal": "<적극매수|매수|관망|매도|적극매도>",
+  "risk_level": "<low|medium|high|very_high>",
+  "key_catalysts": ["<Korean>","<Korean>","<Korean>"],
+  "key_risks": ["<Korean>","<Korean>","<Korean>"],
+  "analyst_consensus": "<Strong Buy|Buy|Hold|Sell|Strong Sell>"
+}
+buy_index: 0-20=적극매도, 21-40=매도, 41-60=관망, 61-80=매수, 81-100=적극매수
+Price targets must be realistic relative to $247. ONLY return JSON.`;
+
+async function generateForecast(apiKey, items) {
+  const summary = items.map(it =>
+    `• "${it.title}"\n  Score:${it.result.impact_score} Dir:${it.result.direction} Rules:[${it.result.triggered_rules?.join(',')}] Conf:${it.result.confidence}\n  ${it.result.reasoning}`
+  ).join('\n\n');
+
+  const body = {
+    system_instruction: { parts: [{ text: FORECAST_PROMPT }] },
+    contents: [{ role: 'user', parts: [{ text: `Synthesize these TSLA analyses into forecasts:\n\n${summary}` }] }],
+    generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.3, thinkingConfig: { thinkingBudget: 0 } },
+  };
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+    { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
+  );
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
+  const data = await res.json();
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const m = raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim().match(/\{[\s\S]*\}/);
+  if (!m) throw new Error('JSON 파싱 실패: ' + raw.slice(0, 80));
+  return JSON.parse(m[0]);
+}
+
+// ─── 컴포넌트: WeeklyCandlestickChart ─────────────────────────────────────
+
+function WeeklyCandlestickChart({ data }) {
+  const W = 700, H = 200;
+  const P = { t: 12, r: 50, b: 24, l: 54 };
+  const cW = W - P.l - P.r, cH = H - P.t - P.b;
+  const allP = data.flatMap(d => [d.high, d.low]);
+  const minP = Math.min(...allP) * 0.994, maxP = Math.max(...allP) * 1.006;
+  const xPos = i => P.l + (i + 0.5) * (cW / data.length);
+  const yPos = p => P.t + (1 - (p - minP) / (maxP - minP)) * cH;
+  const bW = Math.max(1.5, cW / data.length - 1.5);
+  const yTicks = Array.from({ length: 5 }, (_, i) => minP + (i / 4) * (maxP - minP));
+  const curP = data[data.length - 1].close;
+  const curCol = curP >= data[data.length - 2]?.close ? '#22c55e' : '#ef4444';
+  return (
+    <div style={{ width: '100%', overflowX: 'auto' }}>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 320, display: 'block' }}>
+        {yTicks.map(p => (
+          <g key={p}>
+            <line x1={P.l} y1={yPos(p)} x2={W - P.r} y2={yPos(p)} stroke="#2A2D35" strokeWidth="0.8" strokeDasharray="3,3" />
+            <text x={P.l - 5} y={yPos(p) + 3.5} textAnchor="end" fill="#6b7280" fontSize="9.5">${Math.round(p)}</text>
+          </g>
+        ))}
+        {data.map((d, i) => {
+          const x = xPos(i), up = d.close >= d.open, col = up ? '#22c55e' : '#ef4444';
+          const bY = yPos(Math.max(d.open, d.close)), bH = Math.max(1, yPos(Math.min(d.open, d.close)) - bY);
+          return (
+            <g key={i}>
+              <line x1={x} y1={yPos(d.high)} x2={x} y2={yPos(d.low)} stroke={col} strokeWidth="0.8" />
+              <rect x={x - bW / 2} y={bY} width={bW} height={bH} fill={col} fillOpacity="0.85" />
+            </g>
+          );
+        })}
+        <line x1={P.l} y1={yPos(curP)} x2={W - P.r + 2} y2={yPos(curP)} stroke={curCol} strokeWidth="1" strokeDasharray="4,2" />
+        <text x={W - P.r + 4} y={yPos(curP) + 3.5} fill={curCol} fontSize="9" fontWeight="700">${Math.round(curP)}</text>
+        {data.filter((_, i) => i % 8 === 0 || i === data.length - 1).map((d, j) => {
+          const i = data.indexOf(d);
+          return <text key={j} x={xPos(i)} y={H - 5} textAnchor="middle" fill="#6b7280" fontSize="8.5">
+            {d.date.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
+          </text>;
+        })}
+      </svg>
+    </div>
+  );
+}
+
+// ─── 컴포넌트: ForecastBuyIndexChart ─────────────────────────────────────
+
+function ForecastBuyIndexChart({ forecasts }) {
+  const W = 640, H = 170;
+  const P = { t: 28, r: 20, b: 38, l: 38 };
+  const cW = W - P.l - P.r, cH = H - P.t - P.b;
+  const xPos = i => P.l + (i / (forecasts.length - 1)) * cW;
+  const yPos = v => P.t + (1 - v / 100) * cH;
+  const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
+  const pts = forecasts.map((f, i) => [xPos(i), yPos(f.buy_index)]);
+  const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0]},${p[1]}`).join(' ');
+  const areaPath = `M${xPos(0)},${P.t + cH} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${xPos(forecasts.length - 1)},${P.t + cH}Z`;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', display: 'block' }}>
+      <defs>
+        <linearGradient id="areaGrad" x1="0" x2="1" y1="0" y2="0">
+          {forecasts.map((f, i) => <stop key={i} offset={`${(i / (forecasts.length - 1)) * 100}%`} stopColor={bCol(f.buy_index)} stopOpacity="0.25" />)}
+        </linearGradient>
+      </defs>
+      {[0, 25, 50, 75, 100].map(v => (
+        <g key={v}>
+          <line x1={P.l} y1={yPos(v)} x2={W - P.r} y2={yPos(v)} stroke={v === 50 ? '#4b5563' : '#2A2D35'} strokeWidth={v === 50 ? 1 : 0.7} strokeDasharray="3,3" />
+          <text x={P.l - 5} y={yPos(v) + 3.5} textAnchor="end" fill="#6b7280" fontSize="9">{v}</text>
+        </g>
+      ))}
+      <path d={areaPath} fill="url(#areaGrad)" />
+      <path d={linePath} fill="none" stroke="#64748b" strokeWidth="1.5" strokeLinejoin="round" />
+      {forecasts.map((f, i) => {
+        const x = xPos(i), y = yPos(f.buy_index), col = bCol(f.buy_index);
+        return (
+          <g key={i}>
+            <circle cx={x} cy={y} r="5" fill={col} stroke="#0D0F14" strokeWidth="2" />
+            <text x={x} y={y - 10} textAnchor="middle" fill={col} fontSize="11" fontWeight="700">{f.buy_index}</text>
+            <text x={x} y={H - 20} textAnchor="middle" fill={col} fontSize="8.5">{f.signal}</text>
+            <text x={x} y={H - 8} textAnchor="middle" fill="#9ca3af" fontSize="10" fontWeight="600">{f.label}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+// ─── 컴포넌트: ForecastPanel ──────────────────────────────────────────────
+
+const SIGNAL_CFG = {
+  '적극매수': { color: '#22c55e', bg: 'rgba(34,197,94,0.15)',  emoji: '🚀' },
+  '매수':     { color: '#86efac', bg: 'rgba(134,239,172,0.12)', emoji: '📈' },
+  '관망':     { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)',  emoji: '⏸' },
+  '매도':     { color: '#f97316', bg: 'rgba(249,115,22,0.12)',  emoji: '📉' },
+  '적극매도': { color: '#ef4444', bg: 'rgba(239,68,68,0.15)',   emoji: '🔻' },
+};
+const RISK_CFG = {
+  low:       { color: '#22c55e', label: '낮음' },
+  medium:    { color: '#f59e0b', label: '보통' },
+  high:      { color: '#f97316', label: '높음' },
+  very_high: { color: '#ef4444', label: '매우 높음' },
+};
+
+function ForecastPanel({ forecast, loading, error, onRetry }) {
+  if (loading) return (
+    <div className="rounded-xl p-8 border mt-6 flex items-center justify-center gap-3"
+      style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+      <span className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full spinning" />
+      <span className="text-sm text-gray-400">투자 전망 합성 중... (Gemini AI)</span>
+    </div>
+  );
+  if (error) return (
+    <div className="rounded-xl p-5 border mt-6" style={{ background: '#1C1F26', borderColor: '#ef444440' }}>
+      <p className="text-xs text-red-400 mb-2">⚠ 전망 분석 오류: {error}</p>
+      <button onClick={onRetry} className="text-xs px-3 py-1 rounded-lg text-gray-300 hover:text-white"
+        style={{ background: '#252830', border: '1px solid #2A2D35' }}>재시도</button>
+    </div>
+  );
+  if (!forecast) return null;
+
+  const oSig  = SIGNAL_CFG[forecast.overall_signal] || SIGNAL_CFG['관망'];
+  const risk  = RISK_CFG[forecast.risk_level]        || RISK_CFG['medium'];
+  const bCol  = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
+
+  return (
+    <div className="rounded-xl border mt-6 overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4 border-b" style={{ borderColor: '#2A2D35' }}>
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <h2 className="text-sm font-bold text-gray-200 uppercase tracking-wider">투자 전망 분석</h2>
+            <p className="text-xs text-gray-500 mt-0.5">뉴스 종합 · 단기~최장기 5개 시간대</p>
+          </div>
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-xs px-2 py-1 rounded" style={{ background: '#14171e', border: '1px solid #2A2D35', color: '#94a3b8' }}>
+              현재가 추정 <strong className="text-white">${forecast.current_price}</strong>
+            </span>
+            <span className="text-sm font-bold px-3 py-1.5 rounded-lg"
+              style={{ color: oSig.color, background: oSig.bg, border: `1px solid ${oSig.color}40` }}>
+              {oSig.emoji} {forecast.overall_signal}
+            </span>
+            <span className="text-xs px-2.5 py-1 rounded-lg"
+              style={{ color: risk.color, background: `${risk.color}18`, border: `1px solid ${risk.color}40` }}>
+              리스크 {risk.label}
+            </span>
+            <span className="text-xs px-2.5 py-1 rounded" style={{ background: '#252830', border: '1px solid #2A2D35', color: '#9ca3af' }}>
+              Consensus: <strong className="text-gray-300">{forecast.analyst_consensus}</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* 52주 주봉 */}
+      <div className="px-5 pt-4">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">TSLA 52주 주봉 시뮬레이션</p>
+        <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <WeeklyCandlestickChart data={WEEKLY_DATA} />
+        </div>
+      </div>
+
+      {/* 매수지수 트렌드 */}
+      <div className="px-5 pt-4">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">매수지수 트렌드 (0 적극매도 ← 50 중립 → 100 적극매수)</p>
+        <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <ForecastBuyIndexChart forecasts={forecast.forecasts} />
+        </div>
+      </div>
+
+      {/* 기간별 카드 */}
+      <div className="px-5 pt-4">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">기간별 상세 전망</p>
+        <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
+          {forecast.forecasts?.map(f => {
+            const sig = SIGNAL_CFG[f.signal] || SIGNAL_CFG['관망'];
+            const col = bCol(f.buy_index);
+            const range = f.target_high - f.target_low;
+            const midPct = range > 0 ? ((f.target_mid - f.target_low) / range) * 100 : 50;
+            return (
+              <div key={f.label} className="rounded-lg p-3 flex flex-col gap-2"
+                style={{ background: '#14171e', border: `1px solid ${sig.color}30` }}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-gray-300">{f.period}</span>
+                  <span className="text-xs font-bold" style={{ color: sig.color }}>{f.signal}</span>
+                </div>
+                {/* 매수지수 바 */}
+                <div>
+                  <div className="flex justify-between text-xs mb-0.5">
+                    <span className="text-gray-600">매수지수</span>
+                    <span className="font-bold" style={{ color: col }}>{f.buy_index}</span>
+                  </div>
+                  <div className="h-1.5 rounded-full" style={{ background: '#2A2D35' }}>
+                    <div className="h-full rounded-full" style={{ width: `${f.buy_index}%`, background: col }} />
+                  </div>
+                </div>
+                {/* 목표가 범위 */}
+                <div>
+                  <p className="text-xs text-gray-600 mb-1">목표가</p>
+                  <div className="text-center leading-tight">
+                    <span className="text-xs text-gray-500">${Math.round(f.target_low)}</span>
+                    <span className="text-gray-700 mx-1">~</span>
+                    <span className="text-sm font-bold" style={{ color: sig.color }}>${Math.round(f.target_mid)}</span>
+                    <span className="text-gray-700 mx-1">~</span>
+                    <span className="text-xs text-gray-500">${Math.round(f.target_high)}</span>
+                  </div>
+                  <div className="relative h-1.5 rounded-full mt-1.5" style={{ background: '#2A2D35' }}>
+                    <div className="absolute inset-0 rounded-full opacity-20"
+                      style={{ background: 'linear-gradient(to right,#ef4444,#22c55e)' }} />
+                    <div className="absolute w-2 h-2 rounded-full -top-0.5"
+                      style={{ left:`calc(${midPct}% - 4px)`, background: sig.color, boxShadow:`0 0 5px ${sig.color}` }} />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 leading-snug">{f.reasoning}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 촉매 / 리스크 */}
+      <div className="px-5 pt-4 pb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid rgba(34,197,94,0.2)' }}>
+          <p className="text-xs font-semibold text-green-400 mb-2">🚀 핵심 상승 촉매</p>
+          <ul className="space-y-1">
+            {forecast.key_catalysts?.map((c, i) => (
+              <li key={i} className="text-xs text-gray-400 flex gap-1.5"><span className="text-green-500 shrink-0">▲</span>{c}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid rgba(239,68,68,0.2)' }}>
+          <p className="text-xs font-semibold text-red-400 mb-2">⚠ 핵심 하락 리스크</p>
+          <ul className="space-y-1">
+            {forecast.key_risks?.map((r, i) => (
+              <li key={i} className="text-xs text-gray-400 flex gap-1.5"><span className="text-red-500 shrink-0">▼</span>{r}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── 컴포넌트: TrendChart ─────────────────────────────────────────────────
+
+function TrendChart({ sessions }) {
+  if (!sessions || sessions.length === 0) return (
+    <div className="flex flex-col items-center justify-center py-14 text-gray-600">
+      <p className="text-3xl mb-3">📭</p>
+      <p className="text-sm">저장된 분석 세션이 없습니다.</p>
+      <p className="text-xs mt-1">대시보드에서 뉴스를 수집하고 분석을 실행해보세요.</p>
+    </div>
+  );
+  const W = 720, H = 210;
+  const P = { t: 28, r: 24, b: 44, l: 44 };
+  const cW = W - P.l - P.r, cH = H - P.t - P.b;
+  const data = sessions.map(s => ({ ...s, value: s.buyIndex ?? (s.avgScore != null ? Math.round((s.avgScore + 5) / 10 * 100) : null) })).filter(s => s.value !== null && !isNaN(s.value));
+  if (data.length === 0) return <div className="py-8 text-center text-xs text-gray-600">매수지수 데이터가 없습니다.</div>;
+  const xPos = i => P.l + (data.length === 1 ? cW / 2 : (i / (data.length - 1)) * cW);
+  const yPos = v => P.t + (1 - v / 100) * cH;
+  const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
+  const pts = data.map((d, i) => [xPos(i), yPos(d.value)]);
+  const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0]},${p[1]}`).join(' ');
+  const areaPath = `M${xPos(0)},${P.t + cH} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${xPos(data.length - 1)},${P.t + cH}Z`;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', display: 'block' }}>
+      <defs>
+        <linearGradient id="trendGrad" x1="0" x2="1" y1="0" y2="0">
+          {data.map((d, i) => <stop key={i} offset={`${(i / Math.max(data.length - 1, 1)) * 100}%`} stopColor={bCol(d.value)} stopOpacity="0.22" />)}
+        </linearGradient>
+      </defs>
+      {[0, 25, 50, 75, 100].map(v => (
+        <g key={v}>
+          <line x1={P.l} y1={yPos(v)} x2={W - P.r} y2={yPos(v)} stroke={v === 50 ? '#4b5563' : '#2A2D35'} strokeWidth={v === 50 ? 1 : 0.7} strokeDasharray="3,3" />
+          <text x={P.l - 5} y={yPos(v) + 3.5} textAnchor="end" fill="#6b7280" fontSize="9">{v}</text>
+        </g>
+      ))}
+      {/* Zone colors */}
+      <rect x={P.l} y={yPos(100)} width={cW} height={yPos(65) - yPos(100)} fill="rgba(34,197,94,0.04)" />
+      <rect x={P.l} y={yPos(65)} width={cW} height={yPos(45) - yPos(65)} fill="rgba(245,158,11,0.04)" />
+      <rect x={P.l} y={yPos(45)} width={cW} height={yPos(0) - yPos(45)} fill="rgba(239,68,68,0.04)" />
+      {data.length > 1 && <path d={areaPath} fill="url(#trendGrad)" />}
+      {data.length > 1 && <path d={linePath} fill="none" stroke="#475569" strokeWidth="1.8" strokeLinejoin="round" />}
+      {data.map((d, i) => {
+        const [x, y] = pts[i]; const col = bCol(d.value);
+        return (
+          <g key={i}>
+            <circle cx={x} cy={y} r="5.5" fill={col} stroke="#0D0F14" strokeWidth="2" />
+            <text x={x} y={y - 11} textAnchor="middle" fill={col} fontSize="10.5" fontWeight="700">{d.value}</text>
+            <text x={x} y={H - 24} textAnchor="middle" fill="#6b7280" fontSize="8.5" transform={`rotate(-35,${x},${H - 24})`}>{d.date?.slice(5)}</text>
+            <text x={x} y={H - 8} textAnchor="middle" fill="#4b5563" fontSize="7.5">{d.source === 'collected' ? '🔍' : '📋'}</text>
+          </g>
+        );
+      })}
+      <text x={10} y={P.t + cH / 2} textAnchor="middle" fill="#6b7280" fontSize="9" transform={`rotate(-90,10,${P.t + cH / 2})`}>매수지수</text>
+    </svg>
+  );
+}
+
+// ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
+
+function TrendPage({ onBack }) {
+  const [db, setDB] = useState(() => getNewsDB());
+  const [expanded, setExpanded] = useState(null);
+  const refresh = () => setDB(getNewsDB());
+  const sessions = db.sessions || [];
+  const valid = sessions.filter(s => s.buyIndex != null || s.avgScore != null);
+  const latest = valid[0]?.buyIndex ?? null;
+  const avg = valid.length ? Math.round(valid.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / valid.length) : null;
+  const trend = valid.length >= 2 ? ((valid[0]?.buyIndex ?? 50) > (valid[1]?.buyIndex ?? 50) ? '↑ 상승' : '↓ 하락') : '─';
+  const trendCol = trend.startsWith('↑') ? '#22c55e' : trend.startsWith('↓') ? '#ef4444' : '#6b7280';
+  const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
+  const clearDB = () => { if (confirm('모든 수집 기록을 삭제할까요?')) { saveNewsDB({ sessions: [] }); refresh(); } };
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <button onClick={onBack} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition-colors" style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 대시보드</button>
+          <div>
+            <h1 className="text-xl font-bold text-white tracking-tight">TSLA 매수지수 트렌드</h1>
+            <p className="text-xs text-gray-500">종합 수집 타임라인 DB · 이력 분석</p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <button onClick={refresh} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white" style={{ background: '#252830', border: '1px solid #2A2D35' }}>↻ 새로고침</button>
+          {sessions.length > 0 && <button onClick={clearDB} className="text-xs px-3 py-1.5 rounded-lg text-red-400 hover:text-red-300" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>🗑 기록 삭제</button>}
+        </div>
+      </div>
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        {[
+          ['총 세션', sessions.length, '회', '#94a3b8'],
+          ['최근 매수지수', latest ?? '─', '', latest ? bCol(latest) : '#6b7280'],
+          ['평균 매수지수', avg ?? '─', '', avg ? bCol(avg) : '#6b7280'],
+          ['추세', trend, '', trendCol],
+        ].map(([label, val, unit, col]) => (
+          <div key={label} className="rounded-xl p-4" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+            <p className="text-xs text-gray-500 mb-1">{label}</p>
+            <p className="text-2xl font-bold" style={{ color: col }}>{val}<span className="text-sm ml-1 text-gray-500">{unit}</span></p>
+          </div>
+        ))}
+      </div>
+      {/* Trend Chart */}
+      <div className="rounded-xl p-4 border mb-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">매수지수 추세 차트</p>
+          <div className="flex gap-3 text-xs">
+            {[['매수', '#22c55e', '≥65'], ['관망', '#f59e0b', '45~64'], ['매도', '#ef4444', '<45']].map(([l, c, r]) => (
+              <span key={l} className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: c }} /><span className="text-gray-500">{l} ({r})</span></span>
+            ))}
+            <span className="text-gray-600">🔍수집 📋샘플</span>
+          </div>
+        </div>
+        <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <TrendChart sessions={[...valid].reverse()} />
+        </div>
+      </div>
+      {/* Timeline */}
+      <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="px-5 py-4 border-b flex items-center justify-between" style={{ borderColor: '#2A2D35' }}>
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">종합 수집 타임라인</p>
+          <span className="text-xs text-gray-600">{sessions.length}개 세션 저장됨</span>
+        </div>
+        {sessions.length === 0 ? (
+          <div className="py-14 text-center">
+            <p className="text-3xl mb-3">📭</p>
+            <p className="text-sm text-gray-600">저장된 세션이 없습니다.</p>
+            <p className="text-xs text-gray-700 mt-1">대시보드 → 뉴스 수집 → 분석 실행 → 자동 저장됩니다.</p>
+          </div>
+        ) : (
+          <div className="divide-y" style={{ borderColor: '#2A2D35' }}>
+            {sessions.map(s => {
+              const isExp = expanded === s.id;
+              const sig = SIGNAL_CFG[s.overallSignal] || SIGNAL_CFG['관망'];
+              const bi = s.buyIndex;
+              const biCol = bi != null ? bCol(bi) : '#6b7280';
+              return (
+                <div key={s.id}>
+                  <button className="w-full px-5 py-4 flex items-center gap-3 hover:bg-gray-900 transition-colors text-left" onClick={() => setExpanded(isExp ? null : s.id)}>
+                    <div className="shrink-0 w-24">
+                      <p className="text-xs font-semibold text-gray-300">{s.date}</p>
+                      <p className="text-xs text-gray-600">{s.source === 'collected' ? '🔍 실시간' : '📋 샘플'}</p>
+                    </div>
+                    <div className="shrink-0 text-center w-10">
+                      <p className="text-sm font-bold text-white">{s.news?.length ?? 0}</p>
+                      <p className="text-xs text-gray-600">뉴스</p>
+                    </div>
+                    {bi != null && <div className="shrink-0 text-center w-12">
+                      <p className="text-lg font-bold" style={{ color: biCol }}>{bi}</p>
+                      <p className="text-xs text-gray-600">매수지수</p>
+                    </div>}
+                    <div className="shrink-0 text-center w-12">
+                      <p className="text-sm font-bold" style={{ color: s.avgScore >= 0 ? '#22c55e' : '#ef4444' }}>{s.avgScore >= 0 ? '+' : ''}{s.avgScore?.toFixed(1) ?? '─'}</p>
+                      <p className="text-xs text-gray-600">평균</p>
+                    </div>
+                    <div className="flex-1 flex items-center gap-2 flex-wrap">
+                      <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ color: sig.color, background: sig.bg, border: `1px solid ${sig.color}30` }}>{sig.emoji} {s.overallSignal}</span>
+                      {s.topRules?.map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
+                    </div>
+                    <span className="text-gray-600 text-sm shrink-0">{isExp ? '▲' : '▼'}</span>
+                  </button>
+                  {isExp && (
+                    <div className="px-5 pb-4 pt-3 border-t space-y-2" style={{ borderColor: '#2A2D35', background: '#161920' }}>
+                      <p className="text-xs text-gray-600 font-semibold mb-2">수집 뉴스 요약</p>
+                      {s.news?.map(n => {
+                        const a = s.analyses?.[n.id];
+                        return (
+                          <div key={n.id} className="flex items-start gap-3 p-2.5 rounded" style={{ background: '#1C1F26' }}>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs text-gray-300 font-medium leading-snug">{n.title}</p>
+                              <p className="text-xs text-gray-600 mt-0.5">{n.source} · {n.date} · {n.category}</p>
+                            </div>
+                            {a && <div className="shrink-0 flex items-center gap-1.5">
+                              <span className="text-xs font-bold" style={{ color: a.impact_score >= 0 ? '#22c55e' : '#ef4444' }}>{a.impact_score >= 0 ? '+' : ''}{a.impact_score}</span>
+                              {a.triggered_rules?.slice(0, 2).map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
+                            </div>}
+                          </div>
+                        );
+                      })}
+                      {s.forecast?.forecasts && (
+                        <div className="mt-2 p-3 rounded" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+                          <p className="text-xs text-gray-500 mb-2">기간별 매수지수</p>
+                          <div className="flex gap-4">
+                            {s.forecast.forecasts.map(f => {
+                              const c = bCol(f.buy_index);
+                              return <div key={f.label} className="text-center">
+                                <p className="text-sm font-bold" style={{ color: c }}>{f.buy_index}</p>
+                                <p className="text-xs text-gray-600">{f.label}</p>
+                              </div>;
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+      <p className="text-center text-xs text-gray-700 mt-6">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
+    </div>
+  );
+}
+
+// ─── 메인 App ──────────────────────────────────────────────────────────────
+
+function App() {
+  const [apiKey, setApiKey]     = useState('');
+  const [keyInput, setKeyInput] = useState('');
+  const [page, setPage]         = useState('dashboard');
+  const [ruleOpen, setRuleOpen] = useState(false);
+  const [currentNews, setCurrentNews]       = useState(SAMPLE_NEWS);
+  const [isCollected, setIsCollected]       = useState(false);
+  const [collectLoading, setCollectLoading] = useState(false);
+  const [collectError, setCollectError]     = useState(null);
+  const [results, setResults]     = useState(() => loadCache());
+  const [loading, setLoading]     = useState({});
+  const [errors, setErrors]       = useState({});
+  const [analyzing, setAnalyzing] = useState(false);
+  const [forecast, setForecast]               = useState(() => { try { return JSON.parse(localStorage.getItem(FORECAST_CACHE_KEY) || 'null'); } catch { return null; } });
+  const [forecastLoading, setForecastLoading] = useState(false);
+  const [forecastError, setForecastError]     = useState(null);
+  const sessionIdRef    = useRef(null);
+  const sessionSavedRef = useRef(false);
+
+  const updateResult = useCallback((id, result) => {
+    setResults(prev => { const next = { ...prev, [id]: result }; saveCache(next); return next; });
+  }, []);
+
+  const clearCache = useCallback(() => {
+    try { localStorage.removeItem(CACHE_KEY); localStorage.removeItem(FORECAST_CACHE_KEY); } catch {}
+    setResults({}); setErrors({}); setForecast(null); setForecastError(null);
+    setCurrentNews(SAMPLE_NEWS); setIsCollected(false); setCollectError(null);
+    sessionIdRef.current = null; sessionSavedRef.current = false;
+  }, []);
+
+  const runForecast = useCallback(async () => {
+    if (!apiKey || forecastLoading) return;
+    setForecastLoading(true); setForecastError(null);
+    try {
+      const items = currentNews.filter(n => results[n.id]).map(n => ({ title: n.title, result: results[n.id] }));
+      const f = await generateForecast(apiKey, items);
+      setForecast(f);
+      try { localStorage.setItem(FORECAST_CACHE_KEY, JSON.stringify(f)); } catch {}
+    } catch (e) { setForecastError(e.message); }
+    finally { setForecastLoading(false); }
+  }, [apiKey, currentNews, results, forecastLoading]);
+
+  useEffect(() => {
+    if (currentNews.every(n => results[n.id]) && !forecast && !forecastLoading && apiKey) {
+      if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
+      runForecast();
+    }
+  }, [results, apiKey]);
+
+  useEffect(() => {
+    if (forecast && !sessionSavedRef.current) {
+      const analyzed = currentNews.filter(n => results[n.id]);
+      if (analyzed.length > 0) {
+        if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
+        const avgScore = analyzed.reduce((s, n) => s + results[n.id].impact_score, 0) / analyzed.length;
+        saveSession({
+          id: sessionIdRef.current,
+          date: new Date().toISOString().split('T')[0],
+          displayDate: new Date().toLocaleDateString('ko-KR'),
+          source: isCollected ? 'collected' : 'sample',
+          news: currentNews,
+          analyses: Object.fromEntries(analyzed.map(n => [n.id, results[n.id]])),
+          forecast,
+          avgScore: Math.round(avgScore * 10) / 10,
+          buyIndex: forecast.forecasts?.[0]?.buy_index ?? null,
+          overallSignal: forecast.overall_signal,
+          riskLevel: forecast.risk_level,
+          topRules: getTopRules(analyzed.map(n => results[n.id])),
+          timestamp: Date.now(),
+        });
+        sessionSavedRef.current = true;
+      }
+    }
+  }, [forecast]);
+
+  useEffect(() => {
+    try { const s = localStorage.getItem('tsla_api_key'); if (s) { setApiKey(s); setKeyInput(s); } } catch {}
+  }, []);
+
+  const saveKey = () => {
+    const k = keyInput.trim();
+    if (k.length < 20) { alert('올바른 Gemini API 키를 입력하세요 (Google AI Studio에서 발급)'); return; }
+    try { localStorage.setItem('tsla_api_key', k); } catch {}
+    setApiKey(k);
+  };
+
+  const handleCollect = useCallback(async () => {
+    if (!apiKey) { alert('API 키를 먼저 저장해주세요.'); return; }
+    setCollectLoading(true); setCollectError(null);
+    try {
+      const news = await collectTodayNews(apiKey);
+      setCurrentNews(news); setIsCollected(true);
+      setResults({}); setErrors({}); setForecast(null); setForecastError(null);
+      sessionIdRef.current = newSessionId(); sessionSavedRef.current = false;
+      try { localStorage.removeItem(CACHE_KEY); localStorage.removeItem(FORECAST_CACHE_KEY); } catch {}
+    } catch (e) { setCollectError(e.message); }
+    finally { setCollectLoading(false); }
+  }, [apiKey]);
+
+  const analyzeAll = useCallback(async () => {
+    if (!apiKey) { alert('API 키를 먼저 저장해주세요.'); return; }
+    const pending = currentNews.filter(n => !results[n.id]);
+    if (pending.length === 0) { alert('모든 뉴스가 이미 분석되어 있습니다.'); return; }
+    if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
+    sessionSavedRef.current = false;
+    setAnalyzing(true); setErrors({});
+    for (const news of pending) {
+      setLoading(prev => ({ ...prev, [news.id]: true }));
+      try { const r = await analyzeNews(apiKey, news); updateResult(news.id, r); }
+      catch (e) { setErrors(prev => ({ ...prev, [news.id]: e.message })); }
+      finally { setLoading(prev => ({ ...prev, [news.id]: false })); }
+    }
+    setAnalyzing(false);
+  }, [apiKey, currentNews, results, updateResult]);
+
+  const analyzeSingle = useCallback(async (news) => {
+    if (!apiKey) { alert('API 키를 먼저 저장해주세요.'); return; }
+    if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
+    setLoading(prev => ({ ...prev, [news.id]: true }));
+    setErrors(prev => { const n = { ...prev }; delete n[news.id]; return n; });
+    try { const r = await analyzeNews(apiKey, news); updateResult(news.id, r); }
+    catch (e) { setErrors(prev => ({ ...prev, [news.id]: e.message })); }
+    finally { setLoading(prev => ({ ...prev, [news.id]: false })); }
+  }, [apiKey, updateResult]);
+
+  const hasAnyResult = Object.keys(results).length > 0;
+  const cachedCount  = currentNews.filter(n => results[n.id]).length;
+  const pendingCount = currentNews.length - cachedCount;
+  const dbCount      = getNewsDB().sessions.length;
+  const isSaved      = sessionSavedRef.current;
+
+  if (page === 'trend') return <TrendPage onBack={() => setPage('dashboard')} />;
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-6">
+
+      {/* 헤더 */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
+          <div>
+            <h1 className="text-xl font-bold text-white tracking-tight">TSLA 주가 영향 분석</h1>
+            <p className="text-xs text-gray-500">Tesla / Elon Musk · Rule Engine R01~R24</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={() => setPage('dashboard')} className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors"
+            style={page==='dashboard' ? {background:'#252830',border:'1px solid #2A2D35',color:'#fff'} : {color:'#6b7280'}}>
+            📊 대시보드
+          </button>
+          <button onClick={() => setPage('trend')} className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors relative"
+            style={page==='trend' ? {background:'#252830',border:'1px solid #2A2D35',color:'#fff'} : {color:'#6b7280'}}>
+            📈 트렌드 분석
+            {dbCount > 0 && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center" style={{background:'#E31937',color:'#fff',fontSize:'8px',fontWeight:'bold'}}>{dbCount}</span>}
+          </button>
+          <div className="text-right ml-2">
+            <p className="text-xs text-gray-600">기준일</p>
+            <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* API 키 + 액션 바 */}
+      <div className="rounded-xl p-4 border mb-5 flex flex-col sm:flex-row gap-3 items-start sm:items-center flex-wrap" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex-1 w-full min-w-40">
+          <label className="text-xs text-gray-500 mb-1.5 block">Gemini API Key</label>
+          <input type="password" value={keyInput} onChange={e => setKeyInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && saveKey()}
+            placeholder="AIzaSy..." className="w-full text-sm rounded-lg px-3 py-2 text-gray-200 outline-none focus:ring-1 focus:ring-blue-500"
+            style={{ background: '#14171e', border: '1px solid #2A2D35' }} />
+        </div>
+        <button onClick={saveKey} className="px-4 py-2 rounded-lg text-sm font-semibold text-white hover:opacity-90 shrink-0" style={{ background: '#1d4ed8', marginTop: 'auto' }}>저장</button>
+        {apiKey && <div className="flex items-center gap-1.5 text-xs text-green-400 shrink-0" style={{ marginTop: 'auto' }}>
+          <span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> 연결됨
+        </div>}
+        <button onClick={handleCollect} disabled={collectLoading || !apiKey}
+          className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shrink-0 disabled:opacity-40 hover:opacity-90"
+          style={{ background: collectLoading ? '#374151' : '#0891b2', marginTop: 'auto' }}>
+          {collectLoading
+            ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />수집 중...</span>
+            : '🔍 오늘 뉴스 수집'}
+        </button>
+        {cachedCount > 0 && <button onClick={clearCache} disabled={analyzing}
+          className="px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-red-400 shrink-0 disabled:opacity-40"
+          style={{ background: '#14171e', border: '1px solid #2A2D35', marginTop: 'auto' }}>
+          🗑 캐시 초기화 ({cachedCount})
+        </button>}
+        <button onClick={analyzeAll} disabled={analyzing || !apiKey || pendingCount === 0}
+          className="px-5 py-2 rounded-lg text-sm font-bold text-white transition-all shrink-0 disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90"
+          style={{ background: analyzing ? '#374151' : pendingCount === 0 ? '#374151' : '#E31937', marginTop: 'auto' }}>
+          {analyzing
+            ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />분석 중...</span>
+            : pendingCount === 0 ? '✓ 전체 분석 완료' : `▶ 분석 실행 (${pendingCount}건)`}
+        </button>
+      </div>
+
+      {isCollected && (
+        <div className="mb-4 px-4 py-2.5 rounded-lg flex items-center gap-2 text-xs flex-wrap" style={{ background: 'rgba(8,145,178,0.1)', border: '1px solid rgba(8,145,178,0.3)' }}>
+          <span className="text-cyan-400 font-bold">🔍 실시간 수집</span>
+          <span className="text-gray-500">{new Date().toLocaleDateString('ko-KR')} · Gemini Google Search · {currentNews.length}건</span>
+          <span className="text-gray-600 ml-auto">분석 후 트렌드 DB 자동 저장</span>
+        </div>
+      )}
+      {collectError && (
+        <div className="mb-4 px-4 py-2.5 rounded-lg text-xs text-red-400" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+          ⚠ 뉴스 수집 오류: {collectError}
+        </div>
+      )}
+
+      <div className="mb-5"><RuleEnginePanel open={ruleOpen} onToggle={() => setRuleOpen(o => !o)} /></div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {currentNews.map(news => (
+          <div key={news.id} className="relative">
+            <NewsCard news={news} result={results[news.id]} loading={loading[news.id]} error={errors[news.id]} />
+            {results[news.id] && (
+              <div className="absolute top-4 right-4 flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
+                style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: '#10b981' }}>
+                <span>💾</span> 캐시됨
+              </div>
+            )}
+            {!results[news.id] && !loading[news.id] && (
+              <button onClick={() => analyzeSingle(news)} disabled={!apiKey}
+                className="absolute bottom-4 right-4 text-xs px-3 py-1 rounded-lg disabled:opacity-30 hover:opacity-80"
+                style={{ background: '#252830', border: '1px solid #2A2D35', color: '#94a3b8' }}>
+                단독 분석
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {hasAnyResult && <SummaryPanel results={results} />}
+
+      {(forecast || forecastLoading || forecastError) && (
+        <ForecastPanel forecast={forecast} loading={forecastLoading} error={forecastError} onRetry={runForecast} />
+      )}
+
+      {isSaved && (
+        <div className="mt-4 px-4 py-2.5 rounded-lg flex items-center gap-2 text-xs" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
+          <span className="text-green-400 font-semibold">✅ 세션 자동 저장 완료</span>
+          <span className="text-gray-500">트렌드 DB에 기록되었습니다</span>
+          <button onClick={() => setPage('trend')} className="ml-auto text-xs text-cyan-400 hover:text-cyan-300 font-semibold">📈 트렌드 보기 →</button>
+        </div>
+      )}
+
+      <div className="mt-5 rounded-xl p-4 border text-xs text-gray-500 leading-relaxed" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <p className="font-semibold text-gray-400 mb-2">판정 가중치 조정 가이드</p>
+        <ul className="space-y-1">
+          <li>📊 <strong className="text-gray-400">실적 발표 시즌:</strong> R02(실적 미스) 가중치 ×1.5 적용 권장</li>
+          <li>📱 <strong className="text-gray-400">머스크 SNS 활성화 기간:</strong> R08(SNS 논란) 임계값 낮춤 권장</li>
+          <li>⚖️ <strong className="text-gray-400">규제 불확실성 높을 때:</strong> R05, R17 confidence → medium으로 하향 권장</li>
+        </ul>
+      </div>
+      <p className="text-center text-xs text-gray-700 mt-6">
+        Powered by Google Gemini 2.5 Flash · TSLA Impact Analyzer v2.0 · 본 도구는 투자 조언이 아닙니다
+      </p>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
