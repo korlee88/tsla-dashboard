@@ -547,39 +547,49 @@ async function collectTodayNews(apiKey) {
   return items.slice(0, 5).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
 
-// ─── 실시간 TSLA 52주 주봉 (Yahoo Finance) ───────────────────────────────
+// ─── 실시간 TSLA 52주 주봉 (Stooq → allorigins fallback) ────────────────
 
 async function fetchTSLAWeeklyData() {
-  const DIRECT = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1wk&range=1y&includePrePost=false';
-  const PROXY  = 'https://corsproxy.io/?' + encodeURIComponent(DIRECT);
-
-  async function parse(res) {
-    const data = await res.json();
-    const r = data.chart?.result?.[0];
-    if (!r) throw new Error('Yahoo 응답 파싱 실패');
-    const { timestamp, indicators, meta } = r;
-    const q = indicators.quote[0];
-    const items = (timestamp || []).map((ts, i) => ({
-      open:  q.open[i],
-      high:  q.high[i],
-      low:   q.low[i],
-      close: q.close[i],
-      date:  new Date(ts * 1000),
-    })).filter(d => d.open != null && d.close != null && d.high != null && d.low != null);
-    const currentPrice = Math.round((meta.regularMarketPrice || items[items.length - 1]?.close || 247) * 100) / 100;
-    return { items, currentPrice };
+  // Stooq CSV 파싱 공통 함수
+  function parseStooqCSV(text) {
+    const lines = text.trim().split('\n').filter(l => l.trim() && !l.toLowerCase().startsWith('date'));
+    if (lines.length < 4) throw new Error('데이터 부족');
+    const items = lines.map(line => {
+      const c = line.split(',');
+      return { date: new Date(c[0]), open: +c[1], high: +c[2], low: +c[3], close: +c[4] };
+    }).filter(d => d.close > 0 && !isNaN(d.close));
+    // Stooq는 최신순 → 오래된순으로 reverse
+    items.reverse();
+    const last52 = items.slice(-52);
+    const currentPrice = Math.round(last52[last52.length - 1].close * 100) / 100;
+    return { items: last52, currentPrice };
   }
 
-  // 직접 호출 시도
+  const STOOQ = 'https://stooq.com/q/d/l/?s=tsla.us&i=w';
+
+  // 1순위: Stooq 직접
   try {
-    const res = await fetch(DIRECT, { cache: 'no-store' });
-    if (res.ok) return await parse(res);
+    const res = await fetch(STOOQ, { cache: 'no-store' });
+    if (res.ok) {
+      const text = await res.text();
+      return parseStooqCSV(text);
+    }
   } catch {}
 
-  // CORS 프록시 fallback
-  const res = await fetch(PROXY, { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Yahoo Finance HTTP ${res.status}`);
-  return await parse(res);
+  // 2순위: allorigins 프록시 경유
+  try {
+    const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(STOOQ), { cache: 'no-store' });
+    if (res.ok) {
+      const wrapper = await res.json();
+      return parseStooqCSV(wrapper.contents || '');
+    }
+  } catch {}
+
+  // 3순위: corsproxy.io 경유
+  const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(STOOQ), { cache: 'no-store' });
+  if (!res.ok) throw new Error(`Stooq HTTP ${res.status}`);
+  const text = await res.text();
+  return parseStooqCSV(text);
 }
 
 // ─── 포캐스트 API ──────────────────────────────────────────────────────────
@@ -793,7 +803,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
         <div className="flex items-center gap-2 mb-2">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TSLA 52주 실제 주봉</p>
           {weeklyLoading && <span className="text-xs text-blue-400 animate-pulse">Yahoo Finance 로딩 중…</span>}
-          {weeklyError && <span className="text-xs text-yellow-500">⚠ {weeklyError} (Yahoo Finance 연결 실패)</span>}
+          {weeklyError && <span className="text-xs text-yellow-500">⚠ {weeklyError} (주가 로드 실패)</span>}
           {weeklyData && <span className="text-xs text-gray-600">출처: Yahoo Finance</span>}
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
