@@ -1358,10 +1358,6 @@ function App() {
 
       {hasAnyResult && <SummaryPanel results={results} />}
 
-      {(forecast || forecastLoading || forecastError) && (
-        <ForecastPanel forecast={forecast} loading={forecastLoading} error={forecastError} onRetry={runForecast}
-          weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError} />
-      )}
 
       {isSaved && (
         <div className="mt-4 px-4 py-2.5 rounded-lg flex items-center gap-2 text-xs" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
