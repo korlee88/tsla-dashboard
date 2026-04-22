@@ -528,7 +528,7 @@ async function collectTodayNews(apiKey) {
       role: 'user',
       parts: [{ text: `Search for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nReturn ONLY a JSON array of exactly 5 most market-impactful items:\n[{"id":1,"title":"...","summary":"2-3 sentence English summary","source":"publisher name","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\nReturn ONLY the JSON array.` }]
     }],
-    generationConfig: { maxOutputTokens: 2000, temperature: 0.1 }
+    generationConfig: { maxOutputTokens: 8192, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } }
   };
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
@@ -536,11 +536,13 @@ async function collectTodayNews(apiKey) {
   );
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
   const data = await res.json();
-  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  // thought 파트를 제외하고 실제 텍스트 파트만 합침 (gemini-2.5-flash thinking 대응)
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const raw = parts.filter(p => !p.thought).map(p => p.text || '').join('') || parts[0]?.text || '';
   const cleaned = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
   const start = cleaned.indexOf('[');
   const end   = cleaned.lastIndexOf(']');
-  if (start === -1 || end === -1) throw new Error('뉴스 JSON 파싱 실패: ' + raw.slice(0, 120));
+  if (start === -1 || end === -1) throw new Error('뉴스 JSON 파싱 실패: ' + raw.slice(0, 200));
   const items = JSON.parse(cleaned.slice(start, end + 1));
   return items.slice(0, 5).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
