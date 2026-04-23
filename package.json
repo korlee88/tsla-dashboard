@@ -2,13 +2,5 @@
   "name": "tsla-dashboard",
   "version": "1.0.0",
   "description": "Tesla / Elon Musk Stock Impact Analysis Dashboard",
-  "scripts": {
-    "start": "npx serve . -l $PORT --no-clipboard"
-  },
-  "dependencies": {
-    "serve": "^14.2.4"
-  },
-  "engines": {
-    "node": ">=18"
-  }
+  "homepage": "https://korlee88.github.io/tsla-dashboard"
 }
