@@ -1666,8 +1666,27 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
   const [autoSessions, setAutoSessions] = useState([]);
   const [autoLoading, setAutoLoading] = useState(true);
   const [autoLastSync, setAutoLastSync] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [checkedIds, setCheckedIds] = useState(new Set());
 
   const refresh = () => setDB(getNewsDB());
+
+  const toggleEditMode = () => { setEditMode(v => !v); setCheckedIds(new Set()); setExpanded(null); };
+  const toggleCheck = (id, e) => { e.stopPropagation(); setCheckedIds(prev => { const s = new Set(prev); s.has(id) ? s.delete(id) : s.add(id); return s; }); };
+  const toggleAll = () => {
+    const localIds = localSessions.map(s => s.id);
+    const allChecked = localIds.every(id => checkedIds.has(id));
+    setCheckedIds(allChecked ? new Set() : new Set(localIds));
+  };
+  const deleteSelected = () => {
+    if (checkedIds.size === 0) return;
+    const cur = getNewsDB();
+    cur.sessions = (cur.sessions || []).filter(s => !checkedIds.has(s.id));
+    saveNewsDB(cur);
+    setCheckedIds(new Set());
+    setEditMode(false);
+    refresh();
+  };
 
   // 자동 세션 불러오기
   useEffect(() => {
@@ -1907,9 +1926,39 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       </div>
       {/* Timeline */}
       <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <div className="px-5 py-4 border-b flex items-center justify-between" style={{ borderColor: '#2A2D35' }}>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">종합 수집 타임라인</p>
-          <span className="text-xs text-gray-600">{sessions.length}개 세션 · 🤖 자동 {autoSessions.length}건 포함</span>
+        <div className="px-5 py-4 border-b flex items-center justify-between gap-2 flex-wrap" style={{ borderColor: '#2A2D35' }}>
+          <div className="flex items-center gap-3">
+            {editMode && (
+              <input type="checkbox"
+                checked={localSessions.length > 0 && localSessions.every(s => checkedIds.has(s.id))}
+                onChange={toggleAll}
+                className="w-4 h-4 accent-red-500 cursor-pointer"
+                title="전체 선택"
+              />
+            )}
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">종합 수집 타임라인</p>
+            <span className="text-xs text-gray-600">{sessions.length}개 세션 · 🤖 자동 {autoSessions.length}건 포함</span>
+          </div>
+          <div className="flex items-center gap-2">
+            {editMode && checkedIds.size > 0 && (
+              <button onClick={deleteSelected}
+                className="text-xs font-bold px-3 py-1.5 rounded-lg transition-colors"
+                style={{ background: '#ef44441a', color: '#ef4444', border: '1px solid #ef444440' }}
+                onMouseEnter={e => e.currentTarget.style.background = '#ef444430'}
+                onMouseLeave={e => e.currentTarget.style.background = '#ef44441a'}
+              >
+                🗑 선택 삭제 ({checkedIds.size}개)
+              </button>
+            )}
+            {localSessions.length > 0 && (
+              <button onClick={toggleEditMode}
+                className="text-xs px-3 py-1.5 rounded-lg transition-colors"
+                style={{ background: editMode ? '#3b82f620' : '#ffffff0d', color: editMode ? '#60a5fa' : '#9ca3af', border: `1px solid ${editMode ? '#3b82f640' : '#ffffff15'}` }}
+              >
+                {editMode ? '✕ 취소' : '편집'}
+              </button>
+            )}
+          </div>
         </div>
         {sessions.length === 0 ? (
           <div className="py-14 text-center">
@@ -1925,8 +1974,22 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
               const bi = s.buyIndex;
               const biCol = bi != null ? bCol(bi) : '#6b7280';
               return (
-                <div key={s.id}>
-                  <button className="w-full px-3 md:px-5 py-3 md:py-4 flex items-center gap-2 md:gap-3 hover:bg-gray-900 transition-colors text-left" onClick={() => setExpanded(isExp ? null : s.id)}>
+                <div key={s.id} style={editMode && checkedIds.has(s.id) ? { background: '#ef444408' } : {}}>
+                  <button className="w-full px-3 md:px-5 py-3 md:py-4 flex items-center gap-2 md:gap-3 hover:bg-gray-900 transition-colors text-left"
+                    onClick={() => { if (editMode && s.source !== 'auto') { setCheckedIds(prev => { const ns = new Set(prev); ns.has(s.id) ? ns.delete(s.id) : ns.add(s.id); return ns; }); } else if (!editMode) { setExpanded(isExp ? null : s.id); } }}
+                  >
+                    {/* 편집모드 체크박스 */}
+                    {editMode && (
+                      <span className="shrink-0" onClick={e => e.stopPropagation()}>
+                        {s.source !== 'auto' ? (
+                          <input type="checkbox" checked={checkedIds.has(s.id)}
+                            onChange={() => setCheckedIds(prev => { const ns = new Set(prev); ns.has(s.id) ? ns.delete(s.id) : ns.add(s.id); return ns; })}
+                            className="w-4 h-4 accent-red-500 cursor-pointer" />
+                        ) : (
+                          <span className="w-4 h-4 inline-flex items-center justify-center" title="자동 수집 세션은 삭제 불가" style={{ color: '#4b5563', fontSize: 11 }}>🤖</span>
+                        )}
+                      </span>
+                    )}
                     {/* 날짜+소스 */}
                     <div className="shrink-0 w-20 md:w-24">
                       <p className="text-xs font-semibold text-gray-300 truncate">{s.date}</p>
@@ -1949,7 +2012,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                         {s.topRules?.map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
                       </div>
                     </div>
-                    <span className="text-gray-600 text-sm shrink-0">{isExp ? '▲' : '▼'}</span>
+                    {!editMode && <span className="text-gray-600 text-sm shrink-0">{isExp ? '▲' : '▼'}</span>}
                   </button>
                   {isExp && (
                     <div className="px-5 pb-4 pt-3 border-t space-y-2" style={{ borderColor: '#2A2D35', background: '#161920' }}>
