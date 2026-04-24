@@ -230,18 +230,25 @@ function loadLastNews() {
 
 // ─── API 호출 ─────────────────────────────────────────────────────────────
 
-async function geminiPostWithRetry(apiKey, body, retries = 3) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
-    if (res.ok) return res.json();
-    const err = await res.json().catch(() => ({}));
-    const msg = err?.error?.message || `HTTP ${res.status}`;
-    const retryable = res.status === 503 || res.status === 429 || res.status === 500;
-    if (!retryable || attempt === retries) throw new Error(msg);
-    const delay = Math.pow(2, attempt + 1) * 1000 + Math.random() * 500;
-    await new Promise(r => setTimeout(r, delay));
+const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+
+async function geminiPostWithRetry(apiKey, body, retries = 2) {
+  let lastError;
+  for (const model of GEMINI_MODELS) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+      if (res.ok) return res.json();
+      const err = await res.json().catch(() => ({}));
+      const msg = err?.error?.message || `HTTP ${res.status}`;
+      const retryable = res.status === 503 || res.status === 429 || res.status === 500;
+      if (!retryable) throw new Error(msg);
+      lastError = new Error(msg);
+      if (attempt < retries) await new Promise(r => setTimeout(r, Math.pow(2, attempt + 1) * 1000 + Math.random() * 500));
+    }
+    // 현재 모델 재시도 소진 → 다음 모델로 폴백
   }
+  throw lastError;
 }
 
 async function analyzeNews(apiKey, newsItem) {
