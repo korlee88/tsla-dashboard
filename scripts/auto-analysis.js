@@ -10,7 +10,7 @@ const path = require('path');
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
 
-const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash'];
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 const DATA_FILE  = path.join(__dirname, '..', 'data', 'auto-sessions.json');
 const MAX_SESSIONS = 90; // 최대 90개 (약 3주치)
@@ -84,7 +84,7 @@ async function collectNews() {
     tools: [{ google_search: {} }],
     contents: [{
       role: 'user',
-      parts: [{ text: `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성. 영어 원문은 한국어로 번역할 것. source·category만 영어 유지.\n\nSearch for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 10 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"(한국어 번역 제목 예: 테슬라, 1분기 인도량 예상치 하회)","summary":"(한국어 2~3문장 요약 예: 테슬라가 2026년 1분기...)","source":"Reuters","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\n⚠️ title·summary에 영어 사용 절대 금지. 반드시 한국어로만 작성.\nReturn ONLY the JSON array, no other text.` }],
+      parts: [{ text: `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성. 영어 원문은 한국어로 번역할 것. source·category만 영어 유지.\n\nSearch for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 5 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"(한국어 번역 제목 예: 테슬라, 1분기 인도량 예상치 하회)","summary":"(한국어 2~3문장 요약 예: 테슬라가 2026년 1분기...)","source":"Reuters","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\n⚠️ title·summary에 영어 사용 절대 금지. 반드시 한국어로만 작성.\nReturn ONLY the JSON array, no other text.` }],
     }],
     generationConfig: { maxOutputTokens: 8192, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
   });
@@ -94,7 +94,7 @@ async function collectNews() {
   const s = clean.indexOf('['), e = clean.lastIndexOf(']');
   if (s === -1 || e === -1) throw new Error('뉴스 JSON 파싱 실패: ' + raw.slice(0, 200));
   const items = JSON.parse(clean.slice(s, e + 1));
-  return items.slice(0, 10).map((n, i) => ({ ...n, id: Date.now() + i }));
+  return items.slice(0, 5).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
 
 // ─── 개별 뉴스 분석 ──────────────────────────────────────────────────────────
