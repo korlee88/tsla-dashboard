@@ -8,6 +8,8 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -518,6 +520,98 @@ function getTopRules(analyses) {
   return Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([r]) => r);
 }
 
+// ─── Google Drive 동기화 유틸리티 ────────────────────────────────────────
+
+const DRIVE_FILE_NAME = 'tsla_sessions.json';
+const DRIVE_CLIENT_ID_KEY = 'tsla_drive_client_id';
+
+// GAPI 클라이언트 초기화 (1회)
+let _gapiReady = false;
+async function ensureGapi() {
+  if (_gapiReady) return;
+  await new Promise((resolve, reject) => {
+    if (!window.gapi) { reject(new Error('Google API 스크립트 미로드')); return; }
+    gapi.load('client', async () => {
+      try {
+        await gapi.client.init({});
+        _gapiReady = true;
+        resolve();
+      } catch(e) { reject(e); }
+    });
+  });
+}
+
+// OAuth 토큰 발급 (GIS 팝업)
+function driveRequestToken(clientId) {
+  return new Promise((resolve, reject) => {
+    if (!window.google?.accounts?.oauth2) {
+      reject(new Error('Google Identity Services 미로드')); return;
+    }
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'https://www.googleapis.com/auth/drive.appdata',
+      callback: (resp) => {
+        if (resp.error) reject(new Error(resp.error_description || resp.error));
+        else resolve(resp.access_token);
+      },
+    });
+    client.requestAccessToken({ prompt: '' });
+  });
+}
+
+// Drive에서 기존 파일 ID 검색
+async function driveFindFile(token) {
+  const res = await fetch(
+    `https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name+%3D+%27${DRIVE_FILE_NAME}%27&fields=files(id)`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  if (!res.ok) throw new Error(`Drive 파일 검색 실패 (${res.status})`);
+  const data = await res.json();
+  return data.files?.[0]?.id || null;
+}
+
+// Drive에서 세션 데이터 읽기
+async function driveReadSessions(token) {
+  const fileId = await driveFindFile(token);
+  if (!fileId) return [];
+  const res = await fetch(
+    `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  if (!res.ok) throw new Error(`Drive 읽기 실패 (${res.status})`);
+  const data = await res.json();
+  return Array.isArray(data.sessions) ? data.sessions : [];
+}
+
+// Drive에 세션 데이터 저장 (생성 또는 업데이트)
+async function driveWriteSessions(token, sessions) {
+  const fileId = await driveFindFile(token);
+  const body = JSON.stringify({ sessions, updatedAt: new Date().toISOString() });
+  const meta = { name: DRIVE_FILE_NAME, parents: fileId ? undefined : ['appDataFolder'] };
+
+  const form = new FormData();
+  form.append('metadata', new Blob([JSON.stringify(fileId ? {} : meta)], { type: 'application/json' }));
+  form.append('file', new Blob([body], { type: 'application/json' }));
+
+  const url = fileId
+    ? `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart`
+    : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+  const method = fileId ? 'PATCH' : 'POST';
+
+  const res = await fetch(url, { method, headers: { Authorization: `Bearer ${token}` }, body: form });
+  if (!res.ok) throw new Error(`Drive 저장 실패 (${res.status})`);
+}
+
+// 로컬 + Drive 세션 병합 (합집합, 최신 60개)
+function mergeSessions(local, remote) {
+  const map = {};
+  remote.forEach(s => { if (s?.id) map[s.id] = s; });
+  local.forEach(s => { if (s?.id) map[s.id] = s; }); // 로컬이 우선
+  return Object.values(map)
+    .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+    .slice(0, 60);
+}
+
 // ─── 뉴스 수집 API (Google Search Grounding) ──────────────────────────────
 
 async function collectTodayNews(apiKey) {
@@ -960,10 +1054,14 @@ function TrendChart({ sessions }) {
 
 // ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
 
-function TrendPage({ onBack }) {
+function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError }) {
   const [db, setDB] = useState(() => getNewsDB());
   const [expanded, setExpanded] = useState(null);
   const refresh = () => setDB(getNewsDB());
+
+  // Drive에서 불러온 후 로컬 갱신
+  const handlePull = async () => { await onPullFromDrive?.(); refresh(); };
+
   const sessions = db.sessions || [];
   const valid = sessions.filter(s => s.buyIndex != null || s.avgScore != null);
   const latest = valid[0]?.buyIndex ?? null;
@@ -983,7 +1081,19 @@ function TrendPage({ onBack }) {
             <p className="text-xs text-gray-500">종합 수집 타임라인 DB · 이력 분석</p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 items-center">
+          {driveConnected && <>
+            <button onClick={handlePull} disabled={driveSyncing}
+              className="text-xs px-3 py-1.5 rounded-lg font-semibold text-white hover:opacity-90 disabled:opacity-40"
+              style={{ background: '#1d4ed8' }}>
+              {driveSyncing ? '⏳ 동기화 중…' : '⬇ Drive 불러오기'}
+            </button>
+            <button onClick={onPushToDrive} disabled={driveSyncing}
+              className="text-xs px-3 py-1.5 rounded-lg font-semibold text-white hover:opacity-90 disabled:opacity-40"
+              style={{ background: '#7c3aed' }}>⬆ Drive 저장</button>
+            {driveLastSync && <span className="text-xs text-gray-600">동기화: {driveLastSync}</span>}
+          </>}
+          {!driveConnected && <span className="text-xs text-gray-600">☁ Drive 미연결 (대시보드에서 연결)</span>}
           <button onClick={refresh} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white" style={{ background: '#252830', border: '1px solid #2A2D35' }}>↻ 새로고침</button>
           {sessions.length > 0 && <button onClick={clearDB} className="text-xs px-3 py-1.5 rounded-lg text-red-400 hover:text-red-300" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>🗑 기록 삭제</button>}
         </div>
@@ -1111,6 +1221,12 @@ function TrendPage({ onBack }) {
 function App() {
   const [apiKey, setApiKey]     = useState('');
   const [keyInput, setKeyInput] = useState('');
+  const [driveClientId, setDriveClientId]       = useState('');
+  const [driveClientIdInput, setDriveClientIdInput] = useState('');
+  const [driveSyncing, setDriveSyncing]         = useState(false);
+  const [driveError, setDriveError]             = useState(null);
+  const [driveLastSync, setDriveLastSync]       = useState(null);
+  const driveTokenRef = useRef(null);
   const [page, setPage]         = useState('dashboard');
   const [ruleOpen, setRuleOpen] = useState(false);
   const [currentNews, setCurrentNews]       = useState(SAMPLE_NEWS);
@@ -1183,13 +1299,80 @@ function App() {
           timestamp: Date.now(),
         });
         sessionSavedRef.current = true;
+        // Drive 자동 동기화 (연결된 경우)
+        if (driveTokenRef.current) {
+          driveWriteSessions(driveTokenRef.current, getNewsDB().sessions)
+            .then(() => setDriveLastSync(new Date().toLocaleTimeString('ko-KR')))
+            .catch(e => setDriveError('자동 Drive 저장 실패: ' + e.message));
+        }
       }
     }
   }, [forecast]);
 
   useEffect(() => {
-    try { const s = localStorage.getItem('tsla_api_key'); if (s) { setApiKey(s); setKeyInput(s); } } catch {}
+    try {
+      const s = localStorage.getItem('tsla_api_key'); if (s) { setApiKey(s); setKeyInput(s); }
+      const d = localStorage.getItem(DRIVE_CLIENT_ID_KEY); if (d) { setDriveClientId(d); setDriveClientIdInput(d); }
+    } catch {}
   }, []);
+
+  const saveDriveClientId = () => {
+    const k = driveClientIdInput.trim();
+    if (!k.includes('.apps.googleusercontent.com')) {
+      alert('올바른 Google OAuth Client ID를 입력하세요.\n형식: xxxxx.apps.googleusercontent.com');
+      return;
+    }
+    try { localStorage.setItem(DRIVE_CLIENT_ID_KEY, k); } catch {}
+    setDriveClientId(k);
+    setDriveError(null);
+  };
+
+  const connectDrive = async () => {
+    if (!driveClientId) { alert('Client ID를 먼저 저장해주세요.'); return; }
+    setDriveSyncing(true); setDriveError(null);
+    try {
+      await ensureGapi();
+      const token = await driveRequestToken(driveClientId);
+      driveTokenRef.current = token;
+      // 연결 후 Drive → 로컬 병합
+      await pullFromDrive(token);
+    } catch(e) { setDriveError(e.message); }
+    finally { setDriveSyncing(false); }
+  };
+
+  const pullFromDrive = async (token) => {
+    const tok = token || driveTokenRef.current;
+    if (!tok) { setDriveError('먼저 Drive에 연결하세요.'); return; }
+    setDriveSyncing(true); setDriveError(null);
+    try {
+      const remote = await driveReadSessions(tok);
+      const local  = getNewsDB().sessions;
+      const merged = mergeSessions(local, remote);
+      const db = getNewsDB();
+      db.sessions = merged;
+      saveNewsDB(db);
+      setDriveLastSync(new Date().toLocaleTimeString('ko-KR'));
+    } catch(e) {
+      if (e.message.includes('401') || e.message.includes('invalid')) {
+        driveTokenRef.current = null; setDriveError('토큰 만료 — 다시 연결해주세요.');
+      } else setDriveError(e.message);
+    } finally { setDriveSyncing(false); }
+  };
+
+  const pushToDrive = async () => {
+    const tok = driveTokenRef.current;
+    if (!tok) { setDriveError('먼저 Drive에 연결하세요.'); return; }
+    setDriveSyncing(true); setDriveError(null);
+    try {
+      const sessions = getNewsDB().sessions;
+      await driveWriteSessions(tok, sessions);
+      setDriveLastSync(new Date().toLocaleTimeString('ko-KR'));
+    } catch(e) {
+      if (e.message.includes('401')) {
+        driveTokenRef.current = null; setDriveError('토큰 만료 — 다시 연결해주세요.');
+      } else setDriveError(e.message);
+    } finally { setDriveSyncing(false); }
+  };
 
   // ─── 앱 시작 시 Yahoo Finance 실시간 주가 fetch ─────────────────────────
   useEffect(() => {
@@ -1256,7 +1439,10 @@ function App() {
   const dbCount      = getNewsDB().sessions.length;
   const isSaved      = sessionSavedRef.current;
 
-  if (page === 'trend') return <TrendPage onBack={() => setPage('dashboard')} />;
+  if (page === 'trend') return <TrendPage onBack={() => setPage('dashboard')}
+    onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
+    driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
+    driveLastSync={driveLastSync} driveError={driveError} />;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -1318,6 +1504,46 @@ function App() {
             ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />분석 중...</span>
             : pendingCount === 0 ? '✓ 전체 분석 완료' : `▶ 분석 실행 (${pendingCount}건)`}
         </button>
+      </div>
+
+      {/* Google Drive 동기화 패널 */}
+      <div className="rounded-xl p-4 border mb-4 flex flex-col gap-3" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center gap-2">
+          <span className="text-sm">☁</span>
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Google Drive 동기화</span>
+          {driveTokenRef.current && <span className="text-xs px-2 py-0.5 rounded-full text-green-400" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)' }}>● 연결됨</span>}
+          {driveLastSync && <span className="text-xs text-gray-600 ml-auto">마지막 동기화: {driveLastSync}</span>}
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-end flex-wrap">
+          <div className="flex-1 min-w-52">
+            <label className="text-xs text-gray-500 mb-1.5 block">Google OAuth Client ID</label>
+            <input type="text" value={driveClientIdInput} onChange={e => setDriveClientIdInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && saveDriveClientId()}
+              placeholder="xxxxx.apps.googleusercontent.com"
+              className="w-full text-xs rounded-lg px-3 py-2 text-gray-300 outline-none focus:ring-1 focus:ring-green-500"
+              style={{ background: '#14171e', border: '1px solid #2A2D35' }} />
+          </div>
+          <button onClick={saveDriveClientId} className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0"
+            style={{ background: '#166534' }}>ID 저장</button>
+          <button onClick={connectDrive} disabled={driveSyncing || !driveClientId}
+            className="px-3 py-2 rounded-lg text-xs font-bold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
+            style={{ background: driveTokenRef.current ? '#14532d' : '#15803d' }}>
+            {driveSyncing ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full spinning"/>처리 중</span>
+              : driveTokenRef.current ? '🔄 재연결' : '🔐 Google 로그인'}
+          </button>
+          {driveTokenRef.current && <>
+            <button onClick={() => pullFromDrive()} disabled={driveSyncing}
+              className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
+              style={{ background: '#1d4ed8' }}>⬇ Drive → 앱</button>
+            <button onClick={pushToDrive} disabled={driveSyncing}
+              className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
+              style={{ background: '#7c3aed' }}>⬆ 앱 → Drive</button>
+          </>}
+        </div>
+        {driveError && <p className="text-xs text-red-400 flex items-center gap-1.5">⚠ {driveError}</p>}
+        {!driveClientId && <p className="text-xs text-gray-600">
+          Client ID 없음 → <a href="https://console.cloud.google.com/" target="_blank" className="text-blue-400 underline">Google Cloud Console</a>에서 발급 후 입력하세요.
+        </p>}
       </div>
 
       {isCollected && (
