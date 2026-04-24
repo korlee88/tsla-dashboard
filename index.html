@@ -1133,6 +1133,108 @@ function TrendChart({ sessions, prediction }) {
   );
 }
 
+// ─── 컴포넌트: SettingsPage ───────────────────────────────────────────────
+
+function SettingsPage({ onBack,
+  apiKey, keyInput, setKeyInput, saveKey,
+  driveClientId, driveClientIdInput, setDriveClientIdInput, saveDriveClientId,
+  connectDrive, driveSyncing, driveConnected, driveLastSync, driveError,
+  pullFromDrive, pushToDrive,
+}) {
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-6">
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-8">
+        <button onClick={onBack} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition-colors"
+          style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 대시보드</button>
+        <div>
+          <h1 className="text-xl font-bold text-white tracking-tight">⚙ 설정</h1>
+          <p className="text-xs text-gray-500">API 키 · Google Drive 동기화</p>
+        </div>
+      </div>
+
+      {/* Gemini API Key */}
+      <div className="rounded-xl p-5 border mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-sm">🔑</span>
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Gemini API Key</span>
+          {apiKey && <span className="text-xs px-2 py-0.5 rounded-full text-green-400 ml-1" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)' }}>● 연결됨</span>}
+        </div>
+        <div className="flex gap-3">
+          <input type="password" value={keyInput} onChange={e => setKeyInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && saveKey()}
+            placeholder="AIzaSy..."
+            className="flex-1 text-sm rounded-lg px-3 py-2 text-gray-200 outline-none focus:ring-1 focus:ring-blue-500"
+            style={{ background: '#14171e', border: '1px solid #2A2D35' }} />
+          <button onClick={saveKey} className="px-4 py-2 rounded-lg text-sm font-semibold text-white hover:opacity-90 shrink-0"
+            style={{ background: '#1d4ed8' }}>저장</button>
+        </div>
+        <p className="text-xs text-gray-600 mt-2.5">
+          API 키는 이 기기의 로컬 저장소에만 보관됩니다. &nbsp;
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" className="text-blue-400 underline">Google AI Studio에서 발급</a>
+        </p>
+      </div>
+
+      {/* Google Drive 동기화 */}
+      <div className="rounded-xl p-5 border mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-sm">☁</span>
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Google Drive 동기화</span>
+          {driveConnected && <span className="text-xs px-2 py-0.5 rounded-full text-green-400" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)' }}>● 연결됨</span>}
+          {driveLastSync && <span className="text-xs text-gray-600 ml-auto">마지막: {driveLastSync}</span>}
+        </div>
+        <div className="flex gap-3 mb-3">
+          <input type="text" value={driveClientIdInput} onChange={e => setDriveClientIdInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && saveDriveClientId()}
+            placeholder="xxxxx.apps.googleusercontent.com"
+            className="flex-1 text-xs rounded-lg px-3 py-2 text-gray-300 outline-none focus:ring-1 focus:ring-green-500"
+            style={{ background: '#14171e', border: '1px solid #2A2D35' }} />
+          <button onClick={saveDriveClientId} className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0"
+            style={{ background: '#166534' }}>ID 저장</button>
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <button onClick={connectDrive} disabled={driveSyncing || !driveClientId}
+            className="px-3 py-2 rounded-lg text-xs font-bold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
+            style={{ background: driveConnected ? '#14532d' : '#15803d' }}>
+            {driveSyncing ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full spinning"/>처리 중</span>
+              : driveConnected ? '🔄 재연결' : '🔐 Google 로그인'}
+          </button>
+          {driveConnected && <>
+            <button onClick={pullFromDrive} disabled={driveSyncing}
+              className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
+              style={{ background: '#1d4ed8' }}>⬇ Drive → 앱</button>
+            <button onClick={pushToDrive} disabled={driveSyncing}
+              className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
+              style={{ background: '#7c3aed' }}>⬆ 앱 → Drive</button>
+          </>}
+        </div>
+        {driveError && <p className="text-xs text-red-400 mt-2.5 flex items-center gap-1.5">⚠ {driveError}</p>}
+        {!driveClientId && <p className="text-xs text-gray-600 mt-2.5">
+          Client ID 없음 → <a href="https://console.cloud.google.com/" target="_blank" className="text-blue-400 underline">Google Cloud Console</a>에서 발급 후 입력하세요.
+        </p>}
+      </div>
+
+      {/* 자동 분석 안내 */}
+      <div className="rounded-xl p-5 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-sm">🤖</span>
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">자동 분석 스케줄</span>
+          <span className="text-xs px-2 py-0.5 rounded-full text-blue-400" style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)' }}>GitHub Actions</span>
+        </div>
+        <div className="grid grid-cols-4 gap-2 mb-3">
+          {['03:00', '09:00', '15:00', '21:00'].map(t => (
+            <div key={t} className="text-center py-2 rounded-lg" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+              <p className="text-sm font-bold text-blue-400">{t}</p>
+              <p className="text-xs text-gray-600">KST</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-gray-600">자동 분석 결과는 트렌드 분석 페이지에서 확인하세요. API 키 불필요 (GitHub Secret으로 관리).</p>
+      </div>
+    </div>
+  );
+}
+
 // ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
 
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError }) {
@@ -1690,6 +1792,14 @@ function App() {
     driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
     driveLastSync={driveLastSync} driveError={driveError} />;
 
+  if (page === 'settings') return <SettingsPage onBack={() => setPage('dashboard')}
+    apiKey={apiKey} keyInput={keyInput} setKeyInput={setKeyInput} saveKey={saveKey}
+    driveClientId={driveClientId} driveClientIdInput={driveClientIdInput}
+    setDriveClientIdInput={setDriveClientIdInput} saveDriveClientId={saveDriveClientId}
+    connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
+    driveLastSync={driveLastSync} driveError={driveError}
+    pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive} />;
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
 
@@ -1712,6 +1822,10 @@ function App() {
             📈 트렌드 분석
             {dbCount > 0 && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center" style={{background:'#E31937',color:'#fff',fontSize:'8px',fontWeight:'bold'}}>{dbCount}</span>}
           </button>
+          <button onClick={() => setPage('settings')} className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors relative"
+            style={page==='settings' ? {background:'#252830',border:'1px solid #2A2D35',color:'#fff'} : {color:'#6b7280'}}>
+            ⚙ 설정
+          </button>
           <div className="text-right ml-2">
             <p className="text-xs text-gray-600">기준일</p>
             <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
@@ -1719,77 +1833,39 @@ function App() {
         </div>
       </div>
 
-      {/* API 키 + 액션 바 */}
-      <div className="rounded-xl p-4 border mb-5 flex flex-col sm:flex-row gap-3 items-start sm:items-center flex-wrap" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <div className="flex-1 w-full min-w-40">
-          <label className="text-xs text-gray-500 mb-1.5 block">Gemini API Key</label>
-          <input type="password" value={keyInput} onChange={e => setKeyInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && saveKey()}
-            placeholder="AIzaSy..." className="w-full text-sm rounded-lg px-3 py-2 text-gray-200 outline-none focus:ring-1 focus:ring-blue-500"
-            style={{ background: '#14171e', border: '1px solid #2A2D35' }} />
+      {/* 슬림 액션 바 */}
+      <div className="rounded-xl px-4 py-3 border mb-5 flex items-center gap-3 flex-wrap" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        {/* 상태 인디케이터 */}
+        <div className="flex items-center gap-3 shrink-0">
+          <span className={`flex items-center gap-1.5 text-xs ${apiKey ? 'text-green-400' : 'text-gray-600'}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${apiKey ? 'bg-green-400' : 'bg-gray-500'}`} />
+            {apiKey ? 'API 연결' : 'API 없음'}
+          </span>
+          <span className={`flex items-center gap-1.5 text-xs ${driveTokenRef.current ? 'text-green-400' : 'text-gray-600'}`}>
+            ☁ {driveTokenRef.current ? 'Drive 연결' : 'Drive 미연결'}
+          </span>
         </div>
-        <button onClick={saveKey} className="px-4 py-2 rounded-lg text-sm font-semibold text-white hover:opacity-90 shrink-0" style={{ background: '#1d4ed8', marginTop: 'auto' }}>저장</button>
-        {apiKey && <div className="flex items-center gap-1.5 text-xs text-green-400 shrink-0" style={{ marginTop: 'auto' }}>
-          <span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> 연결됨
-        </div>}
+        <div className="flex-1" />
+        {/* 액션 버튼 */}
         <button onClick={handleCollect} disabled={collectLoading || !apiKey}
           className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shrink-0 disabled:opacity-40 hover:opacity-90"
-          style={{ background: collectLoading ? '#374151' : '#0891b2', marginTop: 'auto' }}>
+          style={{ background: collectLoading ? '#374151' : '#0891b2' }}>
           {collectLoading
             ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />수집 중...</span>
-            : '🔍 오늘 뉴스 수집'}
+            : '🔍 뉴스 수집'}
         </button>
         {cachedCount > 0 && <button onClick={clearCache} disabled={analyzing}
           className="px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-red-400 shrink-0 disabled:opacity-40"
-          style={{ background: '#14171e', border: '1px solid #2A2D35', marginTop: 'auto' }}>
-          🗑 캐시 초기화 ({cachedCount})
+          style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          🗑 ({cachedCount})
         </button>}
         <button onClick={analyzeAll} disabled={analyzing || !apiKey || pendingCount === 0}
           className="px-5 py-2 rounded-lg text-sm font-bold text-white transition-all shrink-0 disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90"
-          style={{ background: analyzing ? '#374151' : pendingCount === 0 ? '#374151' : '#E31937', marginTop: 'auto' }}>
+          style={{ background: analyzing ? '#374151' : pendingCount === 0 ? '#374151' : '#E31937' }}>
           {analyzing
             ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />분석 중...</span>
-            : pendingCount === 0 ? '✓ 전체 분석 완료' : `▶ 분석 실행 (${pendingCount}건)`}
+            : pendingCount === 0 ? '✓ 완료' : `▶ 분석 실행 (${pendingCount}건)`}
         </button>
-      </div>
-
-      {/* Google Drive 동기화 패널 */}
-      <div className="rounded-xl p-4 border mb-4 flex flex-col gap-3" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <div className="flex items-center gap-2">
-          <span className="text-sm">☁</span>
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Google Drive 동기화</span>
-          {driveTokenRef.current && <span className="text-xs px-2 py-0.5 rounded-full text-green-400" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)' }}>● 연결됨</span>}
-          {driveLastSync && <span className="text-xs text-gray-600 ml-auto">마지막 동기화: {driveLastSync}</span>}
-        </div>
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-end flex-wrap">
-          <div className="flex-1 min-w-52">
-            <label className="text-xs text-gray-500 mb-1.5 block">Google OAuth Client ID</label>
-            <input type="text" value={driveClientIdInput} onChange={e => setDriveClientIdInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && saveDriveClientId()}
-              placeholder="xxxxx.apps.googleusercontent.com"
-              className="w-full text-xs rounded-lg px-3 py-2 text-gray-300 outline-none focus:ring-1 focus:ring-green-500"
-              style={{ background: '#14171e', border: '1px solid #2A2D35' }} />
-          </div>
-          <button onClick={saveDriveClientId} className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0"
-            style={{ background: '#166534' }}>ID 저장</button>
-          <button onClick={connectDrive} disabled={driveSyncing || !driveClientId}
-            className="px-3 py-2 rounded-lg text-xs font-bold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
-            style={{ background: driveTokenRef.current ? '#14532d' : '#15803d' }}>
-            {driveSyncing ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full spinning"/>처리 중</span>
-              : driveTokenRef.current ? '🔄 재연결' : '🔐 Google 로그인'}
-          </button>
-          {driveTokenRef.current && <>
-            <button onClick={() => pullFromDrive()} disabled={driveSyncing}
-              className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
-              style={{ background: '#1d4ed8' }}>⬇ Drive → 앱</button>
-            <button onClick={pushToDrive} disabled={driveSyncing}
-              className="px-3 py-2 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 disabled:opacity-40"
-              style={{ background: '#7c3aed' }}>⬆ 앱 → Drive</button>
-          </>}
-        </div>
-        {driveError && <p className="text-xs text-red-400 flex items-center gap-1.5">⚠ {driveError}</p>}
-        {!driveClientId && <p className="text-xs text-gray-600">
-          Client ID 없음 → <a href="https://console.cloud.google.com/" target="_blank" className="text-blue-400 underline">Google Cloud Console</a>에서 발급 후 입력하세요.
-        </p>}
       </div>
 
       {isCollected && (
