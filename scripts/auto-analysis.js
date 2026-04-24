@@ -10,7 +10,6 @@ const path = require('path');
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
 
-const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash'];
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 const DATA_FILE  = path.join(__dirname, '..', 'data', 'auto-sessions.json');
 const MAX_SESSIONS = 90; // 최대 90개 (약 3주치)
@@ -53,25 +52,21 @@ function getTopRules(analyses) {
   return Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([r]) => r);
 }
 
-async function geminiPost(body, retries = 2) {
+async function geminiPost(body, retries = 4) {
   let lastError;
-  for (const model of GEMINI_MODELS) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`;
-    for (let attempt = 0; attempt <= retries; attempt++) {
-      const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
-      if (res.ok) return res.json();
-      const e = await res.json().catch(() => ({}));
-      const msg = e?.error?.message || `HTTP ${res.status}`;
-      const retryable = res.status === 503 || res.status === 429 || res.status === 500;
-      if (!retryable) throw new Error(msg);
-      lastError = new Error(msg);
-      if (attempt < retries) {
-        const delay = Math.pow(2, attempt + 1) * 1000 + Math.random() * 500;
-        console.warn(`   ⏳ [${model}] 과부하, ${Math.round(delay/1000)}초 후 재시도 (${attempt + 1}/${retries})...`);
-        await sleep(delay);
-      }
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(GEMINI_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    if (res.ok) return res.json();
+    const e = await res.json().catch(() => ({}));
+    const msg = e?.error?.message || `HTTP ${res.status}`;
+    const retryable = res.status === 503 || res.status === 429 || res.status === 500;
+    if (!retryable) throw new Error(msg);
+    lastError = new Error(msg);
+    if (attempt < retries) {
+      const delay = (attempt + 1) * 3000 + Math.random() * 1000;
+      console.warn(`   ⏳ 과부하, ${Math.round(delay/1000)}초 후 재시도 (${attempt + 1}/${retries})...`);
+      await sleep(delay);
     }
-    console.warn(`   ⚠ [${model}] 재시도 소진 → 다음 모델로 폴백`);
   }
   throw lastError;
 }
