@@ -1795,24 +1795,76 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       {/* 등급표 + 오늘 평가 + 내일 예측 */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
 
-        {/* 매수지수 등급표 */}
-        <div className="rounded-xl border p-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">📊 매수지수 등급표</p>
-          <div className="space-y-1.5">
-            {GRADES.map(g => (
-              <div key={g.grade} className="flex items-center gap-2 rounded-lg px-3 py-2"
-                style={{ background: g.bg, border: `1px solid ${g.color}30` }}>
-                <span className="text-base font-black w-5 shrink-0" style={{ color: g.color }}>{g.grade}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold" style={{ color: g.color }}>{g.label}</span>
-                    <span className="text-xs text-gray-600">{g.min}~{g.max}</span>
+        {/* 오늘의 뉴스 브리핑 */}
+        <div className="rounded-xl border p-4 flex flex-col" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">📰 오늘의 뉴스 브리핑</p>
+          {valid.length === 0 ? (
+            <div className="flex flex-col items-center justify-center flex-1 text-gray-600 min-h-32">
+              <p className="text-2xl mb-2">📭</p>
+              <p className="text-xs">분석 데이터 없음</p>
+            </div>
+          ) : (() => {
+            const s = valid[0];
+            const news = s.news || [];
+            const analyses = s.analyses || {};
+            const analyzed = news
+              .filter(n => analyses[n.id])
+              .map(n => ({ ...n, ...analyses[n.id] }))
+              .sort((a, b) => Math.abs(b.impact_score) - Math.abs(a.impact_score));
+            const topNews = analyzed.slice(0, 3);
+            const bull = s.bullish || 0;
+            const bear = s.bearish || 0;
+            const neu = typeof s.neutral === 'number' ? s.neutral : (analyzed.length - bull - bear);
+            const dominantDir = bull > bear ? '강세' : bear > bull ? '약세' : '중립';
+            const dirEmoji = bull > bear ? '📈' : bear > bull ? '📉' : '➡';
+            const dirColor = bull > bear ? '#22c55e' : bear > bull ? '#ef4444' : '#f59e0b';
+            const topRules = (s.topRules || []).slice(0, 3);
+            // 카테고리 집계
+            const cats = {};
+            analyzed.forEach(n => { if (n.category) cats[n.category] = (cats[n.category] || 0) + 1; });
+            const topCats = Object.entries(cats).sort((a,b) => b[1]-a[1]).slice(0, 3).map(([c]) => c);
+            // 코멘트 생성
+            const ruleText = topRules.length ? ` 주요 트리거 룰: ${topRules.join(', ')}.` : '';
+            const topTitle = topNews[0] ? topNews[0].title : '';
+            const comment = `${s.date} 기준 ${s.analyzedCount || analyzed.length}건 뉴스 분석 — ${dirEmoji} ${dominantDir} 우세 (강세 ${bull} · 약세 ${bear} · 중립 ${neu}건).${ruleText}${topTitle ? ` 가장 주목할 이슈는 "${topTitle.length > 45 ? topTitle.slice(0,45)+'…' : topTitle}"입니다.` : ''}`;
+            return (
+              <div className="flex flex-col gap-3 flex-1">
+                {/* 방향 인디케이터 */}
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">{dirEmoji}</span>
+                  <span className="text-xs font-bold" style={{ color: dirColor }}>{dominantDir} 우세</span>
+                  <span className="text-xs text-gray-600">·</span>
+                  <div className="flex gap-1">
+                    {topCats.map(c => (
+                      <span key={c} className="text-xs px-1.5 py-0.5 rounded" style={{ background: '#252830', color: '#94a3b8' }}>{c}</span>
+                    ))}
                   </div>
-                  <p className="text-xs text-gray-500 leading-tight mt-0.5 truncate">{g.desc}</p>
+                </div>
+                {/* 코멘트 박스 */}
+                <div className="p-3 rounded-lg" style={{ background: '#14171e', border: '1px solid #2a2d35' }}>
+                  <p className="text-xs text-gray-300 leading-relaxed">{comment}</p>
+                </div>
+                {/* 상위 뉴스 3건 */}
+                <div className="space-y-1.5 flex-1">
+                  {topNews.map(n => (
+                    <div key={n.id} className="flex items-start gap-2 px-2 py-2 rounded" style={{ background: '#14171e' }}>
+                      <span className="text-xs font-black shrink-0 mt-0.5 w-7 text-right" style={{ color: n.impact_score >= 0 ? '#22c55e' : '#ef4444' }}>
+                        {n.impact_score >= 0 ? '+' : ''}{n.impact_score}
+                      </span>
+                      <p className="text-xs text-gray-400 leading-snug flex-1 min-w-0"
+                        style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                        {n.title}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-700">{s.source === 'auto' ? '🤖 자동 수집' : s.source === 'collected' ? '🔍 실시간 수집' : '📋 샘플'}</span>
+                  <span className="text-xs text-gray-700">{s.date} {s.kstTime ? s.kstTime + ' KST' : ''}</span>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })()}
         </div>
 
         {/* 오늘의 매수지수 평가 */}
@@ -2054,6 +2106,26 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         )}
       </div>
+      {/* 매수지수 등급표 (하단) */}
+      <div className="rounded-xl border p-4 mt-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">📊 매수지수 등급표</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          {GRADES.map(g => (
+            <div key={g.grade} className="flex items-center gap-2 rounded-lg px-3 py-2"
+              style={{ background: g.bg, border: `1px solid ${g.color}30` }}>
+              <span className="text-base font-black w-5 shrink-0" style={{ color: g.color }}>{g.grade}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-xs font-bold" style={{ color: g.color }}>{g.label}</span>
+                  <span className="text-xs text-gray-600">{g.min}~{g.max}</span>
+                </div>
+                <p className="text-xs text-gray-500 leading-tight mt-0.5 truncate">{g.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <p className="text-center text-xs text-gray-700 mt-6">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
     </div>
   );
