@@ -816,12 +816,7 @@ async function generateForecast(apiKey, items, currentPrice = 247) {
     contents: [{ role: 'user', parts: [{ text: `Synthesize these TSLA analyses into forecasts:\n\n${summary}` }] }],
     generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.3, thinkingConfig: { thinkingBudget: 0 } },
   };
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-    { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
-  );
-  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
-  const data = await res.json();
+  const data = await geminiPostWithRetry(apiKey, body);
   const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
   const m = raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim().match(/\{[\s\S]*\}/);
   if (!m) throw new Error('JSON 파싱 실패: ' + raw.slice(0, 80));
