@@ -1,0 +1,46 @@
+name: TSLA 자동 분석 (하루 4회)
+
+# KST(UTC+9) 기준 스케줄
+# KST 03:00 = UTC 18:00 (전날)
+# KST 09:00 = UTC 00:00
+# KST 15:00 = UTC 06:00
+# KST 21:00 = UTC 12:00
+on:
+  schedule:
+    - cron: '0 18 * * *'   # KST 03:00
+    - cron: '0 0 * * *'    # KST 09:00
+    - cron: '0 6 * * *'    # KST 15:00
+    - cron: '0 12 * * *'   # KST 21:00
+  workflow_dispatch:        # 수동 실행 (테스트용)
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # data/auto-sessions.json 커밋 권한
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 20 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: TSLA 뉴스 수집 & 분석
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/auto-analysis.js
+
+      - name: 결과 커밋 & 푸시
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "TSLA Auto Bot"
+          git add data/auto-sessions.json
+          if git diff --staged --quiet; then
+            echo "변경 사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "auto: TSLA 분석 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            git push
+          fi
