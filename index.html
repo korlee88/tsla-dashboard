@@ -620,7 +620,7 @@ async function collectTodayNews(apiKey) {
     tools: [{ google_search: {} }],
     contents: [{
       role: 'user',
-      parts: [{ text: `Search for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nReturn ONLY a JSON array of exactly 5 most market-impactful items:\n[{"id":1,"title":"...","summary":"2-3 sentence English summary","source":"publisher name","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\nReturn ONLY the JSON array.` }]
+      parts: [{ text: `Search for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 15 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"...","summary":"2-3 sentence English summary","source":"publisher name","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\nReturn ONLY the JSON array, no other text.` }]
     }],
     generationConfig: { maxOutputTokens: 8192, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } }
   };
@@ -638,7 +638,7 @@ async function collectTodayNews(apiKey) {
   const end   = cleaned.lastIndexOf(']');
   if (start === -1 || end === -1) throw new Error('뉴스 JSON 파싱 실패: ' + raw.slice(0, 200));
   const items = JSON.parse(cleaned.slice(start, end + 1));
-  return items.slice(0, 5).map((n, i) => ({ ...n, id: Date.now() + i }));
+  return items.slice(0, 15).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
 
 // ─── 실시간 TSLA 52주 주봉 (Stooq → allorigins fallback) ────────────────
@@ -1707,7 +1707,7 @@ function App() {
 
       <div className="mb-5"><RuleEnginePanel open={ruleOpen} onToggle={() => setRuleOpen(o => !o)} /></div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {currentNews.map(news => (
           <div key={news.id} className="relative">
             <NewsCard news={news} result={results[news.id]} loading={loading[news.id]} error={errors[news.id]} />
