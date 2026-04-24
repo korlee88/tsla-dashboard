@@ -216,9 +216,9 @@ function saveCache(results) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(results)); } catch {}
 }
 
-// 마지막으로 수집한 뉴스 목록 저장/불러오기
-function saveLastNews(newsList, isCollected) {
-  try { localStorage.setItem(NEWS_LIST_KEY, JSON.stringify({ items: newsList, isCollected, savedAt: Date.now() })); } catch {}
+// 마지막으로 수집한 뉴스 목록 저장/불러오기 (sessionId도 같이 저장 → 중복 저장 방지)
+function saveLastNews(newsList, isCollected, sessionId) {
+  try { localStorage.setItem(NEWS_LIST_KEY, JSON.stringify({ items: newsList, isCollected, sessionId: sessionId || null, savedAt: Date.now() })); } catch {}
 }
 function loadLastNews() {
   try {
@@ -2062,7 +2062,7 @@ function App() {
   }, [results, apiKey]);
 
   useEffect(() => {
-    if (forecast && !sessionSavedRef.current) {
+    if (forecast && !sessionSavedRef.current && isCollected) { // 샘플 뉴스는 저장 안 함
       const analyzed = currentNews.filter(n => results[n.id]);
       if (analyzed.length > 0) {
         if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
@@ -2082,6 +2082,8 @@ function App() {
           topRules: getTopRules(analyzed.map(n => results[n.id])),
           timestamp: Date.now(),
         });
+        // 세션 ID를 뉴스 캐시에 기록 → 다음 방문 시 중복 저장 방지
+        saveLastNews(currentNews, isCollected, sessionIdRef.current);
         sessionSavedRef.current = true;
         // Drive 자동 동기화 (연결된 경우)
         if (driveTokenRef.current) {
@@ -2097,6 +2099,12 @@ function App() {
     try {
       const s = localStorage.getItem('tsla_api_key'); if (s) { setApiKey(s); setKeyInput(s); }
       const d = localStorage.getItem(DRIVE_CLIENT_ID_KEY); if (d) { setDriveClientId(d); setDriveClientIdInput(d); }
+      // 이미 저장된 세션이면 sessionId 복원 + 중복 저장 차단
+      const saved = loadLastNews();
+      if (saved?.sessionId) {
+        sessionIdRef.current = saved.sessionId;
+        sessionSavedRef.current = true; // 이미 저장된 세션 → 재저장 안 함
+      }
       // 이전에 Drive 연결 이력이 있으면 자동 재연결 시도 (GIS 라이브러리 로드 대기 후)
       if (d && localStorage.getItem('tsla_drive_auto_connect') === '1') {
         setTimeout(async () => {
