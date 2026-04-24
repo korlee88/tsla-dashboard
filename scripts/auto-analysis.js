@@ -52,17 +52,22 @@ function getTopRules(analyses) {
   return Object.entries(cnt).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([r]) => r);
 }
 
-async function geminiPost(body) {
-  const res = await fetch(GEMINI_URL, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
+async function geminiPost(body, retries = 3) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (res.ok) return res.json();
     const e = await res.json().catch(() => ({}));
-    throw new Error(e?.error?.message || `HTTP ${res.status}`);
+    const msg = e?.error?.message || `HTTP ${res.status}`;
+    const retryable = res.status === 503 || res.status === 429 || res.status === 500;
+    if (!retryable || attempt === retries) throw new Error(msg);
+    const delay = Math.pow(2, attempt + 1) * 1000 + Math.random() * 500;
+    console.warn(`   ⏳ API 과부하, ${Math.round(delay/1000)}초 후 재시도 (${attempt + 1}/${retries})...`);
+    await sleep(delay);
   }
-  return res.json();
 }
 
 // ─── 뉴스 수집 (Google Search Grounding) ────────────────────────────────────

@@ -230,6 +230,20 @@ function loadLastNews() {
 
 // ─── API 호출 ─────────────────────────────────────────────────────────────
 
+async function geminiPostWithRetry(apiKey, body, retries = 3) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    if (res.ok) return res.json();
+    const err = await res.json().catch(() => ({}));
+    const msg = err?.error?.message || `HTTP ${res.status}`;
+    const retryable = res.status === 503 || res.status === 429 || res.status === 500;
+    if (!retryable || attempt === retries) throw new Error(msg);
+    const delay = Math.pow(2, attempt + 1) * 1000 + Math.random() * 500;
+    await new Promise(r => setTimeout(r, delay));
+  }
+}
+
 async function analyzeNews(apiKey, newsItem) {
   const userContent = `Analyze this Tesla-related news for TSLA stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
 
@@ -244,21 +258,7 @@ async function analyzeNews(apiKey, newsItem) {
     },
   };
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-    {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    }
-  );
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err?.error?.message || `HTTP ${res.status}`);
-  }
-
-  const data = await res.json();
+  const data = await geminiPostWithRetry(apiKey, body);
   addApiUsage('analysis', data.usageMetadata); // 토큰 사용량 추적
   const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
@@ -717,12 +717,7 @@ async function collectTodayNews(apiKey) {
     }],
     generationConfig: { maxOutputTokens: 8192, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } }
   };
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-    { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }
-  );
-  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
-  const data = await res.json();
+  const data = await geminiPostWithRetry(apiKey, body);
   addApiUsage('collect', data.usageMetadata); // 토큰 사용량 추적
   // thought 파트를 제외하고 실제 텍스트 파트만 합침 (gemini-2.5-flash thinking 대응)
   const parts = data.candidates?.[0]?.content?.parts || [];
