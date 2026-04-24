@@ -1190,9 +1190,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         </div>
       </div>
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-3 gap-3 mb-5">
         {[
-          ['총 세션', sessions.length, '회', '#94a3b8'],
           ['최근 매수지수', latest ?? '─', '', latest ? bCol(latest) : '#6b7280'],
           ['평균 매수지수', avg ?? '─', '', avg ? bCol(avg) : '#6b7280'],
           ['추세', trend, '', trendCol],
@@ -1767,27 +1766,77 @@ function App() {
         </div>
       )}
 
-      <div className="mb-5"><RuleEnginePanel open={ruleOpen} onToggle={() => setRuleOpen(o => !o)} /></div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {currentNews.map(news => (
-          <div key={news.id} className="relative">
-            <NewsCard news={news} result={results[news.id]} loading={loading[news.id]} error={errors[news.id]} />
-            {results[news.id] && (
-              <div className="absolute top-4 right-4 flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
-                style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: '#10b981' }}>
-                <span>💾</span> 캐시됨
+      <div className="flex gap-4 items-start">
+        {/* 뉴스 그리드 */}
+        <div className="flex-1 min-w-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
+            {currentNews.map(news => (
+              <div key={news.id} className="relative">
+                <NewsCard news={news} result={results[news.id]} loading={loading[news.id]} error={errors[news.id]} />
+                {results[news.id] && (
+                  <div className="absolute top-4 right-4 flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
+                    style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: '#10b981' }}>
+                    <span>💾</span> 캐시됨
+                  </div>
+                )}
+                {!results[news.id] && !loading[news.id] && (
+                  <button onClick={() => analyzeSingle(news)} disabled={!apiKey}
+                    className="absolute bottom-4 right-4 text-xs px-3 py-1 rounded-lg disabled:opacity-30 hover:opacity-80"
+                    style={{ background: '#252830', border: '1px solid #2A2D35', color: '#94a3b8' }}>
+                    단독 분석
+                  </button>
+                )}
               </div>
-            )}
-            {!results[news.id] && !loading[news.id] && (
-              <button onClick={() => analyzeSingle(news)} disabled={!apiKey}
-                className="absolute bottom-4 right-4 text-xs px-3 py-1 rounded-lg disabled:opacity-30 hover:opacity-80"
-                style={{ background: '#252830', border: '1px solid #2A2D35', color: '#94a3b8' }}>
-                단독 분석
-              </button>
-            )}
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* 룰 설명 사이드 패널 */}
+        <div className="hidden xl:block w-56 shrink-0 sticky top-4">
+          <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+            <div className="px-3 py-2.5 border-b flex items-center gap-2" style={{ borderColor: '#2A2D35', background: '#14171e' }}>
+              <span className="text-xs font-bold tracking-wider text-gray-300">룰 엔진 참조</span>
+              <span className="text-xs text-gray-500">R01~R24</span>
+            </div>
+            {/* Bearish Rules */}
+            <div className="px-3 pt-2.5 pb-1">
+              <p className="text-xs font-semibold mb-1.5" style={{ color: '#ef4444' }}>▼ 하락 신호</p>
+              {['R01','R02','R03','R04','R05','R06','R07','R08','R09','R10','R22','R23','R24'].map(r => {
+                const m = RULES_META[r];
+                const score = {R01:-3,R02:-3,R03:-3,R04:-2,R05:-3,R06:-2,R07:-3,R08:-2,R09:-2,R10:-1,R22:-2,R23:-2,R24:-2}[r];
+                return (
+                  <div key={r} className="flex items-center gap-1.5 py-0.5">
+                    <span className="text-xs font-bold w-7 shrink-0" style={{ color: m.color }}>{r}</span>
+                    <span className="text-xs text-gray-400 truncate flex-1">{m.label}</span>
+                    <span className="text-xs font-semibold shrink-0" style={{ color: '#ef4444' }}>{score}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mx-3 border-t my-1.5" style={{ borderColor: '#2A2D35' }} />
+            {/* Bullish Rules */}
+            <div className="px-3 pb-2.5">
+              <p className="text-xs font-semibold mb-1.5" style={{ color: '#22c55e' }}>▲ 상승 신호</p>
+              {['R11','R12','R13','R14','R15','R16','R17','R18','R19','R20','R21'].map(r => {
+                const m = RULES_META[r];
+                const score = {R11:+3,R12:+3,R13:+3,R14:+2,R15:+2,R16:+2,R17:+2,R18:+1,R19:+2,R20:+2,R21:+1}[r];
+                return (
+                  <div key={r} className="flex items-center gap-1.5 py-0.5">
+                    <span className="text-xs font-bold w-7 shrink-0" style={{ color: m.color }}>{r}</span>
+                    <span className="text-xs text-gray-400 truncate flex-1">{m.label}</span>
+                    <span className="text-xs font-semibold shrink-0" style={{ color: '#22c55e' }}>+{score}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="px-3 pb-2.5">
+              <div className="rounded-lg px-2 py-1.5 text-center" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+                <p className="text-xs text-gray-500">점수 범위</p>
+                <p className="text-xs font-bold text-gray-300">−5 <span className="text-gray-600">~</span> +5</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {hasAnyResult && <SummaryPanel results={results} />}
