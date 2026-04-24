@@ -2,7 +2,11 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0D0F14" />
   <title>Tesla TSLA 주가 영향 분석 대시보드</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -46,6 +50,14 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1C1F26; }
     ::-webkit-scrollbar-thumb { background: #2A2D35; border-radius: 3px; }
+    /* 모바일 최적화 */
+    * { -webkit-tap-highlight-color: transparent; }
+    body { overscroll-behavior: none; }
+    input, button, select, textarea { font-size: 16px; } /* iOS 자동 확대 방지 */
+    @media (max-width: 767px) {
+      input, button, select, textarea { font-size: 14px !important; }
+      .badge-rule { font-size: 9px !important; padding: 1px 4px !important; }
+    }
   </style>
 </head>
 <body class="dark min-h-screen text-gray-100">
@@ -53,6 +65,17 @@
 
 <script type="text/babel">
 const { useState, useCallback, useRef, useEffect } = React;
+
+// ─── 훅: 모바일 감지 ─────────────────────────────────────────────────────────
+function useIsMobile() {
+  const [v, setV] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const h = () => setV(window.innerWidth < 768);
+    window.addEventListener('resize', h);
+    return () => window.removeEventListener('resize', h);
+  }, []);
+  return v;
+}
 
 // ─── 상수 ──────────────────────────────────────────────────────────────────
 
@@ -1398,6 +1421,231 @@ function SettingsPage({ onBack,
   );
 }
 
+// ─── 모바일: 하단 탭 네비게이션 ──────────────────────────────────────────────
+function MobileBottomNav({ page, setPage, dbCount }) {
+  const tabs = [
+    { key: 'dashboard', icon: '📊', label: '대시보드' },
+    { key: 'trend',     icon: '📈', label: '트렌드',  badge: dbCount },
+    { key: 'settings',  icon: '⚙',  label: '설정' },
+  ];
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex"
+      style={{ background: '#161920', borderTop: '1px solid #2A2D35', paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      {tabs.map(({ key, icon, label, badge }) => (
+        <button key={key} onClick={() => setPage(key)}
+          className="flex-1 flex flex-col items-center justify-center pt-2 pb-1.5 gap-0.5 relative"
+          style={{ color: page === key ? '#E31937' : '#6b7280' }}>
+          {badge > 0 && (
+            <span className="absolute top-1 right-1/4 w-4 h-4 rounded-full text-white flex items-center justify-center"
+              style={{ background: '#E31937', fontSize: '9px', fontWeight: 'bold' }}>{badge > 99 ? '99+' : badge}</span>
+          )}
+          <span style={{ fontSize: 20 }}>{icon}</span>
+          <span style={{ fontSize: 10 }}>{label}</span>
+          {page === key && <span className="absolute top-0 left-6 right-6 h-0.5 rounded-full" style={{ background: '#E31937' }} />}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+// ─── 모바일: 뉴스 카드 (탭으로 접기/펼치기) ───────────────────────────────────
+function MobileNewsCard({ news, result, loading, error, onAnalyze, apiKey }) {
+  const [open, setOpen] = useState(false);
+  const score = result?.impact_score;
+  const dir   = result?.direction;
+  const sc = dir === 'bullish' ? '#22c55e' : dir === 'bearish' ? '#ef4444' : '#9ca3af';
+  const bg = dir === 'bullish' ? 'rgba(34,197,94,0.12)' : dir === 'bearish' ? 'rgba(239,68,68,0.12)' : 'rgba(255,255,255,0.04)';
+  const bd = dir === 'bullish' ? 'rgba(34,197,94,0.3)' : dir === 'bearish' ? 'rgba(239,68,68,0.3)' : '#2A2D35';
+  return (
+    <div className="rounded-xl overflow-hidden" style={{ background: '#1C1F26', border: `1px solid ${bd}` }}>
+      <button className="w-full p-3 text-left" onClick={() => setOpen(o => !o)}>
+        <div className="flex items-start gap-2.5">
+          <div className="shrink-0 w-11 h-11 rounded-lg flex items-center justify-center font-bold text-sm"
+            style={{ background: bg, color: sc, border: `1px solid ${bd}` }}>
+            {loading
+              ? <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full spinning" />
+              : score != null ? (score > 0 ? '+' : '') + score
+              : <span className="text-gray-700" style={{ fontSize: 9 }}>미분석</span>}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-gray-200 leading-snug"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+              {news.title}
+            </p>
+            <p className="text-xs text-gray-600 mt-0.5">{news.source} · {news.category}</p>
+          </div>
+          <span className="shrink-0 text-gray-700 text-xs">{open ? '▲' : '▼'}</span>
+        </div>
+        {result && !open && (
+          <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+            <span className="text-xs px-1.5 py-0.5 rounded font-semibold" style={{ background: bg, color: sc }}>
+              {dir === 'bullish' ? '📈 상승' : dir === 'bearish' ? '📉 하락' : '➡ 중립'}
+            </span>
+            {result.triggered_rules?.slice(0, 3).map(r => {
+              const m = RULES_META[r];
+              return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null;
+            })}
+          </div>
+        )}
+      </button>
+      {open && (
+        <div className="border-t px-3 pb-3 pt-2.5 space-y-2" style={{ borderColor: '#2A2D35', background: '#14171e' }}>
+          <p className="text-xs text-gray-400 leading-relaxed">{news.summary}</p>
+          {result && <>
+            <p className="text-xs text-gray-500 italic leading-relaxed">💬 {result.reasoning}</p>
+            <div className="flex flex-wrap gap-1 mt-1">
+              {result.triggered_rules?.map(r => {
+                const m = RULES_META[r];
+                return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null;
+              })}
+            </div>
+            <div className="flex gap-2 text-xs mt-1">
+              <span className="px-2 py-0.5 rounded font-semibold" style={{ background: bg, color: sc }}>
+                {dir === 'bullish' ? '📈 상승' : dir === 'bearish' ? '📉 하락' : '➡ 중립'}
+              </span>
+              <span className="text-gray-600">{result.confidence === 'high' ? '신뢰도 높음' : result.confidence === 'medium' ? '신뢰도 보통' : '⚠ 신뢰도 낮음'}</span>
+            </div>
+          </>}
+          {!result && !loading && (
+            <button onClick={() => onAnalyze(news)} disabled={!apiKey}
+              className="w-full py-2 rounded-lg text-xs font-bold text-white disabled:opacity-40"
+              style={{ background: '#E31937' }}>▶ 단독 분석</button>
+          )}
+          {error && <p className="text-xs text-red-400">⚠ {error}</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── 모바일: 대시보드 메인 ────────────────────────────────────────────────────
+function MobileDashboard({
+  apiKey, currentNews, results, errors, loading, analyzing, collectLoading, collectError,
+  isCollected, handleCollect, analyzeAll, analyzeSingle, pendingCount, cachedCount, clearCache,
+  hasAnyResult, isSaved, driveConnected, currentPrice,
+}) {
+  const done    = Object.values(results);
+  const avg     = done.length ? Math.round(done.reduce((s, r) => s + r.impact_score, 0) / done.length * 10) / 10 : null;
+  const bull    = done.filter(r => r.direction === 'bullish').length;
+  const bear    = done.filter(r => r.direction === 'bearish').length;
+  const neu     = done.length - bull - bear;
+  const overall = bull > bear ? 'bullish' : bear > bull ? 'bearish' : 'neutral';
+  const oc      = overall === 'bullish' ? '#22c55e' : overall === 'bearish' ? '#ef4444' : '#9ca3af';
+
+  return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh', paddingBottom: 72 }}>
+      {/* 헤더 */}
+      <div className="sticky top-0 z-40 flex items-center justify-between px-4 py-2.5"
+        style={{ background: 'rgba(13,15,20,0.95)', backdropFilter: 'blur(8px)', borderBottom: '1px solid #1C1F26' }}>
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded flex items-center justify-center font-black text-white text-sm shrink-0"
+            style={{ background: '#E31937' }}>T</div>
+          <div>
+            <p className="text-sm font-bold text-white leading-tight tracking-tight">TSLA 주가 영향 분석</p>
+            <p className="text-xs text-gray-600 leading-tight">
+              {currentPrice ? <span className="text-gray-400">${currentPrice}</span> : null}
+              {currentPrice ? ' · ' : ''}{new Date().toLocaleDateString('ko-KR')}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className={`flex items-center gap-1 text-xs ${apiKey ? 'text-green-400' : 'text-gray-600'}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${apiKey ? 'bg-green-400' : 'bg-gray-600'}`} />
+            {apiKey ? 'API' : 'Key 없음'}
+          </span>
+          <span className={`text-sm ${driveConnected ? 'text-green-400' : 'text-gray-700'}`}>☁</span>
+        </div>
+      </div>
+
+      <div className="px-3 pt-3 space-y-3">
+        {/* 액션 버튼 */}
+        <div className="grid grid-cols-2 gap-2">
+          <button onClick={handleCollect} disabled={collectLoading || !apiKey}
+            className="py-3.5 rounded-xl text-sm font-bold text-white disabled:opacity-40 active:opacity-70 flex items-center justify-center gap-2"
+            style={{ background: collectLoading ? '#374151' : '#0891b2' }}>
+            {collectLoading
+              ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full spinning" />수집 중</>
+              : '🔍 뉴스 수집'}
+          </button>
+          <button onClick={analyzeAll} disabled={analyzing || !apiKey || pendingCount === 0}
+            className="py-3.5 rounded-xl text-sm font-bold text-white disabled:opacity-40 active:opacity-70 flex items-center justify-center gap-2"
+            style={{ background: analyzing ? '#374151' : pendingCount === 0 ? '#374151' : '#E31937' }}>
+            {analyzing
+              ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full spinning" />분석 중</>
+              : pendingCount === 0 ? '✓ 완료' : `▶ 분석 (${pendingCount}건)`}
+          </button>
+        </div>
+
+        {/* 상태 배너 */}
+        {isCollected && !collectError && (
+          <div className="px-3 py-2 rounded-lg flex items-center gap-2 text-xs"
+            style={{ background: 'rgba(8,145,178,0.1)', border: '1px solid rgba(8,145,178,0.25)' }}>
+            <span className="text-cyan-400 font-bold">🔍 실시간 수집</span>
+            <span className="text-gray-500">{currentNews.length}건</span>
+            {isSaved && <span className="ml-auto text-green-400 font-semibold">✅ 저장완료</span>}
+          </div>
+        )}
+        {collectError && (
+          <div className="px-3 py-2 rounded-lg text-xs text-red-400"
+            style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>⚠ {collectError}</div>
+        )}
+        {cachedCount > 0 && (
+          <button onClick={clearCache} disabled={analyzing} className="w-full text-xs text-gray-600 py-1">
+            🗑 캐시 초기화 ({cachedCount}건)
+          </button>
+        )}
+
+        {/* 분석 요약 카드 */}
+        {hasAnyResult && (
+          <div className="rounded-xl p-4" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">분석 요약</p>
+              <span className="text-sm font-bold" style={{ color: oc }}>
+                {overall === 'bullish' ? '📈 상승 우세' : overall === 'bearish' ? '📉 하락 우세' : '➡ 중립'}
+              </span>
+            </div>
+            <div className="grid grid-cols-4 gap-1.5 mb-3">
+              {[
+                ['평균', avg != null ? (avg >= 0 ? '+' : '') + avg : '─', avg != null ? (avg >= 0 ? '#22c55e' : '#ef4444') : '#6b7280'],
+                ['상승', bull, '#22c55e'],
+                ['하락', bear, '#ef4444'],
+                ['중립', neu,  '#9ca3af'],
+              ].map(([l, v, c]) => (
+                <div key={l} className="text-center py-2 rounded-lg" style={{ background: '#14171e' }}>
+                  <p className="text-sm font-bold" style={{ color: c }}>{v}</p>
+                  <p className="text-xs text-gray-600">{l}</p>
+                </div>
+              ))}
+            </div>
+            {done.length > 0 && (
+              <div className="flex rounded-full overflow-hidden h-1.5">
+                <div style={{ width: `${bull/done.length*100}%`, background: '#22c55e', transition: 'width .5s' }} />
+                <div style={{ width: `${neu/done.length*100}%`,  background: '#4b5563', transition: 'width .5s' }} />
+                <div style={{ width: `${bear/done.length*100}%`, background: '#ef4444', transition: 'width .5s' }} />
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* 뉴스 목록 */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">뉴스 {currentNews.length}건</p>
+            {isCollected && <span className="text-xs text-cyan-500">실시간</span>}
+          </div>
+          <div className="space-y-2">
+            {currentNews.map(news => (
+              <MobileNewsCard key={news.id} news={news}
+                result={results[news.id]} loading={loading[news.id]}
+                error={errors[news.id]} onAnalyze={analyzeSingle} apiKey={apiKey} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
 
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError }) {
@@ -1461,23 +1709,32 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
   };
   const prediction = predictTomorrow();
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
+    <div className="max-w-6xl mx-auto px-3 py-4 md:px-4 md:py-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition-colors" style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 대시보드</button>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">TSLA 매수지수 트렌드</h1>
-            <p className="text-xs text-gray-500">
-              종합 수집 타임라인 DB · 이력 분석
-              {autoLoading ? <span className="ml-2 text-blue-400">🤖 자동분석 로딩 중…</span>
-                : autoLastSync ? <span className="ml-2 text-green-500">🤖 마지막 자동분석: {autoLastSync}</span>
-                : <span className="ml-2 text-gray-600">🤖 자동분석 대기</span>}
-            </p>
+      <div className="mb-4 md:mb-6">
+        {/* 타이틀 행 */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <button onClick={onBack} className="text-xs px-2.5 py-1.5 rounded-lg text-gray-400 hover:text-white transition-colors shrink-0" style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 뒤로</button>
+            <div>
+              <h1 className="text-base md:text-xl font-bold text-white tracking-tight leading-tight">TSLA 매수지수 트렌드</h1>
+              <p className="text-xs text-gray-600 leading-tight hidden md:block">
+                종합 수집 타임라인 DB · 이력 분석
+              </p>
+            </div>
+          </div>
+          {/* 자동분석 상태 + 버튼 (오른쪽) */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="text-xs hidden sm:inline" style={{ color: autoLoading ? '#60a5fa' : autoLastSync ? '#22c55e' : '#6b7280' }}>
+              {autoLoading ? '🤖 로딩 중…' : autoLastSync ? `🤖 ${autoLastSync}` : ''}
+            </span>
+            <button onClick={refresh} className="text-xs px-2.5 py-1.5 rounded-lg text-gray-400 hover:text-white" style={{ background: '#252830', border: '1px solid #2A2D35' }}>↻</button>
+            {sessions.length > 0 && <button onClick={clearDB} className="text-xs px-2.5 py-1.5 rounded-lg text-red-400" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>🗑</button>}
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 items-center">
-          {driveConnected && <>
+        {/* Drive 버튼 행 — PC만 */}
+        {driveConnected && (
+          <div className="hidden md:flex gap-2 items-center">
             <button onClick={handlePull} disabled={driveSyncing}
               className="text-xs px-3 py-1.5 rounded-lg font-semibold text-white hover:opacity-90 disabled:opacity-40"
               style={{ background: '#1d4ed8' }}>
@@ -1487,22 +1744,20 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
               className="text-xs px-3 py-1.5 rounded-lg font-semibold text-white hover:opacity-90 disabled:opacity-40"
               style={{ background: '#7c3aed' }}>⬆ Drive 저장</button>
             {driveLastSync && <span className="text-xs text-gray-600">동기화: {driveLastSync}</span>}
-          </>}
-          {!driveConnected && <span className="text-xs text-gray-600">☁ Drive 미연결 (대시보드에서 연결)</span>}
-          <button onClick={refresh} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white" style={{ background: '#252830', border: '1px solid #2A2D35' }}>↻ 새로고침</button>
-          {sessions.length > 0 && <button onClick={clearDB} className="text-xs px-3 py-1.5 rounded-lg text-red-400 hover:text-red-300" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>🗑 기록 삭제</button>}
-        </div>
+          </div>
+        )}
       </div>
+
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-3 gap-2 md:gap-3 mb-4 md:mb-5">
         {[
           ['최근 매수지수', latest ?? '─', '', latest ? bCol(latest) : '#6b7280'],
           ['평균 매수지수', avg ?? '─', '', avg ? bCol(avg) : '#6b7280'],
           ['추세', trend, '', trendCol],
         ].map(([label, val, unit, col]) => (
-          <div key={label} className="rounded-xl p-4" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+          <div key={label} className="rounded-xl p-3 md:p-4" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
             <p className="text-xs text-gray-500 mb-1">{label}</p>
-            <p className="text-2xl font-bold" style={{ color: col }}>{val}<span className="text-sm ml-1 text-gray-500">{unit}</span></p>
+            <p className="text-xl md:text-2xl font-bold" style={{ color: col }}>{val}<span className="text-xs md:text-sm ml-1 text-gray-500">{unit}</span></p>
           </div>
         ))}
       </div>
@@ -1659,26 +1914,28 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
               const biCol = bi != null ? bCol(bi) : '#6b7280';
               return (
                 <div key={s.id}>
-                  <button className="w-full px-5 py-4 flex items-center gap-3 hover:bg-gray-900 transition-colors text-left" onClick={() => setExpanded(isExp ? null : s.id)}>
-                    <div className="shrink-0 w-24">
-                      <p className="text-xs font-semibold text-gray-300">{s.date}</p>
+                  <button className="w-full px-3 md:px-5 py-3 md:py-4 flex items-center gap-2 md:gap-3 hover:bg-gray-900 transition-colors text-left" onClick={() => setExpanded(isExp ? null : s.id)}>
+                    {/* 날짜+소스 */}
+                    <div className="shrink-0 w-20 md:w-24">
+                      <p className="text-xs font-semibold text-gray-300 truncate">{s.date}</p>
                       <p className="text-xs text-gray-600">{s.source === 'auto' ? `🤖 ${s.kstTime || '자동'}` : s.source === 'collected' ? '🔍 실시간' : '📋 샘플'}</p>
                     </div>
-                    <div className="shrink-0 text-center w-10">
-                      <p className="text-sm font-bold text-white">{s.news?.length ?? 0}</p>
-                      <p className="text-xs text-gray-600">뉴스</p>
-                    </div>
-                    {bi != null && <div className="shrink-0 text-center w-12">
-                      <p className="text-lg font-bold" style={{ color: biCol }}>{bi}</p>
-                      <p className="text-xs text-gray-600">매수지수</p>
+                    {/* 매수지수 */}
+                    {bi != null && <div className="shrink-0 text-center w-10 md:w-12">
+                      <p className="text-base md:text-lg font-bold" style={{ color: biCol }}>{bi}</p>
+                      <p className="text-xs text-gray-600 hidden md:block">매수지수</p>
                     </div>}
-                    <div className="shrink-0 text-center w-12">
-                      <p className="text-sm font-bold" style={{ color: s.avgScore >= 0 ? '#22c55e' : '#ef4444' }}>{s.avgScore >= 0 ? '+' : ''}{s.avgScore?.toFixed(1) ?? '─'}</p>
-                      <p className="text-xs text-gray-600">평균</p>
+                    {/* 평균점수 */}
+                    <div className="shrink-0 text-center w-9 md:w-12">
+                      <p className="text-xs md:text-sm font-bold" style={{ color: s.avgScore >= 0 ? '#22c55e' : '#ef4444' }}>{s.avgScore >= 0 ? '+' : ''}{s.avgScore?.toFixed(1) ?? '─'}</p>
+                      <p className="text-xs text-gray-600 hidden md:block">평균</p>
                     </div>
-                    <div className="flex-1 flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ color: sig.color, background: sig.bg, border: `1px solid ${sig.color}30` }}>{sig.emoji} {s.overallSignal}</span>
-                      {s.topRules?.map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
+                    {/* 룰 + 신호 */}
+                    <div className="flex-1 flex items-center gap-1.5 flex-wrap overflow-hidden">
+                      {s.overallSignal && <span className="text-xs font-bold px-1.5 py-0.5 rounded shrink-0" style={{ color: sig.color, background: sig.bg, border: `1px solid ${sig.color}30` }}>{sig.emoji} {s.overallSignal}</span>}
+                      <div className="hidden sm:flex gap-1 flex-wrap">
+                        {s.topRules?.map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
+                      </div>
                     </div>
                     <span className="text-gray-600 text-sm shrink-0">{isExp ? '▲' : '▼'}</span>
                   </button>
@@ -1974,7 +2231,45 @@ function App() {
   const pendingCount = currentNews.length - cachedCount;
   const dbCount      = getNewsDB().sessions.length;
   const isSaved      = sessionSavedRef.current;
+  const isMobile     = useIsMobile();
 
+  // ── 모바일 라우팅 ────────────────────────────────────────────────────────
+  if (isMobile) {
+    const mobileProps = {
+      page, setPage, dbCount,
+      apiKey, currentNews, results, errors, loading, analyzing, collectLoading, collectError,
+      isCollected, handleCollect, analyzeAll, analyzeSingle, pendingCount, cachedCount, clearCache,
+      hasAnyResult, isSaved, driveConnected: !!driveTokenRef.current, currentPrice,
+    };
+    return (
+      <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+        {page === 'dashboard' && <MobileDashboard {...mobileProps} />}
+        {page === 'trend' && (
+          <div style={{ paddingBottom: 72 }}>
+            <TrendPage onBack={() => setPage('dashboard')}
+              onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
+              driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
+              driveLastSync={driveLastSync} driveError={driveError} />
+          </div>
+        )}
+        {page === 'settings' && (
+          <div style={{ paddingBottom: 72 }}>
+            <SettingsPage onBack={() => setPage('dashboard')}
+              apiKey={apiKey} keyInput={keyInput} setKeyInput={setKeyInput} saveKey={saveKey}
+              driveClientId={driveClientId} driveClientIdInput={driveClientIdInput}
+              setDriveClientIdInput={setDriveClientIdInput} saveDriveClientId={saveDriveClientId}
+              connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
+              driveLastSync={driveLastSync} driveError={driveError}
+              pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive}
+              getDriveToken={() => driveTokenRef.current} />
+          </div>
+        )}
+        <MobileBottomNav page={page} setPage={setPage} dbCount={dbCount} />
+      </div>
+    );
+  }
+
+  // ── PC 라우팅 ─────────────────────────────────────────────────────────────
   if (page === 'trend') return <TrendPage onBack={() => setPage('dashboard')}
     onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
     driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
