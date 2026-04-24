@@ -224,6 +224,7 @@ async function analyzeNews(apiKey, newsItem) {
   }
 
   const data = await res.json();
+  addApiUsage('analysis', data.usageMetadata); // 토큰 사용량 추적
   const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
   // JSON 파싱 — responseMimeType=application/json 이지만 방어적으로 처리
@@ -495,6 +496,44 @@ function RuleEnginePanel({ open, onToggle }) {
   );
 }
 
+// ─── API 사용량 추적 ─────────────────────────────────────────────────────────
+
+const API_USAGE_KEY = 'tsla_api_usage_v1';
+
+function getApiUsage() {
+  try {
+    const d = JSON.parse(localStorage.getItem(API_USAGE_KEY) || 'null');
+    return d || { inputTokens: 0, outputTokens: 0, collectCalls: 0, analysisCalls: 0, sinceDate: new Date().toISOString().split('T')[0] };
+  } catch { return { inputTokens: 0, outputTokens: 0, collectCalls: 0, analysisCalls: 0, sinceDate: new Date().toISOString().split('T')[0] }; }
+}
+function addApiUsage(type, meta) {
+  try {
+    const u = getApiUsage();
+    u.inputTokens  += meta?.promptTokenCount     || 0;
+    u.outputTokens += meta?.candidatesTokenCount || 0;
+    if (type === 'collect') u.collectCalls++; else u.analysisCalls++;
+    u.lastDate = new Date().toISOString().split('T')[0];
+    localStorage.setItem(API_USAGE_KEY, JSON.stringify(u));
+  } catch {}
+}
+function resetApiUsage() {
+  try { localStorage.removeItem(API_USAGE_KEY); } catch {}
+}
+
+// Drive appDataFolder 파일 크기 조회
+async function getDriveAppDataSize(token) {
+  try {
+    const res = await fetch(
+      'https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&fields=files(name,size)',
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const bytes = (data.files || []).reduce((s, f) => s + (parseInt(f.size) || 0), 0);
+    return bytes;
+  } catch { return null; }
+}
+
 // ─── 자동 세션 로드 (GitHub repo data/auto-sessions.json) ────────────────────
 
 const AUTO_SESSIONS_URL = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
@@ -649,6 +688,7 @@ async function collectTodayNews(apiKey) {
   );
   if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e?.error?.message || `HTTP ${res.status}`); }
   const data = await res.json();
+  addApiUsage('collect', data.usageMetadata); // 토큰 사용량 추적
   // thought 파트를 제외하고 실제 텍스트 파트만 합침 (gemini-2.5-flash thinking 대응)
   const parts = data.candidates?.[0]?.content?.parts || [];
   const raw = parts.filter(p => !p.thought).map(p => p.text || '').join('') || parts[0]?.text || '';
@@ -1139,21 +1179,56 @@ function SettingsPage({ onBack,
   apiKey, keyInput, setKeyInput, saveKey,
   driveClientId, driveClientIdInput, setDriveClientIdInput, saveDriveClientId,
   connectDrive, driveSyncing, driveConnected, driveLastSync, driveError,
-  pullFromDrive, pushToDrive,
+  pullFromDrive, pushToDrive, getDriveToken,
 }) {
+  const [usage, setUsage]           = useState(() => getApiUsage());
+  const [driveFileSize, setDriveFileSize] = useState(null);
+  const [driveChecking, setDriveChecking] = useState(false);
+
+  // Drive 연결 시 파일 크기 자동 조회
+  useEffect(() => {
+    const token = getDriveToken?.();
+    if (!token || driveFileSize !== null) return;
+    setDriveChecking(true);
+    getDriveAppDataSize(token)
+      .then(bytes => setDriveFileSize(bytes))
+      .finally(() => setDriveChecking(false));
+  }, [driveConnected]);
+
+  const handleReset = () => {
+    if (!confirm('API 사용량 기록을 초기화할까요?')) return;
+    resetApiUsage();
+    setUsage(getApiUsage());
+  };
+
+  // 비용 계산 (Gemini 2.5 Flash, thinkingBudget:0 기준)
+  // Input: $0.15/1M tokens  |  Output: $0.60/1M tokens
+  const INPUT_PRICE  = 0.15 / 1_000_000;
+  const OUTPUT_PRICE = 0.60 / 1_000_000;
+  const manualCostUSD = usage.inputTokens * INPUT_PRICE + usage.outputTokens * OUTPUT_PRICE;
+  const manualCostKRW = manualCostUSD * 1380;
+
+  // 자동 분석 월 예상 (4회/일 × 30일 × 16 API calls × 평균 1200 tokens)
+  const AUTO_MONTHLY_TOKENS = 4 * 30 * 16 * 1200;
+  const autoMonthlyUSD = AUTO_MONTHLY_TOKENS * (INPUT_PRICE * 0.7 + OUTPUT_PRICE * 0.3);
+  const autoMonthlyKRW = autoMonthlyUSD * 1380;
+
+  const fmt = (n) => n < 1000 ? n.toString() : n < 1_000_000 ? (n/1000).toFixed(1)+'K' : (n/1_000_000).toFixed(2)+'M';
+  const fmtBytes = (b) => b == null ? '─' : b < 1024 ? b+'B' : b < 1024*1024 ? (b/1024).toFixed(1)+'KB' : (b/1024/1024).toFixed(2)+'MB';
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-8">
+      <div className="flex items-center gap-3 mb-6">
         <button onClick={onBack} className="text-xs px-3 py-1.5 rounded-lg text-gray-400 hover:text-white transition-colors"
           style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 대시보드</button>
         <div>
           <h1 className="text-xl font-bold text-white tracking-tight">⚙ 설정</h1>
-          <p className="text-xs text-gray-500">API 키 · Google Drive 동기화</p>
+          <p className="text-xs text-gray-500">API 키 · 사용량 · Google Drive</p>
         </div>
       </div>
 
-      {/* Gemini API Key */}
+      {/* ── Gemini API Key ── */}
       <div className="rounded-xl p-5 border mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="flex items-center gap-2 mb-4">
           <span className="text-sm">🔑</span>
@@ -1169,13 +1244,75 @@ function SettingsPage({ onBack,
           <button onClick={saveKey} className="px-4 py-2 rounded-lg text-sm font-semibold text-white hover:opacity-90 shrink-0"
             style={{ background: '#1d4ed8' }}>저장</button>
         </div>
-        <p className="text-xs text-gray-600 mt-2.5">
+        <p className="text-xs text-gray-600 mt-2">
           API 키는 이 기기의 로컬 저장소에만 보관됩니다. &nbsp;
           <a href="https://aistudio.google.com/app/apikey" target="_blank" className="text-blue-400 underline">Google AI Studio에서 발급</a>
         </p>
       </div>
 
-      {/* Google Drive 동기화 */}
+      {/* ── Gemini API 사용량 ── */}
+      <div className="rounded-xl p-5 border mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm">📊</span>
+            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Gemini API 사용량</span>
+            <span className="text-xs text-gray-600">(수동 조작 기준)</span>
+          </div>
+          <button onClick={handleReset} className="text-xs px-2.5 py-1 rounded text-gray-500 hover:text-red-400 transition-colors"
+            style={{ background: '#14171e', border: '1px solid #2A2D35' }}>초기화</button>
+        </div>
+
+        {/* 토큰 현황 */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {[
+            ['입력 토큰', fmt(usage.inputTokens), '#60a5fa'],
+            ['출력 토큰', fmt(usage.outputTokens), '#a78bfa'],
+            ['수집 횟수', `${usage.collectCalls}회`, '#34d399'],
+            ['분석 횟수', `${usage.analysisCalls}회`, '#fbbf24'],
+          ].map(([label, val, color]) => (
+            <div key={label} className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+              <p className="text-xs text-gray-500 mb-1">{label}</p>
+              <p className="text-lg font-bold" style={{ color }}>{val}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* 비용 */}
+        <div className="rounded-lg p-3 mb-3" style={{ background: '#0d1117', border: '1px solid #2A2D35' }}>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs text-gray-500">누적 예상 비용 (수동)</span>
+            <span className="text-xs text-gray-600">집계 시작: {usage.sinceDate || '─'}</span>
+          </div>
+          <div className="flex items-end gap-3">
+            <p className="text-2xl font-bold text-white">₩{manualCostKRW < 1 ? '< 1' : Math.round(manualCostKRW).toLocaleString()}</p>
+            <p className="text-sm text-gray-500 mb-0.5">${manualCostUSD.toFixed(4)}</p>
+          </div>
+          <p className="text-xs text-gray-700 mt-1">Input $0.15/1M · Output $0.60/1M (thinkingBudget:0 비사고 모드)</p>
+        </div>
+
+        {/* 자동 분석 월 예상 */}
+        <div className="rounded-lg p-3" style={{ background: '#0d1117', border: '1px solid #1e3a5f' }}>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-semibold text-blue-400">🤖 자동 분석 월 예상 비용</span>
+            <span className="text-xs text-gray-600">4회/일 × 30일</span>
+          </div>
+          <div className="flex items-end gap-3">
+            <p className="text-xl font-bold" style={{ color: '#60a5fa' }}>₩{Math.round(autoMonthlyKRW).toLocaleString()}</p>
+            <p className="text-sm text-gray-500 mb-0.5">${autoMonthlyUSD.toFixed(3)}/월</p>
+          </div>
+          <p className="text-xs text-gray-600 mt-1.5">
+            ✅ <strong className="text-green-400">무료 한도 내 가능</strong> — Gemini 무료 티어: 1,500 req/일, 1M TPM<br/>
+            자동 분석은 약 64 req/일 사용 → 무료 한도의 4%
+          </p>
+        </div>
+
+        <div className="mt-3 text-right">
+          <a href="https://aistudio.google.com/app/apikey" target="_blank"
+            className="text-xs text-blue-400 underline hover:text-blue-300">실제 사용량 확인 → Google AI Studio</a>
+        </div>
+      </div>
+
+      {/* ── Google Drive 동기화 ── */}
       <div className="rounded-xl p-5 border mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="flex items-center gap-2 mb-4">
           <span className="text-sm">☁</span>
@@ -1183,6 +1320,32 @@ function SettingsPage({ onBack,
           {driveConnected && <span className="text-xs px-2 py-0.5 rounded-full text-green-400" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)' }}>● 연결됨</span>}
           {driveLastSync && <span className="text-xs text-gray-600 ml-auto">마지막: {driveLastSync}</span>}
         </div>
+
+        {/* Drive 저장 용량 현황 */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+            <p className="text-xs text-gray-500 mb-1">앱 데이터 크기</p>
+            <p className="text-lg font-bold text-white">
+              {driveChecking ? <span className="text-gray-600 text-sm">조회 중…</span>
+                : driveConnected ? fmtBytes(driveFileSize)
+                : <span className="text-gray-600 text-sm">미연결</span>}
+            </p>
+            <p className="text-xs text-gray-700 mt-0.5">appDataFolder</p>
+          </div>
+          <div className="rounded-lg p-3" style={{ background: '#14171e', border: '1px solid #1e3a1e' }}>
+            <p className="text-xs text-gray-500 mb-1">요금</p>
+            <p className="text-lg font-bold text-green-400">무료</p>
+            <p className="text-xs text-gray-700 mt-0.5">15GB 이하 무료</p>
+          </div>
+        </div>
+
+        <div className="rounded-lg p-3 mb-4 text-xs" style={{ background: '#0d1117', border: '1px solid #2A2D35' }}>
+          <p className="text-gray-400 font-semibold mb-1">☁ Google Drive 요금 안내</p>
+          <p className="text-gray-600">이 앱의 세션 데이터(최대 60개)는 약 <strong className="text-gray-400">0.5MB 이하</strong>입니다.</p>
+          <p className="text-gray-600 mt-0.5">Google Drive는 Gmail·사진 포함 <strong className="text-gray-400">15GB까지 무료</strong>이므로 실질적으로 <strong className="text-green-400">요금 발생 없음</strong>.</p>
+          <p className="text-gray-700 mt-0.5">Drive API 호출 자체도 무료입니다 (쿼터 초과 시 일시 제한만 있음).</p>
+        </div>
+
         <div className="flex gap-3 mb-3">
           <input type="text" value={driveClientIdInput} onChange={e => setDriveClientIdInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && saveDriveClientId()}
@@ -1214,7 +1377,7 @@ function SettingsPage({ onBack,
         </p>}
       </div>
 
-      {/* 자동 분석 안내 */}
+      {/* ── 자동 분석 스케줄 ── */}
       <div className="rounded-xl p-5 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="flex items-center gap-2 mb-3">
           <span className="text-sm">🤖</span>
@@ -1229,7 +1392,7 @@ function SettingsPage({ onBack,
             </div>
           ))}
         </div>
-        <p className="text-xs text-gray-600">자동 분석 결과는 트렌드 분석 페이지에서 확인하세요. API 키 불필요 (GitHub Secret으로 관리).</p>
+        <p className="text-xs text-gray-600">자동 분석 결과는 트렌드 분석 페이지에서 확인하세요. GitHub Secret에 저장된 API 키로 서버에서 실행됩니다.</p>
       </div>
     </div>
   );
@@ -1823,7 +1986,8 @@ function App() {
     setDriveClientIdInput={setDriveClientIdInput} saveDriveClientId={saveDriveClientId}
     connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
     driveLastSync={driveLastSync} driveError={driveError}
-    pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive} />;
+    pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive}
+    getDriveToken={() => driveTokenRef.current} />;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
