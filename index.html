@@ -1661,6 +1661,25 @@ function App() {
     try {
       const s = localStorage.getItem('tsla_api_key'); if (s) { setApiKey(s); setKeyInput(s); }
       const d = localStorage.getItem(DRIVE_CLIENT_ID_KEY); if (d) { setDriveClientId(d); setDriveClientIdInput(d); }
+      // 이전에 Drive 연결 이력이 있으면 자동 재연결 시도 (GIS 라이브러리 로드 대기 후)
+      if (d && localStorage.getItem('tsla_drive_auto_connect') === '1') {
+        setTimeout(async () => {
+          try {
+            await ensureGapi();
+            const token = await driveRequestToken(d); // prompt:'' → 팝업 없이 자동 재발급
+            driveTokenRef.current = token;
+            setDriveLastSync('자동 재연결 완료');
+            // 조용히 Drive 데이터 병합
+            const remote = await driveReadSessions(token);
+            const local  = getNewsDB().sessions;
+            const merged = mergeSessions(local, remote);
+            saveNewsDB({ sessions: merged });
+          } catch (e) {
+            // 자동 재연결 실패 시 조용히 무시 (사용자가 직접 재로그인하면 됨)
+            console.warn('Drive 자동 재연결 실패:', e.message);
+          }
+        }, 1800); // GIS 스크립트 로드 대기
+      }
     } catch {}
   }, []);
 
@@ -1682,9 +1701,15 @@ function App() {
       await ensureGapi();
       const token = await driveRequestToken(driveClientId);
       driveTokenRef.current = token;
+      // 다음 방문 시 자동 재연결 허용 플래그 저장
+      try { localStorage.setItem('tsla_drive_auto_connect', '1'); } catch {}
       // 연결 후 Drive → 로컬 병합
       await pullFromDrive(token);
-    } catch(e) { setDriveError(e.message); }
+    } catch(e) {
+      setDriveError(e.message);
+      // 실패 시 자동 재연결 플래그 제거
+      try { localStorage.removeItem('tsla_drive_auto_connect'); } catch {}
+    }
     finally { setDriveSyncing(false); }
   };
 
