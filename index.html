@@ -206,14 +206,26 @@ function confidenceDot(c) {
 
 // ─── 캐시 유틸 ────────────────────────────────────────────────────────────
 
-const CACHE_KEY = 'tsla_analysis_cache_v1';
+const CACHE_KEY      = 'tsla_analysis_cache_v1';
+const NEWS_LIST_KEY  = 'tsla_last_news_v1';  // 마지막 수집 뉴스 영구 저장
 
 function loadCache() {
   try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); } catch { return {}; }
 }
-
 function saveCache(results) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(results)); } catch {}
+}
+
+// 마지막으로 수집한 뉴스 목록 저장/불러오기
+function saveLastNews(newsList, isCollected) {
+  try { localStorage.setItem(NEWS_LIST_KEY, JSON.stringify({ items: newsList, isCollected, savedAt: Date.now() })); } catch {}
+}
+function loadLastNews() {
+  try {
+    const d = JSON.parse(localStorage.getItem(NEWS_LIST_KEY) || 'null');
+    if (!d?.items?.length) return null;
+    return d;
+  } catch { return null; }
 }
 
 // ─── API 호출 ─────────────────────────────────────────────────────────────
@@ -1997,8 +2009,8 @@ function App() {
   const driveTokenRef = useRef(null);
   const [page, setPage]         = useState('dashboard');
   const [ruleOpen, setRuleOpen] = useState(false);
-  const [currentNews, setCurrentNews]       = useState(SAMPLE_NEWS);
-  const [isCollected, setIsCollected]       = useState(false);
+  const [currentNews, setCurrentNews]       = useState(() => loadLastNews()?.items ?? SAMPLE_NEWS);
+  const [isCollected, setIsCollected]       = useState(() => loadLastNews()?.isCollected ?? false);
   const [collectLoading, setCollectLoading] = useState(false);
   const [collectError, setCollectError]     = useState(null);
   const [results, setResults]     = useState(() => loadCache());
@@ -2020,7 +2032,11 @@ function App() {
   }, []);
 
   const clearCache = useCallback(() => {
-    try { localStorage.removeItem(CACHE_KEY); localStorage.removeItem(FORECAST_CACHE_KEY); } catch {}
+    try {
+      localStorage.removeItem(CACHE_KEY);
+      localStorage.removeItem(FORECAST_CACHE_KEY);
+      localStorage.removeItem(NEWS_LIST_KEY); // 저장된 뉴스도 초기화
+    } catch {}
     setResults({}); setErrors({}); setForecast(null); setForecastError(null);
     setCurrentNews(SAMPLE_NEWS); setIsCollected(false); setCollectError(null);
     sessionIdRef.current = null; sessionSavedRef.current = false;
@@ -2193,6 +2209,7 @@ function App() {
     try {
       const news = await collectTodayNews(apiKey);
       setCurrentNews(news); setIsCollected(true);
+      saveLastNews(news, true); // 수집한 뉴스 영구 저장
       setResults({}); setErrors({}); setForecast(null); setForecastError(null);
       sessionIdRef.current = newSessionId(); sessionSavedRef.current = false;
       try { localStorage.removeItem(CACHE_KEY); localStorage.removeItem(FORECAST_CACHE_KEY); } catch {}
