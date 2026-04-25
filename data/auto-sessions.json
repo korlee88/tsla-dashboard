@@ -1,6 +1,237 @@
 {
   "sessions": [
     {
+      "id": "auto-1777141948886",
+      "date": "2026-04-26",
+      "displayDate": "2026.04.26",
+      "kstTime": "03:31",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777141927321,
+          "title": "일론 머스크, OpenAI 사기 혐의 철회, 재판은 계속 진행",
+          "summary": "일론 머스크가 OpenAI를 상대로 제기한 소송에서 샘 올트먼과 그렉 브록먼에 대한 사기 혐의를 철회했습니다. 하지만 OpenAI가 비영리 사명을 저버렸다는 자선 신탁 위반 및 부당 이득 주장에 대한 재판은 4월 27일에 진행될 예정입니다.",
+          "source": "Reuters",
+          "date": "2026-04-25",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1777141927322,
+          "title": "테슬라, 슈퍼차저 가상 대기열 기능 구축 중",
+          "summary": "테슬라가 슈퍼차저 네트워크에 가상 대기열 기능을 적극적으로 구축하고 있습니다. 이 기능은 운전자들이 물리적으로 기다릴 필요 없이 디지털 대기열에 참여하여 충전소 혼잡을 줄이고 사용자 경험을 개선하는 것을 목표로 합니다.",
+          "source": "basenor",
+          "date": "2026-04-25",
+          "category": "Product"
+        },
+        {
+          "id": 1777141927323,
+          "title": "테슬라, 20억 달러 규모의 미스터리 AI 하드웨어 회사 인수",
+          "summary": "테슬라가 2026년 4월에 최대 20억 달러 규모의 AI 하드웨어 회사를 인수하는 계약을 체결했다고 조용히 공개했습니다. 이 인수는 테슬라의 AI 역량을 강화하려는 움직임으로 보이지만, 회사명이나 구체적인 사업 내용은 아직 공개되지 않았습니다.",
+          "source": "Futurism",
+          "date": "2026-04-25",
+          "category": "AI|Market"
+        },
+        {
+          "id": 1777141927324,
+          "title": "테슬라, Model S/X 시그니처 에디션 인도 이벤트 개최",
+          "summary": "테슬라가 Model S 및 Model X 시그니처 에디션의 인도 이벤트를 5월 12일 프리몬트 공장에서 개최할 예정입니다. 이 한정판 모델은 이미 매진되었으며, 초대받은 참가자들은 동반 1인과 함께 행사에 참석할 수 있습니다.",
+          "source": "Related Tesla News",
+          "date": "2026-04-25",
+          "category": "Product"
+        },
+        {
+          "id": 1777141927325,
+          "title": "WT 자산운용, 테슬라 지분 확대",
+          "summary": "WT 자산운용이 4분기에 테슬라 지분을 512.5% 늘려 98,000주를 보유하게 되었습니다. 이는 테슬라가 1분기 EPS 예상치를 상회하고 긍정적인 잉여현금흐름을 기록한 가운데 이루어졌습니다.",
+          "source": "MarketBeat",
+          "date": "2026-04-25",
+          "category": "Market"
+        },
+        {
+          "id": 1777141927326,
+          "title": "테슬라, 1분기 실적 예상치 상회에도 불구하고 주가 하락",
+          "summary": "테슬라가 1분기 조정 주당순이익(EPS) 0.41달러를 기록하며 예상치인 0.36달러를 상회했지만, 일론 머스크 CEO가 최신 자율주행 하드웨어가 완전 자율주행을 지원할 능력이 없다고 언급하면서 주가가 하락했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Earnings|Musk|Product"
+        },
+        {
+          "id": 1777141927327,
+          "title": "일론 머스크, OpenAI와의 법정 다툼 계속",
+          "summary": "일론 머스크와 OpenAI의 법정 다툼이 계속되고 있으며, 4월 27일 배심원 선정 절차가 시작될 예정입니다. 머스크는 OpenAI가 비영리 사명을 저버렸다고 주장하고 있으며, 이는 AI 개발의 혜택이 누구에게 돌아가야 하는지에 대한 광범위한 논쟁을 부각시킵니다.",
+          "source": "CTV News",
+          "date": "2026-04-25",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1777141927328,
+          "title": "테슬라, AI 및 로봇 공학에 250억 달러 이상 투자 계획",
+          "summary": "테슬라는 AI 인프라, 로봇 공학, 칩 개발 및 제조에 대한 투자를 늘려 올해 자본 지출이 250억 달러를 초과할 것으로 예상하고 있습니다. 이는 회사가 전기차를 넘어 AI 허브로 전환하려는 전략의 일환입니다.",
+          "source": "Nasdaq",
+          "date": "2026-04-23",
+          "category": "AI|Market"
+        },
+        {
+          "id": 1777141927329,
+          "title": "테슬라, Model 3 및 Model Y 시각화 업데이트 출시",
+          "summary": "테슬라가 Model 3 및 Model Y 차량에 대한 새로운 시각화 업데이트인 Spring Update (2026.14.1 및 2026.14.2)를 광범위하게 출시했습니다.",
+          "source": "Related Tesla News",
+          "date": "2026-04-24",
+          "category": "Product"
+        },
+        {
+          "id": 1777141927331,
+          "title": "테슬라, 무인 로보택시 서비스 텍사스 두 개 도시로 확장",
+          "summary": "테슬라가 텍사스의 두 개 도시로 무인 로보택시 서비스를 확장했으며, 이는 Waymo보다 저렴하다고 보도되었습니다.",
+          "source": "Related Tesla News",
+          "date": "2026-04-20",
+          "category": "Product|Competition"
+        }
+      ],
+      "analyses": {
+        "1777141927321": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI에 대한 사기 혐의를 철회했음에도 불구하고, 자선 신탁 위반 및 부당 이득 주장에 대한 재판이 계속 진행되어 머스크의 다른 벤처 관련 법적 리스크가 지속될 수 있습니다.",
+          "key_factors": [
+            "OpenAI 소송 지속",
+            "머스크의 법적 리스크"
+          ]
+        },
+        "1777141927322": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 슈퍼차저 가상 대기열 기능은 사용자 경험을 개선하고 충전소 혼잡을 줄여 고객 만족도를 높일 수 있습니다.",
+          "key_factors": [
+            "사용자 경험 개선",
+            "충전소 혼잡 감소"
+          ]
+        },
+        "1777141927323": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 20억 달러 규모 AI 하드웨어 회사 인수는 AI 역량을 강화하고 미래 기술 발전에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "AI 역량 강화",
+            "미공개 회사 정보"
+          ]
+        },
+        "1777141927324": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 한정판 모델의 인도 이벤트를 개최하는 것은 긍정적인 브랜드 이미지와 고객 참여를 유도하지만, 이미 매진된 모델이므로 주가에 미치는 직접적인 영향은 미미할 것으로 예상됩니다.",
+          "key_factors": [
+            "한정판 모델 인도",
+            "긍정적 브랜드 이미지"
+          ]
+        },
+        "1777141927325": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "WT 자산운용의 테슬라 지분 확대는 긍정적인 EPS와 잉여현금흐름에 기반한 기관 투자자의 신뢰 증가를 나타냅니다.",
+          "key_factors": [
+            "기관 투자자 지분 확대",
+            "긍정적인 EPS",
+            "잉여현금흐름"
+          ]
+        },
+        "1777141927326": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12",
+            "R13"
+          ],
+          "reasoning": "테슬라가 1분기 EPS 예상치를 상회했음에도 불구하고, CEO의 자율주행 하드웨어 능력에 대한 부정적인 발언으로 인해 주가가 하락했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "FSD hardware limitation"
+          ]
+        },
+        "1777141927327": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크와 OpenAI 간의 지속적인 법적 분쟁은 머스크의 다른 벤처와 관련된 위험이 테슬라에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크의 법적 분쟁",
+            "OpenAI와의 소송",
+            "AI 개발 방향 논쟁"
+          ]
+        },
+        "1777141927328": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 AI 및 로봇 공학에 대한 대규모 투자는 회사의 미래 성장 동력을 강화하고 전기차를 넘어선 기술 기업으로의 전환을 가속화할 것으로 예상되어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 인프라 투자",
+            "로봇 공학 개발",
+            "칩 개발 및 제조"
+          ]
+        },
+        "1777141927329": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 모델 3 및 모델 Y 시각화 업데이트 출시는 제품 개선으로 고객 만족도를 높여 판매에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "제품 개선",
+            "고객 만족도"
+          ]
+        },
+        "1777141927331": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 무인 로보택시 서비스를 텍사스 두 개 도시로 확장하고 Waymo보다 저렴하게 제공하는 것은 새로운 제품/FSD 이정표로 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "로보택시 서비스 확장",
+            "경쟁사 대비 가격 우위"
+          ]
+        }
+      },
+      "avgScore": 0.8,
+      "buyIndex": 58,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R12"
+      ],
+      "bullish": 7,
+      "bearish": 3,
+      "neutral": 0,
+      "timestamp": 1777141948886
+    },
+    {
       "id": "auto-1777122585188",
       "date": "2026-04-25",
       "displayDate": "2026.04.25",
@@ -957,5 +1188,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-25 22:09 KST"
+  "lastUpdated": "2026-04-26 03:31 KST"
 }
