@@ -585,7 +585,8 @@ async function getDriveAppDataSize(token) {
 // ─── 자동 세션 로드 (GitHub repo data/auto-sessions.json) ────────────────────
 
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
-const CALENDAR_DATA_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
+const CALENDAR_DATA_URL   = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
+const BACKTEST_RESULTS_URL = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/backtest-results.json';
 const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
 const DAILY_CACHE_KEY    = 'tsla_daily_cache_v1';
 const BACKTEST_CACHE_KEY = 'tsla_backtest_v2';
@@ -3200,15 +3201,38 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
 function BacktestPage({ apiKey }) {
   const [savedData,      setSavedData]      = React.useState(() => loadBacktest());
   const [results,        setResults]        = React.useState(() => loadBacktest()?.results || []);
+  const [staticData,     setStaticData]     = React.useState(null);   // GitHub repo JSON
+  const [staticLoading,  setStaticLoading]  = React.useState(true);
   const [btPrices,       setBtPrices]       = React.useState(null);
   const [pricesLoading,  setPricesLoading]  = React.useState(false);
   const [running,        setRunning]        = React.useState(false);
   const stopRef                             = React.useRef(false);
   const [progress,       setProgress]       = React.useState({ current: 0, total: 0, phase: '', week: '' });
-  const [selectedRange,  setSelectedRange]  = React.useState('q1');
+  const [selectedRange,  setSelectedRange]  = React.useState('all');
   const [expandedWeek,   setExpandedWeek]   = React.useState(null);
   const [activeTab,      setActiveTab]      = React.useState('results');
   const [btError,        setBtError]        = React.useState(null);
+
+  // ── GitHub repo 정적 결과 파일 로드 ──
+  React.useEffect(() => {
+    setStaticLoading(true);
+    fetch(BACKTEST_RESULTS_URL + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.weeks?.length) {
+          setStaticData(data);
+          // 브라우저 캐시보다 새 파일이 더 최신이면 덮어쓰기
+          const cachedAt = loadBacktest()?.savedAt || 0;
+          if (!cachedAt || data.weeks.length > (loadBacktest()?.results?.length || 0)) {
+            setResults(data.weeks);
+            setSavedData({ results: data.weeks, savedAt: Date.now(), fromStatic: true });
+            saveBacktest({ results: data.weeks, savedAt: Date.now(), fromStatic: true });
+          }
+        }
+      })
+      .catch(() => {})
+      .finally(() => setStaticLoading(false));
+  }, []);
 
   const RANGE_LABELS = {
     q1:  'Q1 (1~3월)',
@@ -3295,8 +3319,19 @@ function BacktestPage({ apiKey }) {
     setProgress(p => ({ ...p, phase: '완료' }));
   }
 
+  // ── 범위 필터링 ──
+  const QUARTER_RANGES = {
+    q1: { start: '2025-01-01', end: '2025-03-31' },
+    q2: { start: '2025-04-01', end: '2025-06-30' },
+    q3: { start: '2025-07-01', end: '2025-09-30' },
+    q4: { start: '2025-10-01', end: '2025-12-31' },
+    all: { start: '2025-01-01', end: '2025-12-31' },
+  };
+  const qRange = QUARTER_RANGES[selectedRange];
+  const filteredResults = results.filter(r => r.weekStart >= qRange.start && r.weekStart <= qRange.end);
+
   // ── 통계 계산 ──
-  const analyzed    = results.filter(r => r.analysis && r.movement);
+  const analyzed    = filteredResults.filter(r => r.analysis && r.movement);
   const matched     = analyzed.filter(r => r.match).length;
   const accuracy    = analyzed.length ? Math.round(matched / analyzed.length * 100) : 0;
   const strong      = analyzed.filter(r => r.strongSignal);
@@ -3305,7 +3340,7 @@ function BacktestPage({ apiKey }) {
 
   // 상위 룰
   const ruleCntAll = {};
-  results.forEach(r => (r.analysis?.topRules || []).forEach(rule => { ruleCntAll[rule] = (ruleCntAll[rule] || 0) + 1; }));
+  filteredResults.forEach(r => (r.analysis?.topRules || []).forEach(rule => { ruleCntAll[rule] = (ruleCntAll[rule] || 0) + 1; }));
   const topRulesAll = Object.entries(ruleCntAll).sort((a, b) => b[1] - a[1]).slice(0, 8);
 
   // 룰 설명 맵
@@ -3363,7 +3398,18 @@ function BacktestPage({ apiKey }) {
               🗑 초기화
             </button>
           )}
-          {savedData?.savedAt && !running && (
+          {staticLoading && !running && (
+            <span className="flex items-center gap-1.5 text-xs text-gray-600">
+              <span className="w-3 h-3 border border-gray-600 border-t-transparent rounded-full spinning" />
+              서버 데이터 확인 중...
+            </span>
+          )}
+          {staticData && !running && (
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.25)', color: '#22c55e' }}>
+              ✓ 서버 완성 데이터 · {staticData.generatedAt || ''}
+            </span>
+          )}
+          {!staticData && savedData?.savedAt && !running && (
             <span className="text-xs text-gray-600">마지막 실행: {new Date(savedData.savedAt).toLocaleDateString('ko-KR')}</span>
           )}
         </div>
@@ -3444,7 +3490,7 @@ function BacktestPage({ apiKey }) {
                 <span className="text-center">AI 방향</span>
                 <span className="text-center">일치</span>
               </div>
-              {results.map((row, idx) => {
+              {filteredResults.map((row, idx) => {
                 const isOpen  = expandedWeek === row.weekStart;
                 const bi      = row.analysis?.buyIndex;
                 const biColor = bi == null ? '#6b7280' : bi >= 70 ? '#22c55e' : bi >= 50 ? '#86efac' : bi >= 30 ? '#f97316' : '#ef4444';
@@ -3455,7 +3501,7 @@ function BacktestPage({ apiKey }) {
                   ? ({ bullish: '📈 매수', bearish: '📉 매도', neutral: '➡ 중립' }[row.analysis.direction] || '—')
                   : '—';
                 return (
-                  <div key={row.weekStart} style={{ borderBottom: idx < results.length - 1 ? '1px solid #1a1d24' : 'none' }}>
+                  <div key={row.weekStart} style={{ borderBottom: idx < filteredResults.length - 1 ? '1px solid #1a1d24' : 'none' }}>
                     <button
                       className="w-full grid sm:grid px-4 py-2.5 text-left hover:bg-white/5 transition-colors"
                       style={{ gridTemplateColumns: '110px 50px 80px 110px 90px 50px' }}
@@ -3605,14 +3651,26 @@ function BacktestPage({ apiKey }) {
       {/* 빈 상태 */}
       {results.length === 0 && !running && (
         <div className="text-center py-14 text-gray-600">
-          <p className="text-5xl mb-4">🔬</p>
-          <p className="text-sm text-gray-500">백테스트를 실행하면 2025년 과거 뉴스 기반의 AI 예측 정확도를 검증합니다.</p>
-          <div className="mt-4 flex flex-col gap-1 text-xs text-gray-700">
-            <p>1단계 — 주간 TOP 10 뉴스 수집 (Gemini Google Search)</p>
-            <p>2단계 — AI 분석 모델로 매수지수 산출</p>
-            <p>3단계 — 실제 TSLA 주가 움직임과 방향 비교</p>
-            <p>4단계 — 정확도 통계 + 모델 강화 인사이트 제공</p>
-          </div>
+          {staticLoading
+            ? (
+              <div className="flex flex-col items-center gap-3">
+                <span className="w-10 h-10 border-2 border-gray-600 border-t-gray-300 rounded-full spinning" />
+                <p className="text-sm text-gray-500">서버에서 백테스트 결과를 불러오는 중...</p>
+              </div>
+            ) : (
+              <>
+                <p className="text-5xl mb-4">🔬</p>
+                <p className="text-sm text-gray-500">아직 백테스트 결과가 없습니다.</p>
+                <p className="text-xs mt-1 text-gray-600">GitHub Actions에서 실행 중이거나, 직접 실행 버튼을 눌러주세요.</p>
+                <div className="mt-4 flex flex-col gap-1 text-xs text-gray-700">
+                  <p>1단계 — 주간 TOP 10 뉴스 수집 (Gemini Google Search)</p>
+                  <p>2단계 — AI 분석 모델로 매수지수 산출</p>
+                  <p>3단계 — 실제 TSLA 주가 움직임과 방향 비교</p>
+                  <p>4단계 — 정확도 통계 + 모델 강화 인사이트 제공</p>
+                </div>
+              </>
+            )
+          }
         </div>
       )}
     </div>

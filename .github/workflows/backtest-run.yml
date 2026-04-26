@@ -1,0 +1,39 @@
+name: 테슬라 백테스트 실행 (수동 + 월별 자동)
+
+on:
+  workflow_dispatch:        # 수동 실행 (즉시 트리거용)
+  schedule:
+    - cron: '0 18 1 * *'  # UTC 18:00 매월 1일 = KST 03:00 (밤새 실행 후 아침에 확인)
+
+jobs:
+  run-backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180   # 최대 3시간 (52주 × ~2분 = 약 1.5~2시간)
+    permissions:
+      contents: write
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 22 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 백테스트 실행
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/backtest-run.js
+
+      - name: 결과 커밋 & 푸시
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "TSLA Backtest Bot"
+          git add data/backtest-results.json
+          if git diff --staged --quiet; then
+            echo "변경 사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "backtest: 2025년 AI 예측 백테스트 결과 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            git push
+          fi
