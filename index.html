@@ -37,10 +37,10 @@
     .card-glow-neu  { box-shadow: 0 0 20px rgba(100,116,139,0.1); }
     .spinning { animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .score-flash { animation: scoreFlash 0.6s ease-out; }
+    .score-flash { animation: scoreFlash 0.4s ease-out; }
     @keyframes scoreFlash {
-      0%   { transform: scale(1.4); opacity: 0.5; }
-      100% { transform: scale(1);   opacity: 1; }
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
     }
     .badge-rule {
       font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
@@ -360,8 +360,8 @@ function NewsCard({ news, result, loading, error }) {
         </div>
         {result && (
           <span
-            className="text-xs font-bold px-2 py-1 rounded-lg shrink-0 score-flash"
-            style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40` }}
+            className="text-xs font-bold px-2 py-1 rounded-lg shrink-0 score-flash whitespace-nowrap"
+            style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40`, zIndex: 1, position: 'relative' }}
           >
             {result.direction.toUpperCase()}
           </span>
@@ -2148,7 +2148,7 @@ function App() {
   const [driveError, setDriveError]             = useState(null);
   const [driveLastSync, setDriveLastSync]       = useState(null);
   const driveTokenRef = useRef(null);
-  const [page, setPage]         = useState('dashboard');
+  const [page, setPage]         = useState('trend');
   const [ruleOpen, setRuleOpen] = useState(false);
   const [currentNews, setCurrentNews]       = useState(() => loadLastNews()?.items ?? SAMPLE_NEWS);
   const [isCollected, setIsCollected]       = useState(() => loadLastNews()?.isCollected ?? false);
