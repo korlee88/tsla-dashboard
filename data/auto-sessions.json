@@ -1,6 +1,241 @@
 {
   "sessions": [
     {
+      "id": "auto-1777175302660",
+      "date": "2026-04-26",
+      "displayDate": "2026.04.26",
+      "kstTime": "12:47",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777175280712,
+          "title": "일론 머스크, 미래 테슬라 차량은 로드스터만 수동 운전 가능할 것이라고 언급",
+          "summary": "일론 머스크 테슬라 CEO는 미래의 모든 테슬라 차량이 완전 자율주행이 될 것이며, 로드스터만이 유일하게 수동으로 운전할 수 있는 모델이 될 것이라고 밝혔다. 그는 또한 테슬라의 사이버캡 자율주행 차량이 생산에 들어갔다고 언급했다.",
+          "source": "CarsGuide",
+          "date": "2026-04-24",
+          "category": "Musk|Product"
+        },
+        {
+          "id": 1777175280713,
+          "title": "테슬라, 완전 자율주행을 위해 수백만 대의 차량 하드웨어 업그레이드 필요 인정",
+          "summary": "일론 머스크는 테슬라의 1분기 실적 발표에서 2019년부터 2023년 사이에 판매된 수백만 대의 테슬라 차량에 탑재된 하드웨어 3(HW3)가 완전 자율주행(FSD) 기능을 완전히 지원하기에는 역부족이라고 인정했다. 이 차량들은 FSD를 사용하려면 하드웨어 4(HW4)로 업그레이드해야 한다.",
+          "source": "PCMag",
+          "date": "2026-04-23",
+          "category": "Product|Technology"
+        },
+        {
+          "id": 1777175280714,
+          "title": "테슬라, 2026년 자본 지출 가이던스 상향 조정 및 로보택시 기대치 하향",
+          "summary": "테슬라는 2026년 연간 자본 지출 가이던스를 50억 달러 증액하여 총 250억 달러로 상향 조정했다. 이는 6개의 신규 공장 건설과 로보택시 및 옵티머스 휴머노이드 로봇 인프라 지원을 위한 AI 투자 증가에 따른 것이다. 또한, 로보택시 배포에 대한 기대치는 낮아졌다.",
+          "source": "The Motley Fool",
+          "date": "2026-04-23",
+          "category": "Earnings|Capital Expenditure|Robotaxi"
+        },
+        {
+          "id": 1777175280715,
+          "title": "일론 머스크, HW3 차량 업그레이드를 위한 '마이크로팩토리' 건설 제안",
+          "summary": "일론 머스크는 수백만 대의 HW3 장착 테슬라 차량을 HW4로 업그레이드하기 위해 주요 대도시에 '마이크로팩토리'를 건설할 계획이라고 밝혔다. 이는 서비스 센터에서 진행하는 것보다 효율적이며, 모든 HW3 차량을 로보택시 차량군에 편입시키고 무인 FSD를 가능하게 할 것이라고 덧붙였다.",
+          "source": "TheStreet",
+          "date": "2026-04-25",
+          "category": "Product|Technology|Musk"
+        },
+        {
+          "id": 1777175280716,
+          "title": "테슬라, 1분기 실적 예상치 상회에도 불구하고 주가 하락",
+          "summary": "테슬라는 1분기 조정 주당순이익(EPS) 0.41달러와 매출 223억 9천만 달러를 기록하며 시장 예상치를 상회했다. 그러나 완전 자율주행 하드웨어의 한계 인정과 자본 지출 계획 상향 조정으로 인해 주가는 하락세를 보였다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777175280717,
+          "title": "테슬라, 인텔의 14A 공정 기술을 테라팹 프로젝트에 활용할 계획",
+          "summary": "일론 머스크는 테슬라의 테라팹(Terafab) 프로젝트에 인텔의 14A 공정 기술을 사용할 계획이라고 언급했다. 이 소식은 인텔 주가 상승에 영향을 미쳤다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-23",
+          "category": "Technology|Partnership"
+        },
+        {
+          "id": 1777175280718,
+          "title": "테슬라 로드스터, 2026년 5월경 공개 예상",
+          "summary": "일론 머스크는 차세대 테슬라 로드스터가 2026년 5월경에 공개될 수 있다고 시사했다. 그는 로드스터의 데뷔가 역대 가장 흥미로운 제품 공개 중 하나가 될 것이라고 강조했다.",
+          "source": "Car and Driver",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777175280719,
+          "title": "테슬라, 로보택시 출시 지연 및 FSD 소프트웨어 개선 필요성 언급",
+          "summary": "일론 머스크는 테슬라의 무인 FSD 기술이 아직 대규모 배포 준비가 되지 않았으며, 소프트웨어의 주요 아키텍처 개선이 필요하다고 밝혔다. 이는 로보택시 출시가 예상보다 느리게 진행될 수 있음을 시사한다.",
+          "source": "Investopedia",
+          "date": "2026-04-23",
+          "category": "Robotaxi|Technology"
+        },
+        {
+          "id": 1777175280720,
+          "title": "테슬라, AI 및 로봇공학 투자 확대로 인한 마이너스 잉여현금흐름 예상",
+          "summary": "테슬라는 1분기에 14억 4천만 달러의 잉여현금흐름을 보고했지만, AI 인프라, 로봇공학, 칩 개발 및 제조에 대한 투자를 늘리면서 2026년 남은 기간 동안 마이너스 잉여현금흐름을 예상하고 있다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Earnings|Macro"
+        },
+        {
+          "id": 1777175280721,
+          "title": "테슬라, 완전 자율주행 관련 집단 소송 직면",
+          "summary": "일론 머스크가 HW3의 완전 자율주행 불가능을 인정한 가운데, 테슬라 소유주들은 머스크가 FSD 시스템의 기능에 대해 수년간 오도했다고 주장하며 여러 건의 집단 소송을 제기했다.",
+          "source": "Electrek",
+          "date": "2026-04-25",
+          "category": "Legal|Musk"
+        }
+      ],
+      "analyses": {
+        "1777175280712": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크의 발언은 테슬라의 완전 자율주행 기술에 대한 강한 자신감을 보여주며, 사이버캡 생산 개시 언급은 미래 제품 로드맵에 대한 긍정적인 신호로 해석될 수 있습니다.",
+          "key_factors": [
+            "완전 자율주행 기술 강조",
+            "사이버캡 생산 개시 언급",
+            "로드스터의 독점적 수동 운전 가능성"
+          ]
+        },
+        "1777175280713": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 수백만 대의 기존 차량에 대해 완전 자율주행(FSD) 기능을 위해 하드웨어 업그레이드가 필요하다고 인정한 것은 상당한 비용과 고객 불만을 야기할 수 있습니다.",
+          "key_factors": [
+            "하드웨어 업그레이드 비용",
+            "고객 불만",
+            "FSD 기능 지연"
+          ]
+        },
+        "1777175280714": {
+          "impact_score": 1,
+          "direction": "neutral",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 2026년 자본 지출 가이던스 상향 조정은 신규 공장 및 AI 투자 증가를 의미하지만, 로보택시 배포 기대치 하향은 단기적인 불확실성을 더하여 전반적인 영향은 중립적입니다.",
+          "key_factors": [
+            "자본 지출 가이던스 상향 조정",
+            "로보택시 배포 기대치 하향",
+            "신규 공장 건설 및 AI 투자"
+          ]
+        },
+        "1777175280715": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13",
+            "R19"
+          ],
+          "reasoning": "일론 머스크의 HW3 차량 HW4 업그레이드를 위한 마이크로팩토리 건설 제안은 로보택시 차량군 확장 및 FSD 기술 발전을 가속화하여 테슬라의 장기적인 성장 잠재력을 높일 것입니다.",
+          "key_factors": [
+            "HW4 업그레이드",
+            "로보택시 확장",
+            "FSD 발전"
+          ]
+        },
+        "1777175280716": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 1분기 EPS와 매출 예상치를 상회했음에도 불구하고, 완전 자율주행 하드웨어의 한계를 인정하고 자본 지출 계획을 상향 조정한 점이 투자자들에게 부정적으로 작용하여 주가가 하락했습니다.",
+          "key_factors": [
+            "FSD 하드웨어 한계 인정",
+            "자본 지출 계획 상향 조정",
+            "예상치 상회 실적"
+          ]
+        },
+        "1777175280717": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 인텔의 첨단 공정 기술을 테라팹 프로젝트에 활용하는 것은 장기적인 기술 발전과 생산 효율성 향상에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "Terafab project",
+            "Intel 14A process technology",
+            "Technology partnership"
+          ]
+        },
+        "1777175280718": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 2026년 5월 차세대 로드스터 공개를 시사하며 역대 가장 흥미로운 제품 공개가 될 것이라고 강조하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "신제품 공개",
+            "일론 머스크 발언"
+          ]
+        },
+        "1777175280719": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 로보택시 출시 지연과 FSD 소프트웨어의 주요 아키텍처 개선 필요성을 언급하여 투자자들의 기대에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "로보택시 출시 지연",
+            "FSD 소프트웨어 개선 필요성"
+          ]
+        },
+        "1777175280720": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 AI 및 로봇공학 투자 확대로 인해 2026년 남은 기간 동안 마이너스 잉여현금흐름을 예상하는 것은 단기적인 재무 건전성에 대한 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "마이너스 잉여현금흐름 예상",
+            "AI 및 로봇공학 투자 확대"
+          ]
+        },
+        "1777175280721": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R05",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 FSD 시스템 기능 오도 주장에 대한 집단 소송은 테슬라의 평판과 재정에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "집단 소송",
+            "FSD 시스템",
+            "일론 머스크의 발언"
+          ]
+        }
+      },
+      "avgScore": -0.4,
+      "buyIndex": 46,
+      "direction": "bearish",
+      "topRules": [
+        "R13",
+        "R19",
+        "R05",
+        "R24"
+      ],
+      "bullish": 4,
+      "bearish": 5,
+      "neutral": 1,
+      "timestamp": 1777175302660
+    },
+    {
       "id": "auto-1777141948886",
       "date": "2026-04-26",
       "displayDate": "2026.04.26",
@@ -1188,5 +1423,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-26 03:31 KST"
+  "lastUpdated": "2026-04-26 12:47 KST"
 }
