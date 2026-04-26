@@ -586,6 +586,39 @@ async function getDriveAppDataSize(token) {
 
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
 const CALENDAR_DATA_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
+const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
+
+// 주가 캐시 로드/저장
+function loadPriceCache() {
+  try { return JSON.parse(localStorage.getItem(PRICE_CACHE_KEY) || 'null'); } catch { return null; }
+}
+function savePriceCache(price, items) {
+  try {
+    // items의 date를 ISO string으로 직렬화 (Date 객체는 JSON에서 string으로 바뀜)
+    const serialized = (items || []).map(d => ({ ...d, date: d.date instanceof Date ? d.date.toISOString() : d.date }));
+    localStorage.setItem(PRICE_CACHE_KEY, JSON.stringify({ price, items: serialized, fetchedAt: Date.now() }));
+  } catch {}
+}
+function deserializePriceCache(cache) {
+  if (!cache) return null;
+  return {
+    ...cache,
+    items: (cache.items || []).map(d => ({ ...d, date: new Date(d.date) })),
+  };
+}
+// KST 기준 "오늘 7시 이후" 여부 판단 → 캐시 유효성
+function isPriceCacheValid(cache) {
+  if (!cache || !cache.fetchedAt) return false;
+  const nowUtc = Date.now();
+  // KST 7:00 = UTC 22:00 전날 → fetchedAt 이후 KST 7시 체크
+  const kstNow = new Date(nowUtc + 9 * 3600000); // UTC로 KST 시간 계산
+  // 오늘 KST 7:00 의 UTC timestamp
+  const kstMidnight = new Date(Date.UTC(kstNow.getUTCFullYear(), kstNow.getUTCMonth(), kstNow.getUTCDate())); // KST 자정 = UTC 자정 (ISO기준)
+  const kst7am = kstMidnight.getTime() - 9 * 3600000 + 7 * 3600000; // KST 7시 = kstMidnight(UTC) - 9h + 7h = UTC 전날 22시
+  // 현재가 KST 7시 이전이면 kst7am을 하루 당김
+  const effectiveKst7am = nowUtc >= kst7am ? kst7am : kst7am - 86400000;
+  return cache.fetchedAt >= effectiveKst7am;
+}
 
 async function fetchAutoSessions() {
   try {
@@ -1007,7 +1040,7 @@ const RISK_CFG = {
   very_high: { color: '#ef4444', label: '매우 높음' },
 };
 
-function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLoading, weeklyError, currentPrice, newsItems = [], newsResults = {}, calendarEvents = [] }) {
+function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLoading, weeklyError, currentPrice, priceLastFetch, priceFromCache, newsItems = [], newsResults = {}, calendarEvents = [] }) {
   if (loading) return (
     <div className="rounded-xl p-8 border mt-6 flex items-center justify-center gap-3"
       style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
@@ -1041,11 +1074,19 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
             <span className="text-xs px-2 py-1 rounded" style={{ background: '#14171e', border: '1px solid #2A2D35', color: '#94a3b8' }}>
               {weeklyLoading
                 ? <span className="animate-pulse">현재가 로딩 중…</span>
-                : weeklyData
-                  ? <><span>실시간 현재가 </span><strong className="text-white">${(weeklyData[weeklyData.length-1]?.close ?? currentPrice)?.toFixed(2)}</strong><span className="text-gray-600 ml-1">Yahoo Finance</span></>
-                  : currentPrice && currentPrice !== 247
-                    ? <><span>현재가 </span><strong className="text-white">${currentPrice?.toFixed(2)}</strong><span className="text-gray-600 ml-1">Gemini Search</span></>
-                    : <><span>현재가 </span><strong className="text-white">${forecast.current_price ?? 247}</strong><span className="text-yellow-600 ml-1">추정</span></>
+                : (() => {
+                    const displayPrice = weeklyData ? (weeklyData[weeklyData.length-1]?.close ?? currentPrice) : currentPrice;
+                    const timeLabel = priceLastFetch
+                      ? new Date(priceLastFetch + 9*3600000).toISOString().replace('T',' ').slice(0,16) + ' KST'
+                      : null;
+                    if (weeklyData && !priceFromCache) return (
+                      <><span>실시간 현재가 </span><strong className="text-white">${displayPrice?.toFixed(2)}</strong><span className="text-gray-600 ml-1">Yahoo Finance</span></>
+                    );
+                    if (currentPrice && currentPrice !== 247) return (
+                      <><span>마지막 조회가 </span><strong className="text-white">${displayPrice?.toFixed(2)}</strong>{timeLabel && <span className="text-gray-600 ml-1" style={{fontSize:9}}>{timeLabel}</span>}</>
+                    );
+                    return <><span>현재가 </span><strong className="text-white">${forecast.current_price ?? 247}</strong><span className="text-yellow-600 ml-1">추정</span></>;
+                  })()
               }
             </span>
             <span className="text-sm font-bold px-3 py-1.5 rounded-lg"
@@ -1404,7 +1445,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
 
 // ─── 컴포넌트: TrendChart ─────────────────────────────────────────────────
 
-function TrendChart({ sessions, prediction, prediction7 }) {
+function TrendChart({ sessions, prediction, prediction7, weeklyData }) {
   if (!sessions || sessions.length === 0) return (
     <div className="flex flex-col items-center justify-center py-14 text-gray-600">
       <p className="text-3xl mb-3">📭</p>
@@ -1434,15 +1475,34 @@ function TrendChart({ sessions, prediction, prediction7 }) {
 
   if (data.length === 0) return <div className="py-8 text-center text-xs text-gray-600">매수지수 데이터가 없습니다.</div>;
 
+  // ── 실제 주가 매핑 (weeklyData → 세션 날짜에 nearest 매핑) ────
+  let pricePoints = [];
+  const hasPrice = weeklyData && weeklyData.length > 0;
+  if (hasPrice) {
+    pricePoints = data.map(d => {
+      const sessionMs = new Date(d.date).getTime();
+      let best = null, bestDiff = Infinity;
+      weeklyData.forEach(w => {
+        const diff = Math.abs(w.date.getTime() - sessionMs);
+        if (diff < bestDiff) { bestDiff = diff; best = w; }
+      });
+      return best ? best.close : null;
+    }).filter(Boolean);
+  }
+  const hasPriceData = pricePoints.length === data.length && pricePoints.every(p => p != null);
+  const priceMin = hasPriceData ? Math.min(...pricePoints) * 0.995 : 0;
+  const priceMax = hasPriceData ? Math.max(...pricePoints) * 1.005 : 1;
+
   const preds = Array.isArray(prediction7) && prediction7.length > 0 ? prediction7 : (prediction ? [prediction] : []);
-  const W = 720, H = 240;
-  const P = { t: 30, r: 28, b: 60, l: 44 };
+  const W = 720, H = 260;
+  const P = { t: 30, r: hasPriceData ? 62 : 28, b: 60, l: 44 };
   const cW = W - P.l - P.r, cH = H - P.t - P.b;
 
   // 총 슬롯 = 실제 날짜 수 + 예측 개수
   const totalSlots = data.length + preds.length;
   const xPos = i => P.l + (totalSlots <= 1 ? cW / 2 : (i / (totalSlots - 1)) * cW);
   const yPos = v => P.t + (1 - v / 100) * cH;
+  const yPosPrice = p => P.t + (1 - (p - priceMin) / (priceMax - priceMin)) * cH;
   const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
 
   const pts = data.map((d, i) => [xPos(i), yPos(d.value)]);
@@ -1450,12 +1510,14 @@ function TrendChart({ sessions, prediction, prediction7 }) {
   const areaPath = `M${xPos(0)},${P.t + cH} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${xPos(data.length - 1)},${P.t + cH}Z`;
 
   const lastPt = pts[pts.length - 1];
-  // 예측 포인트 좌표 계산
   const predPts = preds.map((p, i) => [xPos(data.length + i), yPos(p.value)]);
-  // 예측 점선 경로 (마지막 실제 → 예측들)
   const predPath = lastPt && predPts.length > 0
     ? `M${lastPt[0]},${lastPt[1]} ` + predPts.map(p => `L${p[0]},${p[1]}`).join(' ')
     : null;
+
+  // 주가 선 경로
+  const pricePts = hasPriceData ? data.map((d, i) => [xPos(i), yPosPrice(pricePoints[i])]) : [];
+  const pricePath = pricePts.length > 1 ? pricePts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0]},${p[1]}`).join(' ') : null;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', display: 'block' }}>
@@ -1465,7 +1527,7 @@ function TrendChart({ sessions, prediction, prediction7 }) {
         </linearGradient>
       </defs>
 
-      {/* 그리드 + Y라벨 */}
+      {/* 그리드 + 좌측 Y라벨 (매수지수) */}
       {[0, 25, 50, 75, 100].map(v => (
         <g key={v}>
           <line x1={P.l} y1={yPos(v)} x2={W - P.r} y2={yPos(v)} stroke={v === 50 ? '#4b5563' : '#2A2D35'} strokeWidth={v === 50 ? 1 : 0.7} strokeDasharray="3,3" />
@@ -1473,21 +1535,45 @@ function TrendChart({ sessions, prediction, prediction7 }) {
         </g>
       ))}
 
+      {/* 우측 Y라벨 (실제 주가) */}
+      {hasPriceData && [0, 0.25, 0.5, 0.75, 1].map(t => {
+        const p = priceMin + t * (priceMax - priceMin);
+        const y = P.t + (1 - t) * cH;
+        return <text key={t} x={W - P.r + 5} y={y + 3.5} fill="#06b6d4" fontSize="8.5" opacity="0.75">${Math.round(p)}</text>;
+      })}
+
       {/* Zone */}
       <rect x={P.l} y={yPos(100)} width={cW} height={yPos(65) - yPos(100)} fill="rgba(34,197,94,0.04)" />
       <rect x={P.l} y={yPos(65)}  width={cW} height={yPos(45) - yPos(65)}  fill="rgba(245,158,11,0.04)" />
       <rect x={P.l} y={yPos(45)}  width={cW} height={yPos(0)  - yPos(45)}  fill="rgba(239,68,68,0.04)" />
 
-      {/* 실제 데이터 영역 + 선 */}
+      {/* 매수지수 영역 + 선 */}
       {data.length > 1 && <path d={areaPath} fill="url(#trendGrad)" />}
       {data.length > 1 && <path d={linePath} fill="none" stroke="#475569" strokeWidth="1.8" strokeLinejoin="round" />}
+
+      {/* 실제 주가 오버레이 */}
+      {pricePath && (
+        <path d={pricePath} fill="none" stroke="#06b6d4" strokeWidth="2" strokeLinejoin="round" opacity="0.85" />
+      )}
+      {/* 주가 포인트 */}
+      {pricePts.map(([x, y], i) => (
+        <g key={`pp-${i}`}>
+          <circle cx={x} cy={y} r="3.5" fill="#06b6d4" stroke="#0D0F14" strokeWidth="1.5" opacity="0.9" />
+          {/* 첫·마지막 포인트에 가격 라벨 */}
+          {(i === 0 || i === pricePts.length - 1) && (
+            <text x={x} y={y - 8} textAnchor={i === 0 ? 'start' : 'end'} fill="#06b6d4" fontSize="8.5" fontWeight="700" opacity="0.9">
+              ${Math.round(pricePoints[i])}
+            </text>
+          )}
+        </g>
+      ))}
 
       {/* 예측 점선 */}
       {predPath && (
         <path d={predPath} fill="none" stroke="#a78bfa" strokeWidth="1.6" strokeDasharray="5,3" opacity="0.7" />
       )}
 
-      {/* 실제 데이터 포인트 */}
+      {/* 매수지수 포인트 */}
       {data.map((d, i) => {
         const [x, y] = pts[i]; const col = bCol(d.value);
         return (
@@ -1512,15 +1598,12 @@ function TrendChart({ sessions, prediction, prediction7 }) {
               ? <><circle cx={px} cy={py} r="9" fill="none" stroke={col} strokeWidth="1.5" strokeDasharray="3,2" opacity="0.5" /><circle cx={px} cy={py} r="4.5" fill={col} opacity="0.8" stroke="#0D0F14" strokeWidth="1.5" /></>
               : <circle cx={px} cy={py} r="3.5" fill={col} opacity="0.55" stroke="#0D0F14" strokeWidth="1" />
             }
-            {/* 수치 — 첫날은 크게, 나머지 짝수만 표시 */}
             {(isFirst || i % 2 === 0) && (
               <text x={px} y={py - (isFirst ? 16 : 11)} textAnchor="middle" fill={col} fontSize={isFirst ? "10" : "8"} fontWeight={isFirst ? "700" : "500"} opacity={isFirst ? 1 : 0.75}>
                 {pred.value}
               </text>
             )}
-            {/* 날짜 라벨 */}
             <text x={px} y={H - 40} textAnchor="middle" fill="#a78bfa" fontSize="7.5" opacity="0.7" transform={`rotate(-30,${px},${H - 40})`}>{pred.dateLabel || `+${pred.day}일`}</text>
-            {/* 신뢰도 — 마지막 포인트에만 */}
             {i === preds.length - 1 && (
               <text x={px} y={H - 16} textAnchor="middle" fill="#7c3aed" fontSize="7" opacity="0.8">({pred.confLabel})</text>
             )}
@@ -1529,6 +1612,7 @@ function TrendChart({ sessions, prediction, prediction7 }) {
       })}
 
       <text x={10} y={P.t + cH / 2} textAnchor="middle" fill="#6b7280" fontSize="9" transform={`rotate(-90,10,${P.t + cH / 2})`}>매수지수</text>
+      {hasPriceData && <text x={W - 4} y={P.t + cH / 2} textAnchor="middle" fill="#06b6d4" fontSize="9" opacity="0.7" transform={`rotate(90,${W - 4},${P.t + cH / 2})`}>TSLA 주가</text>}
     </svg>
   );
 }
@@ -2302,7 +2386,7 @@ function CalendarPage({ onBack, desktopMode }) {
 
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError,
   forecast, forecastLoading, forecastError, onRetryForecast,
-  weeklyData, weeklyLoading, weeklyError, currentPrice,
+  weeklyData, weeklyLoading, weeklyError, currentPrice, priceLastFetch, priceFromCache,
   newsItems, newsResults, calendarEvents }) {
   const [db, setDB] = useState(() => getNewsDB());
   const [expanded, setExpanded] = useState(null);
@@ -2639,11 +2723,12 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
               <span key={l} className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: c }} /><span className="text-gray-500">{l} ({r})</span></span>
             ))}
             <span className="flex items-center gap-1"><span className="w-5 h-0.5 rounded" style={{ background: '#a78bfa', borderTop: '1px dashed #a78bfa' }} /><span className="text-gray-500">7일예측</span></span>
+            {weeklyData && <span className="flex items-center gap-1"><span className="w-5 h-0.5 rounded" style={{ background: '#06b6d4' }} /><span className="text-gray-500">실제주가</span></span>}
             <span className="text-gray-600">🔍수집 📋샘플</span>
           </div>
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} />
+          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} />
         </div>
       </div>
       {/* Timeline */}
@@ -2786,6 +2871,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         weeklyLoading={weeklyLoading}
         weeklyError={weeklyError}
         currentPrice={currentPrice}
+        priceLastFetch={priceLastFetch}
+        priceFromCache={priceFromCache}
         newsItems={newsItems}
         newsResults={newsResults}
         calendarEvents={calendarEvents || []}
@@ -2820,10 +2907,12 @@ function App() {
   const [forecast, setForecast]               = useState(() => { try { return JSON.parse(localStorage.getItem(FORECAST_CACHE_KEY) || 'null'); } catch { return null; } });
   const [forecastLoading, setForecastLoading] = useState(false);
   const [forecastError, setForecastError]     = useState(null);
-  const [weeklyData,    setWeeklyData]    = useState(null);
+  const [weeklyData,    setWeeklyData]    = useState(() => { const c = deserializePriceCache(loadPriceCache()); return c?.items?.length ? c.items : null; });
   const [weeklyLoading, setWeeklyLoading] = useState(false);
   const [weeklyError,   setWeeklyError]   = useState(null);
-  const [currentPrice,  setCurrentPrice]  = useState(247);
+  const [currentPrice,  setCurrentPrice]  = useState(() => { const c = loadPriceCache(); return c?.price || 247; });
+  const [priceLastFetch, setPriceLastFetch] = useState(() => { const c = loadPriceCache(); return c?.fetchedAt || null; });
+  const [priceFromCache, setPriceFromCache] = useState(() => isPriceCacheValid(loadPriceCache()));
   const [calendarEvents, setCalendarEvents] = useState([]);
   const sessionIdRef    = useRef(null);
   const sessionSavedRef = useRef(false);
@@ -3006,14 +3095,25 @@ function App() {
     } finally { setDriveSyncing(false); }
   };
 
-  // ─── 앱 시작 시 Yahoo Finance 실시간 주가 fetch ─────────────────────────
+  // ─── 앱 시작 시 주가 fetch (KST 7시 이후 하루 1회 갱신) ─────────────────
   useEffect(() => {
-    setWeeklyLoading(true); setWeeklyError(null);
+    const cache = loadPriceCache();
+    if (isPriceCacheValid(cache) && cache.items?.length) {
+      // 캐시 유효 → 바로 사용, fetch 안 함
+      setPriceFromCache(true);
+      return;
+    }
+    // 캐시 만료 또는 없음 → 새로 fetch
+    setWeeklyLoading(true); setWeeklyError(null); setPriceFromCache(false);
     fetchTSLAWeeklyData()
       .then(({ items, currentPrice: cp }) => {
         setWeeklyData(items);
         setCurrentPrice(cp);
         setWeeklyError(null);
+        const ts = Date.now();
+        savePriceCache(cp, items);
+        setPriceLastFetch(ts);
+        setPriceFromCache(false);
       })
       .catch(e => { setWeeklyError(e.message); })
       .finally(() => setWeeklyLoading(false));
@@ -3022,15 +3122,17 @@ function App() {
   // ─── Yahoo Finance 실패 시 Gemini로 현재가만 가져오기 ──────────────────
   const geminiPriceFetchedRef = useRef(false);
   useEffect(() => {
-    if (weeklyData || weeklyLoading || !weeklyError || !apiKey || geminiPriceFetchedRef.current) return;
+    if (weeklyLoading || !weeklyError || !apiKey || geminiPriceFetchedRef.current) return;
     geminiPriceFetchedRef.current = true;
     fetchPriceViaGemini(apiKey)
       .then(price => {
         setCurrentPrice(price);
-        setWeeklyError(null); // 가격 얻었으면 에러 메시지 제거
+        setWeeklyError(null);
+        savePriceCache(price, weeklyData || []);
+        setPriceLastFetch(Date.now());
       })
-      .catch(() => {}); // Gemini도 실패하면 기본값 유지
-  }, [apiKey, weeklyData, weeklyLoading, weeklyError]);
+      .catch(() => {});
+  }, [apiKey, weeklyLoading, weeklyError]);
 
   const saveKey = () => {
     const k = keyInput.trim();
@@ -3106,7 +3208,7 @@ function App() {
               forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
               onRetryForecast={runForecast}
               weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
-              currentPrice={currentPrice}
+              currentPrice={currentPrice} priceLastFetch={priceLastFetch} priceFromCache={priceFromCache}
               newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
           </div>
         )}
@@ -3184,7 +3286,7 @@ function App() {
         forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
         onRetryForecast={runForecast}
         weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
-        currentPrice={currentPrice}
+        currentPrice={currentPrice} priceLastFetch={priceLastFetch} priceFromCache={priceFromCache}
         newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
     </div>
   );
