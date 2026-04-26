@@ -135,6 +135,17 @@ const RULES_META = {
   R24:{cat:'Musk',label:'사업 리스크',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
 };
 
+// ─── 캘린더 카테고리 메타 ─────────────────────────────────────────────────────
+const CAL_CATEGORY_META = {
+  '실적발표':   { color: '#22c55e', bg: 'rgba(34,197,94,0.15)',   border: 'rgba(34,197,94,0.35)',   dot: '💰' },
+  '인도량발표': { color: '#06b6d4', bg: 'rgba(6,182,212,0.15)',   border: 'rgba(6,182,212,0.35)',   dot: '🚗' },
+  '제품출시':   { color: '#a78bfa', bg: 'rgba(167,139,250,0.15)', border: 'rgba(167,139,250,0.35)', dot: '🆕' },
+  '주주총회':   { color: '#f59e0b', bg: 'rgba(245,158,11,0.15)',  border: 'rgba(245,158,11,0.35)',  dot: '📋' },
+  '컨퍼런스':   { color: '#38bdf8', bg: 'rgba(56,189,248,0.15)',  border: 'rgba(56,189,248,0.35)',  dot: '🎤' },
+  '규제':       { color: '#f97316', bg: 'rgba(249,115,22,0.15)',  border: 'rgba(249,115,22,0.35)',  dot: '⚖️' },
+  '기타':       { color: '#9ca3af', bg: 'rgba(156,163,175,0.1)',  border: 'rgba(156,163,175,0.25)', dot: '📌' },
+};
+
 const SAMPLE_NEWS = [
   {
     id: 1,
@@ -573,7 +584,8 @@ async function getDriveAppDataSize(token) {
 
 // ─── 자동 세션 로드 (GitHub repo data/auto-sessions.json) ────────────────────
 
-const AUTO_SESSIONS_URL = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
+const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
+const CALENDAR_DATA_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
 
 async function fetchAutoSessions() {
   try {
@@ -1488,6 +1500,7 @@ function MobileBottomNav({ page, setPage, dbCount }) {
   const tabs = [
     { key: 'dashboard', icon: '📊', label: '대시보드' },
     { key: 'trend',     icon: '📈', label: '트렌드',  badge: dbCount },
+    { key: 'calendar',  icon: '📅', label: '캘린더' },
     { key: 'settings',  icon: '⚙',  label: '설정' },
   ];
   return (
@@ -1704,6 +1717,320 @@ function MobileDashboard({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── 컴포넌트: CalendarPage ───────────────────────────────────────────────
+
+function CalendarPage({ onBack }) {
+  const isMobile = useIsMobile();
+  const [events, setEvents]               = useState([]);
+  const [loading, setLoading]             = useState(true);
+  const [loadError, setLoadError]         = useState(false);
+  const [lastUpdated, setLastUpdated]     = useState(null);
+  const [currentYear, setCurrentYear]     = useState(() => new Date().getFullYear());
+  const [currentMonth, setCurrentMonth]   = useState(() => new Date().getMonth());
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [activeFilter, setActiveFilter]   = useState(null);
+
+  useEffect(() => {
+    setLoading(true); setLoadError(false);
+    fetch(CALENDAR_DATA_URL + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        setEvents(Array.isArray(data.events) ? data.events : []);
+        setLastUpdated(data.lastUpdated || null);
+        setLoading(false);
+      })
+      .catch(() => { setLoadError(true); setLoading(false); });
+  }, []);
+
+  const prevMonth = () => { if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(y => y - 1); } else setCurrentMonth(m => m - 1); };
+  const nextMonth = () => { if (currentMonth === 11) { setCurrentMonth(0); setCurrentYear(y => y + 1); } else setCurrentMonth(m => m + 1); };
+  const goToday   = () => { const n = new Date(); setCurrentYear(n.getFullYear()); setCurrentMonth(n.getMonth()); };
+
+  const buildGrid = (year, month) => {
+    const first = new Date(year, month, 1).getDay();
+    const days  = new Date(year, month + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < first; i++) cells.push(null);
+    for (let d = 1; d <= days; d++) cells.push(new Date(year, month, d));
+    while (cells.length % 7 !== 0) cells.push(null);
+    return cells;
+  };
+
+  const MONTH_KO = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  const DAY_KO   = ['일','월','화','수','목','금','토'];
+  const todayStr = new Date().toISOString().split('T')[0];
+  const monthStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`;
+
+  const monthEvents = events.filter(ev => ev.date && ev.date.startsWith(monthStr));
+  const filteredMonthEvents = activeFilter ? monthEvents.filter(e => e.category === activeFilter) : monthEvents;
+
+  const eventsByDate = filteredMonthEvents.reduce((acc, ev) => {
+    if (!acc[ev.date]) acc[ev.date] = [];
+    acc[ev.date].push(ev);
+    return acc;
+  }, {});
+
+  const grid = buildGrid(currentYear, currentMonth);
+  const maxPills = isMobile ? 1 : 2;
+
+  const EventPill = ({ ev, compact }) => {
+    const meta = CAL_CATEGORY_META[ev.category] || CAL_CATEGORY_META['기타'];
+    return (
+      <button onClick={() => setSelectedEvent(ev)}
+        className="w-full text-left rounded px-1 py-0.5 mb-0.5 truncate hover:opacity-80 transition-opacity"
+        style={{ background: meta.bg, border: `1px solid ${meta.border}`, color: meta.color,
+                 fontSize: 10, fontWeight: 600, opacity: ev.confirmed ? 1 : 0.65 }}>
+        {!ev.confirmed && '? '}{meta.dot} {ev.title}
+      </button>
+    );
+  };
+
+  return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh', paddingBottom: isMobile ? 80 : 0 }}>
+
+      {/* 모바일 헤더 */}
+      {isMobile && (
+        <div className="sticky top-0 z-40 flex items-center gap-3 px-4 py-3"
+          style={{ background: 'rgba(13,15,20,0.97)', borderBottom: '1px solid #2A2D35', backdropFilter: 'blur(8px)' }}>
+          <button onClick={onBack} className="text-gray-400 text-sm">← 뒤로</button>
+          <h1 className="text-base font-bold text-white flex-1">📅 테슬라 캘린더</h1>
+          {lastUpdated && <span className="text-xs text-gray-600">{lastUpdated.slice(0,10)}</span>}
+        </div>
+      )}
+
+      <div className={isMobile ? 'px-3 pt-3' : 'max-w-6xl mx-auto px-4 py-6'}>
+
+        {/* 데스크탑 타이틀 */}
+        {!isMobile && (
+          <div className="flex items-start justify-between mb-5">
+            <div>
+              <h2 className="text-xl font-bold text-white">📅 테슬라 이벤트 캘린더</h2>
+              <p className="text-xs text-gray-500 mt-0.5">
+                {lastUpdated ? `마지막 업데이트: ${lastUpdated}` : '매주 월요일 KST 09:00 자동 업데이트'}
+              </p>
+            </div>
+            {/* 카테고리 필터 (데스크탑) */}
+            <div className="flex flex-wrap gap-1.5 justify-end max-w-lg">
+              <button onClick={() => setActiveFilter(null)}
+                className="text-xs px-2.5 py-1 rounded-lg font-semibold transition-all"
+                style={!activeFilter ? { background:'#E3193715', border:'1px solid #E3193750', color:'#fff' }
+                                     : { background:'#1C1F26', border:'1px solid #2A2D35', color:'#6b7280' }}>
+                전체
+              </button>
+              {Object.entries(CAL_CATEGORY_META).map(([cat, meta]) => (
+                <button key={cat} onClick={() => setActiveFilter(activeFilter === cat ? null : cat)}
+                  className="text-xs px-2.5 py-1 rounded-lg font-semibold transition-all"
+                  style={activeFilter === cat
+                    ? { background: meta.bg, border: `1px solid ${meta.border}`, color: meta.color }
+                    : { background:'#1C1F26', border:'1px solid #2A2D35', color:'#6b7280' }}>
+                  {meta.dot} {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 월 네비게이션 */}
+        <div className="flex items-center justify-between mb-4 rounded-xl px-4 py-3"
+          style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+          <button onClick={prevMonth}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors text-lg"
+            style={{ background: '#14171e', border: '1px solid #2A2D35' }}>‹</button>
+          <div className="flex items-center gap-3">
+            <span className="text-base font-bold text-white">{currentYear}년 {MONTH_KO[currentMonth]}</span>
+            <button onClick={goToday}
+              className="text-xs px-2.5 py-1 rounded-lg text-gray-500 hover:text-white transition-colors"
+              style={{ background: '#14171e', border: '1px solid #2A2D35' }}>오늘</button>
+          </div>
+          <button onClick={nextMonth}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-white transition-colors text-lg"
+            style={{ background: '#14171e', border: '1px solid #2A2D35' }}>›</button>
+        </div>
+
+        {/* 로딩 */}
+        {loading && (
+          <div className="flex items-center justify-center py-20 gap-3 text-gray-500">
+            <span className="w-5 h-5 border-2 border-gray-600 border-t-gray-300 rounded-full spinning" />
+            캘린더 불러오는 중...
+          </div>
+        )}
+
+        {/* 에러 */}
+        {!loading && loadError && (
+          <div className="py-16 text-center rounded-xl border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+            <p className="text-gray-500 text-sm">캘린더 데이터를 불러오지 못했습니다</p>
+            <p className="text-gray-600 text-xs mt-1">GitHub Actions가 아직 실행되지 않았거나 네트워크 오류입니다</p>
+          </div>
+        )}
+
+        {/* 달력 그리드 */}
+        {!loading && !loadError && (
+          <div className="rounded-xl overflow-hidden border mb-4" style={{ borderColor: '#2A2D35' }}>
+            {/* 요일 헤더 */}
+            <div className="grid grid-cols-7" style={{ background: '#14171e', borderBottom: '1px solid #2A2D35' }}>
+              {DAY_KO.map((d, i) => (
+                <div key={d} className="text-center py-2 text-xs font-semibold"
+                  style={{ color: i === 0 ? '#ef4444' : i === 6 ? '#60a5fa' : '#6b7280' }}>{d}</div>
+              ))}
+            </div>
+            {/* 날짜 셀 */}
+            <div className="grid grid-cols-7" style={{ background: '#1C1F26' }}>
+              {grid.map((date, idx) => {
+                if (!date) return (
+                  <div key={`e${idx}`} className="border-b border-r"
+                    style={{ borderColor: '#2A2D35', background: '#161920', minHeight: isMobile ? 60 : 88 }} />
+                );
+                const ds  = date.toISOString().split('T')[0];
+                const evs = eventsByDate[ds] || [];
+                const isToday   = ds === todayStr;
+                const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+                const isSun     = date.getDay() === 0;
+                return (
+                  <div key={ds} className="border-b border-r p-1 transition-colors"
+                    style={{ borderColor: '#2A2D35', background: isToday ? 'rgba(227,25,55,0.06)' : '#1C1F26', minHeight: isMobile ? 60 : 88 }}>
+                    {/* 날짜 숫자 */}
+                    <div className="flex items-center mb-0.5">
+                      <span className="text-xs font-semibold w-5 h-5 flex items-center justify-center rounded-full"
+                        style={{ color: isToday ? '#fff' : isWeekend ? (isSun ? '#ef4444' : '#60a5fa') : '#9ca3af',
+                                 background: isToday ? '#E31937' : 'transparent', fontSize: 11 }}>
+                        {date.getDate()}
+                      </span>
+                    </div>
+                    {/* 이벤트 pill */}
+                    {evs.slice(0, maxPills).map(ev => <EventPill key={ev.id} ev={ev} />)}
+                    {evs.length > maxPills && (
+                      <button className="text-xs text-gray-500 hover:text-gray-300 px-1 leading-tight"
+                        onClick={() => setSelectedEvent(evs[maxPills])}>
+                        +{evs.length - maxPills}건
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* 모바일 카테고리 필터 */}
+        {isMobile && !loading && !loadError && (
+          <div className="flex gap-1.5 flex-wrap mb-4">
+            <button onClick={() => setActiveFilter(null)}
+              className="text-xs px-3 py-1.5 rounded-full font-semibold"
+              style={!activeFilter ? { background:'#E31937', color:'#fff' }
+                                   : { background:'#1C1F26', border:'1px solid #2A2D35', color:'#6b7280' }}>
+              전체
+            </button>
+            {Object.entries(CAL_CATEGORY_META).map(([cat, meta]) => (
+              <button key={cat} onClick={() => setActiveFilter(activeFilter === cat ? null : cat)}
+                className="text-xs px-3 py-1.5 rounded-full font-semibold"
+                style={activeFilter === cat
+                  ? { background: meta.bg, border: `1px solid ${meta.border}`, color: meta.color }
+                  : { background:'#1C1F26', border:'1px solid #2A2D35', color:'#6b7280' }}>
+                {meta.dot} {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* 이번 달 이벤트 목록 */}
+        {!loading && !loadError && filteredMonthEvents.length > 0 && (
+          <div className="rounded-xl border overflow-hidden mb-4" style={{ borderColor: '#2A2D35' }}>
+            <div className="px-4 py-2.5 border-b flex items-center justify-between"
+              style={{ background: '#14171e', borderColor: '#2A2D35' }}>
+              <span className="text-xs font-bold tracking-wider text-gray-300">
+                {MONTH_KO[currentMonth]} 이벤트 ({filteredMonthEvents.length}건)
+              </span>
+              {lastUpdated && <span className="text-xs text-gray-600">업데이트 {lastUpdated.slice(0,10)}</span>}
+            </div>
+            <div style={{ divideColor: '#2A2D35' }}>
+              {filteredMonthEvents.sort((a,b) => a.date.localeCompare(b.date)).map(ev => {
+                const meta = CAL_CATEGORY_META[ev.category] || CAL_CATEGORY_META['기타'];
+                return (
+                  <button key={ev.id} onClick={() => setSelectedEvent(ev)}
+                    className="w-full text-left px-4 py-3 flex items-start gap-3 hover:opacity-80 transition-opacity border-b"
+                    style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                    <div className="w-10 h-10 rounded-lg flex flex-col items-center justify-center shrink-0"
+                      style={{ background: meta.bg, border: `1px solid ${meta.border}` }}>
+                      <span style={{ fontSize: 15 }}>{meta.dot}</span>
+                      <span className="font-bold" style={{ color: meta.color, fontSize: 9 }}>{ev.date.slice(8)}일</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-semibold text-gray-100 truncate">{ev.title}</span>
+                        {!ev.confirmed && <span className="text-xs text-yellow-500 shrink-0">미확정</span>}
+                        {ev.importance === 'high' && (
+                          <span className="text-xs px-1.5 py-0.5 rounded font-bold shrink-0"
+                            style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>중요</span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {ev.date}{ev.time ? ` · ${ev.time} ${ev.timezone || ''}` : ''} · {ev.category} · {ev.source}
+                      </p>
+                      {ev.description && <p className="text-xs text-gray-400 mt-1 leading-relaxed line-clamp-2">{ev.description}</p>}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* 빈 상태 */}
+        {!loading && !loadError && filteredMonthEvents.length === 0 && (
+          <div className="py-14 text-center rounded-xl border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+            <p className="text-2xl mb-2">📭</p>
+            <p className="text-gray-500 text-sm">이번 달 등록된 이벤트가 없습니다</p>
+            <p className="text-gray-600 text-xs mt-1">매주 월요일 KST 09:00 자동 업데이트됩니다</p>
+          </div>
+        )}
+      </div>
+
+      {/* 이벤트 상세 모달 */}
+      {selectedEvent && (() => {
+        const meta = CAL_CATEGORY_META[selectedEvent.category] || CAL_CATEGORY_META['기타'];
+        return (
+          <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-4"
+            style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(4px)' }}
+            onClick={() => setSelectedEvent(null)}>
+            <div className="w-full max-w-md rounded-2xl p-5 relative"
+              style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}
+              onClick={e => e.stopPropagation()}>
+              <div className="flex items-start gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-xl"
+                  style={{ background: meta.bg, border: `1px solid ${meta.border}` }}>
+                  {meta.dot}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-base font-bold text-white leading-snug">{selectedEvent.title}</h3>
+                  {selectedEvent.titleEn && <p className="text-xs text-gray-500 mt-0.5">{selectedEvent.titleEn}</p>}
+                </div>
+                <button onClick={() => setSelectedEvent(null)} className="text-gray-600 hover:text-white text-lg leading-none">✕</button>
+              </div>
+              <div className="space-y-2.5 text-sm">
+                {[
+                  ['📅 날짜', `${selectedEvent.date}${selectedEvent.time ? ` ${selectedEvent.time} ${selectedEvent.timezone||''}` : ''}`],
+                  ['🏷 분류', selectedEvent.category],
+                  ['✅ 확정', selectedEvent.confirmed ? '공식 확정' : '⚠ 미확정 (추정)'],
+                  selectedEvent.description && ['📝 설명', selectedEvent.description],
+                  ['🔗 출처', selectedEvent.source],
+                ].filter(Boolean).map(([label, value]) => (
+                  <div key={label} className="flex gap-3">
+                    <span className="text-gray-600 shrink-0 w-16 text-xs">{label}</span>
+                    <span className="text-gray-300 text-xs leading-relaxed"
+                      style={label === '🏷 분류' ? { color: meta.color } : label.includes('확정') && selectedEvent.confirmed ? { color: '#22c55e' } : label.includes('확정') ? { color: '#f59e0b' } : {}}>
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -2501,12 +2828,19 @@ function App() {
               getDriveToken={() => driveTokenRef.current} />
           </div>
         )}
+        {page === 'calendar' && (
+          <div style={{ paddingBottom: 72 }}>
+            <CalendarPage onBack={() => setPage('dashboard')} />
+          </div>
+        )}
         <MobileBottomNav page={page} setPage={setPage} dbCount={dbCount} />
       </div>
     );
   }
 
   // ── PC 라우팅 ─────────────────────────────────────────────────────────────
+  if (page === 'calendar') return <CalendarPage onBack={() => setPage('dashboard')} />;
+
   if (page === 'trend') return <TrendPage onBack={() => setPage('dashboard')}
     onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
     driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
@@ -2538,6 +2872,7 @@ function App() {
           {[
             { key: 'dashboard', icon: '📊', label: '대시보드' },
             { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
+            { key: 'calendar',  icon: '📅', label: '캘린더' },
             { key: 'settings',  icon: '⚙',  label: '설정' },
           ].map(({ key, icon, label, badge }) => (
             <button key={key} onClick={() => setPage(key)}

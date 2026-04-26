@@ -1,0 +1,39 @@
+name: 테슬라 캘린더 자동 업데이트 (매주 월요일)
+
+# KST(UTC+9) 기준: 월요일 09:00 KST = 월요일 00:00 UTC
+on:
+  schedule:
+    - cron: '0 0 * * 1'    # UTC 00:00 월요일 (= KST 09:00 월요일)
+  workflow_dispatch:        # 수동 실행 (테스트용)
+
+jobs:
+  update-calendar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # data/calendar.json 커밋 권한
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 22 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 테슬라 이벤트 수집
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/calendar-update.js
+
+      - name: 결과 커밋 & 푸시
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "TSLA Calendar Bot"
+          git add data/calendar.json
+          if git diff --staged --quiet; then
+            echo "변경 사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "calendar: 테슬라 이벤트 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            git push
+          fi
