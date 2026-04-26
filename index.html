@@ -938,39 +938,116 @@ function aggregateMonthly(weeklyData) {
     const d = w.date instanceof Date ? w.date : new Date(w.date);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
     if (!months[key]) {
-      months[key] = { date: d, open: w.open, high: w.high, low: w.low, close: w.close };
+      months[key] = { date: d, open: w.open, high: w.high ?? w.close, low: w.low ?? w.close, close: w.close };
     } else {
       months[key].high  = Math.max(months[key].high,  w.high  ?? w.close);
       months[key].low   = Math.min(months[key].low,   w.low   ?? w.close);
       months[key].close = w.close;
     }
   });
-  return Object.entries(months)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([, v]) => v);
+  return Object.entries(months).sort(([a],[b]) => a.localeCompare(b)).map(([,v]) => v);
 }
 
-// ─── 컴포넌트: CandlestickChart (주봉 / 월봉 토글) ────────────────────────
+// ─── 일봉 데이터 fetch (3개월) ──────────────────────────────────────────────
+async function fetchTSLADailyData() {
+  const BASE = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=3mo&interval=1d&includePrePost=false';
+  const BASE2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=3mo&interval=1d&includePrePost=false';
+
+  function parse(json) {
+    const r = json?.chart?.result?.[0];
+    if (!r) throw new Error('파싱 실패');
+    const ts = r.timestamp || [];
+    const q = r.indicators?.quote?.[0] || {};
+    return ts.map((t, i) => ({
+      date:  new Date(t * 1000),
+      open:  q.open?.[i]  || q.close?.[i] || 0,
+      high:  q.high?.[i]  || q.close?.[i] || 0,
+      low:   q.low?.[i]   || q.close?.[i] || 0,
+      close: q.close?.[i] || 0,
+    })).filter(d => d.close > 0 && !isNaN(d.close));
+  }
+
+  try { const r = await fetch(BASE,  { cache:'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
+  try { const r = await fetch(BASE2, { cache:'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
+  try {
+    const r = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(BASE), { cache:'no-store' });
+    if (r.ok) { const w = await r.json(); return parse(JSON.parse(w.contents || '{}')); }
+  } catch {}
+  try { const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(BASE), { cache:'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
+  throw new Error('일봉 데이터 로드 실패');
+}
+
+// ─── 컴포넌트: CandlestickChart (일봉 / 주봉 / 월봉 토글) ──────────────────
 
 function WeeklyCandlestickChart({ data }) {
-  const [mode, setMode] = React.useState('weekly'); // 'weekly' | 'monthly'
+  const [mode, setMode] = React.useState('weekly'); // 'daily' | 'weekly' | 'monthly'
+  const [dailyData,    setDailyData]    = React.useState(null);
+  const [dailyLoading, setDailyLoading] = React.useState(false);
+  const [dailyError,   setDailyError]   = React.useState(null);
+
+  // 일봉 선택 시 자동 fetch
+  React.useEffect(() => {
+    if (mode !== 'daily' || dailyData || dailyLoading) return;
+    setDailyLoading(true); setDailyError(null);
+    fetchTSLADailyData()
+      .then(items => setDailyData(items))
+      .catch(e => setDailyError(e.message))
+      .finally(() => setDailyLoading(false));
+  }, [mode]);
 
   if (!data || data.length < 2) return (
     <div className="flex items-center justify-center h-24 text-xs text-gray-600">차트 데이터 없음</div>
   );
 
-  const chartData = mode === 'monthly' ? aggregateMonthly(data) : data;
-  if (chartData.length < 2) return <div className="flex items-center justify-center h-24 text-xs text-gray-600">데이터 부족</div>;
+  // 모드별 데이터 선택
+  const MODES = [
+    { key: 'daily',   label: '일봉' },
+    { key: 'weekly',  label: '주봉' },
+    { key: 'monthly', label: '월봉' },
+  ];
 
-  const W = 700, H = 215;
-  const P = { t: 12, r: 55, b: 28, l: 54 };
+  const chartData = mode === 'monthly' ? aggregateMonthly(data)
+                  : mode === 'daily'   ? (dailyData || [])
+                  : data;
+
+  const W = 700, H = 220;
+  const P = { t: 12, r: 56, b: 30, l: 56 };
   const cW = W - P.l - P.r, cH = H - P.t - P.b;
+
+  // 일봉 로딩/에러 중간 상태
+  if (mode === 'daily' && dailyLoading) return (
+    <div style={{ width: '100%' }}>
+      <ModeToggle modes={MODES} mode={mode} setMode={setMode} />
+      <div className="flex items-center justify-center gap-2 text-xs text-gray-500" style={{ height: H }}>
+        <span className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full spinning" />
+        일봉 데이터 로딩 중…
+      </div>
+    </div>
+  );
+  if (mode === 'daily' && dailyError) return (
+    <div style={{ width: '100%' }}>
+      <ModeToggle modes={MODES} mode={mode} setMode={setMode} />
+      <div className="flex flex-col items-center justify-center gap-2 text-xs text-gray-600" style={{ height: H }}>
+        <span>⚠ {dailyError}</span>
+        <button onClick={() => { setDailyData(null); setDailyError(null); }}
+          className="px-3 py-1 rounded text-gray-400" style={{ background:'#1C1F26', border:'1px solid #2A2D35' }}>
+          재시도
+        </button>
+      </div>
+    </div>
+  );
+  if (chartData.length < 2) return (
+    <div style={{ width: '100%' }}>
+      <ModeToggle modes={MODES} mode={mode} setMode={setMode} />
+      <div className="flex items-center justify-center h-24 text-xs text-gray-600">데이터 부족</div>
+    </div>
+  );
 
   const allP = chartData.flatMap(d => [d.high ?? d.close, d.low ?? d.close]).filter(v => v > 0);
   const minP = Math.min(...allP) * 0.993, maxP = Math.max(...allP) * 1.007;
   const xPos = i => P.l + (i + 0.5) * (cW / chartData.length);
   const yPos = p => P.t + (1 - (p - minP) / (maxP - minP)) * cH;
-  const bW = Math.max(2, cW / chartData.length - 2);
+  const bW = Math.max(1.5, cW / chartData.length - (mode === 'daily' ? 1 : 1.5));
   const yTicks = Array.from({ length: 5 }, (_, i) => minP + (i / 4) * (maxP - minP));
 
   const lastItem = chartData[chartData.length - 1];
@@ -978,45 +1055,28 @@ function WeeklyCandlestickChart({ data }) {
   const curP = lastItem?.close ?? 0;
   const curCol = curP >= (prevItem?.close ?? 0) ? '#22c55e' : '#ef4444';
 
-  // X축 라벨: YYYY/MM, 겹치지 않게 선택
+  // X축 라벨: YYYY/MM — 최소 간격으로 겹침 방지 (2배 여유)
+  const minGap = mode === 'daily' ? 10 : mode === 'weekly' ? 9 : 2;
+  const labelIndices = [];
+  let lastIdx = -999;
+  chartData.forEach((_, i) => {
+    if (i - lastIdx >= minGap || i === chartData.length - 1) {
+      labelIndices.push(i);
+      lastIdx = i;
+    }
+  });
+
   const fmtLabel = d => {
     const dt = d instanceof Date ? d : new Date(d);
     return `${dt.getFullYear()}/${String(dt.getMonth() + 1).padStart(2, '0')}`;
   };
 
-  // 월봉: 모든 캔들에 라벨 / 주봉: 월 바뀔 때만 라벨
-  const labelIndices = new Set();
-  if (mode === 'monthly') {
-    chartData.forEach((_, i) => labelIndices.add(i));
-  } else {
-    let lastMonth = null;
-    chartData.forEach((d, i) => {
-      const dt = d.date instanceof Date ? d.date : new Date(d.date);
-      const m = `${dt.getFullYear()}-${dt.getMonth()}`;
-      if (m !== lastMonth) { labelIndices.add(i); lastMonth = m; }
-    });
-  }
-
   return (
     <div style={{ width: '100%' }}>
-      {/* 토글 버튼 */}
-      <div className="flex justify-end mb-1.5 pr-1">
-        {['weekly', 'monthly'].map(m => (
-          <button key={m} onClick={() => setMode(m)}
-            className="text-xs px-2.5 py-0.5 first:rounded-l last:rounded-r transition-colors"
-            style={{
-              background: mode === m ? '#2A2D35' : 'transparent',
-              color: mode === m ? '#e5e7eb' : '#6b7280',
-              border: '1px solid #2A2D35',
-              marginLeft: m === 'monthly' ? -1 : 0,
-            }}>
-            {m === 'weekly' ? '주봉' : '월봉'}
-          </button>
-        ))}
-      </div>
+      <ModeToggle modes={MODES} mode={mode} setMode={setMode} />
       <div style={{ overflowX: 'auto' }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 320, display: 'block' }}>
-          {/* 가격 그리드 + 좌측 Y라벨 */}
+          {/* Y 그리드 + 좌측 가격 */}
           {yTicks.map(p => (
             <g key={p}>
               <line x1={P.l} y1={yPos(p)} x2={W - P.r} y2={yPos(p)} stroke="#2A2D35" strokeWidth="0.8" strokeDasharray="3,3" />
@@ -1024,14 +1084,17 @@ function WeeklyCandlestickChart({ data }) {
             </g>
           ))}
 
-          {/* 캔들 */}
+          {/* 캔들스틱 */}
           {chartData.map((d, i) => {
-            const x = xPos(i), up = d.close >= d.open, col = up ? '#22c55e' : '#ef4444';
+            const x = xPos(i);
+            const up = d.close >= d.open;
+            const col = up ? '#22c55e' : '#ef4444';
             const bY = yPos(Math.max(d.open, d.close));
             const bH = Math.max(1, yPos(Math.min(d.open, d.close)) - bY);
+            const wickW = mode === 'monthly' ? 1.2 : mode === 'daily' ? 0.7 : 0.8;
             return (
               <g key={i}>
-                <line x1={x} y1={yPos(d.high ?? d.close)} x2={x} y2={yPos(d.low ?? d.close)} stroke={col} strokeWidth={mode === 'monthly' ? 1.2 : 0.8} />
+                <line x1={x} y1={yPos(d.high ?? d.close)} x2={x} y2={yPos(d.low ?? d.close)} stroke={col} strokeWidth={wickW} />
                 <rect x={x - bW / 2} y={bY} width={bW} height={bH} fill={col} fillOpacity="0.85" />
               </g>
             );
@@ -1042,17 +1105,37 @@ function WeeklyCandlestickChart({ data }) {
           <text x={W - P.r + 4} y={yPos(curP) + 3.5} fill={curCol} fontSize="9" fontWeight="700">${Math.round(curP)}</text>
 
           {/* X축 라벨: YYYY/MM */}
-          {chartData.map((d, i) => {
-            if (!labelIndices.has(i)) return null;
-            const dt = d.date instanceof Date ? d.date : new Date(d.date);
+          {labelIndices.map(i => {
+            const dt = chartData[i].date instanceof Date ? chartData[i].date : new Date(chartData[i].date);
             return (
-              <text key={i} x={xPos(i)} y={H - 6} textAnchor="middle" fill="#6b7280" fontSize="8.5">
+              <text key={i} x={xPos(i)} y={H - 8} textAnchor="middle" fill="#6b7280" fontSize="8.5">
                 {fmtLabel(dt)}
               </text>
             );
           })}
         </svg>
       </div>
+    </div>
+  );
+}
+
+// 토글 버튼 서브컴포넌트
+function ModeToggle({ modes, mode, setMode }) {
+  return (
+    <div className="flex justify-end mb-1.5 pr-1">
+      {modes.map((m, idx) => (
+        <button key={m.key} onClick={() => setMode(m.key)}
+          className="text-xs px-2.5 py-0.5 transition-colors"
+          style={{
+            background: mode === m.key ? '#374151' : 'transparent',
+            color: mode === m.key ? '#e5e7eb' : '#6b7280',
+            border: '1px solid #2A2D35',
+            marginLeft: idx > 0 ? -1 : 0,
+            borderRadius: idx === 0 ? '4px 0 0 4px' : idx === modes.length - 1 ? '0 4px 4px 0' : 0,
+          }}>
+          {m.label}
+        </button>
+      ))}
     </div>
   );
 }
