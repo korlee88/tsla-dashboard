@@ -931,53 +931,128 @@ async function generateForecast(apiKey, items, currentPrice = 247, calendarEvent
   return JSON.parse(m[0]);
 }
 
-// ─── 컴포넌트: WeeklyCandlestickChart ─────────────────────────────────────
+// ─── 주봉 → 월봉 집계 ──────────────────────────────────────────────────────
+function aggregateMonthly(weeklyData) {
+  const months = {};
+  (weeklyData || []).forEach(w => {
+    const d = w.date instanceof Date ? w.date : new Date(w.date);
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    if (!months[key]) {
+      months[key] = { date: d, open: w.open, high: w.high, low: w.low, close: w.close };
+    } else {
+      months[key].high  = Math.max(months[key].high,  w.high  ?? w.close);
+      months[key].low   = Math.min(months[key].low,   w.low   ?? w.close);
+      months[key].close = w.close;
+    }
+  });
+  return Object.entries(months)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, v]) => v);
+}
+
+// ─── 컴포넌트: CandlestickChart (주봉 / 월봉 토글) ────────────────────────
 
 function WeeklyCandlestickChart({ data }) {
+  const [mode, setMode] = React.useState('weekly'); // 'weekly' | 'monthly'
+
   if (!data || data.length < 2) return (
     <div className="flex items-center justify-center h-24 text-xs text-gray-600">차트 데이터 없음</div>
   );
-  const W = 700, H = 200;
-  const P = { t: 12, r: 50, b: 24, l: 54 };
+
+  const chartData = mode === 'monthly' ? aggregateMonthly(data) : data;
+  if (chartData.length < 2) return <div className="flex items-center justify-center h-24 text-xs text-gray-600">데이터 부족</div>;
+
+  const W = 700, H = 215;
+  const P = { t: 12, r: 55, b: 28, l: 54 };
   const cW = W - P.l - P.r, cH = H - P.t - P.b;
-  const allP = data.flatMap(d => [d.high ?? d.close, d.low ?? d.close]).filter(v => v > 0);
-  const minP = Math.min(...allP) * 0.994, maxP = Math.max(...allP) * 1.006;
-  const xPos = i => P.l + (i + 0.5) * (cW / data.length);
+
+  const allP = chartData.flatMap(d => [d.high ?? d.close, d.low ?? d.close]).filter(v => v > 0);
+  const minP = Math.min(...allP) * 0.993, maxP = Math.max(...allP) * 1.007;
+  const xPos = i => P.l + (i + 0.5) * (cW / chartData.length);
   const yPos = p => P.t + (1 - (p - minP) / (maxP - minP)) * cH;
-  const bW = Math.max(1.5, cW / data.length - 1.5);
+  const bW = Math.max(2, cW / chartData.length - 2);
   const yTicks = Array.from({ length: 5 }, (_, i) => minP + (i / 4) * (maxP - minP));
-  const lastItem = data[data.length - 1];
-  const prevItem = data[data.length - 2];
+
+  const lastItem = chartData[chartData.length - 1];
+  const prevItem = chartData[chartData.length - 2];
   const curP = lastItem?.close ?? 0;
   const curCol = curP >= (prevItem?.close ?? 0) ? '#22c55e' : '#ef4444';
+
+  // X축 라벨: YYYY/MM, 겹치지 않게 선택
+  const fmtLabel = d => {
+    const dt = d instanceof Date ? d : new Date(d);
+    return `${dt.getFullYear()}/${String(dt.getMonth() + 1).padStart(2, '0')}`;
+  };
+
+  // 월봉: 모든 캔들에 라벨 / 주봉: 월 바뀔 때만 라벨
+  const labelIndices = new Set();
+  if (mode === 'monthly') {
+    chartData.forEach((_, i) => labelIndices.add(i));
+  } else {
+    let lastMonth = null;
+    chartData.forEach((d, i) => {
+      const dt = d.date instanceof Date ? d.date : new Date(d.date);
+      const m = `${dt.getFullYear()}-${dt.getMonth()}`;
+      if (m !== lastMonth) { labelIndices.add(i); lastMonth = m; }
+    });
+  }
+
   return (
-    <div style={{ width: '100%', overflowX: 'auto' }}>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 320, display: 'block' }}>
-        {yTicks.map(p => (
-          <g key={p}>
-            <line x1={P.l} y1={yPos(p)} x2={W - P.r} y2={yPos(p)} stroke="#2A2D35" strokeWidth="0.8" strokeDasharray="3,3" />
-            <text x={P.l - 5} y={yPos(p) + 3.5} textAnchor="end" fill="#6b7280" fontSize="9.5">${Math.round(p)}</text>
-          </g>
+    <div style={{ width: '100%' }}>
+      {/* 토글 버튼 */}
+      <div className="flex justify-end mb-1.5 pr-1">
+        {['weekly', 'monthly'].map(m => (
+          <button key={m} onClick={() => setMode(m)}
+            className="text-xs px-2.5 py-0.5 first:rounded-l last:rounded-r transition-colors"
+            style={{
+              background: mode === m ? '#2A2D35' : 'transparent',
+              color: mode === m ? '#e5e7eb' : '#6b7280',
+              border: '1px solid #2A2D35',
+              marginLeft: m === 'monthly' ? -1 : 0,
+            }}>
+            {m === 'weekly' ? '주봉' : '월봉'}
+          </button>
         ))}
-        {data.map((d, i) => {
-          const x = xPos(i), up = d.close >= d.open, col = up ? '#22c55e' : '#ef4444';
-          const bY = yPos(Math.max(d.open, d.close)), bH = Math.max(1, yPos(Math.min(d.open, d.close)) - bY);
-          return (
-            <g key={i}>
-              <line x1={x} y1={yPos(d.high)} x2={x} y2={yPos(d.low)} stroke={col} strokeWidth="0.8" />
-              <rect x={x - bW / 2} y={bY} width={bW} height={bH} fill={col} fillOpacity="0.85" />
+      </div>
+      <div style={{ overflowX: 'auto' }}>
+        <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 320, display: 'block' }}>
+          {/* 가격 그리드 + 좌측 Y라벨 */}
+          {yTicks.map(p => (
+            <g key={p}>
+              <line x1={P.l} y1={yPos(p)} x2={W - P.r} y2={yPos(p)} stroke="#2A2D35" strokeWidth="0.8" strokeDasharray="3,3" />
+              <text x={P.l - 5} y={yPos(p) + 3.5} textAnchor="end" fill="#6b7280" fontSize="9.5">${Math.round(p)}</text>
             </g>
-          );
-        })}
-        <line x1={P.l} y1={yPos(curP)} x2={W - P.r + 2} y2={yPos(curP)} stroke={curCol} strokeWidth="1" strokeDasharray="4,2" />
-        <text x={W - P.r + 4} y={yPos(curP) + 3.5} fill={curCol} fontSize="9" fontWeight="700">${Math.round(curP)}</text>
-        {data.filter((_, i) => i % 8 === 0 || i === data.length - 1).map((d, j) => {
-          const i = data.indexOf(d);
-          return <text key={j} x={xPos(i)} y={H - 5} textAnchor="middle" fill="#6b7280" fontSize="8.5">
-            {d.date.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}
-          </text>;
-        })}
-      </svg>
+          ))}
+
+          {/* 캔들 */}
+          {chartData.map((d, i) => {
+            const x = xPos(i), up = d.close >= d.open, col = up ? '#22c55e' : '#ef4444';
+            const bY = yPos(Math.max(d.open, d.close));
+            const bH = Math.max(1, yPos(Math.min(d.open, d.close)) - bY);
+            return (
+              <g key={i}>
+                <line x1={x} y1={yPos(d.high ?? d.close)} x2={x} y2={yPos(d.low ?? d.close)} stroke={col} strokeWidth={mode === 'monthly' ? 1.2 : 0.8} />
+                <rect x={x - bW / 2} y={bY} width={bW} height={bH} fill={col} fillOpacity="0.85" />
+              </g>
+            );
+          })}
+
+          {/* 현재가 점선 */}
+          <line x1={P.l} y1={yPos(curP)} x2={W - P.r + 2} y2={yPos(curP)} stroke={curCol} strokeWidth="1" strokeDasharray="4,2" />
+          <text x={W - P.r + 4} y={yPos(curP) + 3.5} fill={curCol} fontSize="9" fontWeight="700">${Math.round(curP)}</text>
+
+          {/* X축 라벨: YYYY/MM */}
+          {chartData.map((d, i) => {
+            if (!labelIndices.has(i)) return null;
+            const dt = d.date instanceof Date ? d.date : new Date(d.date);
+            return (
+              <text key={i} x={xPos(i)} y={H - 6} textAnchor="middle" fill="#6b7280" fontSize="8.5">
+                {fmtLabel(dt)}
+              </text>
+            );
+          })}
+        </svg>
+      </div>
     </div>
   );
 }
@@ -1140,9 +1215,9 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
       {/* 52주 주봉 */}
       <div className="px-5 pt-3">
         <div className="flex items-center gap-2 mb-2">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TSLA 52주 실제 주봉</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TSLA 실제 캔들차트 <span className="text-gray-700 font-normal normal-case">(주봉 / 월봉)</span></p>
           {weeklyLoading && <span className="text-xs text-blue-400 animate-pulse">로딩 중…</span>}
-          {weeklyData && <span className="text-xs text-gray-600">출처: Yahoo Finance</span>}
+          {weeklyData && <span className="text-xs text-gray-600">출처: Yahoo Finance · 1년</span>}
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
           {weeklyLoading
