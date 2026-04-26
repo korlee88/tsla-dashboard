@@ -1711,9 +1711,9 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
   const toggleEditMode = () => { setEditMode(v => !v); setCheckedIds(new Set()); setExpanded(null); };
   const toggleCheck = (id, e) => { e.stopPropagation(); setCheckedIds(prev => { const s = new Set(prev); s.has(id) ? s.delete(id) : s.add(id); return s; }); };
   const toggleAll = () => {
-    const localIds = localSessions.map(s => s.id);
-    const allChecked = localIds.every(id => checkedIds.has(id));
-    setCheckedIds(allChecked ? new Set() : new Set(localIds));
+    const allIds = autoSessions.map(s => s.id);
+    const allChecked = allIds.every(id => checkedIds.has(id));
+    setCheckedIds(allChecked ? new Set() : new Set(allIds));
   };
   const deleteSelected = () => {
     if (checkedIds.size === 0) return;
@@ -1739,7 +1739,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
   const handlePull = async () => { await onPullFromDrive?.(); refresh(); };
 
   const localSessions = db.sessions || [];
-  const sessions = mergeWithAutoSessions(localSessions, autoSessions);
+  const sessions = autoSessions.slice().sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
   const valid = sessions.filter(s => s.buyIndex != null || s.avgScore != null);
   const latest = valid[0]?.buyIndex ?? null;
   const avg = valid.length ? Math.round(valid.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / valid.length) : null;
@@ -2033,14 +2033,14 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           <div className="flex items-center gap-3">
             {editMode && (
               <input type="checkbox"
-                checked={localSessions.length > 0 && localSessions.every(s => checkedIds.has(s.id))}
+                checked={autoSessions.length > 0 && autoSessions.every(s => checkedIds.has(s.id))}
                 onChange={toggleAll}
                 className="w-4 h-4 accent-red-500 cursor-pointer"
                 title="전체 선택"
               />
             )}
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">종합 수집 타임라인</p>
-            <span className="text-xs text-gray-600">{sessions.length}개 세션 · 🤖 자동 {autoSessions.length}건 포함</span>
+            <span className="text-xs text-gray-600">🤖 자동 분석 {autoSessions.length}건</span>
           </div>
           <div className="flex items-center gap-2">
             {editMode && checkedIds.size > 0 && (
@@ -2053,7 +2053,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                 🗑 선택 삭제 ({checkedIds.size}개)
               </button>
             )}
-            {localSessions.length > 0 && (
+            {autoSessions.length > 0 && (
               <button onClick={toggleEditMode}
                 className="text-xs px-3 py-1.5 rounded-lg transition-colors"
                 style={{ background: editMode ? '#3b82f620' : '#ffffff0d', color: editMode ? '#60a5fa' : '#9ca3af', border: `1px solid ${editMode ? '#3b82f640' : '#ffffff15'}` }}
