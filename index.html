@@ -588,6 +588,9 @@ const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dash
 const CALENDAR_DATA_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
 const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
 const DAILY_CACHE_KEY    = 'tsla_daily_cache_v1';
+const BACKTEST_CACHE_KEY = 'tsla_backtest_v2';
+function loadBacktest()       { try { return JSON.parse(localStorage.getItem(BACKTEST_CACHE_KEY) || 'null'); } catch { return null; } }
+function saveBacktest(data)   { try { localStorage.setItem(BACKTEST_CACHE_KEY, JSON.stringify({ ...data, savedAt: Date.now() })); } catch {} }
 
 // 일봉 캐시 로드/저장 (주봉과 동일한 KST 7시 기준 하루 1회)
 function loadDailyCache() {
@@ -991,6 +994,72 @@ async function fetchTSLADailyData() {
   } catch {}
   try { const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(BASE), { cache:'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
   throw new Error('일봉 데이터 로드 실패');
+}
+
+// ─── 백테스트용 함수들 ──────────────────────────────────────────────────────
+
+async function fetchTSLA2YearWeekly() {
+  const BASE  = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=2y&interval=1wk&includePrePost=false';
+  const BASE2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=2y&interval=1wk&includePrePost=false';
+  function parse(json) {
+    const r = json?.chart?.result?.[0];
+    if (!r) throw new Error('파싱 실패');
+    const ts = r.timestamp || [];
+    const q  = r.indicators?.quote?.[0] || {};
+    return ts.map((t, i) => ({
+      date:    new Date(t * 1000),
+      dateStr: new Date(t * 1000).toISOString().split('T')[0],
+      open:  q.open?.[i]  || q.close?.[i] || 0,
+      high:  q.high?.[i]  || q.close?.[i] || 0,
+      low:   q.low?.[i]   || q.close?.[i] || 0,
+      close: q.close?.[i] || 0,
+    })).filter(d => d.close > 0 && !isNaN(d.close));
+  }
+  try { const r = await fetch(BASE,  { cache: 'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
+  try { const r = await fetch(BASE2, { cache: 'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
+  try {
+    const r = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(BASE), { cache: 'no-store' });
+    if (r.ok) { const w = await r.json(); return parse(JSON.parse(w.contents || '{}')); }
+  } catch {}
+  try { const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(BASE), { cache: 'no-store' }); if (r.ok) return parse(await r.json()); } catch {}
+  throw new Error('2년 주봉 로드 실패');
+}
+
+async function collectHistoricalWeekNews(apiKey, weekStart, weekEnd) {
+  const data = await geminiPostWithRetry(apiKey, {
+    tools: [{ google_search: {} }],
+    contents: [{ role: 'user', parts: [{ text:
+      `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성.\n\nSearch for the 10 most impactful Tesla (TSLA) and Elon Musk news articles published during the week of ${weekStart} to ${weekEnd} that could have affected Tesla stock price.\nOnly include articles from major outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Electrek, The Verge, TechCrunch, Forbes, CNN Business.\nReturn ONLY a JSON array of up to 10 items:\n[{"id":1,"title":"(한국어 번역 제목)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${weekStart}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\ntitle·summary는 반드시 한국어. Return ONLY the JSON array, no other text.`
+    }] }],
+    generationConfig: { maxOutputTokens: 4096, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
+  });
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const raw   = parts.filter(p => !p.thought).map(p => p.text || '').join('') || parts[0]?.text || '';
+  const clean = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+  const s = clean.indexOf('['), e = clean.lastIndexOf(']');
+  if (s === -1 || e === -1) return [];
+  const items = JSON.parse(clean.slice(s, e + 1));
+  return items.slice(0, 10).map((n, i) => ({ ...n, id: `${weekStart}-${i}` }));
+}
+
+async function analyzeWeekBatch(apiKey, newsItems) {
+  if (!newsItems || newsItems.length === 0) return null;
+  const analyses = [];
+  for (let i = 0; i < newsItems.length; i++) {
+    try { analyses.push(await analyzeNews(apiKey, newsItems[i])); } catch {}
+    if (i < newsItems.length - 1) await new Promise(r => setTimeout(r, 700));
+  }
+  if (analyses.length === 0) return null;
+  const scores   = analyses.map(a => a.impact_score || 0);
+  const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 10) / 10;
+  const buyIndex = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
+  const bullish  = analyses.filter(a => a.direction === 'bullish').length;
+  const bearish  = analyses.filter(a => a.direction === 'bearish').length;
+  const direction = bullish > bearish ? 'bullish' : bearish > bullish ? 'bearish' : 'neutral';
+  const ruleCnt  = {};
+  analyses.forEach(a => (a.triggered_rules || []).forEach(r => { ruleCnt[r] = (ruleCnt[r] || 0) + 1; }));
+  const topRules = Object.entries(ruleCnt).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([r]) => r);
+  return { avgScore, buyIndex, direction, bullish, bearish, neutral: analyses.length - bullish - bearish, topRules };
 }
 
 // ─── 컴포넌트: CandlestickChart (일봉 / 주봉 / 월봉 토글) ──────────────────
@@ -2089,6 +2158,7 @@ function MobileBottomNav({ page, setPage, dbCount }) {
     { key: 'dashboard', icon: '📊', label: '대시보드' },
     { key: 'trend',     icon: '📈', label: '트렌드',  badge: dbCount },
     { key: 'calendar',  icon: '📅', label: '캘린더' },
+    { key: 'backtest',  icon: '🔬', label: '백테스트' },
     { key: 'settings',  icon: '⚙',  label: '설정' },
   ];
   return (
@@ -3125,6 +3195,430 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
   );
 }
 
+// ─── 백테스트 페이지 ───────────────────────────────────────────────────────
+
+function BacktestPage({ apiKey }) {
+  const [savedData,      setSavedData]      = React.useState(() => loadBacktest());
+  const [results,        setResults]        = React.useState(() => loadBacktest()?.results || []);
+  const [btPrices,       setBtPrices]       = React.useState(null);
+  const [pricesLoading,  setPricesLoading]  = React.useState(false);
+  const [running,        setRunning]        = React.useState(false);
+  const stopRef                             = React.useRef(false);
+  const [progress,       setProgress]       = React.useState({ current: 0, total: 0, phase: '', week: '' });
+  const [selectedRange,  setSelectedRange]  = React.useState('q1');
+  const [expandedWeek,   setExpandedWeek]   = React.useState(null);
+  const [activeTab,      setActiveTab]      = React.useState('results');
+  const [btError,        setBtError]        = React.useState(null);
+
+  const RANGE_LABELS = {
+    q1:  'Q1 (1~3월)',
+    q2:  'Q2 (4~6월)',
+    q3:  'Q3 (7~9월)',
+    q4:  'Q4 (10~12월)',
+    all: '전체 2025년',
+  };
+
+  function get2025Weeks(range) {
+    const map = {
+      q1:  { start: '2025-01-06', end: '2025-03-31' },
+      q2:  { start: '2025-04-07', end: '2025-06-30' },
+      q3:  { start: '2025-07-07', end: '2025-09-29' },
+      q4:  { start: '2025-10-06', end: '2025-12-29' },
+      all: { start: '2025-01-06', end: '2025-12-29' },
+    };
+    const { start, end } = map[range];
+    const weeks = [];
+    let d = new Date(start + 'T00:00:00Z');
+    const endDate = new Date(end + 'T00:00:00Z');
+    while (d <= endDate) {
+      const ws = d.toISOString().split('T')[0];
+      const we = new Date(d.getTime() + 6 * 86400000).toISOString().split('T')[0];
+      weeks.push({ weekStart: ws, weekEnd: we });
+      d = new Date(d.getTime() + 7 * 86400000);
+    }
+    return weeks;
+  }
+
+  function getActualMovement(weekStart, prices) {
+    const src = prices || btPrices;
+    if (!src) return null;
+    const wDate = new Date(weekStart + 'T00:00:00Z');
+    let closest = null, minDiff = Infinity;
+    for (const p of src) {
+      const diff = Math.abs(p.date.getTime() - wDate.getTime());
+      if (diff < minDiff) { minDiff = diff; closest = p; }
+    }
+    if (!closest || minDiff > 8 * 86400000) return null;
+    const pct = (closest.close - closest.open) / closest.open * 100;
+    const actual = pct > 1.5 ? 'bullish' : pct < -1.5 ? 'bearish' : 'neutral';
+    return { pctChange: Math.round(pct * 100) / 100, actual, open: closest.open, close: closest.close };
+  }
+
+  // 주가 2년 주봉 로드
+  React.useEffect(() => {
+    setPricesLoading(true);
+    fetchTSLA2YearWeekly()
+      .then(items => setBtPrices(items))
+      .catch(e => setBtError('주가 데이터 로드 실패: ' + e.message))
+      .finally(() => setPricesLoading(false));
+  }, []);
+
+  async function runBacktest() {
+    if (!apiKey) { alert('API 키를 먼저 설정해주세요.'); return; }
+    if (!btPrices) { alert('주가 데이터를 불러오는 중입니다. 잠시 후 시도해주세요.'); return; }
+    setRunning(true); stopRef.current = false; setBtError(null);
+    const weeks = get2025Weeks(selectedRange);
+    setProgress({ current: 0, total: weeks.length, phase: '초기화', week: '' });
+    const newResults = [];
+    for (let i = 0; i < weeks.length; i++) {
+      if (stopRef.current) break;
+      const { weekStart, weekEnd } = weeks[i];
+      setProgress({ current: i + 1, total: weeks.length, phase: '뉴스 수집', week: weekStart });
+      try {
+        const news = await collectHistoricalWeekNews(apiKey, weekStart, weekEnd);
+        setProgress({ current: i + 1, total: weeks.length, phase: 'AI 분석', week: weekStart });
+        const analysis = await analyzeWeekBatch(apiKey, news);
+        const movement = getActualMovement(weekStart, btPrices);
+        const match    = (analysis && movement) ? (analysis.direction === movement.actual) : null;
+        const strong   = analysis ? Math.abs(analysis.buyIndex - 50) > 20 : false;
+        newResults.push({ weekStart, weekEnd, news: news.map(n => ({ title: n.title, source: n.source, category: n.category })), newsCount: news.length, analysis, movement, match, strongSignal: strong });
+      } catch (e) {
+        const movement = getActualMovement(weekStart, btPrices);
+        newResults.push({ weekStart, weekEnd, newsCount: 0, analysis: null, movement, match: null, strongSignal: false, error: e.message });
+      }
+      setResults([...newResults]);
+      saveBacktest({ results: newResults, range: selectedRange });
+      setSavedData({ results: newResults, range: selectedRange, savedAt: Date.now() });
+      if (i < weeks.length - 1) await new Promise(r => setTimeout(r, 1500));
+    }
+    setRunning(false);
+    setProgress(p => ({ ...p, phase: '완료' }));
+  }
+
+  // ── 통계 계산 ──
+  const analyzed    = results.filter(r => r.analysis && r.movement);
+  const matched     = analyzed.filter(r => r.match).length;
+  const accuracy    = analyzed.length ? Math.round(matched / analyzed.length * 100) : 0;
+  const strong      = analyzed.filter(r => r.strongSignal);
+  const strongAcc   = strong.length ? Math.round(strong.filter(r => r.match).length / strong.length * 100) : 0;
+  const avgScoreAll = analyzed.length ? Math.round(analyzed.reduce((s, r) => s + (r.analysis?.avgScore || 0), 0) / analyzed.length * 10) / 10 : 0;
+
+  // 상위 룰
+  const ruleCntAll = {};
+  results.forEach(r => (r.analysis?.topRules || []).forEach(rule => { ruleCntAll[rule] = (ruleCntAll[rule] || 0) + 1; }));
+  const topRulesAll = Object.entries(ruleCntAll).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+  // 룰 설명 맵
+  const RULE_LABELS = {
+    R01:'인도량 미달(>5%)', R02:'EPS 미달(>10%)', R03:'가이던스 하향', R04:'리콜(>50K)',
+    R05:'SEC/DOJ 조사', R06:'경쟁사 EV 출시', R07:'공장 폐쇄/화재', R08:'머스크 SNS 논란',
+    R09:'보조금 축소', R10:'가격 인하(>5%)', R11:'인도량 초과(>5%)', R12:'EPS 초과(>10%)',
+    R13:'신제품/FSD 마일스톤', R14:'EV 인센티브 확대', R15:'대형 에너지 계약', R16:'신시장 진출',
+    R17:'목표가 상향(>20%)', R18:'연준 금리 인하 신호', R19:'머스크 자사주매입/호재', R20:'중국 판매 성장',
+    R21:'주요 소송 승리', R22:'공매도 리포트', R23:'경기침체 우려', R24:'머스크 사업 리스크',
+  };
+
+  return (
+    <div style={{ padding: '16px 16px 40px', maxWidth: 920, margin: '0 auto' }}>
+      {/* 헤더 */}
+      <div className="mb-5">
+        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+          🔬 AI 모델 백테스트
+          <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#9ca3af' }}>2025 과거 데이터 검증</span>
+        </h2>
+        <p className="text-xs text-gray-500 mt-1">2025년 주간 뉴스를 AI로 분석하고, 실제 TSLA 주가 움직임과 비교하여 예측 정확도를 검증합니다.</p>
+      </div>
+
+      {/* 컨트롤 패널 */}
+      <div className="rounded-xl p-4 mb-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className="text-xs text-gray-400 shrink-0">분석 기간:</span>
+          {Object.entries(RANGE_LABELS).map(([k, v]) => (
+            <button key={k} onClick={() => { setSelectedRange(k); setResults([]); setBtError(null); }}
+              disabled={running}
+              className="px-3 py-1 rounded-full text-xs font-medium transition-all disabled:opacity-40"
+              style={selectedRange === k
+                ? { background: '#E31937', color: '#fff' }
+                : { background: '#14171e', border: '1px solid #2A2D35', color: '#9ca3af' }}>
+              {v}
+            </button>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={running ? () => { stopRef.current = true; } : runBacktest}
+            disabled={pricesLoading || (!running && !apiKey)}
+            className="px-5 py-2 rounded-lg text-sm font-bold text-white transition-all disabled:opacity-40"
+            style={{ background: running ? '#f59e0b' : '#E31937' }}>
+            {pricesLoading
+              ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />주가 로딩 중...</span>
+              : running
+                ? '⏹ 중단'
+                : results.length > 0 ? '🔄 재실행' : '▶ 백테스트 시작'}
+          </button>
+          {results.length > 0 && !running && (
+            <button onClick={() => { setResults([]); setSavedData(null); try { localStorage.removeItem(BACKTEST_CACHE_KEY); } catch {} }}
+              className="px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-red-400 transition-colors"
+              style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+              🗑 초기화
+            </button>
+          )}
+          {savedData?.savedAt && !running && (
+            <span className="text-xs text-gray-600">마지막 실행: {new Date(savedData.savedAt).toLocaleDateString('ko-KR')}</span>
+          )}
+        </div>
+
+        {/* 진행바 */}
+        {running && (
+          <div className="mt-3">
+            <div className="flex items-center justify-between text-xs text-gray-400 mb-1.5">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full spinning" style={{ borderWidth: 2, borderStyle: 'solid', borderColor: '#E31937 transparent transparent transparent', display: 'inline-block' }} />
+                {progress.phase} — <span className="font-mono text-gray-300">{progress.week}</span>
+              </span>
+              <span className="font-mono">{progress.current} / {progress.total} 주</span>
+            </div>
+            <div className="w-full rounded-full h-1.5" style={{ background: '#2A2D35' }}>
+              <div className="h-1.5 rounded-full transition-all duration-300"
+                style={{ background: 'linear-gradient(90deg,#E31937,#f97316)', width: `${progress.total ? Math.round(progress.current / progress.total * 100) : 0}%` }} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 에러 */}
+      {btError && (
+        <div className="rounded-lg p-3 mb-4 text-sm" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444' }}>
+          ⚠ {btError}
+        </div>
+      )}
+
+      {/* API 키 없음 안내 */}
+      {!apiKey && !running && results.length === 0 && (
+        <div className="rounded-lg p-3 mb-4 text-sm" style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)', color: '#f59e0b' }}>
+          ⚙ 백테스트를 실행하려면 설정 페이지에서 Gemini API 키를 먼저 입력해주세요.
+        </div>
+      )}
+
+      {/* 통계 카드 */}
+      {results.length > 0 && (
+        <>
+          <div className="grid gap-3 mb-4" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+            {[
+              { label: '분석 완료',      value: `${analyzed.length}주`,                     sub: `/ ${results.length}주 처리`,          color: '#06b6d4' },
+              { label: '방향 정확도',    value: `${accuracy}%`,                              sub: `${matched}/${analyzed.length}건 일치`, color: accuracy >= 60 ? '#22c55e' : accuracy >= 45 ? '#f59e0b' : '#ef4444' },
+              { label: '강한신호 정확도', value: `${strongAcc}%`,                            sub: `${strong.filter(r=>r.match).length}/${strong.length}건`, color: strongAcc >= 65 ? '#22c55e' : strongAcc >= 50 ? '#f59e0b' : '#ef4444' },
+              { label: '평균 AI 점수',   value: `${avgScoreAll >= 0 ? '+' : ''}${avgScoreAll}`, sub: '(-5 ~ +5)',                        color: avgScoreAll > 1 ? '#22c55e' : avgScoreAll < -1 ? '#ef4444' : '#9ca3af' },
+            ].map(({ label, value, sub, color }) => (
+              <div key={label} className="rounded-xl p-3 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                <p className="text-xs text-gray-500 mb-1">{label}</p>
+                <p className="text-2xl font-bold leading-tight" style={{ color }}>{value}</p>
+                <p className="text-xs text-gray-600 mt-0.5">{sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* 탭 */}
+          <div className="flex gap-2 mb-3">
+            {[['results', '📋 주별 결과'], ['insights', '💡 모델 인사이트']].map(([k, v]) => (
+              <button key={k} onClick={() => setActiveTab(k)}
+                className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                style={activeTab === k
+                  ? { background: '#E3193715', border: '1px solid #E3193750', color: '#fff' }
+                  : { background: '#1C1F26',   border: '1px solid #2A2D35',   color: '#6b7280' }}>
+                {v}
+              </button>
+            ))}
+          </div>
+
+          {/* ── 주별 결과 탭 ── */}
+          {activeTab === 'results' && (
+            <div className="rounded-xl border overflow-hidden" style={{ borderColor: '#2A2D35' }}>
+              {/* 컬럼 헤더 */}
+              <div className="hidden sm:grid px-4 py-2 border-b text-xs text-gray-500"
+                style={{ background: '#14171e', borderColor: '#2A2D35', gridTemplateColumns: '110px 50px 80px 110px 90px 50px' }}>
+                <span>주 시작일</span>
+                <span className="text-center">뉴스</span>
+                <span className="text-center">매수지수</span>
+                <span className="text-center">실제 변동</span>
+                <span className="text-center">AI 방향</span>
+                <span className="text-center">일치</span>
+              </div>
+              {results.map((row, idx) => {
+                const isOpen  = expandedWeek === row.weekStart;
+                const bi      = row.analysis?.buyIndex;
+                const biColor = bi == null ? '#6b7280' : bi >= 70 ? '#22c55e' : bi >= 50 ? '#86efac' : bi >= 30 ? '#f97316' : '#ef4444';
+                const mv      = row.movement;
+                const mvColor = !mv ? '#6b7280' : mv.pctChange > 0 ? '#22c55e' : mv.pctChange < 0 ? '#ef4444' : '#9ca3af';
+                const mvArrow = !mv ? '—' : mv.actual === 'bullish' ? '▲' : mv.actual === 'bearish' ? '▼' : '→';
+                const dirLabel = row.analysis
+                  ? ({ bullish: '📈 매수', bearish: '📉 매도', neutral: '➡ 중립' }[row.analysis.direction] || '—')
+                  : '—';
+                return (
+                  <div key={row.weekStart} style={{ borderBottom: idx < results.length - 1 ? '1px solid #1a1d24' : 'none' }}>
+                    <button
+                      className="w-full grid sm:grid px-4 py-2.5 text-left hover:bg-white/5 transition-colors"
+                      style={{ gridTemplateColumns: '110px 50px 80px 110px 90px 50px' }}
+                      onClick={() => setExpandedWeek(isOpen ? null : row.weekStart)}>
+                      <span className="text-xs text-gray-300 font-mono">{row.weekStart}</span>
+                      <span className="text-xs text-center text-gray-400">{row.newsCount || '—'}</span>
+                      <span className="text-center">
+                        {bi != null
+                          ? <span className="text-sm font-bold" style={{ color: biColor }}>{bi}</span>
+                          : <span className="text-xs text-gray-600">—</span>}
+                      </span>
+                      <span className="text-center">
+                        {mv
+                          ? <span className="text-xs font-mono" style={{ color: mvColor }}>
+                              {mvArrow} {mv.pctChange > 0 ? '+' : ''}{mv.pctChange}%
+                            </span>
+                          : <span className="text-xs text-gray-600">—</span>}
+                      </span>
+                      <span className="text-center text-xs" style={{ color: row.analysis?.direction === 'bullish' ? '#22c55e' : row.analysis?.direction === 'bearish' ? '#ef4444' : '#9ca3af' }}>
+                        {dirLabel}
+                      </span>
+                      <span className="text-center text-base leading-none">
+                        {row.match === true ? '✅' : row.match === false ? '❌' : row.error ? '⚠' : '—'}
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div className="px-4 pb-3 border-t" style={{ borderColor: '#2A2D35', background: '#0f1117' }}>
+                        {row.error && <p className="text-xs text-red-400 pt-2 pb-1">⚠ {row.error}</p>}
+                        {row.analysis && (
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 pt-2 pb-1.5 text-xs text-gray-400">
+                            <span>avg점수: <span className="text-white font-mono">{row.analysis.avgScore >= 0 ? '+' : ''}{row.analysis.avgScore}</span></span>
+                            <span>강한신호: <span style={{ color: row.strongSignal ? '#f59e0b' : '#6b7280' }}>{row.strongSignal ? '✓ 예' : '아니오'}</span></span>
+                            <span>룰: <span className="text-white">{(row.analysis.topRules || []).join(', ') || '없음'}</span></span>
+                            {mv && <span>주가: <span className="text-white font-mono">${mv.open?.toFixed(1)} → ${mv.close?.toFixed(1)}</span></span>}
+                          </div>
+                        )}
+                        {row.news?.length > 0 && (
+                          <div className="mt-1.5 space-y-1">
+                            {row.news.map((n, i) => (
+                              <div key={i} className="flex gap-2 text-xs">
+                                <span className="text-gray-600 shrink-0 font-mono w-20 truncate">[{n.source}]</span>
+                                <span className="text-gray-300" style={{ overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' }}>{n.title}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* ── 인사이트 탭 ── */}
+          {activeTab === 'insights' && (
+            <div className="space-y-4">
+              {/* 정확도 요약 */}
+              <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                <h3 className="text-sm font-bold text-white mb-3">📊 예측 정확도 분석</h3>
+                <div className="space-y-2 text-sm text-gray-400">
+                  <p>• 전체 방향 정확도:
+                    <span className="font-bold ml-1" style={{ color: accuracy >= 60 ? '#22c55e' : accuracy >= 50 ? '#f59e0b' : '#ef4444' }}>{accuracy}%</span>
+                    <span className="text-xs ml-2">{accuracy >= 65 ? '— 우수한 예측력입니다.' : accuracy >= 55 ? '— 신뢰 가능한 수준입니다.' : accuracy >= 45 ? '— 소폭 개선이 필요합니다.' : '— 개선이 필요한 수준입니다.'}</span>
+                  </p>
+                  <p>• 강한 신호(매수지수 &gt;70 또는 &lt;30) 정확도:
+                    <span className="font-bold ml-1" style={{ color: strongAcc >= 65 ? '#22c55e' : '#f59e0b' }}>{strongAcc}%</span>
+                    <span className="text-xs text-gray-500 ml-1">({strong.length}건)</span>
+                  </p>
+                  <p>• 분석 {analyzed.length}주 중 {matched}주 방향 일치 · 불일치 {analyzed.length - matched}주</p>
+                </div>
+              </div>
+
+              {/* 자주 발동된 룰 */}
+              {topRulesAll.length > 0 && (
+                <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                  <h3 className="text-sm font-bold text-white mb-3">🔥 자주 발동된 룰 (2025년)</h3>
+                  <div className="space-y-2">
+                    {topRulesAll.map(([rule, cnt]) => (
+                      <div key={rule} className="flex items-center gap-3">
+                        <span className="text-xs font-mono text-yellow-400 w-8 shrink-0">{rule}</span>
+                        <div className="flex-1 rounded-full h-1.5" style={{ background: '#2A2D35' }}>
+                          <div className="h-1.5 rounded-full" style={{ background: '#E31937', width: `${Math.min(100, Math.round(cnt / results.length * 100))}%` }} />
+                        </div>
+                        <span className="text-xs text-gray-500 w-16 text-right shrink-0">{RULE_LABELS[rule] || rule} ({cnt}주)</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 모델 강화 제안 */}
+              <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                <h3 className="text-sm font-bold text-white mb-3">💡 AI 모델 강화 제안</h3>
+                <ul className="space-y-2.5 text-xs text-gray-400">
+                  {accuracy < 55 && (
+                    <li className="flex gap-2">
+                      <span className="text-yellow-400 shrink-0 font-bold">①</span>
+                      방향 정확도가 낮습니다. S&amp;P500, 금리 등 매크로 지표를 추가 룰로 반영하면 정확도가 향상될 수 있습니다.
+                    </li>
+                  )}
+                  {strongAcc > accuracy + 8 && (
+                    <li className="flex gap-2">
+                      <span className="text-green-400 shrink-0 font-bold">②</span>
+                      강한 신호에서 정확도가 높습니다. 매수지수 70↑ / 30↓ 구간에 가중치를 부여하면 수익성이 개선될 수 있습니다.
+                    </li>
+                  )}
+                  {topRulesAll.some(([r]) => r === 'R08' || r === 'R24') && (
+                    <li className="flex gap-2">
+                      <span className="text-orange-400 shrink-0 font-bold">③</span>
+                      머스크 SNS/DOGE 관련 룰(R08/R24)이 자주 발동됩니다. 단기 감성과 장기 주가의 괴리를 고려한 가중치 하향 조정을 권장합니다.
+                    </li>
+                  )}
+                  {topRulesAll.some(([r]) => r === 'R01' || r === 'R11') && (
+                    <li className="flex gap-2">
+                      <span className="text-blue-400 shrink-0 font-bold">④</span>
+                      인도량 관련 룰(R01/R11)이 핵심 변수입니다. 분기 인도량 발표 전후 2주를 별도 가중 분석하세요.
+                    </li>
+                  )}
+                  <li className="flex gap-2">
+                    <span className="text-purple-400 shrink-0 font-bold">⑤</span>
+                    뉴스 기반 분석의 한계를 보완하기 위해 RSI·MACD 등 기술적 지표와의 복합 모델 적용을 고려하세요.
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-cyan-400 shrink-0 font-bold">⑥</span>
+                    '중립' 예측 정확도 향상을 위해 중립 판정 범위를 매수지수 45~55로 좁히는 것을 권장합니다.
+                  </li>
+                  {analyzed.length > 0 && avgScoreAll > 1.5 && (
+                    <li className="flex gap-2">
+                      <span className="text-pink-400 shrink-0 font-bold">⑦</span>
+                      평균 AI 점수가 양수 편향(+{avgScoreAll})입니다. 부정적 뉴스의 가중치를 상향 조정해 균형을 맞추세요.
+                    </li>
+                  )}
+                  {analyzed.length > 0 && avgScoreAll < -1.5 && (
+                    <li className="flex gap-2">
+                      <span className="text-pink-400 shrink-0 font-bold">⑦</span>
+                      평균 AI 점수가 음수 편향({avgScoreAll})입니다. 긍정 뉴스 선별 기준을 보완하세요.
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* 빈 상태 */}
+      {results.length === 0 && !running && (
+        <div className="text-center py-14 text-gray-600">
+          <p className="text-5xl mb-4">🔬</p>
+          <p className="text-sm text-gray-500">백테스트를 실행하면 2025년 과거 뉴스 기반의 AI 예측 정확도를 검증합니다.</p>
+          <div className="mt-4 flex flex-col gap-1 text-xs text-gray-700">
+            <p>1단계 — 주간 TOP 10 뉴스 수집 (Gemini Google Search)</p>
+            <p>2단계 — AI 분석 모델로 매수지수 산출</p>
+            <p>3단계 — 실제 TSLA 주가 움직임과 방향 비교</p>
+            <p>4단계 — 정확도 통계 + 모델 강화 인사이트 제공</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── 메인 App ──────────────────────────────────────────────────────────────
 
 function App() {
@@ -3483,6 +3977,11 @@ function App() {
             <CalendarPage onBack={() => setPage('dashboard')} />
           </div>
         )}
+        {page === 'backtest' && (
+          <div style={{ paddingBottom: 72 }}>
+            <BacktestPage apiKey={apiKey} />
+          </div>
+        )}
         <MobileBottomNav page={page} setPage={setPage} dbCount={dbCount} />
       </div>
     );
@@ -3504,6 +4003,7 @@ function App() {
           { key: 'dashboard', icon: '📊', label: '대시보드' },
           { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
           { key: 'calendar',  icon: '📅', label: '캘린더' },
+          { key: 'backtest',  icon: '🔬', label: '백테스트' },
           { key: 'settings',  icon: '⚙',  label: '설정' },
         ].map(({ key, icon, label, badge }) => (
           <button key={key} onClick={() => setPage(key)}
@@ -3527,6 +4027,13 @@ function App() {
     <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
       <DesktopHeader />
       <CalendarPage onBack={() => setPage('dashboard')} desktopMode />
+    </div>
+  );
+
+  if (page === 'backtest') return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <BacktestPage apiKey={apiKey} />
     </div>
   );
 
