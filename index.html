@@ -1129,7 +1129,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
 
 // ─── 컴포넌트: TrendChart ─────────────────────────────────────────────────
 
-function TrendChart({ sessions, prediction }) {
+function TrendChart({ sessions, prediction, prediction7 }) {
   if (!sessions || sessions.length === 0) return (
     <div className="flex flex-col items-center justify-center py-14 text-gray-600">
       <p className="text-3xl mb-3">📭</p>
@@ -1159,13 +1159,13 @@ function TrendChart({ sessions, prediction }) {
 
   if (data.length === 0) return <div className="py-8 text-center text-xs text-gray-600">매수지수 데이터가 없습니다.</div>;
 
-  const hasPred = prediction != null;
-  const W = 720, H = 220;
-  const P = { t: 30, r: 28, b: 52, l: 44 };
+  const preds = Array.isArray(prediction7) && prediction7.length > 0 ? prediction7 : (prediction ? [prediction] : []);
+  const W = 720, H = 240;
+  const P = { t: 30, r: 28, b: 60, l: 44 };
   const cW = W - P.l - P.r, cH = H - P.t - P.b;
 
-  // 총 슬롯 = 실제 날짜 수 + (예측 1개)
-  const totalSlots = data.length + (hasPred ? 1 : 0);
+  // 총 슬롯 = 실제 날짜 수 + 예측 개수
+  const totalSlots = data.length + preds.length;
   const xPos = i => P.l + (totalSlots <= 1 ? cW / 2 : (i / (totalSlots - 1)) * cW);
   const yPos = v => P.t + (1 - v / 100) * cH;
   const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
@@ -1174,10 +1174,13 @@ function TrendChart({ sessions, prediction }) {
   const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0]},${p[1]}`).join(' ');
   const areaPath = `M${xPos(0)},${P.t + cH} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${xPos(data.length - 1)},${P.t + cH}Z`;
 
-  const predX = hasPred ? xPos(data.length) : null;
-  const predY = hasPred ? yPos(prediction.value) : null;
-  const predCol = hasPred ? bCol(prediction.value) : '#6b7280';
   const lastPt = pts[pts.length - 1];
+  // 예측 포인트 좌표 계산
+  const predPts = preds.map((p, i) => [xPos(data.length + i), yPos(p.value)]);
+  // 예측 점선 경로 (마지막 실제 → 예측들)
+  const predPath = lastPt && predPts.length > 0
+    ? `M${lastPt[0]},${lastPt[1]} ` + predPts.map(p => `L${p[0]},${p[1]}`).join(' ')
+    : null;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', display: 'block' }}>
@@ -1204,10 +1207,9 @@ function TrendChart({ sessions, prediction }) {
       {data.length > 1 && <path d={areaPath} fill="url(#trendGrad)" />}
       {data.length > 1 && <path d={linePath} fill="none" stroke="#475569" strokeWidth="1.8" strokeLinejoin="round" />}
 
-      {/* 예측 점선 연결 */}
-      {hasPred && lastPt && (
-        <line x1={lastPt[0]} y1={lastPt[1]} x2={predX} y2={predY}
-          stroke={predCol} strokeWidth="1.8" strokeDasharray="5,3" opacity="0.75" />
+      {/* 예측 점선 */}
+      {predPath && (
+        <path d={predPath} fill="none" stroke="#a78bfa" strokeWidth="1.6" strokeDasharray="5,3" opacity="0.7" />
       )}
 
       {/* 실제 데이터 포인트 */}
@@ -1218,27 +1220,38 @@ function TrendChart({ sessions, prediction }) {
             <circle cx={x} cy={y} r="5.5" fill={col} stroke="#0D0F14" strokeWidth="2" />
             <text x={x} y={y - 11} textAnchor="middle" fill={col} fontSize="10.5" fontWeight="700">{d.value}</text>
             {d.count > 1 && <text x={x} y={y - 22} textAnchor="middle" fill="#6b7280" fontSize="7.5">({d.count}회 평균)</text>}
-            <text x={x} y={H - 32} textAnchor="middle" fill="#6b7280" fontSize="8.5" transform={`rotate(-30,${x},${H - 32})`}>{d.date?.slice(5)}</text>
-            <text x={x} y={H - 10} textAnchor="middle" fill="#4b5563" fontSize="8">{d.source === 'collected' ? '🔍' : '📋'}</text>
+            <text x={x} y={H - 40} textAnchor="middle" fill="#6b7280" fontSize="8.5" transform={`rotate(-30,${x},${H - 40})`}>{d.date?.slice(5)}</text>
+            <text x={x} y={H - 16} textAnchor="middle" fill="#4b5563" fontSize="8">{d.source === 'collected' ? '🔍' : '📋'}</text>
           </g>
         );
       })}
 
-      {/* 내일 예측 포인트 */}
-      {hasPred && (
-        <g>
-          {/* 외곽 점선 원 */}
-          <circle cx={predX} cy={predY} r="9" fill="none" stroke={predCol} strokeWidth="1.5" strokeDasharray="3,2" opacity="0.6" />
-          {/* 내부 채운 원 */}
-          <circle cx={predX} cy={predY} r="5" fill={predCol} opacity="0.75" stroke="#0D0F14" strokeWidth="1.5" />
-          {/* 수치 */}
-          <text x={predX} y={predY - 16} textAnchor="middle" fill={predCol} fontSize="10.5" fontWeight="700">{prediction.value}</text>
-          {/* "내일예측" 라벨 */}
-          <text x={predX} y={H - 32} textAnchor="middle" fill={predCol} fontSize="8.5" fontWeight="600">내일예측</text>
-          {/* 신뢰도 */}
-          <text x={predX} y={H - 10} textAnchor="middle" fill="#4b5563" fontSize="8">({prediction.confLabel})</text>
-        </g>
-      )}
+      {/* 7일 예측 포인트 */}
+      {preds.map((pred, i) => {
+        const [px, py] = predPts[i];
+        const col = bCol(pred.value);
+        const isFirst = i === 0;
+        return (
+          <g key={`pred-${i}`}>
+            {isFirst
+              ? <><circle cx={px} cy={py} r="9" fill="none" stroke={col} strokeWidth="1.5" strokeDasharray="3,2" opacity="0.5" /><circle cx={px} cy={py} r="4.5" fill={col} opacity="0.8" stroke="#0D0F14" strokeWidth="1.5" /></>
+              : <circle cx={px} cy={py} r="3.5" fill={col} opacity="0.55" stroke="#0D0F14" strokeWidth="1" />
+            }
+            {/* 수치 — 첫날은 크게, 나머지 짝수만 표시 */}
+            {(isFirst || i % 2 === 0) && (
+              <text x={px} y={py - (isFirst ? 16 : 11)} textAnchor="middle" fill={col} fontSize={isFirst ? "10" : "8"} fontWeight={isFirst ? "700" : "500"} opacity={isFirst ? 1 : 0.75}>
+                {pred.value}
+              </text>
+            )}
+            {/* 날짜 라벨 */}
+            <text x={px} y={H - 40} textAnchor="middle" fill="#a78bfa" fontSize="7.5" opacity="0.7" transform={`rotate(-30,${px},${H - 40})`}>{pred.dateLabel || `+${pred.day}일`}</text>
+            {/* 신뢰도 — 마지막 포인트에만 */}
+            {i === preds.length - 1 && (
+              <text x={px} y={H - 16} textAnchor="middle" fill="#7c3aed" fontSize="7" opacity="0.8">({pred.confLabel})</text>
+            )}
+          </g>
+        );
+      })}
 
       <text x={10} y={P.t + cH / 2} textAnchor="middle" fill="#6b7280" fontSize="9" transform={`rotate(-90,10,${P.t + cH / 2})`}>매수지수</text>
     </svg>
@@ -1758,24 +1771,36 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
   ];
   const getGrade = v => GRADES.find(g => v >= g.min && v <= g.max) || GRADES[2];
 
-  // ─── 내일 예측 (선형 회귀) ───────────────────────────────────────────────
-  const predictTomorrow = () => {
-    if (valid.length === 0) return null;
-    if (valid.length === 1) return { value: valid[0].buyIndex, confidence: 'low', confLabel: '낮음', slope: 0 };
-    const pts = [...valid].reverse().slice(-6).map((s, i) => ({ x: i, y: s.buyIndex ?? 50 }));
-    const n = pts.length;
-    const sx = pts.reduce((s, p) => s + p.x, 0), sy = pts.reduce((s, p) => s + p.y, 0);
-    const sxy = pts.reduce((s, p) => s + p.x * p.y, 0), sx2 = pts.reduce((s, p) => s + p.x * p.x, 0);
-    const slope = (n * sxy - sx * sy) / (n * sx2 - sx * sx || 1);
-    const intercept = (sy - slope * sx) / n;
-    const raw = intercept + slope * n;
-    const value = Math.min(100, Math.max(0, Math.round(raw)));
+  // ─── 7일 예측 (선형 회귀) ───────────────────────────────────────────────
+  const predict7Days = () => {
+    if (valid.length === 0) return [];
+    const basePts = [...valid].reverse().slice(-8).map((s, i) => ({ x: i, y: s.buyIndex ?? 50 }));
+    const n = basePts.length;
     const confidence = valid.length >= 5 ? 'high' : valid.length >= 3 ? 'medium' : 'low';
     const confLabel = confidence === 'high' ? '높음' : confidence === 'medium' ? '보통' : '낮음';
     const confColor = confidence === 'high' ? '#22c55e' : confidence === 'medium' ? '#f59e0b' : '#6b7280';
-    return { value, confidence, confLabel, confColor, slope: Math.round(slope * 10) / 10, basis: `최근 ${n}개 세션 선형회귀` };
+    if (n < 2) {
+      const v = basePts[0]?.y ?? 50;
+      return Array.from({ length: 7 }, (_, i) => ({ value: v, day: i + 1, confidence, confLabel, confColor, slope: 0 }));
+    }
+    const sx = basePts.reduce((s, p) => s + p.x, 0), sy = basePts.reduce((s, p) => s + p.y, 0);
+    const sxy = basePts.reduce((s, p) => s + p.x * p.y, 0), sx2 = basePts.reduce((s, p) => s + p.x * p.x, 0);
+    const slope = (n * sxy - sx * sy) / (n * sx2 - sx * sx || 1);
+    const intercept = (sy - slope * sx) / n;
+    return Array.from({ length: 7 }, (_, i) => {
+      const raw = intercept + slope * (n + i);
+      // 날짜 계산
+      const d = new Date(); d.setDate(d.getDate() + i + 1);
+      const dateLabel = `${String(d.getMonth() + 1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      return {
+        value: Math.min(100, Math.max(0, Math.round(raw))),
+        day: i + 1, dateLabel, confidence, confLabel, confColor,
+        slope: Math.round(slope * 10) / 10,
+      };
+    });
   };
-  const prediction = predictTomorrow();
+  const prediction7 = predict7Days();
+  const prediction = prediction7[0] ?? null;
   return (
     <div className="max-w-6xl mx-auto px-3 py-4 md:px-4 md:py-6">
       {/* Header */}
@@ -2020,11 +2045,12 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
             {[['매수', '#22c55e', '≥65'], ['관망', '#f59e0b', '45~64'], ['매도', '#ef4444', '<45']].map(([l, c, r]) => (
               <span key={l} className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: c }} /><span className="text-gray-500">{l} ({r})</span></span>
             ))}
+            <span className="flex items-center gap-1"><span className="w-5 h-0.5 rounded" style={{ background: '#a78bfa', borderTop: '1px dashed #a78bfa' }} /><span className="text-gray-500">7일예측</span></span>
             <span className="text-gray-600">🔍수집 📋샘플</span>
           </div>
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart sessions={[...valid].reverse()} prediction={prediction} />
+          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} />
         </div>
       </div>
       {/* Timeline */}
