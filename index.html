@@ -361,7 +361,7 @@ function NewsCard({ news, result, loading, error }) {
         {result && (
           <span
             className="text-xs font-bold px-2 py-1 rounded-lg shrink-0 score-flash whitespace-nowrap"
-            style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40`, zIndex: 1, position: 'relative' }}
+            style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40` }}
           >
             {result.direction.toUpperCase()}
           </span>
@@ -2454,7 +2454,8 @@ function App() {
     <div className="max-w-6xl mx-auto px-4 py-6">
 
       {/* 헤더 */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 sticky top-0 z-50 py-3 -mx-4 px-4"
+        style={{ background: 'rgba(13,15,20,0.97)', backdropFilter: 'blur(8px)', borderBottom: '1px solid #1C1F26' }}>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
           <div>
