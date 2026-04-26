@@ -1,6 +1,245 @@
 {
   "sessions": [
     {
+      "id": "auto-1777189346920",
+      "date": "2026-04-26",
+      "displayDate": "2026.04.26",
+      "kstTime": "16:41",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777189321869,
+          "title": "테슬라, 사이버캡 생산 라인 가동 시작으로 주가 상승",
+          "summary": "테슬라가 자율주행 로보택시인 사이버캡의 생산 라인 가동을 공식적으로 시작했다는 보도가 나왔다. 사이버캡은 스티어링 휠과 페달이 없는 완전 자율주행 차량으로, 규제 당국의 특별 허가가 필요하다. 이 소식은 투자자들에게 긍정적으로 작용하여 금요일 거래에서 주가가 소폭 상승했다.",
+          "source": "TipRanks",
+          "date": "2026-04-25",
+          "category": "Product"
+        },
+        {
+          "id": 1777189321870,
+          "title": "일론 머스크, xAI의 Grok 챗봇 훈련을 위한 작가 채용 공고",
+          "summary": "일론 머스크의 AI 회사인 xAI가 Grok 챗봇의 글쓰기 능력을 향상시키기 위해 에미상 후보에 오르거나 구겐하임 펠로우십을 받은 작가 등 '엘리트 수준의 글쓰기'를 할 수 있는 작가를 채용하고 있다. 이는 AI 모델 훈련을 위해 고학력 전문가를 고용하는 최근의 추세를 따른다.",
+          "source": "SFGATE",
+          "date": "2026-04-25",
+          "category": "Musk"
+        },
+        {
+          "id": 1777189321871,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당순이익(EPS) 41센트를 기록하며 예상치 34센트를 상회했다. 매출 또한 예상치를 약간 웃돌았다. 회사는 아시아-태평양 및 남미 일부 지역에서 차량 수요가 지속적으로 증가했으며, 북미와 유럽-중동 지역에서도 수요가 회복되고 있다고 밝혔다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777189321872,
+          "title": "테슬라, 규제 크레딧 판매 손실 직면",
+          "summary": "테슬라는 오랫동안 경쟁사들에게 자동차 규제 크레딧을 판매하여 상당한 순이익을 얻었지만, 'One Big Beautiful Bill Act'로 인해 무공해 차량(ZEV) 크레딧이 대부분 사라지면서 이러한 수익원이 거의 완전히 없어질 위기에 처했다. 이는 테슬라의 수익성에 영향을 미칠 수 있다.",
+          "source": "TipRanks",
+          "date": "2026-04-25",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777189321873,
+          "title": "테슬라, 옵티머스 봇과 사이버캡 생산 계획 순조롭게 진행 중",
+          "summary": "테슬라는 휴머노이드 로봇인 옵티머스(Optimus)의 1세대 생산 라인이 설치 중이며, 사이버캡과 테슬라 세미(Semi)의 생산도 2026년 일정대로 진행되고 있다고 밝혔다. 이는 테슬라가 단순한 EV 회사를 넘어 AI 및 로봇 공학 회사로 변모하고 있음을 시사한다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777189321874,
+          "title": "일론 머스크, 스페이스X의 2조 달러 IPO와 OpenAI 소송으로 주목",
+          "summary": "일론 머스크의 스페이스X가 2조 달러 규모의 IPO를 준비하며 AI 기반 위성 네트워크를 통합하고 있으며, OpenAI에 대한 소송을 통해 거버넌스 윤리에 도전하고 있다. 이러한 움직임은 기술 및 혁신의 미래에 대한 그의 중요한 역할을 보여준다.",
+          "source": "Female Entrepreneurs",
+          "date": "2026-04-09",
+          "category": "Musk"
+        },
+        {
+          "id": 1777189321875,
+          "title": "테슬라, 무인 로보택시 서비스 달라스 및 휴스턴에서 시작",
+          "summary": "테슬라가 달라스와 휴스턴에서 무인 로보택시 서비스를 시작했다고 밝혔다. 이는 완전 자율주행 기술의 상용화에 대한 테슬라의 진전을 보여주는 것으로, 향후 자율주행 시장에서의 경쟁력을 강화할 수 있다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777189321876,
+          "title": "테슬라 주가, Q1 실적 호조에도 불구하고 자본 지출 및 자율주행 위험으로 인해 변동성",
+          "summary": "테슬라 주가는 1분기 실적 예상치 상회와 사이버캡 생산 이정표 소식에 힘입어 상승했지만, 대규모 자본 지출 확대와 자율주행/하드웨어 관련 위험이 현금 흐름과 마진에 압력을 가할 수 있다는 투자자들의 우려로 인해 여전히 변동성이 크다.",
+          "source": "MarketBeat",
+          "date": "2026-04-25",
+          "category": "Market"
+        },
+        {
+          "id": 1777189321877,
+          "title": "테슬라, 유럽에서 FSD 승인 및 로보택시 확장 기대",
+          "summary": "테슬라는 4월에 유럽 당국으로부터 완전 자율주행(FSD) 기술에 대한 중요한 결정을 기다리고 있으며, 이는 FSD 기술의 내재적 가치에 대한 인식을 높일 수 있다. 또한, 로보택시의 라스베이거스 확장 가능성도 언급되어 있다.",
+          "source": "The Motley Fool",
+          "date": "2026-03-30",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777189321878,
+          "title": "스페이스X, 테슬라 또는 xAI와의 합병 가능성 보도",
+          "summary": "블룸버그에 따르면 스페이스X가 테슬라 또는 xAI와의 합병을 고려하고 있으며, 이는 xAI 지분을 스페이스X 지분으로 교환하는 방식이 될 수 있다고 보도되었다. 이는 일론 머스크의 여러 회사 간의 시너지를 창출하고 투자자들의 관심을 끌 수 있다.",
+          "source": "Seeking Alpha",
+          "date": "2026-01-30",
+          "category": "Musk"
+        }
+      ],
+      "analyses": {
+        "1777189321869": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 사이버캡 생산 라인 가동 시작은 새로운 제품의 중요한 이정표로, 투자자들에게 긍정적인 영향을 미쳐 주가 상승을 이끌었습니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "완전 자율주행 기술"
+          ]
+        },
+        "1777189321870": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 다른 벤처인 xAI의 인력 채용 소식은 테슬라의 직접적인 사업에 미치는 영향은 적지만, 머스크의 관심과 자원 분산에 대한 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "Musk's focus on other ventures",
+            "Potential resource diversion"
+          ]
+        },
+        "1777189321871": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당순이익(EPS)이 예상치를 10% 이상 상회하고 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "EPS beat",
+            "수요 회복"
+          ]
+        },
+        "1777189321872": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R09"
+          ],
+          "reasoning": "테슬라의 주요 수익원 중 하나인 규제 크레딧 판매가 법안으로 인해 거의 사라질 위기에 처하여 수익성에 부정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "규제 크레딧 판매 손실",
+            "수익성 감소"
+          ]
+        },
+        "1777189321873": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 옵티머스 로봇과 사이버캡의 생산 계획을 순조롭게 진행하고 있다고 밝히면서 AI 및 로봇 공학 회사로의 변모 가능성을 보여주어 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "옵티머스 로봇 생산 라인 설치",
+            "사이버캡 및 세미 생산 계획 순조로움",
+            "AI 및 로봇 공학 회사로의 변모"
+          ]
+        },
+        "1777189321874": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 스페이스X IPO와 OpenAI 소송은 그의 다른 벤처와 관련된 위험이 테슬라에 전이될 가능성을 시사한다.",
+          "key_factors": [
+            "Musk other ventures risk spillover",
+            "SpaceX IPO",
+            "OpenAI lawsuit"
+          ]
+        },
+        "1777189321875": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 달라스와 휴스턴에서 무인 로보택시 서비스를 시작한 것은 완전 자율주행 기술의 중요한 상용화 이정표로, 미래 수익 잠재력을 높일 것입니다.",
+          "key_factors": [
+            "로보택시 서비스 시작",
+            "완전 자율주행 기술 상용화"
+          ]
+        },
+        "1777189321876": {
+          "impact_score": 1,
+          "direction": "neutral",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "1분기 실적 호조는 긍정적이지만, 대규모 자본 지출과 자율주행 관련 위험이 현금 흐름과 마진에 대한 우려를 제기하여 상쇄적인 영향을 미칩니다.",
+          "key_factors": [
+            "Q1 실적 예상치 상회",
+            "사이버캡 생산 이정표",
+            "대규모 자본 지출 확대",
+            "자율주행/하드웨어 관련 위험"
+          ]
+        },
+        "1777189321877": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 유럽 FSD 승인 기대와 로보택시 확장 가능성은 핵심 기술의 가치를 높이고 새로운 수익원을 창출할 잠재력이 있어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "유럽 FSD 승인",
+            "로보택시 확장"
+          ]
+        },
+        "1777189321878": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "스페이스X와 테슬라 또는 xAI의 합병 가능성은 머스크의 회사들 간 시너지를 창출하고 투자자들의 관심을 끌어 테슬라에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "시너지 창출",
+            "투자자 관심 증가",
+            "머스크의 회사 구조 재편"
+          ]
+        }
+      },
+      "avgScore": 1.5,
+      "buyIndex": 65,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R12",
+        "R09"
+      ],
+      "bullish": 6,
+      "bearish": 3,
+      "neutral": 1,
+      "timestamp": 1777189346920
+    },
+    {
       "id": "auto-1777175302660",
       "date": "2026-04-26",
       "displayDate": "2026.04.26",
@@ -1423,5 +1662,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-26 12:47 KST"
+  "lastUpdated": "2026-04-26 16:41 KST"
 }
