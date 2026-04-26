@@ -793,7 +793,7 @@ async function fetchTSLAWeeklyData() {
 
 const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
 
-function makeForecastPrompt(currentPrice) {
+function makeForecastPrompt(currentPrice, calendarEvents = []) {
   const dayNames = ['일','월','화','수','목','금','토'];
   const dailyRows = Array.from({length: 7}, (_, i) => {
     const d = new Date(Date.now() + (i + 1) * 86400000);
@@ -802,9 +802,21 @@ function makeForecastPrompt(currentPrice) {
     return '    { "day": ' + (i+1) + ', "label": "' + label + '", "date": "' + date + '", "change_pct": <expected % change, e.g. -1.5 or +2.3>, "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean 1문장>" }';
   }).join(',\n');
 
+  // 캘린더 이벤트 섹션 (향후 60일 이내)
+  const calSection = calendarEvents.length > 0
+    ? '\n\nUpcoming Tesla corporate events (CRITICAL — factor these into your forecast timing):\n' +
+      calendarEvents.map(ev =>
+        `  [${ev.confirmed ? '✓CONFIRMED' : '?ESTIMATED'}] ${ev.date} | ${ev.category} | ${ev.title} | importance:${ev.importance}` +
+        (ev.description ? ` | ${ev.description}` : '')
+      ).join('\n')
+    : '';
+
   return `You are a quantitative Tesla (TSLA) stock strategist.
-Given multiple news impact analyses, synthesize them into investment forecasts.
+Given multiple news impact analyses${calendarEvents.length > 0 ? ' AND upcoming corporate events' : ''}, synthesize them into investment forecasts.
 Current TSLA price is $${currentPrice} USD (real-time from Yahoo Finance).
+${calSection}
+
+IMPORTANT: If any confirmed earnings, delivery numbers, or shareholder meeting falls within the forecast period, weight those events heavily — they are major catalysts. Adjust buy_index and change_pct accordingly (earnings surprise potential, delivery beat/miss risk, etc.).
 
 Return ONLY valid JSON in this exact format:
 {
@@ -826,19 +838,22 @@ ${dailyRows}
   "analyst_consensus": "<Strong Buy|Buy|Hold|Sell|Strong Sell>"
 }
 buy_index: 0-20=적극매도, 21-40=매도, 41-60=관망, 61-80=매수, 81-100=적극매수
-buy_index: 0-20=적극매도, 21-40=매도, 41-60=관망, 61-80=매수, 81-100=적극매수
-change_pct: expected daily % change based on news sentiment (e.g. -2.5 or +1.8). Be conservative and realistic. Do NOT use absolute prices in daily_forecasts.
+change_pct: expected daily % change (e.g. -2.5 or +1.8). Be conservative. Do NOT use absolute prices in daily_forecasts.
 Price targets in forecasts[] must be realistic relative to $${currentPrice}. ONLY return JSON.`;
 }
 
-async function generateForecast(apiKey, items, currentPrice = 247) {
+async function generateForecast(apiKey, items, currentPrice = 247, calendarEvents = []) {
   const summary = items.map(it =>
     `• "${it.title}"\n  Score:${it.result.impact_score} Dir:${it.result.direction} Rules:[${it.result.triggered_rules?.join(',')}] Conf:${it.result.confidence}\n  ${it.result.reasoning}`
   ).join('\n\n');
 
+  const calNote = calendarEvents.length > 0
+    ? `\n\nUpcoming events to factor in:\n${calendarEvents.map(ev => `- [${ev.confirmed?'확정':'추정'}] ${ev.date} ${ev.category}: ${ev.title}`).join('\n')}`
+    : '';
+
   const body = {
-    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice) }] },
-    contents: [{ role: 'user', parts: [{ text: `Synthesize these TSLA analyses into forecasts:\n\n${summary}` }] }],
+    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice, calendarEvents) }] },
+    contents: [{ role: 'user', parts: [{ text: `Synthesize these TSLA analyses into forecasts:${calNote}\n\n${summary}` }] }],
     generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.3, thinkingConfig: { thinkingBudget: 0 } },
   };
   const data = await geminiPostWithRetry(apiKey, body);
@@ -1723,7 +1738,7 @@ function MobileDashboard({
 
 // ─── 컴포넌트: CalendarPage ───────────────────────────────────────────────
 
-function CalendarPage({ onBack }) {
+function CalendarPage({ onBack, desktopMode }) {
   const isMobile = useIsMobile();
   const [events, setEvents]               = useState([]);
   const [loading, setLoading]             = useState(true);
@@ -1792,8 +1807,8 @@ function CalendarPage({ onBack }) {
   return (
     <div style={{ background: '#0D0F14', minHeight: '100vh', paddingBottom: isMobile ? 80 : 0 }}>
 
-      {/* 모바일 헤더 */}
-      {isMobile && (
+      {/* 모바일 헤더 (데스크탑 모드일 때는 숨김) */}
+      {isMobile && !desktopMode && (
         <div className="sticky top-0 z-40 flex items-center gap-3 px-4 py-3"
           style={{ background: 'rgba(13,15,20,0.97)', borderBottom: '1px solid #2A2D35', backdropFilter: 'blur(8px)' }}>
           <button onClick={onBack} className="text-gray-400 text-sm">← 뒤로</button>
@@ -1805,7 +1820,7 @@ function CalendarPage({ onBack }) {
       <div className={isMobile ? 'px-3 pt-3' : 'max-w-6xl mx-auto px-4 py-6'}>
 
         {/* 데스크탑 타이틀 */}
-        {!isMobile && (
+        {(!isMobile || desktopMode) && (
           <div className="flex items-start justify-between mb-5">
             <div>
               <h2 className="text-xl font-bold text-white">📅 테슬라 이벤트 캘린더</h2>
@@ -2563,8 +2578,23 @@ function App() {
   const [weeklyLoading, setWeeklyLoading] = useState(false);
   const [weeklyError,   setWeeklyError]   = useState(null);
   const [currentPrice,  setCurrentPrice]  = useState(247);
+  const [calendarEvents, setCalendarEvents] = useState([]);
   const sessionIdRef    = useRef(null);
   const sessionSavedRef = useRef(false);
+
+  // 캘린더 이벤트 로드 (예측 모델에 활용)
+  useEffect(() => {
+    fetch(CALENDAR_DATA_URL + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        const today = new Date().toISOString().split('T')[0];
+        // 향후 60일 이내 이벤트만 활용
+        const upcoming = (data.events || []).filter(ev => ev.date >= today &&
+          ev.date <= new Date(Date.now() + 60 * 86400000).toISOString().split('T')[0]);
+        setCalendarEvents(upcoming);
+      })
+      .catch(() => {});
+  }, []);
 
   const updateResult = useCallback((id, result) => {
     setResults(prev => { const next = { ...prev, [id]: result }; saveCache(next); return next; });
@@ -2586,12 +2616,12 @@ function App() {
     setForecastLoading(true); setForecastError(null);
     try {
       const items = currentNews.filter(n => results[n.id]).map(n => ({ title: n.title, result: results[n.id] }));
-      const f = await generateForecast(apiKey, items, currentPrice);
+      const f = await generateForecast(apiKey, items, currentPrice, calendarEvents);
       setForecast(f);
       try { localStorage.setItem(FORECAST_CACHE_KEY, JSON.stringify(f)); } catch {}
     } catch (e) { setForecastError(e.message); }
     finally { setForecastLoading(false); }
-  }, [apiKey, currentNews, results, forecastLoading, currentPrice]);
+  }, [apiKey, currentNews, results, forecastLoading, currentPrice, calendarEvents]);
 
   useEffect(() => {
     if (currentNews.every(n => results[n.id]) && !forecast && !forecastLoading && apiKey) {
@@ -2838,58 +2868,76 @@ function App() {
     );
   }
 
-  // ── PC 라우팅 ─────────────────────────────────────────────────────────────
-  if (page === 'calendar') return <CalendarPage onBack={() => setPage('dashboard')} />;
-
-  if (page === 'trend') return <TrendPage onBack={() => setPage('dashboard')}
-    onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
-    driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
-    driveLastSync={driveLastSync} driveError={driveError} />;
-
-  if (page === 'settings') return <SettingsPage onBack={() => setPage('dashboard')}
-    apiKey={apiKey} keyInput={keyInput} setKeyInput={setKeyInput} saveKey={saveKey}
-    driveClientId={driveClientId} driveClientIdInput={driveClientIdInput}
-    setDriveClientIdInput={setDriveClientIdInput} saveDriveClientId={saveDriveClientId}
-    connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
-    driveLastSync={driveLastSync} driveError={driveError}
-    pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive}
-    getDriveToken={() => driveTokenRef.current} />;
-
-  return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
-
-      {/* 헤더 */}
-      <div className="flex items-center justify-between mb-6 sticky top-0 z-50 py-3 -mx-4 px-4"
-        style={{ background: 'rgba(13,15,20,0.97)', backdropFilter: 'blur(8px)', borderBottom: '1px solid #1C1F26' }}>
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">TSLA 주가 영향 분석</h1>
-            <p className="text-xs text-gray-500">Tesla / Elon Musk · Rule Engine R01~R24</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {[
-            { key: 'dashboard', icon: '📊', label: '대시보드' },
-            { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
-            { key: 'calendar',  icon: '📅', label: '캘린더' },
-            { key: 'settings',  icon: '⚙',  label: '설정' },
-          ].map(({ key, icon, label, badge }) => (
-            <button key={key} onClick={() => setPage(key)}
-              className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all relative"
-              style={page === key
-                ? { background: '#E3193715', border: '1px solid #E3193750', color: '#fff' }
-                : { background: '#1C1F26',   border: '1px solid #2A2D35',   color: '#6b7280' }}>
-              {icon} {label}
-              {badge && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center" style={{ background: '#E31937', color: '#fff', fontSize: '8px', fontWeight: 'bold' }}>{badge}</span>}
-            </button>
-          ))}
-          <div className="text-right ml-2">
-            <p className="text-xs text-gray-600">기준일</p>
-            <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
-          </div>
+  // ── PC 공통 헤더 + 페이지 라우팅 ────────────────────────────────────────
+  const DesktopHeader = () => (
+    <div className="flex items-center justify-between sticky top-0 z-50 py-3 px-6"
+      style={{ background: 'rgba(13,15,20,0.97)', backdropFilter: 'blur(8px)', borderBottom: '1px solid #1C1F26' }}>
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
+        <div>
+          <h1 className="text-xl font-bold text-white tracking-tight">TSLA 주가 영향 분석</h1>
+          <p className="text-xs text-gray-500">Tesla / Elon Musk · Rule Engine R01~R24</p>
         </div>
       </div>
+      <div className="flex items-center gap-2">
+        {[
+          { key: 'dashboard', icon: '📊', label: '대시보드' },
+          { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
+          { key: 'calendar',  icon: '📅', label: '캘린더' },
+          { key: 'settings',  icon: '⚙',  label: '설정' },
+        ].map(({ key, icon, label, badge }) => (
+          <button key={key} onClick={() => setPage(key)}
+            className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all relative"
+            style={page === key
+              ? { background: '#E3193715', border: '1px solid #E3193750', color: '#fff' }
+              : { background: '#1C1F26',   border: '1px solid #2A2D35',   color: '#6b7280' }}>
+            {icon} {label}
+            {badge && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center" style={{ background: '#E31937', color: '#fff', fontSize: '8px', fontWeight: 'bold' }}>{badge}</span>}
+          </button>
+        ))}
+        <div className="text-right ml-2">
+          <p className="text-xs text-gray-600">기준일</p>
+          <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (page === 'calendar') return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <CalendarPage onBack={() => setPage('dashboard')} desktopMode />
+    </div>
+  );
+
+  if (page === 'trend') return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <TrendPage onBack={() => setPage('dashboard')}
+        onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
+        driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
+        driveLastSync={driveLastSync} driveError={driveError} />
+    </div>
+  );
+
+  if (page === 'settings') return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <SettingsPage onBack={() => setPage('dashboard')}
+        apiKey={apiKey} keyInput={keyInput} setKeyInput={setKeyInput} saveKey={saveKey}
+        driveClientId={driveClientId} driveClientIdInput={driveClientIdInput}
+        setDriveClientIdInput={setDriveClientIdInput} saveDriveClientId={saveDriveClientId}
+        connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
+        driveLastSync={driveLastSync} driveError={driveError}
+        pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive}
+        getDriveToken={() => driveTokenRef.current} />
+    </div>
+  );
+
+  return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <div className="max-w-6xl mx-auto px-4 py-6">
 
       {/* 슬림 액션 바 */}
       <div className="rounded-xl px-4 py-3 border mb-5 flex items-center gap-3 flex-wrap" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
@@ -3028,6 +3076,7 @@ function App() {
       <p className="text-center text-xs text-gray-700 mt-6">
         Powered by Google Gemini 2.5 Flash · TSLA Impact Analyzer v2.0 · 본 도구는 투자 조언이 아닙니다
       </p>
+    </div>
     </div>
   );
 }
