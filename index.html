@@ -363,7 +363,7 @@ function NewsCard({ news, result, loading, error }) {
             className="text-xs font-bold px-2 py-1 rounded-lg shrink-0 whitespace-nowrap"
             style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40` }}
           >
-            {result.direction.toUpperCase()}
+            {result.direction === 'bullish' ? '📈 강세' : result.direction === 'bearish' ? '📉 약세' : '➡ 중립'}
           </span>
         )}
         {loading && (
