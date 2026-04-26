@@ -2535,19 +2535,20 @@ function App() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => setPage('dashboard')} className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors"
-            style={page==='dashboard' ? {background:'#252830',border:'1px solid #2A2D35',color:'#fff'} : {color:'#6b7280'}}>
-            📊 대시보드
-          </button>
-          <button onClick={() => setPage('trend')} className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors relative"
-            style={page==='trend' ? {background:'#252830',border:'1px solid #2A2D35',color:'#fff'} : {color:'#6b7280'}}>
-            📈 트렌드 분석
-            {dbCount > 0 && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center" style={{background:'#E31937',color:'#fff',fontSize:'8px',fontWeight:'bold'}}>{dbCount}</span>}
-          </button>
-          <button onClick={() => setPage('settings')} className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-colors relative"
-            style={page==='settings' ? {background:'#252830',border:'1px solid #2A2D35',color:'#fff'} : {color:'#6b7280'}}>
-            ⚙ 설정
-          </button>
+          {[
+            { key: 'dashboard', icon: '📊', label: '대시보드' },
+            { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
+            { key: 'settings',  icon: '⚙',  label: '설정' },
+          ].map(({ key, icon, label, badge }) => (
+            <button key={key} onClick={() => setPage(key)}
+              className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all relative"
+              style={page === key
+                ? { background: '#E3193715', border: '1px solid #E3193750', color: '#fff' }
+                : { background: '#1C1F26',   border: '1px solid #2A2D35',   color: '#6b7280' }}>
+              {icon} {label}
+              {badge && <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center" style={{ background: '#E31937', color: '#fff', fontSize: '8px', fontWeight: 'bold' }}>{badge}</span>}
+            </button>
+          ))}
           <div className="text-right ml-2">
             <p className="text-xs text-gray-600">기준일</p>
             <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
