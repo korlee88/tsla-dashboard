@@ -2251,7 +2251,10 @@ function CalendarPage({ onBack, desktopMode }) {
 
 // ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
 
-function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError }) {
+function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError,
+  forecast, forecastLoading, forecastError, onRetryForecast,
+  weeklyData, weeklyLoading, weeklyError,
+  newsItems, newsResults, calendarEvents }) {
   const [db, setDB] = useState(() => getNewsDB());
   const [expanded, setExpanded] = useState(null);
   const [autoSessions, setAutoSessions] = useState([]);
@@ -2744,7 +2747,21 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         </div>
       </div>
 
-      <p className="text-center text-xs text-gray-700 mt-6">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
+      {/* 투자 전망 분석 패널 */}
+      <ForecastPanel
+        forecast={forecast}
+        loading={forecastLoading}
+        error={forecastError}
+        onRetry={onRetryForecast}
+        weeklyData={weeklyData}
+        weeklyLoading={weeklyLoading}
+        weeklyError={weeklyError}
+        newsItems={newsItems}
+        newsResults={newsResults}
+        calendarEvents={calendarEvents || []}
+      />
+
+      <p className="text-center text-xs text-gray-700 mt-6 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
     </div>
   );
 }
@@ -3042,7 +3059,11 @@ function App() {
             <TrendPage onBack={() => setPage('dashboard')}
               onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
               driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
-              driveLastSync={driveLastSync} driveError={driveError} />
+              driveLastSync={driveLastSync} driveError={driveError}
+              forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
+              onRetryForecast={runForecast}
+              weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
+              newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
           </div>
         )}
         {page === 'settings' && (
@@ -3115,7 +3136,11 @@ function App() {
       <TrendPage onBack={() => setPage('dashboard')}
         onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
         driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
-        driveLastSync={driveLastSync} driveError={driveError} />
+        driveLastSync={driveLastSync} driveError={driveError}
+        forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
+        onRetryForecast={runForecast}
+        weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
+        newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
     </div>
   );
 
@@ -3254,19 +3279,6 @@ function App() {
       </div>
 
       {hasAnyResult && <SummaryPanel results={results} />}
-
-      <ForecastPanel
-        forecast={forecast}
-        loading={forecastLoading}
-        error={forecastError}
-        onRetry={runForecast}
-        weeklyData={weeklyData}
-        weeklyLoading={weeklyLoading}
-        weeklyError={weeklyError}
-        newsItems={currentNews}
-        newsResults={results}
-        calendarEvents={calendarEvents}
-      />
 
 
       {isSaved && (
