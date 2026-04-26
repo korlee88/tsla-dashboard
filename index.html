@@ -1068,6 +1068,9 @@ function WeeklyCandlestickChart({ data }) {
 
   const fmtLabel = d => {
     const dt = d instanceof Date ? d : new Date(d);
+    if (mode === 'daily') {
+      return `${String(dt.getMonth() + 1).padStart(2, '0')}/${String(dt.getDate()).padStart(2, '0')}`;
+    }
     return `${dt.getFullYear()}/${String(dt.getMonth() + 1).padStart(2, '0')}`;
   };
 
