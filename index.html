@@ -744,49 +744,84 @@ async function collectTodayNews(apiKey) {
   return items.slice(0, 10).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
 
-// ─── 실시간 TSLA 52주 주봉 (Stooq → allorigins fallback) ────────────────
+// ─── 실시간 TSLA 52주 주봉 (Yahoo Finance v8 → 다중 프록시 폴백) ──────────
 
 async function fetchTSLAWeeklyData() {
-  // Stooq CSV 파싱 공통 함수
-  function parseStooqCSV(text) {
-    const lines = text.trim().split('\n').filter(l => l.trim() && !l.toLowerCase().startsWith('date'));
-    if (lines.length < 4) throw new Error('데이터 부족');
-    const items = lines.map(line => {
-      const c = line.split(',');
-      return { date: new Date(c[0]), open: +c[1], high: +c[2], low: +c[3], close: +c[4] };
-    }).filter(d => d.close > 0 && !isNaN(d.close));
-    // Stooq는 최신순 → 오래된순으로 reverse
-    items.reverse();
-    const last52 = items.slice(-52);
-    const currentPrice = Math.round(last52[last52.length - 1].close * 100) / 100;
-    return { items: last52, currentPrice };
+  const YF = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=1y&interval=1wk&includePrePost=false';
+  const YF2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=1y&interval=1wk&includePrePost=false';
+
+  function parseYahooJSON(json) {
+    const result = json?.chart?.result?.[0];
+    if (!result) throw new Error('Yahoo Finance 응답 파싱 실패');
+    const meta = result.meta || {};
+    const timestamps = result.timestamp || [];
+    const q = result.indicators?.quote?.[0] || {};
+    if (timestamps.length < 4) throw new Error('데이터 부족');
+    const items = timestamps.map((ts, i) => ({
+      date: new Date(ts * 1000),
+      open:  q.open?.[i]  || q.close?.[i] || 0,
+      high:  q.high?.[i]  || q.close?.[i] || 0,
+      low:   q.low?.[i]   || q.close?.[i] || 0,
+      close: q.close?.[i] || 0,
+    })).filter(d => d.close > 0 && !isNaN(d.close));
+    if (items.length < 4) throw new Error('유효 데이터 부족');
+    const livePrice = meta.regularMarketPrice || meta.previousClose;
+    const currentPrice = livePrice
+      ? Math.round(livePrice * 100) / 100
+      : Math.round(items[items.length - 1].close * 100) / 100;
+    return { items, currentPrice };
   }
 
-  const STOOQ = 'https://stooq.com/q/d/l/?s=tsla.us&i=w';
-
-  // 1순위: Stooq 직접
+  // 1순위: Yahoo Finance query1 직접
   try {
-    const res = await fetch(STOOQ, { cache: 'no-store' });
+    const res = await fetch(YF, { cache: 'no-store' });
+    if (res.ok) return parseYahooJSON(await res.json());
+  } catch {}
+
+  // 2순위: Yahoo Finance query2 직접
+  try {
+    const res = await fetch(YF2, { cache: 'no-store' });
+    if (res.ok) return parseYahooJSON(await res.json());
+  } catch {}
+
+  // 3순위: allorigins 프록시 경유
+  try {
+    const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(YF), { cache: 'no-store' });
     if (res.ok) {
-      const text = await res.text();
-      return parseStooqCSV(text);
+      const w = await res.json();
+      return parseYahooJSON(JSON.parse(w.contents || '{}'));
     }
   } catch {}
 
-  // 2순위: allorigins 프록시 경유
+  // 4순위: corsproxy.io 경유
   try {
-    const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(STOOQ), { cache: 'no-store' });
-    if (res.ok) {
-      const wrapper = await res.json();
-      return parseStooqCSV(wrapper.contents || '');
-    }
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(YF), { cache: 'no-store' });
+    if (res.ok) return parseYahooJSON(await res.json());
   } catch {}
 
-  // 3순위: corsproxy.io 경유
-  const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(STOOQ), { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Stooq HTTP ${res.status}`);
-  const text = await res.text();
-  return parseStooqCSV(text);
+  // 5순위: thingproxy 경유
+  try {
+    const res = await fetch('https://thingproxy.freeboard.io/fetch/' + YF, { cache: 'no-store' });
+    if (res.ok) return parseYahooJSON(await res.json());
+  } catch {}
+
+  throw new Error('주가 데이터를 불러올 수 없습니다 (네트워크 오류)');
+}
+
+// Gemini Google Search로 현재 TSLA 주가만 가져오는 폴백
+async function fetchPriceViaGemini(apiKey) {
+  if (!apiKey) throw new Error('API 키 없음');
+  const today = new Date().toISOString().split('T')[0];
+  const data = await geminiPostWithRetry(apiKey, {
+    tools: [{ google_search: {} }],
+    contents: [{ role: 'user', parts: [{ text: `What is the current TSLA Tesla stock price as of ${today}? Reply with ONLY a single decimal number like 247.50. No text, no dollar sign, just the number.` }] }],
+    generationConfig: { maxOutputTokens: 30, temperature: 0, thinkingConfig: { thinkingBudget: 0 } },
+  });
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const raw = parts.filter(p => !p.thought).map(p => p.text || '').join('').trim();
+  const price = parseFloat(raw.replace(/[^0-9.]/g, ''));
+  if (!price || isNaN(price) || price < 10 || price > 20000) throw new Error('가격 파싱 실패: ' + raw);
+  return price;
 }
 
 // ─── 포캐스트 API ──────────────────────────────────────────────────────────
@@ -866,17 +901,22 @@ async function generateForecast(apiKey, items, currentPrice = 247, calendarEvent
 // ─── 컴포넌트: WeeklyCandlestickChart ─────────────────────────────────────
 
 function WeeklyCandlestickChart({ data }) {
+  if (!data || data.length < 2) return (
+    <div className="flex items-center justify-center h-24 text-xs text-gray-600">차트 데이터 없음</div>
+  );
   const W = 700, H = 200;
   const P = { t: 12, r: 50, b: 24, l: 54 };
   const cW = W - P.l - P.r, cH = H - P.t - P.b;
-  const allP = data.flatMap(d => [d.high, d.low]);
+  const allP = data.flatMap(d => [d.high ?? d.close, d.low ?? d.close]).filter(v => v > 0);
   const minP = Math.min(...allP) * 0.994, maxP = Math.max(...allP) * 1.006;
   const xPos = i => P.l + (i + 0.5) * (cW / data.length);
   const yPos = p => P.t + (1 - (p - minP) / (maxP - minP)) * cH;
   const bW = Math.max(1.5, cW / data.length - 1.5);
   const yTicks = Array.from({ length: 5 }, (_, i) => minP + (i / 4) * (maxP - minP));
-  const curP = data[data.length - 1].close;
-  const curCol = curP >= data[data.length - 2]?.close ? '#22c55e' : '#ef4444';
+  const lastItem = data[data.length - 1];
+  const prevItem = data[data.length - 2];
+  const curP = lastItem?.close ?? 0;
+  const curCol = curP >= (prevItem?.close ?? 0) ? '#22c55e' : '#ef4444';
   return (
     <div style={{ width: '100%', overflowX: 'auto' }}>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 320, display: 'block' }}>
@@ -967,7 +1007,7 @@ const RISK_CFG = {
   very_high: { color: '#ef4444', label: '매우 높음' },
 };
 
-function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLoading, weeklyError, newsItems = [], newsResults = {}, calendarEvents = [] }) {
+function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLoading, weeklyError, currentPrice, newsItems = [], newsResults = {}, calendarEvents = [] }) {
   if (loading) return (
     <div className="rounded-xl p-8 border mt-6 flex items-center justify-center gap-3"
       style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
@@ -999,9 +1039,14 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
           </div>
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-xs px-2 py-1 rounded" style={{ background: '#14171e', border: '1px solid #2A2D35', color: '#94a3b8' }}>
-              {weeklyData ? '실시간 현재가' : '현재가 추정'}{' '}
-              <strong className="text-white">${weeklyData ? weeklyData[weeklyData.length-1]?.close?.toFixed(2) : forecast.current_price}</strong>
-              {weeklyData && <span className="text-gray-600 ml-1 text-xs">Yahoo Finance</span>}
+              {weeklyLoading
+                ? <span className="animate-pulse">현재가 로딩 중…</span>
+                : weeklyData
+                  ? <><span>실시간 현재가 </span><strong className="text-white">${(weeklyData[weeklyData.length-1]?.close ?? currentPrice)?.toFixed(2)}</strong><span className="text-gray-600 ml-1">Yahoo Finance</span></>
+                  : currentPrice && currentPrice !== 247
+                    ? <><span>현재가 </span><strong className="text-white">${currentPrice?.toFixed(2)}</strong><span className="text-gray-600 ml-1">Gemini Search</span></>
+                    : <><span>현재가 </span><strong className="text-white">${forecast.current_price ?? 247}</strong><span className="text-yellow-600 ml-1">추정</span></>
+              }
             </span>
             <span className="text-sm font-bold px-3 py-1.5 rounded-lg"
               style={{ color: oSig.color, background: oSig.bg, border: `1px solid ${oSig.color}40` }}>
@@ -1022,8 +1067,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
       <div className="px-5 pt-4">
         <div className="flex items-center gap-2 mb-2">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TSLA 52주 실제 주봉</p>
-          {weeklyLoading && <span className="text-xs text-blue-400 animate-pulse">Yahoo Finance 로딩 중…</span>}
-          {weeklyError && <span className="text-xs text-yellow-500">⚠ {weeklyError} (주가 로드 실패)</span>}
+          {weeklyLoading && <span className="text-xs text-blue-400 animate-pulse">로딩 중…</span>}
           {weeklyData && <span className="text-xs text-gray-600">출처: Yahoo Finance</span>}
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
@@ -1034,8 +1078,13 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
               </div>
             : weeklyData
               ? <WeeklyCandlestickChart data={weeklyData} />
-              : <div className="flex items-center justify-center h-24 text-xs text-gray-600">
-                  주가 데이터를 불러올 수 없습니다 (API Key 확인 또는 새로고침)
+              : <div className="flex flex-col items-center justify-center h-24 gap-2">
+                  <span className="text-xs text-gray-600">차트를 불러올 수 없습니다</span>
+                  <button onClick={() => window.location.reload()}
+                    className="text-xs px-3 py-1 rounded text-gray-400 hover:text-white transition-colors"
+                    style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+                    🔄 새로고침
+                  </button>
                 </div>
           }
         </div>
@@ -2253,7 +2302,7 @@ function CalendarPage({ onBack, desktopMode }) {
 
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError,
   forecast, forecastLoading, forecastError, onRetryForecast,
-  weeklyData, weeklyLoading, weeklyError,
+  weeklyData, weeklyLoading, weeklyError, currentPrice,
   newsItems, newsResults, calendarEvents }) {
   const [db, setDB] = useState(() => getNewsDB());
   const [expanded, setExpanded] = useState(null);
@@ -2727,26 +2776,6 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         )}
       </div>
-      {/* 매수지수 등급표 (하단) */}
-      <div className="rounded-xl border p-4 mt-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">📊 매수지수 등급표</p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-          {GRADES.map(g => (
-            <div key={g.grade} className="flex items-center gap-2 rounded-lg px-3 py-2"
-              style={{ background: g.bg, border: `1px solid ${g.color}30` }}>
-              <span className="text-base font-black w-5 shrink-0" style={{ color: g.color }}>{g.grade}</span>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-xs font-bold" style={{ color: g.color }}>{g.label}</span>
-                  <span className="text-xs text-gray-600">{g.min}~{g.max}</span>
-                </div>
-                <p className="text-xs text-gray-500 leading-tight mt-0.5 truncate">{g.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* 투자 전망 분석 패널 */}
       <ForecastPanel
         forecast={forecast}
@@ -2756,6 +2785,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         weeklyData={weeklyData}
         weeklyLoading={weeklyLoading}
         weeklyError={weeklyError}
+        currentPrice={currentPrice}
         newsItems={newsItems}
         newsResults={newsResults}
         calendarEvents={calendarEvents || []}
@@ -2985,9 +3015,22 @@ function App() {
         setCurrentPrice(cp);
         setWeeklyError(null);
       })
-      .catch(e => setWeeklyError(e.message))
+      .catch(e => { setWeeklyError(e.message); })
       .finally(() => setWeeklyLoading(false));
   }, []);
+
+  // ─── Yahoo Finance 실패 시 Gemini로 현재가만 가져오기 ──────────────────
+  const geminiPriceFetchedRef = useRef(false);
+  useEffect(() => {
+    if (weeklyData || weeklyLoading || !weeklyError || !apiKey || geminiPriceFetchedRef.current) return;
+    geminiPriceFetchedRef.current = true;
+    fetchPriceViaGemini(apiKey)
+      .then(price => {
+        setCurrentPrice(price);
+        setWeeklyError(null); // 가격 얻었으면 에러 메시지 제거
+      })
+      .catch(() => {}); // Gemini도 실패하면 기본값 유지
+  }, [apiKey, weeklyData, weeklyLoading, weeklyError]);
 
   const saveKey = () => {
     const k = keyInput.trim();
@@ -3063,6 +3106,7 @@ function App() {
               forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
               onRetryForecast={runForecast}
               weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
+              currentPrice={currentPrice}
               newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
           </div>
         )}
@@ -3140,6 +3184,7 @@ function App() {
         forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
         onRetryForecast={runForecast}
         weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
+        currentPrice={currentPrice}
         newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
     </div>
   );
