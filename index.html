@@ -587,6 +587,22 @@ async function getDriveAppDataSize(token) {
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
 const CALENDAR_DATA_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
 const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
+const DAILY_CACHE_KEY    = 'tsla_daily_cache_v1';
+
+// 일봉 캐시 로드/저장 (주봉과 동일한 KST 7시 기준 하루 1회)
+function loadDailyCache() {
+  try { return JSON.parse(localStorage.getItem(DAILY_CACHE_KEY) || 'null'); } catch { return null; }
+}
+function saveDailyCache(items) {
+  try {
+    const serialized = (items || []).map(d => ({ ...d, date: d.date instanceof Date ? d.date.toISOString() : d.date }));
+    localStorage.setItem(DAILY_CACHE_KEY, JSON.stringify({ items: serialized, fetchedAt: Date.now() }));
+  } catch {}
+}
+function deserializeDailyCache(cache) {
+  if (!cache?.items) return null;
+  return cache.items.map(d => ({ ...d, date: new Date(d.date) }));
+}
 
 // 주가 캐시 로드/저장
 function loadPriceCache() {
@@ -981,16 +997,30 @@ async function fetchTSLADailyData() {
 
 function WeeklyCandlestickChart({ data }) {
   const [mode, setMode] = React.useState('weekly'); // 'daily' | 'weekly' | 'monthly'
-  const [dailyData,    setDailyData]    = React.useState(null);
+  // 일봉: localStorage 캐시에서 초기값 복원
+  const [dailyData,    setDailyData]    = React.useState(() => {
+    const c = loadDailyCache();
+    if (!c || !isPriceCacheValid(c)) return null;
+    return deserializeDailyCache(c);
+  });
   const [dailyLoading, setDailyLoading] = React.useState(false);
   const [dailyError,   setDailyError]   = React.useState(null);
 
-  // 일봉 선택 시 자동 fetch
+  // 일봉 선택 시 자동 fetch (캐시 유효하면 스킵)
   React.useEffect(() => {
     if (mode !== 'daily' || dailyData || dailyLoading) return;
+    // 캐시 재확인 (컴포넌트 마운트 후 캐시가 있을 수 있음)
+    const cache = loadDailyCache();
+    if (isPriceCacheValid(cache)) {
+      const cached = deserializeDailyCache(cache);
+      if (cached?.length) { setDailyData(cached); return; }
+    }
     setDailyLoading(true); setDailyError(null);
     fetchTSLADailyData()
-      .then(items => setDailyData(items))
+      .then(items => {
+        setDailyData(items);
+        saveDailyCache(items); // localStorage에 저장
+      })
       .catch(e => setDailyError(e.message))
       .finally(() => setDailyLoading(false));
   }, [mode]);
