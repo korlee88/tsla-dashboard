@@ -5,8 +5,9 @@
  * Node.js 22 내장 fetch 사용
  */
 
-const fs   = require('fs');
-const path = require('path');
+const fs            = require('fs');
+const path          = require('path');
+const { execSync }  = require('child_process');
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -45,6 +46,20 @@ CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra
 // ─── 유틸 ────────────────────────────────────────────────────────────────────
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function gitCommitProgress(label) {
+  try {
+    execSync('git add data/backtest-results.json', { stdio: 'pipe' });
+    const diff = execSync('git diff --staged --name-only', { stdio: 'pipe' }).toString().trim();
+    if (!diff) { console.log(`   ⏭  ${label} — 변경 없음, 커밋 건너뜀`); return; }
+    const nowKST = new Date(Date.now() + 9 * 3600000).toISOString().replace('T',' ').slice(0,16) + ' KST';
+    execSync(`git commit -m "backtest: ${label} 완료 (${nowKST})"`, { stdio: 'pipe' });
+    execSync('git push', { stdio: 'pipe' });
+    console.log(`   ✅ ${label} 중간 커밋 & 푸시 완료`);
+  } catch (e) {
+    console.warn(`   ⚠  git 커밋 실패 (무시): ${e.message.slice(0,80)}`);
+  }
+}
 
 async function geminiPost(body, retries = 4) {
   let lastError;
@@ -239,6 +254,7 @@ async function main() {
   console.log(`\n📅 처리 예정: ${pending.length}주 (완료: ${doneSet.size}주 / 전체: ${allWeeks.length}주)\n`);
 
   const results = [...(db.weeks || [])];
+  let lastCommittedQuarter = null;
 
   for (let i = 0; i < pending.length; i++) {
     const { weekStart, weekEnd, quarter } = pending[i];
@@ -286,10 +302,19 @@ async function main() {
     });
 
     // 중간 저장 (재시작 대비)
-    db.weeks      = results.sort((a, b) => a.weekStart.localeCompare(b.weekStart));
+    db.weeks       = results.sort((a, b) => a.weekStart.localeCompare(b.weekStart));
     db.generatedAt = kstStr;
     fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
     fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2), 'utf-8');
+
+    // 분기가 바뀌는 시점 또는 마지막 주에 중간 커밋 (앱에서 진행상황 확인 가능)
+    const nextQuarter = pending[i + 1]?.quarter;
+    const isLastWeek  = (i === pending.length - 1);
+    if (isLastWeek || (nextQuarter && nextQuarter !== quarter && lastCommittedQuarter !== quarter)) {
+      console.log(`\n📤 ${quarter.toUpperCase()} 완료 — 중간 커밋 중...`);
+      gitCommitProgress(`2025 ${quarter.toUpperCase()}`);
+      lastCommittedQuarter = quarter;
+    }
 
     if (i < pending.length - 1) await sleep(2000); // 요청 간격 2초
   }
