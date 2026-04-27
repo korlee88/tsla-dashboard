@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write       # data/calendar.json 커밋 권한
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: 저장소 체크아웃
@@ -35,5 +37,6 @@ jobs:
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
             git commit -m "calendar: 테슬라 이벤트 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            git pull --rebase origin master
             git push
           fi

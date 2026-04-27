@@ -11,6 +11,8 @@ jobs:
     timeout-minutes: 180   # 최대 3시간 (52주 × ~2분 = 약 1.5~2시간)
     permissions:
       contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: 저장소 체크아웃
