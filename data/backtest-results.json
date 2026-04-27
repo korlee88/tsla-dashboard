@@ -1,0 +1,3851 @@
+{
+  "weeks": [
+    {
+      "weekStart": "2025-01-06",
+      "weekEnd": "2025-01-12",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 2025년 첫 거래일에 6% 하락",
+          "source": "Gulfbrokers",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라, 4분기 실적 부진에도 불구하고 주가 상승, 머스크는 세계 최대 기업 예측",
+          "source": "Forbes",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 저가형 자동차 계획 취소 루머 부인 후 테슬라 주가 하락",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "트럼프 당선 후 테슬라 주가 12% 급등, 사상 최고치 경신",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크의 정치 참여가 테슬라 판매에 악영향을 미칠 위험",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가 50% 폭락, 투자자들은 변동성 관리에 나서야",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2025년 성장 전망 재검토 시사",
+          "source": "BNN Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 매입 후 주가 급등",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라에 전념하겠다고 약속하며 주가 6% 상승",
+          "source": "GuruFocus",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 로보택시 출시 임박 및 머스크의 복귀로 주가 상승",
+          "source": "Forbes",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.3,
+        "buyIndex": 47,
+        "direction": "neutral",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R02",
+          "R13"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -6.72,
+        "actual": "bearish",
+        "open": 423.2,
+        "close": 394.74
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-01-13",
+      "weekEnd": "2025-01-19",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크의 최후통첩 후 테슬라 주가 하락",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 저가형 모델 생산 및 로보택시 서비스 출시 계획",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 2025년 300달러에서 528달러 사이 예상",
+          "source": "Trade The Pool",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 매입 후 주가 상승",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 4분기 실적 발표 전 이례적인 인도량 컨센서스 공개",
+          "source": "Electrek",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크, 저가형 자동차 계획 취소 루머 부인",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크의 정치 참여가 테슬라 브랜드에 부정적 영향",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 차량 인도량 13% 감소",
+          "source": "Forbes",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크, 테슬라에 더 많은 시간 할애 계획 발표",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 3분기 차량 인도량 497,099대 기록, 예상치 상회",
+          "source": "Global Trade Magazine",
+          "category": "Delivery"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.4,
+        "buyIndex": 54,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R24",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 11.3,
+        "actual": "bullish",
+        "open": 383.21,
+        "close": 426.5
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-01-20",
+      "weekEnd": "2025-01-26",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 유럽 판매 부진으로 주가 하락: Magnificent 7의 균열",
+          "source": "MarketWatch",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크, 트럼프 취임식에서 열정적인 연설",
+          "source": "The Washington Post",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가 4.17% 하락하며 419.25달러로 마감",
+          "source": "StockInvest.us",
+          "category": "Market"
+        },
+        {
+          "title": "프랑스 검찰, X(트위터)의 아동 학대 이미지 및 딥페이크 의혹으로 일론 머스크 소환",
+          "source": "Associated Press",
+          "category": "Legal"
+        },
+        {
+          "title": "일론 머스크, 새로운 미국 정당 창당 위협",
+          "source": "Mashable",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 퇴임 보도에 급등",
+          "source": "Business Insider",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주식, 1월 20일 이전에 매수, 매도 또는 보유해야 하는가?",
+          "source": "Barchart.com",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크의 2025년: 트럼프의 권력 중개자에서 테슬라의 혼란까지",
+          "source": "Benzinga",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가에 큰 새로운 위협이 닥치다",
+          "source": "TheStreet",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라 주식, 1월 28일 이전에 매수해야 할까?",
+          "source": "The Motley Fool",
+          "category": "Delivery"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -2.2,
+        "buyIndex": 28,
+        "direction": "bearish",
+        "bullish": 1,
+        "bearish": 9,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R01",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -6.02,
+        "actual": "bearish",
+        "open": 432.64,
+        "close": 406.58
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-01-27",
+      "weekEnd": "2025-02-02",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "월스트리트, 테슬라의 2025년 판매량이 일론 머스크 목표치 미달할 것으로 전망",
+          "source": "Financial Times",
+          "category": "Market|Sales|Regulatory"
+        },
+        {
+          "title": "테슬라, 신형 모델 및 자율주행 덕분에 2025년 성장 회복 전망",
+          "source": "Electrek",
+          "category": "Earnings|Product|Delivery|Market"
+        },
+        {
+          "title": "테슬라, 4분기 실적 부진에도 불구하고 로보택시 생산 및 AI 우위 강조하며 주가 상승",
+          "source": "Forbes",
+          "category": "Earnings|Product|Market|Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 차세대 전기차 2025년 말 출시 목표 발표",
+          "source": "Electrek",
+          "category": "Product|Delivery"
+        },
+        {
+          "title": "일론 머스크, 테슬라 CEO 역할에 더 많은 시간 할애 약속",
+          "source": "Associated Press",
+          "category": "Musk|Regulatory"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇 생산에 집중",
+          "source": "CNN Business",
+          "category": "Product|Strategy|AI"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 실적 예상치 상회하며 로봇공학 및 AI 전환 강조",
+          "source": "Forbes",
+          "category": "Earnings|Strategy|AI"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI의 공동 프로젝트 '매크로하드' 공개",
+          "source": "Reuters",
+          "category": "Musk|AI|Product"
+        },
+        {
+          "title": "테슬라, 일론 머스크의 다른 회사들과의 거래 내역 공개",
+          "source": "Electrek",
+          "category": "Musk|Regulatory|Energy"
+        },
+        {
+          "title": "일론 머스크, 월스트리트 저널의 '테슬라 CEO 교체설' 보도 비판",
+          "source": "Wall Street Journal",
+          "category": "Musk|Legal"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.7,
+        "buyIndex": 57,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R02",
+          "R03"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 2.48,
+        "actual": "bullish",
+        "open": 394.8,
+        "close": 404.6
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-02-03",
+      "weekEnd": "2025-02-09",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라 주가, 2월에 28% 급락",
+          "source": "The Motley Fool",
+          "category": "Market|Musk|Regulatory"
+        },
+        {
+          "title": "테슬라, 1월 유럽 판매량 45% 감소",
+          "source": "TheStreet",
+          "category": "Delivery|Competition"
+        },
+        {
+          "title": "일론 머스크, 백악관 역할에서 물러날 가능성에 테슬라 주가 상승",
+          "source": "Business Insider",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 1분기 인도량 예상치 하회",
+          "source": "Business Insider",
+          "category": "Delivery"
+        },
+        {
+          "title": "중국 경쟁사 BYD, 테슬라에 대한 압박 증가",
+          "source": "Business Insider",
+          "category": "Competition"
+        },
+        {
+          "title": "스페이스X, 테슬라와의 합병 고려 보도",
+          "source": "Bloomberg",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 자율주행 및 로봇 공학에 200억 달러 투자 발표",
+          "source": "Bloomberg",
+          "category": "Product|Energy"
+        },
+        {
+          "title": "일론 머스크, 10억 달러 상당의 테슬라 주식 매입",
+          "source": "Associated Press",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 로보택시 네트워크 확장 계획 발표",
+          "source": "The Economic Times",
+          "category": "Product"
+        },
+        {
+          "title": "월스트리트 애널리스트, 테슬라 목표 주가 500달러로 상향 조정",
+          "source": "The Economic Times",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.3,
+        "buyIndex": 47,
+        "direction": "neutral",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R01",
+          "R13",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -6.48,
+        "actual": "bearish",
+        "open": 386.68,
+        "close": 361.62
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-02-10",
+      "weekEnd": "2025-02-16",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크, 백악관 역할에서 물러날 가능성에 테슬라 주가 급등",
+          "source": "MarketWatch",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2월 중국산 전기차 판매 91% 급증",
+          "source": "Reuters",
+          "category": "Delivery"
+        },
+        {
+          "title": "스페이스X, 테슬라와의 합병 검토 보도에 주가 상승",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 250만 주 매입 후 테슬라 주가 상승",
+          "source": "Global Trade Magazine",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 유럽 판매량 급감 및 머스크의 정치 활동으로 하락",
+          "source": "TheStreet",
+          "category": "Market"
+        },
+        {
+          "title": "애널리스트, 테슬라 FSD 소프트웨어로 '수천억 달러 가치' 이동 예상",
+          "source": "Barchart",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 신규 저가 모델 및 로보택시 출시 계획 발표",
+          "source": "CNBC",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, OpenAI 소송 제기",
+          "source": "Bloomberg",
+          "category": "Legal"
+        },
+        {
+          "title": "스페이스X와 xAI 합병, 1조 2,500억 달러 가치 평가",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 1분기 실적 월스트리트 예상치 상회",
+          "source": "Stocktwits",
+          "category": "Earnings"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.7,
+        "buyIndex": 67,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R13",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -0.1,
+        "actual": "neutral",
+        "open": 356.21,
+        "close": 355.84
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-02-17",
+      "weekEnd": "2025-02-23",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 유럽 판매량 급감 및 머스크의 정치 활동으로 주가 하락",
+          "source": "TheStreet, The Motley Fool",
+          "category": "Market|Musk|Sales"
+        },
+        {
+          "title": "일론 머스크, 테슬라에 더 많은 시간 할애할 것이라고 발표",
+          "source": "CNBC",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 인도량 예상치 하회",
+          "source": "Politico",
+          "category": "Delivery|Market"
+        },
+        {
+          "title": "테슬라, 저가형 자동차 계획 폐기 보도에 머스크 '거짓말' 반박",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크의 정치적 개입, 테슬라 주가에 부정적 영향",
+          "source": "Reuters, The Motley Fool, CNBC",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 중국 시장 경쟁 심화 및 판매량 감소",
+          "source": "Politico",
+          "category": "Competition|Sales"
+        },
+        {
+          "title": "테슬라, 2025년 2월 영국 판매량 급감에도 BYD 추월",
+          "source": "Reuters",
+          "category": "Sales|Competition"
+        },
+        {
+          "title": "일론 머스크, 스페이스X IPO 시 차등 의결권 고려 중",
+          "source": "Bloomberg",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2025년 2월 유럽 판매량 13개월 만에 성장세 전환",
+          "source": "Reuters",
+          "category": "Sales|Market"
+        },
+        {
+          "title": "일론 머스크의 회사들, 트럼프 행정부 출범 당시 23.7억 달러 규모의 잠재적 연방 벌금 직면",
+          "source": "Anadolu Ajansı, Global Trade Magazine",
+          "category": "Regulatory|Musk|Legal"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -2.3,
+        "buyIndex": 27,
+        "direction": "bearish",
+        "bullish": 2,
+        "bearish": 8,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R01",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -4.85,
+        "actual": "bearish",
+        "open": 355.01,
+        "close": 337.8
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-02-24",
+      "weekEnd": "2025-03-02",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 독일 엔지니어링 그룹 자산 인수",
+          "source": "Financial Times",
+          "category": "Market"
+        },
+        {
+          "title": "AP, 테슬라의 중국 내 영향력과 일론 머스크의 트럼프 행정부 영향력 조명",
+          "source": "Associated Press",
+          "category": "Musk|Regulatory|Legal"
+        },
+        {
+          "title": "일론 머스크의 불안정한 대중 인식, 테슬라 판매에 걸림돌",
+          "source": "Forbes",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "월스트리트, 2025년 테슬라 판매량이 일론 머스크 목표치 미달 예상",
+          "source": "Financial Times",
+          "category": "Market|Regulatory|Macro"
+        },
+        {
+          "title": "일론 머스크, 차세대 EV 2025년 말 출시 목표",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 차세대 전기차, 2025년 출시 예정 (공급망 소식통)",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 실망스러운 실적에도 머스크는 로봇과 '사이버캡' 강조",
+          "source": "Financial Times",
+          "category": "Earnings|Product|Musk"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": -0.1,
+        "buyIndex": 49,
+        "direction": "bullish",
+        "bullish": 4,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R05",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -13.36,
+        "actual": "bearish",
+        "open": 338.14,
+        "close": 292.98
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-03-03",
+      "weekEnd": "2025-03-09",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 주식 급락에 '버텨라' 촉구 후 주가 반등",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크의 정치적 행보, 테슬라에 해가 될 수 있어",
+          "source": "Bloomberg",
+          "category": "Musk|Regulatory"
+        },
+        {
+          "title": "일론 머스크, 테슬라 주가 부양 시도 실패",
+          "source": "Electrek",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라 주가 급락 속 스페이스X가 머스크의 가장 가치 있는 자산으로 부상",
+          "source": "Forbes",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 주가 하락에 팀 월츠 주지사와 설전",
+          "source": "Forbes",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "파이낸셜 타임즈, 테슬라의 회계 부정 의혹 보도 철회",
+          "source": "Teslarati",
+          "category": "Legal"
+        }
+      ],
+      "newsCount": 6,
+      "analysis": {
+        "avgScore": -1.3,
+        "buyIndex": 37,
+        "direction": "bearish",
+        "bullish": 2,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R24",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -12.54,
+        "actual": "bearish",
+        "open": 300.34,
+        "close": 262.67
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-03-10",
+      "weekEnd": "2025-03-16",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 퇴진 가능성 보도에 급등",
+          "source": "Politico (via Stock Events)",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 1분기 인도량 예상치 하회하며 주가 급락",
+          "source": "Politico (via Stock Events)",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 주식 매입 소식에 상승",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라 직원들에게 밝은 미래 약속하며 주가 12% 상승",
+          "source": "Hindustan Times",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 3월 한 달간 주가 13.7% 하락",
+          "source": "StatMuse Money",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가, 트럼프-머스크 갈등 완화 기대감에 일부 회복",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 3분기 유럽 판매량 증가 및 인도량 예상치 상회",
+          "source": "Global Trade Magazine",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라, 2025년 변동성 심화: 머스크의 정치 참여, 중국 경쟁, 세금 공제 축소 등",
+          "source": "YouTube (Year-in-review)",
+          "category": "Musk|Competition|Regulatory|Macro"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 자본 지출 67% 증가",
+          "source": "Stocktwits",
+          "category": "Energy"
+        },
+        {
+          "title": "테슬라 주가, 2025년 4월 저점 대비 121% 상승하며 사상 최고치 기록",
+          "source": "Business Insider",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.2,
+        "buyIndex": 62,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R01",
+          "R11"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -1.01,
+        "actual": "neutral",
+        "open": 252.54,
+        "close": 249.98
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-03-17",
+      "weekEnd": "2025-03-23",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 CEO직 5년간 유지 및 정치 자금 지출 축소 시사",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 대체할 CEO 물색 시작 (WSJ 보도)",
+          "source": "Wall Street Journal",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 백악관 역할 축소 및 테슬라 집중 계획 발표",
+          "source": "Financial Times",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 차세대 전기차 출시 목표 (Electrek 보도)",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 연간 이익 팬데믹 이후 최저치 기록 및 로보택시, 로봇에 대규모 투자 계획",
+          "source": "Associated Press",
+          "category": "Earnings|Product"
+        },
+        {
+          "title": "테슬라, 1분기 판매량 3년 만에 최저치 기록",
+          "source": "San Antonio Express-News",
+          "category": "Delivery"
+        },
+        {
+          "title": "파이낸셜 타임즈, 테슬라의 '14억 달러 누락' 보도 철회",
+          "source": "Financial Times",
+          "category": "Legal"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 퇴진 가능성 보도에 상승",
+          "source": "Politico",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2025년 신규 모델 3종 출시 예정 (Model 2, Semi, Model Y Juniper)",
+          "source": "Tesla Car World",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 25000달러 EV 계획 폐기 부인에 대한 경영진의 의문 제기",
+          "source": "Cybernews",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.1,
+        "buyIndex": 51,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R24",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 1.49,
+        "actual": "neutral",
+        "open": 245.06,
+        "close": 248.71
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-03-24",
+      "weekEnd": "2025-03-30",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 주요 경쟁사에 밀려 판매 부진 심화",
+          "source": "Forbes",
+          "category": "Competition"
+        },
+        {
+          "title": "일론 머스크, DOGE에 전념하며 테슬라 '위기' 직면",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "파이낸셜 타임즈, 테슬라의 회계 부정 의혹 보도 철회",
+          "source": "Teslarati",
+          "category": "Legal"
+        },
+        {
+          "title": "테슬라, 미국 내 차량 생산량 2년 내 두 배 증대 발표",
+          "source": "Fox Business",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크의 정치 활동 반발로 테슬라 판매량 3년 만에 최저치 기록",
+          "source": "San Antonio Express-News",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 백악관 역할 축소 및 테슬라 집중 약속",
+          "source": "Financial Times",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 저가형 차량 계획 폐기 보도에 일론 머스크 '거짓말' 반박",
+          "source": "FOX Business",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 이사회 의장, CEO 교체설 보도한 월스트리트 저널 비난",
+          "source": "Teslarati",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 및 정치 지출 축소 시사",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 하반기 차세대 EV 생산 목표",
+          "source": "Electrek",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.2,
+        "buyIndex": 48,
+        "direction": "neutral",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R19",
+          "R06"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 2.12,
+        "actual": "bullish",
+        "open": 258.08,
+        "close": 263.55
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-03-31",
+      "weekEnd": "2025-04-06",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 1분기 판매량 예상치 하회 및 머스크의 백악관 역할 축소 가능성에 주가 급등",
+          "source": "Politico (via MarketWatch)",
+          "category": "Delivery|Musk|Market"
+        },
+        {
+          "title": "테슬라, 저가형 모델 계획 폐기 보도에 머스크 '거짓말' 반박",
+          "source": "Reuters (via Fox Business)",
+          "category": "Product|Musk"
+        },
+        {
+          "title": "테슬라, 1분기 판매량 예상치 하회",
+          "source": "MarketWatch",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 역량에 대한 회의론에 직면",
+          "source": "Forbes",
+          "category": "Musk|Product|Competition"
+        },
+        {
+          "title": "테슬라, 중국 경쟁 심화 속 판매량 감소",
+          "source": "MarketWatch",
+          "category": "Competition|Delivery"
+        },
+        {
+          "title": "테슬라, 2025년 성장 전망 재검토 시사",
+          "source": "Bloomberg",
+          "category": "Earnings|Macro|Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 '위기'와 DOGE 역할에 대한 분석",
+          "source": "Forbes",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "파이낸셜 타임즈, 테슬라의 회계 부정 의혹 기사 철회",
+          "source": "Teslarati (via Financial Times)",
+          "category": "Legal|Musk"
+        }
+      ],
+      "newsCount": 8,
+      "analysis": {
+        "avgScore": -2.7,
+        "buyIndex": 23,
+        "direction": "bearish",
+        "bullish": 1,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R01",
+          "R08",
+          "R06"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -3.96,
+        "actual": "bearish",
+        "open": 249.31,
+        "close": 239.43
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-04-07",
+      "weekEnd": "2025-04-13",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 정부 역할 축소 및 테슬라 집중 계획 발표 후 주가 상승",
+          "source": "Investing.com",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상 하회 및 2025년 성장 전망 재검토 시사",
+          "source": "BNN Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가 50% 폭락: 추가 하락 가능성?",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 퇴진 보도에 급등",
+          "source": "Impact Link",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 저가형 자동차 계획 취소 보도 후 주가 하락했으나 머스크는 부인",
+          "source": "Reuters",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 5,
+      "analysis": {
+        "avgScore": -1,
+        "buyIndex": 40,
+        "direction": "bearish",
+        "bullish": 2,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R02",
+          "R03"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 12.75,
+        "actual": "bullish",
+        "open": 223.78,
+        "close": 252.31
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-04-14",
+      "weekEnd": "2025-04-20",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 도지코인 관여 축소 후 테슬라 주가 20% 급등",
+          "source": "Business Insider",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 실적 발표: 수익 71% 급감, 매출 9% 감소",
+          "source": "Finance Magnates",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 2025년 4월 약세 전망: 220달러에서 235달러 사이 예상",
+          "source": "CryptoRank",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가 하락, 일론 머스크에게 중요한 것 잃게 할 수도",
+          "source": "TheStreet",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 4분기 실적 발표 임박: AI 및 로보틱스에 대한 기대",
+          "source": "Nasdaq",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 테슬라 전략적 통제권과 연계된 보상 패키지 옹호 후 주가 4.5% 상승",
+          "source": "Traders Union",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 2025년 4월 14일 주요 가격대 분석",
+          "source": "YouTube",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 10억 달러 규모 테슬라 주식 매입 후 주가 급등",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 4월 주가 예측: 220달러에서 235달러 사이 예상",
+          "source": "CryptoRank",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 실적 발표 앞두고 주가 하락",
+          "source": "Nasdaq",
+          "category": "Earnings"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0,
+        "buyIndex": 50,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 4,
+        "neutral": 3,
+        "topRules": [
+          "R08",
+          "R19",
+          "R13"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -6.58,
+        "actual": "bearish",
+        "open": 258.36,
+        "close": 241.37
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-04-21",
+      "weekEnd": "2025-04-27",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "테슬라 주가, 2025년 4월 21일 -5.75% 하락",
+          "source": "MarketWatch",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 9,600만 주 테슬라 제한부 주식 포기",
+          "source": "Stock Titan",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 1분기 실적 발표 후 자본 지출 가이던스 상향 조정으로 주가 소폭 하락",
+          "source": "Morningstar",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크의 정부 역할 축소 보도에 테슬라 주가 급등",
+          "source": "Business Insider",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 '분산된 관심' 속에 하락",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 사이버캡 생산 시작 및 2026년 200억 달러 이상 자본 지출 계획",
+          "source": "Bloomberg",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크의 10억 달러 규모 테슬라 주식 매입 후 주가 상승",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 2025년 4월 220달러에서 235달러 사이 예상",
+          "source": "CryptoRank",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 정치적 활동으로 2025년 초부터 급락",
+          "source": "MARIST CIRCLE",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 1조 달러 규모 일론 머스크 보상 패키지 주주 승인 후 4.8% 하락",
+          "source": "Mint",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.9,
+        "buyIndex": 41,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R24",
+          "R13"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 23.75,
+        "actual": "bullish",
+        "open": 230.26,
+        "close": 284.95
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-04-28",
+      "weekEnd": "2025-05-04",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라에 더 많은 시간 할애 약속",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 1분기 수익 급감 및 매출 감소 보고",
+          "source": "Forbes",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 월스트리트 저널의 CEO 교체설 보도 비판",
+          "source": "KVUE",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 저가형 EV 생산 계획 지연 가능성",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 에너지 사업에 대한 관세 영향 우려",
+          "source": "Forbes",
+          "category": "Regulatory"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 미래는 로보택시와 휴머노이드 로봇에 달려있다고 강조",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 차량 인도량 감소",
+          "source": "Electrek",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라, 미국 내 LFP 배터리 셀 현지 생산 계획 지연",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 유럽 시장 점유율 급락",
+          "source": "Forbes",
+          "category": "Competition"
+        },
+        {
+          "title": "테슬라, 자율주행 및 로봇 개발에 대규모 투자 계획",
+          "source": "Reuters",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -1.5,
+        "buyIndex": 35,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R13",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -0.61,
+        "actual": "neutral",
+        "open": 288.98,
+        "close": 287.21
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-05-05",
+      "weekEnd": "2025-05-11",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 상당 매입 공개 후 주가 상승",
+          "source": "MarketWatch",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가 하락, 애널리스트는 머스크의 현금 위기 가능성 경고",
+          "source": "L.A. Times",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크의 백악관 역할 축소 보도에 테슬라 주가 상승",
+          "source": "Politico (via MarketWatch)",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 서비스 및 에너지 부문에서 견고한 성장세 보여",
+          "source": "Public.com",
+          "category": "Energy"
+        },
+        {
+          "title": "애널리스트, 테슬라의 FSD 소프트웨어 개선으로 '수천억 달러' 가치 이동 예측",
+          "source": "Barchart",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 시장 상승에도 하락세 지속",
+          "source": "Nasdaq",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 약세론자들의 예측을 깨고 주가 상승",
+          "source": "BNN Bloomberg",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주식, 단기 및 장기 이동 평균에서 매도 신호 발생",
+          "source": "StockInvest.us",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 9,
+      "analysis": {
+        "avgScore": 1.2,
+        "buyIndex": 62,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R12",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 4.81,
+        "actual": "bullish",
+        "open": 284.57,
+        "close": 298.26
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-05-12",
+      "weekEnd": "2025-05-18",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 및 정치적 지출 삭감 예정",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 중국 판매량 급감으로 주가 하락",
+          "source": "Electrek",
+          "category": "Delivery"
+        },
+        {
+          "title": "월스트리트저널, 테슬라 이사회 일론 머스크 대체할 CEO 물색 시작 보도",
+          "source": "CNN Business",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 일론 머스크 소유 회사들과의 거래 내역 공개",
+          "source": "Electrek",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 4,
+      "analysis": {
+        "avgScore": -1.5,
+        "buyIndex": 35,
+        "direction": "bearish",
+        "bullish": 1,
+        "bearish": 2,
+        "neutral": 1,
+        "topRules": [
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 8.69,
+        "actual": "bullish",
+        "open": 321.99,
+        "close": 349.98
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-05-19",
+      "weekEnd": "2025-05-25",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 및 정치적 지출 축소 시사",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라 CEO 교체설 '고의적인 거짓'으로 일축",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 2025년 말까지 수십만 대의 자율주행 테슬라 차량 미국 도로에 투입 공언",
+          "source": "KSAT",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 정치적 지출 '훨씬 덜 할 것' 시사",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 영업이익 66% 감소에도 머스크는 '이미 회복 중' 주장",
+          "source": "CarExpert",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI 합병 계획 부인",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 슈퍼컴퓨터 개발 재개 및 '최고 물량 칩' 목표 언급",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라 판매량 '주요 반등' 주장",
+          "source": "Axios",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 '24/7' 업무 복귀 소식에 상승",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 유럽 시장 점유율 급락 및 중국 시장 경쟁 심화",
+          "source": "Forbes",
+          "category": "Competition"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.5,
+        "buyIndex": 55,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 3,
+        "neutral": 1,
+        "topRules": [
+          "R19",
+          "R13",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 0.9,
+        "actual": "neutral",
+        "open": 336.3,
+        "close": 339.34
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-05-26",
+      "weekEnd": "2025-06-01",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 이끌겠다고 약속",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라 CEO 교체설 보도에 월스트리트 저널 비난",
+          "source": "Wall Street Journal",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 역할 축소 소식에 상승",
+          "source": "Politico (via MarketWatch)",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 경영진, 2만 5천 달러 EV 프로젝트 취소 부인한 머스크에게 의문 제기",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 10억 달러 규모 주식 매입 후 급등",
+          "source": "MarketWatch",
+          "category": "Market"
+        },
+        {
+          "title": "트럼프, 머스크의 정부 계약 해지 위협으로 테슬라 주가 하락",
+          "source": "Associated Press",
+          "category": "Musk|Regulatory"
+        },
+        {
+          "title": "테슬라 투자자들, 일론 머스크의 주당 최소 40시간 근무 요구",
+          "source": "Minerva-Manifest",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 판매 '대폭 반등' 보고",
+          "source": "Axios",
+          "category": "Market|Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI 합병 계획 없다고 밝혀",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 정치 기부금 삭감 및 테슬라 전념 약속",
+          "source": "Bloomberg",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0,
+        "buyIndex": 50,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 4,
+        "neutral": 1,
+        "topRules": [
+          "R19",
+          "R08",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -0.26,
+        "actual": "neutral",
+        "open": 347.35,
+        "close": 346.46
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-06-02",
+      "weekEnd": "2025-06-08",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라에 집중하기 위해 정부 자문직 사임",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "골드만삭스, 머스크-트럼프 불화로 테슬라 판매량 급감 전망",
+          "source": "Forbes",
+          "category": "Market|Musk|Competition"
+        },
+        {
+          "title": "트럼프, 머스크와의 불화 심화되며 테슬라 주가 하락",
+          "source": "AP News",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라, 머스크-트럼프 불화 속 주가 반등 시도",
+          "source": "Reuters",
+          "category": "Market|Musk"
+        },
+        {
+          "title": "테슬라, 판매 부진 및 머스크 논란으로 압박 직면",
+          "source": "Bloomberg",
+          "category": "Delivery|Competition|Musk|Macro"
+        },
+        {
+          "title": "일론 머스크, 25% 의결권 확보 못하면 AI 및 로봇 사업 외부에서 추진 경고",
+          "source": "Forbes Middle East",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "테슬라, 로보택시 6월 출시 베팅 실패로 투자자 손실",
+          "source": "Electrek",
+          "category": "Product|Market"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": -2.9,
+        "buyIndex": 21,
+        "direction": "bearish",
+        "bullish": 1,
+        "bearish": 6,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R24",
+          "R01"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -14.08,
+        "actual": "bearish",
+        "open": 343.5,
+        "close": 295.14
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-06-09",
+      "weekEnd": "2025-06-15",
+      "quarter": "q2",
+      "news": [],
+      "newsCount": 0,
+      "analysis": null,
+      "movement": {
+        "pctChange": 13.76,
+        "actual": "bullish",
+        "open": 285.96,
+        "close": 325.31
+      },
+      "match": null,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-06-16",
+      "weekEnd": "2025-06-22",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 6월 22일 로보택시 서비스 출시 예정 발표",
+          "source": "CBT News",
+          "category": "Product"
+        },
+        {
+          "title": "골드만삭스, 머스크-트럼프 갈등으로 테슬라 판매량 사상 최악 감소 전망",
+          "source": "Forbes",
+          "category": "Musk|Macro|Market"
+        },
+        {
+          "title": "테슬라 주가, 머스크-트럼프 불화 진정 및 로보택시 기대감에 상승",
+          "source": "CBT News",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라 주가, 머스크-트럼프 갈등 폭발 후 급락했다 반등",
+          "source": "Markets Insider",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 트럼프 법안이 테슬라에 미칠 악영향 뒤늦게 깨달아",
+          "source": "Electrek",
+          "category": "Regulatory|Musk|Macro"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 CEO 교체 절차 시작 (WSJ 보도)",
+          "source": "Wall Street Journal",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 및 정치적 지출 축소 약속",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라에 '초집중' 약속 후 주가 6% 상승",
+          "source": "GuruFocus",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라 임원들, 머스크의 저가 EV 프로젝트 폐기 부인에 놀라움 표해",
+          "source": "The Times of India",
+          "category": "Product|Musk"
+        },
+        {
+          "title": "일론 머스크, 2025년 테슬라 세미 최종 테스트 및 생산 확인",
+          "source": "YouTube (Tesla Car World)",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.4,
+        "buyIndex": 46,
+        "direction": "neutral",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R13",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -2.76,
+        "actual": "bearish",
+        "open": 331.29,
+        "close": 322.16
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-06-23",
+      "weekEnd": "2025-06-29",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 트럼프와의 불화 속 테슬라 로보택시 출시로 반등 노려",
+          "source": "Insurance Journal",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "테슬라 주가, 머스크-트럼프 불화 완화 및 로보택시 기대감에 상승",
+          "source": "CBT News",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "일론 머스크, 6월 로보택시 출시 약속했지만 투자자들은 큰 손실 입어",
+          "source": "Electrek",
+          "category": "Product|Market|Musk"
+        },
+        {
+          "title": "골드만삭스, 머스크-트럼프 불화로 테슬라 판매량 사상 최악 감소 전망",
+          "source": "Forbes",
+          "category": "Musk|Macro|Market"
+        },
+        {
+          "title": "트럼프, 머스크 비난 후 테슬라 주가 하락",
+          "source": "AP News",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 신당 창당 발표 후 급락",
+          "source": "Financial Times|Reuters",
+          "category": "Musk|Market|Regulatory"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 CEO 교체 절차 시작",
+          "source": "Wall Street Journal|CNN Business",
+          "category": "Musk|Market|Regulatory"
+        },
+        {
+          "title": "일론 머스크, 테슬라 수익 급감 후 백악관 역할에서 물러나 테슬라에 집중할 것",
+          "source": "Financial Times",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 퇴진 보도에 급등",
+          "source": "Markets Insider",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라, 2만 5천 달러 EV 프로젝트 취소 부인 후 경영진 머스크에게 질문",
+          "source": "Reuters",
+          "category": "Product|Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -1.2,
+        "buyIndex": 38,
+        "direction": "bearish",
+        "bullish": 4,
+        "bearish": 6,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R13",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -1.19,
+        "actual": "neutral",
+        "open": 327.54,
+        "close": 323.63
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-06-30",
+      "weekEnd": "2025-07-06",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "트럼프, 머스크의 정부 보조금 비판 후 테슬라 주가 5% 하락",
+          "source": "Business Insider",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "일론 머스크, '아메리카 당' 창당 계획 발표 후 테슬라 주가 7% 급락",
+          "source": "TIKR.com",
+          "category": "Musk|Market|Legal"
+        }
+      ],
+      "newsCount": 2,
+      "analysis": {
+        "avgScore": -4,
+        "buyIndex": 10,
+        "direction": "bearish",
+        "bullish": 0,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R09",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -1.42,
+        "actual": "neutral",
+        "open": 319.9,
+        "close": 315.35
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-07-07",
+      "weekEnd": "2025-07-13",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "일론 머스크의 '아메리카 당' 창당 발표로 테슬라 주가 7% 급락",
+          "source": "Reuters",
+          "category": "Musk|Market|Regulatory"
+        },
+        {
+          "title": "트럼프의 '빅 뷰티풀 법안'이 테슬라에 미칠 영향에 대한 머스크의 뒤늦은 깨달음",
+          "source": "Electrek",
+          "category": "Regulatory|Market|Musk"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크의 정치적 야망 제한 촉구",
+          "source": "Forbes",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라, xAI 투자에 대한 주주 투표 실시 예정",
+          "source": "KEYT",
+          "category": "Musk|Product|Market"
+        }
+      ],
+      "newsCount": 4,
+      "analysis": {
+        "avgScore": -3.7,
+        "buyIndex": 13,
+        "direction": "bearish",
+        "bullish": 0,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R08",
+          "R09"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 7.6,
+        "actual": "bullish",
+        "open": 291.37,
+        "close": 313.51
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-07-14",
+      "weekEnd": "2025-07-20",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "일론 머스크, '아메리카 당' 창당 발표 후 테슬라 주가 7% 가까이 급락",
+          "source": "TIKR.com",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2분기 실적 월가 예상치 하회…로보택시 및 저가 차량 계획은 유지",
+          "source": "Bloomberg Businessweek",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 290억 달러 규모의 테슬라 주식 보상 받아",
+          "source": "Newsday",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 10억 달러 규모 주식 매입 공개 후 급등",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 유럽 판매 호조 및 머스크의 주식 매입으로 주가 상승",
+          "source": "Global Trade Magazine",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라 주가, 머스크의 백악관 역할 축소 보도에 상승",
+          "source": "Politico",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2분기 모델 3 및 모델 Y 인도량 37만 4천대 기록, 예상치 상회",
+          "source": "Associated Press",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라 주가, 관세 완화로 22.69% 급등했으나 과대평가 우려 직면",
+          "source": "StockInvest.us",
+          "category": "Macro"
+        },
+        {
+          "title": "테슬라 주가, 머스크의 7천억 달러 자산 달성 소식에 1% 상승",
+          "source": "Traders Union",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 중국 판매 데이터 및 AI 낙관론에 힘입어 상승",
+          "source": "TradingView",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.9,
+        "buyIndex": 59,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R08",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 3.75,
+        "actual": "bullish",
+        "open": 317.73,
+        "close": 329.65
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-07-21",
+      "weekEnd": "2025-07-27",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라의 '험난한' 분기 경고에도 불구하고 '저렴한' EV 희망이 주가 하락을 완화",
+          "source": "Stocktwits",
+          "category": "Earnings|Musk|Product"
+        },
+        {
+          "title": "테슬라, 2025년 2분기 캘리포니아 판매량 21% 감소하며 전체 EV 시장 하락 견인",
+          "source": "Electrek",
+          "category": "Delivery|Market|Competition"
+        },
+        {
+          "title": "일론 머스크의 '아메리카 당' 창당 계획으로 테슬라 주가 하락",
+          "source": "TIKR.com",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "블룸버그: 일론 머스크의 기행이 그의 사업에 부담을 주고 있다",
+          "source": "Bloomberg",
+          "category": "Musk|Macro"
+        },
+        {
+          "title": "테슬라, 2분기 실적 부진 및 일론 머스크의 정치적 발언으로 주가 하락",
+          "source": "Bloomberg",
+          "category": "Earnings|Musk|Market"
+        },
+        {
+          "title": "포브스: 일론 머스크의 순자산 120억 달러 감소, 투자자들은 그의 '기행'에 지쳐간다",
+          "source": "Forbes",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "CNN 비즈니스: 테슬라, 일론 머스크의 정치적 개입으로 더 깊은 문제에 직면",
+          "source": "CNN Business",
+          "category": "Musk|Market|Regulatory"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": -3.6,
+        "buyIndex": 14,
+        "direction": "bearish",
+        "bullish": 0,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R24",
+          "R02"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -5.48,
+        "actual": "bearish",
+        "open": 334.4,
+        "close": 316.06
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-07-28",
+      "weekEnd": "2025-08-03",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라, 일론 머스크에게 290억 달러 규모의 주식 보상 승인",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 1년여 만에 첫 강한 '골든 크로스' 나타나며 상승",
+          "source": "MarketWatch",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 280억 달러 3분기 매출 달성 '어려웠다' 언급하며 주주 보상 투표 앞두고 '터무니없는' 의결권 자문사 비판",
+          "source": "Stocktwits",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 머스크의 정치적 발언 제한하려는 제안 SEC에 저지 요청",
+          "source": "Bloomberg",
+          "category": "Regulatory"
+        },
+        {
+          "title": "테슬라 주가 하락: 일론 머스크, '최고 물량 칩' 목표로 AI 슈퍼컴퓨터 개발 재개",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 어려운 시기 경고 및 EU-중국 관계 '변곡점' 언급",
+          "source": "Bloomberg",
+          "category": "Macro"
+        },
+        {
+          "title": "테슬라, 2분기 매출 10년 만에 가장 큰 폭으로 감소",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, xAI 투자 여부 주주 투표 실시 예정",
+          "source": "CNN Business",
+          "category": "Musk"
+        },
+        {
+          "title": "베테랑 애널리스트, 테슬라 실적 발표 후 'AI, 자율주행, 로봇' 3단어 평가",
+          "source": "TheStreet",
+          "category": "Product"
+        },
+        {
+          "title": "2025년 일론 머스크(그리고 테슬라)의 인기가 크게 하락",
+          "source": "Forbes",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.7,
+        "buyIndex": 43,
+        "direction": "bearish",
+        "bullish": 4,
+        "bearish": 6,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R24",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -4.97,
+        "actual": "bearish",
+        "open": 318.45,
+        "close": 302.63
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-08-04",
+      "weekEnd": "2025-08-10",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라 이사회, 일론 머스크에게 260억 달러 상당의 주식 지급",
+          "source": "Electrek",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 일론 머스크에게 290억 달러 규모의 주식 보상 승인",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 일론 머스크에게 300억 달러 상당의 주식 지급 승인",
+          "source": "Financial Times",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 사이버캡 생산 시작 및 AI 역량 강조",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 20억 달러 규모의 AI 하드웨어 회사 인수 공개",
+          "source": "Stocktwits",
+          "category": "AI"
+        },
+        {
+          "title": "테슬라 주가 상승 촉매제: AI, 로보택시, 트럼프와의 관계 개선",
+          "source": "Forbes",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 6,
+      "analysis": {
+        "avgScore": 2,
+        "buyIndex": 70,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 1,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R13"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 6.66,
+        "actual": "bullish",
+        "open": 309.08,
+        "close": 329.65
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-08-11",
+      "weekEnd": "2025-08-17",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라, 머스크에게 290억 달러 규모의 주식 보상 승인",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 머스크의 정치적 발언 제한 제안 SEC에 저지 요청",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 이사회, 머스크에게 1조 달러 규모의 보상 패키지 제안",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 판매량 10년 만에 최대 감소 기록",
+          "source": "Bloomberg",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 CEO 교체 절차 시작 보도 (WSJ)",
+          "source": "Wall Street Journal",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 주주 압력 속에 11월 연례 주주총회 발표",
+          "source": "Associated Press",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 신규 사업 '고통스러울 정도로 느릴 것' 경고",
+          "source": "The Cool Down",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 차세대 전기차 2025년 말 출시 목표",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, AI 슈퍼컴퓨터 개발 재개 및 '최고 물량 칩' 목표",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 수익 급락 후 DOGE 역할에서 물러날 준비",
+          "source": "CNN Business",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.1,
+        "buyIndex": 51,
+        "direction": "neutral",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R08",
+          "R19",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -1.33,
+        "actual": "neutral",
+        "open": 335,
+        "close": 330.56
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-08-18",
+      "weekEnd": "2025-08-24",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라 이사회, 일론 머스크에게 260억 달러 상당의 주식 지급",
+          "source": "Electrek, Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 및 로보틱스 집중 재확인",
+          "source": "Forbes, Stocktwits",
+          "category": "AI|Product|Musk"
+        },
+        {
+          "title": "테슬라, 2분기 실적 부진 및 일론 머스크의 정치적 개입 우려",
+          "source": "Bloomberg, Financial Times",
+          "category": "Earnings|Musk|Competition"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 CEO 교체 논의 보도 부인",
+          "source": "Wall Street Journal, CNN, KVUE, NDTV",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 약속",
+          "source": "KEYT",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 새로운 미국 정당 창당 계획 발표 후 테슬라 주가 하락",
+          "source": "Financial Times",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 250억 달러 이상 자본 지출 계획으로 AI 투자 확대",
+          "source": "CTV News",
+          "category": "AI|Product|Market"
+        },
+        {
+          "title": "테슬라 주주들, 일론 머스크의 1조 달러 보상 패키지 승인",
+          "source": "Bloomberg, Reuters, YouTube",
+          "category": "Musk|AI|Market"
+        },
+        {
+          "title": "테슬라, 유럽 시장에서 판매 감소 지속",
+          "source": "Electrek",
+          "category": "Delivery|Competition"
+        },
+        {
+          "title": "테슬라, 저가형 자동차 계획 폐기 보도에 일론 머스크 '거짓말' 비난",
+          "source": "Reuters",
+          "category": "Product|Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.6,
+        "buyIndex": 44,
+        "direction": "bearish",
+        "bullish": 4,
+        "bearish": 5,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R19",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 3.15,
+        "actual": "bullish",
+        "open": 329.62,
+        "close": 340.01
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-08-25",
+      "weekEnd": "2025-08-31",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "일론 머스크의 10억 달러 규모 테슬라 주식 매입 후 주가 상승",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 8월 주가 전망: 하락 가능성 경고",
+          "source": "CryptoRank",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2분기 실적 발표 후 주가 8% 하락",
+          "source": "MarketWatch",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 실적 예상치 상회 및 전기차 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 2025년 50% 폭락 가능성 경고",
+          "source": "Business Insider",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 5,
+      "analysis": {
+        "avgScore": -0.8,
+        "buyIndex": 42,
+        "direction": "bearish",
+        "bullish": 2,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R09",
+          "R06"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -1.48,
+        "actual": "neutral",
+        "open": 338.9,
+        "close": 333.87
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-09-01",
+      "weekEnd": "2025-09-07",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 매입 후 주가 급등",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 일론 머스크에게 1조 달러 보상 패키지 제안",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라에 전념하며 주가 랠리",
+          "source": "Electrek",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 독일 기가팩토리 EV 생산량 증대 전략",
+          "source": "Reuters",
+          "category": "Production"
+        },
+        {
+          "title": "테슬라, 완전자율주행(FSD) 주행 거리 80억 마일 돌파",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 종료",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 네바다주 DMV로부터 자율주행차 공공 도로 테스트 승인",
+          "source": "StocksToTrade",
+          "category": "Regulatory"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 공학 회사로 전환 가속화",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 유럽 판매 감소에도 불구하고 독일 생산량 증가",
+          "source": "Reuters",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라, 중국에서 사이버트럭 목격",
+          "source": "Electrek",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.6,
+        "buyIndex": 66,
+        "direction": "bullish",
+        "bullish": 8,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R13",
+          "R17"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 6.89,
+        "actual": "bullish",
+        "open": 328.23,
+        "close": 350.84
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-09-08",
+      "weekEnd": "2025-09-14",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라 이사회, 머스크에게 1조 달러 보상 계획 제안",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 자동차 판매 부진 속 휴머노이드 로봇으로 전략 전환 계획",
+          "source": "Bloomberg",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 새로운 보상 패키지로 1조 달러 벌 수도",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "WSJ: 테슬라 이사회, 일론 머스크 CEO 교체 절차 시작",
+          "source": "Wall Street Journal",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라 CEO 교체 보도에 대해 '고의적인 허위'라고 비난",
+          "source": "NDTV",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 하반기 차세대 전기차 출시 목표",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 및 정치적 지출 '훨씬 줄일 것'",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 수익 71% 급감, 머스크는 DOGE 역할에서 물러날 준비",
+          "source": "CNN Business",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 백악관 퇴임 보도에 급등",
+          "source": "CNN Business",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 상반기 저가형 전기차 출시 예정",
+          "source": "MarketWatch",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.9,
+        "buyIndex": 59,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 2,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R24",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 11.65,
+        "actual": "bullish",
+        "open": 354.64,
+        "close": 395.94
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-09-15",
+      "weekEnd": "2025-09-21",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 매입으로 재집중 시사",
+          "source": "MarketWatch",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가 급등, 일론 머스크의 복귀와 함께 투자자 신뢰 회복",
+          "source": "Electrek",
+          "category": "Musk|Market|Product"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크에게 1조 달러 규모의 보상 패키지 제안",
+          "source": "Bloomberg",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 칩 개발 재개 및 대량 생산 목표 발표",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 저가형 모델 생산 시작 및 로보택시 출시 계획 발표",
+          "source": "CNBC",
+          "category": "Product|Delivery"
+        },
+        {
+          "title": "테슬라, 9월에 32% 주가 상승 기록",
+          "source": "GuruFocus",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 CEO직 5년간 유지 약속",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 CEO 교체 논의 보도에 '거짓' 반박",
+          "source": "Wall Street Journal",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 로이터의 저가형 자동차 계획 폐기 보도에 '거짓말' 비난",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2분기 실적 부진 및 로보택시 행사 연기 발표 후 주가 하락",
+          "source": "MarketWatch",
+          "category": "Earnings|Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.4,
+        "buyIndex": 64,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R13",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 0.69,
+        "actual": "neutral",
+        "open": 423.13,
+        "close": 426.07
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-09-22",
+      "weekEnd": "2025-09-28",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라, 일론 머스크에게 1조 달러 규모의 보상 패키지 제안",
+          "source": "Bloomberg",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 주식 추가 매각 2025년까지 없을 것이라고 언급",
+          "source": "CNBC",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 3분기 전기차 판매량 예상외 증가 보고",
+          "source": "Associated Press",
+          "category": "Delivery|Musk"
+        },
+        {
+          "title": "일론 머스크, 2025년 말 차세대 EV 출시 목표 언급",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크 CEO 교체 절차 시작 보도 (WSJ)",
+          "source": "Wall Street Journal",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 약속",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, EPA의 새 정책에 불만 표출 (일론 머스크의 기부에도 불구하고)",
+          "source": "Electrek",
+          "category": "Regulatory|Musk"
+        },
+        {
+          "title": "테슬라, 로보택시 및 로봇에 대규모 투자 계획 발표",
+          "source": "Associated Press",
+          "category": "Product|Earnings|AI"
+        },
+        {
+          "title": "테슬라, AI 야망 지원 위해 250억 달러 추가 지출 계획",
+          "source": "Bloomberg",
+          "category": "AI|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI의 공동 프로젝트 '매크로하드' 공개",
+          "source": "Reuters",
+          "category": "AI|Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.6,
+        "buyIndex": 66,
+        "direction": "bullish",
+        "bullish": 8,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R19",
+          "R11"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 2.15,
+        "actual": "bullish",
+        "open": 431.11,
+        "close": 440.4
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-09-29",
+      "weekEnd": "2025-10-05",
+      "quarter": "q3",
+      "news": [
+        {
+          "title": "테슬라, 3분기 전기차 판매량 예상외 증가 보고",
+          "source": "AP News",
+          "category": "Delivery"
+        },
+        {
+          "title": "테슬라, 미국 EV 세금 공제 혜택에 힘입어 강력한 분기 실적 예상",
+          "source": "BNN Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 투자자 신뢰 증가 및 일론 머스크의 전념으로 상승",
+          "source": "Electrek",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 10억 달러 규모의 TSLA 주식 매입으로 재집중",
+          "source": "Zacks.com",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 머스크에게 1조 달러 보상 패키지 제안",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 머스크에게 290억 달러 상당의 주식 부여",
+          "source": "AP News",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라 AI 슈퍼컴퓨터 개발 재개 발표",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 향후 5년간 테슬라 CEO직 유지 및 정치적 지출 축소 시사",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 3분기 실적 발표 후 투자자 실망",
+          "source": "CNN Business",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크의 정치적 행보로 테슬라 미국 내 100만 대 이상 판매 손실",
+          "source": "Electrek",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.5,
+        "buyIndex": 55,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R13",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -3.27,
+        "actual": "bearish",
+        "open": 444.35,
+        "close": 429.83
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-10-06",
+      "weekEnd": "2025-10-12",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "일론 머스크, 백악관 역할 축소로 테슬라 주가 상승",
+          "source": "Politico (via Google Search)",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 실적 부진 및 BYD와의 경쟁 심화",
+          "source": "Vantage Markets",
+          "category": "Earnings|Competition"
+        },
+        {
+          "title": "테슬라 로보택시 서비스 출시, 주가 10% 급등",
+          "source": "Vantage Markets",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 2분기 차량 인도량 감소 및 경쟁 심화",
+          "source": "TheStreet",
+          "category": "Delivery|Competition"
+        },
+        {
+          "title": "일론 머스크, 10억 달러 규모 테슬라 주식 매입으로 주가 상승",
+          "source": "Bloomberg (via YouTube)",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 예상치 상회하는 실적 발표 및 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "멜리우스 리서치, 테슬라 FSD 소프트웨어 개선으로 수천억 달러 가치 이동 전망",
+          "source": "TheStreet",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 4분기 매출 감소 및 자본 효율성 하락",
+          "source": "Public.com",
+          "category": "Earnings"
+        },
+        {
+          "title": "미국 자동차 안전 규제 당국, 테슬라 도어 결함 조사 착수",
+          "source": "Bloomberg (via YouTube)",
+          "category": "Regulatory"
+        },
+        {
+          "title": "로스 거버, 2025년 테슬라 주가 50% 하락 전망",
+          "source": "Business Insider",
+          "category": "Market|Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.1,
+        "buyIndex": 49,
+        "direction": "neutral",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R01",
+          "R13",
+          "R02"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -6.18,
+        "actual": "bearish",
+        "open": 440.75,
+        "close": 413.49
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-10-13",
+      "weekEnd": "2025-10-19",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라, 만료되는 미국 전기차 세금 공제 혜택에 힘입어 견조한 분기 실적 예상",
+          "source": "BNN Bloomberg",
+          "category": "Earnings|Product|Regulatory"
+        },
+        {
+          "title": "테슬라 주가, 2025년 3분기 기록적인 차량 인도량과 일론 머스크의 주식 매입으로 급등",
+          "source": "Forbes",
+          "category": "Delivery|Musk|Market|Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 '극도로 밝은' 10년 미래 전망하며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "테슬라, 기록적인 판매에도 불구하고 3분기 수익 감소",
+          "source": "Bloomberg",
+          "category": "Earnings|Market|Musk"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크의 1조 달러 보상 패키지 승인 촉구에 투자자 반발 직면",
+          "source": "Forbes",
+          "category": "Musk|Regulatory|Market|Legal"
+        },
+        {
+          "title": "테슬라, 2025년 말 차세대 전기차 출시 목표",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주주들, 일론 머스크의 2025년 성과 보상안 압도적으로 승인",
+          "source": "Tesla",
+          "category": "Musk|Legal|Market"
+        },
+        {
+          "title": "일론 머스크, 백악관 역할 축소하고 테슬라에 집중할 예정",
+          "source": "Financial Times",
+          "category": "Musk|Regulatory"
+        },
+        {
+          "title": "테슬라, 일론 머스크의 정치적 발언 제한 주주 제안 SEC에 저지 요청",
+          "source": "Bloomberg Law News",
+          "category": "Musk|Regulatory|Legal"
+        },
+        {
+          "title": "테슬라, 일론 머스크의 CEO 교체 루머 부인",
+          "source": "KVUE",
+          "category": "Musk|Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.7,
+        "buyIndex": 57,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 3,
+        "neutral": 1,
+        "topRules": [
+          "R19",
+          "R24",
+          "R13"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 3.73,
+        "actual": "bullish",
+        "open": 423.53,
+        "close": 439.31
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-10-20",
+      "weekEnd": "2025-10-26",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라, 3분기 매출 기록에도 불구하고 이익 감소",
+          "source": "The Wall Street Journal",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 3분기 이익 감소 후 5% 하락",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 '극도로 밝은' 10년 미래 전망하며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 기록적인 판매에도 불구하고 이익 급감",
+          "source": "Bloomberg",
+          "category": "Earnings|Musk"
+        },
+        {
+          "title": "테슬라, 3분기 전기차 판매량 예상치 상회",
+          "source": "Associated Press",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크의 1조 달러 보상안, 투자자 반발 직면",
+          "source": "Forbes",
+          "category": "Musk|Legal"
+        },
+        {
+          "title": "테슬라, 10월 20일 주가 상승했지만 '최하위 실적' 우려 지속",
+          "source": "MarketWatch",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 새로운 안정화 단계 진입, 투자 회사 전망 상향 조정",
+          "source": "FinancialContent",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라의 기록적인 판매량, 투자자들을 만족시키지 못하다",
+          "source": "CNN Business",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "title": "테슬라, 기록적인 판매에도 불구하고 이익 25% 이상 감소",
+          "source": "Financial Times",
+          "category": "Earnings"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -1.4,
+        "buyIndex": 36,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R02",
+          "R19",
+          "R11"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -2.29,
+        "actual": "bearish",
+        "open": 443.87,
+        "close": 433.72
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-10-27",
+      "weekEnd": "2025-11-02",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라 주주들, 일론 머스크의 1조 달러 보상안 승인",
+          "source": "Bloomberg",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 '극도로 밝은' 미래 전망 및 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "테슬라, 2025년 3분기 실적 발표: 예상치 상회하는 차량 인도량 및 에너지 저장 사업 성장",
+          "source": "basenor",
+          "category": "Earnings|Delivery|Energy"
+        },
+        {
+          "title": "테슬라, 로보택시 서비스 확장 계획 발표",
+          "source": "basenor",
+          "category": "Product|Musk"
+        },
+        {
+          "title": "노르웨이 국부펀드, 일론 머스크의 1조 달러 보상안에 반대 투표",
+          "source": "Forbes",
+          "category": "Musk|Market|Legal"
+        },
+        {
+          "title": "일론 머스크, 3분기 281억 달러 매출 달성 '어려웠다' 언급 및 의결권 자문사에 비판",
+          "source": "Stocktwits",
+          "category": "Musk|Earnings|Legal"
+        },
+        {
+          "title": "테슬라, 연례 주주총회 11월 6일 개최 확정",
+          "source": "Associated Press",
+          "category": "Regulatory|Musk"
+        },
+        {
+          "title": "테슬라 주가, 로보택시 확장 기대감에 상승",
+          "source": "basenor",
+          "category": "Market|Product"
+        },
+        {
+          "title": "테슬라, 저가형 모델 Y 및 모델 3 출시",
+          "source": "basenor",
+          "category": "Product|Competition"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 슈퍼컴퓨터 개발 재개 및 '최고 물량 칩' 목표",
+          "source": "Stocktwits",
+          "category": "Product|Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.5,
+        "buyIndex": 65,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 3,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R19",
+          "R11"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 3.77,
+        "actual": "bullish",
+        "open": 439.98,
+        "close": 456.56
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-11-03",
+      "weekEnd": "2025-11-09",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라 주주들, 일론 머스크의 1조 달러 보상 패키지 승인",
+          "source": "Bloomberg, Forbes, AP News, CNN Business",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 칩 개발 현황 및 미래 계획 발표",
+          "source": "Forbes, Barchart",
+          "category": "Product|AI"
+        },
+        {
+          "title": "테슬라, 2025년 연례 주주총회 11월 6일 개최 확정",
+          "source": "AP News, Electrek",
+          "category": "Regulatory|Market"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 발표",
+          "source": "Electrek, TechCrunch",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 공학에 대한 대규모 투자 계획 발표",
+          "source": "TechCrunch, Bloomberg",
+          "category": "AI|Product|Energy"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 Dojo 3 개발 재개 발표",
+          "source": "Stocktwits",
+          "category": "AI|Product"
+        },
+        {
+          "title": "테슬라, 로보택시 서비스 및 옵티머스 로봇 개발 가속화",
+          "source": "AP News, YouTube",
+          "category": "Product|AI"
+        },
+        {
+          "title": "테슬라 주가, 주주총회 앞두고 상승세",
+          "source": "TradingView News, AP News",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라에 대한 집중 강조",
+          "source": "Stocktwits",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2025년 3분기 판매량 증가 보고",
+          "source": "AP News",
+          "category": "Delivery"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 2.3,
+        "buyIndex": 73,
+        "direction": "bullish",
+        "bullish": 8,
+        "bearish": 1,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R19",
+          "R11"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -5.8,
+        "actual": "bearish",
+        "open": 455.99,
+        "close": 429.52
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-11-10",
+      "weekEnd": "2025-11-16",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라 주주들, 일론 머스크의 1조 달러 보상안 승인",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라 연례 주주총회에서 AI, 자율주행, 로봇공학 중심의 '새로운 시대' 강조",
+          "source": "YouTube",
+          "category": "Musk|Product"
+        },
+        {
+          "title": "테슬라, 주주 압력 속에 11월 연례 주주총회 개최 발표",
+          "source": "Reuters",
+          "category": "Regulatory"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 10년 미래 '매우 밝다'며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 1조 달러 보상안 승인 후 10% 하락",
+          "source": "MarketWatch",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, AI 슈퍼컴퓨터 개발 재개 및 '최고 물량 칩' 목표 발표",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 주주총회 앞두고 주가 상승",
+          "source": "TradingView",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": 1.4,
+        "buyIndex": 64,
+        "direction": "bullish",
+        "bullish": 4,
+        "bearish": 1,
+        "neutral": 2,
+        "topRules": [
+          "R19",
+          "R13",
+          "R24"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -8.02,
+        "actual": "bearish",
+        "open": 439.6,
+        "close": 404.35
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-11-17",
+      "weekEnd": "2025-11-23",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라 주가, 머스크 1조 달러 보상안 승인 후 하락",
+          "source": "MarketWatch",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 판매 부진 지속 및 유럽 시장 점유율 하락",
+          "source": "Reuters",
+          "category": "Delivery|Competition|Musk"
+        },
+        {
+          "title": "아크 인베스트, 테슬라 지분 축소: 높은 가치 평가와 중국 시장 둔화 우려",
+          "source": "MarketMinute",
+          "category": "Market|Competition"
+        },
+        {
+          "title": "포브스, 테슬라 주식 매도 권고: 판매 감소, 마진 압박, 사이버트럭 실망",
+          "source": "Forbes",
+          "category": "Market|Product|Competition"
+        },
+        {
+          "title": "모건 스탠리, 테슬라 주가에 영향을 미칠 주요 요인 분석: xAI 투자 및 FSD 기술",
+          "source": "Investing.com",
+          "category": "Musk|Product|AI"
+        },
+        {
+          "title": "일론 머스크의 10억 달러 테슬라 주식 매입, 시장 하락으로 손실 직면",
+          "source": "Economy Watch",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, AI 슈퍼컴퓨터 '도조 3' 재개 및 차세대 AI 칩 개발 추진",
+          "source": "Stocktwits",
+          "category": "AI|Product"
+        },
+        {
+          "title": "테슬라 주가, 머스크의 10억 달러 주식 매입 및 기가베를린 EV 성장 전략으로 상승",
+          "source": "Global Trade Magazine",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2025년 성장 전망 재검토 시사: 관세, 노후화된 라인업, 머스크 논란 영향",
+          "source": "BNN Bloomberg",
+          "category": "Macro|Regulatory|Product|Musk"
+        },
+        {
+          "title": "테슬라, 로보택시 야망 구체화: 오스틴에서 제한적 서비스 시작 및 공격적인 확장 목표",
+          "source": "Forbes",
+          "category": "Product|AI"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -1.4,
+        "buyIndex": 36,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R01",
+          "R08",
+          "R20"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -1.92,
+        "actual": "bearish",
+        "open": 398.74,
+        "close": 391.09
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-11-24",
+      "weekEnd": "2025-11-30",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라, 11월 6일 주주총회 개최 예정",
+          "source": "Reuters",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라 주주들, 일론 머스크의 1조 달러 보상 패키지 승인",
+          "source": "Bloomberg",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 미래를 AI, 자율주행, 로봇 중심으로 제시",
+          "source": "YouTube (Elon Musk - Full Speech at the 2025 Annual Tesla Shareholder Meeting)",
+          "category": "Musk|Product"
+        },
+        {
+          "title": "테슬라, xAI 투자 승인 여부 주주총회에서 결정",
+          "source": "Zacks Investment Ideas",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라 주가, 10개월 만에 최고치 기록",
+          "source": "TradingView News",
+          "category": "Market"
+        },
+        {
+          "title": "포브스, 테슬라 주식 매각 권고 및 목표가 하향 조정",
+          "source": "Forbes",
+          "category": "Market|Delivery|Product|Competition"
+        },
+        {
+          "title": "테슬라, AI 칩 개발 재개 및 엔지니어 채용",
+          "source": "Stocktwits",
+          "category": "Product|Musk"
+        },
+        {
+          "title": "테슬라, AI 칩 공급을 위해 삼성과 165억 달러 계약 체결",
+          "source": "Stocktwits",
+          "category": "Product|Competition"
+        },
+        {
+          "title": "테슬라, 로보택시 및 저가 차량 계획 지속",
+          "source": "Bloomberg",
+          "category": "Product|Delivery|Macro"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 10년 미래를 '매우 밝다'고 전망하며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk|Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.5,
+        "buyIndex": 65,
+        "direction": "bullish",
+        "bullish": 8,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R19",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 6.96,
+        "actual": "bullish",
+        "open": 402.17,
+        "close": 430.17
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-12-01",
+      "weekEnd": "2025-12-07",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라, 2025년 말 차세대 전기차 출시 목표",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 로보택시 무인 테스트 소식에 급등",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 AI 슈퍼컴퓨터 개발 재개 및 '최고 물량 칩' 목표",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 말까지 AI6 칩 설계 완료 목표",
+          "source": "GuruFocus",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 일론 머스크의 자체 칩 개발 업데이트에 7% 급등",
+          "source": "Finbold",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 실적 부진에도 AI 및 로보틱스에 대한 투자 지속",
+          "source": "TechCrunch",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 2025년 주주총회에서 일론 머스크의 1조 달러 보상안 압도적으로 승인",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 10년 미래 '매우 밝다'며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 8,
+      "analysis": {
+        "avgScore": 2.5,
+        "buyIndex": 75,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 1,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R19"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 6.98,
+        "actual": "bullish",
+        "open": 425.32,
+        "close": 455
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2025-12-08",
+      "weekEnd": "2025-12-14",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라 주가, 로보택시 및 AI 발전 기대로 3년 만에 최고치 기록",
+          "source": "MarketWatch",
+          "category": "Market|Product|AI|Robotics"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 스페이스X의 엔비디아 칩 대규모 구매 지속 시사",
+          "source": "Stocktwits",
+          "category": "Musk|AI|Robotics|Product"
+        },
+        {
+          "title": "테슬라, 2025년 로보택시 출시 및 사이버캡 생산 가속화 전망",
+          "source": "Seeking Alpha",
+          "category": "Product|AI|Robotics|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI의 공동 프로젝트 '매크로하드' 또는 '디지털 옵티머스' 공개",
+          "source": "Reuters",
+          "category": "Musk|AI|Product"
+        },
+        {
+          "title": "테슬라, 2025년 EV 판매량 감소 및 머스크의 정치적 개입 논란",
+          "source": "Forbes, CNN Business, WION",
+          "category": "Delivery|Musk|Competition|Macro"
+        },
+        {
+          "title": "일론 머스크의 2025년 테슬라 예측, 대부분 미달성",
+          "source": "Electrek",
+          "category": "Musk|Delivery|Product|AI|Robotics"
+        },
+        {
+          "title": "테슬라 주가, AI 프리미엄으로 과대평가 논란 속 EV 판매 부진",
+          "source": "Forbes",
+          "category": "Market|Product|AI|Robotics"
+        },
+        {
+          "title": "테슬라, 2025년 1분기 실적 부진 및 머스크의 백악관 역할 축소 발표",
+          "source": "Financial Times, Business Insider",
+          "category": "Earnings|Musk|Regulatory|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 CEO직 최소 5년 더 유지할 계획 밝혀",
+          "source": "CNN Business",
+          "category": "Musk|Product"
+        },
+        {
+          "title": "테슬라 이사회, 일론 머스크의 1조 달러 규모 성과급 패키지 승인",
+          "source": "Reuters",
+          "category": "Musk|Market|Legal"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.8,
+        "buyIndex": 58,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R17",
+          "R01"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 2.57,
+        "actual": "bullish",
+        "open": 447.45,
+        "close": 458.96
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-12-15",
+      "weekEnd": "2025-12-21",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라, 오스틴에서 무인 로보택시 테스트 시작",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 스페이스X 기업 가치 8천억 달러로 세계 최고 부자 등극",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 2025년 테슬라 관련 주요 약속 미이행",
+          "source": "Electrek",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크, 2025년 혼란스러운 한 해를 보내다: 정치적 논란과 테슬라 브랜드 가치 하락",
+          "source": "Forbes",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2025년 EV 판매량 감소 및 중국 경쟁 심화",
+          "source": "The Independent",
+          "category": "Competition"
+        },
+        {
+          "title": "일론 머스크, 2025년에도 테슬라 CEO직 유지 약속",
+          "source": "The Times of India",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 차세대 AI6 칩 12월에 테이프 아웃 목표",
+          "source": "GuruFocus",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 2025년 주요 약속 미이행으로 비판 직면",
+          "source": "Mashable",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2025년 4분기 인도량 예상치 하회",
+          "source": "YouTube (Yahoo Finance)",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크, 2025년 트럼프 행정부와의 관계 및 테슬라에 미친 영향",
+          "source": "YouTube (WION)",
+          "category": "Musk"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -1.6,
+        "buyIndex": 34,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 7,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R01",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": 2.51,
+        "actual": "bullish",
+        "open": 469.44,
+        "close": 481.2
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-12-22",
+      "weekEnd": "2025-12-28",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "테슬라, 법적 승리 및 로보택시 기대감으로 주가 사상 최고치 경신",
+          "source": "MarketWatch",
+          "category": "Musk|Legal|Product|Market"
+        },
+        {
+          "title": "일론 머스크의 2025년: 정치적 활동과 테슬라의 도전",
+          "source": "Forbes",
+          "category": "Musk|Regulatory|Market|Legal"
+        },
+        {
+          "title": "테슬라, 2025년 연간 인도량 목표 미달 및 중국 BYD와의 경쟁 심화",
+          "source": "YouTube (CNN Business)",
+          "category": "Delivery|Competition"
+        },
+        {
+          "title": "도이치뱅크, 테슬라 주식을 '2025년 핵심 아이디어'로 선정",
+          "source": "Investing.com",
+          "category": "Market|Product"
+        }
+      ],
+      "newsCount": 4,
+      "analysis": {
+        "avgScore": 0.3,
+        "buyIndex": 53,
+        "direction": "neutral",
+        "bullish": 2,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R21",
+          "R13",
+          "R18"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -3,
+        "actual": "bearish",
+        "open": 489.88,
+        "close": 475.19
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2025-12-29",
+      "weekEnd": "2026-01-04",
+      "quarter": "q4",
+      "news": [
+        {
+          "title": "일론 머스크, 2025년 테슬라 예측 대부분 빗나갔다고 일렉트렉 보도",
+          "source": "Electrek",
+          "category": "Musk|Delivery|Product"
+        },
+        {
+          "title": "블룸버그, 테슬라 2년 연속 판매량 감소로 EV 선두 자리 BYD에 내줘",
+          "source": "Bloomberg",
+          "category": "Delivery|Competition|Market"
+        },
+        {
+          "title": "포브스, 일론 머스크의 2025년은 혼란과 논란의 한 해였지만, 테슬라 이사회는 1조 달러 보상 패키지 승인",
+          "source": "Forbes",
+          "category": "Musk|Legal|Market"
+        },
+        {
+          "title": "마켓워치, 테슬라 주가, 머스크 보상 합의 복원 후 급등",
+          "source": "MarketWatch",
+          "category": "Musk|Legal|Market"
+        },
+        {
+          "title": "배런스, 스페이스X의 2026년 IPO 가능성, 테슬라 투자자들에게 희소식",
+          "source": "Barron's",
+          "category": "Musk|Market|Product"
+        },
+        {
+          "title": "유튜브 WION, 2025년 테슬라, 정치적 역풍과 머스크의 두 자릿수 성장 예측",
+          "source": "WION (YouTube)",
+          "category": "Musk|Macro|Competition"
+        },
+        {
+          "title": "유튜브 Matt Pocius, 일론 머스크, 테슬라 기술 혁신 발표 및 TSLA 주가 950달러 전망",
+          "source": "Matt Pocius (YouTube)",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "마켓워치, 테슬라 주가, 머스크의 10억 달러 주식 매입 공개 후 급등",
+          "source": "MarketWatch",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "모틀리 풀, 테슬라 로보택시, 댈러스와 휴스턴에서 서비스 시작",
+          "source": "The Motley Fool",
+          "category": "Product|Delivery"
+        },
+        {
+          "title": "스톡트윗, 일론 머스크, 테슬라의 '극도로 밝은' 10년 미래 전망하며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk|Product|Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.2,
+        "buyIndex": 62,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R19",
+          "R13",
+          "R08"
+        ],
+        "failCount": 0
+      },
+      "movement": {
+        "pctChange": -6.59,
+        "actual": "bearish",
+        "open": 469,
+        "close": 438.07
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    }
+  ],
+  "generatedAt": "2026-04-27 10:34 KST",
+  "stats": {
+    "totalWeeks": 52,
+    "analyzedWeeks": 51,
+    "accuracy": 47,
+    "strongAccuracy": 67,
+    "avgScore": -0.2
+  }
+}
