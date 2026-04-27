@@ -39,7 +39,17 @@ R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller 
 R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE)
 
 Score guidelines:
-±5: Extreme event  |  ±3~4: Major event  |  ±1~2: Minor event  |  0: Neutral
+±5: Extreme event (confirmed bankruptcy risk, historic milestone)
+±3~4: Major confirmed event (earnings beat/miss, delivery report, product launch)
+±1~2: Minor event (analyst note, speculation, rumor, incremental news)
+0: Neutral/irrelevant
+
+IMPORTANT score caps (backtesting showed these rules cause noise when over-weighted):
+- R08 (Musk SNS/DOGE controversy): MAX impact_score = ±2. Short-term sentiment noise, reverts quickly.
+- R24 (Musk other ventures spillover): MAX impact_score = ±2 when appearing alone without R08.
+- R23 (recession fear): MAX impact_score = -1. Macro, not Tesla-specific.
+- Use "neutral" direction ONLY when evidence is truly balanced AND confidence is "low".
+  Prefer "bearish" over "neutral" when avgScore is slightly negative.
 
 CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
 
@@ -198,13 +208,23 @@ async function analyzeWeekBatch(newsItems) {
 
   const scores   = analyses.map(a => a.impact_score || 0);
   const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 10) / 10;
-  const buyIndex = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
   const bullish  = analyses.filter(a => a.direction === 'bullish').length;
   const bearish  = analyses.filter(a => a.direction === 'bearish').length;
-  const direction = bullish > bearish ? 'bullish' : bearish > bullish ? 'bearish' : 'neutral';
   const ruleCnt  = {};
   analyses.forEach(a => (a.triggered_rules || []).forEach(r => { ruleCnt[r] = (ruleCnt[r] || 0) + 1; }));
   const topRules = Object.entries(ruleCnt).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([r]) => r);
+
+  // ── 개선된 매수지수 산출 (백테스트 기반 보정) ──────────────────────────
+  let buyIndex = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
+  const hasR08 = topRules.includes('R08');
+  const hasR24 = topRules.includes('R24');
+  if (hasR24 && !hasR08) buyIndex = Math.min(100, buyIndex + 9); // R24 단독 노이즈 할인
+  const dist = buyIndex - 50;
+  if (Math.abs(dist) >= 20) buyIndex = Math.max(0, Math.min(100, Math.round(50 + dist * 1.15))); // 강한신호 증폭
+  const direction = bullish > bearish ? 'bullish'
+    : bearish > bullish ? 'bearish'
+    : avgScore < 0 ? 'bearish' : 'bullish'; // neutral 제거, avgScore tie-break
+  // ────────────────────────────────────────────────────────────────────────
   return { avgScore, buyIndex, direction, bullish, bearish, neutral: analyses.length - bullish - bearish, topRules, failCount };
 }
 
