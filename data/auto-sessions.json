@@ -1,6 +1,239 @@
 {
   "sessions": [
     {
+      "id": "auto-1777278586961",
+      "date": "2026-04-27",
+      "displayDate": "2026.04.27",
+      "kstTime": "17:28",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777278551079,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시 생산 시작으로 주가 상승",
+          "summary": "테슬라 주가는 1분기 주당순이익(EPS)이 예상치를 상회하고 긍정적인 잉여현금흐름을 기록하며 상승했습니다. 또한, 사이버캡(Cybercab) 로보택시 생산이 시작되었다는 소식은 장기적인 자율주행 전략에 대한 긍정적인 신호로 작용했습니다.",
+          "source": "MarketBeat",
+          "date": "2026-04-25",
+          "category": "Earnings|Product|Market"
+        },
+        {
+          "id": 1777278551080,
+          "title": "테슬라, 2.5억 달러 관세 환급으로 1분기 수익 증대",
+          "summary": "테슬라의 2026년 1분기 수익성은 2억 5천만 달러의 관세 환급으로 인해 증가했습니다. 이는 국제 무역 정책 결과에 대한 의존도를 강조하며, 지정학적 긴장이 반도체 및 리튬 접근에 영향을 미쳐 향후 자본 지출에 위험을 초래할 수 있습니다.",
+          "source": "Traders Union",
+          "date": "2026-04-27",
+          "category": "Regulatory|Macro|Earnings"
+        },
+        {
+          "id": 1777278551081,
+          "title": "일론 머스크, 테슬라의 현재 하드웨어는 완전 자율주행 역량 부족 인정",
+          "summary": "일론 머스크 테슬라 CEO는 최신 자율주행 하드웨어가 완전한 무인 운행을 지원할 '능력이 없다'고 인정하며, 분기별 실적 호조에도 불구하고 로보택시 야망에 대한 새로운 의문을 제기했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Musk|Product"
+        },
+        {
+          "id": 1777278551082,
+          "title": "테슬라, AI 인프라 및 로봇 개발에 250억 달러 이상 투자 계획",
+          "summary": "테슬라는 2026년에 공장 확장, AI 인프라, 로보택시 및 옵티머스 제품 출시에 250억 달러 이상의 자본 지출을 계획하고 있습니다. 이로 인해 올해 남은 기간 동안 잉여현금흐름이 마이너스를 기록할 것으로 예상됩니다.",
+          "source": "Investing.com",
+          "date": "2026-04-22",
+          "category": "Product|AI|Capital Expenditure"
+        },
+        {
+          "id": 1777278551083,
+          "title": "테슬라, 테라팹 프로젝트에 인텔의 14A 공정 사용 계획",
+          "summary": "테슬라 CEO 일론 머스크는 250억 달러 규모의 테라팹(Terafab) 프로젝트에 인텔의 차세대 14A 공정을 사용할 계획이라고 밝혔습니다. 이는 테슬라의 칩 개발 및 제조 전략에 중요한 영향을 미칠 수 있습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Product|Tech"
+        },
+        {
+          "id": 1777278551084,
+          "title": "테슬라 주가, 좁은 범위 내에서 통합 중",
+          "summary": "테슬라 주가는 현재 362.00달러에서 382.00달러 사이의 좁은 범위 내에서 거래되고 있으며, 단기적인 일중 매수 활동은 있지만 중장기적인 추세 신호는 약합니다.",
+          "source": "Traders Union",
+          "date": "2026-04-27",
+          "category": "Market"
+        },
+        {
+          "id": 1777278551085,
+          "title": "스페이스X, 테슬라 또는 xAI와의 합병 고려 중",
+          "summary": "블룸버그 보도에 따르면 스페이스X는 테슬라와의 합병 또는 xAI와의 대체 합병을 고려하고 있으며, 잠재적으로 2026년 중반 IPO에 앞서 xAI 주식을 스페이스X 지분으로 교환할 수 있습니다. 이는 일론 머스크의 여러 벤처 간의 시너지를 창출할 수 있습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-01-30",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1777278551086,
+          "title": "테슬라, 1분기 차량 수요 반등으로 실적 호조",
+          "summary": "테슬라는 1분기 차량 수요 반등에 힘입어 주당순이익(EPS)이 예상치를 상회하는 실적을 기록했습니다. 이는 투자자들에게 긍정적인 신호로 작용했습니다.",
+          "source": "MarketBeat",
+          "date": "2026-04-25",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "id": 1777278551087,
+          "title": "테슬라, 에너지 저장 마진 사상 최고치 기록",
+          "summary": "테슬라의 에너지 저장 부문 마진이 39.5%로 사상 최고치를 기록했습니다. 이는 회사의 에너지 사업 부문이 강력한 성장을 보이고 있음을 나타냅니다.",
+          "source": "Investing.com",
+          "date": "2026-04-22",
+          "category": "Energy|Earnings"
+        },
+        {
+          "id": 1777278551088,
+          "title": "테슬라, 2년여 만에 최고 1분기 주문 잔고 기록",
+          "summary": "테슬라는 2년여 만에 가장 높은 1분기 주문 잔고를 기록했습니다. 이는 향후 차량 인도량에 대한 긍정적인 전망을 제시합니다.",
+          "source": "Investing.com",
+          "date": "2026-04-22",
+          "category": "Delivery|Market"
+        }
+      ],
+      "analyses": {
+        "1777278551079": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12",
+            "R13"
+          ],
+          "reasoning": "테슬라의 1분기 주당순이익이 예상치를 상회하고 로보택시 생산이 시작되었다는 소식은 주가에 긍정적인 영향을 미쳤습니다.",
+          "key_factors": [
+            "1분기 EPS 예상치 상회",
+            "로보택시 생산 시작"
+          ]
+        },
+        "1777278551080": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 2.5억 달러 관세 환급은 1분기 수익성을 증대시켜 단기적으로 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "관세 환급",
+            "1분기 수익성 증대"
+          ]
+        },
+        "1777278551081": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 테슬라의 현재 하드웨어가 완전 자율주행 역량이 부족하다고 인정하여 로보택시 야망에 대한 불확실성을 높였습니다.",
+          "key_factors": [
+            "FSD 하드웨어 역량 부족 인정",
+            "로보택시 야망 불확실성"
+          ]
+        },
+        "1777278551082": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 AI 인프라 및 로봇 개발에 대한 대규모 투자는 장기적인 성장 동력을 확보하고 신제품 출시를 가속화할 것으로 예상되어 긍정적입니다.",
+          "key_factors": [
+            "AI 인프라 투자",
+            "로보택시 및 옵티머스 출시",
+            "대규모 자본 지출"
+          ]
+        },
+        "1777278551083": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 인텔의 14A 공정을 테라팹 프로젝트에 사용하려는 계획은 칩 개발 및 제조 전략에 긍정적인 영향을 미칠 수 있는 신제품/기술 이정표로 해석됩니다.",
+          "key_factors": [
+            "테라팹 프로젝트",
+            "인텔 14A 공정",
+            "칩 개발 및 제조 전략"
+          ]
+        },
+        "1777278551084": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가가 좁은 범위 내에서 통합 중이라는 소식은 단기적인 움직임을 나타내지만, 중장기적인 추세 신호가 약하여 주가에 대한 명확한 방향성을 제시하지 않습니다.",
+          "key_factors": [
+            "좁은 범위 내 거래",
+            "단기 매수 활동",
+            "중장기 추세 신호 약화"
+          ]
+        },
+        "1777278551085": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X와 테슬라의 합병 가능성은 일론 머스크의 여러 벤처 간의 시너지를 창출하여 테슬라에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "스페이스X-테슬라 합병 가능성",
+            "xAI 주식 교환",
+            "시너지 창출"
+          ]
+        },
+        "1777278551086": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 차량 수요 반등에 힘입어 주당순이익(EPS)이 예상치를 상회하는 실적을 기록하여 투자자들에게 긍정적인 신호로 작용했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "차량 수요 반등"
+          ]
+        },
+        "1777278551087": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R15"
+          ],
+          "reasoning": "테슬라의 에너지 저장 부문 마진이 사상 최고치를 기록하며 에너지 사업의 강력한 성장과 수익성 개선을 나타내어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "에너지 저장 마진 사상 최고치",
+            "에너지 사업 부문 성장"
+          ]
+        },
+        "1777278551088": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 2년여 만에 최고 1분기 주문 잔고를 기록하여 향후 차량 인도량에 대한 긍정적인 전망을 제시합니다.",
+          "key_factors": [
+            "주문 잔고 증가",
+            "향후 인도량 전망"
+          ]
+        }
+      },
+      "avgScore": 2,
+      "buyIndex": 83,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R24",
+        "R15"
+      ],
+      "bullish": 8,
+      "bearish": 1,
+      "neutral": 1,
+      "timestamp": 1777278586961
+    },
+    {
       "id": "auto-1777261947528",
       "date": "2026-04-27",
       "displayDate": "2026.04.27",
@@ -2360,5 +2593,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-27 12:51 KST"
+  "lastUpdated": "2026-04-27 17:28 KST"
 }
