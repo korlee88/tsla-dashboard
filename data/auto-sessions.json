@@ -1,6 +1,279 @@
 {
   "sessions": [
     {
+      "id": "auto-1777298514042",
+      "date": "2026-04-27",
+      "displayDate": "2026.04.27",
+      "kstTime": "22:58",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777298381115,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시 생산 시작으로 주가 상승",
+          "summary": "테슬라가 1분기 주당순이익(EPS) 예상치를 상회하고 긍정적인 잉여현금흐름을 기록하며 투자자들의 신뢰를 얻었습니다. 또한, 로보택시인 '사이버캡'의 생산이 오스틴 공장에서 시작되었다는 소식은 장기적인 자율주행 전략에 대한 기대감을 높였습니다.",
+          "source": "MarketBeat",
+          "date": "2026-04-25",
+          "category": "Earnings|Product|Market"
+        },
+        {
+          "id": 1777298381116,
+          "title": "일론 머스크, 테슬라의 완전 자율주행 하드웨어 한계 인정",
+          "summary": "일론 머스크 테슬라 CEO는 현재의 자율주행 하드웨어(Hardware 3)가 완전한 무인 운전을 지원할 능력이 없다고 인정했습니다. 이는 1분기 실적 호조에도 불구하고 로보택시 사업의 야망에 대한 새로운 의문을 제기하며 주가에 부정적인 영향을 미쳤습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Musk|Product|Technology"
+        },
+        {
+          "id": 1777298381117,
+          "title": "테슬라, AI 인프라 및 로보택시 생산에 250억 달러 이상 투자 계획",
+          "summary": "테슬라는 올해 AI 인프라, 옵티머스 로봇, 로보택시 생산 및 자체 칩 개발에 250억 달러 이상의 자본 지출을 계획하고 있습니다. 이는 회사의 장기적인 성장 전략을 보여주지만, 단기적으로는 잉여현금흐름에 부담을 줄 수 있습니다.",
+          "source": "TradingView",
+          "date": "2026-04-23",
+          "category": "Investment|Product|AI"
+        },
+        {
+          "id": 1777298381118,
+          "title": "테슬라, 1분기 차량 수요 반등으로 예상치 뛰어넘는 실적 기록",
+          "summary": "테슬라는 1분기에 예상치를 뛰어넘는 주당순이익 41센트를 기록하며 차량 수요가 전 세계적으로 반등하고 있다고 밝혔습니다. 이는 오랫동안 어려움을 겪었던 자동차 사업의 회복 가능성을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Delivery|Market"
+        },
+        {
+          "id": 1777298381119,
+          "title": "테슬라, 인텔의 차세대 14A 칩을 테라팹 프로젝트에 활용 계획",
+          "summary": "일론 머스크 테슬라 CEO는 250억 달러 규모의 테라팹 프로젝트에 인텔의 차세대 14A 공정을 사용할 계획이라고 밝혔습니다. 이는 테슬라의 반도체 전략과 인텔과의 협력 가능성을 보여줍니다.",
+          "source": "Reuters",
+          "date": "2026-04-23",
+          "category": "Technology|Partnership"
+        },
+        {
+          "id": 1777298381120,
+          "title": "테슬라, 1분기 에너지 저장 마진 39.5%로 사상 최고치 기록",
+          "summary": "테슬라의 1분기 에너지 저장 부문 매출 총이익률이 39.5%로 사상 최고치를 기록했습니다. 이는 테슬라가 자동차 사업 외에 에너지 부문에서도 강력한 성장과 수익성을 보여주고 있음을 나타냅니다.",
+          "source": "Investing.com",
+          "date": "2026-04-22",
+          "category": "Energy|Earnings"
+        },
+        {
+          "id": 1777298381121,
+          "title": "테슬라, 1분기 잉여현금흐름 14억 달러 기록에도 연간 마이너스 전망",
+          "summary": "테슬라는 1분기에 14억 달러의 긍정적인 잉여현금흐름을 기록했지만, 전략적 투자 확대로 인해 올해 남은 기간 동안 마이너스 잉여현금흐름을 예상하고 있습니다. 이는 단기적인 재정 압박 가능성을 시사합니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Earnings|Investment"
+        },
+        {
+          "id": 1777298381122,
+          "title": "테슬라, 사이버캡 및 테슬라 세미 생산 2026년 시작 예정",
+          "summary": "테슬라는 사이버캡 로보택시와 테슬라 세미 트럭의 생산이 2026년에 시작될 예정이라고 밝혔습니다. 이는 회사의 제품 포트폴리오 확장과 미래 성장 동력에 대한 기대감을 높입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Product|Delivery"
+        },
+        {
+          "id": 1777298381123,
+          "title": "테슬라, FSD 구매자에게 하드웨어 업그레이드 할인 제공 계획",
+          "summary": "테슬라는 완전자율주행(FSD) 구매자들에게 하드웨어 업그레이드(컴퓨터 및 카메라 교체 포함) 할인을 제공할 예정입니다. 이는 기존 FSD 고객들의 불만을 해소하고 자율주행 기술 도입을 가속화하기 위한 전략으로 보입니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Product|Technology"
+        },
+        {
+          "id": 1777298381124,
+          "title": "테슬라, 1분기 주문 잔고 2년여 만에 최고치 기록",
+          "summary": "테슬라는 1분기에 2년여 만에 가장 높은 주문 잔고를 기록했다고 밝혔습니다. 이는 차량 수요의 강세와 향후 판매량 증가에 대한 긍정적인 신호로 해석될 수 있습니다.",
+          "source": "Investing.com",
+          "date": "2026-04-22",
+          "category": "Delivery|Market"
+        }
+      ],
+      "analyses": {
+        "1777298381115": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12",
+            "R13"
+          ],
+          "reasoning": "테슬라가 1분기 EPS 예상치를 상회하고 로보택시 생산을 시작하여 투자자 신뢰와 장기적인 성장 기대감을 높였습니다.",
+          "key_factors": [
+            "EPS 예상치 상회",
+            "로보택시 생산 시작"
+          ]
+        },
+        "1777298381116": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 현재의 자율주행 하드웨어의 한계를 인정하여 로보택시 사업의 야망에 대한 의문을 제기하며 주가에 부정적인 영향을 미쳤습니다.",
+          "key_factors": [
+            "자율주행 하드웨어 한계 인정",
+            "로보택시 사업 불확실성"
+          ]
+        },
+        "1777298381117": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 AI 인프라 및 로보택시 생산에 대한 대규모 투자는 장기적인 성장 잠재력을 보여주지만, 단기적으로는 현금 흐름에 부담을 줄 수 있습니다.",
+          "key_factors": [
+            "AI 인프라 투자",
+            "로보택시 생산",
+            "옵티머스 로봇 개발"
+          ]
+        },
+        "1777298381118": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당순이익이 예상치를 10% 이상 뛰어넘는 실적을 기록하여 차량 수요 반등과 자동차 사업 회복 가능성을 시사합니다.",
+          "key_factors": [
+            "EPS beat",
+            "차량 수요 반등"
+          ]
+        },
+        "1777298381119": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 인텔의 차세대 칩을 테라팹 프로젝트에 활용할 계획이라는 소식은 테슬라의 기술력 강화와 잠재적 비용 효율성 개선에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "인텔 14A 칩 활용",
+            "테라팹 프로젝트",
+            "반도체 전략"
+          ]
+        },
+        "1777298381120": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 에너지 저장 부문 매출 총이익률이 사상 최고치를 기록하며 강력한 성장과 수익성을 보여주어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "에너지 저장 마진 사상 최고치",
+            "에너지 부문 수익성 강화"
+          ]
+        },
+        "1777298381121": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 1분기에 긍정적인 잉여현금흐름을 기록했음에도 불구하고, 전략적 투자 확대로 인해 연간 마이너스 잉여현금흐름을 전망한 것은 단기적인 재정 압박 가능성을 시사하며 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "연간 마이너스 잉여현금흐름 전망",
+            "전략적 투자 확대"
+          ]
+        },
+        "1777298381122": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 사이버캡 로보택시와 세미 트럭 생산 2026년 시작 발표는 회사의 제품 포트폴리오 확장과 미래 성장 동력에 대한 기대감을 높여 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "사이버캡 로보택시 생산 시작",
+            "테슬라 세미 트럭 생산 시작",
+            "제품 포트폴리오 확장"
+          ]
+        },
+        "1777298381123": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 FSD 구매자에게 하드웨어 업그레이드 할인을 제공하는 것은 기존 고객 만족도를 높이고 FSD 기술 채택을 가속화하여 장기적으로 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "FSD 고객 만족도 향상",
+            "자율주행 기술 도입 가속화"
+          ]
+        },
+        "1777298381124": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 주문 잔고가 2년여 만에 최고치를 기록한 것은 향후 판매량 증가에 대한 긍정적인 신호로, 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "주문 잔고 증가",
+            "수요 강세"
+          ]
+        }
+      },
+      "avgScore": 1.8,
+      "buyIndex": 74,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12"
+      ],
+      "bullish": 8,
+      "bearish": 2,
+      "neutral": 0,
+      "muskXSentiment": null,
+      "newsCategories": {
+        "total": 10,
+        "Earnings|Product|Market": 1,
+        "Musk|Product|Technology": 1,
+        "Investment|Product|AI": 1,
+        "Earnings|Delivery|Market": 1,
+        "Technology|Partnership": 1,
+        "Energy|Earnings": 1,
+        "Earnings|Investment": 1,
+        "Product|Delivery": 1,
+        "Product|Technology": 1,
+        "Delivery|Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.14,
+        "qqqChg": -0.02,
+        "vixClose": 19.110000610351562,
+        "wtiChg": 0.74,
+        "cnyChg": -0.19,
+        "prevTslaChg": -6.53,
+        "rsi": 34.7,
+        "macd": {
+          "macd": -9.606219625574283,
+          "signal": -3.020062066645488,
+          "hist": -6.586157558928795,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 483.34,
+          "middle": 408.5,
+          "lower": 333.65,
+          "pos": 0.219
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 68,
+        "macdTrend": -2,
+        "bbLow": 2,
+        "earningsWeek": 6
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777298514042
+    },
+    {
       "id": "auto-1777278586961",
       "date": "2026-04-27",
       "displayDate": "2026.04.27",
@@ -2593,5 +2866,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-27 17:28 KST"
+  "lastUpdated": "2026-04-27 22:58 KST"
 }
