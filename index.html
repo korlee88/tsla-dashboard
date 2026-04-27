@@ -1561,8 +1561,6 @@ function PredAccuracyCard({ dailyData }) {
   const accuracy  = resolved.length > 0 ? Math.round(correct.length / resolved.length * 100) : null;
   const accColor  = accuracy == null ? '#6b7280' : accuracy >= 70 ? '#22c55e' : accuracy >= 50 ? '#f59e0b' : '#ef4444';
 
-  if (records.length === 0 && !pending.length) return null;
-
   const pctColor = v => v == null ? '#6b7280' : v > 0.5 ? '#22c55e' : v < -0.5 ? '#ef4444' : '#9ca3af';
   const pctStr   = v => v == null ? '─' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
 
@@ -1713,7 +1711,29 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
         style={{ background: '#252830', border: '1px solid #2A2D35' }}>재시도</button>
     </div>
   );
-  if (!forecast) return null;
+  if (!forecast) return (
+    <div className="rounded-xl border mt-6 overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+      <div className="px-5 py-4 border-b" style={{ borderColor: '#2A2D35', background: '#14171e' }}>
+        <h2 className="text-sm font-bold text-gray-200 uppercase tracking-wider">투자 전망 분석</h2>
+        <p className="text-xs text-gray-500 mt-0.5">뉴스 종합 · 단기~최장기 5개 시간대</p>
+      </div>
+      <div className="flex flex-col items-center justify-center py-12 gap-4">
+        <span className="text-4xl">🔮</span>
+        <div className="text-center">
+          <p className="text-sm text-gray-400 font-semibold mb-1">아직 투자 전망이 생성되지 않았습니다</p>
+          <p className="text-xs text-gray-600">대시보드에서 뉴스 수집 → 분석 완료 후 자동 생성됩니다</p>
+          <p className="text-xs text-gray-700 mt-1">또는 아래 버튼을 클릭하여 직접 생성하세요</p>
+        </div>
+        {onRetry && (
+          <button onClick={onRetry}
+            className="px-5 py-2 rounded-lg text-sm font-bold text-white hover:opacity-90 transition-opacity"
+            style={{ background: '#E31937' }}>
+            ▶ 전망 생성
+          </button>
+        )}
+      </div>
+    </div>
+  );
 
   const oSig  = SIGNAL_CFG[forecast.overall_signal] || SIGNAL_CFG['관망'];
   const risk  = RISK_CFG[forecast.risk_level]        || RISK_CFG['medium'];
