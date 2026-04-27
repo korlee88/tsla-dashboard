@@ -8,6 +8,7 @@
 const fs            = require('fs');
 const path          = require('path');
 const { execSync }  = require('child_process');
+const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./lib/scoring');
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -188,7 +189,7 @@ async function analyzeNewsItem(newsItem) {
 
 // ─── 주간 일괄 분석 ──────────────────────────────────────────────────────────
 
-async function analyzeWeekBatch(newsItems) {
+async function analyzeWeekBatch(newsItems, macroCtx = null) {
   const analyses = [];
   let failCount  = 0;
   for (let i = 0; i < newsItems.length; i++) {
@@ -214,18 +215,20 @@ async function analyzeWeekBatch(newsItems) {
   analyses.forEach(a => (a.triggered_rules || []).forEach(r => { ruleCnt[r] = (ruleCnt[r] || 0) + 1; }));
   const topRules = Object.entries(ruleCnt).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([r]) => r);
 
-  // ── 개선된 매수지수 산출 (백테스트 기반 보정) ──────────────────────────
-  let buyIndex = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
-  const hasR08 = topRules.includes('R08');
-  const hasR24 = topRules.includes('R24');
-  if (hasR24 && !hasR08) buyIndex = Math.min(100, buyIndex + 9); // R24 단독 노이즈 할인
-  const dist = buyIndex - 50;
-  if (Math.abs(dist) >= 20) buyIndex = Math.max(0, Math.min(100, Math.round(50 + dist * 1.15))); // 강한신호 증폭
-  const direction = bullish > bearish ? 'bullish'
-    : bearish > bullish ? 'bearish'
-    : avgScore < 0 ? 'bearish' : 'bullish'; // neutral 제거, avgScore tie-break
-  // ────────────────────────────────────────────────────────────────────────
-  return { avgScore, buyIndex, direction, bullish, bearish, neutral: analyses.length - bullish - bearish, topRules, failCount };
+  // ── 다층 강화 채점 모델 v2.0 ──────────────────────────────────────────
+  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
+  return {
+    avgScore,
+    buyIndex:  enhanced.buyIndex,
+    direction: enhanced.direction,
+    bullish, bearish,
+    neutral:   analyses.length - bullish - bearish,
+    topRules,
+    failCount,
+    scoringLayers: enhanced.layers,
+    macroCtx,
+    modelVersion: '2.0',
+  };
 }
 
 // ─── 2025 주 목록 생성 ───────────────────────────────────────────────────────
@@ -269,6 +272,16 @@ async function main() {
   const prices = await fetchTSLA2YearWeekly();
   console.log(`   ✅ ${prices.length}개 주봉 로드 완료`);
 
+  // ── 2-2. 매크로 데이터 로드 (SPY, QQQ, VIX, TSLA) ──
+  console.log('\n📊 매크로 데이터 로드 중 (SPY/QQQ/VIX/TSLA)...');
+  let macroData = null;
+  try {
+    macroData = await loadMacroData();
+    console.log(`   ✅ SPY:${macroData.spy.length}, QQQ:${macroData.qqq.length}, VIX:${macroData.vix.length}, TSLA:${macroData.tsla.length} 주봉`);
+  } catch (e) {
+    console.warn(`   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용: ${e.message}`);
+  }
+
   // ── 3. 주간 루프 ──
   const allWeeks = get2025Weeks();
   const pending  = allWeeks.filter(w => !doneSet.has(w.weekStart));
@@ -295,7 +308,8 @@ async function main() {
     if (newsItems.length > 0) {
       console.log(`   🔍 AI 분석 중...`);
       try {
-        analysis = await analyzeWeekBatch(newsItems);
+        const macroCtx = macroData ? buildMacroContext(macroData, weekStart) : null;
+        analysis = await analyzeWeekBatch(newsItems, macroCtx);
       } catch (e) {
         error = 'AI 분석 실패: ' + e.message;
         console.error(`   ❌ ${error}`);

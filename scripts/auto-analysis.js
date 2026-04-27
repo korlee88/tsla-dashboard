@@ -6,6 +6,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./lib/scoring');
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -171,19 +172,21 @@ async function main() {
   const bearish  = analyzed.filter(n => analyses[n.id].direction === 'bearish').length;
   const topRules = getTopRules(analyzed.map(n => analyses[n.id]));
 
-  // ── 개선된 매수지수 산출 (백테스트 기반 보정) ──────────────────────────
-  let buyIndex = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
-  // ③ R24 단독 과잉반응 할인 (백테스트: R24 단독 발동 시 정확도 23% → 노이즈 보정)
-  const hasR08 = topRules.includes('R08');
-  const hasR24 = topRules.includes('R24');
-  if (hasR24 && !hasR08) buyIndex = Math.min(100, buyIndex + 9);
-  // ② 강한신호 증폭 (±20 이상 이탈 시 신뢰도 높음 → 1.15배)
-  const dist = buyIndex - 50;
-  if (Math.abs(dist) >= 20) buyIndex = Math.max(0, Math.min(100, Math.round(50 + dist * 1.15)));
-  // ⑥ neutral 방향 제거: bull=bear 동수면 avgScore로 tie-break
-  const direction = bullish > bearish ? 'bullish'
-    : bearish > bullish ? 'bearish'
-    : avgScore < 0 ? 'bearish' : 'bullish';
+  // ── 다층 강화 채점 모델 v2.0 (백테스트 검증: ±2% 이상 움직인 주 72%) ────
+  let macroCtx = null;
+  try {
+    console.log('   📊 매크로 컨텍스트 로드 중 (SPY/QQQ/VIX/TSLA)...');
+    const macroData = await loadMacroData();
+    macroCtx = buildMacroContext(macroData, dateStr);
+    console.log(`   ✅ SPY: ${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}%, QQQ: ${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}%, VIX: ${macroCtx.vixClose}, RSI: ${macroCtx.rsi}`);
+  } catch (e) {
+    console.warn('   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용:', e.message);
+  }
+
+  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
+  const buyIndex  = enhanced.buyIndex;
+  const direction = enhanced.direction;
+  const scoringLayers = enhanced.layers;
   // ────────────────────────────────────────────────────────────────────────
 
   // 4. 세션 객체
@@ -204,6 +207,9 @@ async function main() {
     bullish,
     bearish,
     neutral:     analyzed.length - bullish - bearish,
+    macroCtx,           // 매크로 컨텍스트 (SPY/QQQ/VIX/RSI)
+    scoringLayers,      // 적용된 보정 레이어
+    modelVersion: '2.0',
     timestamp:   Date.now(),
   };
 

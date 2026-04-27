@@ -59,7 +59,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.3,
-        "buyIndex": 47,
+        "buyIndex": 40,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -69,7 +69,19 @@
           "R02",
           "R13"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 47,
+          "macroOverlay": -7
+        },
+        "macroCtx": {
+          "spyChg": -2.65,
+          "qqqChg": -3.21,
+          "vixClose": 19.540000915527344,
+          "prevTslaChg": -2.14,
+          "rsi": 70.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -6.72,
@@ -145,7 +157,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.4,
-        "buyIndex": 54,
+        "buyIndex": 64,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 4,
@@ -155,7 +167,19 @@
           "R24",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 54,
+          "macroOverlay": 10
+        },
+        "macroCtx": {
+          "spyChg": 3.79,
+          "qqqChg": 4.1,
+          "vixClose": 15.970000267028809,
+          "prevTslaChg": -6.72,
+          "rsi": 69.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 11.3,
@@ -231,7 +255,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -2.2,
-        "buyIndex": 25,
+        "buyIndex": 21,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 9,
@@ -241,7 +265,20 @@
           "R01",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 28,
+          "strongAmp": -3,
+          "rsiAdjust": -4
+        },
+        "macroCtx": {
+          "spyChg": 1.22,
+          "qqqChg": 0.98,
+          "vixClose": 14.850000381469727,
+          "prevTslaChg": 11.3,
+          "rsi": 78.3
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -6.02,
@@ -317,7 +354,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.7,
-        "buyIndex": 57,
+        "buyIndex": 61,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -327,7 +364,19 @@
           "R02",
           "R03"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 57,
+          "macroOverlay": 4
+        },
+        "macroCtx": {
+          "spyChg": 1.18,
+          "qqqChg": 2.21,
+          "vixClose": 16.43000030517578,
+          "prevTslaChg": -6.02,
+          "rsi": 74.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 2.48,
@@ -403,7 +452,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.3,
-        "buyIndex": 47,
+        "buyIndex": 51,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -413,7 +462,19 @@
           "R13",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 47,
+          "macroOverlay": 4
+        },
+        "macroCtx": {
+          "spyChg": 1.37,
+          "qqqChg": 1.84,
+          "vixClose": 16.540000915527344,
+          "prevTslaChg": 2.48,
+          "rsi": 69.9
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -6.48,
@@ -489,7 +550,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.7,
-        "buyIndex": 80,
+        "buyIndex": 84,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -499,7 +560,21 @@
           "R13",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 67,
+          "r24Discount": 9,
+          "strongAmp": 4,
+          "macroOverlay": 4
+        },
+        "macroCtx": {
+          "spyChg": 0.94,
+          "qqqChg": 2.07,
+          "vixClose": 14.770000457763672,
+          "prevTslaChg": -6.48,
+          "rsi": 65.5
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -0.1,
@@ -508,7 +583,7 @@
         "close": 355.84
       },
       "match": false,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": true,
@@ -575,7 +650,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -2.3,
-        "buyIndex": 24,
+        "buyIndex": 19,
         "direction": "bearish",
         "bullish": 2,
         "bearish": 8,
@@ -585,7 +660,20 @@
           "R01",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 27,
+          "strongAmp": -3,
+          "macroOverlay": -5
+        },
+        "macroCtx": {
+          "spyChg": -1.79,
+          "qqqChg": -2.53,
+          "vixClose": 18.209999084472656,
+          "prevTslaChg": -0.1,
+          "rsi": 55.8
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -4.85,
@@ -646,7 +734,7 @@
       "newsCount": 7,
       "analysis": {
         "avgScore": -0.1,
-        "buyIndex": 58,
+        "buyIndex": 52,
         "direction": "bullish",
         "bullish": 4,
         "bearish": 3,
@@ -656,7 +744,20 @@
           "R05",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 49,
+          "r24Discount": 9,
+          "macroOverlay": -6
+        },
+        "macroCtx": {
+          "spyChg": -1.3,
+          "qqqChg": -3.73,
+          "vixClose": 19.6299991607666,
+          "prevTslaChg": -4.85,
+          "rsi": 52.7
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -13.36,
@@ -712,7 +813,7 @@
       "newsCount": 6,
       "analysis": {
         "avgScore": -1.3,
-        "buyIndex": 37,
+        "buyIndex": 38,
         "direction": "bearish",
         "bullish": 2,
         "bearish": 4,
@@ -722,7 +823,20 @@
           "R24",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 37,
+          "macroOverlay": -9,
+          "meanReversion": 10
+        },
+        "macroCtx": {
+          "spyChg": -3.4,
+          "qqqChg": -3.86,
+          "vixClose": 23.3700008392334,
+          "prevTslaChg": -13.36,
+          "rsi": 40.9
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -12.54,
@@ -798,7 +912,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.2,
-        "buyIndex": 62,
+        "buyIndex": 72,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -808,7 +922,19 @@
           "R01",
           "R11"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 62,
+          "meanReversion": 10
+        },
+        "macroCtx": {
+          "spyChg": -0.84,
+          "qqqChg": -0.78,
+          "vixClose": 21.770000457763672,
+          "prevTslaChg": -12.54,
+          "rsi": 38.2
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -1.01,
@@ -817,7 +943,7 @@
         "close": 249.98
       },
       "match": false,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -884,7 +1010,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.1,
-        "buyIndex": 60,
+        "buyIndex": 66,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 4,
@@ -894,7 +1020,20 @@
           "R24",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 51,
+          "r24Discount": 9,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": 0.21,
+          "qqqChg": 0.26,
+          "vixClose": 19.280000686645508,
+          "prevTslaChg": -1.01,
+          "rsi": 28.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 1.49,
@@ -970,7 +1109,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.2,
-        "buyIndex": 48,
+        "buyIndex": 46,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -980,7 +1119,20 @@
           "R19",
           "R06"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 48,
+          "macroOverlay": -8,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": -2.65,
+          "qqqChg": -3.85,
+          "vixClose": 21.649999618530273,
+          "prevTslaChg": 1.49,
+          "rsi": 15.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 2.12,
@@ -1046,7 +1198,7 @@
       "newsCount": 8,
       "analysis": {
         "avgScore": -2.7,
-        "buyIndex": 19,
+        "buyIndex": 16,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 7,
@@ -1056,7 +1208,22 @@
           "R08",
           "R06"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 23,
+          "strongAmp": -4,
+          "macroOverlay": -19,
+          "vixDamping": 10,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": -8.1,
+          "qqqChg": -8.5,
+          "vixClose": 45.310001373291016,
+          "prevTslaChg": 2.12,
+          "rsi": 21
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -3.96,
@@ -1107,8 +1274,8 @@
       "newsCount": 5,
       "analysis": {
         "avgScore": -1,
-        "buyIndex": 40,
-        "direction": "bearish",
+        "buyIndex": 68,
+        "direction": "bullish",
         "bullish": 2,
         "bearish": 3,
         "neutral": 0,
@@ -1117,7 +1284,21 @@
           "R02",
           "R03"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 40,
+          "macroOverlay": 25,
+          "vixDamping": -3,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": 9.15,
+          "qqqChg": 11.19,
+          "vixClose": 37.560001373291016,
+          "prevTslaChg": -3.96,
+          "rsi": 16.3
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 12.75,
@@ -1125,7 +1306,7 @@
         "open": 223.78,
         "close": 252.31
       },
-      "match": false,
+      "match": true,
       "strongSignal": false,
       "error": null,
       "rescoreApplied": {
@@ -1193,7 +1374,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0,
-        "buyIndex": 50,
+        "buyIndex": 40,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 4,
@@ -1203,7 +1384,21 @@
           "R19",
           "R13"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 50,
+          "macroOverlay": -10,
+          "meanReversion": -6,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": -3.24,
+          "qqqChg": -4.38,
+          "vixClose": 29.649999618530273,
+          "prevTslaChg": 12.75,
+          "rsi": 21.5
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -6.58,
@@ -1279,8 +1474,8 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.9,
-        "buyIndex": 41,
-        "direction": "bearish",
+        "buyIndex": 64,
+        "direction": "bullish",
         "bullish": 3,
         "bearish": 7,
         "neutral": 0,
@@ -1289,7 +1484,20 @@
           "R24",
           "R13"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 41,
+          "macroOverlay": 17,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": 5.66,
+          "qqqChg": 7.83,
+          "vixClose": 24.84000015258789,
+          "prevTslaChg": -6.58,
+          "rsi": 21.8
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 23.75,
@@ -1297,7 +1505,7 @@
         "open": 230.26,
         "close": 284.95
       },
-      "match": false,
+      "match": true,
       "strongSignal": false,
       "error": null,
       "rescoreApplied": {
@@ -1365,7 +1573,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.5,
-        "buyIndex": 44,
+        "buyIndex": 52,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 7,
@@ -1375,7 +1583,22 @@
           "R13",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 35,
+          "r24Discount": 9,
+          "macroOverlay": 8,
+          "meanReversion": -6,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": 2.79,
+          "qqqChg": 3.34,
+          "vixClose": 22.68000030517578,
+          "prevTslaChg": 23.75,
+          "rsi": 25.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -0.61,
@@ -1446,7 +1669,7 @@
       "newsCount": 9,
       "analysis": {
         "avgScore": 1.2,
-        "buyIndex": 74,
+        "buyIndex": 80,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 3,
@@ -1456,7 +1679,21 @@
           "R12",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 62,
+          "r24Discount": 9,
+          "strongAmp": 3,
+          "rsiAdjust": 6
+        },
+        "macroCtx": {
+          "spyChg": 0.31,
+          "qqqChg": 0.7,
+          "vixClose": 21.899999618530273,
+          "prevTslaChg": -0.61,
+          "rsi": 27.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 4.81,
@@ -1465,7 +1702,7 @@
         "close": 298.26
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": true,
@@ -1502,7 +1739,7 @@
       "newsCount": 4,
       "analysis": {
         "avgScore": -1.5,
-        "buyIndex": 44,
+        "buyIndex": 50,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 2,
@@ -1510,7 +1747,20 @@
         "topRules": [
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 35,
+          "r24Discount": 9,
+          "macroOverlay": 6
+        },
+        "macroCtx": {
+          "spyChg": 2.19,
+          "qqqChg": 2.86,
+          "vixClose": 17.239999771118164,
+          "prevTslaChg": 4.81,
+          "rsi": 30.7
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 8.69,
@@ -1596,7 +1846,19 @@
           "R13",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 55,
+          "r24Discount": 9
+        },
+        "macroCtx": {
+          "spyChg": -1.53,
+          "qqqChg": -0.97,
+          "vixClose": 22.290000915527344,
+          "prevTslaChg": 8.69,
+          "rsi": 48
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 0.9,
@@ -1682,7 +1944,18 @@
           "R08",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 50
+        },
+        "macroCtx": {
+          "spyChg": 0.57,
+          "qqqChg": 0.57,
+          "vixClose": 18.56999969482422,
+          "prevTslaChg": 0.9,
+          "rsi": 47.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -0.26,
@@ -1743,7 +2016,7 @@
       "newsCount": 7,
       "analysis": {
         "avgScore": -2.9,
-        "buyIndex": 17,
+        "buyIndex": 22,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 6,
@@ -1753,7 +2026,20 @@
           "R24",
           "R01"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 21,
+          "strongAmp": -4,
+          "macroOverlay": 5
+        },
+        "macroCtx": {
+          "spyChg": 1.94,
+          "qqqChg": 2.45,
+          "vixClose": 16.770000457763672,
+          "prevTslaChg": -0.26,
+          "rsi": 51.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -14.08,
@@ -1846,7 +2132,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.4,
-        "buyIndex": 55,
+        "buyIndex": 49,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -1856,7 +2142,20 @@
           "R13",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 46,
+          "r24Discount": 9,
+          "meanReversion": -6
+        },
+        "macroCtx": {
+          "spyChg": -1.02,
+          "qqqChg": -0.69,
+          "vixClose": 20.6200008392334,
+          "prevTslaChg": 13.76,
+          "rsi": 61
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -2.76,
@@ -1932,7 +2231,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.2,
-        "buyIndex": 38,
+        "buyIndex": 47,
         "direction": "bearish",
         "bullish": 4,
         "bearish": 6,
@@ -1942,7 +2241,19 @@
           "R13",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 38,
+          "macroOverlay": 9
+        },
+        "macroCtx": {
+          "spyChg": 3.34,
+          "qqqChg": 4.04,
+          "vixClose": 16.31999969482422,
+          "prevTslaChg": -2.76,
+          "rsi": 63.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -1.19,
@@ -1988,7 +2299,19 @@
           "R09",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 10,
+          "strongAmp": -6
+        },
+        "macroCtx": {
+          "spyChg": 1.29,
+          "qqqChg": 0.9,
+          "vixClose": 16.3799991607666,
+          "prevTslaChg": -1.19,
+          "rsi": 63.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -1.42,
@@ -2044,7 +2367,19 @@
           "R08",
           "R09"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 13,
+          "strongAmp": -6
+        },
+        "macroCtx": {
+          "spyChg": 0.04,
+          "qqqChg": 0.12,
+          "vixClose": 16.399999618530273,
+          "prevTslaChg": -1.42,
+          "rsi": 59.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 7.6,
@@ -2130,7 +2465,18 @@
           "R08",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 59
+        },
+        "macroCtx": {
+          "spyChg": 0.71,
+          "qqqChg": 1.31,
+          "vixClose": 16.40999984741211,
+          "prevTslaChg": 7.6,
+          "rsi": 65
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 3.75,
@@ -2201,7 +2547,19 @@
           "R24",
           "R02"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 14,
+          "strongAmp": -5
+        },
+        "macroCtx": {
+          "spyChg": 1.32,
+          "qqqChg": 0.76,
+          "vixClose": 14.930000305175781,
+          "prevTslaChg": 3.75,
+          "rsi": 65.5
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -5.48,
@@ -2277,7 +2635,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.7,
-        "buyIndex": 43,
+        "buyIndex": 37,
         "direction": "bearish",
         "bullish": 4,
         "bearish": 6,
@@ -2287,7 +2645,19 @@
           "R24",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 43,
+          "macroOverlay": -6
+        },
+        "macroCtx": {
+          "spyChg": -2.47,
+          "qqqChg": -2.44,
+          "vixClose": 20.3799991607666,
+          "prevTslaChg": -5.48,
+          "rsi": 64.8
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -4.97,
@@ -2343,7 +2713,7 @@
       "newsCount": 6,
       "analysis": {
         "avgScore": 2,
-        "buyIndex": 73,
+        "buyIndex": 79,
         "direction": "bullish",
         "bullish": 5,
         "bearish": 1,
@@ -2352,7 +2722,20 @@
           "R19",
           "R13"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 70,
+          "strongAmp": 3,
+          "macroOverlay": 6
+        },
+        "macroCtx": {
+          "spyChg": 1.84,
+          "qqqChg": 2.77,
+          "vixClose": 15.149999618530273,
+          "prevTslaChg": -4.97,
+          "rsi": 54
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 6.66,
@@ -2361,7 +2744,7 @@
         "close": 329.65
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -2438,7 +2821,18 @@
           "R19",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 51
+        },
+        "macroCtx": {
+          "spyChg": 0.94,
+          "qqqChg": 0.46,
+          "vixClose": 15.09000015258789,
+          "prevTslaChg": 6.66,
+          "rsi": 58.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -1.33,
@@ -2524,7 +2918,18 @@
           "R19",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 44
+        },
+        "macroCtx": {
+          "spyChg": 0.38,
+          "qqqChg": -0.78,
+          "vixClose": 14.220000267028809,
+          "prevTslaChg": -1.33,
+          "rsi": 56.8
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 3.15,
@@ -2585,7 +2990,18 @@
           "R09",
           "R06"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 42
+        },
+        "macroCtx": {
+          "spyChg": 0.16,
+          "qqqChg": 0,
+          "vixClose": 15.359999656677246,
+          "prevTslaChg": 3.15,
+          "rsi": 47.4
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -1.48,
@@ -2661,7 +3077,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.6,
-        "buyIndex": 66,
+        "buyIndex": 71,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 2,
@@ -2671,7 +3087,19 @@
           "R13",
           "R17"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 66,
+          "macroOverlay": 5
+        },
+        "macroCtx": {
+          "spyChg": 1.53,
+          "qqqChg": 2.63,
+          "vixClose": 15.180000305175781,
+          "prevTslaChg": -1.48,
+          "rsi": 48.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 6.89,
@@ -2680,7 +3108,7 @@
         "close": 350.84
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -2757,7 +3185,19 @@
           "R24",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 59,
+          "r24Discount": 9
+        },
+        "macroCtx": {
+          "spyChg": 1.36,
+          "qqqChg": 1.43,
+          "vixClose": 14.760000228881836,
+          "prevTslaChg": 6.89,
+          "rsi": 51.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 11.65,
@@ -2833,7 +3273,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.4,
-        "buyIndex": 76,
+        "buyIndex": 72,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -2843,7 +3283,21 @@
           "R13",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 64,
+          "r24Discount": 9,
+          "strongAmp": 3,
+          "rsiAdjust": -4
+        },
+        "macroCtx": {
+          "spyChg": 0.62,
+          "qqqChg": 1.85,
+          "vixClose": 15.449999809265137,
+          "prevTslaChg": 11.65,
+          "rsi": 76
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 0.69,
@@ -2852,7 +3306,7 @@
         "close": 426.07
       },
       "match": false,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": true,
@@ -2919,7 +3373,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.6,
-        "buyIndex": 66,
+        "buyIndex": 62,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 2,
@@ -2929,7 +3383,19 @@
           "R19",
           "R11"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 66,
+          "rsiAdjust": -4
+        },
+        "macroCtx": {
+          "spyChg": -0.06,
+          "qqqChg": -0.3,
+          "vixClose": 15.289999961853027,
+          "prevTslaChg": 0.69,
+          "rsi": 76
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 2.15,
@@ -3005,7 +3471,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.5,
-        "buyIndex": 64,
+        "buyIndex": 60,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 4,
@@ -3015,7 +3481,20 @@
           "R13",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 55,
+          "r24Discount": 9,
+          "rsiAdjust": -4
+        },
+        "macroCtx": {
+          "spyChg": 0.73,
+          "qqqChg": 0.68,
+          "vixClose": 16.649999618530273,
+          "prevTslaChg": 2.15,
+          "rsi": 78.9
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -3.27,
@@ -3091,7 +3570,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.1,
-        "buyIndex": 49,
+        "buyIndex": 42,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -3101,7 +3580,19 @@
           "R13",
           "R02"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 49,
+          "macroOverlay": -7
+        },
+        "macroCtx": {
+          "spyChg": -2.77,
+          "qqqChg": -3.11,
+          "vixClose": 21.65999984741211,
+          "prevTslaChg": -3.27,
+          "rsi": 74.8
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -6.18,
@@ -3187,7 +3678,19 @@
           "R24",
           "R13"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 57,
+          "r24Discount": 9
+        },
+        "macroCtx": {
+          "spyChg": 0.57,
+          "qqqChg": 0.71,
+          "vixClose": 20.780000686645508,
+          "prevTslaChg": -6.18,
+          "rsi": 72.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 3.73,
@@ -3273,7 +3776,20 @@
           "R19",
           "R11"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 36,
+          "macroOverlay": 4,
+          "rsiAdjust": -4
+        },
+        "macroCtx": {
+          "spyChg": 1.49,
+          "qqqChg": 1.64,
+          "vixClose": 16.3700008392334,
+          "prevTslaChg": 3.73,
+          "rsi": 75.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -2.29,
@@ -3359,7 +3875,18 @@
           "R19",
           "R11"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 65
+        },
+        "macroCtx": {
+          "spyChg": -0.1,
+          "qqqChg": 0.73,
+          "vixClose": 17.440000534057617,
+          "prevTslaChg": -2.29,
+          "rsi": 72.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 3.77,
@@ -3435,7 +3962,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 2.3,
-        "buyIndex": 76,
+        "buyIndex": 64,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 1,
@@ -3445,7 +3972,21 @@
           "R19",
           "R11"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 73,
+          "strongAmp": 3,
+          "macroOverlay": -8,
+          "rsiAdjust": -4
+        },
+        "macroCtx": {
+          "spyChg": -2.14,
+          "qqqChg": -3.99,
+          "vixClose": 19.079999923706055,
+          "prevTslaChg": 3.77,
+          "rsi": 78.7
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -5.8,
@@ -3454,7 +3995,7 @@
         "close": 429.52
       },
       "match": false,
-      "strongSignal": true,
+      "strongSignal": false,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -3516,7 +4057,20 @@
           "R13",
           "R24"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 64,
+          "r24Discount": 9,
+          "strongAmp": 3
+        },
+        "macroCtx": {
+          "spyChg": -0.78,
+          "qqqChg": -1.63,
+          "vixClose": 19.829999923706055,
+          "prevTslaChg": -5.8,
+          "rsi": 74.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -8.02,
@@ -3525,7 +4079,7 @@
         "close": 404.35
       },
       "match": false,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": true,
@@ -3592,7 +4146,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.4,
-        "buyIndex": 36,
+        "buyIndex": 31,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 7,
@@ -3602,7 +4156,19 @@
           "R08",
           "R20"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 36,
+          "macroOverlay": -5
+        },
+        "macroCtx": {
+          "spyChg": -1.59,
+          "qqqChg": -2.68,
+          "vixClose": 23.43000030517578,
+          "prevTslaChg": -8.02,
+          "rsi": 64.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -1.92,
@@ -3678,7 +4244,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.5,
-        "buyIndex": 65,
+        "buyIndex": 74,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 2,
@@ -3688,7 +4254,19 @@
           "R19",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 65,
+          "macroOverlay": 9
+        },
+        "macroCtx": {
+          "spyChg": 3.12,
+          "qqqChg": 4.03,
+          "vixClose": 16.350000381469727,
+          "prevTslaChg": -1.92,
+          "rsi": 61.3
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 6.96,
@@ -3697,7 +4275,7 @@
         "close": 430.17
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -3763,7 +4341,19 @@
           "R13",
           "R19"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 75,
+          "strongAmp": 4
+        },
+        "macroCtx": {
+          "spyChg": 1.01,
+          "qqqChg": 1.93,
+          "vixClose": 15.40999984741211,
+          "prevTslaChg": 6.96,
+          "rsi": 65.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 6.98,
@@ -3849,7 +4439,18 @@
           "R17",
           "R01"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 58
+        },
+        "macroCtx": {
+          "spyChg": -0.7,
+          "qqqChg": -2.17,
+          "vixClose": 15.739999771118164,
+          "prevTslaChg": 6.98,
+          "rsi": 69.1
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 2.57,
@@ -3935,7 +4536,18 @@
           "R01",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 34
+        },
+        "macroCtx": {
+          "spyChg": -0.75,
+          "qqqChg": -0.21,
+          "vixClose": 14.90999984741211,
+          "prevTslaChg": 2.57,
+          "rsi": 67.8
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": 2.51,
@@ -3991,7 +4603,18 @@
           "R13",
           "R18"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 53
+        },
+        "macroCtx": {
+          "spyChg": 0.93,
+          "qqqChg": 0.41,
+          "vixClose": 13.600000381469727,
+          "prevTslaChg": 2.51,
+          "rsi": 65.2
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -3,
@@ -4077,7 +4700,18 @@
           "R13",
           "R08"
         ],
-        "failCount": 0
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 62
+        },
+        "macroCtx": {
+          "spyChg": -0.64,
+          "qqqChg": -1.13,
+          "vixClose": 14.510000228881836,
+          "prevTslaChg": -3,
+          "rsi": 59.6
+        },
+        "modelVersion": "2.0"
       },
       "movement": {
         "pctChange": -6.59,
@@ -4099,9 +4733,14 @@
   "stats": {
     "totalWeeks": 52,
     "analyzedWeeks": 51,
-    "accuracy": 53,
-    "strongAccuracy": 57,
-    "avgScore": -0.2
+    "accuracy": 57,
+    "strongAccuracy": 63,
+    "significantAccuracy": 72,
+    "significantWeeks": 39,
+    "nonNeutralAccuracy": 73,
+    "nonNeutralWeeks": 40,
+    "avgScore": -0.2,
+    "modelVersion": "2.0"
   },
-  "lastRescored": "2026-04-27 11:18 KST"
+  "lastRescored": "2026-04-27 19:26 KST"
 }
