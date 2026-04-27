@@ -54,6 +54,7 @@ function gitCommitProgress(label) {
     if (!diff) { console.log(`   ⏭  ${label} — 변경 없음, 커밋 건너뜀`); return; }
     const nowKST = new Date(Date.now() + 9 * 3600000).toISOString().replace('T',' ').slice(0,16) + ' KST';
     execSync(`git commit -m "backtest: ${label} 완료 (${nowKST})"`, { stdio: 'pipe' });
+    execSync('git pull --rebase origin master', { stdio: 'pipe' });
     execSync('git push', { stdio: 'pipe' });
     console.log(`   ✅ ${label} 중간 커밋 & 푸시 완료`);
   } catch (e) {
