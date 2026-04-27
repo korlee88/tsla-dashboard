@@ -125,6 +125,33 @@ async function analyzeNewsItem(newsItem) {
   return JSON.parse(m[0]);
 }
 
+// ─── 머스크 X 센티먼트 수집 (Gemini Search Grounding) ────────────────────────
+// Grok 제안 #1: 머스크 X 포스트 센티먼트를 별도 신호로 활용
+
+async function collectMuskXSentiment(dateStr) {
+  try {
+    const data = await geminiPost({
+      tools: [{ google_search: {} }],
+      contents: [{
+        role: 'user',
+        parts: [{ text: `Search X (Twitter) and web for @elonmusk posts from the past 7 days (around ${dateStr}) related to Tesla, TSLA, electric vehicles, Robotaxi, FSD, Optimus, energy storage, or Tesla business strategy.\nAnalyze the overall tone and sentiment of Elon Musk's recent public communications about Tesla.\nReturn ONLY JSON:\n{"posts":[{"date":"YYYY-MM-DD","content":"(한국어 내용 요약)","sentiment":"bullish|bearish|neutral","engagement":"high|medium|low"}],"overall_sentiment":"bullish|bearish|neutral","sentiment_score":<integer -3 to +3>,"post_count":<number of found posts>,"reasoning":"(한국어 한 문장 설명)"}\nCRITICAL: Return ONLY the JSON object.` }],
+      }],
+      generationConfig: { maxOutputTokens: 1024, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
+    });
+    const parts = data.candidates?.[0]?.content?.parts || [];
+    const raw   = parts.filter(p => !p.thought).map(p => p.text || '').join('') || parts[0]?.text || '';
+    const clean = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (!m) return null;
+    const result = JSON.parse(m[0]);
+    console.log(`   🐦 머스크 X: 센티먼트 ${result.overall_sentiment} (${result.sentiment_score >= 0 ? '+' : ''}${result.sentiment_score}) | 포스트 ${result.post_count || '?'}건`);
+    return result;
+  } catch (e) {
+    console.warn(`   ⚠ 머스크 X 센티먼트 수집 실패: ${e.message}`);
+    return null;
+  }
+}
+
 // ─── 메인 ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -140,7 +167,12 @@ async function main() {
   // 1. 뉴스 수집
   console.log('\n📰 뉴스 수집 중 (Google Search Grounding)...');
   const newsItems = await collectNews();
-  console.log(`   ✅ ${newsItems.length}건 수집 완료\n`);
+  console.log(`   ✅ ${newsItems.length}건 수집 완료`);
+
+  // 1-2. 머스크 X 센티먼트 수집 (Grok 제안 #1)
+  console.log('\n🐦 머스크 X 센티먼트 수집 중...');
+  const muskXData = await collectMuskXSentiment(dateStr);
+  console.log('');
 
   // 2. 개별 뉴스 분석 (Rate limit: 1.2초 간격)
   console.log('🔍 뉴스 분석 중...');
@@ -172,21 +204,38 @@ async function main() {
   const bearish  = analyzed.filter(n => analyses[n.id].direction === 'bearish').length;
   const topRules = getTopRules(analyzed.map(n => analyses[n.id]));
 
-  // ── 다층 강화 채점 모델 v2.0 (백테스트 검증: ±2% 이상 움직인 주 72%) ────
+  // 뉴스 카테고리 집계 (Grok 제안 #2)
+  const newsCategories = { total: analyzed.length };
+  analyzed.forEach(n => { const c = n.category || 'Market'; newsCategories[c] = (newsCategories[c] || 0) + 1; });
+
+  // ── 다층 강화 채점 모델 v3.0 (백테스트 ±2% 이상 주 72%) ─────────────────
   let macroCtx = null;
   try {
-    console.log('   📊 매크로 컨텍스트 로드 중 (SPY/QQQ/VIX/TSLA)...');
+    console.log('   📊 매크로 컨텍스트 로드 중 (SPY/QQQ/VIX/TSLA/WTI/CNY)...');
     const macroData = await loadMacroData();
     macroCtx = buildMacroContext(macroData, dateStr);
-    console.log(`   ✅ SPY: ${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}%, QQQ: ${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}%, VIX: ${macroCtx.vixClose}, RSI: ${macroCtx.rsi}`);
+    const wtiStr = macroCtx.wtiChg >= 0 ? '+' : '';
+    const cnyStr = macroCtx.cnyChg >= 0 ? '+' : '';
+    const macdStr = macroCtx.macd?.crossover ? `MACD ${macroCtx.macd.crossover}` : `MACD ${macroCtx.macd?.trend || '-'}`;
+    const bbStr   = macroCtx.bb ? `BB:${Math.round(macroCtx.bb.pos*100)}%` : '';
+    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}`);
   } catch (e) {
     console.warn('   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용:', e.message);
   }
 
-  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
-  const buyIndex  = enhanced.buyIndex;
-  const direction = enhanced.direction;
-  const scoringLayers = enhanced.layers;
+  // 머스크 X 센티먼트를 buyIndex에 반영 (독립 신호)
+  let muskXAdj = 0;
+  if (muskXData && typeof muskXData.sentiment_score === 'number') {
+    // -3~+3 → -4~+4pt 범위로 변환 (R08/R24보다 약하게)
+    muskXAdj = Math.round(muskXData.sentiment_score * 1.3);
+    console.log(`   🐦 머스크 X 보정: ${muskXAdj >= 0 ? '+' : ''}${muskXAdj}pt (원점수: ${muskXData.sentiment_score})`);
+  }
+
+  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx, newsCategories });
+  let buyIndex    = Math.max(0, Math.min(100, enhanced.buyIndex + muskXAdj));
+  const direction = buyIndex >= 57 ? 'bullish' : buyIndex <= 43 ? 'bearish' : enhanced.direction;
+  const scoringLayers = { ...enhanced.layers, ...(muskXAdj !== 0 ? { muskXSentiment: muskXAdj } : {}) };
+  // ──────────────────────────────────────────────────────────────────────────
   // ────────────────────────────────────────────────────────────────────────
 
   // 4. 세션 객체
@@ -207,9 +256,11 @@ async function main() {
     bullish,
     bearish,
     neutral:     analyzed.length - bullish - bearish,
-    macroCtx,           // 매크로 컨텍스트 (SPY/QQQ/VIX/RSI)
-    scoringLayers,      // 적용된 보정 레이어
-    modelVersion: '2.0',
+    muskXSentiment: muskXData,   // 머스크 X 센티먼트 (Grok 제안 #1)
+    newsCategories,              // 카테고리별 뉴스 분포 (Grok 제안 #2)
+    macroCtx,                    // 매크로 컨텍스트 v3.0 (SPY/QQQ/VIX/TSLA/WTI/CNY/MACD/BB)
+    scoringLayers,               // 적용된 보정 레이어
+    modelVersion: '3.0',
     timestamp:   Date.now(),
   };
 

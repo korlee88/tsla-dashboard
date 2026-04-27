@@ -10,7 +10,7 @@ const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./
 const DATA_FILE = path.join(__dirname, '..', 'data', 'backtest-results.json');
 
 (async () => {
-  console.log('🔄 백테스트 데이터 재채점 시작 (모델 v2.0)\n');
+  console.log('🔄 백테스트 데이터 재채점 시작 (모델 v3.0)\n');
 
   const db = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
   console.log(`📂 ${db.weeks.length}주 데이터 로드`);
@@ -39,7 +39,7 @@ const DATA_FILE = path.join(__dirname, '..', 'data', 'backtest-results.json');
       direction: enhanced.direction,
       scoringLayers: enhanced.layers,
       macroCtx,
-      modelVersion: '2.0',
+      modelVersion: '3.0',
     };
     const newMatch = enhanced.direction === week.movement.actual;
     const strong   = Math.abs(enhanced.buyIndex - 50) > 20;
@@ -78,14 +78,14 @@ const DATA_FILE = path.join(__dirname, '..', 'data', 'backtest-results.json');
     nonNeutralAccuracy:     nnAcc,         // ±1.5% 이상
     nonNeutralWeeks:        nonNeutral.length,
     avgScore,
-    modelVersion: '2.0',
+    modelVersion: '3.0',
   };
   db.lastRescored = new Date(Date.now() + 9 * 3600000).toISOString().replace('T', ' ').slice(0, 16) + ' KST';
 
   fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2), 'utf-8');
 
   console.log('━'.repeat(56));
-  console.log('         🎯 다층 강화 모델 v2.0 재채점 완료');
+  console.log('         🎯 다층 강화 모델 v3.0 재채점 완료');
   console.log('━'.repeat(56));
   console.log(`전체 ${analyzed.length}주 정확도:           ${accuracy}% (${matched}/${analyzed.length})`);
   console.log(`강한신호(|bi-50|>20) 정확도:    ${strongAcc}% (${strongMatched}/${strong.length})`);

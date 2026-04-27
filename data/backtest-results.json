@@ -59,7 +59,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.3,
-        "buyIndex": 40,
+        "buyIndex": 38,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -72,16 +72,36 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 47,
-          "macroOverlay": -7
+          "macroOverlay": -7,
+          "macdTrend": 2,
+          "bbHigh": -2,
+          "deliveryWeek": -2
         },
         "macroCtx": {
           "spyChg": -2.65,
           "qqqChg": -3.21,
           "vixClose": 19.540000915527344,
+          "wtiChg": 3.4,
+          "cnyChg": 0.17,
           "prevTslaChg": -2.14,
-          "rsi": 70.6
+          "rsi": 70.6,
+          "macd": {
+            "macd": 55.27698835781791,
+            "signal": 45.40002837144218,
+            "hist": 9.87695998637573,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 469.4,
+            "middle": 309.18,
+            "lower": 148.96,
+            "pos": 0.767
+          },
+          "isDeliveryWeek": true,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -6.72,
@@ -170,16 +190,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 54,
-          "macroOverlay": 10
+          "macroOverlay": 10,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 3.79,
           "qqqChg": 4.1,
           "vixClose": 15.970000267028809,
+          "wtiChg": 1.75,
+          "cnyChg": -0.01,
           "prevTslaChg": -6.72,
-          "rsi": 69.6
+          "rsi": 69.6,
+          "macd": {
+            "macd": 56.02448578456756,
+            "signal": 47.52491985406726,
+            "hist": 8.499565930500303,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 481.55,
+            "middle": 319.8,
+            "lower": 158.05,
+            "pos": 0.83
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 11.3,
@@ -269,16 +308,35 @@
         "scoringLayers": {
           "base": 28,
           "strongAmp": -3,
-          "rsiAdjust": -4
+          "rsiOverbought": -4,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 1.22,
           "qqqChg": 0.98,
           "vixClose": 14.850000381469727,
+          "wtiChg": -4.51,
+          "cnyChg": -0.52,
           "prevTslaChg": 11.3,
-          "rsi": 78.3
+          "rsi": 78.3,
+          "macd": {
+            "macd": 54.38261533796168,
+            "signal": 48.896458950846146,
+            "hist": 5.486156387115535,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 487.41,
+            "middle": 329.59,
+            "lower": 171.77,
+            "pos": 0.744
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -6.02,
@@ -354,7 +412,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.7,
-        "buyIndex": 61,
+        "buyIndex": 66,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -367,16 +425,37 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 57,
-          "macroOverlay": 4
+          "macroOverlay": 4,
+          "macdTrend": 2,
+          "bbHigh": -2,
+          "cnyStrong": 2,
+          "earningsWeek": 3
         },
         "macroCtx": {
           "spyChg": 1.18,
           "qqqChg": 2.21,
           "vixClose": 16.43000030517578,
+          "wtiChg": -2.7,
+          "cnyChg": -0.86,
           "prevTslaChg": -6.02,
-          "rsi": 74.1
+          "rsi": 74.1,
+          "macd": {
+            "macd": 52.318557539404765,
+            "signal": 49.58087866855787,
+            "hist": 2.737678870846892,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 492.44,
+            "middle": 338.31,
+            "lower": 184.18,
+            "pos": 0.715
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 2.48,
@@ -452,7 +531,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.3,
-        "buyIndex": 51,
+        "buyIndex": 40,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -465,16 +544,36 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 47,
-          "macroOverlay": 4
+          "macroOverlay": 4,
+          "macdCross": -6,
+          "cnyWeak": -3,
+          "earningsWeek": -2
         },
         "macroCtx": {
           "spyChg": 1.37,
           "qqqChg": 1.84,
           "vixClose": 16.540000915527344,
+          "wtiChg": -4.24,
+          "cnyChg": 1.42,
           "prevTslaChg": 2.48,
-          "rsi": 69.9
+          "rsi": 69.9,
+          "macd": {
+            "macd": 46.676590495592905,
+            "signal": 49.000021033964885,
+            "hist": -2.32343053837198,
+            "crossover": "bearish",
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 491.82,
+            "middle": 344.48,
+            "lower": 197.13,
+            "pos": 0.558
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -6.48,
@@ -550,7 +649,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.7,
-        "buyIndex": 84,
+        "buyIndex": 82,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -565,16 +664,34 @@
           "base": 67,
           "r24Discount": 9,
           "strongAmp": 4,
-          "macroOverlay": 4
+          "macroOverlay": 4,
+          "macdTrend": -2
         },
         "macroCtx": {
           "spyChg": 0.94,
           "qqqChg": 2.07,
           "vixClose": 14.770000457763672,
+          "wtiChg": -0.37,
+          "cnyChg": 0.03,
           "prevTslaChg": -6.48,
-          "rsi": 65.5
+          "rsi": 65.5,
+          "macd": {
+            "macd": 41.26323646467853,
+            "signal": 47.45266412010761,
+            "hist": -6.1894276554290855,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 491.49,
+            "middle": 349.24,
+            "lower": 207,
+            "pos": 0.523
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -0.1,
@@ -650,7 +767,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -2.3,
-        "buyIndex": 19,
+        "buyIndex": 17,
         "direction": "bearish",
         "bullish": 2,
         "bearish": 8,
@@ -664,16 +781,34 @@
         "scoringLayers": {
           "base": 27,
           "strongAmp": -3,
-          "macroOverlay": -5
+          "macroOverlay": -5,
+          "macdTrend": -2
         },
         "macroCtx": {
           "spyChg": -1.79,
           "qqqChg": -2.53,
           "vixClose": 18.209999084472656,
+          "wtiChg": -0.42,
+          "cnyChg": 0.03,
           "prevTslaChg": -0.1,
-          "rsi": 55.8
+          "rsi": 55.8,
+          "macd": {
+            "macd": 35.11267936035381,
+            "signal": 44.984667168156854,
+            "hist": -9.871987807803045,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 488.6,
+            "middle": 353.63,
+            "lower": 218.66,
+            "pos": 0.441
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -4.85,
@@ -748,16 +883,35 @@
         "scoringLayers": {
           "base": 49,
           "r24Discount": 9,
-          "macroOverlay": -6
+          "macroOverlay": -6,
+          "macdTrend": -2,
+          "bbLow": 2
         },
         "macroCtx": {
           "spyChg": -1.3,
           "qqqChg": -3.73,
           "vixClose": 19.6299991607666,
+          "wtiChg": -0.06,
+          "cnyChg": 0.49,
           "prevTslaChg": -4.85,
-          "rsi": 52.7
+          "rsi": 52.7,
+          "macd": {
+            "macd": 26.31833955489327,
+            "signal": 41.25140164550414,
+            "hist": -14.933062090610868,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 480.7,
+            "middle": 357.39,
+            "lower": 234.08,
+            "pos": 0.239
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -13.36,
@@ -813,7 +967,7 @@
       "newsCount": 6,
       "analysis": {
         "avgScore": -1.3,
-        "buyIndex": 38,
+        "buyIndex": 42,
         "direction": "bearish",
         "bullish": 2,
         "bearish": 4,
@@ -827,16 +981,35 @@
         "scoringLayers": {
           "base": 37,
           "macroOverlay": -9,
-          "meanReversion": 10
+          "meanReversion": 10,
+          "macdTrend": -2,
+          "bbOversold": 6
         },
         "macroCtx": {
           "spyChg": -3.4,
           "qqqChg": -3.86,
           "vixClose": 23.3700008392334,
+          "wtiChg": -4.16,
+          "cnyChg": -0.44,
           "prevTslaChg": -13.36,
-          "rsi": 40.9
+          "rsi": 40.9,
+          "macd": {
+            "macd": 16.710371645030477,
+            "signal": 36.34319564540941,
+            "hist": -19.632824000378932,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 474.58,
+            "middle": 359.49,
+            "lower": 244.4,
+            "pos": 0.079
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -12.54,
@@ -912,7 +1085,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.2,
-        "buyIndex": 72,
+        "buyIndex": 76,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -925,16 +1098,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 62,
-          "meanReversion": 10
+          "meanReversion": 10,
+          "macdTrend": -2,
+          "bbOversold": 6
         },
         "macroCtx": {
           "spyChg": -0.84,
           "qqqChg": -0.78,
           "vixClose": 21.770000457763672,
+          "wtiChg": 0.1,
+          "cnyChg": 0.04,
           "prevTslaChg": -12.54,
-          "rsi": 38.2
+          "rsi": 38.2,
+          "macd": {
+            "macd": 7.980020769253088,
+            "signal": 30.670560670178148,
+            "hist": -22.69053990092506,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 476.89,
+            "middle": 358.53,
+            "lower": 240.17,
+            "pos": 0.041
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -1.01,
@@ -1010,7 +1202,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.1,
-        "buyIndex": 66,
+        "buyIndex": 70,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 4,
@@ -1024,16 +1216,35 @@
         "scoringLayers": {
           "base": 51,
           "r24Discount": 9,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbOversold": 6
         },
         "macroCtx": {
           "spyChg": 0.21,
           "qqqChg": 0.26,
           "vixClose": 19.280000686645508,
+          "wtiChg": 1.38,
+          "cnyChg": 0.15,
           "prevTslaChg": -1.01,
-          "rsi": 28.1
+          "rsi": 28.1,
+          "macd": {
+            "macd": 0.9477522042998316,
+            "signal": 24.725998977002487,
+            "hist": -23.778246772702655,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 476.93,
+            "middle": 358.51,
+            "lower": 240.1,
+            "pos": 0.036
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 1.49,
@@ -1109,7 +1320,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.2,
-        "buyIndex": 46,
+        "buyIndex": 52,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -1123,16 +1334,36 @@
         "scoringLayers": {
           "base": 48,
           "macroOverlay": -8,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbOversold": 6,
+          "cnyStrong": 2
         },
         "macroCtx": {
           "spyChg": -2.65,
           "qqqChg": -3.85,
           "vixClose": 21.649999618530273,
+          "wtiChg": 1.48,
+          "cnyChg": -1.47,
           "prevTslaChg": 1.49,
-          "rsi": 15.6
+          "rsi": 15.6,
+          "macd": {
+            "macd": -3.3888443597015794,
+            "signal": 19.103030309661676,
+            "hist": -22.491874669363256,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 480.18,
+            "middle": 355.63,
+            "lower": 231.08,
+            "pos": 0.13
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 2.12,
@@ -1198,7 +1429,7 @@
       "newsCount": 8,
       "analysis": {
         "avgScore": -2.7,
-        "buyIndex": 16,
+        "buyIndex": 17,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 7,
@@ -1214,16 +1445,36 @@
           "strongAmp": -4,
           "macroOverlay": -19,
           "vixDamping": 10,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbOversold": 6,
+          "wtiDown": -3
         },
         "macroCtx": {
           "spyChg": -8.1,
           "qqqChg": -8.5,
           "vixClose": 45.310001373291016,
+          "wtiChg": -10.72,
+          "cnyChg": 0.06,
           "prevTslaChg": 2.12,
-          "rsi": 21
+          "rsi": 21,
+          "macd": {
+            "macd": -8.671945615948971,
+            "signal": 13.548035124539547,
+            "hist": -22.219980740488516,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 485.37,
+            "middle": 351.57,
+            "lower": 217.76,
+            "pos": 0.081
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -3.96,
@@ -1274,7 +1525,7 @@
       "newsCount": 5,
       "analysis": {
         "avgScore": -1,
-        "buyIndex": 68,
+        "buyIndex": 73,
         "direction": "bullish",
         "bullish": 2,
         "bearish": 3,
@@ -1289,16 +1540,36 @@
           "base": 40,
           "macroOverlay": 25,
           "vixDamping": -3,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbLow": 2,
+          "deliveryWeek": 5
         },
         "macroCtx": {
           "spyChg": 9.15,
           "qqqChg": 11.19,
           "vixClose": 37.560001373291016,
+          "wtiChg": 0.62,
+          "cnyChg": 0.45,
           "prevTslaChg": -3.96,
-          "rsi": 16.3
+          "rsi": 16.3,
+          "macd": {
+            "macd": -11.684837143827849,
+            "signal": 8.501460670866068,
+            "hist": -20.186297814693916,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 487.17,
+            "middle": 346.55,
+            "lower": 205.93,
+            "pos": 0.165
+          },
+          "isDeliveryWeek": true,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 12.75,
@@ -1307,7 +1578,7 @@
         "close": 252.31
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -1389,16 +1660,35 @@
           "base": 50,
           "macroOverlay": -10,
           "meanReversion": -6,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbLow": 2
         },
         "macroCtx": {
           "spyChg": -3.24,
           "qqqChg": -4.38,
           "vixClose": 29.649999618530273,
+          "wtiChg": 4.83,
+          "cnyChg": 0.28,
           "prevTslaChg": 12.75,
-          "rsi": 21.5
+          "rsi": 21.5,
+          "macd": {
+            "macd": -14.784910904371316,
+            "signal": 3.844186355818592,
+            "hist": -18.62909726018991,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 489.28,
+            "middle": 341.36,
+            "lower": 193.45,
+            "pos": 0.162
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -6.58,
@@ -1474,7 +1764,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.9,
-        "buyIndex": 64,
+        "buyIndex": 65,
         "direction": "bullish",
         "bullish": 3,
         "bearish": 7,
@@ -1488,16 +1778,35 @@
         "scoringLayers": {
           "base": 41,
           "macroOverlay": 17,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "earningsWeek": 3
         },
         "macroCtx": {
           "spyChg": 5.66,
           "qqqChg": 7.83,
           "vixClose": 24.84000015258789,
+          "wtiChg": -1.99,
+          "cnyChg": -0.18,
           "prevTslaChg": -6.58,
-          "rsi": 21.8
+          "rsi": 21.8,
+          "macd": {
+            "macd": -13.568786009831058,
+            "signal": 0.36159188268866194,
+            "hist": -13.93037789251972,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 484.3,
+            "middle": 336.15,
+            "lower": 188,
+            "pos": 0.327
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 23.75,
@@ -1573,7 +1882,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.5,
-        "buyIndex": 52,
+        "buyIndex": 47,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 7,
@@ -1589,16 +1898,35 @@
           "r24Discount": 9,
           "macroOverlay": 8,
           "meanReversion": -6,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "wtiDown": -3
         },
         "macroCtx": {
           "spyChg": 2.79,
           "qqqChg": 3.34,
           "vixClose": 22.68000030517578,
+          "wtiChg": -8.19,
+          "cnyChg": -0.22,
           "prevTslaChg": 23.75,
-          "rsi": 25.1
+          "rsi": 25.1,
+          "macd": {
+            "macd": -12.281068320420161,
+            "signal": -2.1669401579331025,
+            "hist": -10.11412816248706,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 470.83,
+            "middle": 328.7,
+            "lower": 186.57,
+            "pos": 0.354
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -0.61,
@@ -1684,16 +2012,35 @@
           "base": 62,
           "r24Discount": 9,
           "strongAmp": 3,
-          "rsiAdjust": 6
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "wtiUp": 2
         },
         "macroCtx": {
           "spyChg": 0.31,
           "qqqChg": 0.7,
           "vixClose": 21.899999618530273,
+          "wtiChg": 7.51,
+          "cnyChg": -0.62,
           "prevTslaChg": -0.61,
-          "rsi": 27.6
+          "rsi": 27.6,
+          "macd": {
+            "macd": -10.250734558126737,
+            "signal": -3.7836990379718296,
+            "hist": -6.467035520154908,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 458.69,
+            "middle": 322.56,
+            "lower": 186.43,
+            "pos": 0.411
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 4.81,
@@ -1739,7 +2086,7 @@
       "newsCount": 4,
       "analysis": {
         "avgScore": -1.5,
-        "buyIndex": 50,
+        "buyIndex": 48,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 2,
@@ -1751,16 +2098,34 @@
         "scoringLayers": {
           "base": 35,
           "r24Discount": 9,
-          "macroOverlay": 6
+          "macroOverlay": 6,
+          "macdTrend": -2
         },
         "macroCtx": {
           "spyChg": 2.19,
           "qqqChg": 2.86,
           "vixClose": 17.239999771118164,
+          "wtiChg": 1.79,
+          "cnyChg": -0.41,
           "prevTslaChg": 4.81,
-          "rsi": 30.7
+          "rsi": 30.7,
+          "macd": {
+            "macd": -4.417387671964661,
+            "signal": -3.910436764770396,
+            "hist": -0.5069509071942653,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 445.89,
+            "middle": 318.48,
+            "lower": 191.07,
+            "pos": 0.624
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 8.69,
@@ -1836,7 +2201,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.5,
-        "buyIndex": 64,
+        "buyIndex": 70,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 3,
@@ -1849,16 +2214,34 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 55,
-          "r24Discount": 9
+          "r24Discount": 9,
+          "macdCross": 6
         },
         "macroCtx": {
           "spyChg": -1.53,
           "qqqChg": -0.97,
           "vixClose": 22.290000915527344,
+          "wtiChg": -1.94,
+          "cnyChg": -0.07,
           "prevTslaChg": 8.69,
-          "rsi": 48
+          "rsi": 48,
+          "macd": {
+            "macd": -0.6455371471037665,
+            "signal": -3.2574568412370706,
+            "hist": 2.611919694133304,
+            "crossover": "bullish",
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 435.66,
+            "middle": 314.92,
+            "lower": 194.18,
+            "pos": 0.601
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 0.9,
@@ -1934,7 +2317,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0,
-        "buyIndex": 50,
+        "buyIndex": 52,
         "direction": "bullish",
         "bullish": 5,
         "bearish": 4,
@@ -1946,16 +2329,34 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 50
+          "base": 50,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": 0.57,
           "qqqChg": 0.57,
           "vixClose": 18.56999969482422,
+          "wtiChg": -1.47,
+          "cnyChg": 0,
           "prevTslaChg": 0.9,
-          "rsi": 47.1
+          "rsi": 47.1,
+          "macd": {
+            "macd": 2.8849497651652314,
+            "signal": -2.02897551995661,
+            "hist": 4.913925285121842,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 428.61,
+            "middle": 312.51,
+            "lower": 196.4,
+            "pos": 0.646
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -0.26,
@@ -2016,7 +2417,7 @@
       "newsCount": 7,
       "analysis": {
         "avgScore": -2.9,
-        "buyIndex": 22,
+        "buyIndex": 26,
         "direction": "bearish",
         "bullish": 1,
         "bearish": 6,
@@ -2030,16 +2431,35 @@
         "scoringLayers": {
           "base": 21,
           "strongAmp": -4,
-          "macroOverlay": 5
+          "macroOverlay": 5,
+          "macdTrend": 2,
+          "wtiUp": 2
         },
         "macroCtx": {
           "spyChg": 1.94,
           "qqqChg": 2.45,
           "vixClose": 16.770000457763672,
+          "wtiChg": 5.68,
+          "cnyChg": -0.4,
           "prevTslaChg": -0.26,
-          "rsi": 51.6
+          "rsi": 51.6,
+          "macd": {
+            "macd": 1.5242225606848478,
+            "signal": -1.3183359038283187,
+            "hist": 2.8425584645131665,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 409.71,
+            "middle": 305.94,
+            "lower": 202.17,
+            "pos": 0.448
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -14.08,
@@ -2132,7 +2552,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.4,
-        "buyIndex": 49,
+        "buyIndex": 51,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -2146,16 +2566,34 @@
         "scoringLayers": {
           "base": 46,
           "r24Discount": 9,
-          "meanReversion": -6
+          "meanReversion": -6,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": -1.02,
           "qqqChg": -0.69,
           "vixClose": 20.6200008392334,
+          "wtiChg": -2.1,
+          "cnyChg": 0.1,
           "prevTslaChg": 13.76,
-          "rsi": 61
+          "rsi": 61,
+          "macd": {
+            "macd": 3.600485089528547,
+            "signal": 0.33195851526636566,
+            "hist": 3.2685265742621814,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 379.34,
+            "middle": 297.75,
+            "lower": 216.17,
+            "pos": 0.65
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -2.76,
@@ -2231,7 +2669,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.2,
-        "buyIndex": 47,
+        "buyIndex": 46,
         "direction": "bearish",
         "bullish": 4,
         "bearish": 6,
@@ -2244,16 +2682,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 38,
-          "macroOverlay": 9
+          "macroOverlay": 9,
+          "macdTrend": 2,
+          "wtiDown": -3
         },
         "macroCtx": {
           "spyChg": 3.34,
           "qqqChg": 4.04,
           "vixClose": 16.31999969482422,
+          "wtiChg": -16,
+          "cnyChg": -0.29,
           "prevTslaChg": -2.76,
-          "rsi": 63.1
+          "rsi": 63.1,
+          "macd": {
+            "macd": 4.266681815004745,
+            "signal": 1.1189031752140415,
+            "hist": 3.1477786397907033,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 373.05,
+            "middle": 295.85,
+            "lower": 218.65,
+            "pos": 0.68
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -1.19,
@@ -2289,7 +2746,7 @@
       "newsCount": 2,
       "analysis": {
         "avgScore": -4,
-        "buyIndex": 4,
+        "buyIndex": 6,
         "direction": "bearish",
         "bullish": 0,
         "bearish": 2,
@@ -2302,16 +2759,34 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 10,
-          "strongAmp": -6
+          "strongAmp": -6,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": 1.29,
           "qqqChg": 0.9,
           "vixClose": 16.3799991607666,
+          "wtiChg": 2.07,
+          "cnyChg": -0.1,
           "prevTslaChg": -1.19,
-          "rsi": 63.6
+          "rsi": 63.6,
+          "macd": {
+            "macd": 4.0794949387244515,
+            "signal": 1.7110215279161236,
+            "hist": 2.3684734108083276,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 366.63,
+            "middle": 293.83,
+            "lower": 221.03,
+            "pos": 0.648
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -1.42,
@@ -2357,7 +2832,7 @@
       "newsCount": 4,
       "analysis": {
         "avgScore": -3.7,
-        "buyIndex": 7,
+        "buyIndex": 0,
         "direction": "bearish",
         "bullish": 0,
         "bearish": 4,
@@ -2370,16 +2845,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 13,
-          "strongAmp": -6
+          "strongAmp": -6,
+          "macdTrend": 2,
+          "deliveryWeek": -9
         },
         "macroCtx": {
           "spyChg": 0.04,
           "qqqChg": 0.12,
           "vixClose": 16.399999618530273,
+          "wtiChg": 4.19,
+          "cnyChg": 0.14,
           "prevTslaChg": -1.42,
-          "rsi": 59.6
+          "rsi": 59.6,
+          "macd": {
+            "macd": 3.7395682487161253,
+            "signal": 2.1167308720761238,
+            "hist": 1.6228373766400015,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 363.22,
+            "middle": 292.62,
+            "lower": 222.01,
+            "pos": 0.648
+          },
+          "isDeliveryWeek": true,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 7.6,
@@ -2467,16 +2961,35 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 59
+          "base": 59,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 0.71,
           "qqqChg": 1.31,
           "vixClose": 16.40999984741211,
+          "wtiChg": -1.95,
+          "cnyChg": 0.21,
           "prevTslaChg": 7.6,
-          "rsi": 65
+          "rsi": 65,
+          "macd": {
+            "macd": 4.7181478581660485,
+            "signal": 2.6370142692941085,
+            "hist": 2.08113358887194,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 366.87,
+            "middle": 294.45,
+            "lower": 222.02,
+            "pos": 0.743
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 3.75,
@@ -2537,7 +3050,7 @@
       "newsCount": 7,
       "analysis": {
         "avgScore": -3.6,
-        "buyIndex": 9,
+        "buyIndex": 1,
         "direction": "bearish",
         "bullish": 0,
         "bearish": 7,
@@ -2550,16 +3063,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 14,
-          "strongAmp": -5
+          "strongAmp": -5,
+          "macdTrend": 2,
+          "earningsWeek": -10
         },
         "macroCtx": {
           "spyChg": 1.32,
           "qqqChg": 0.76,
           "vixClose": 14.930000305175781,
+          "wtiChg": -3.21,
+          "cnyChg": -0.34,
           "prevTslaChg": 3.75,
-          "rsi": 65.5
+          "rsi": 65.5,
+          "macd": {
+            "macd": 4.346970945644955,
+            "signal": 2.9790056045642777,
+            "hist": 1.3679653410806774,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 368.59,
+            "middle": 297.12,
+            "lower": 225.65,
+            "pos": 0.633
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -5.48,
@@ -2635,7 +3167,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.7,
-        "buyIndex": 37,
+        "buyIndex": 26,
         "direction": "bearish",
         "bullish": 4,
         "bearish": 6,
@@ -2648,16 +3180,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 43,
-          "macroOverlay": -6
+          "macroOverlay": -6,
+          "macdCross": -6,
+          "earningsWeek": -5
         },
         "macroCtx": {
           "spyChg": -2.47,
           "qqqChg": -2.44,
           "vixClose": 20.3799991607666,
+          "wtiChg": 3.35,
+          "cnyChg": 0.65,
           "prevTslaChg": -5.48,
-          "rsi": 64.8
+          "rsi": 64.8,
+          "macd": {
+            "macd": 2.9352862457938045,
+            "signal": 2.970261732810183,
+            "hist": -0.03497548701637854,
+            "crossover": "bearish",
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 367.89,
+            "middle": 299.75,
+            "lower": 231.62,
+            "pos": 0.521
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -4.97,
@@ -2666,7 +3217,7 @@
         "close": 302.63
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -2713,7 +3264,7 @@
       "newsCount": 6,
       "analysis": {
         "avgScore": 2,
-        "buyIndex": 79,
+        "buyIndex": 85,
         "direction": "bullish",
         "bullish": 5,
         "bearish": 1,
@@ -2726,16 +3277,34 @@
         "scoringLayers": {
           "base": 70,
           "strongAmp": 3,
-          "macroOverlay": 6
+          "macroOverlay": 6,
+          "macdCross": 6
         },
         "macroCtx": {
           "spyChg": 1.84,
           "qqqChg": 2.77,
           "vixClose": 15.149999618530273,
+          "wtiChg": -4.44,
+          "cnyChg": -0.42,
           "prevTslaChg": -4.97,
-          "rsi": 54
+          "rsi": 54,
+          "macd": {
+            "macd": 3.951255633088863,
+            "signal": 3.1664605128659193,
+            "hist": 0.7847951202229435,
+            "crossover": "bullish",
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 368.87,
+            "middle": 303.8,
+            "lower": 238.72,
+            "pos": 0.699
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 6.66,
@@ -2811,7 +3380,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.1,
-        "buyIndex": 51,
+        "buyIndex": 53,
         "direction": "bullish",
         "bullish": 5,
         "bearish": 5,
@@ -2823,16 +3392,34 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 51
+          "base": 51,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": 0.94,
           "qqqChg": 0.46,
           "vixClose": 15.09000015258789,
+          "wtiChg": -1.07,
+          "cnyChg": -0.02,
           "prevTslaChg": 6.66,
-          "rsi": 58.6
+          "rsi": 58.6,
+          "macd": {
+            "macd": 4.77480737529072,
+            "signal": 3.4881298853508795,
+            "hist": 1.2866774899398408,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 370.46,
+            "middle": 307.15,
+            "lower": 243.83,
+            "pos": 0.685
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -1.33,
@@ -2920,16 +3507,35 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 44
+          "base": 44,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 0.38,
           "qqqChg": -0.78,
           "vixClose": 14.220000267028809,
+          "wtiChg": 1.05,
+          "cnyChg": -0.03,
           "prevTslaChg": -1.33,
-          "rsi": 56.8
+          "rsi": 56.8,
+          "macd": {
+            "macd": 6.1194735901091235,
+            "signal": 4.014398626302528,
+            "hist": 2.1050749638065955,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 368.8,
+            "middle": 312.18,
+            "lower": 255.55,
+            "pos": 0.746
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 3.15,
@@ -2980,7 +3586,7 @@
       "newsCount": 5,
       "analysis": {
         "avgScore": -0.8,
-        "buyIndex": 42,
+        "buyIndex": 44,
         "direction": "bearish",
         "bullish": 2,
         "bearish": 3,
@@ -2992,16 +3598,34 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 42
+          "base": 42,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": 0.16,
           "qqqChg": 0,
           "vixClose": 15.359999656677246,
+          "wtiChg": 0.2,
+          "cnyChg": -0.2,
           "prevTslaChg": 3.15,
-          "rsi": 47.4
+          "rsi": 47.4,
+          "macd": {
+            "macd": 6.613447677169972,
+            "signal": 4.534208436476018,
+            "hist": 2.079239240693955,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 366.43,
+            "middle": 316.26,
+            "lower": 266.08,
+            "pos": 0.676
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -1.48,
@@ -3077,7 +3701,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.6,
-        "buyIndex": 71,
+        "buyIndex": 69,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 2,
@@ -3090,16 +3714,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 66,
-          "macroOverlay": 5
+          "macroOverlay": 5,
+          "macdTrend": 2,
+          "bbOverbought": -4
         },
         "macroCtx": {
           "spyChg": 1.53,
           "qqqChg": 2.63,
           "vixClose": 15.180000305175781,
+          "wtiChg": -3.25,
+          "cnyChg": 0.15,
           "prevTslaChg": -1.48,
-          "rsi": 48.6
+          "rsi": 48.6,
+          "macd": {
+            "macd": 8.278829778060924,
+            "signal": 5.283132704792999,
+            "hist": 2.995697073267925,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 360.65,
+            "middle": 321.73,
+            "lower": 282.8,
+            "pos": 0.874
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 6.89,
@@ -3108,7 +3751,7 @@
         "close": 350.84
       },
       "match": true,
-      "strongSignal": true,
+      "strongSignal": false,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -3175,7 +3818,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.9,
-        "buyIndex": 68,
+        "buyIndex": 66,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 2,
@@ -3188,16 +3831,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 59,
-          "r24Discount": 9
+          "r24Discount": 9,
+          "macdTrend": 2,
+          "bbOverbought": -4
         },
         "macroCtx": {
           "spyChg": 1.36,
           "qqqChg": 1.43,
           "vixClose": 14.760000228881836,
+          "wtiChg": 1.11,
+          "cnyChg": -0.2,
           "prevTslaChg": 6.89,
-          "rsi": 51.1
+          "rsi": 51.1,
+          "macd": {
+            "macd": 13.086991970457575,
+            "signal": 6.8439045579259155,
+            "hist": 6.2430874125316596,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 374.43,
+            "middle": 327.28,
+            "lower": 280.13,
+            "pos": 1
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 11.65,
@@ -3273,7 +3935,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.4,
-        "buyIndex": 72,
+        "buyIndex": 70,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -3288,16 +3950,35 @@
           "base": 64,
           "r24Discount": 9,
           "strongAmp": 3,
-          "rsiAdjust": -4
+          "rsiOverbought": -4,
+          "macdTrend": 2,
+          "bbOverbought": -4
         },
         "macroCtx": {
           "spyChg": 0.62,
           "qqqChg": 1.85,
           "vixClose": 15.449999809265137,
+          "wtiChg": -0.46,
+          "cnyChg": -0.16,
           "prevTslaChg": 11.65,
-          "rsi": 76
+          "rsi": 76,
+          "macd": {
+            "macd": 19.1084642546341,
+            "signal": 9.296816497267553,
+            "hist": 9.811647757366547,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 394.73,
+            "middle": 334.22,
+            "lower": 273.71,
+            "pos": 1
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 0.69,
@@ -3306,7 +3987,7 @@
         "close": 426.07
       },
       "match": false,
-      "strongSignal": true,
+      "strongSignal": false,
       "error": null,
       "rescoreApplied": {
         "r24Discount": true,
@@ -3373,7 +4054,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.6,
-        "buyIndex": 62,
+        "buyIndex": 60,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 2,
@@ -3386,16 +4067,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 66,
-          "rsiAdjust": -4
+          "rsiOverbought": -4,
+          "macdTrend": 2,
+          "bbOverbought": -4
         },
         "macroCtx": {
           "spyChg": -0.06,
           "qqqChg": -0.3,
           "vixClose": 15.289999961853027,
+          "wtiChg": 4.75,
+          "cnyChg": 0.29,
           "prevTslaChg": 0.69,
-          "rsi": 76
+          "rsi": 76,
+          "macd": {
+            "macd": 24.751514525726634,
+            "signal": 12.38775610295937,
+            "hist": 12.363758422767264,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 415.19,
+            "middle": 341.33,
+            "lower": 267.47,
+            "pos": 1
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 2.15,
@@ -3471,7 +4171,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.5,
-        "buyIndex": 60,
+        "buyIndex": 55,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 4,
@@ -3485,16 +4185,36 @@
         "scoringLayers": {
           "base": 55,
           "r24Discount": 9,
-          "rsiAdjust": -4
+          "rsiOverbought": -4,
+          "macdTrend": 2,
+          "bbOverbought": -4,
+          "wtiDown": -3
         },
         "macroCtx": {
           "spyChg": 0.73,
           "qqqChg": 0.68,
           "vixClose": 16.649999618530273,
+          "wtiChg": -6.44,
+          "cnyChg": -0.19,
           "prevTslaChg": 2.15,
-          "rsi": 78.9
+          "rsi": 78.9,
+          "macd": {
+            "macd": 28.047447749001265,
+            "signal": 15.51969443216775,
+            "hist": 12.527753316833515,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 428.64,
+            "middle": 345.32,
+            "lower": 262,
+            "pos": 1
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -3.27,
@@ -3570,7 +4290,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -0.1,
-        "buyIndex": 42,
+        "buyIndex": 38,
         "direction": "bearish",
         "bullish": 5,
         "bearish": 5,
@@ -3583,16 +4303,36 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 49,
-          "macroOverlay": -7
+          "macroOverlay": -7,
+          "macdTrend": 2,
+          "bbOverbought": -4,
+          "deliveryWeek": -2
         },
         "macroCtx": {
           "spyChg": -2.77,
           "qqqChg": -3.11,
           "vixClose": 21.65999984741211,
+          "wtiChg": -3.66,
+          "cnyChg": 0.12,
           "prevTslaChg": -3.27,
-          "rsi": 74.8
+          "rsi": 74.8,
+          "macd": {
+            "macd": 29.006627087871948,
+            "signal": 18.21708096330859,
+            "hist": 10.789546124563358,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 437.4,
+            "middle": 349.03,
+            "lower": 260.65,
+            "pos": 0.865
+          },
+          "isDeliveryWeek": true,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -6.18,
@@ -3668,7 +4408,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 0.7,
-        "buyIndex": 66,
+        "buyIndex": 64,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 3,
@@ -3681,16 +4421,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 57,
-          "r24Discount": 9
+          "r24Discount": 9,
+          "macdTrend": 2,
+          "bbOverbought": -4
         },
         "macroCtx": {
           "spyChg": 0.57,
           "qqqChg": 0.71,
           "vixClose": 20.780000686645508,
+          "wtiChg": -2.47,
+          "cnyChg": 0.32,
           "prevTslaChg": -6.18,
-          "rsi": 72.1
+          "rsi": 72.1,
+          "macd": {
+            "macd": 31.487276703017415,
+            "signal": 20.871120111250356,
+            "hist": 10.616156591767059,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 450.38,
+            "middle": 353.67,
+            "lower": 256.96,
+            "pos": 0.943
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 3.73,
@@ -3766,7 +4525,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.4,
-        "buyIndex": 36,
+        "buyIndex": 33,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 7,
@@ -3780,16 +4539,37 @@
         "scoringLayers": {
           "base": 36,
           "macroOverlay": 4,
-          "rsiAdjust": -4
+          "rsiOverbought": -4,
+          "macdTrend": 2,
+          "bbOverbought": -4,
+          "wtiUp": 2,
+          "earningsWeek": -3
         },
         "macroCtx": {
           "spyChg": 1.49,
           "qqqChg": 1.64,
           "vixClose": 16.3700008392334,
+          "wtiChg": 6.53,
+          "cnyChg": -0.01,
           "prevTslaChg": 3.73,
-          "rsi": 75.6
+          "rsi": 75.6,
+          "macd": {
+            "macd": 32.62605060584366,
+            "signal": 23.22210621016902,
+            "hist": 9.403944395674639,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 459.38,
+            "middle": 360.6,
+            "lower": 261.82,
+            "pos": 0.87
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -2.29,
@@ -3865,7 +4645,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.5,
-        "buyIndex": 65,
+        "buyIndex": 66,
         "direction": "bullish",
         "bullish": 6,
         "bearish": 3,
@@ -3877,16 +4657,36 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 65
+          "base": 65,
+          "macdTrend": 2,
+          "bbOverbought": -4,
+          "earningsWeek": 3
         },
         "macroCtx": {
           "spyChg": -0.1,
           "qqqChg": 0.73,
           "vixClose": 17.440000534057617,
+          "wtiChg": -1.36,
+          "cnyChg": -0.16,
           "prevTslaChg": -2.29,
-          "rsi": 72.1
+          "rsi": 72.1,
+          "macd": {
+            "macd": 34.968439546911384,
+            "signal": 25.571372877517494,
+            "hist": 9.39706666939389,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 472.89,
+            "middle": 367.16,
+            "lower": 261.44,
+            "pos": 0.923
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 3.77,
@@ -3977,16 +4777,35 @@
           "base": 73,
           "strongAmp": 3,
           "macroOverlay": -8,
-          "rsiAdjust": -4
+          "rsiOverbought": -4,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": -2.14,
           "qqqChg": -3.99,
           "vixClose": 19.079999923706055,
+          "wtiChg": -2.69,
+          "cnyChg": 0.02,
           "prevTslaChg": 3.77,
-          "rsi": 78.7
+          "rsi": 78.7,
+          "macd": {
+            "macd": 34.248106103458895,
+            "signal": 27.306719522705777,
+            "hist": 6.941386580753118,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 479.46,
+            "middle": 372.53,
+            "lower": 265.6,
+            "pos": 0.766
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -5.8,
@@ -4047,7 +4866,7 @@
       "newsCount": 7,
       "analysis": {
         "avgScore": 1.4,
-        "buyIndex": 76,
+        "buyIndex": 78,
         "direction": "bullish",
         "bullish": 4,
         "bearish": 1,
@@ -4061,16 +4880,34 @@
         "scoringLayers": {
           "base": 64,
           "r24Discount": 9,
-          "strongAmp": 3
+          "strongAmp": 3,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": -0.78,
           "qqqChg": -1.63,
           "vixClose": 19.829999923706055,
+          "wtiChg": 0.37,
+          "cnyChg": -0.09,
           "prevTslaChg": -5.8,
-          "rsi": 74.6
+          "rsi": 74.6,
+          "macd": {
+            "macd": 31.28558860246841,
+            "signal": 28.102493338658306,
+            "hist": 3.1830952638101024,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 481.89,
+            "middle": 376.57,
+            "lower": 271.24,
+            "pos": 0.632
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -8.02,
@@ -4146,7 +4983,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.4,
-        "buyIndex": 31,
+        "buyIndex": 25,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 7,
@@ -4159,16 +4996,34 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 36,
-          "macroOverlay": -5
+          "macroOverlay": -5,
+          "macdCross": -6
         },
         "macroCtx": {
           "spyChg": -1.59,
           "qqqChg": -2.68,
           "vixClose": 23.43000030517578,
+          "wtiChg": -2.91,
+          "cnyChg": 0.12,
           "prevTslaChg": -8.02,
-          "rsi": 64.6
+          "rsi": 64.6,
+          "macd": {
+            "macd": 27.550218401272502,
+            "signal": 27.992038351181147,
+            "hist": -0.4418199499086448,
+            "crossover": "bearish",
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 481.99,
+            "middle": 380.35,
+            "lower": 278.72,
+            "pos": 0.553
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -1.92,
@@ -4177,7 +5032,7 @@
         "close": 391.09
       },
       "match": true,
-      "strongSignal": false,
+      "strongSignal": true,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -4244,7 +5099,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.5,
-        "buyIndex": 74,
+        "buyIndex": 70,
         "direction": "bullish",
         "bullish": 8,
         "bearish": 2,
@@ -4257,16 +5112,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 65,
-          "macroOverlay": 9
+          "macroOverlay": 9,
+          "macdTrend": -2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 3.12,
           "qqqChg": 4.03,
           "vixClose": 16.350000381469727,
+          "wtiChg": 0.86,
+          "cnyChg": -0.43,
           "prevTslaChg": -1.92,
-          "rsi": 61.3
+          "rsi": 61.3,
+          "macd": {
+            "macd": 27.427177944240213,
+            "signal": 27.879066269792965,
+            "hist": -0.45188832555275127,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 485.16,
+            "middle": 386.19,
+            "lower": 287.21,
+            "pos": 0.722
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 6.96,
@@ -4275,7 +5149,7 @@
         "close": 430.17
       },
       "match": true,
-      "strongSignal": true,
+      "strongSignal": false,
       "error": null,
       "rescoreApplied": {
         "r24Discount": false,
@@ -4332,7 +5206,7 @@
       "newsCount": 8,
       "analysis": {
         "avgScore": 2.5,
-        "buyIndex": 79,
+        "buyIndex": 83,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 1,
@@ -4344,16 +5218,35 @@
         "failCount": 0,
         "scoringLayers": {
           "base": 75,
-          "strongAmp": 4
+          "strongAmp": 4,
+          "macdCross": 6,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 1.01,
           "qqqChg": 1.93,
           "vixClose": 15.40999984741211,
+          "wtiChg": 1.9,
+          "cnyChg": -0.05,
           "prevTslaChg": 6.96,
-          "rsi": 65.1
+          "rsi": 65.1,
+          "macd": {
+            "macd": 28.998957962937084,
+            "signal": 28.10304460842179,
+            "hist": 0.8959133545152937,
+            "crossover": "bullish",
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 492.19,
+            "middle": 392.45,
+            "lower": 292.72,
+            "pos": 0.814
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 6.98,
@@ -4441,16 +5334,35 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 58
+          "base": 58,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": -0.7,
           "qqqChg": -2.17,
           "vixClose": 15.739999771118164,
+          "wtiChg": -4.51,
+          "cnyChg": -0.17,
           "prevTslaChg": 6.98,
-          "rsi": 69.1
+          "rsi": 69.1,
+          "macd": {
+            "macd": 30.215833843370433,
+            "signal": 28.52560245541152,
+            "hist": 1.6902313879589137,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 496.86,
+            "middle": 399.6,
+            "lower": 302.34,
+            "pos": 0.805
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 2.57,
@@ -4526,7 +5438,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": -1.6,
-        "buyIndex": 34,
+        "buyIndex": 32,
         "direction": "bearish",
         "bullish": 3,
         "bearish": 7,
@@ -4538,16 +5450,35 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 34
+          "base": 34,
+          "macdTrend": 2,
+          "bbOverbought": -4
         },
         "macroCtx": {
           "spyChg": -0.75,
           "qqqChg": -0.21,
           "vixClose": 14.90999984741211,
+          "wtiChg": -1.46,
+          "cnyChg": -0.19,
           "prevTslaChg": 2.57,
-          "rsi": 67.8
+          "rsi": 67.8,
+          "macd": {
+            "macd": 32.59901934992416,
+            "signal": 29.340285834314052,
+            "hist": 3.2587335156101105,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 501.22,
+            "middle": 408.53,
+            "lower": 315.83,
+            "pos": 0.892
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": 2.51,
@@ -4605,16 +5536,35 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 53
+          "base": 53,
+          "macdTrend": 2,
+          "bbHigh": -2
         },
         "macroCtx": {
           "spyChg": 0.93,
           "qqqChg": 0.41,
           "vixClose": 13.600000381469727,
+          "wtiChg": 0.19,
+          "cnyChg": -0.18,
           "prevTslaChg": 2.51,
-          "rsi": 65.2
+          "rsi": 65.2,
+          "macd": {
+            "macd": 33.6152577073745,
+            "signal": 30.195280208926143,
+            "hist": 3.419977498448354,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 505.39,
+            "middle": 415.8,
+            "lower": 326.22,
+            "pos": 0.831
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -3,
@@ -4690,7 +5640,7 @@
       "newsCount": 10,
       "analysis": {
         "avgScore": 1.2,
-        "buyIndex": 62,
+        "buyIndex": 64,
         "direction": "bullish",
         "bullish": 7,
         "bearish": 3,
@@ -4702,16 +5652,34 @@
         ],
         "failCount": 0,
         "scoringLayers": {
-          "base": 62
+          "base": 62,
+          "macdTrend": 2
         },
         "macroCtx": {
           "spyChg": -0.64,
           "qqqChg": -1.13,
           "vixClose": 14.510000228881836,
+          "wtiChg": 0.49,
+          "cnyChg": -0.45,
           "prevTslaChg": -3,
-          "rsi": 59.6
+          "rsi": 59.6,
+          "macd": {
+            "macd": 31.067236779135442,
+            "signal": 30.369671522968005,
+            "hist": 0.6975652561674366,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 502.14,
+            "middle": 421.18,
+            "lower": 340.21,
+            "pos": 0.604
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
         },
-        "modelVersion": "2.0"
+        "modelVersion": "3.0"
       },
       "movement": {
         "pctChange": -6.59,
@@ -4734,13 +5702,13 @@
     "totalWeeks": 52,
     "analyzedWeeks": 51,
     "accuracy": 57,
-    "strongAccuracy": 63,
+    "strongAccuracy": 69,
     "significantAccuracy": 72,
     "significantWeeks": 39,
     "nonNeutralAccuracy": 73,
     "nonNeutralWeeks": 40,
     "avgScore": -0.2,
-    "modelVersion": "2.0"
+    "modelVersion": "3.0"
   },
-  "lastRescored": "2026-04-27 19:26 KST"
+  "lastRescored": "2026-04-27 19:45 KST"
 }
