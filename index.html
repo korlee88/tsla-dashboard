@@ -888,6 +888,79 @@ async function fetchPriceViaGemini(apiKey) {
   return price;
 }
 
+// ─── 예측 정확도 추적 (Prediction Accuracy Tracker) ──────────────────────────
+
+const PRED_ACCURACY_KEY = 'tsla_pred_accuracy_v1';
+
+function loadPredAccuracy() {
+  try { return JSON.parse(localStorage.getItem(PRED_ACCURACY_KEY) || '{"records":[]}'); } catch { return { records: [] }; }
+}
+function savePredAccuracy(data) {
+  try { localStorage.setItem(PRED_ACCURACY_KEY, JSON.stringify(data)); } catch {}
+}
+
+/** 예측 생성 시 D+1~D+7 레코드 저장 */
+function recordForecastPredictions(forecast, basePrice) {
+  if (!forecast?.daily_forecasts?.length || !basePrice) return;
+  const db = loadPredAccuracy();
+  const now = new Date();
+  const forecastDate = now.toISOString().split('T')[0];
+
+  forecast.daily_forecasts.forEach(df => {
+    const targetTs  = now.getTime() + df.day * 86400000;
+    const targetDate = new Date(targetTs).toISOString().split('T')[0];
+    // 같은 예측일+대상일 중복 방지
+    if (db.records.some(r => r.forecastDate === forecastDate && r.targetDate === targetDate)) return;
+    db.records.push({
+      forecastDate,
+      targetDate,
+      dayLabel:          df.label || `D+${df.day}`,
+      basePrice:         Math.round(basePrice * 100) / 100,
+      predictedChangePct:df.change_pct ?? 0,
+      predictedPrice:    Math.round(basePrice * (1 + (df.change_pct ?? 0) / 100) * 100) / 100,
+      predictedSignal:   df.signal || '',
+      actualPrice:       null,
+      actualChangePct:   null,
+      matched:           null,
+    });
+  });
+
+  // 최근 14일치만 보관, 날짜 내림차순 정렬
+  const cutoff = new Date(Date.now() - 14 * 86400000).toISOString().split('T')[0];
+  db.records = db.records
+    .filter(r => r.targetDate >= cutoff)
+    .sort((a, b) => b.targetDate.localeCompare(a.targetDate) || b.forecastDate.localeCompare(a.forecastDate));
+  savePredAccuracy(db);
+  return db;
+}
+
+/** 일봉 데이터 도착 시 실제 종가로 비교 해소 */
+function resolvePredictionsWithActual(dailyPrices) {
+  if (!dailyPrices?.length) return;
+  const db = loadPredAccuracy();
+  let updated = false;
+
+  db.records.forEach(rec => {
+    if (rec.matched !== null) return;                             // 이미 해소됨
+    const bar = dailyPrices.find(d => {
+      const ds = (d.date instanceof Date ? d.date : new Date(d.date)).toISOString().split('T')[0];
+      return ds === rec.targetDate;
+    });
+    if (!bar || !bar.close) return;
+
+    rec.actualPrice      = Math.round(bar.close * 100) / 100;
+    rec.actualChangePct  = Math.round((bar.close - rec.basePrice) / rec.basePrice * 100 * 100) / 100;
+    // 방향 일치 여부 (±0.5% 이하는 보합으로 처리)
+    const predDir = rec.predictedChangePct > 0.5 ? 1 : rec.predictedChangePct < -0.5 ? -1 : 0;
+    const actDir  = rec.actualChangePct    > 0.5 ? 1 : rec.actualChangePct    < -0.5 ? -1 : 0;
+    rec.matched   = predDir === 0 && actDir === 0 ? null : predDir === actDir;
+    updated = true;
+  });
+
+  if (updated) savePredAccuracy(db);
+  return db;
+}
+
 // ─── 포캐스트 API ──────────────────────────────────────────────────────────
 
 const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
@@ -1426,6 +1499,176 @@ function ForecastBuyIndexChart({ forecasts }) {
         );
       })}
     </svg>
+  );
+}
+
+// ─── 컴포넌트: PredAccuracyCard ──────────────────────────────────────────────
+
+function PredAccuracyCard({ dailyData }) {
+  const [records, setRecords]       = React.useState(() => loadPredAccuracy().records);
+  const [ownDaily, setOwnDaily]     = React.useState(null);
+  const [loadingD,  setLoadingD]    = React.useState(false);
+
+  // 일봉 데이터 자체 로드 (3개월치) — prop이 없거나 주봉만 있을 때 직접 fetch
+  React.useEffect(() => {
+    setLoadingD(true);
+    fetchTSLADailyData()
+      .then(d => setOwnDaily(d))
+      .catch(() => {})
+      .finally(() => setLoadingD(false));
+  }, []);
+
+  // 일봉 해소: prop(weeklyData)보다 ownDaily(daily)를 우선
+  const priceData = ownDaily?.length ? ownDaily : dailyData;
+
+  React.useEffect(() => {
+    if (!priceData?.length) return;
+    const db = loadPredAccuracy();
+    let updated = false;
+    db.records.forEach(rec => {
+      if (rec.matched !== null) return;
+      const bar = priceData.find(d => {
+        const ds = (d.date instanceof Date ? d.date : new Date(d.date)).toISOString().split('T')[0];
+        return ds === rec.targetDate;
+      });
+      if (!bar?.close) return;
+      rec.actualPrice     = Math.round(bar.close * 100) / 100;
+      rec.actualChangePct = Math.round((bar.close - rec.basePrice) / rec.basePrice * 100 * 100) / 100;
+      const pDir = rec.predictedChangePct > 0.5 ? 1 : rec.predictedChangePct < -0.5 ? -1 : 0;
+      const aDir = rec.actualChangePct    > 0.5 ? 1 : rec.actualChangePct    < -0.5 ? -1 : 0;
+      rec.matched = (pDir === 0 && aDir === 0) ? null : pDir === aDir;
+      updated = true;
+    });
+    if (updated) { savePredAccuracy(db); setRecords([...db.records]); }
+  }, [priceData]);
+
+  // D+1 (내일) 예측만 날짜별 1건씩 — 최근 7일
+  const today = new Date().toISOString().split('T')[0];
+  const daily1 = records
+    .filter(r => r.dayLabel === '내일' || r.dayLabel === 'D+1')
+    .filter((r, i, arr) => arr.findIndex(x => x.targetDate === r.targetDate) === i) // 날짜 중복 제거
+    .filter(r => r.targetDate <= today)   // 미래 날짜 제외 (아직 마감 안 됨)
+    .slice(0, 7);
+
+  // 오늘 또는 미래 예측 (아직 해소 안 된 것) — 예정 표시용
+  const pending = records
+    .filter(r => (r.dayLabel === '내일' || r.dayLabel === 'D+1') && r.targetDate > today)
+    .filter((r, i, arr) => arr.findIndex(x => x.targetDate === r.targetDate) === i)
+    .slice(0, 1);
+
+  const resolved  = daily1.filter(r => r.matched !== null);
+  const correct   = resolved.filter(r => r.matched === true);
+  const accuracy  = resolved.length > 0 ? Math.round(correct.length / resolved.length * 100) : null;
+  const accColor  = accuracy == null ? '#6b7280' : accuracy >= 70 ? '#22c55e' : accuracy >= 50 ? '#f59e0b' : '#ef4444';
+
+  if (records.length === 0 && !pending.length) return null;
+
+  const pctColor = v => v == null ? '#6b7280' : v > 0.5 ? '#22c55e' : v < -0.5 ? '#ef4444' : '#9ca3af';
+  const pctStr   = v => v == null ? '─' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+
+  return (
+    <div className="rounded-xl border overflow-hidden mt-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+      {/* 헤더 */}
+      <div className="px-5 py-3 border-b flex items-center justify-between" style={{ borderColor: '#2A2D35', background: '#14171e' }}>
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-gray-300">🎯 일별 종가 예측 정확도</span>
+          <span className="text-xs text-gray-600">최근 7일 · D+1 예측 vs 실제 장 마감</span>
+        </div>
+        {accuracy != null && (
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-500">{correct.length}/{resolved.length}건 적중</span>
+            <span className="text-sm font-black px-2.5 py-1 rounded-lg" style={{ color: accColor, background: `${accColor}18`, border: `1px solid ${accColor}40` }}>
+              {accuracy}%
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* 예정 행 (미래 예측) */}
+      {pending.map(r => (
+        <div key={r.targetDate} className="px-5 py-3 border-b flex items-center gap-3 text-xs"
+          style={{ borderColor: '#2A2D35', background: 'rgba(99,102,241,0.04)' }}>
+          <span className="text-indigo-400 font-bold w-16 shrink-0">📅 {r.targetDate.slice(5).replace('-','/')}</span>
+          <span className="text-gray-600 w-12 shrink-0 text-center">예정</span>
+          <span style={{ color: pctColor(r.predictedChangePct) }} className="font-bold w-14 text-right shrink-0">
+            {pctStr(r.predictedChangePct)}
+          </span>
+          <span className="text-gray-700 w-16 text-right shrink-0">${r.predictedPrice}</span>
+          <span className="text-xs px-1.5 py-0.5 rounded ml-1 shrink-0" style={{ background: '#252830', color: '#9ca3af' }}>{r.predictedSignal}</span>
+          <span className="ml-auto text-xs text-indigo-400">마감 대기 중…</span>
+        </div>
+      ))}
+
+      {/* 기록 행 */}
+      {daily1.length === 0 && pending.length === 0 ? (
+        <div className="py-10 text-center text-xs text-gray-600">
+          <p className="text-2xl mb-2">📭</p>
+          <p>투자 전망을 생성하면 자동으로 예측 기록이 쌓입니다.</p>
+          <p className="mt-1 text-gray-700">매일 장 마감 후 실제 종가와 비교하여 정확도를 계산합니다.</p>
+        </div>
+      ) : (
+        <>
+          {/* 테이블 헤더 */}
+          <div className="px-5 py-2 grid text-xs text-gray-600 font-semibold border-b"
+            style={{ borderColor: '#2A2D35', gridTemplateColumns: '70px 1fr 1fr 1fr 1fr 40px' }}>
+            <span>날짜</span>
+            <span className="text-center">예측 등락</span>
+            <span className="text-center">예측 종가</span>
+            <span className="text-center">실제 등락</span>
+            <span className="text-center">실제 종가</span>
+            <span className="text-center">결과</span>
+          </div>
+          {daily1.map(r => {
+            const isMatch   = r.matched === true;
+            const isMiss    = r.matched === false;
+            const isPending = r.matched === null && r.actualPrice != null; // 보합
+            const rowBg     = isMatch ? 'rgba(34,197,94,0.04)' : isMiss ? 'rgba(239,68,68,0.04)' : 'transparent';
+            return (
+              <div key={r.targetDate + r.forecastDate}
+                className="px-5 py-2.5 grid items-center text-xs border-b"
+                style={{ borderColor: '#2A2D35', background: rowBg, gridTemplateColumns: '70px 1fr 1fr 1fr 1fr 40px' }}>
+                {/* 날짜 */}
+                <span className="text-gray-400 font-medium">
+                  {r.targetDate.slice(5).replace('-','/')}
+                </span>
+                {/* 예측 등락 */}
+                <span className="text-center font-bold tabular-nums" style={{ color: pctColor(r.predictedChangePct) }}>
+                  {pctStr(r.predictedChangePct)}
+                </span>
+                {/* 예측 종가 */}
+                <span className="text-center text-gray-500">${r.predictedPrice}</span>
+                {/* 실제 등락 */}
+                <span className="text-center font-bold tabular-nums" style={{ color: pctColor(r.actualChangePct) }}>
+                  {r.actualPrice ? pctStr(r.actualChangePct) : <span className="text-gray-700">대기중</span>}
+                </span>
+                {/* 실제 종가 */}
+                <span className="text-center" style={{ color: r.actualPrice ? '#e2e8f0' : '#4b5563' }}>
+                  {r.actualPrice ? `$${r.actualPrice}` : '─'}
+                </span>
+                {/* 결과 */}
+                <span className="text-center text-base">
+                  {isMatch ? '✅' : isMiss ? '❌' : r.actualPrice ? '🟡' : '⏳'}
+                </span>
+              </div>
+            );
+          })}
+          {/* 정확도 요약 바 */}
+          {resolved.length > 0 && (
+            <div className="px-5 py-3" style={{ borderTop: '1px solid #2A2D35' }}>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-gray-600">정확도</span>
+                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: '#252830' }}>
+                  <div className="h-full rounded-full transition-all" style={{ width: `${accuracy}%`, background: accColor }} />
+                </div>
+                <span className="text-xs font-bold tabular-nums" style={{ color: accColor }}>{accuracy}%</span>
+                <span className="text-xs text-gray-600">({correct.length}/{resolved.length})</span>
+                {accuracy >= 70 && <span className="text-xs text-green-400">🎯 목표 달성</span>}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 
@@ -3494,6 +3737,9 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         calendarEvents={calendarEvents || []}
       />
 
+      {/* 일별 종가 예측 정확도 카드 */}
+      <PredAccuracyCard dailyData={weeklyData} />
+
       <p className="text-center text-xs text-gray-700 mt-6 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
     </div>
   );
@@ -4077,6 +4323,8 @@ function App() {
       const f = await generateForecast(apiKey, items, currentPrice, calendarEvents);
       setForecast(f);
       try { localStorage.setItem(FORECAST_CACHE_KEY, JSON.stringify(f)); } catch {}
+      // 예측 정확도 추적: D+1~D+7 레코드 저장
+      try { recordForecastPredictions(f, currentPrice); } catch {}
     } catch (e) { setForecastError(e.message); }
     finally { setForecastLoading(false); }
   }, [apiKey, currentNews, results, forecastLoading, currentPrice, calendarEvents]);
