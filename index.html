@@ -888,7 +888,7 @@ async function fetchPriceViaGemini(apiKey) {
 
 const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
 
-function makeForecastPrompt(currentPrice, calendarEvents = []) {
+function makeForecastPrompt(currentPrice, calendarEvents = [], scoringCtx = null) {
   const dayNames = ['일','월','화','수','목','금','토'];
   const dailyRows = Array.from({length: 7}, (_, i) => {
     const d = new Date(Date.now() + (i + 1) * 86400000);
@@ -897,30 +897,71 @@ function makeForecastPrompt(currentPrice, calendarEvents = []) {
     return '    { "day": ' + (i+1) + ', "label": "' + label + '", "date": "' + date + '", "change_pct": <expected % change, e.g. -1.5 or +2.3>, "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean 1문장>" }';
   }).join(',\n');
 
-  // 캘린더 이벤트 섹션 (향후 60일 이내)
+  // 캘린더 이벤트 섹션
   const calSection = calendarEvents.length > 0
-    ? '\n\nUpcoming Tesla corporate events (CRITICAL — factor these into your forecast timing):\n' +
+    ? '\n\n[UPCOMING CATALYST EVENTS — weight heavily in forecast timing]\n' +
       calendarEvents.map(ev =>
         `  [${ev.confirmed ? '✓CONFIRMED' : '?ESTIMATED'}] ${ev.date} | ${ev.category} | ${ev.title} | importance:${ev.importance}` +
         (ev.description ? ` | ${ev.description}` : '')
       ).join('\n')
     : '';
 
-  return `You are a quantitative Tesla (TSLA) stock strategist.
-Given multiple news impact analyses${calendarEvents.length > 0 ? ' AND upcoming corporate events' : ''}, synthesize them into investment forecasts.
-Current TSLA price is $${currentPrice} USD (real-time from Yahoo Finance).
+  // v4.0: 매크로 컨텍스트 섹션 (보유 시 포함)
+  let macroSection = '';
+  if (scoringCtx) {
+    const { buyIndex, signalState, macroCtx, layers } = scoringCtx;
+    const vix = macroCtx?.vixClose;
+    const rsi = macroCtx?.rsi;
+    const macd = macroCtx?.macd;
+    const bb   = macroCtx?.bb;
+    const activeL = Object.entries(layers || {}).filter(([k,v]) => k !== 'base' && v !== 0).map(([k,v]) => `${k}:${v>=0?'+':''}${v}`).join(', ');
+    macroSection = `
+[QUANTITATIVE MODEL v4.0 — Pre-computed Signals]
+Overall Buy Index: ${buyIndex}/100  |  Signal State: ${signalState}
+Active Adjustments: ${activeL || 'none'}
+
+Macro Context:
+  SPY weekly: ${macroCtx?.spyChg >= 0 ? '+' : ''}${macroCtx?.spyChg}%  |  QQQ: ${macroCtx?.qqqChg >= 0 ? '+' : ''}${macroCtx?.qqqChg}%
+  VIX: ${vix || 'N/A'}${vix > 30 ? ' ⚠ 공포장 — 기술지표 신뢰도 하락' : ''}
+  WTI Oil: ${macroCtx?.wtiChg >= 0 ? '+' : ''}${macroCtx?.wtiChg}%  |  CNY/USD: ${macroCtx?.cnyChg >= 0 ? '+' : ''}${macroCtx?.cnyChg}%
+  RSI(14w): ${rsi || 'N/A'}${rsi < 30 ? ' → 과매도 반등 가능' : rsi > 75 ? ' → 과매수 주의 (Cautionary Bull)' : ''}
+  MACD: ${macd?.crossover ? macd.crossover + ' crossover' : macd?.trend + ' trend'}  |  BB position: ${bb ? Math.round(bb.pos * 100) + '%' : 'N/A'}
+  ${macroCtx?.isEarningsWeek ? '🔔 EARNINGS WEEK — Base score amplified ×1.5' : ''}${macroCtx?.isDeliveryWeek ? '🔔 DELIVERY WEEK — Signal amplified ×1.25' : ''}`;
+  }
+
+  return `# Role: Quantitative Tesla (TSLA) Stock Strategy Analyst
+
+## Task
+You are given pre-computed quantitative signals from a v4.0 multi-layer model (13 layers: news sentiment, macro overlay, technical indicators, volatility regime, momentum). Synthesize ALL signals into a unified investment forecast.
+${macroSection}
 ${calSection}
 
-IMPORTANT: If any confirmed earnings, delivery numbers, or shareholder meeting falls within the forecast period, weight those events heavily — they are major catalysts. Adjust buy_index and change_pct accordingly (earnings surprise potential, delivery beat/miss risk, etc.).
+## Chain-of-Thought Instructions (think step by step)
+Step 1 — News Signal: Analyze the news impact scores below. Weight Earnings/Delivery news 1.5x vs Market/Musk news.
+Step 2 — Macro Context: If VIX > 30, reduce technical signal confidence by 20% and emphasize macro direction.
+Step 3 — Confirmation Check: Does the buy_index align with at least 2 independent signals (news + macro, news + RSI, etc.)?
+Step 4 — Cautionary Flag: If bullish signal but RSI > 75, flag "Cautionary Bull" in signal_state. If bearish but RSI < 30, flag "Cautionary Bear".
+Step 5 — Calendar: Adjust forecast timing around any confirmed earnings/delivery events.
+Step 6 — Anti-Bias: Check the confirmation bias list before finalizing.
 
+## Confirmation Bias Checklist (must pass before output)
+□ Are bearish risks equally weighted as bullish catalysts?
+□ Is the buy_index supported by at least 2 independent factor types?
+□ Does the macro environment (SPY/VIX) corroborate the directional call?
+□ If an upcoming catalyst event exists, is uncertainty reflected in the risk level?
+□ Is current price $${currentPrice} USD realistic vs recent history?
+
+## Output Format
+Current TSLA price: $${currentPrice} USD
 Return ONLY valid JSON in this exact format:
 {
   "current_price": ${currentPrice},
+  "signal_state": "<strong_bull|cautionary_bull|bull|neutral|bear|cautionary_bear|strong_bear>",
   "daily_forecasts": [
 ${dailyRows}
   ],
   "forecasts": [
-    { "label": "1W",  "period": "단기 1주",   "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
+    { "label": "1W",  "period": "단기 1주",   "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean, reference specific signals>" },
     { "label": "1M",  "period": "단기 1개월", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
     { "label": "3M",  "period": "중기 3개월", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
     { "label": "6M",  "period": "장기 6개월", "buy_index": <0-100>, "target_low": <num>, "target_mid": <num>, "target_high": <num>, "trend": "<bullish|bearish|neutral>", "signal": "<적극매수|매수|관망|매도|적극매도>", "reasoning": "<Korean>" },
@@ -928,28 +969,30 @@ ${dailyRows}
   ],
   "overall_signal": "<적극매수|매수|관망|매도|적극매도>",
   "risk_level": "<low|medium|high|very_high>",
-  "key_catalysts": ["<Korean>","<Korean>","<Korean>"],
-  "key_risks": ["<Korean>","<Korean>","<Korean>"],
-  "analyst_consensus": "<Strong Buy|Buy|Hold|Sell|Strong Sell>"
+  "key_catalysts": ["<Korean, specific>","<Korean>","<Korean>"],
+  "key_risks": ["<Korean, specific>","<Korean>","<Korean>"],
+  "analyst_consensus": "<Strong Buy|Buy|Hold|Sell|Strong Sell>",
+  "bias_check_passed": <true|false>,
+  "confirmation_count": <number of independent signals confirming direction>
 }
 buy_index: 0-20=적극매도, 21-40=매도, 41-60=관망, 61-80=매수, 81-100=적극매수
-change_pct: expected daily % change (e.g. -2.5 or +1.8). Be conservative. Do NOT use absolute prices in daily_forecasts.
-Price targets in forecasts[] must be realistic relative to $${currentPrice}. ONLY return JSON.`;
+change_pct: conservative daily % estimate. Do NOT use absolute prices in daily_forecasts.
+Price targets must be realistic vs $${currentPrice}. ONLY return JSON.`;
 }
 
-async function generateForecast(apiKey, items, currentPrice = 247, calendarEvents = []) {
+async function generateForecast(apiKey, items, currentPrice = 247, calendarEvents = [], scoringCtx = null) {
   const summary = items.map(it =>
-    `• "${it.title}"\n  Score:${it.result.impact_score} Dir:${it.result.direction} Rules:[${it.result.triggered_rules?.join(',')}] Conf:${it.result.confidence}\n  ${it.result.reasoning}`
+    `• [${it.result.direction?.toUpperCase()} ${it.result.impact_score >= 0 ? '+' : ''}${it.result.impact_score}] "${it.title}"\n  Rules:[${it.result.triggered_rules?.join(',')}] Conf:${it.result.confidence}\n  근거: ${it.result.reasoning}`
   ).join('\n\n');
 
   const calNote = calendarEvents.length > 0
-    ? `\n\nUpcoming events to factor in:\n${calendarEvents.map(ev => `- [${ev.confirmed?'확정':'추정'}] ${ev.date} ${ev.category}: ${ev.title}`).join('\n')}`
+    ? `\n\n향후 예정 이벤트:\n${calendarEvents.map(ev => `- [${ev.confirmed?'확정':'추정'}] ${ev.date} ${ev.category}: ${ev.title}`).join('\n')}`
     : '';
 
   const body = {
-    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice, calendarEvents) }] },
-    contents: [{ role: 'user', parts: [{ text: `Synthesize these TSLA analyses into forecasts:${calNote}\n\n${summary}` }] }],
-    generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.3, thinkingConfig: { thinkingBudget: 0 } },
+    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice, calendarEvents, scoringCtx) }] },
+    contents: [{ role: 'user', parts: [{ text: `[TSLA 뉴스 분석 결과 — ${items.length}건]${calNote}\n\n${summary}\n\n위 데이터를 바탕으로 Chain-of-Thought 방식으로 분석 후 JSON 전망을 생성하세요.` }] }],
+    generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.25, thinkingConfig: { thinkingBudget: 0 } },
   };
   const data = await geminiPostWithRetry(apiKey, body);
   const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
@@ -1391,6 +1434,16 @@ const SIGNAL_CFG = {
   '매도':     { color: '#f97316', bg: 'rgba(249,115,22,0.12)',  emoji: '📉' },
   '적극매도': { color: '#ef4444', bg: 'rgba(239,68,68,0.15)',   emoji: '🔻' },
 };
+// v4.0 Confirmation Logic 신호 상태
+const SIGNAL_STATE_CFG = {
+  strong_bull:    { label: '강력 매수',  emoji: '🚀', color: '#22c55e',  bg: 'rgba(34,197,94,0.12)',   desc: '다중 강세 신호 확인' },
+  cautionary_bull:{ label: '주의 매수',  emoji: '⚠️📈', color: '#86efac', bg: 'rgba(134,239,172,0.1)', desc: 'RSI 과매수 또는 공포장 — 분할 진입 권장' },
+  bull:           { label: '매수',       emoji: '📈',  color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',   desc: '강세 신호 우세' },
+  neutral:        { label: '관망',       emoji: '⏸',   color: '#f59e0b',  bg: 'rgba(245,158,11,0.1)',   desc: '방향성 불명확' },
+  bear:           { label: '매도',       emoji: '📉',  color: '#f97316',  bg: 'rgba(249,115,22,0.1)',   desc: '약세 신호 우세' },
+  cautionary_bear:{ label: '주의 매도',  emoji: '⚠️📉', color: '#fca5a5', bg: 'rgba(252,165,165,0.1)', desc: 'RSI 과매도 — 반전 가능성 주시' },
+  strong_bear:    { label: '강력 매도',  emoji: '🔻',  color: '#ef4444',  bg: 'rgba(239,68,68,0.12)',   desc: '강한 하락 압력' },
+};
 const RISK_CFG = {
   low:       { color: '#22c55e', label: '낮음' },
   medium:    { color: '#f59e0b', label: '보통' },
@@ -1435,6 +1488,24 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
             <p className="text-xs text-gray-500 mt-0.5">뉴스 종합 · 단기~최장기 5개 시간대</p>
           </div>
           <div className="flex flex-wrap gap-2 items-center">
+            {/* v4.0 신호 상태 배지 */}
+            {forecast.signal_state && SIGNAL_STATE_CFG[forecast.signal_state] && (() => {
+              const ss = SIGNAL_STATE_CFG[forecast.signal_state];
+              return (
+                <span className="text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1"
+                  style={{ color: ss.color, background: ss.bg, border: `1px solid ${ss.color}40` }}
+                  title={ss.desc}>
+                  {ss.emoji} {ss.label}
+                  {forecast.confirmation_count > 0 && <span className="opacity-70">({forecast.confirmation_count}개 신호)</span>}
+                </span>
+              );
+            })()}
+            {/* 확증 편향 통과 여부 */}
+            {forecast.bias_check_passed !== undefined && (
+              <span className="text-xs px-2 py-0.5 rounded" style={{ background: forecast.bias_check_passed ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)', color: forecast.bias_check_passed ? '#4ade80' : '#f87171', border: `1px solid ${forecast.bias_check_passed ? '#22c55e30' : '#ef444430'}` }}>
+                {forecast.bias_check_passed ? '✓ 편향검사 통과' : '⚠ 편향검사 주의'}
+              </span>
+            )}
             <span className="text-xs px-2 py-1 rounded" style={{ background: '#14171e', border: '1px solid #2A2D35', color: '#94a3b8' }}>
               {weeklyLoading
                 ? <span className="animate-pulse">현재가 로딩 중…</span>
@@ -3032,8 +3103,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-0 divide-x" style={{ borderColor: '#2A2D35' }}>
-              {/* 오늘의 평가 */}
-              <div className="pr-4 flex flex-col gap-3">
+              {/* 오늘의 평가 (v4.0) */}
+              <div className="pr-4 flex flex-col gap-2.5">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">📅 오늘의 평가</p>
                 {latest == null ? (
                   <div className="flex items-center justify-center h-24 text-gray-600 text-xs">데이터 없음</div>
@@ -3041,9 +3112,17 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                   const g = getGrade(latest);
                   const todaySession = valid[0];
                   const vsAvg = avg != null ? latest - avg : null;
+                  // v4.0: 신호 상태 계산
+                  const mCtx = todaySession?.macroCtx;
+                  const rsi  = mCtx?.rsi ?? null;
+                  const vix  = mCtx?.vixClose ?? null;
+                  const macdInfo = mCtx?.macd;
+                  const bbInfo   = mCtx?.bb;
+                  const sState   = todaySession?.analysis?.signalState || (latest >= 75 && rsi > 75 ? 'cautionary_bull' : latest >= 75 ? 'strong_bull' : latest >= 57 ? 'bull' : latest <= 32 ? 'strong_bear' : latest <= 43 ? 'bear' : 'neutral');
+                  const ss = SIGNAL_STATE_CFG[sState] || SIGNAL_STATE_CFG['neutral'];
                   return (
                     <>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         <div className="flex flex-col items-center justify-center w-14 h-14 rounded-xl shrink-0"
                           style={{ background: g.bg, border: `2px solid ${g.color}` }}>
                           <span className="text-xl font-black" style={{ color: g.color }}>{g.grade}</span>
@@ -3054,19 +3133,41 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                           <p className="text-xs text-gray-600 mt-0.5">{todaySession?.date}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-400 leading-relaxed px-2 py-1.5 rounded" style={{ background: '#14171e' }}>{g.desc}</p>
-                      <div className="flex flex-wrap gap-2 text-xs">
+                      {/* v4.0 신호 상태 배지 */}
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ color: ss.color, background: ss.bg, border: `1px solid ${ss.color}40` }}
+                          title={ss.desc}>
+                          {ss.emoji} {ss.label}
+                        </span>
                         {vsAvg != null && (
-                          <span className="px-2 py-1 rounded" style={{ background: '#252830', color: vsAvg >= 0 ? '#22c55e' : '#ef4444' }}>
-                            평균 대비 {vsAvg >= 0 ? '+' : ''}{vsAvg}p
-                          </span>
-                        )}
-                        {todaySession?.overallSignal && (
-                          <span className="px-2 py-1 rounded" style={{ background: '#252830', color: '#94a3b8' }}>
-                            {todaySession.overallSignal}
+                          <span className="text-xs px-2 py-0.5 rounded" style={{ background: '#252830', color: vsAvg >= 0 ? '#22c55e' : '#ef4444' }}>
+                            평균대비 {vsAvg >= 0 ? '+' : ''}{vsAvg}p
                           </span>
                         )}
                       </div>
+                      {/* 기술적 지표 요약 */}
+                      {(rsi || vix || macdInfo || bbInfo) && (
+                        <div className="grid grid-cols-2 gap-1 text-xs">
+                          {rsi && <div className="px-1.5 py-1 rounded text-center" style={{ background: '#14171e' }}>
+                            <p className="text-gray-600" style={{fontSize:9}}>RSI</p>
+                            <p className="font-bold" style={{ color: rsi < 30 ? '#22c55e' : rsi > 75 ? '#f97316' : '#94a3b8' }}>{rsi}</p>
+                          </div>}
+                          {vix && <div className="px-1.5 py-1 rounded text-center" style={{ background: '#14171e' }}>
+                            <p className="text-gray-600" style={{fontSize:9}}>VIX</p>
+                            <p className="font-bold" style={{ color: vix > 30 ? '#ef4444' : vix > 20 ? '#f59e0b' : '#22c55e' }}>{Math.round(vix)}</p>
+                          </div>}
+                          {macdInfo && <div className="px-1.5 py-1 rounded text-center" style={{ background: '#14171e' }}>
+                            <p className="text-gray-600" style={{fontSize:9}}>MACD</p>
+                            <p className="font-bold" style={{ color: macdInfo.trend === 'bullish' ? '#22c55e' : '#ef4444' }}>
+                              {macdInfo.crossover ? (macdInfo.crossover === 'bullish' ? '골든' : '데드') : (macdInfo.trend === 'bullish' ? '↑' : '↓')}
+                            </p>
+                          </div>}
+                          {bbInfo && <div className="px-1.5 py-1 rounded text-center" style={{ background: '#14171e' }}>
+                            <p className="text-gray-600" style={{fontSize:9}}>BB위치</p>
+                            <p className="font-bold" style={{ color: bbInfo.pos < 0.3 ? '#22c55e' : bbInfo.pos > 0.7 ? '#ef4444' : '#94a3b8' }}>{Math.round(bbInfo.pos * 100)}%</p>
+                          </div>}
+                        </div>
+                      )}
                     </>
                   );
                 })()}

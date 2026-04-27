@@ -218,12 +218,59 @@ function buildMacroContext(macroData, weekStart) {
   };
 }
 
+// ─── v4.0: Confirmation Logic — 신호 상태 분류 ─────────────────────────────
+
+/**
+ * [v4.0 Confirmation Logic]
+ * buyIndex + RSI + VIX 조합으로 7단계 신호 상태 결정
+ * Strong Bull / Cautionary Bull / Bull / Neutral / Bear / Cautionary Bear / Strong Bear
+ */
+function getSignalState(buyIndex, macroCtx) {
+  const rsi      = macroCtx?.rsi      ?? 50;
+  const vix      = macroCtx?.vixClose ?? 20;
+  const macdTrend = macroCtx?.macd?.trend;
+
+  if (buyIndex >= 75) {
+    // 과매수 + 공포장이면 주의 필요
+    if (rsi > 75 || vix > 30) return 'cautionary_bull';
+    return 'strong_bull';
+  }
+  if (buyIndex >= 57) {
+    if (rsi > 75) return 'cautionary_bull';   // 오버바웃 진입 주의
+    return 'bull';
+  }
+  if (buyIndex >= 44) {
+    return 'neutral';
+  }
+  if (buyIndex >= 32) {
+    // 과매도이면 반전 가능성 → 주의 약세
+    if (rsi < 30 || vix > 40) return 'cautionary_bear';
+    return 'bear';
+  }
+  // buyIndex < 32
+  if (rsi < 30 && vix > 35) return 'cautionary_bear'; // 극단 공포 = 반전 가능
+  return 'strong_bear';
+}
+
+/**
+ * 신호 상태 → 한국어 라벨
+ */
+const SIGNAL_STATE_LABELS = {
+  strong_bull:    { label: '강력 매수',  emoji: '🚀', color: '#22c55e',  desc: '다중 강세 신호 확인, 높은 신뢰도' },
+  cautionary_bull:{ label: '주의 매수',  emoji: '⚠📈', color: '#86efac', desc: 'RSI 과매수 또는 공포장 — 진입 분할 권장' },
+  bull:           { label: '매수',       emoji: '📈',  color: '#4ade80',  desc: '강세 신호 우세, 순차 진입 고려' },
+  neutral:        { label: '관망',       emoji: '⏸',   color: '#f59e0b',  desc: '방향성 불명확, 추가 시그널 대기' },
+  bear:           { label: '매도',       emoji: '📉',  color: '#f97316',  desc: '약세 신호 우세, 비중 축소 고려' },
+  cautionary_bear:{ label: '주의 매도',  emoji: '⚠📉', color: '#fca5a5', desc: 'RSI 과매도 또는 극단 공포 — 반전 가능성 주시' },
+  strong_bear:    { label: '강력 매도',  emoji: '🔻',  color: '#ef4444',  desc: '강한 하락 압력, 비중 최소화' },
+};
+
 // ─── 핵심 채점 함수 ──────────────────────────────────────────────────────────
 
 /**
- * 다층 강화 모델 v3.0 매수지수 계산
+ * 다층 강화 모델 v4.0 매수지수 계산
  * @param {Object} input { avgScore, topRules, bullish, bearish, macroCtx, newsCategories }
- * @returns {Object} { buyIndex, direction, layers }
+ * @returns {Object} { buyIndex, direction, signalState, layers }
  */
 function calculateEnhancedScore(input) {
   const {
@@ -291,11 +338,15 @@ function calculateEnhancedScore(input) {
     if (macroCtx.prevTslaChg < -10) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
     else if (macroCtx.prevTslaChg > 12) { bi = Math.max(0, bi - 6); layers.meanReversion = -6; }
 
-    // ── [5] VIX regime ──────────────────────────────────────────────────────
+    // ── [5] VIX Adaptive Weighting (v4.0 강화) ─────────────────────────────
+    // VIX>30: 기술지표 비중 -20%, 매크로 오버레이 비중 +40%
     if (macroCtx.vixClose && macroCtx.vixClose > 30) {
       const before = bi;
+      // 신호 강도를 0.8배로 줄이는 기존 로직 유지 + 매크로 재증폭
       bi = Math.round(50 + (bi - 50) * 0.8);
-      layers.vixDamping = bi - before;
+      const macroBoost = Math.round(((macroCtx.spyChg || 0) + (macroCtx.qqqChg || 0)) / 2 * 1.0);
+      if (macroBoost !== 0) bi = Math.max(0, Math.min(100, bi + macroBoost));
+      layers.vixAdaptive = bi - before;
     }
 
     // ── [6] RSI 보정 ────────────────────────────────────────────────────────
@@ -336,14 +387,16 @@ function calculateEnhancedScore(input) {
       else if (macroCtx.cnyChg < -0.8){ bi = Math.min(100, bi + 2); layers.cnyStrong = +2; }
     }
 
-    // ── [12] 분기 인도량 / 실적 발표주 신호 증폭 ─────────────────────────────
+    // ── [12] 분기 인도량 / 실적 발표주 신호 증폭 (v4.0: Earnings ×1.5) ───────
     if (macroCtx.isDeliveryWeek || macroCtx.isEarningsWeek) {
-      const before = bi;
+      const before  = bi;
       const distNow = bi - 50;
       if (Math.abs(distNow) >= 5) {
-        bi = Math.round(50 + distNow * 1.25);
+        // v4.0: Earnings Week는 뉴스 Base Score 1.5배 → 신호 증폭 ×1.35
+        const mult  = macroCtx.isEarningsWeek ? 1.35 : 1.25;
+        bi = Math.round(50 + distNow * mult);
         bi = Math.max(0, Math.min(100, bi));
-        const label = macroCtx.isDeliveryWeek ? 'deliveryWeek' : 'earningsWeek';
+        const label = macroCtx.isEarningsWeek ? 'earningsWeek' : 'deliveryWeek';
         layers[label] = bi - before;
       }
     }
@@ -359,7 +412,10 @@ function calculateEnhancedScore(input) {
                  : bearish > bullish ? 'bearish'
                  : (avgScore < 0 ? 'bearish' : 'bullish');
 
-  return { buyIndex: bi, direction, layers };
+  // ── [v4.0] Confirmation Logic — 신호 상태 분류 ───────────────────────────
+  const signalState = getSignalState(bi, macroCtx);
+
+  return { buyIndex: bi, direction, signalState, layers };
 }
 
 module.exports = {
@@ -367,6 +423,8 @@ module.exports = {
   loadMacroData,
   buildMacroContext,
   calculateEnhancedScore,
+  getSignalState,
+  SIGNAL_STATE_LABELS,
   calcMACD,
   calcBollingerBands,
   calcRSI,
