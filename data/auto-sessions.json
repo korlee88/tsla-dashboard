@@ -1,6 +1,304 @@
 {
   "sessions": [
     {
+      "id": "auto-1777348619212",
+      "date": "2026-04-28",
+      "displayDate": "2026.04.28",
+      "kstTime": "12:56",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777348594266,
+          "title": "테슬라, 일론 머스크의 2018년 성과 보상 계획과 연계된 3억 4백만 주 등록",
+          "summary": "테슬라가 일론 머스크 CEO의 2018년 성과 보상 계획과 관련된 약 3억 4백만 주의 보통주를 SEC에 등록했습니다. 이는 주식 발행을 가능하게 하지만 즉각적인 매각을 의미하지는 않으며, 일부 소매 투자자들은 단기적인 매도 압력을 예상하고 있습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-27",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "id": 1777348594267,
+          "title": "테슬라, 1분기 수익 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했습니다. 또한 아시아-태평양, 남미 일부 지역과 북미 및 유럽-중동 지역에서 전기차 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777348594268,
+          "title": "테슬라, AI 및 로봇 공학 로드맵에 대한 낙관론으로 주가 상승",
+          "summary": "테슬라 주가는 기술적 매수와 AI/로봇 공학 로드맵에 대한 낙관론으로 상승했습니다. 이는 최근 분기 실적과 공격적인 자본 지출 계획에 대한 투자자들의 우려를 상쇄했습니다.",
+          "source": "MarketBeat",
+          "date": "2026-04-28",
+          "category": "AI|Market"
+        },
+        {
+          "id": 1777348594269,
+          "title": "테슬라, AI 인프라 및 로보택시 개발에 250억 달러 이상 투자 계획",
+          "summary": "테슬라는 2026년에 공장 확장, AI 인프라, 로보택시 및 옵티머스 제품 출시에 250억 달러 이상의 자본 지출을 계획하고 있습니다. 이는 장기적인 AI 및 로봇 공학 리더십을 위한 전략적 투자로 해석됩니다.",
+          "source": "Investing.com",
+          "date": "2026-04-22",
+          "category": "AI|Product|Capital"
+        },
+        {
+          "id": 1777348594270,
+          "title": "일론 머스크, 스페이스X를 '돼지 저금통'처럼 사용하여 테슬라에 이점 제공했다는 보도",
+          "summary": "일론 머스크가 스페이스X를 '돼지 저금통'처럼 사용하여 자신과 테슬라에 이점을 제공했다는 보도가 나왔습니다. 이 뉴스는 머스크의 기업 운영 방식에 대한 논란을 불러일으킬 수 있습니다.",
+          "source": "Yahoo Finance",
+          "date": "2026-04-28",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1777348594271,
+          "title": "테슬라, 로보택시 점검 결과 '재앙적'이라는 평가",
+          "summary": "Seeking Alpha의 한 기사에서 테슬라의 로보택시 점검 결과가 '재앙적'이라고 평가되었습니다. 이는 테슬라의 자율주행 기술 개발 및 상용화에 대한 우려를 제기할 수 있습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-28",
+          "category": "Product|Competition"
+        },
+        {
+          "id": 1777348594272,
+          "title": "테슬라, FSD(Full Self-Driving)에 대해 알려지지 않은 사실들",
+          "summary": "Seeking Alpha의 또 다른 기사에서는 테슬라의 FSD(Full Self-Driving) 기능에 대해 대부분의 사람들이 알지 못하는 사실들을 다루고 있습니다. 이는 FSD 기술의 실제 성능과 한계에 대한 논의를 촉발할 수 있습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-28",
+          "category": "Product|Tech"
+        },
+        {
+          "id": 1777348594273,
+          "title": "테슬라 주가, 주요 거래 신호 후 4% 상승",
+          "summary": "테슬라 주가가 주요 거래 신호 이후 4% 상승했습니다. 이는 단기적인 기술적 매수세와 시장 심리 개선에 따른 것으로 보입니다.",
+          "source": "Benzinga",
+          "date": "2026-04-28",
+          "category": "Market"
+        },
+        {
+          "id": 1777348594274,
+          "title": "테슬라의 저조한 실적, 주가에 큰 영향을 미치지 않을 것으로 예상",
+          "summary": "테슬라의 최근 실적이 예상보다 저조했지만, 주가에 큰 부담을 주지 않을 것이라는 분석이 나왔습니다. 이는 투자자들이 테슬라의 장기적인 AI 및 로봇 공학 비전에 더 큰 가치를 부여하고 있기 때문입니다.",
+          "source": "The Motley Fool",
+          "date": "2026-04-28",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777348594275,
+          "title": "테슬라, 물리적 AI 리더십을 향한 움직임",
+          "summary": "테슬라가 '물리적 AI' 리더십을 위한 투자를 늘리고 있으며, 이는 장기적인 가치 동인으로 평가받고 있습니다. 옵티머스 로봇과 로보택시의 상업화가 주요 촉매제가 될 수 있습니다.",
+          "source": "Insider Monkey",
+          "date": "2026-04-27",
+          "category": "AI|Product"
+        }
+      ],
+      "analyses": {
+        "1777348594266": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 일론 머스크의 성과 보상 계획과 연계된 대규모 주식을 SEC에 등록하여 단기적인 매도 압력에 대한 우려가 제기되고 있습니다.",
+          "key_factors": [
+            "일론 머스크 성과 보상 계획",
+            "3억 4백만 주 등록",
+            "잠재적 매도 압력"
+          ]
+        },
+        "1777348594267": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 상회하고 전기차 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777348594268": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가는 AI 및 로봇 공학 로드맵에 대한 낙관론으로 상승하여 최근 실적 우려를 상쇄했습니다.",
+          "key_factors": [
+            "AI 및 로봇 공학 로드맵",
+            "기술적 매수"
+          ]
+        },
+        "1777348594269": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 AI 인프라 및 로보택시 개발에 대한 대규모 투자는 장기적인 성장 동력을 확보하고 신제품 출시를 가속화할 것으로 예상되어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 인프라 투자",
+            "로보택시 개발",
+            "옵티머스 출시"
+          ]
+        },
+        "1777348594270": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 스페이스X를 자신과 테슬라에 이점을 제공하기 위해 사용했다는 보도는 머스크의 다른 벤처 기업 리스크가 테슬라에 전이될 수 있음을 시사하며 부정적인 투자 심리를 유발할 수 있습니다.",
+          "key_factors": [
+            "머스크의 기업 운영 방식 논란",
+            "다른 벤처 기업 리스크 전이"
+          ]
+        },
+        "1777348594271": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "Seeking Alpha의 로보택시 점검 결과가 '재앙적'이라는 평가는 테슬라의 자율주행 기술 상용화에 대한 시장의 우려를 증폭시킬 수 있습니다.",
+          "key_factors": [
+            "로보택시 기술 평가",
+            "자율주행 상용화 우려"
+          ]
+        },
+        "1777348594272": {
+          "impact_score": 1,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "FSD의 알려지지 않은 사실에 대한 기사는 기술의 실제 성능과 한계에 대한 논의를 촉발할 수 있지만, 구체적인 긍정적 또는 부정적 내용이 없어 주가에 미치는 영향은 미미할 것으로 예상됩니다.",
+          "key_factors": [
+            "FSD 기술 논의",
+            "정보의 불확실성"
+          ]
+        },
+        "1777348594273": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가가 주요 거래 신호 이후 4% 상승했지만, 이는 단기적인 기술적 매수세와 시장 심리 개선에 따른 것으로 보이며, 구체적인 펀더멘털 변화는 없습니다.",
+          "key_factors": [
+            "기술적 매수세",
+            "시장 심리 개선"
+          ]
+        },
+        "1777348594274": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 최근 실적이 예상보다 저조했지만, 투자자들이 장기적인 AI 및 로봇 공학 비전에 더 큰 가치를 부여하여 주가에 큰 부담을 주지 않을 것이라는 분석입니다.",
+          "key_factors": [
+            "저조한 실적",
+            "장기적인 AI 및 로봇 공학 비전",
+            "투자자 심리"
+          ]
+        },
+        "1777348594275": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 물리적 AI 리더십을 위한 투자를 늘리고 옵티머스 로봇과 로보택시의 상업화가 장기적인 가치 동인이 될 것이라는 소식은 긍정적입니다.",
+          "key_factors": [
+            "물리적 AI 리더십",
+            "옵티머스 로봇",
+            "로보택시 상업화"
+          ]
+        }
+      },
+      "avgScore": 0.7,
+      "buyIndex": 71,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R24"
+      ],
+      "bullish": 5,
+      "bearish": 4,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-22",
+            "content": "Tesla의 1분기 수익이 예상치를 뛰어넘었지만, Elon Musk는 AI 소프트웨어 및 칩, 제조 및 설계 비용에 올해 250억 달러를 포함하여 상당한 지출이 있을 것이라고 언급했습니다. 또한, Tesla는 Model S 및 Model X 생산을 중단하고 Optimus 로봇 생산에 집중할 것이며, Optimus가 내년에는 Tesla 외부에서 유용하게 사용될 것이라고 말했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Elon Musk는 이전에 4월 말까지 제공될 것이라고 했던 2세대 Tesla Roadster에 대한 업데이트가 5월에 나올 것이라고 밝혔습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Elon Musk는 Tesla의 완전 자율 주행(FSD) 약속이 주요한 노력이 필요할 수 있음을 인정했습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": -1,
+        "post_count": 3,
+        "reasoning": "Elon Musk의 최근 게시물은 Tesla의 재정적 성과에 대한 중립적인 업데이트와 Roadster 업데이트 지연 및 FSD 약속에 대한 인정으로 인해 긍정적이지도 부정적이지도 않은 혼합된 감정을 보여줍니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Regulatory|Market": 1,
+        "Earnings|Market": 2,
+        "AI|Market": 1,
+        "AI|Product|Capital": 1,
+        "Musk|Legal": 1,
+        "Product|Competition": 1,
+        "Product|Tech": 1,
+        "Market": 1,
+        "AI|Product": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.28,
+        "qqqChg": 0.13,
+        "vixClose": 18.020000457763672,
+        "wtiChg": 0.7,
+        "cnyChg": 0.08,
+        "prevTslaChg": -6.53,
+        "rsi": 34.7,
+        "macd": {
+          "macd": -8.629408463826621,
+          "signal": -2.8246998342959557,
+          "hist": -5.804708629530666,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 482.76,
+          "middle": 409.11,
+          "lower": 335.46,
+          "pos": 0.293
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 57,
+        "r24Discount": 9,
+        "macdTrend": -2,
+        "bbLow": 2,
+        "earningsWeek": 6,
+        "muskXSentiment": -1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777348619212
+    },
+    {
       "id": "auto-1777298514042",
       "date": "2026-04-27",
       "displayDate": "2026.04.27",
@@ -2866,5 +3164,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-27 22:58 KST"
+  "lastUpdated": "2026-04-28 12:56 KST"
 }
