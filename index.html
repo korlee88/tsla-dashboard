@@ -2205,7 +2205,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
 
 // ─── 컴포넌트: TrendChart ─────────────────────────────────────────────────
 
-function TrendChart({ sessions, prediction, prediction7, weeklyData }) {
+function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }) {
   if (!sessions || sessions.length === 0) return (
     <div className="flex flex-col items-center justify-center py-14 text-gray-600">
       <p className="text-3xl mb-3">📭</p>
@@ -2235,19 +2235,32 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData }) {
 
   if (data.length === 0) return <div className="py-8 text-center text-xs text-gray-600">매수지수 데이터가 없습니다.</div>;
 
-  // ── 실제 주가 매핑 (weeklyData → 세션 날짜에 nearest 매핑) ────
+  // ── 실제 주가 매핑 ──────────────────────────────────────────────────────────
+  // 우선순위: 일봉(dailyData) > 주봉(weeklyData) — 일봉이 날짜별 정확도 높음
+  const priceSource = (dailyData && dailyData.length > 0) ? dailyData
+                    : (weeklyData && weeklyData.length > 0) ? weeklyData
+                    : null;
   let pricePoints = [];
-  const hasPrice = weeklyData && weeklyData.length > 0;
-  if (hasPrice) {
+  if (priceSource) {
     pricePoints = data.map(d => {
-      const sessionMs = new Date(d.date).getTime();
+      const sessionDate = d.date; // "YYYY-MM-DD"
+      // 1순위: 날짜 완전 일치
+      const exact = priceSource.find(w => {
+        const wDate = (w.date instanceof Date ? w.date : new Date(w.date)).toISOString().split('T')[0];
+        return wDate === sessionDate;
+      });
+      if (exact) return exact.close;
+      // 2순위: 가장 가까운 날짜
+      const sessionMs = new Date(sessionDate + 'T00:00:00Z').getTime();
       let best = null, bestDiff = Infinity;
-      weeklyData.forEach(w => {
-        const diff = Math.abs(w.date.getTime() - sessionMs);
+      priceSource.forEach(w => {
+        const wMs = (w.date instanceof Date ? w.date : new Date(w.date)).getTime();
+        const diff = Math.abs(wMs - sessionMs);
         if (diff < bestDiff) { bestDiff = diff; best = w; }
       });
-      return best ? best.close : null;
-    }).filter(Boolean);
+      // 7일 이내 데이터만 허용 (주말·공휴일 대응)
+      return (best && bestDiff < 8 * 86400000) ? best.close : null;
+    });
   }
   const hasPriceData = pricePoints.length === data.length && pricePoints.every(p => p != null);
   const priceMin = hasPriceData ? Math.min(...pricePoints) * 0.995 : 0;
@@ -3300,11 +3313,19 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
     });
   }, []);
 
+  // 차트용 일봉 데이터 (주봉보다 정밀한 가격)
+  const [chartDailyData, setChartDailyData] = useState(null);
+  useEffect(() => {
+    fetchTSLADailyData()
+      .then(d => setChartDailyData(d))
+      .catch(() => {});
+  }, []);
+
   // Drive에서 불러온 후 로컬 갱신
   const handlePull = async () => { await onPullFromDrive?.(); refresh(); };
 
   const localSessions = db.sessions || [];
-  const sessions = autoSessions.slice().sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  const sessions = mergeWithAutoSessions(localSessions, autoSessions);
   const valid = sessions.filter(s => s.buyIndex != null || s.avgScore != null);
   const latest = valid[0]?.buyIndex ?? null;
   const avg = valid.length ? Math.round(valid.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / valid.length) : null;
@@ -3672,7 +3693,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} />
+          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} dailyData={chartDailyData} />
         </div>
       </div>
       </Section>{/* /Section 2 */}
