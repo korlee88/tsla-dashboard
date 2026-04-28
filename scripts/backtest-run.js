@@ -13,7 +13,9 @@ const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
 
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+const MODELS    = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+const makeUrl   = m => `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${API_KEY}`;
+const GEMINI_URL = makeUrl(MODELS[0]);
 const DATA_FILE  = path.join(__dirname, '..', 'data', 'backtest-results.json');
 
 // ─── 시스템 프롬프트 (auto-analysis.js 와 동일) ──────────────────────────────
@@ -73,23 +75,30 @@ function gitCommitProgress(label) {
   }
 }
 
-async function geminiPost(body, retries = 4) {
+async function geminiPost(body, retries = 7) {
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt++) {
-    const res = await fetch(GEMINI_URL, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    if (res.ok) return res.json();
-    const e   = await res.json().catch(() => ({}));
-    const msg = e?.error?.message || `HTTP ${res.status}`;
-    const retryable = res.status === 503 || res.status === 429 || res.status === 500;
-    if (!retryable) throw new Error(msg);
-    lastError = new Error(msg);
+    const modelIdx = Math.min(attempt >= 4 ? 1 : 0, MODELS.length - 1);
+    const url = makeUrl(MODELS[modelIdx]);
+    try {
+      const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+      if (res.ok) {
+        if (modelIdx > 0) console.log(`   ✅ 폴백 모델 ${MODELS[modelIdx]} 성공`);
+        return res.json();
+      }
+      const e   = await res.json().catch(() => ({}));
+      const msg = e?.error?.message || `HTTP ${res.status}`;
+      const retryable = res.status === 503 || res.status === 429 || res.status === 500 || res.status === 529;
+      if (!retryable) throw new Error(msg);
+      lastError = new Error(msg);
+    } catch (fetchErr) {
+      if (fetchErr.message && !fetchErr.message.includes('geminiPost')) lastError = fetchErr;
+      else throw fetchErr;
+    }
     if (attempt < retries) {
-      const delay = (attempt + 1) * 4000 + Math.random() * 1500;
-      console.warn(`   ⏳ 과부하, ${Math.round(delay / 1000)}초 후 재시도 (${attempt + 1}/${retries})...`);
+      const baseDelay = attempt < 3 ? Math.min(10000 * Math.pow(2, attempt), 60000) : 60000;
+      const delay = baseDelay + Math.random() * 5000;
+      console.warn(`   ⏳ 과부하(${MODELS[modelIdx]}), ${Math.round(delay/1000)}초 후 재시도 (${attempt+1}/${retries})...`);
       await sleep(delay);
     }
   }
