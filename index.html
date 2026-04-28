@@ -3197,6 +3197,39 @@ function CalendarPage({ onBack, desktopMode }) {
   );
 }
 
+// ─── 컴포넌트: Section (접기/펼치기 래퍼) ────────────────────────────────────
+function Section({ title, icon, badge, accent, defaultOpen = true, extra, children }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const bc = accent ? `${accent}50` : '#2A2D35';
+  const ic = accent || '#6b7280';
+  return (
+    <div className="mb-5">
+      {/* 섹션 헤더 토글 바 */}
+      <div className="flex items-center px-4 py-2.5 rounded-xl mb-2 cursor-pointer select-none"
+        style={{ background: '#1C1F26', border: `1px solid ${bc}` }}
+        onClick={() => setOpen(v => !v)}>
+        <span className="text-sm mr-2" style={{ opacity: open ? 1 : 0.5 }}>{icon}</span>
+        <span className="text-sm font-bold text-gray-200 flex-1">{title}</span>
+        {badge != null && (
+          <span className="text-xs px-2 py-0.5 rounded-full mr-2 font-semibold"
+            style={{ background: `${ic}15`, color: ic, border: `1px solid ${ic}30` }}>
+            {badge}
+          </span>
+        )}
+        {extra && (
+          <div className="mr-2" onClick={e => e.stopPropagation()}>{extra}</div>
+        )}
+        <span className="text-gray-600 text-xs ml-1"
+          style={{ transform: open ? 'rotate(180deg)' : 'none', display: 'inline-block', transition: 'transform .2s' }}>
+          ▼
+        </span>
+      </div>
+      {/* 섹션 내용 */}
+      {open && children}
+    </div>
+  );
+}
+
 // ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
 
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError,
@@ -3332,6 +3365,9 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         )}
       </div>
+
+      {/* ── Section 1: 지수 현황 ─────────────────────────────────────────── */}
+      <Section title="지수 현황" icon="📊" badge={latest != null ? `매수지수 ${latest}` : null} accent={latest != null ? bCol(latest) : null} defaultOpen={true}>
 
       {/* Stats — 통합 프레임 */}
       <div className="rounded-xl mb-4 md:mb-5" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
@@ -3591,7 +3627,10 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           )}
         </div>
       </div>
+      </Section>{/* /Section 1 */}
 
+      {/* ── Section 2: 매수지수 추세 ──────────────────────────────────────── */}
+      <Section title="매수지수 추세" icon="📈" accent="#a78bfa" defaultOpen={true}>
       {/* Trend Chart */}
       <div className="rounded-xl p-4 border mb-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="flex items-center justify-between mb-3">
@@ -3609,7 +3648,28 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} />
         </div>
       </div>
-      {/* Timeline */}
+      </Section>{/* /Section 2 */}
+
+      {/* ── Section 3: 수집 타임라인 ──────────────────────────────────────── */}
+      <Section title="수집 타임라인" icon="📋"
+        badge={sessions.length > 0 ? `${sessions.length}건` : null}
+        defaultOpen={true}
+        extra={
+          <div className="flex items-center gap-1.5">
+            {editMode && checkedIds.size > 0 && (
+              <button onClick={deleteSelected} className="text-xs font-bold px-2 py-0.5 rounded"
+                style={{ background: '#ef44441a', color: '#ef4444', border: '1px solid #ef444430' }}>
+                🗑 {checkedIds.size}개
+              </button>
+            )}
+            {sessions.length > 0 && (
+              <button onClick={toggleEditMode} className="text-xs px-2 py-0.5 rounded"
+                style={{ background: editMode ? '#3b82f615' : '#ffffff0d', color: editMode ? '#60a5fa' : '#9ca3af', border: '1px solid #ffffff15' }}>
+                {editMode ? '✕' : '편집'}
+              </button>
+            )}
+          </div>
+        }>
       <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="px-5 py-4 border-b flex items-center justify-between gap-2 flex-wrap" style={{ borderColor: '#2A2D35' }}>
           <div className="flex items-center gap-3">
@@ -3739,6 +3799,12 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         )}
       </div>
+      </Section>{/* /Section 3 */}
+
+      {/* ── Section 4: 투자 전망 분석 ─────────────────────────────────────── */}
+      <Section title="투자 전망 분석" icon="🔮"
+        badge={forecast?.overall_signal || null}
+        accent="#a78bfa" defaultOpen={true}>
       {/* 투자 전망 분석 패널 */}
       <ForecastPanel
         forecast={forecast}
@@ -3756,11 +3822,36 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         newsResults={newsResults}
         calendarEvents={calendarEvents || []}
       />
+      </Section>{/* /Section 4 */}
 
+      {/* ── Section 5: 예측 정확도 ─────────────────────────────────────────── */}
+      <Section title="예측 정확도 추적" icon="🎯" accent="#f59e0b" defaultOpen={true}>
       {/* 일별 종가 예측 정확도 카드 */}
       <PredAccuracyCard dailyData={weeklyData} />
+      </Section>{/* /Section 5 */}
 
-      <p className="text-center text-xs text-gray-700 mt-6 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
+      {/* ── Section 6: 등급표 (기본 닫힘) ─────────────────────────────────── */}
+      <Section title="매수지수 등급표" icon="📊" defaultOpen={false}>
+      <div className="rounded-xl border p-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          {GRADES.map(g => (
+            <div key={g.grade} className="flex items-center gap-2 rounded-lg px-3 py-2"
+              style={{ background: g.bg, border: `1px solid ${g.color}30` }}>
+              <span className="text-base font-black w-5 shrink-0" style={{ color: g.color }}>{g.grade}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-xs font-bold" style={{ color: g.color }}>{g.label}</span>
+                  <span className="text-xs text-gray-600">{g.min}~{g.max}</span>
+                </div>
+                <p className="text-xs text-gray-500 leading-tight mt-0.5 truncate">{g.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      </Section>{/* /Section 6 */}
+
+      <p className="text-center text-xs text-gray-700 mt-2 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
     </div>
   );
 }
