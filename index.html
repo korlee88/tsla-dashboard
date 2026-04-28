@@ -2411,6 +2411,275 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData, 
   );
 }
 
+// ─── 컴포넌트: SignalPage ─────────────────────────────────────────────────
+
+function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
+  weeklyData, weeklyLoading, currentPrice }) {
+
+  const db = getNewsDB();
+  const allSessions = db.sessions || [];
+  const valid = allSessions.filter(s => s.buyIndex != null || s.avgScore != null);
+
+  const [dailyData, setDailyData] = useState(() => {
+    const c = loadDailyCache();
+    if (!c || !isPriceCacheValid(c)) return null;
+    return deserializeDailyCache(c);
+  });
+  const [priceLoading, setPriceLoading] = useState(() => {
+    const c = loadDailyCache();
+    return !(c && isPriceCacheValid(c) && deserializeDailyCache(c)?.length);
+  });
+  useEffect(() => {
+    const c = loadDailyCache();
+    if (isPriceCacheValid(c)) {
+      const cached = deserializeDailyCache(c);
+      if (cached?.length) { setDailyData(cached); setPriceLoading(false); return; }
+    }
+    fetchTSLADailyData()
+      .then(d => { setDailyData(d); saveDailyCache(d); })
+      .catch(() => {})
+      .finally(() => setPriceLoading(false));
+  }, []);
+
+  const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
+
+  const latestSession = valid[0];
+  const signalState   = forecast?.signal_state;
+  const ssCfg  = SIGNAL_STATE_CFG[signalState] || SIGNAL_STATE_CFG['neutral'];
+  const riskCfg = RISK_CFG[forecast?.risk_level] || RISK_CFG['medium'];
+  const biasOk  = forecast?.bias_check_passed;
+  const buyIndex = latestSession?.buyIndex;
+  const overallSignal = latestSession?.overallSignal;
+  const sigCfg = SIGNAL_CFG[overallSignal] || SIGNAL_CFG['관망'];
+
+  const recent = valid.slice(0, 7);
+  const avgBuyIdx = recent.length
+    ? Math.round(recent.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / recent.length)
+    : null;
+  const avgScore = recent.length
+    ? Math.round(recent.reduce((s, x) => s + (x.avgScore ?? 0), 0) / recent.length * 10) / 10
+    : null;
+
+  const daily7 = forecast?.daily_forecasts || [];
+  const prediction7 = daily7.map((d, i) => ({
+    value:     d.buy_index ?? 50,
+    day:       i + 1,
+    dateLabel: d.date || `+${i + 1}일`,
+    confLabel: d.confidence || '',
+    signal:    d.signal || '',
+  }));
+
+  const priceStr = currentPrice
+    ? `$${typeof currentPrice === 'number' ? currentPrice.toFixed(2) : currentPrice}`
+    : null;
+
+  if (forecastLoading) return (
+    <div className="max-w-5xl mx-auto px-4 py-16 flex flex-col items-center gap-4 text-gray-500">
+      <span className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full spinning" />
+      <p className="text-sm">신호 분석 중…</p>
+    </div>
+  );
+
+  if (!forecast && valid.length === 0) return (
+    <div className="max-w-5xl mx-auto px-4 py-16 flex flex-col items-center gap-3 text-gray-600">
+      <span style={{ fontSize: 44 }}>📭</span>
+      <p className="text-sm">아직 데이터가 없습니다</p>
+      <p className="text-xs text-gray-700">대시보드에서 뉴스를 수집·분석한 뒤 트렌드 등록 버튼을 눌러주세요</p>
+    </div>
+  );
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
+
+      {/* ── Hero: 종합 신호 ─────────────────────────────────────── */}
+      <div className="rounded-2xl p-5 border" style={{ background: '#1C1F26', borderColor: ssCfg.color + '50' }}>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-4">
+            <span style={{ fontSize: 42, lineHeight: 1 }}>{ssCfg.emoji}</span>
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-0.5">종합 매매 신호</p>
+              <p className="text-4xl font-black" style={{ color: ssCfg.color }}>{ssCfg.label}</p>
+              <p className="text-xs text-gray-500 mt-1">{ssCfg.desc}</p>
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-wrap gap-2 justify-end">
+              {biasOk != null && (
+                <span className="text-xs px-3 py-1 rounded-full font-semibold"
+                  style={{ background: biasOk ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)',
+                           color: biasOk ? '#22c55e' : '#ef4444',
+                           border: `1px solid ${biasOk ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}` }}>
+                  {biasOk ? '✓ 편향검사 통과' : '✗ 편향검사 실패'}
+                </span>
+              )}
+              <span className="text-xs px-3 py-1 rounded-full font-semibold"
+                style={{ background: riskCfg.color + '18', color: riskCfg.color,
+                         border: `1px solid ${riskCfg.color}35` }}>
+                리스크 {riskCfg.label}
+              </span>
+            </div>
+            {priceStr && (
+              <p className="text-sm text-gray-400">현재가 <strong className="text-white font-mono">{priceStr}</strong></p>
+            )}
+            {forecastError && (
+              <button onClick={onRetryForecast}
+                className="text-xs px-3 py-1 rounded-lg text-orange-400 border border-orange-400/30 hover:bg-orange-400/10">
+                ↻ 재생성
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── 핵심 지표 카드 ─────────────────────────────────────── */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[
+          {
+            label: '현재 매수지수',
+            value: buyIndex != null ? buyIndex : '─',
+            color: buyIndex != null ? bCol(buyIndex) : '#6b7280',
+            sub:   buyIndex >= 65 ? '매수 구간' : buyIndex >= 45 ? '관망 구간' : buyIndex != null ? '매도 구간' : '데이터 없음',
+          },
+          {
+            label: '7일 평균지수',
+            value: avgBuyIdx != null ? avgBuyIdx : '─',
+            color: avgBuyIdx != null ? bCol(avgBuyIdx) : '#6b7280',
+            sub:   `최근 ${recent.length}회 평균`,
+          },
+          {
+            label: 'AI 평균점수',
+            value: avgScore != null ? (avgScore >= 0 ? '+' : '') + avgScore : '─',
+            color: avgScore > 0 ? '#22c55e' : avgScore < 0 ? '#ef4444' : '#9ca3af',
+            sub:   '뉴스 영향도 (±5)',
+          },
+          {
+            label: '내일 예측',
+            value: daily7[0] != null
+              ? (daily7[0].change_pct >= 0 ? '+' : '') + (daily7[0].change_pct?.toFixed(1) ?? '0') + '%'
+              : '─',
+            color: (daily7[0]?.change_pct ?? 0) > 0.5 ? '#22c55e'
+                 : (daily7[0]?.change_pct ?? 0) < -0.5 ? '#ef4444' : '#9ca3af',
+            sub:   daily7[0]?.signal || '',
+          },
+        ].map(({ label, value, color, sub }) => (
+          <div key={label} className="rounded-xl p-4 border" style={{ background: '#14171e', borderColor: '#2A2D35' }}>
+            <p className="text-xs text-gray-500 mb-1">{label}</p>
+            <p className="text-3xl font-black tabular-nums" style={{ color }}>{value}</p>
+            <p className="text-xs mt-1" style={{ color: color + 'aa' }}>{sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ── 매수지수 추세 + 주가 차트 ─────────────────────────── */}
+      <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">매수지수 추세 &amp; 7일 예측</p>
+          <div className="flex gap-3 text-xs">
+            {[['#22c55e','매수(≥65)'],['#f59e0b','관망(45~64)'],['#ef4444','매도(<45)']].map(([c,l])=>(
+              <span key={l} className="flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full" style={{ background: c }} />
+                <span className="text-gray-600">{l}</span>
+              </span>
+            ))}
+            <span className="flex items-center gap-1">
+              <span className="w-5 h-px inline-block" style={{ borderTop:'1px dashed #a78bfa' }} />
+              <span className="text-gray-600">예측</span>
+            </span>
+            {(weeklyData || dailyData) && (
+              <span className="flex items-center gap-1">
+                <span className="w-5 h-0.5 inline-block" style={{ background: '#06b6d4' }} />
+                <span className="text-gray-600">주가</span>
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+          <TrendChart
+            sessions={[...valid].reverse()}
+            prediction7={prediction7}
+            weeklyData={weeklyData}
+            dailyData={dailyData}
+            priceLoading={priceLoading || weeklyLoading}
+          />
+        </div>
+      </div>
+
+      {/* ── 7일 일별 예측 ─────────────────────────────────────── */}
+      {daily7.length > 0 && (
+        <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">📅 7일 일별 예측</p>
+          <div className="grid grid-cols-7 gap-1.5">
+            {daily7.map((d, i) => {
+              const pct = typeof d.change_pct === 'number' ? d.change_pct : 0;
+              const col = pct > 0.5 ? '#22c55e' : pct < -0.5 ? '#ef4444' : '#9ca3af';
+              const sig = SIGNAL_CFG[d.signal] || { color: '#9ca3af', emoji: '─' };
+              const isFirst = i === 0;
+              return (
+                <div key={i} className="rounded-lg p-2 text-center border"
+                  style={{ background: isFirst ? sig.color + '12' : '#14171e',
+                           borderColor: isFirst ? sig.color + '50' : '#2A2D35' }}>
+                  <p className="text-xs font-bold" style={{ color: isFirst ? sig.color : '#6b7280' }}>
+                    {d.label || (i === 0 ? '내일' : `D+${i + 1}`)}
+                  </p>
+                  <p className="text-gray-600" style={{ fontSize: 9 }}>{d.date || ''}</p>
+                  <p className="text-base font-black tabular-nums" style={{ color: col }}>
+                    {pct >= 0 ? '+' : ''}{pct.toFixed(1)}%
+                  </p>
+                  <p className="text-xs font-semibold mt-0.5" style={{ color: sig.color }}>
+                    {sig.emoji} {d.signal}
+                  </p>
+                  {d.reasoning && (
+                    <p className="text-gray-700 leading-snug mt-1 hidden md:block" style={{ fontSize: 8 }}>
+                      {d.reasoning}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── 최근 세션 히스토리 ─────────────────────────────────── */}
+      {valid.length > 0 && (
+        <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">🕐 최근 수집 히스토리</p>
+          <div className="space-y-1.5">
+            {valid.slice(0, 8).map((s, i) => {
+              const bi   = s.buyIndex;
+              const biC  = bi != null ? bCol(bi) : '#6b7280';
+              const sc   = SIGNAL_CFG[s.overallSignal];
+              return (
+                <div key={s.id || i}
+                  className="flex items-center gap-3 rounded-lg px-3 py-2"
+                  style={{ background: '#14171e' }}>
+                  <span className="text-xs text-gray-500 w-20 shrink-0">{s.date}</span>
+                  <span className="text-sm font-black w-8 text-center tabular-nums" style={{ color: biC }}>
+                    {bi ?? '─'}
+                  </span>
+                  <span className="text-xs w-16" style={{ color: sc?.color ?? '#6b7280' }}>
+                    {sc?.emoji} {s.overallSignal || '─'}
+                  </span>
+                  <span className="text-xs text-gray-600">
+                    avg {s.avgScore >= 0 ? '+' : ''}{s.avgScore?.toFixed(1) ?? '─'}
+                  </span>
+                  <div className="flex gap-1 ml-auto flex-wrap">
+                    {(s.topRules || []).slice(0, 3).map(r => (
+                      <span key={r} className="px-1.5 py-0.5 rounded text-gray-500"
+                        style={{ background: '#1C1F26', fontSize: 9 }}>{r}</span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
 // ─── 컴포넌트: SettingsPage ───────────────────────────────────────────────
 
 function SettingsPage({ onBack,
@@ -2640,9 +2909,9 @@ function SettingsPage({ onBack,
 function MobileBottomNav({ page, setPage, dbCount }) {
   const tabs = [
     { key: 'dashboard', icon: '📊', label: '대시보드' },
+    { key: 'signal',    icon: '🎯', label: '매매신호' },
     { key: 'trend',     icon: '📈', label: '트렌드',  badge: dbCount },
     { key: 'calendar',  icon: '📅', label: '캘린더' },
-    { key: 'backtest',  icon: '🔬', label: '백테스트' },
     { key: 'settings',  icon: '⚙',  label: '설정' },
   ];
   return (
@@ -4783,6 +5052,15 @@ function App() {
     return (
       <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
         {page === 'dashboard' && <MobileDashboard {...mobileProps} />}
+        {page === 'signal' && (
+          <div style={{ paddingBottom: 72 }}>
+            <SignalPage
+              forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
+              onRetryForecast={runForecast}
+              weeklyData={weeklyData} weeklyLoading={weeklyLoading}
+              currentPrice={currentPrice} />
+          </div>
+        )}
         {page === 'trend' && (
           <div style={{ paddingBottom: 72 }}>
             <TrendPage key={`trend-m-${dbCount}`} onBack={() => setPage('dashboard')}
@@ -4837,6 +5115,7 @@ function App() {
       <div className="flex items-center gap-2">
         {[
           { key: 'dashboard', icon: '📊', label: '대시보드' },
+          { key: 'signal',    icon: '🎯', label: '매매 신호' },
           { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
           { key: 'calendar',  icon: '📅', label: '캘린더' },
           { key: 'backtest',  icon: '🔬', label: '백테스트' },
@@ -4856,6 +5135,17 @@ function App() {
           <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
         </div>
       </div>
+    </div>
+  );
+
+  if (page === 'signal') return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <SignalPage
+        forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
+        onRetryForecast={runForecast}
+        weeklyData={weeklyData} weeklyLoading={weeklyLoading}
+        currentPrice={currentPrice} />
     </div>
   );
 
