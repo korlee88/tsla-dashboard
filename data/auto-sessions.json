@@ -1,6 +1,285 @@
 {
   "sessions": [
     {
+      "id": "auto-1777385621166",
+      "date": "2026-04-28",
+      "displayDate": "2026.04.28",
+      "kstTime": "23:12",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777385560036,
+          "title": "테슬라 모델 Y 스티어링 휠 분리 조사 종결, 추가 조치 불필요",
+          "summary": "미국 도로교통안전국(NHTSA)은 스티어링 휠 분리 보고가 있었던 120,089대의 테슬라 모델 Y 차량에 대한 조사를 종결하고, 추가적인 제조사 조치가 필요 없다고 밝혔다. NHTSA는 스티어링 휠 고정 볼트 누락으로 인한 분리 사례가 있었지만, 이는 광범위한 안전 문제가 아닌 개별적인 사건으로 판단했다. 이 결정은 테슬라 차량의 안전성에 대한 우려를 해소하는 데 도움이 될 것으로 보인다.",
+          "source": "GuruFocus",
+          "date": "2026-04-28",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777385560037,
+          "title": "테슬라, AI, 로봇 공학 및 칩 생산에 250억 달러 투자 계획",
+          "summary": "테슬라는 2026년에 인공지능, 로봇 공학 및 칩 생산에 250억 달러 이상을 투자할 계획이며, 이는 2025년 지출액인 약 85억 달러의 거의 세 배에 달하는 금액이다. 이 투자는 캘리포니아 프리몬트 공장 업데이트, 사이버캡 로보택시 및 테슬라 세미의 본격적인 생산 시작, 옵티머스 휴머노이드 로봇 생산, 그리고 스페이스X와의 파트너십을 통한 반도체 제조 확장에 사용될 예정이다.",
+          "source": "Thomasnet",
+          "date": "2026-04-28",
+          "category": "Product|AI|Robotics"
+        },
+        {
+          "id": 1777385560038,
+          "title": "테슬라, AI로 슈퍼차저 대기 시간 예측 정확도 향상",
+          "summary": "테슬라 차징은 슈퍼차저 예측 기능을 업그레이드하여 대기 시간 예측의 정확도를 높였다. 새로운 머신러닝 모델은 전 세계 슈퍼차저 근처에서 주행한 9백만 마일의 익명 궤적 데이터를 기반으로 훈련되어, 충전 의도를 더 잘 식별하고 대기열 길이 추정 오류를 약 20%까지 줄였다. 이는 운전자들이 장거리 여행 계획 시 지연을 더 잘 예측하고 정보에 입각한 결정을 내리는 데 도움이 될 것으로 예상된다.",
+          "source": "Mobility Plaza",
+          "date": "2026-04-28",
+          "category": "Product|AI"
+        },
+        {
+          "id": 1777385560039,
+          "title": "테슬라, 20억 달러 규모 AI 하드웨어 회사 인수 계약 체결 (추정: DensityAI)",
+          "summary": "테슬라는 2026년 1분기 10-Q 보고서에서 최대 20억 달러 규모의 익명 AI 하드웨어 회사 인수 계약을 공개했다. 업계 기자 프레드 램버트는 이 회사가 전 테슬라 실리콘 책임자였던 가네쉬 벤카타라마난이 설립한 DensityAI일 것으로 추정하고 있다. 이 인수는 테슬라의 AI 컴퓨팅 스택을 재편할 잠재력이 있으며, 자체 AI 칩 개발에 대한 테슬라의 의지를 보여준다.",
+          "source": "basenor",
+          "date": "2026-04-28",
+          "category": "AI|Market"
+        },
+        {
+          "id": 1777385560040,
+          "title": "스페이스X, 일론 머스크 보상 계획에 화성 식민지화 목표 포함",
+          "summary": "스페이스X 이사회는 일론 머스크 창업자를 위한 보상 계획을 승인했으며, 여기에는 화성 식민지화 및 우주 데이터 센터 운영과 같은 미래 지향적인 목표가 포함되어 있다. 이 보상 패키지는 스페이스X가 시가총액 7조 5천억 달러를 달성하고 1백만 명 이상의 영구적인 화성 식민지를 건설할 경우 머스크에게 2억 개의 슈퍼 의결권 제한 주식을 지급할 예정이다.",
+          "source": "BNN Bloomberg",
+          "date": "2026-04-28",
+          "category": "Musk"
+        },
+        {
+          "id": 1777385560041,
+          "title": "일론 머스크, OpenAI CEO 및 공동 창업자 비난하며 소송 제기",
+          "summary": "일론 머스크는 OpenAI와의 법적 분쟁이 시작되면서 샘 알트만 CEO와 그렉 브록만 공동 창업자를 '사기꾼 알트만'과 '그렉 스톡맨'이라고 비난하며, 이들이 '자선 단체를 훔쳤다'고 주장했다. 머스크는 2024년 11월 OpenAI가 원래의 비영리 사명을 배신했다고 주장하며 소송을 제기했으며, 2026년 초에 소송을 재개했다.",
+          "source": "The Times of India",
+          "date": "2026-04-28",
+          "category": "Legal|Musk"
+        },
+        {
+          "id": 1777385560042,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 전기차 수요 회복 시사",
+          "summary": "테슬라는 1분기 조정 주당 순이익이 41센트로 월스트리트 예상치인 34센트를 상회하며, 전기차 수요가 전 세계적으로 회복되고 있다고 밝혔다. 이는 테슬라의 자동차 사업이 회복될 가능성을 시사하며, 아시아 태평양 및 남미 지역의 지속적인 수요 증가와 북미 및 유럽-중동 지역의 회복세를 언급했다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777385560043,
+          "title": "테슬라, AI 및 로봇 공학 투자로 2026년 지출 계획 25% 상향 조정",
+          "summary": "테슬라는 인공지능, 로봇 공학 및 칩에 대한 투자를 위해 2026년 지출 계획을 250억 달러 이상으로 대폭 상향 조정했다. 일론 머스크 CEO는 이러한 투자가 미래의 큰 수익원을 창출하는 데 '충분히 정당하다'고 말했다. 그러나 이러한 발언 이후 테슬라 주가는 하락세를 보였다.",
+          "source": "DD News",
+          "date": "2026-04-23",
+          "category": "AI|Robotics|Market"
+        },
+        {
+          "id": 1777385560044,
+          "title": "스페이스X, 테슬라와의 합병 가능성 검토 중",
+          "summary": "스페이스X는 AI 스타트업 xAI 외에 전기차 대기업 테슬라와의 잠재적 합병을 고려하고 있는 것으로 알려졌다. 블룸버그는 이 사안에 정통한 소식통을 인용하여 스페이스X가 테슬라와의 합병 가능성을 논의했다고 보도했다. 일론 머스크는 두 회사의 CEO를 맡고 있다.",
+          "source": "Bloomberg",
+          "date": "2026-03-05",
+          "category": "Market|Musk"
+        },
+        {
+          "id": 1777385560045,
+          "title": "일론 머스크 관련 신간 '머스크주의: 당혹스러운 사람들을 위한 안내서' 출간",
+          "summary": "NPR의 미셸 마틴은 퀸 슬로보디안과 함께 일론 머스크에 대한 신간 '머스크주의: 당혹스러운 사람들을 위한 안내서'에 대해 인터뷰했다. 이 책은 일론 머스크의 사상과 행동에 대한 분석을 담고 있을 것으로 예상된다.",
+          "source": "NPR",
+          "date": "2026-04-28",
+          "category": "Musk"
+        }
+      ],
+      "analyses": {
+        "1777385560036": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "NHTSA가 테슬라 모델 Y 스티어링 휠 분리 조사를 종결하고 추가 조치가 불필요하다고 결정하여 차량 안전성 우려가 해소되고 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "NHTSA 조사 종결",
+            "추가 조치 불필요",
+            "안전성 우려 해소"
+          ]
+        },
+        "1777385560037": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 AI, 로봇 공학 및 칩 생산에 대한 대규모 투자는 미래 성장 동력을 강화하고 신제품 출시를 가속화할 것으로 예상되어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 및 로봇 공학 투자",
+            "사이버캡 로보택시 및 테슬라 세미 생산",
+            "옵티머스 로봇 생산",
+            "반도체 제조 확장"
+          ]
+        },
+        "1777385560038": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 AI 기반 슈퍼차저 대기 시간 예측 정확도 향상은 사용자 경험을 개선하고 장거리 여행의 편의성을 높여 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "사용자 경험 개선",
+            "AI 기술 적용",
+            "슈퍼차저 네트워크 효율성"
+          ]
+        },
+        "1777385560039": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 20억 달러 규모의 AI 하드웨어 회사를 인수하여 AI 컴퓨팅 스택을 강화하고 자체 AI 칩 개발에 대한 의지를 보여주는 것은 미래 기술 경쟁력에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 하드웨어 회사 인수",
+            "AI 컴퓨팅 스택 강화",
+            "자체 AI 칩 개발 의지"
+          ]
+        },
+        "1777385560040": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 스페이스X 보상 계획에 화성 식민지화 목표가 포함된 것은 장기적으로 긍정적인 비전을 제시하지만, 테슬라 주가에 직접적인 영향은 제한적입니다.",
+          "key_factors": [
+            "Musk's long-term vision",
+            "SpaceX valuation target"
+          ]
+        },
+        "1777385560041": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R08",
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI CEO와 공동 창업자를 비난하며 소송을 제기한 것은 머스크의 SNS 논란 및 다른 벤처 리스크로 인해 테슬라 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 논란",
+            "OpenAI 소송",
+            "다른 벤처 리스크"
+          ]
+        },
+        "1777385560042": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 상회하며 전기차 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "전기차 수요 회복"
+          ]
+        },
+        "1777385560043": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 AI 및 로봇 공학에 대한 투자를 위해 2026년 지출 계획을 대폭 상향 조정한 것은 미래 성장 동력 확보에 긍정적이지만, 단기적으로는 주가 하락을 야기할 수 있습니다.",
+          "key_factors": [
+            "AI 및 로봇 공학 투자 확대",
+            "미래 수익원 창출 기대",
+            "단기 주가 하락"
+          ]
+        },
+        "1777385560044": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X와 테슬라의 합병 가능성 논의는 테슬라의 사업 확장 및 기술 시너지에 대한 긍정적인 기대를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "스페이스X 합병 가능성",
+            "사업 확장 및 시너지"
+          ]
+        },
+        "1777385560045": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크에 대한 신간 출간 소식은 TSLA 주가에 직접적인 영향을 미치지 않는 중립적인 정보입니다.",
+          "key_factors": [
+            "신간 출간",
+            "일론 머스크 분석"
+          ]
+        }
+      },
+      "avgScore": 1.8,
+      "buyIndex": 72,
+      "direction": "bullish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R08",
+        "R12"
+      ],
+      "bullish": 8,
+      "bearish": 1,
+      "neutral": 1,
+      "muskXSentiment": null,
+      "newsCategories": {
+        "total": 10,
+        "Regulatory": 1,
+        "Product|AI|Robotics": 1,
+        "Product|AI": 1,
+        "AI|Market": 1,
+        "Musk": 2,
+        "Legal|Musk": 1,
+        "Earnings|Market": 1,
+        "AI|Robotics|Market": 1,
+        "Market|Musk": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.02,
+        "qqqChg": 0.2,
+        "vixClose": 18.700000762939453,
+        "wtiChg": 3.43,
+        "cnyChg": 0.2,
+        "prevTslaChg": 1.77,
+        "rsi": 31.6,
+        "macd": {
+          "macd": -8.457055504520781,
+          "signal": -3.9511709683409206,
+          "hist": -4.5058845361798605,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.76,
+          "middle": 404.08,
+          "lower": 337.4,
+          "pos": 0.324
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 68,
+        "macdTrend": -2,
+        "earningsWeek": 6
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777385621166
+    },
+    {
       "id": "auto-1777348619212",
       "date": "2026-04-28",
       "displayDate": "2026.04.28",
@@ -3164,5 +3443,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-28 12:56 KST"
+  "lastUpdated": "2026-04-28 23:12 KST"
 }
