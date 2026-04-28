@@ -682,7 +682,21 @@ function saveSession(session) {
   const idx = db.sessions.findIndex(s => s.id === session.id);
   if (idx >= 0) db.sessions[idx] = session; else db.sessions.unshift(session);
   db.sessions = db.sessions.slice(0, 60);
-  saveNewsDB(db);
+  try {
+    localStorage.setItem(NEWS_DB_KEY, JSON.stringify(db));
+    return true; // 저장 성공
+  } catch {
+    // 쿼터 초과 시 분석 데이터를 제외한 경량 버전으로 재시도
+    console.warn('saveSession: 용량 초과, 경량 저장 시도');
+    const slim = {
+      ...session,
+      news: (session.news || []).map(n => ({ id: n.id, title: n.title, source: n.source, category: n.category })),
+      analyses: {}, // 분석 상세 제외
+    };
+    if (idx >= 0) db.sessions[idx] = slim; else db.sessions[0] = slim;
+    try { localStorage.setItem(NEWS_DB_KEY, JSON.stringify(db)); return true; } catch {}
+  }
+  return false;
 }
 function newSessionId() { return new Date().toISOString().replace(/[:.]/g, '-'); }
 function getTopRules(analyses) {
@@ -4469,7 +4483,7 @@ function App() {
     if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
     const avgScore = analyzed.reduce((s, n) => s + results[n.id].impact_score, 0) / analyzed.length;
     const f = currentForecast || null;
-    saveSession({
+    const saved = saveSession({
       id: sessionIdRef.current,
       date: new Date().toISOString().split('T')[0],
       displayDate: new Date().toLocaleDateString('ko-KR'),
@@ -4487,6 +4501,7 @@ function App() {
       analyzedCount: analyzed.length,
       timestamp: Date.now(),
     });
+    if (!saved) { console.error('saveSession 실패 — localStorage 저장 불가'); return false; }
     saveLastNews(currentNews, isCollected, sessionIdRef.current);
     sessionSavedRef.current = true;
     if (driveTokenRef.current) {
@@ -4711,12 +4726,42 @@ function App() {
   // 수동 트렌드 등록 버튼용 핸들러
   const handleSaveToTrend = useCallback(() => {
     if (sessionSavedRef.current) return;
-    const ok = doSaveSession(forecast);
-    if (ok) {
-      // 저장 성공 — 상태 강제 업데이트 (isSaved 리렌더)
-      setResults(prev => ({ ...prev }));
+    const analyzed = currentNews.filter(n => results[n.id]);
+    if (!isCollected || analyzed.length === 0) {
+      alert('뉴스를 수집하고 분석을 완료한 후 등록할 수 있습니다.'); return;
     }
-  }, [doSaveSession, forecast]);
+    if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
+    const avgScore = analyzed.reduce((s, n) => s + results[n.id].impact_score, 0) / analyzed.length;
+    const f = forecast;
+    const saved = saveSession({
+      id: sessionIdRef.current,
+      date: new Date().toISOString().split('T')[0],
+      displayDate: new Date().toLocaleDateString('ko-KR'),
+      source: 'collected',
+      news: currentNews,
+      analyses: Object.fromEntries(analyzed.map(n => [n.id, results[n.id]])),
+      forecast: f,
+      avgScore: Math.round(avgScore * 10) / 10,
+      buyIndex: f?.forecasts?.[0]?.buy_index ?? null,
+      overallSignal: f?.overall_signal ?? null,
+      riskLevel: f?.risk_level ?? null,
+      topRules: getTopRules(analyzed.map(n => results[n.id])),
+      bullish: analyzed.filter(n => results[n.id].direction === 'bullish').length,
+      bearish: analyzed.filter(n => results[n.id].direction === 'bearish').length,
+      analyzedCount: analyzed.length,
+      timestamp: Date.now(),
+    });
+    if (!saved) { alert('저장 실패: 브라우저 저장공간 부족'); return; }
+    saveLastNews(currentNews, isCollected, sessionIdRef.current);
+    sessionSavedRef.current = true;
+    if (driveTokenRef.current) {
+      driveWriteSessions(driveTokenRef.current, getNewsDB().sessions)
+        .then(() => setDriveLastSync(new Date().toLocaleTimeString('ko-KR')))
+        .catch(() => {});
+    }
+    // 저장 성공 → UI 갱신
+    setResults(prev => ({ ...prev }));
+  }, [isCollected, currentNews, results, forecast]);
 
   // ── 모바일 라우팅 ────────────────────────────────────────────────────────
   if (isMobile) {
@@ -4735,7 +4780,7 @@ function App() {
         {page === 'dashboard' && <MobileDashboard {...mobileProps} />}
         {page === 'trend' && (
           <div style={{ paddingBottom: 72 }}>
-            <TrendPage onBack={() => setPage('dashboard')}
+            <TrendPage key={`trend-m-${dbCount}`} onBack={() => setPage('dashboard')}
               onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
               driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
               driveLastSync={driveLastSync} driveError={driveError}
@@ -4826,7 +4871,7 @@ function App() {
   if (page === 'trend') return (
     <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
       <DesktopHeader />
-      <TrendPage onBack={() => setPage('dashboard')}
+      <TrendPage key={`trend-${dbCount}`} onBack={() => setPage('dashboard')}
         onPullFromDrive={() => pullFromDrive()} onPushToDrive={pushToDrive}
         driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
         driveLastSync={driveLastSync} driveError={driveError}
