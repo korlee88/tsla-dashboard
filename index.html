@@ -2693,6 +2693,7 @@ function MobileDashboard({
   isCollected, handleCollect, analyzeAll, analyzeSingle, pendingCount, cachedCount, clearCache,
   hasAnyResult, isSaved, driveConnected, currentPrice,
   forecast, forecastLoading, forecastError, runForecast, calendarEvents,
+  handleSaveToTrend,
 }) {
   const done    = Object.values(results);
   const avg     = done.length ? Math.round(done.reduce((s, r) => s + r.impact_score, 0) / done.length * 10) / 10 : null;
@@ -2745,6 +2746,18 @@ function MobileDashboard({
               : pendingCount === 0 ? '✓ 완료' : `▶ 분석 (${pendingCount}건)`}
           </button>
         </div>
+
+        {/* 트렌드 등록 버튼 (모바일) */}
+        {hasAnyResult && isCollected && !isSaved && !analyzing && (
+          <button onClick={handleSaveToTrend}
+            className="w-full py-3 rounded-xl text-sm font-bold text-white active:opacity-70"
+            style={{ background: '#059669' }}>
+            📋 트렌드 등록
+          </button>
+        )}
+        {hasAnyResult && isCollected && isSaved && (
+          <div className="w-full text-center text-xs text-green-400 font-semibold py-1">✅ 트렌드 저장됨</div>
+        )}
 
         {/* 상태 배너 */}
         {isCollected && !collectError && (
@@ -4419,11 +4432,11 @@ function App() {
     try {
       localStorage.removeItem(CACHE_KEY);
       localStorage.removeItem(FORECAST_CACHE_KEY);
-      localStorage.removeItem(NEWS_LIST_KEY); // 저장된 뉴스도 초기화
+      // NEWS_LIST_KEY는 삭제하지 않음 — 뉴스는 유지
     } catch {}
     setResults({}); setErrors({}); setForecast(null); setForecastError(null);
-    setCurrentNews(SAMPLE_NEWS); setIsCollected(false); setCollectError(null);
-    sessionIdRef.current = null; sessionSavedRef.current = false;
+    setCollectError(null);
+    sessionIdRef.current = newSessionId(); sessionSavedRef.current = false;
   }, []);
 
   const runForecast = useCallback(async () => {
@@ -4448,39 +4461,57 @@ function App() {
     }
   }, [results, apiKey, priceReady]);
 
+  // ── 세션 저장 공통 함수 (forecast 유무 무관) ─────────────────────────────
+  const doSaveSession = useCallback((currentForecast) => {
+    if (!isCollected || sessionSavedRef.current) return false;
+    const analyzed = currentNews.filter(n => results[n.id]);
+    if (analyzed.length === 0) return false;
+    if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
+    const avgScore = analyzed.reduce((s, n) => s + results[n.id].impact_score, 0) / analyzed.length;
+    const f = currentForecast || null;
+    saveSession({
+      id: sessionIdRef.current,
+      date: new Date().toISOString().split('T')[0],
+      displayDate: new Date().toLocaleDateString('ko-KR'),
+      source: 'collected',
+      news: currentNews,
+      analyses: Object.fromEntries(analyzed.map(n => [n.id, results[n.id]])),
+      forecast: f,
+      avgScore: Math.round(avgScore * 10) / 10,
+      buyIndex: f?.forecasts?.[0]?.buy_index ?? null,
+      overallSignal: f?.overall_signal ?? null,
+      riskLevel: f?.risk_level ?? null,
+      topRules: getTopRules(analyzed.map(n => results[n.id])),
+      bullish: analyzed.filter(n => results[n.id].direction === 'bullish').length,
+      bearish: analyzed.filter(n => results[n.id].direction === 'bearish').length,
+      analyzedCount: analyzed.length,
+      timestamp: Date.now(),
+    });
+    saveLastNews(currentNews, isCollected, sessionIdRef.current);
+    sessionSavedRef.current = true;
+    if (driveTokenRef.current) {
+      driveWriteSessions(driveTokenRef.current, getNewsDB().sessions)
+        .then(() => setDriveLastSync(new Date().toLocaleTimeString('ko-KR')))
+        .catch(e => setDriveError('자동 Drive 저장 실패: ' + e.message));
+    }
+    return true;
+  }, [isCollected, currentNews, results]);
+
+  // forecast 생성 완료 시 자동 저장 (기존 동작 유지)
   useEffect(() => {
-    if (forecast && !sessionSavedRef.current && isCollected) { // 샘플 뉴스는 저장 안 함
-      const analyzed = currentNews.filter(n => results[n.id]);
-      if (analyzed.length > 0) {
-        if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
-        const avgScore = analyzed.reduce((s, n) => s + results[n.id].impact_score, 0) / analyzed.length;
-        saveSession({
-          id: sessionIdRef.current,
-          date: new Date().toISOString().split('T')[0],
-          displayDate: new Date().toLocaleDateString('ko-KR'),
-          source: isCollected ? 'collected' : 'sample',
-          news: currentNews,
-          analyses: Object.fromEntries(analyzed.map(n => [n.id, results[n.id]])),
-          forecast,
-          avgScore: Math.round(avgScore * 10) / 10,
-          buyIndex: forecast.forecasts?.[0]?.buy_index ?? null,
-          overallSignal: forecast.overall_signal,
-          riskLevel: forecast.risk_level,
-          topRules: getTopRules(analyzed.map(n => results[n.id])),
-          timestamp: Date.now(),
-        });
-        // 세션 ID를 뉴스 캐시에 기록 → 다음 방문 시 중복 저장 방지
-        saveLastNews(currentNews, isCollected, sessionIdRef.current);
-        sessionSavedRef.current = true;
-        // Drive 자동 동기화 (연결된 경우)
-        if (driveTokenRef.current) {
-          driveWriteSessions(driveTokenRef.current, getNewsDB().sessions)
-            .then(() => setDriveLastSync(new Date().toLocaleTimeString('ko-KR')))
-            .catch(e => setDriveError('자동 Drive 저장 실패: ' + e.message));
-        }
-      }
+    if (forecast && !sessionSavedRef.current && isCollected) {
+      doSaveSession(forecast);
     }
   }, [forecast]);
+
+  // 분석 완료 시 자동 저장 (forecast 없어도 — 예: priceReady 실패 시 대비)
+  useEffect(() => {
+    const allDone = currentNews.length > 0 && currentNews.every(n => results[n.id]);
+    if (allDone && isCollected && !sessionSavedRef.current && !forecast && !forecastLoading) {
+      // forecast가 없는 상태에서 모든 분석 완료 → 바로 저장 (forecast는 나중에 추가)
+      doSaveSession(null);
+    }
+  }, [results, isCollected, forecastLoading]);
 
   useEffect(() => {
     try {
@@ -4677,6 +4708,16 @@ function App() {
   const isSaved      = sessionSavedRef.current;
   const isMobile     = useIsMobile();
 
+  // 수동 트렌드 등록 버튼용 핸들러
+  const handleSaveToTrend = useCallback(() => {
+    if (sessionSavedRef.current) return;
+    const ok = doSaveSession(forecast);
+    if (ok) {
+      // 저장 성공 — 상태 강제 업데이트 (isSaved 리렌더)
+      setResults(prev => ({ ...prev }));
+    }
+  }, [doSaveSession, forecast]);
+
   // ── 모바일 라우팅 ────────────────────────────────────────────────────────
   if (isMobile) {
     const mobileProps = {
@@ -4687,6 +4728,7 @@ function App() {
       // 투자 전망 (PC와 동일하게 전달)
       forecast, forecastLoading, forecastError, runForecast,
       calendarEvents: calendarEvents || [],
+      handleSaveToTrend,
     };
     return (
       <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
@@ -4848,13 +4890,26 @@ function App() {
             ? <span className="flex items-center gap-2"><span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full spinning" />분석 중...</span>
             : pendingCount === 0 ? '✓ 완료' : `▶ 분석 실행 (${pendingCount}건)`}
         </button>
+        {/* 트렌드 등록 버튼 — 분석 완료 후 미저장 상태일 때 표시 */}
+        {hasAnyResult && isCollected && !isSaved && !analyzing && (
+          <button onClick={handleSaveToTrend}
+            className="px-4 py-2 rounded-lg text-sm font-bold text-white hover:opacity-90 shrink-0"
+            style={{ background: '#059669' }}>
+            📋 트렌드 등록
+          </button>
+        )}
+        {hasAnyResult && isCollected && isSaved && (
+          <span className="text-xs text-green-400 font-semibold flex items-center gap-1 shrink-0">
+            ✅ 트렌드 저장됨
+          </span>
+        )}
       </div>
 
       {isCollected && (
         <div className="mb-4 px-4 py-2.5 rounded-lg flex items-center gap-2 text-xs flex-wrap" style={{ background: 'rgba(8,145,178,0.1)', border: '1px solid rgba(8,145,178,0.3)' }}>
           <span className="text-cyan-400 font-bold">🔍 실시간 수집</span>
           <span className="text-gray-500">{new Date().toLocaleDateString('ko-KR')} · Gemini Google Search · {currentNews.length}건</span>
-          <span className="text-gray-600 ml-auto">분석 후 트렌드 DB 자동 저장</span>
+          <span className="text-gray-600 ml-auto">{isSaved ? '✅ 트렌드 저장됨' : '분석 완료 후 자동 저장'}</span>
         </div>
       )}
       {collectError && (
