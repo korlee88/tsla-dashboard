@@ -679,7 +679,12 @@ function saveNewsDB(db) {
 }
 function saveSession(session) {
   const db = getNewsDB();
-  const idx = db.sessions.findIndex(s => s.id === session.id);
+  let idx = db.sessions.findIndex(s => s.id === session.id);
+  // 같은 날짜 'collected' 세션이 이미 있으면 ID를 재사용해 중복 방지
+  if (idx < 0 && session.source === 'collected') {
+    const sameDay = db.sessions.findIndex(s => s.source === 'collected' && s.date === session.date);
+    if (sameDay >= 0) { session = { ...session, id: db.sessions[sameDay].id }; idx = sameDay; }
+  }
   if (idx >= 0) db.sessions[idx] = session; else db.sessions.unshift(session);
   db.sessions = db.sessions.slice(0, 60);
   try {
@@ -2205,7 +2210,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
 
 // ─── 컴포넌트: TrendChart ─────────────────────────────────────────────────
 
-function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }) {
+function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData, priceLoading }) {
   if (!sessions || sessions.length === 0) return (
     <div className="flex flex-col items-center justify-center py-14 text-gray-600">
       <p className="text-3xl mb-3">📭</p>
@@ -2242,7 +2247,7 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }
                     : null;
   let pricePoints = [];
   if (priceSource) {
-    pricePoints = data.map(d => {
+    const raw = data.map(d => {
       const sessionDate = d.date; // "YYYY-MM-DD"
       // 1순위: 날짜 완전 일치
       const exact = priceSource.find(w => {
@@ -2250,7 +2255,7 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }
         return wDate === sessionDate;
       });
       if (exact) return exact.close;
-      // 2순위: 가장 가까운 날짜
+      // 2순위: 가장 가까운 날짜 (7일 이내)
       const sessionMs = new Date(sessionDate + 'T00:00:00Z').getTime();
       let best = null, bestDiff = Infinity;
       priceSource.forEach(w => {
@@ -2258,11 +2263,18 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }
         const diff = Math.abs(wMs - sessionMs);
         if (diff < bestDiff) { bestDiff = diff; best = w; }
       });
-      // 7일 이내 데이터만 허용 (주말·공휴일 대응)
       return (best && bestDiff < 8 * 86400000) ? best.close : null;
     });
+    // null 구간: carry-forward(앞→뒤) 후 backfill(뒤→앞)으로 빈 값 채움
+    let last = null;
+    pricePoints = raw.map(p => { if (p != null) last = p; return last; });
+    last = null;
+    for (let i = pricePoints.length - 1; i >= 0; i--) {
+      if (pricePoints[i] != null) last = pricePoints[i];
+      else if (last != null) pricePoints[i] = last;
+    }
   }
-  const hasPriceData = pricePoints.length === data.length && pricePoints.every(p => p != null);
+  const hasPriceData = pricePoints.length === data.length && pricePoints.some(p => p != null);
   const priceMin = hasPriceData ? Math.min(...pricePoints) * 0.995 : 0;
   const priceMax = hasPriceData ? Math.max(...pricePoints) * 1.005 : 1;
 
@@ -2312,7 +2324,7 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }
       {hasPriceData && [0, 0.25, 0.5, 0.75, 1].map(t => {
         const p = priceMin + t * (priceMax - priceMin);
         const y = P.t + (1 - t) * cH;
-        return <text key={t} x={W - P.r + 5} y={y + 3.5} fill="#06b6d4" fontSize="8.5" opacity="0.75">${Math.round(p)}</text>;
+        return <text key={t} x={W - P.r + 5} y={y + 3.5} fill="#06b6d4" fontSize="8.5" opacity="0.75">${p.toFixed(1)}</text>;
       })}
 
       {/* Zone */}
@@ -2335,7 +2347,7 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }
           {/* 첫·마지막 포인트에 가격 라벨 */}
           {(i === 0 || i === pricePts.length - 1) && (
             <text x={x} y={y - 8} textAnchor={i === 0 ? 'start' : 'end'} fill="#06b6d4" fontSize="8.5" fontWeight="700" opacity="0.9">
-              ${Math.round(pricePoints[i])}
+              ${pricePoints[i].toFixed(1)}
             </text>
           )}
         </g>
@@ -2385,7 +2397,16 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData }
       })}
 
       <text x={10} y={P.t + cH / 2} textAnchor="middle" fill="#6b7280" fontSize="9" transform={`rotate(-90,10,${P.t + cH / 2})`}>매수지수</text>
-      {hasPriceData && <text x={W - 4} y={P.t + cH / 2} textAnchor="middle" fill="#06b6d4" fontSize="9" opacity="0.7" transform={`rotate(90,${W - 4},${P.t + cH / 2})`}>TSLA 주가</text>}
+      {hasPriceData && <text x={W - 8} y={P.t + cH / 2} textAnchor="middle" fill="#06b6d4" fontSize="9" opacity="0.7" transform={`rotate(-90,${W - 8},${P.t + cH / 2})`}>TSLA 주가</text>}
+      {/* 주가 로딩 중 스피너 (우상단) */}
+      {priceLoading && (
+        <g>
+          <circle cx={W - P.r + 30} cy={P.t + 8} r="4.5" fill="none" stroke="#06b6d4" strokeWidth="1.5" strokeDasharray="7 5" opacity="0.7">
+            <animateTransform attributeName="transform" type="rotate" from={`0 ${W - P.r + 30} ${P.t + 8}`} to={`360 ${W - P.r + 30} ${P.t + 8}`} dur="1.2s" repeatCount="indefinite" />
+          </circle>
+          <text x={W - P.r + 42} y={P.t + 12} fill="#06b6d4" fontSize="7.5" opacity="0.7">주가 로딩중</text>
+        </g>
+      )}
     </svg>
   );
 }
@@ -3313,12 +3334,26 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
     });
   }, []);
 
-  // 차트용 일봉 데이터 (주봉보다 정밀한 가격)
-  const [chartDailyData, setChartDailyData] = useState(null);
+  // 차트용 일봉 데이터 (주봉보다 정밀한 가격) — KST 7시 기준 하루 1회 캐시
+  const [chartDailyData, setChartDailyData] = useState(() => {
+    const c = loadDailyCache();
+    if (!c || !isPriceCacheValid(c)) return null;
+    return deserializeDailyCache(c);
+  });
+  const [chartPriceLoading, setChartPriceLoading] = useState(() => {
+    const c = loadDailyCache();
+    return !(c && isPriceCacheValid(c) && deserializeDailyCache(c)?.length);
+  });
   useEffect(() => {
+    const c = loadDailyCache();
+    if (isPriceCacheValid(c)) {
+      const cached = deserializeDailyCache(c);
+      if (cached?.length) { setChartDailyData(cached); setChartPriceLoading(false); return; }
+    }
     fetchTSLADailyData()
-      .then(d => setChartDailyData(d))
-      .catch(() => {});
+      .then(d => { setChartDailyData(d); saveDailyCache(d); })
+      .catch(() => {})
+      .finally(() => setChartPriceLoading(false));
   }, []);
 
   // Drive에서 불러온 후 로컬 갱신
@@ -3693,7 +3728,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} dailyData={chartDailyData} />
+          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} dailyData={chartDailyData} priceLoading={chartPriceLoading} />
         </div>
       </div>
       </Section>{/* /Section 2 */}
@@ -4496,58 +4531,7 @@ function App() {
     }
   }, [results, apiKey, priceReady]);
 
-  // ── 세션 저장 공통 함수 (forecast 유무 무관) ─────────────────────────────
-  const doSaveSession = useCallback((currentForecast) => {
-    if (!isCollected || sessionSavedRef.current) return false;
-    const analyzed = currentNews.filter(n => results[n.id]);
-    if (analyzed.length === 0) return false;
-    if (!sessionIdRef.current) sessionIdRef.current = newSessionId();
-    const avgScore = analyzed.reduce((s, n) => s + results[n.id].impact_score, 0) / analyzed.length;
-    const f = currentForecast || null;
-    const saved = saveSession({
-      id: sessionIdRef.current,
-      date: new Date().toISOString().split('T')[0],
-      displayDate: new Date().toLocaleDateString('ko-KR'),
-      source: 'collected',
-      news: currentNews,
-      analyses: Object.fromEntries(analyzed.map(n => [n.id, results[n.id]])),
-      forecast: f,
-      avgScore: Math.round(avgScore * 10) / 10,
-      buyIndex: f?.forecasts?.[0]?.buy_index ?? null,
-      overallSignal: f?.overall_signal ?? null,
-      riskLevel: f?.risk_level ?? null,
-      topRules: getTopRules(analyzed.map(n => results[n.id])),
-      bullish: analyzed.filter(n => results[n.id].direction === 'bullish').length,
-      bearish: analyzed.filter(n => results[n.id].direction === 'bearish').length,
-      analyzedCount: analyzed.length,
-      timestamp: Date.now(),
-    });
-    if (!saved) { console.error('saveSession 실패 — localStorage 저장 불가'); return false; }
-    saveLastNews(currentNews, isCollected, sessionIdRef.current);
-    sessionSavedRef.current = true;
-    if (driveTokenRef.current) {
-      driveWriteSessions(driveTokenRef.current, getNewsDB().sessions)
-        .then(() => setDriveLastSync(new Date().toLocaleTimeString('ko-KR')))
-        .catch(e => setDriveError('자동 Drive 저장 실패: ' + e.message));
-    }
-    return true;
-  }, [isCollected, currentNews, results]);
 
-  // forecast 생성 완료 시 자동 저장 (기존 동작 유지)
-  useEffect(() => {
-    if (forecast && !sessionSavedRef.current && isCollected) {
-      doSaveSession(forecast);
-    }
-  }, [forecast]);
-
-  // 분석 완료 시 자동 저장 (forecast 없어도 — 예: priceReady 실패 시 대비)
-  useEffect(() => {
-    const allDone = currentNews.length > 0 && currentNews.every(n => results[n.id]);
-    if (allDone && isCollected && !sessionSavedRef.current && !forecast && !forecastLoading) {
-      // forecast가 없는 상태에서 모든 분석 완료 → 바로 저장 (forecast는 나중에 추가)
-      doSaveSession(null);
-    }
-  }, [results, isCollected, forecastLoading]);
 
   useEffect(() => {
     try {
