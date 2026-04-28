@@ -1,6 +1,281 @@
 {
   "sessions": [
     {
+      "id": "auto-1777403666404",
+      "date": "2026-04-29",
+      "displayDate": "2026.04.29",
+      "kstTime": "04:13",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777403638986,
+          "title": "테슬라, 1분기 수익 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 넘어섰습니다. 이는 2분기 연속 예상치를 상회하는 실적이며, 아시아-태평양 및 남미 지역의 지속적인 수요 증가와 북미 및 유럽-중동 지역의 수요 회복을 언급하며 전기차 사업의 회복 가능성을 시사했습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777403638987,
+          "title": "테슬라, AI 및 로봇 사업 확대를 위해 올해 250억 달러 이상 투자 예상",
+          "summary": "테슬라는 일론 머스크의 전기차 기업을 AI 및 로봇 회사로 전환하려는 노력을 지원하기 위해 올해 250억 달러 이상을 지출할 것으로 예상됩니다. 이는 작년 지출액의 3배에 달하는 금액으로, 지난 2년간 감소세를 보인 자동차 사업의 부담을 덜어줄 것으로 보입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Musk"
+        },
+        {
+          "id": 1777403638988,
+          "title": "테슬라, 1분기 잉여현금흐름 예상치 크게 상회",
+          "summary": "테슬라의 1분기 잉여현금흐름은 14억 4천만 달러로, 마이너스 18억 6천만 달러였던 예상치를 크게 상회했습니다. 이는 회사의 재정 건전성에 긍정적인 신호로 해석될 수 있습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777403638989,
+          "title": "테슬라, 사이버캡, 세미, 메가팩 생산 2026년 시작 예정",
+          "summary": "테슬라는 사이버캡, 테슬라 세미, 메가팩 생산이 2026년에 시작될 것이라고 밝혔습니다. 또한, 휴머노이드 로봇인 옵티머스의 1세대 생산 라인이 설치 중이며, 사이버캡과 테슬라 세미는 2026년 일정대로 진행되고 있다고 언급했습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777403638990,
+          "title": "테슬라, 네덜란드에서 완전 자율 주행 승인 획득",
+          "summary": "테슬라는 4월에 네덜란드에서 완전 자율 주행(Full Self-Driving) 승인을 받았습니다. 이는 규제 당국의 승인을 얻는 데 어려움을 겪었던 완전 자율 주행 기술의 확장에 긍정적인 소식입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777403638991,
+          "title": "테슬라, 달라스와 휴스턴에서 무인 로보택시 운행 시작",
+          "summary": "테슬라는 달라스와 휴스턴에서 무인 로보택시 운행을 시작했습니다. 이는 테슬라가 자율 주행 기술을 상용화하려는 노력의 일환입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777403638992,
+          "title": "테슬라, 1분기 매출 예상치 소폭 상회",
+          "summary": "테슬라의 1분기 매출은 223억 9천만 달러로, 월스트리트 예상치인 221억 9천만 달러를 소폭 상회했습니다. 이는 전년 대비 16% 증가한 수치입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777403638993,
+          "title": "테슬라, 1분기 조정 총 마진율 19.2% 기록",
+          "summary": "테슬라의 1분기 조정 총 마진율(규제 크레딧 제외)은 19.2%로, 전년 동기 12.5%에서 상승했습니다. 이는 수익성 개선을 나타내는 지표입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777403638994,
+          "title": "테슬라, 옵티머스 1세대 생산 라인 프레몬트 공장에 설치 중",
+          "summary": "테슬라는 휴머노이드 로봇 옵티머스의 1세대 생산 라인을 프레몬트 공장에 설치하고 있으며, 이는 모델 S 및 모델 X 라인을 대체할 예정입니다. 또한, 텍사스 기가팩토리에서는 2세대 라인을 준비 중이며, 장기적으로 연간 1천만 대 생산을 목표로 하고 있습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Product"
+        },
+        {
+          "id": 1777403638995,
+          "title": "테슬라 주가, 실적 발표 후 상승",
+          "summary": "테슬라 주가는 1분기 실적 발표 후 시간 외 거래에서 4.5% 이상 상승했습니다. 이는 투자자들이 회사의 실적과 미래 계획에 긍정적으로 반응했음을 보여줍니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1777403638986": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 10% 이상 상회하며 전기차 수요 회복 가능성을 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777403638987": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇 사업 확대를 위해 대규모 투자를 계획하는 것은 미래 성장 동력을 확보하고 자동차 사업 의존도를 줄이는 긍정적인 신호입니다.",
+          "key_factors": [
+            "AI 및 로봇 사업 투자 확대",
+            "미래 성장 동력 확보",
+            "자동차 사업 의존도 감소"
+          ]
+        },
+        "1777403638988": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 잉여현금흐름이 예상치를 크게 상회하여 회사의 재정 건전성에 긍정적인 신호로 해석됩니다.",
+          "key_factors": [
+            "잉여현금흐름 예상치 상회",
+            "재정 건전성"
+          ]
+        },
+        "1777403638989": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡, 세미, 메가팩 생산을 2026년에 시작하고 옵티머스 1세대 생산 라인을 설치 중이라고 밝히면서 신제품 및 생산 확대에 대한 긍정적인 전망을 제시했습니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "테슬라 세미 생산 시작",
+            "메가팩 생산 시작",
+            "옵티머스 1세대 생산 라인 설치"
+          ]
+        },
+        "1777403638990": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 네덜란드에서 완전 자율 주행 승인을 획득한 것은 FSD 기술 확장에 긍정적인 중요한 이정표입니다.",
+          "key_factors": [
+            "FSD 승인",
+            "유럽 시장 확장"
+          ]
+        },
+        "1777403638991": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 달라스와 휴스턴에서 무인 로보택시 운행을 시작한 것은 자율 주행 기술 상용화의 중요한 진전으로, 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "로보택시 상용화",
+            "자율 주행 기술 발전"
+          ]
+        },
+        "1777403638992": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 매출이 시장 예상치를 소폭 상회하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "1분기 매출 예상치 상회",
+            "전년 대비 16% 증가"
+          ]
+        },
+        "1777403638993": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 조정 총 마진율이 전년 동기 대비 크게 상승하여 수익성 개선을 나타내므로 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "조정 총 마진율 상승",
+            "수익성 개선"
+          ]
+        },
+        "1777403638994": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 옵티머스 1세대 생산 라인을 프레몬트 공장에 설치하고 2세대 라인을 준비하며 장기적으로 연간 1천만 대 생산을 목표로 하는 것은 신제품 이정표 달성으로 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "옵티머스 1세대 생산 라인 설치",
+            "모델 S/X 라인 대체",
+            "텍사스 기가팩토리 2세대 라인 준비",
+            "연간 1천만 대 생산 목표"
+          ]
+        },
+        "1777403638995": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라 주가는 1분기 실적 발표 후 시간 외 거래에서 4.5% 이상 상승하여 투자자들이 회사의 실적과 미래 계획에 긍정적으로 반응했음을 나타냅니다.",
+          "key_factors": [
+            "1분기 실적 발표",
+            "시간 외 거래 상승",
+            "미래 계획에 대한 긍정적 반응"
+          ]
+        }
+      },
+      "avgScore": 3.2,
+      "buyIndex": 100,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12"
+      ],
+      "bullish": 10,
+      "bearish": 0,
+      "neutral": 0,
+      "muskXSentiment": null,
+      "newsCategories": {
+        "total": 10,
+        "Earnings": 4,
+        "Musk": 1,
+        "Product": 3,
+        "Regulatory": 1,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.02,
+        "qqqChg": 0.18,
+        "vixClose": 18.15999984741211,
+        "wtiChg": 3.42,
+        "cnyChg": 0.21,
+        "prevTslaChg": 1.77,
+        "rsi": 31.6,
+        "macd": {
+          "macd": -8.650105008727508,
+          "signal": -3.9897808691822663,
+          "hist": -4.660324139545241,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.82,
+          "middle": 403.96,
+          "lower": 337.1,
+          "pos": 0.307
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 82,
+        "strongAmp": 5,
+        "catFinancial": 3,
+        "macdTrend": -2,
+        "earningsWeek": 12
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777403666404
+    },
+    {
       "id": "auto-1777385621166",
       "date": "2026-04-28",
       "displayDate": "2026.04.28",
@@ -3443,5 +3718,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-28 23:12 KST"
+  "lastUpdated": "2026-04-29 04:13 KST"
 }
