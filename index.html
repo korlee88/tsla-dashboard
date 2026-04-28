@@ -359,74 +359,89 @@ function RuleBadges({ rules }) {
 
 // ─── 컴포넌트: NewsCard ────────────────────────────────────────────────────
 
-function NewsCard({ news, result, loading, error }) {
-  const glowClass = !result ? '' : result.direction === 'bullish' ? 'card-glow-bull' : result.direction === 'bearish' ? 'card-glow-bear' : 'card-glow-neu';
-  const dir = result ? directionLabel(result.direction) : null;
+function NewsCard({ news, result, loading, error, onAnalyze, apiKey }) {
+  const [open, setOpen] = useState(false);
+  const dir  = result ? directionLabel(result.direction) : null;
   const conf = result ? confidenceDot(result.confidence) : null;
+  const borderColor = result
+    ? (result.direction === 'bullish' ? 'rgba(34,197,94,0.35)'
+     : result.direction === 'bearish' ? 'rgba(239,68,68,0.35)' : '#2A2D35')
+    : '#2A2D35';
 
   return (
-    <div
-      className={`rounded-xl p-4 border transition-all duration-300 ${glowClass}`}
-      style={{ background: '#1C1F26', borderColor: result ? (result.direction === 'bullish' ? 'rgba(34,197,94,0.3)' : result.direction === 'bearish' ? 'rgba(239,68,68,0.3)' : '#2A2D35') : '#2A2D35' }}
-    >
-      {/* header */}
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <div className="flex-1">
-          <h3 className="text-sm font-semibold leading-snug text-gray-100">{news.title}</h3>
-          <div className="flex items-center gap-2 mt-1">
+    <div className="rounded-xl border overflow-hidden transition-all duration-200"
+      style={{ background: '#1C1F26', borderColor }}>
+
+      {/* ── 접힌 헤더 (항상 표시) ── */}
+      <div className="flex items-center gap-3 px-4 py-3 cursor-pointer select-none"
+        onClick={() => setOpen(v => !v)}>
+
+        {/* 방향 인디케이터 */}
+        {loading
+          ? <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full spinning shrink-0" />
+          : result
+            ? <span className="text-base shrink-0">{result.direction === 'bullish' ? '📈' : result.direction === 'bearish' ? '📉' : '➡'}</span>
+            : <span className="w-4 h-4 rounded-full shrink-0" style={{ background: '#2A2D35', border: '1px solid #374151' }} />
+        }
+
+        {/* 제목 + 메타 */}
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-gray-100 leading-snug truncate">{news.title}</p>
+          <div className="flex items-center gap-2 mt-0.5 flex-wrap">
             <span className="text-xs text-gray-500">{news.source}</span>
             <span className="text-gray-700 text-xs">·</span>
             <span className="text-xs text-gray-500">{news.date}</span>
-            <span className="text-xs px-1.5 py-0.5 rounded text-gray-400" style={{ background: '#252830', border: '1px solid #2A2D35' }}>{news.category}</span>
+            <span className="text-xs px-1.5 py-0.5 rounded text-gray-500" style={{ background: '#252830' }}>{news.category}</span>
           </div>
         </div>
-        {result && (
-          <span
-            className="text-xs font-bold px-2 py-1 rounded-lg shrink-0 whitespace-nowrap"
-            style={{ color: dir.color, background: dir.bg, border: `1px solid ${dir.color}40` }}
-          >
-            {result.direction === 'bullish' ? '📈 강세' : result.direction === 'bearish' ? '📉 약세' : '➡ 중립'}
-          </span>
-        )}
-        {loading && (
-          <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full spinning shrink-0 mt-0.5" />
-        )}
+
+        {/* 점수 + 화살표 */}
+        <div className="flex items-center gap-2 shrink-0">
+          {result && (
+            <span className="text-sm font-black tabular-nums" style={{ color: dir.color }}>
+              {result.impact_score >= 0 ? '+' : ''}{result.impact_score}
+            </span>
+          )}
+          {!result && !loading && onAnalyze && (
+            <button onClick={e => { e.stopPropagation(); onAnalyze(news); }}
+              disabled={!apiKey}
+              className="text-xs px-2.5 py-1 rounded-lg disabled:opacity-30"
+              style={{ background: '#252830', border: '1px solid #374151', color: '#94a3b8' }}>
+              분석
+            </button>
+          )}
+          <span className="text-gray-600 text-xs transition-transform duration-200"
+            style={{ transform: open ? 'rotate(180deg)' : 'none', display: 'inline-block' }}>▼</span>
+        </div>
       </div>
 
-      {/* summary */}
-      <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">{news.summary}</p>
+      {/* ── 펼친 상세 내용 ── */}
+      {open && (
+        <div className="px-4 pb-4 border-t border-gray-800 pt-3 space-y-3">
+          {/* 요약 */}
+          <p className="text-xs text-gray-400 leading-relaxed">{news.summary}</p>
 
-      {/* result section */}
-      {result && (
-        <div className="mt-3 pt-3 border-t border-gray-800">
-          <ImpactGauge score={result.impact_score} />
-          <RuleBadges rules={result.triggered_rules} />
-
-          {/* reasoning */}
-          <p className="text-xs text-gray-300 mt-2 leading-relaxed italic">
-            "{result.reasoning}"
-          </p>
-
-          {/* key factors + confidence */}
-          <div className="flex items-start justify-between mt-2 gap-2">
-            <div className="flex flex-wrap gap-1">
-              {result.key_factors?.map((f, i) => (
-                <span key={i} className="text-xs px-1.5 py-0.5 rounded text-gray-400" style={{ background: '#252830', border: '1px solid #2A2D35' }}>
-                  {f}
+          {result && (
+            <>
+              <ImpactGauge score={result.impact_score} />
+              <RuleBadges rules={result.triggered_rules} />
+              <p className="text-xs text-gray-300 leading-relaxed italic">"{result.reasoning}"</p>
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex flex-wrap gap-1">
+                  {result.key_factors?.map((f, i) => (
+                    <span key={i} className="text-xs px-1.5 py-0.5 rounded text-gray-400"
+                      style={{ background: '#252830', border: '1px solid #2A2D35' }}>{f}</span>
+                  ))}
+                </div>
+                <span className="text-xs shrink-0 flex items-center gap-1" style={{ color: conf.color }}>
+                  <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: conf.color }} />
+                  {conf.label}
                 </span>
-              ))}
-            </div>
-            <span className="text-xs shrink-0 flex items-center gap-1" style={{ color: conf.color }}>
-              <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: conf.color }} />
-              {conf.label}
-            </span>
-          </div>
-        </div>
-      )}
+              </div>
+            </>
+          )}
 
-      {error && (
-        <div className="mt-3 pt-3 border-t border-red-900">
-          <p className="text-xs text-red-400">⚠ 분석 오류: {error}</p>
+          {error && <p className="text-xs text-red-400">⚠ 분석 오류: {error}</p>}
         </div>
       )}
     </div>
@@ -2571,9 +2586,8 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
       </div>
 
       {/* ── 매수지수 추세 + 주가 차트 ─────────────────────────── */}
-      <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">매수지수 추세 &amp; 7일 예측</p>
+      <Section title="매수지수 추세 & 7일 예측" icon="📈" accent="#a78bfa"
+        extra={
           <div className="flex gap-3 text-xs">
             {[['#22c55e','매수(≥65)'],['#f59e0b','관망(45~64)'],['#ef4444','매도(<45)']].map(([c,l])=>(
               <span key={l} className="flex items-center gap-1">
@@ -2592,7 +2606,7 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
               </span>
             )}
           </div>
-        </div>
+        }>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
           <TrendChart
             sessions={[...valid].reverse()}
@@ -2602,12 +2616,11 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
             priceLoading={priceLoading || weeklyLoading}
           />
         </div>
-      </div>
+      </Section>
 
       {/* ── 7일 일별 예측 ─────────────────────────────────────── */}
       {daily7.length > 0 && (
-        <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">📅 7일 일별 예측</p>
+        <Section title="7일 일별 예측" icon="📅" accent="#06b6d4">
           <div className="grid grid-cols-7 gap-1.5">
             {daily7.map((d, i) => {
               const pct = typeof d.change_pct === 'number' ? d.change_pct : 0;
@@ -2637,13 +2650,12 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
               );
             })}
           </div>
-        </div>
+        </Section>
       )}
 
       {/* ── 최근 세션 히스토리 ─────────────────────────────────── */}
       {valid.length > 0 && (
-        <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">🕐 최근 수집 히스토리</p>
+        <Section title="최근 수집 히스토리" icon="🕐" defaultOpen={false}>
           <div className="space-y-1.5">
             {valid.slice(0, 8).map((s, i) => {
               const bi   = s.buyIndex;
@@ -2673,7 +2685,7 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
               );
             })}
           </div>
-        </div>
+        </Section>
       )}
 
     </div>
@@ -2908,7 +2920,7 @@ function SettingsPage({ onBack,
 // ─── 모바일: 하단 탭 네비게이션 ──────────────────────────────────────────────
 function MobileBottomNav({ page, setPage, dbCount }) {
   const tabs = [
-    { key: 'dashboard', icon: '📊', label: '대시보드' },
+    { key: 'dashboard', icon: '📰', label: '뉴스수집' },
     { key: 'signal',    icon: '🎯', label: '매매신호' },
     { key: 'trend',     icon: '📈', label: '트렌드',  badge: dbCount },
     { key: 'calendar',  icon: '📅', label: '캘린더' },
@@ -3213,6 +3225,20 @@ function MobileDashboard({
   );
 }
 
+// ─── 캘린더 이벤트 코멘트 (localStorage) ─────────────────────────────────
+const CAL_COMMENTS_KEY = 'tsla_cal_comments_v1';
+function loadCalComments() {
+  try { return JSON.parse(localStorage.getItem(CAL_COMMENTS_KEY) || '{}'); } catch { return {}; }
+}
+function saveCalComment(eventId, text) {
+  try {
+    const c = loadCalComments();
+    if (text.trim()) c[eventId] = { text: text.trim(), savedAt: Date.now() };
+    else delete c[eventId];
+    localStorage.setItem(CAL_COMMENTS_KEY, JSON.stringify(c));
+  } catch {}
+}
+
 // ─── 컴포넌트: CalendarPage ───────────────────────────────────────────────
 
 function CalendarPage({ onBack, desktopMode }) {
@@ -3225,6 +3251,14 @@ function CalendarPage({ onBack, desktopMode }) {
   const [currentMonth, setCurrentMonth]   = useState(() => new Date().getMonth());
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [activeFilter, setActiveFilter]   = useState(null);
+  const [comments, setComments]           = useState(() => loadCalComments());
+  const [editingComment, setEditingComment] = useState('');
+  const today = new Date().toISOString().split('T')[0];
+
+  const saveComment = (eventId, text) => {
+    saveCalComment(eventId, text);
+    setComments(loadCalComments());
+  };
 
   useEffect(() => {
     setLoading(true); setLoadError(false);
@@ -3272,7 +3306,7 @@ function CalendarPage({ onBack, desktopMode }) {
   const EventPill = ({ ev, compact }) => {
     const meta = CAL_CATEGORY_META[ev.category] || CAL_CATEGORY_META['기타'];
     return (
-      <button onClick={() => setSelectedEvent(ev)}
+      <button onClick={() => { setSelectedEvent(ev); setEditingComment(comments[ev.id]?.text || ''); }}
         className="w-full text-left rounded px-1 py-0.5 mb-0.5 truncate hover:opacity-80 transition-opacity"
         style={{ background: meta.bg, border: `1px solid ${meta.border}`, color: meta.color,
                  fontSize: 10, fontWeight: 600, opacity: ev.confirmed ? 1 : 0.65 }}>
@@ -3440,29 +3474,36 @@ function CalendarPage({ onBack, desktopMode }) {
             </div>
             <div style={{ divideColor: '#2A2D35' }}>
               {filteredMonthEvents.sort((a,b) => a.date.localeCompare(b.date)).map(ev => {
-                const meta = CAL_CATEGORY_META[ev.category] || CAL_CATEGORY_META['기타'];
+                const meta    = CAL_CATEGORY_META[ev.category] || CAL_CATEGORY_META['기타'];
+                const isPast  = ev.date < today;
+                const comment = comments[ev.id];
                 return (
-                  <button key={ev.id} onClick={() => setSelectedEvent(ev)}
+                  <button key={ev.id} onClick={() => { setSelectedEvent(ev); setEditingComment(comment?.text || ''); }}
                     className="w-full text-left px-4 py-3 flex items-start gap-3 hover:opacity-80 transition-opacity border-b"
-                    style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                    style={{ background: isPast ? '#161820' : '#1C1F26', borderColor: '#2A2D35' }}>
                     <div className="w-10 h-10 rounded-lg flex flex-col items-center justify-center shrink-0"
-                      style={{ background: meta.bg, border: `1px solid ${meta.border}` }}>
-                      <span style={{ fontSize: 15 }}>{meta.dot}</span>
-                      <span className="font-bold" style={{ color: meta.color, fontSize: 9 }}>{ev.date.slice(8)}일</span>
+                      style={{ background: isPast ? '#1a1c24' : meta.bg, border: `1px solid ${isPast ? '#2A2D35' : meta.border}`, opacity: isPast ? 0.6 : 1 }}>
+                      <span style={{ fontSize: 15 }}>{isPast ? '✓' : meta.dot}</span>
+                      <span className="font-bold" style={{ color: isPast ? '#4b5563' : meta.color, fontSize: 9 }}>{ev.date.slice(8)}일</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-semibold text-gray-100 truncate">{ev.title}</span>
-                        {!ev.confirmed && <span className="text-xs text-yellow-500 shrink-0">미확정</span>}
-                        {ev.importance === 'high' && (
+                        <span className="text-sm font-semibold truncate" style={{ color: isPast ? '#6b7280' : '#f1f5f9' }}>{ev.title}</span>
+                        {isPast && <span className="text-xs px-1.5 py-0.5 rounded text-gray-600" style={{ background: '#1a1c24', border: '1px solid #2A2D35' }}>지남</span>}
+                        {!ev.confirmed && !isPast && <span className="text-xs text-yellow-500 shrink-0">미확정</span>}
+                        {ev.importance === 'high' && !isPast && (
                           <span className="text-xs px-1.5 py-0.5 rounded font-bold shrink-0"
                             style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>중요</span>
                         )}
                       </div>
-                      <p className="text-xs text-gray-500 mt-0.5">
-                        {ev.date}{ev.time ? ` · ${ev.time} ${ev.timezone || ''}` : ''} · {ev.category} · {ev.source}
+                      <p className="text-xs text-gray-600 mt-0.5">
+                        {ev.date}{ev.time ? ` · ${ev.time} ${ev.timezone || ''}` : ''} · {ev.category}
                       </p>
-                      {ev.description && <p className="text-xs text-gray-400 mt-1 leading-relaxed line-clamp-2">{ev.description}</p>}
+                      {comment && (
+                        <p className="text-xs mt-1 leading-relaxed" style={{ color: '#60a5fa' }}>
+                          💬 {comment.text}
+                        </p>
+                      )}
                     </div>
                   </button>
                 );
@@ -3518,6 +3559,40 @@ function CalendarPage({ onBack, desktopMode }) {
                     </span>
                   </div>
                 ))}
+              </div>
+
+              {/* ── 코멘트 ── */}
+              <div className="mt-4 pt-4" style={{ borderTop: '1px solid #2A2D35' }}>
+                <p className="text-xs text-gray-500 mb-2 flex items-center gap-1.5">
+                  💬 메모
+                  {selectedEvent.date < today && (
+                    <span className="px-1.5 py-0.5 rounded text-gray-600" style={{ background: '#161920', border: '1px solid #2A2D35', fontSize: 9 }}>지난 이벤트</span>
+                  )}
+                </p>
+                <textarea
+                  value={editingComment}
+                  onChange={e => setEditingComment(e.target.value)}
+                  placeholder={selectedEvent.date < today ? '실제 결과·영향 메모...' : '이벤트 관련 메모...'}
+                  rows={3}
+                  className="w-full text-xs rounded-lg px-3 py-2 text-gray-200 outline-none resize-none focus:ring-1 focus:ring-blue-500"
+                  style={{ background: '#14171e', border: '1px solid #2A2D35' }}
+                />
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={() => { saveComment(selectedEvent.id, editingComment); setSelectedEvent(null); }}
+                    className="flex-1 py-1.5 rounded-lg text-xs font-semibold text-white"
+                    style={{ background: '#1d4ed8' }}>
+                    저장
+                  </button>
+                  {comments[selectedEvent.id] && (
+                    <button
+                      onClick={() => { saveComment(selectedEvent.id, ''); setEditingComment(''); }}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold text-red-400"
+                      style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)' }}>
+                      삭제
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -4721,7 +4796,7 @@ function App() {
   const [driveError, setDriveError]             = useState(null);
   const [driveLastSync, setDriveLastSync]       = useState(null);
   const driveTokenRef = useRef(null);
-  const [page, setPage]         = useState('trend');
+  const [page, setPage]         = useState('signal');
   const [ruleOpen, setRuleOpen] = useState(false);
   const [currentNews, setCurrentNews]       = useState(() => loadLastNews()?.items ?? SAMPLE_NEWS);
   const [isCollected, setIsCollected]       = useState(() => loadLastNews()?.isCollected ?? false);
@@ -5114,7 +5189,7 @@ function App() {
       </div>
       <div className="flex items-center gap-2">
         {[
-          { key: 'dashboard', icon: '📊', label: '대시보드' },
+          { key: 'dashboard', icon: '📰', label: '뉴스 수집' },
           { key: 'signal',    icon: '🎯', label: '매매 신호' },
           { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
           { key: 'calendar',  icon: '📅', label: '캘린더' },
@@ -5259,20 +5334,13 @@ function App() {
       )}
 
       <div className="flex gap-4 items-start">
-        {/* 뉴스 그리드 */}
+        {/* 뉴스 목록 (아코디언) */}
         <div className="flex-1 min-w-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
+          <div className="space-y-2">
             {currentNews.map(news => (
-              <div key={news.id} className="relative">
-                <NewsCard news={news} result={results[news.id]} loading={loading[news.id]} error={errors[news.id]} />
-                {!results[news.id] && !loading[news.id] && (
-                  <button onClick={() => analyzeSingle(news)} disabled={!apiKey}
-                    className="absolute bottom-4 right-4 text-xs px-3 py-1 rounded-lg disabled:opacity-30 hover:opacity-80"
-                    style={{ background: '#252830', border: '1px solid #2A2D35', color: '#94a3b8' }}>
-                    단독 분석
-                  </button>
-                )}
-              </div>
+              <NewsCard key={news.id} news={news}
+                result={results[news.id]} loading={loading[news.id]}
+                error={errors[news.id]} onAnalyze={analyzeSingle} apiKey={apiKey} />
             ))}
           </div>
         </div>
