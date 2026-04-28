@@ -1712,7 +1712,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
     </div>
   );
   if (!forecast) return (
-    <div className="rounded-xl border mt-6 overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+    <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
       <div className="px-5 py-4 border-b" style={{ borderColor: '#2A2D35', background: '#14171e' }}>
         <h2 className="text-sm font-bold text-gray-200 uppercase tracking-wider">투자 전망 분석</h2>
         <p className="text-xs text-gray-500 mt-0.5">뉴스 종합 · 단기~최장기 5개 시간대</p>
@@ -1746,7 +1746,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
   const priceStale = priceDiffPct > 3; // 3% 이상 차이나면 경고
 
   return (
-    <div className="rounded-xl border mt-6 overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+    <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
       {/* Header */}
       <div className="px-5 pt-5 pb-4 border-b" style={{ borderColor: '#2A2D35' }}>
         <div className="flex items-center justify-between flex-wrap gap-3">
@@ -3197,6 +3197,39 @@ function CalendarPage({ onBack, desktopMode }) {
   );
 }
 
+// ─── 컴포넌트: CollapsibleSection ────────────────────────────────────────────
+function CollapsibleSection({ title, icon, badge, defaultOpen = true, children, accent, extra }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const borderColor = accent ? `${accent}40` : '#2A2D35';
+  const iconColor   = accent || '#6b7280';
+  return (
+    <div className="rounded-xl border overflow-hidden mb-4" style={{ background: '#1C1F26', borderColor }}>
+      {/* 섹션 헤더 */}
+      <div className="flex items-center px-4 py-3 gap-2" style={{ borderBottom: open ? `1px solid ${borderColor}` : 'none' }}>
+        {/* 토글 영역 (타이틀 클릭) */}
+        <button className="flex items-center gap-2.5 flex-1 min-w-0 text-left hover:opacity-80 transition-opacity"
+          onClick={() => setOpen(v => !v)}>
+          <span className="text-base shrink-0" style={{ filter: open ? 'none' : 'grayscale(60%)' }}>{icon}</span>
+          <span className="text-sm font-bold text-gray-200 truncate">{title}</span>
+          {badge != null && (
+            <span className="text-xs px-1.5 py-0.5 rounded-full font-semibold shrink-0"
+              style={{ background: `${iconColor}18`, color: iconColor, border: `1px solid ${iconColor}30` }}>
+              {badge}
+            </span>
+          )}
+        </button>
+        {/* 추가 컨트롤 (편집버튼 등) — 클릭 이벤트 별도 */}
+        {extra && <div className="shrink-0 flex items-center gap-1.5" onClick={e => e.stopPropagation()}>{extra}</div>}
+        {/* 접기/펼치기 화살표 */}
+        <button onClick={() => setOpen(v => !v)} className="shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-gray-700 transition-colors ml-1">
+          <span className="text-gray-500 text-xs" style={{ display: 'inline-block', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▼</span>
+        </button>
+      </div>
+      {open && <div>{children}</div>}
+    </div>
+  );
+}
+
 // ─── 컴포넌트: TrendPage ──────────────────────────────────────────────────
 
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError,
@@ -3333,9 +3366,16 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         )}
       </div>
 
-      {/* Stats — 통합 프레임 */}
-      <div className="rounded-xl mb-4 md:mb-5" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
-        <div className="grid grid-cols-3 divide-x" style={{ borderColor: '#2A2D35' }}>
+      {/* ── Section 1: 지수 현황 ──────────────────────────────────────────────── */}
+      <CollapsibleSection
+        title="지수 현황"
+        icon="📊"
+        badge={latest != null ? `${latest}pt` : null}
+        accent={latest != null ? bCol(latest) : null}
+        defaultOpen={true}
+      >
+        {/* Stats */}
+        <div className="grid grid-cols-3 divide-x border-b" style={{ borderColor: '#2A2D35' }}>
           {[
             ['최근 매수지수', latest ?? '─', latest ? bCol(latest) : '#6b7280'],
             ['평균 매수지수', avg    ?? '─', avg    ? bCol(avg)    : '#6b7280'],
@@ -3353,9 +3393,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
             </div>
           ))}
         </div>
-      </div>
-      {/* 뉴스 브리핑 + 오늘 평가/내일 예측 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
+        {/* 뉴스 브리핑 + 오늘 평가/내일 예측 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
 
         {/* 오늘의 뉴스 브리핑 */}
         <div className="rounded-xl border p-4 flex flex-col" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
@@ -3590,61 +3629,61 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
             </div>
           )}
         </div>
-      </div>
+      </CollapsibleSection>
 
-      {/* Trend Chart */}
-      <div className="rounded-xl p-4 border mb-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">매수지수 추세 차트</p>
-          <div className="flex gap-3 text-xs">
-            {[['매수', '#22c55e', '≥65'], ['관망', '#f59e0b', '45~64'], ['매도', '#ef4444', '<45']].map(([l, c, r]) => (
-              <span key={l} className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: c }} /><span className="text-gray-500">{l} ({r})</span></span>
-            ))}
+      {/* ── Section 2: 매수지수 추세 ──────────────────────────────────────────── */}
+      <CollapsibleSection title="매수지수 추세" icon="📈" accent="#a78bfa" defaultOpen={true}>
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">매수지수 추세 차트</p>
+            <div className="flex gap-3 text-xs">
+              {[['매수', '#22c55e', '≥65'], ['관망', '#f59e0b', '45~64'], ['매도', '#ef4444', '<45']].map(([l, c, r]) => (
+                <span key={l} className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: c }} /><span className="text-gray-500">{l} ({r})</span></span>
+              ))}
             <span className="flex items-center gap-1"><span className="w-5 h-0.5 rounded" style={{ background: '#a78bfa', borderTop: '1px dashed #a78bfa' }} /><span className="text-gray-500">7일예측</span></span>
             {weeklyData && <span className="flex items-center gap-1"><span className="w-5 h-0.5 rounded" style={{ background: '#06b6d4' }} /><span className="text-gray-500">실제주가</span></span>}
             <span className="text-gray-600">🔍수집 📋샘플</span>
           </div>
         </div>
-        <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} />
+          <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+            <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} />
+          </div>
         </div>
-      </div>
-      {/* Timeline */}
-      <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-        <div className="px-5 py-4 border-b flex items-center justify-between gap-2 flex-wrap" style={{ borderColor: '#2A2D35' }}>
-          <div className="flex items-center gap-3">
+      </CollapsibleSection>
+
+      {/* ── Section 3: 수집 타임라인 ─────────────────────────────────────────── */}
+      <CollapsibleSection
+        title="수집 타임라인"
+        icon="📋"
+        badge={sessions.length > 0 ? `${sessions.length}개 세션` : null}
+        defaultOpen={true}
+        extra={
+          <>
+            {editMode && checkedIds.size > 0 && (
+              <button onClick={deleteSelected}
+                className="text-xs font-bold px-2.5 py-1 rounded-lg"
+                style={{ background: '#ef44441a', color: '#ef4444', border: '1px solid #ef444440' }}>
+                🗑 {checkedIds.size}개
+              </button>
+            )}
             {editMode && (
               <input type="checkbox"
-                checked={autoSessions.length > 0 && autoSessions.every(s => checkedIds.has(s.id))}
+                checked={localSessions.length > 0 && localSessions.every(s => checkedIds.has(s.id))}
                 onChange={toggleAll}
                 className="w-4 h-4 accent-red-500 cursor-pointer"
                 title="전체 선택"
               />
             )}
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">종합 수집 타임라인</p>
-            <span className="text-xs text-gray-600">🤖 자동 분석 {autoSessions.length}건</span>
-          </div>
-          <div className="flex items-center gap-2">
-            {editMode && checkedIds.size > 0 && (
-              <button onClick={deleteSelected}
-                className="text-xs font-bold px-3 py-1.5 rounded-lg transition-colors"
-                style={{ background: '#ef44441a', color: '#ef4444', border: '1px solid #ef444440' }}
-                onMouseEnter={e => e.currentTarget.style.background = '#ef444430'}
-                onMouseLeave={e => e.currentTarget.style.background = '#ef44441a'}
-              >
-                🗑 선택 삭제 ({checkedIds.size}개)
-              </button>
-            )}
-            {autoSessions.length > 0 && (
+            {sessions.length > 0 && (
               <button onClick={toggleEditMode}
-                className="text-xs px-3 py-1.5 rounded-lg transition-colors"
-                style={{ background: editMode ? '#3b82f620' : '#ffffff0d', color: editMode ? '#60a5fa' : '#9ca3af', border: `1px solid ${editMode ? '#3b82f640' : '#ffffff15'}` }}
-              >
+                className="text-xs px-2.5 py-1 rounded-lg"
+                style={{ background: editMode ? '#3b82f620' : '#ffffff0d', color: editMode ? '#60a5fa' : '#9ca3af', border: `1px solid ${editMode ? '#3b82f640' : '#ffffff15'}` }}>
                 {editMode ? '✕ 취소' : '편집'}
               </button>
             )}
-          </div>
-        </div>
+          </>
+        }
+      >
         {sessions.length === 0 ? (
           <div className="py-14 text-center">
             <p className="text-3xl mb-3">📭</p>
@@ -3738,29 +3777,65 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
             })}
           </div>
         )}
-      </div>
-      {/* 투자 전망 분석 패널 */}
-      <ForecastPanel
-        forecast={forecast}
-        loading={forecastLoading}
-        error={forecastError}
-        onRetry={onRetryForecast}
-        weeklyData={weeklyData}
-        weeklyLoading={weeklyLoading}
-        weeklyError={weeklyError}
-        currentPrice={currentPrice}
-        priceLastFetch={priceLastFetch}
-        priceFromCache={priceFromCache}
-        priceReady={priceReady}
-        newsItems={newsItems}
-        newsResults={newsResults}
-        calendarEvents={calendarEvents || []}
-      />
+      </CollapsibleSection>
 
-      {/* 일별 종가 예측 정확도 카드 */}
-      <PredAccuracyCard dailyData={weeklyData} />
+      {/* ── Section 4: 투자 전망 분석 ───────────────────────────────────────── */}
+      <CollapsibleSection
+        title="투자 전망 분석"
+        icon="🔮"
+        badge={forecast?.overall_signal || null}
+        accent="#a78bfa"
+        defaultOpen={true}
+      >
+        <div className="p-0">
+          <ForecastPanel
+            forecast={forecast}
+            loading={forecastLoading}
+            error={forecastError}
+            onRetry={onRetryForecast}
+            weeklyData={weeklyData}
+            weeklyLoading={weeklyLoading}
+            weeklyError={weeklyError}
+            currentPrice={currentPrice}
+            priceLastFetch={priceLastFetch}
+            priceFromCache={priceFromCache}
+            priceReady={priceReady}
+            newsItems={newsItems}
+            newsResults={newsResults}
+            calendarEvents={calendarEvents || []}
+          />
+        </div>
+      </CollapsibleSection>
 
-      <p className="text-center text-xs text-gray-700 mt-6 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
+      {/* ── Section 5: 예측 정확도 ───────────────────────────────────────────── */}
+      <CollapsibleSection title="예측 정확도 추적" icon="🎯" accent="#f59e0b" defaultOpen={true}>
+        <div className="p-4 pt-0">
+          <PredAccuracyCard dailyData={weeklyData} />
+        </div>
+      </CollapsibleSection>
+
+      {/* ── Section 6: 등급표 참조 (기본 닫힘) ──────────────────────────────── */}
+      <CollapsibleSection title="매수지수 등급표" icon="📊" defaultOpen={false}>
+        <div className="p-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            {GRADES.map(g => (
+              <div key={g.grade} className="flex items-center gap-2 rounded-lg px-3 py-2"
+                style={{ background: g.bg, border: `1px solid ${g.color}30` }}>
+                <span className="text-base font-black w-5 shrink-0" style={{ color: g.color }}>{g.grade}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-xs font-bold" style={{ color: g.color }}>{g.label}</span>
+                    <span className="text-xs text-gray-600">{g.min}~{g.max}</span>
+                  </div>
+                  <p className="text-xs text-gray-500 leading-tight mt-0.5 truncate">{g.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <p className="text-center text-xs text-gray-700 mt-2 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
     </div>
   );
 }
