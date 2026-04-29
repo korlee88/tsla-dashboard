@@ -1,6 +1,311 @@
 {
   "sessions": [
     {
+      "id": "auto-1777471533998",
+      "date": "2026-04-29",
+      "displayDate": "2026.04.29",
+      "kstTime": "23:02",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777471446624,
+          "title": "일론 머스크, OpenAI 미래 관련 재판 증인으로 다시 출석 예정",
+          "summary": "일론 머스크가 OpenAI의 미래를 둘러싼 재판에 증인으로 다시 출석할 예정이다. 이는 테슬라 투자자들에게 머스크의 시간과 관심이 분산될 수 있다는 우려를 불러일으킬 수 있다.",
+          "source": "Reuters",
+          "date": "2026-04-29",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1777471446625,
+          "title": "스페이스X, 머스크 보상 계획에 화성 식민지화 목표 포함",
+          "summary": "스페이스X 이사회가 일론 머스크의 보상 계획을 승인했으며, 여기에는 화성 식민지화와 같은 야심찬 목표가 포함되어 있다. 이는 머스크의 관심이 스페이스X로 쏠리면서 테슬라에 대한 투자자들의 자본 순환 위험을 야기할 수 있다.",
+          "source": "Reuters",
+          "date": "2026-04-28",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1777471446626,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 전기차 수요 반등 시사",
+          "summary": "테슬라가 1분기 주당 순이익(EPS)에서 월스트리트 예상치를 상회했으며, 전 세계적으로 전기차 수요가 반등하고 있다고 밝혔다. 이는 장기간 어려움을 겪던 자동차 사업의 회복 가능성을 시사한다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777471446627,
+          "title": "테슬라, 250억 달러 규모의 공격적인 자본 지출 계획 발표로 투자자 우려",
+          "summary": "테슬라가 올해 AI, 칩, 공장에 약 250억 달러를 지출할 계획이라고 발표하면서 투자자들의 우려를 샀다. 이는 잉여 현금 흐름을 마이너스로 만들고 자금 조달 문제를 야기할 수 있기 때문이다.",
+          "source": "MarketBeat",
+          "date": "2026-04-28",
+          "category": "Market|Macro"
+        },
+        {
+          "id": 1777471446628,
+          "title": "미국 규제 당국, 모델 Y 스티어링 볼트 조사 종결, 리콜 불필요",
+          "summary": "미국 규제 당국(NHTSA)이 모델 Y 스티어링 볼트 보고서에 대한 조사를 리콜 없이 종결했다. 이는 테슬라에 대한 단기적인 안전성 우려를 해소하는 긍정적인 소식이다.",
+          "source": "MarketBeat",
+          "date": "2026-04-28",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777471446629,
+          "title": "테슬라, 사이버캡(로보택시 플랫폼) 생산 시작 발표",
+          "summary": "테슬라가 사이버캡(로보택시 플랫폼) 생산을 시작했다고 발표했다. 이는 장기적으로 긍정적인 촉매제가 될 수 있지만, 단기적인 수익 영향은 불확실하다.",
+          "source": "MarketBeat",
+          "date": "2026-04-28",
+          "category": "Product"
+        },
+        {
+          "id": 1777471446630,
+          "title": "테슬라, FSD 소프트웨어 국제 시장 출시 예정",
+          "summary": "테슬라가 완전자율주행(FSD) 소프트웨어를 추가 국제 시장에 확대 출시할 계획이라고 밝혔다. 이는 테슬라의 소프트웨어 매출 증대에 기여할 수 있다.",
+          "source": "Investing.com",
+          "date": "2026-04-29",
+          "category": "Product"
+        },
+        {
+          "id": 1777471446631,
+          "title": "테슬라, 1분기 매출 예상치 하회에도 불구하고 이익은 상회",
+          "summary": "테슬라가 1분기 매출은 예상치를 하회했지만, 주당 순이익(EPS)은 예상치를 상회했다. 이는 투자자들이 매출 부진에도 불구하고 수익성 개선에 주목할 수 있음을 시사한다.",
+          "source": "MarketBeat",
+          "date": "2026-04-28",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777471446632,
+          "title": "테슬라, 옵티머스 휴머노이드 로봇 1세대 생산 라인 설치 중",
+          "summary": "테슬라가 휴머노이드 로봇인 옵티머스의 1세대 생산 라인을 설치 중이라고 밝혔다. 이는 테슬라가 단순한 전기차 회사를 넘어 AI 및 로봇 회사로의 전환을 가속화하고 있음을 보여준다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Product"
+        },
+        {
+          "id": 1777471446633,
+          "title": "테슬라 주가, 단기 시장 약세 및 기술주 하락 압력",
+          "summary": "테슬라 주가가 나스닥 및 임의 소비재 부문의 단기 시장 약세와 함께 하락 압력을 받고 있다. 이는 거시 경제적 요인이 테슬라 주가에 영향을 미치고 있음을 나타낸다.",
+          "source": "MarketBeat",
+          "date": "2026-04-28",
+          "category": "Market|Macro"
+        }
+      ],
+      "analyses": {
+        "1777471446624": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI 재판에 증인으로 출석하는 것은 그의 시간과 관심이 테슬라 경영에서 분산될 수 있다는 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "머스크의 시간 분산",
+            "OpenAI 재판"
+          ]
+        },
+        "1777471446625": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 스페이스X 보상 계획에 화성 식민지화 목표가 포함되면서 테슬라 투자자들의 자본 순환 위험에 대한 우려가 제기될 수 있습니다.",
+          "key_factors": [
+            "머스크의 스페이스X 집중",
+            "자본 순환 위험"
+          ]
+        },
+        "1777471446626": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익에서 월스트리트 예상치를 상회하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "전기차 수요 반등"
+          ]
+        },
+        "1777471446627": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 공격적인 250억 달러 자본 지출 계획은 잉여 현금 흐름을 마이너스로 만들고 잠재적인 자금 조달 우려를 야기하여 투자자들에게 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "250억 달러 자본 지출 계획",
+            "잉여 현금 흐름 감소",
+            "자금 조달 우려"
+          ]
+        },
+        "1777471446628": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "미국 규제 당국이 모델 Y 스티어링 볼트 조사를 리콜 없이 종결하여 테슬라의 안전성 우려가 해소되었다.",
+          "key_factors": [
+            "규제 조사 종결",
+            "리콜 불필요",
+            "안전성 우려 해소"
+          ]
+        },
+        "1777471446629": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡(로보택시 플랫폼) 생산을 시작했다고 발표하여 장기적인 성장 잠재력에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "로보택시 플랫폼 생산 시작",
+            "장기적 성장 촉매"
+          ]
+        },
+        "1777471446630": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 FSD 소프트웨어 국제 시장 출시는 소프트웨어 매출 증대와 기술 리더십 강화를 통해 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "FSD 국제 출시",
+            "소프트웨어 매출 증대"
+          ]
+        },
+        "1777471446631": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 매출 예상치를 하회했음에도 불구하고 주당 순이익(EPS)이 예상치를 상회하여 수익성 개선에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "EPS beat",
+            "매출 하회"
+          ]
+        },
+        "1777471446632": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 옵티머스 휴머노이드 로봇의 1세대 생산 라인을 설치 중이라는 소식은 회사의 AI 및 로봇 기술 발전을 보여주는 중요한 이정표로, 장기적인 성장 잠재력을 높일 것입니다.",
+          "key_factors": [
+            "옵티머스 로봇 생산 라인",
+            "AI 및 로봇 회사로의 전환"
+          ]
+        },
+        "1777471446633": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R23"
+          ],
+          "reasoning": "단기 시장 약세와 기술주 하락 압력은 거시 경제적 요인으로 인해 테슬라 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "시장 약세",
+            "기술주 하락 압력",
+            "거시 경제적 요인"
+          ]
+        }
+      },
+      "avgScore": 1,
+      "buyIndex": 77,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R12",
+        "R23"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-25",
+            "content": "Elon Musk는 Q1 2026 실적 발표에서 Hardware 3가 감독되지 않는 FSD를 달성할 능력이 없다고 인정했습니다. 그는 하드웨어의 '메모리 대역폭'이 병목 현상이라고 언급했습니다. Musk는 HW3 차량을 새로운 컴퓨터 및 카메라 시스템으로 개조하기 위해 주요 도시에 '마이크로팩토리'를 건설할 것을 제안했으며, 모든 HW3 차량을 HW4로 전환하여 Robotaxi 차량에 진입하고 감독되지 않는 FSD를 가능하게 할 계획이라고 밝혔습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Tesla의 1분기 수익은 월스트리트의 예상을 뛰어넘었지만, Elon Musk는 AI 소프트웨어 및 칩, 제조 및 설계 비용에 올해 250억 달러를 지출할 계획이라고 언급하며 상당한 지출이 있을 것이라고 경고했습니다. 그는 Optimus가 올해 여름 생산에 들어가 내년에는 'Tesla 외부'에서 유용하게 사용될 것이라고 말했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Elon Musk는 이전에 2026년 4월 말까지 Tesla Roadster 2에 대한 업데이트가 있을 것이라고 말했지만, Q1 2026 실적 발표에서 이 업데이트가 5월에 나올 것이라고 밝혔습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "bearish",
+        "sentiment_score": -1,
+        "post_count": 3,
+        "reasoning": "Elon Musk의 최근 게시물은 FSD 하드웨어의 한계를 인정하고 Roadster 출시 지연을 발표하는 등 Tesla의 단기적인 어려움을 강조하여 전반적으로 부정적인 분위기를 나타냅니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Legal": 1,
+        "Musk|Market": 1,
+        "Earnings|Market": 1,
+        "Market|Macro": 2,
+        "Regulatory": 1,
+        "Product": 3,
+        "Earnings": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.05,
+        "qqqChg": -0.04,
+        "vixClose": 18.329999923706055,
+        "wtiChg": 5.24,
+        "cnyChg": -0.06,
+        "prevTslaChg": 1.06,
+        "rsi": 30.7,
+        "macd": {
+          "macd": -9.262428557523037,
+          "signal": -4.146069252374425,
+          "hist": -5.116359305148612,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 471.09,
+          "middle": 403.55,
+          "lower": 336,
+          "pos": 0.271
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 60,
+        "r24Discount": 9,
+        "macdTrend": -2,
+        "bbLow": 2,
+        "wtiUp": 2,
+        "earningsWeek": 7,
+        "muskXSentiment": -1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777471533998
+    },
+    {
       "id": "auto-1777434886644",
       "date": "2026-04-29",
       "displayDate": "2026.04.29",
@@ -4008,5 +4313,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-29 12:53 KST"
+  "lastUpdated": "2026-04-29 23:02 KST"
 }
