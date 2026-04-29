@@ -1,6 +1,322 @@
 {
   "sessions": [
     {
+      "id": "auto-1777489448513",
+      "date": "2026-04-30",
+      "displayDate": "2026.04.30",
+      "kstTime": "04:03",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777489421527,
+          "title": "테슬라, 1분기 실적 예상치 상회에도 불구하고 자율주행 하드웨어 한계 인정",
+          "summary": "테슬라가 1분기 조정 주당순이익(EPS) 0.41달러를 기록하며 예상치 0.36달러를 상회했고, 매출은 예상치에 부합하는 223억 9천만 달러를 기록했습니다. 하지만 일론 머스크 CEO가 최신 자율주행 하드웨어가 완전한 자율주행을 지원할 능력이 없다고 인정하면서 시간 외 거래에서 주가가 하락했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Earnings|Product|Musk"
+        },
+        {
+          "id": 1777489421528,
+          "title": "테슬라, AI 및 로봇 사업 확대를 위해 자본 지출 250억 달러 이상으로 증액",
+          "summary": "테슬라는 자율주행 시스템, 옵티머스 휴머노이드 로봇, 사이버캡 생산 및 테라팩토리 투자를 확대하기 위해 올해 예상 연간 자본 지출을 250억 달러 이상으로 늘릴 계획입니다. 이는 이전 예상치인 200억 달러를 상회하는 금액입니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "AI|Robotics|Capital Expenditure"
+        },
+        {
+          "id": 1777489421529,
+          "title": "테슬라, 1분기 실적 발표에서 전기차 수요 회복 시사",
+          "summary": "테슬라는 1분기 월스트리트의 이익 예상치를 뛰어넘는 실적을 발표하며, 전 세계적으로 전기차 수요가 회복되고 있다고 밝혔습니다. 이는 오랫동안 어려움을 겪었던 자동차 사업의 회복 가능성을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Demand"
+        },
+        {
+          "id": 1777489421530,
+          "title": "테슬라, 1분기 긍정적인 현금 흐름 기록",
+          "summary": "테슬라는 1분기 14억 4천만 달러의 잉여 현금 흐름을 기록하며, 예상치였던 마이너스 18억 6천만 달러를 크게 상회했습니다. 이는 회사의 재무 건전성에 긍정적인 신호입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Financials"
+        },
+        {
+          "id": 1777489421531,
+          "title": "테슬라, 사이버캡, 테슬라 세미, 메가팩 생산 2026년 시작 예정",
+          "summary": "테슬라는 사이버캡, 테슬라 세미, 메가팩 생산이 2026년에 시작될 예정이며, 옵티머스 휴머노이드 로봇의 1세대 생산 라인도 설치 중이라고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Product|Robotics"
+        },
+        {
+          "id": 1777489421532,
+          "title": "테슬라, 네덜란드에서 완전 자율 주행 승인 획득",
+          "summary": "테슬라는 4월에 네덜란드에서 완전 자율 주행(FSD) 승인을 받았다고 밝혔습니다. 이는 유럽 시장에서 FSD 기술 확장에 긍정적인 영향을 미칠 수 있습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Regulatory|Product"
+        },
+        {
+          "id": 1777489421533,
+          "title": "테슬라, AI 및 로봇 사업에 대한 투자 확대",
+          "summary": "테슬라는 일론 머스크의 전기차 회사를 AI 및 로봇 회사로 전환하려는 노력을 지원하기 위해 올해 수십억 달러를 추가로 지출할 것으로 예상됩니다. 이는 작년 지출액의 3배에 달하는 금액입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "AI|Robotics|Musk"
+        },
+        {
+          "id": 1777489421534,
+          "title": "테슬라, 모델 S 및 모델 X 생산 점진적 중단 계획",
+          "summary": "테슬라는 다음 분기부터 고급 모델인 모델 S와 모델 X 차량의 생산을 점진적으로 중단할 계획이라고 발표했습니다. 이는 옵티머스 로봇 생산 라인으로 전환하기 위한 전략의 일환입니다.",
+          "source": "Stocktwits",
+          "date": "2026-03-05",
+          "category": "Product|Robotics"
+        },
+        {
+          "id": 1777489421535,
+          "title": "SpaceX, 테슬라와의 합병 가능성 논의 보도",
+          "summary": "블룸버그는 소식통을 인용하여 SpaceX가 테슬라와의 합병 가능성을 논의했다고 보도했습니다. 이는 일론 머스크의 여러 회사 간의 통합이 심화될 수 있음을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-03-05",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1777489421536,
+          "title": "테슬라 주가, 월스트리트의 우려 증가",
+          "summary": "모건 스탠리가 테슬라 주식에 대한 투자의견을 '비중 축소'로 하향 조정하는 등 월스트리트에서 테슬라의 급등하는 주가에 대한 우려가 커지고 있습니다.",
+          "source": "Fox Business",
+          "date": "2020-01-16",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1777489421527": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 EPS 예상치를 상회했음에도 불구하고, 일론 머스크 CEO가 자율주행 하드웨어의 한계를 인정하여 시간 외 거래에서 주가가 하락했습니다.",
+          "key_factors": [
+            "EPS 예상치 상회",
+            "자율주행 하드웨어 한계 인정",
+            "시간 외 주가 하락"
+          ]
+        },
+        "1777489421528": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇 사업 확대를 위해 자본 지출을 크게 늘리는 것은 미래 성장 동력에 대한 강력한 투자 의지를 보여주며, 이는 신제품 및 기술 이정표 달성에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 및 로봇 사업 확대",
+            "자본 지출 증액",
+            "미래 성장 동력 투자"
+          ]
+        },
+        "1777489421529": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 월스트리트의 이익 예상치를 뛰어넘는 실적을 발표하며 전기차 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "이익 예상치 상회",
+            "전기차 수요 회복"
+          ]
+        },
+        "1777489421530": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 1분기에 예상치를 크게 상회하는 긍정적인 잉여 현금 흐름을 기록하여 재무 건전성에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "잉여 현금 흐름",
+            "예상치 상회"
+          ]
+        },
+        "1777489421531": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡, 테슬라 세미, 메가팩 생산을 2026년에 시작하고 옵티머스 로봇 생산 라인을 설치 중이라고 밝히면서 미래 성장 동력에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "테슬라 세미 생산 시작",
+            "메가팩 생산 시작",
+            "옵티머스 로봇 생산 라인 설치"
+          ]
+        },
+        "1777489421532": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 네덜란드에서 완전 자율 주행(FSD) 승인을 획득하여 유럽 시장 확장에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "FSD 승인",
+            "유럽 시장 확장"
+          ]
+        },
+        "1777489421533": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇 사업에 대한 투자를 대폭 확대하는 것은 미래 성장 동력 확보와 신제품 개발에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "AI 및 로봇 사업 투자 확대",
+            "미래 성장 동력 확보"
+          ]
+        },
+        "1777489421534": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 고급 모델인 모델 S와 모델 X의 생산을 중단하는 것은 단기적으로 매출 감소와 제품 다양성 축소로 이어질 수 있어 부정적입니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "옵티머스 로봇 생산 라인 전환"
+          ]
+        },
+        "1777489421535": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "SpaceX와 테슬라의 합병 논의 보도는 테슬라 주주들에게 다른 머스크 기업의 위험이 전이될 수 있다는 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "SpaceX 합병 논의",
+            "머스크 기업 위험 전이"
+          ]
+        },
+        "1777489421536": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "모건 스탠리가 테슬라 주식에 대한 투자의견을 '비중 축소'로 하향 조정하면서 월스트리트의 우려가 커지고 있습니다.",
+          "key_factors": [
+            "모건 스탠리 투자의견 하향",
+            "월스트리트 우려 증가"
+          ]
+        }
+      },
+      "avgScore": 1,
+      "buyIndex": 78,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R24"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-29",
+            "content": "Elon Musk는 Optimus V3가 '특별하다'고 언급하며 로봇이 Tesla의 가장 큰 제품이 될 것이라고 강조했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Musk는 Cybercab 생산이 시작되었다는 홍보 영상을 X에 게시했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Musk는 Q1 2026 실적 발표에서 Hardware 3가 무인 FSD를 달성할 수 없다고 인정했습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Tesla는 AI 및 로봇 추진을 위해 2026년에 250억 달러의 추가 지출을 계획하고 있다고 발표했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Musk는 Tesla의 실적 발표에서 Optimus 생산 라인 구축의 어려움과 유럽 규제 문제로 인해 무인 FSD 및 로보택시 서비스의 타임라인을 제공할 수 없다고 언급하며 평소보다 신중한 태도를 보였습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 5,
+        "reasoning": "Elon Musk의 최근 게시물은 Optimus V3 및 Cybercab 생산 시작과 같은 긍정적인 소식과 Hardware 3의 FSD 한계 및 높은 Capex와 같은 부정적인 소식이 혼재되어 있어 전반적으로 중립적인 분위기를 보입니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Earnings|Product|Musk": 1,
+        "AI|Robotics|Capital Expenditure": 1,
+        "Earnings|Demand": 1,
+        "Earnings|Financials": 1,
+        "Product|Robotics": 2,
+        "Regulatory|Product": 1,
+        "AI|Robotics|Musk": 1,
+        "Musk|Market": 1,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.05,
+        "qqqChg": 0.31,
+        "vixClose": 18.790000915527344,
+        "wtiChg": 7.32,
+        "cnyChg": 0.01,
+        "prevTslaChg": 1.06,
+        "rsi": 30.7,
+        "macd": {
+          "macd": -9.150755436084296,
+          "signal": -4.123734628086677,
+          "hist": -5.027020807997619,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 471.03,
+          "middle": 403.62,
+          "lower": 336.2,
+          "pos": 0.28
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 60,
+        "r24Discount": 9,
+        "macdTrend": -2,
+        "bbLow": 2,
+        "wtiUp": 2,
+        "earningsWeek": 7
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777489448513
+    },
+    {
       "id": "auto-1777471533998",
       "date": "2026-04-29",
       "displayDate": "2026.04.29",
@@ -4313,5 +4629,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-29 23:02 KST"
+  "lastUpdated": "2026-04-30 04:03 KST"
 }
