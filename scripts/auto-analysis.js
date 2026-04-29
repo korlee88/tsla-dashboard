@@ -72,14 +72,21 @@ function getTopRules(analyses) {
 
 async function geminiPost(body, retries = 7) {
   let lastError;
-  // 모델 순서: 기본(2.5-flash) → 폴백(2.0-flash) → 폴백(1.5-flash)
+  // 모델 순서: 0-3회→gemini-2.5-flash, 4-5회→gemini-2.0-flash, 6+회→gemini-1.5-flash
   for (let attempt = 0; attempt <= retries; attempt++) {
-    const modelIdx = Math.min(attempt >= 4 ? 1 : 0, MODELS.length - 1); // 4회 실패 시 2.0-flash로 전환
-    const url = makeUrl(MODELS[modelIdx]);
+    const modelIdx = attempt < 4 ? 0 : attempt < 6 ? 1 : 2;
+    const model = MODELS[modelIdx];
+    const url = makeUrl(model);
+    // thinkingConfig는 gemini-2.5-flash(thinking 지원 모델)에서만 유효 — 폴백 시 제거
+    let actualBody = body;
+    if (modelIdx > 0 && body.generationConfig?.thinkingConfig) {
+      const { thinkingConfig, ...restGen } = body.generationConfig;
+      actualBody = { ...body, generationConfig: restGen };
+    }
     try {
-      const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+      const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(actualBody) });
       if (res.ok) {
-        if (modelIdx > 0) console.log(`   ✅ 폴백 모델 ${MODELS[modelIdx]} 성공`);
+        if (modelIdx > 0) console.log(`   ✅ 폴백 모델 ${model} 성공`);
         return res.json();
       }
       const e = await res.json().catch(() => ({}));
@@ -93,12 +100,11 @@ async function geminiPost(body, retries = 7) {
       } else throw fetchErr;
     }
     if (attempt < retries) {
-      // 지수 백오프: 10s → 20s → 40s → 60s → 60s(폴백) → 60s → 60s
+      // 지수 백오프: 10s → 20s → 40s → 60s(폴백 전환) → 60s → 60s → 60s
       const baseDelay = attempt < 3
         ? Math.min(10000 * Math.pow(2, attempt), 60000)
         : 60000;
       const delay = baseDelay + Math.random() * 5000;
-      const model = MODELS[modelIdx];
       console.warn(`   ⏳ 과부하(${model}), ${Math.round(delay/1000)}초 후 재시도 (${attempt + 1}/${retries})...`);
       await sleep(delay);
     }
