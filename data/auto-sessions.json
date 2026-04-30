@@ -1,6 +1,293 @@
 {
   "sessions": [
     {
+      "id": "auto-1777537510772",
+      "date": "2026-04-30",
+      "displayDate": "2026.04.30",
+      "kstTime": "17:23",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777537459937,
+          "title": "테슬라, 2026년 1분기 실적 예상치 상회 및 EV 수요 회복 조짐",
+          "summary": "테슬라가 2026년 1분기 조정 주당순이익(EPS) 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했습니다. 이는 2분기 연속 예상치를 뛰어넘는 실적이며, 아시아-태평양 및 남미 지역의 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서도 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777537459938,
+          "title": "일론 머스크, 2018년 성과 보상 패키지 관련 1,140억 달러 규모 주식 등록",
+          "summary": "테슬라가 일론 머스크의 2018년 CEO 성과 보상 패키지와 관련된 약 3억 4백만 주의 보통주를 SEC에 등록했습니다. 현재 주가 기준으로 이 주식의 가치는 1,140억 달러가 넘으며, 이는 수년간 지속된 법적 분쟁이 공식적으로 종료되었음을 의미합니다.",
+          "source": "Electrek",
+          "date": "2026-04-27",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1777537459939,
+          "title": "테슬라, 사이버캡 로보택시 생산 시작 및 2026년 자본 지출 200억 달러 이상 증액 계획",
+          "summary": "테슬라가 사이버캡 로보택시 생산을 시작했으며, 2026년 자본 지출을 200억 달러 이상으로 늘려 세미트럭, 사이버캡, 옵티머스 로봇 생산을 위한 공장 업그레이드 및 배터리, 리튬 생산 확대를 추진할 계획입니다.",
+          "source": "TradingView",
+          "date": "2026-04-27",
+          "category": "Product|Delivery"
+        },
+        {
+          "id": 1777537459940,
+          "title": "일론 머스크, OpenAI의 영리 전환 비판 및 1,800억 달러 소송 제기",
+          "summary": "일론 머스크는 OpenAI가 비영리 단체에서 영리 모델로 전환한 것에 대해 비판하며, 이와 관련하여 1,800억 달러 이상의 소송을 제기했습니다. 그는 OpenAI 설립에 3,800만 달러를 지원한 것을 후회한다고 밝혔습니다.",
+          "source": "GuruFocus",
+          "date": "2026-04-29",
+          "category": "Musk|Legal|Competition"
+        },
+        {
+          "id": 1777537459941,
+          "title": "테슬라 주식, 1분기 실적 발표 후 하락 및 JP모건 가치 평가에 대해 약세 전환",
+          "summary": "테슬라 주식이 1분기 실적 발표 후 하락했으며, JP모건은 가치 평가를 이유로 테슬라에 대해 약세로 돌아섰습니다.",
+          "source": "Watcher Guru",
+          "date": "2026-04-29",
+          "category": "Market"
+        },
+        {
+          "id": 1777537459942,
+          "title": "테슬라 세미트럭, 대량 생산 라인에서 첫 출고",
+          "summary": "로이터 통신에 따르면 첫 번째 테슬라 세미트럭이 대량 생산 라인에서 출고되었습니다.",
+          "source": "Reuters",
+          "date": "2026-04-29",
+          "category": "Product|Delivery"
+        },
+        {
+          "id": 1777537459943,
+          "title": "테슬라, 중국에서 바이두와 협력하여 FSD에 지도 통합 및 AI 훈련 센터 개설",
+          "summary": "테슬라가 중국에서 바이두와 협력하여 완전자율주행(FSD) 시스템에 지도를 통합하고, 중국 교통 상황에 FSD를 적용하기 위한 현지 AI 훈련 센터를 개설했습니다.",
+          "source": "TradingView",
+          "date": "2026-04-27",
+          "category": "Product|Regulatory"
+        },
+        {
+          "id": 1777537459944,
+          "title": "스페이스X, 테슬라와의 합병 가능성 검토 보도",
+          "summary": "블룸버그 통신은 스페이스X가 전기차 대기업 테슬라와의 잠재적 합병을 고려하고 있다고 보도했습니다. 이는 일론 머스크가 이끄는 회사들 간의 통합 가능성을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-03-05",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1777537459945,
+          "title": "테슬라, 높은 P/E 비율로 인해 주식 과대평가 우려",
+          "summary": "테슬라의 주가수익비율(P/E)은 340.66으로, 이는 나스닥 100 기술 지수의 P/E보다 10배 높은 수치입니다. 이는 테슬라 주식이 동종 기술 기업에 비해 극도로 과대평가되어 있음을 시사합니다.",
+          "source": "The Motley Fool",
+          "date": "2026-04-27",
+          "category": "Market"
+        },
+        {
+          "id": 1777537459946,
+          "title": "테슬라, 2025년 승용 전기차 인도량 감소",
+          "summary": "테슬라의 승용 전기차 인도량은 2024년에 1% 감소한 179만 대를 기록했으며, 2025년에는 9% 더 감소한 163만 대를 기록했습니다. 이는 회사의 매출 및 수익 감소로 이어졌습니다.",
+          "source": "The Motley Fool",
+          "date": "2026-04-27",
+          "category": "Delivery|Competition"
+        }
+      ],
+      "analyses": {
+        "1777537459937": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 2026년 1분기 주당순이익이 월스트리트 예상치를 10% 이상 상회하며 긍정적인 실적을 발표했고, 전 세계적으로 EV 수요 회복 조짐을 보였습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777537459938": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R19"
+          ],
+          "reasoning": "일론 머스크의 대규모 성과 보상 패키지 주식 등록은 장기적인 리더십 안정성과 주주 가치 창출에 대한 긍정적인 신호로 해석될 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 성과 보상 패키지",
+            "주식 등록",
+            "법적 분쟁 종료"
+          ]
+        },
+        "1777537459939": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 사이버캡 로보택시 생산 시작과 2026년 대규모 자본 지출 증액 계획은 미래 성장 동력 확보 및 신제품 출시에 대한 긍정적인 신호입니다.",
+          "key_factors": [
+            "사이버캡 로보택시 생산 시작",
+            "2026년 자본 지출 200억 달러 이상 증액",
+            "세미트럭, 사이버캡, 옵티머스 로봇 생산 확대"
+          ]
+        },
+        "1777537459940": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI에 1,800억 달러 규모의 소송을 제기한 것은 그의 다른 벤처와 관련된 법적 분쟁으로, 테슬라에 대한 투자자들의 우려를 야기할 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 법적 분쟁",
+            "OpenAI의 영리 전환 비판"
+          ]
+        },
+        "1777537459941": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주식이 1분기 실적 발표 후 하락했으며 JP모건이 가치 평가를 이유로 약세로 전환하여 부정적인 시장 심리를 반영합니다.",
+          "key_factors": [
+            "1분기 실적 발표 후 주가 하락",
+            "JP모건의 약세 전환"
+          ]
+        },
+        "1777537459942": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 세미트럭의 대량 생산 라인 첫 출고는 신제품의 중요한 이정표이며 미래 수익 성장에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "세미트럭 대량 생산",
+            "신제품 이정표"
+          ]
+        },
+        "1777537459943": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13",
+            "R20"
+          ],
+          "reasoning": "테슬라가 바이두와 협력하여 중국에서 FSD 시스템에 지도를 통합하고 AI 훈련 센터를 개설한 것은 FSD의 중국 시장 진출을 가속화하고 판매 성장을 촉진할 중요한 진전입니다.",
+          "key_factors": [
+            "FSD 중국 시장 진출",
+            "바이두와의 협력",
+            "AI 훈련 센터 개설"
+          ]
+        },
+        "1777537459944": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X와 테슬라의 잠재적 합병 가능성 보도는 시너지 효과에 대한 기대로 테슬라 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "합병 가능성",
+            "시너지 효과"
+          ]
+        },
+        "1777537459945": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 높은 P/E 비율이 나스닥 100 기술 지수보다 10배 높아 주식이 과대평가되었다는 분석은 투자자들에게 부정적인 신호로 작용할 수 있습니다.",
+          "key_factors": [
+            "높은 P/E 비율",
+            "주식 과대평가 우려"
+          ]
+        },
+        "1777537459946": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R01"
+          ],
+          "reasoning": "테슬라의 2024년 및 2025년 승용 전기차 인도량 감소는 매출 및 수익 감소로 이어져 주가에 부정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "인도량 감소",
+            "매출 및 수익 감소"
+          ]
+        }
+      },
+      "avgScore": 0.8,
+      "buyIndex": 73,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R12",
+        "R19",
+        "R20"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 0,
+        "reasoning": "지난 7일 동안(2026년 4월 23일부터 2026년 4월 30일까지) @elonmusk의 Tesla, TSLA, 전기차, Robotaxi, FSD, Optimus, 에너지 저장 또는 Tesla 사업 전략과 관련된 게시물을 찾을 수 없었습니다. 따라서 전반적인 분위기와 감정을 분석할 수 없습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Earnings": 1,
+        "Musk|Legal": 1,
+        "Product|Delivery": 2,
+        "Musk|Legal|Competition": 1,
+        "Market": 2,
+        "Product|Regulatory": 1,
+        "Musk|Market": 1,
+        "Delivery|Competition": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.08,
+        "qqqChg": 0.45,
+        "vixClose": 18.510000228881836,
+        "wtiChg": -0.9,
+        "cnyChg": -0.04,
+        "prevTslaChg": 0.19,
+        "rsi": 30.2,
+        "macd": {
+          "macd": -9.443209533104778,
+          "signal": -4.223324038569826,
+          "hist": -5.219885494534951,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 471.19,
+          "middle": 403.39,
+          "lower": 335.6,
+          "pos": 0.274
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": true
+      },
+      "scoringLayers": {
+        "base": 58,
+        "r24Discount": 9,
+        "macdTrend": -2,
+        "bbLow": 2,
+        "earningsWeek": 6
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777537510772
+    },
+    {
       "id": "auto-1777521283438",
       "date": "2026-04-30",
       "displayDate": "2026.04.30",
@@ -4944,5 +5231,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-30 12:54 KST"
+  "lastUpdated": "2026-04-30 17:23 KST"
 }
