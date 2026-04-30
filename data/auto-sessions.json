@@ -1,6 +1,317 @@
 {
   "sessions": [
     {
+      "id": "auto-1777576059073",
+      "date": "2026-05-01",
+      "displayDate": "2026.05.01",
+      "kstTime": "04:02",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777575866707,
+          "title": "일론 머스크, OpenAI 소송에서 증인으로 출석",
+          "summary": "일론 머스크는 OpenAI와의 법적 분쟁에서 증인으로 출석하여 샘 알트만의 변호사와 논쟁을 벌였습니다. 이 소송은 OpenAI의 미래에 대한 중요한 영향을 미 미칠 수 있습니다.",
+          "source": "Reuters",
+          "date": "2026-04-30",
+          "category": "Legal"
+        },
+        {
+          "id": 1777575866708,
+          "title": "테슬라, AI 및 로봇 야망에 250억 달러 추가 지출 계획",
+          "summary": "테슬라는 인공지능, 로봇 공학 및 칩 개발에 자금을 투입하기 위해 올해 지출 계획을 250억 달러 이상으로 대폭 늘렸습니다. 일론 머스크는 이러한 투자가 미래 수익 창출에 정당하다고 밝혔습니다.",
+          "source": "Reuters",
+          "date": "2026-04-23",
+          "category": "AI|Product"
+        },
+        {
+          "id": 1777575866709,
+          "title": "테슬라, 1분기 실적 발표 후 주가 하락",
+          "summary": "테슬라는 1분기 실적 발표 후 주가가 2% 이상 하락했습니다. 회사는 긍정적인 잉여 현금 흐름을 보고했지만, AI 및 로봇 프로젝트에 대한 대규모 투자로 인해 2026년 남은 기간 동안 현금 흐름이 다시 마이너스로 전환될 것으로 예상했습니다.",
+          "source": "Reuters",
+          "date": "2026-04-23",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777575866710,
+          "title": "일론 머스크, X(구 트위터)에 금융 서비스 도구 도입 예정",
+          "summary": "일론 머스크는 X(구 트위터)를 '만능 앱'으로 전환하려는 오랜 목표에 다가가고 있으며, 이달 중 새로운 금융 서비스 도구를 공개할 예정입니다.",
+          "source": "Business News | Live Index",
+          "date": "2026-04-26",
+          "category": "Musk"
+        },
+        {
+          "id": 1777575866711,
+          "title": "테슬라, 로보택시 및 옵티머스 로봇에 집중하며 사업 방향 전환",
+          "summary": "테슬라는 승용 전기차 사업의 어려움 속에서 사이버캡 자율주행 로보택시와 옵티머스 휴머노이드 로봇과 같은 새로운 제품 플랫폼에 초점을 맞추고 있습니다. 이는 장기적으로 더 큰 기회를 제공할 수 있지만, 단기적인 매출 공백을 초래할 수 있습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-27",
+          "category": "Product|Competition"
+        },
+        {
+          "id": 1777575866712,
+          "title": "테슬라, 2026년 1분기 EV 인도량 6% 증가",
+          "summary": "테슬라의 2026년 1분기 전기차 인도량은 전년 대비 6% 증가했으며, 매출은 16%, 주당 순이익은 8% 증가했습니다. 이는 어려운 경쟁 환경 속에서도 긍정적인 시작을 알리는 신호입니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-27",
+          "category": "Delivery|Earnings"
+        },
+        {
+          "id": 1777575866713,
+          "title": "스페이스X, 일론 머스크 보상 계획 승인",
+          "summary": "스페이스X 이사회는 화성 식민지화 목표와 연계된 일론 머스크의 보상 계획을 승인했습니다.",
+          "source": "Reuters",
+          "date": "2026-04-28",
+          "category": "Musk"
+        },
+        {
+          "id": 1777575866714,
+          "title": "테슬라, 캘리포니아에서 '오토파일럿' 마케팅 용어 변경 후 면허 정지 면해",
+          "summary": "테슬라는 오해의 소지가 있는 '오토파일럿' 마케팅 용어를 변경한 후 캘리포니아에서 면허 정지를 피했습니다.",
+          "source": "Fox Business",
+          "date": "2026-04-29",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777575866715,
+          "title": "일론 머스크, '보편적 고소득' 지지",
+          "summary": "일론 머스크는 AI로 인한 일자리 손실에 대응하기 위해 '보편적 고소득'을 지지한다고 밝혔습니다.",
+          "source": "Fox Business",
+          "date": "2026-04-28",
+          "category": "Musk|Macro"
+        },
+        {
+          "id": 1777575866716,
+          "title": "NIO, 테슬라 모델 Y보다 저렴한 ONVO L80 SUV 공개",
+          "summary": "NIO는 테슬라 모델 Y보다 낮은 사전 판매 가격으로 ONVO L80 SUV를 공개하며 전기차 시장의 경쟁 심화를 예고했습니다.",
+          "source": "Investing.com",
+          "date": "2026-04-30",
+          "category": "Competition|Product"
+        }
+      ],
+      "analyses": {
+        "1777575866707": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI 소송에 증인으로 출석하여 논쟁을 벌인 것은 그의 다른 벤처와 관련된 잠재적 위험을 시사하며, 이는 테슬라에 간접적인 부정적 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 다른 벤처 관련 법적 분쟁",
+            "잠재적 평판 리스크"
+          ]
+        },
+        "1777575866708": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI, 로봇 공학 및 칩 개발에 250억 달러 이상을 투자하는 것은 미래 수익 창출에 긍정적인 영향을 미칠 수 있는 신제품 및 기술 이정표를 나타냅니다.",
+          "key_factors": [
+            "AI 및 로봇 공학 투자",
+            "칩 개발",
+            "미래 수익 창출"
+          ]
+        },
+        "1777575866709": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 실적 발표 후 주가가 하락했으며, AI 및 로봇 프로젝트에 대한 대규모 투자로 인해 향후 현금 흐름이 마이너스로 전환될 것이라는 전망이 부정적인 영향을 미쳤습니다.",
+          "key_factors": [
+            "1분기 실적 발표 후 주가 하락",
+            "AI 및 로봇 프로젝트 투자로 인한 미래 현금 흐름 마이너스 전환 예상"
+          ]
+        },
+        "1777575866710": {
+          "impact_score": 1,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 X(구 트위터) 금융 서비스 도구 도입은 테슬라의 직접적인 사업과 관련이 적어 주가에 미치는 영향은 미미할 것으로 예상됩니다.",
+          "key_factors": [
+            "X(구 트위터) 금융 서비스",
+            "머스크의 다른 사업"
+          ]
+        },
+        "1777575866711": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 로보택시와 옵티머스 로봇에 집중하는 것은 장기적인 성장 동력을 확보하는 중요한 신제품 이정표로 볼 수 있지만, 단기적인 매출 공백 우려도 존재합니다.",
+          "key_factors": [
+            "로보택시 개발",
+            "옵티머스 로봇 개발",
+            "장기 성장 기회",
+            "단기 매출 공백"
+          ]
+        },
+        "1777575866712": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R11"
+          ],
+          "reasoning": "테슬라의 2026년 1분기 EV 인도량이 전년 대비 6% 증가하여 긍정적인 실적을 기록했습니다.",
+          "key_factors": [
+            "EV 인도량 증가",
+            "매출 증가",
+            "주당 순이익 증가"
+          ]
+        },
+        "1777575866713": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "이 뉴스는 스페이스X의 일론 머스크 보상 계획 승인에 관한 것으로, 테슬라 주식에 직접적인 영향은 미미합니다.",
+          "key_factors": [
+            "SpaceX",
+            "Elon Musk compensation"
+          ]
+        },
+        "1777575866714": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 오토파일럿 마케팅 용어 변경으로 캘리포니아에서 면허 정지를 피하여 규제 리스크가 해소되었습니다.",
+          "key_factors": [
+            "규제 리스크 해소",
+            "오토파일럿 마케팅 용어 변경"
+          ]
+        },
+        "1777575866715": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R08"
+          ],
+          "reasoning": "일론 머스크의 AI로 인한 일자리 손실에 대한 '보편적 고소득' 지지 발언은 단기적으로 투자자들에게 불확실성을 주어 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 발언",
+            "AI 일자리 손실",
+            "보편적 고소득"
+          ]
+        },
+        "1777575866716": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R06"
+          ],
+          "reasoning": "NIO가 테슬라 모델 Y보다 저렴한 ONVO L80 SUV를 공개하며 전기차 시장의 경쟁 심화가 예상되어 테슬라의 시장 점유율과 수익성에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "경쟁 심화",
+            "가격 경쟁",
+            "시장 점유율"
+          ]
+        }
+      },
+      "avgScore": 0.4,
+      "buyIndex": 53,
+      "direction": "bullish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R11",
+        "R08",
+        "R06"
+      ],
+      "bullish": 4,
+      "bearish": 4,
+      "neutral": 2,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-24",
+            "content": "Elon Musk는 X를 통해 Tesla의 Cybercab(로보택시) 생산이 시작되었다고 발표했습니다. 그는 또한 Tesla의 AI 시스템이 이미 대규모로 작동하고 있으며, 다른 어떤 AI 팀도 이러한 주장을 할 수 없다고 강조했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Musk는 Cybercab 및 Semi 트럭의 초기 생산 속도는 느리겠지만 연말과 내년에는 증가할 것이라고 언급했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Musk는 Tesla의 로보택시 사업의 전개가 예상보다 느리게 진행되고 있으며, 안전 및 기술적 문제로 인해 자율주행차 목표가 지연되고 있다고 밝혔습니다. 그는 부상이나 사망을 피하기 위해 신중한 접근 방식을 취하고 있다고 말했습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-27",
+            "content": "Elon Musk와 Tesla AI 임원 Yun-Ta Tsai는 Tesla AI가 완벽해야 하며 실수를 저지르지 않아야 한다고 강조했습니다. Musk는 Tesla AI가 매일 대규모로 생명을 구하고 있으며, 다른 어떤 AI 팀도 이러한 주장을 할 수 없다고 덧붙였습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 4,
+        "reasoning": "Elon Musk는 Cybercab 생산 시작 및 Tesla AI의 역량에 대해 낙관적인 게시물을 올렸지만, 로보택시 사업의 느린 전개와 관련된 신중한 발언도 있었습니다. 전반적으로 긍정적인 내용이 많았으나, 현실적인 어려움에 대한 언급도 있어 중립적인 입장을 유지합니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Legal": 1,
+        "AI|Product": 1,
+        "Earnings|Market": 1,
+        "Musk": 2,
+        "Product|Competition": 1,
+        "Delivery|Earnings": 1,
+        "Regulatory": 1,
+        "Musk|Macro": 1,
+        "Competition|Product": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.58,
+        "qqqChg": 0.32,
+        "vixClose": 17.299999237060547,
+        "wtiChg": -3.29,
+        "cnyChg": -0.14,
+        "prevTslaChg": 0.19,
+        "rsi": 30.2,
+        "macd": {
+          "macd": -8.49551683590039,
+          "signal": -4.033785499128949,
+          "hist": -4.46173133677144,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.91,
+          "middle": 403.99,
+          "lower": 337.07,
+          "pos": 0.356
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 54,
+        "macdTrend": -2,
+        "muskXSentiment": 1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777576059073
+    },
+    {
       "id": "auto-1777557954500",
       "date": "2026-04-30",
       "displayDate": "2026.04.30",
@@ -5548,5 +5859,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-04-30 23:01 KST"
+  "lastUpdated": "2026-05-01 04:02 KST"
 }
