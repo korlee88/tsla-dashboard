@@ -1,6 +1,308 @@
 {
   "sessions": [
     {
+      "id": "auto-1777623214404",
+      "date": "2026-05-01",
+      "displayDate": "2026.05.01",
+      "kstTime": "17:13",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777623188224,
+          "title": "테슬라 세미, 고용량 생산 라인 가동 시작",
+          "summary": "테슬라가 첫 번째 세미 트럭의 고용량 생산 라인 가동을 시작했다고 발표했다. 이는 새로운 수익원(물류/기업 판매)을 창출하고 단기 성장 스토리를 뒷받침할 것으로 예상된다.",
+          "source": "Reuters",
+          "date": "2026-04-29",
+          "category": "Product"
+        },
+        {
+          "id": 1777623188225,
+          "title": "테슬라 주가, 주요 기술적 매수 신호 발생 후 상승",
+          "summary": "테슬라 주가가 369.55달러 근처에서 주요 기술적 매수 신호가 발생한 후 장중 3% 이상 상승했다. 이는 모멘텀 및 퀀트 투자자들을 끌어들일 수 있다.",
+          "source": "MarketBeat",
+          "date": "2026-05-01",
+          "category": "Market"
+        },
+        {
+          "id": 1777623188226,
+          "title": "일론 머스크, OpenAI 미래 관련 재판에서 증언 예정",
+          "summary": "일론 머스크가 OpenAI의 미래를 둘러싼 재판에서 증인으로 다시 출석할 예정이다. 그는 OpenAI가 자신의 아이디어였으나 경영진이 이를 유용했다고 주장하고 있다.",
+          "source": "Reuters",
+          "date": "2026-04-29",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1777623188227,
+          "title": "골드만삭스, 중국 내 테슬라 주문 감소 보고",
+          "summary": "골드만삭스는 2026년 17주차에 중국 내 테슬라 주간 주문량이 1% 감소했다고 보고했다. 이는 중국 전기차 브랜드들의 강세와 관련이 있을 수 있다.",
+          "source": "Investing.com",
+          "date": "2026-04-29",
+          "category": "Competition"
+        },
+        {
+          "id": 1777623188228,
+          "title": "NIO, 테슬라 모델 Y보다 저렴한 ONVO L80 SUV 공개",
+          "summary": "NIO가 가족 SUV 시장을 겨냥한 대형 5인승 SUV인 ONVO L80을 공개했으며, 사전 판매 가격은 테슬라 모델 Y보다 낮게 책정되었다.",
+          "source": "Investing.com",
+          "date": "2026-04-29",
+          "category": "Competition"
+        },
+        {
+          "id": 1777623188229,
+          "title": "테슬라, FSD 소프트웨어 해외 시장 출시 예정",
+          "summary": "테슬라가 완전자율주행(FSD) 소프트웨어를 추가적인 국제 시장에 확대 출시할 계획이라고 밝혔다.",
+          "source": "Investing.com",
+          "date": "2026-04-29",
+          "category": "Product"
+        },
+        {
+          "id": 1777623188230,
+          "title": "테슬라, 2026년 자본 지출 가이던스 상향 조정",
+          "summary": "테슬라가 2026년 자본 지출 가이던스를 상향 조정하면서, 시장은 이에 대한 반응으로 주가가 소폭 하락했다. 이는 공장 확장, AI 인프라 구축, 로보택시 및 옵티머스 제품 출시에 대한 전략적 투자를 반영한다.",
+          "source": "Morningstar",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777623188231,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 수익 예상치를 상회하며 전기차 수요가 전 세계적으로 회복되고 있음을 시사했다. 조정 주당 순이익은 41센트로 예상치 34센트를 넘어섰다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "id": 1777623188232,
+          "title": "테슬라, 사이버캡 및 옵티머스 생산 라인 설치 중",
+          "summary": "테슬라가 사이버캡과 휴머노이드 로봇 옵티머스의 1세대 생산 라인을 설치 중이라고 밝혔다. 이는 2026년 생산 시작을 목표로 하고 있다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777623188233,
+          "title": "더 던 프로젝트, 테슬라 자율주행 소프트웨어 관련 규제 개혁 촉구",
+          "summary": "더 던 프로젝트(The Dawn Project)는 테슬라의 자율주행 소프트웨어가 59건의 사망 사고에 연루되었다며 의회에 긴급 규제 개혁을 촉구하는 보고서를 제출했다.",
+          "source": "Financial Post",
+          "date": "2026-04-30",
+          "category": "Regulatory|Legal"
+        }
+      ],
+      "analyses": {
+        "1777623188224": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 세미 트럭의 고용량 생산 라인 가동 시작은 새로운 수익원을 창출하고 단기 성장 스토리를 뒷받침할 것으로 예상되어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "세미 트럭 고용량 생산",
+            "새로운 수익원 창출"
+          ]
+        },
+        "1777623188225": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "기술적 매수 신호 발생으로 테슬라 주가가 상승하여 단기적인 긍정적 모멘텀을 형성할 수 있습니다.",
+          "key_factors": [
+            "기술적 매수 신호",
+            "모멘텀 투자자 유입"
+          ]
+        },
+        "1777623188226": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI와의 법적 분쟁에 다시 증인으로 출석하면서 그의 다른 벤처 관련 리스크가 테슬라에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 법정 증언",
+            "OpenAI와의 법적 분쟁",
+            "경영진의 아이디어 유용 주장"
+          ]
+        },
+        "1777623188227": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "골드만삭스의 중국 내 테슬라 주간 주문량 1% 감소 보고는 중국 시장에서의 경쟁 심화로 인한 소폭의 부정적 영향을 시사합니다.",
+          "key_factors": [
+            "중국 주문 감소",
+            "중국 전기차 경쟁 심화"
+          ]
+        },
+        "1777623188228": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R06"
+          ],
+          "reasoning": "NIO가 테슬라 모델 Y보다 저렴한 ONVO L80 SUV를 출시하여 경쟁 심화가 예상됩니다.",
+          "key_factors": [
+            "NIO ONVO L80 출시",
+            "모델 Y보다 낮은 가격",
+            "경쟁 심화"
+          ]
+        },
+        "1777623188229": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 FSD 소프트웨어 해외 시장 출시는 새로운 수익원 창출과 기술 리더십 강화를 통해 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "FSD 해외 출시",
+            "신규 시장 확장",
+            "기술 리더십"
+          ]
+        },
+        "1777623188230": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 2026년 자본 지출 가이던스 상향 조정은 미래 성장을 위한 투자로 해석될 수 있으나, 단기적으로는 비용 증가에 대한 우려로 주가에 부정적인 영향을 미쳤습니다.",
+          "key_factors": [
+            "자본 지출 가이던스 상향 조정",
+            "공장 확장",
+            "AI 인프라 구축",
+            "로보택시 및 옵티머스 제품 출시"
+          ]
+        },
+        "1777623188231": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 상회하여 전기차 수요 회복에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777623188232": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡과 옵티머스 로봇의 생산 라인을 설치 중이며 2026년 생산 목표를 밝힌 것은 새로운 제품 출시 및 기술적 진전을 의미하여 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "사이버캡 생산 라인",
+            "옵티머스 생산 라인",
+            "2026년 생산 목표"
+          ]
+        },
+        "1777623188233": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 자율주행 소프트웨어와 관련된 사망 사고 보고서 제출 및 규제 개혁 촉구는 잠재적인 규제 강화와 부정적인 여론을 야기할 수 있습니다.",
+          "key_factors": [
+            "자율주행 소프트웨어 안전성 논란",
+            "규제 개혁 촉구",
+            "부정적인 언론 보도"
+          ]
+        }
+      },
+      "avgScore": 0.5,
+      "buyIndex": 63,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R06",
+        "R12"
+      ],
+      "bullish": 5,
+      "bearish": 5,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-24",
+            "content": "Tesla의 자율주행 로보택시인 Cybercab 생산이 시작되었다고 발표했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-29",
+            "content": "Optimus 3 로봇을 '특별하다'고 언급하며, 경쟁사 모방 위험 때문에 공개를 미루고 있다고 밝혔습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-30",
+            "content": "2025년 성과 기반 주식 보상 및 2018년 CEO 스톡옵션 보상 재개 등 자신의 보상 구조에 대한 세부 정보를 담은 Tesla의 수정된 연례 보고서 제출에 대한 소식이 있었습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 3,
+        "reasoning": "일론 머스크는 로보택시 생산 시작과 Optimus 로봇에 대한 긍정적인 언급으로 낙관적인 입장을 보였지만, 보상 구조에 대한 뉴스는 중립적인 입장을 유지했습니다. 전반적으로 긍정적인 내용과 중립적인 내용이 혼재되어 있어 중립적인 감정으로 평가됩니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product": 3,
+        "Market": 1,
+        "Musk|Legal": 1,
+        "Competition": 2,
+        "Earnings": 1,
+        "Earnings|Delivery": 1,
+        "Regulatory|Legal": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.56,
+        "qqqChg": 0.37,
+        "vixClose": 17.09000015258789,
+        "wtiChg": 0.39,
+        "cnyChg": 0,
+        "prevTslaChg": 2.56,
+        "rsi": 32.6,
+        "macd": {
+          "macd": -8.19497633989431,
+          "signal": -3.860975187498957,
+          "hist": -4.334001152395354,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.67,
+          "middle": 404.28,
+          "lower": 337.88,
+          "pos": 0.329
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 55,
+        "r24Discount": 9,
+        "macdTrend": -2,
+        "muskXSentiment": 1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777623214404
+    },
+    {
       "id": "auto-1777608401925",
       "date": "2026-05-01",
       "displayDate": "2026.05.01",
@@ -6133,5 +6435,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-01 13:06 KST"
+  "lastUpdated": "2026-05-01 17:13 KST"
 }
