@@ -1,6 +1,356 @@
 {
   "sessions": [
     {
+      "id": "auto-1777661670749",
+      "date": "2026-05-02",
+      "displayDate": "2026.05.02",
+      "kstTime": "03:52",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777661561790,
+          "title": "테슬라, 세미 트럭용 베이스차저 출시 및 18만 8천 달러 메가차저 공개",
+          "summary": "테슬라가 세미 트럭을 위한 새로운 충전 프로그램인 '세미 충전 비즈니스'를 시작하며, 저전력 충전기인 베이스차저와 18만 8천 달러의 메가차저를 공개했습니다. 베이스차저는 주로 차고지 및 야간 충전에 사용되며, 메가차저는 초고속 충전을 제공합니다.",
+          "source": "Electrek",
+          "date": "2026-05-01",
+          "category": "Product"
+        },
+        {
+          "id": 1777661561791,
+          "title": "테슬라, 일론 머스크 소유 기업 간 5억 7천 3백만 달러 규모 거래 공개",
+          "summary": "테슬라의 수정된 연간 보고서에 따르면, 일론 머스크가 소유한 스페이스X와 xAI 간에 5억 7천 3백만 달러 규모의 거래가 있었으며, X(구 트위터) 및 더 보링 컴퍼니 등 다른 머스크 소유 기업들과도 수백만 달러의 비용이 오갔습니다. 또한, 테슬라의 20억 달러 xAI 투자가 스페이스X 주식으로 전환된 사실도 밝혀졌습니다.",
+          "source": "Electrek",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777661561792,
+          "title": "테슬라, 5월 15일부로 네덜란드에서 FSD 일회성 구매 중단",
+          "summary": "테슬라가 5월 15일부터 네덜란드에서 완전자율주행(FSD) 기능의 일회성 구매 옵션을 중단하고 월 99유로의 구독 모델로 전환합니다. 이는 북미 시장에서 이미 시행된 정책을 따르는 것으로, 네덜란드는 최근 FSD(감독) 시스템에 대한 규제 승인을 받은 첫 유럽 국가입니다.",
+          "source": "basenor",
+          "date": "2026-05-01",
+          "category": "Product"
+        },
+        {
+          "id": 1777661561793,
+          "title": "일론 머스크, 2025년 테슬라로부터 1,580억 달러 보상 패키지 수령",
+          "summary": "테슬라가 2025년 일론 머스크에게 1,580억 달러 규모의 보상 패키지를 지급했다고 밝혔습니다. 이는 주주들이 승인한 대규모 스톡 어워드의 일환으로, 머스크가 테슬라에 계속 머물며 회사의 목표 달성에 집중하도록 하기 위함입니다.",
+          "source": "GlobalNews",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777661561794,
+          "title": "테슬라, 로봇 및 세미 트럭 생산에 따른 자본 지출 증가 예상",
+          "summary": "테슬라 주가는 AI 및 로봇 공학 관련 자본 지출 증가에 대한 투자자들의 우려로 인해 지난주 7% 하락했지만, 이번 주에는 상승세를 보이고 있습니다. 최고재무책임자(CFO)는 2026년 자본 지출이 250억 달러를 초과하여 올해 남은 기간 동안 마이너스 잉여 현금 흐름을 기록할 것이라고 밝혔습니다.",
+          "source": "The Motley Fool",
+          "date": "2026-05-01",
+          "category": "Market"
+        },
+        {
+          "id": 1777661561795,
+          "title": "일론 머스크의 보안 비용 증가, 2025년 480만 달러 기록",
+          "summary": "일론 머스크의 보안 비용이 2025년에 480만 달러로 증가하여 2024년의 280만 달러보다 크게 늘었습니다. 이는 고위 경영진에 대한 위협이 증가하는 가운데 머스크의 안전을 보호하기 위한 조치입니다.",
+          "source": "Business Insider",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777661561796,
+          "title": "테슬라, 1분기 실적 예상치 상회에도 불구하고 FSD 하드웨어 한계 인정",
+          "summary": "테슬라 주가는 1분기 실적 예상치를 상회했음에도 불구하고, 일론 머스크 CEO가 최신 자율주행 하드웨어가 완전한 자율주행을 지원할 능력이 없다고 인정하면서 시간 외 거래에서 0.3% 하락했습니다. 이는 로보택시 야망에 대한 새로운 의문을 제기했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777661561797,
+          "title": "일론 머스크, 구글 CEO 순다르 피차이의 우주 데이터 센터 발언에 동의",
+          "summary": "일론 머스크는 구글 CEO 순다르 피차이가 10년 안에 우주 데이터 센터가 '새로운 표준'이 될 것이라고 언급한 것에 대해 '사실'이라고 답했습니다. 이는 머스크가 오랫동안 주장해온 견해와 일치합니다.",
+          "source": "Times of India",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777661561798,
+          "title": "테슬라, 1분기 이익 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라는 1분기 조정 주당 순이익이 41센트로 애널리스트 예상치인 34센트를 상회하며 월스트리트의 이익 예상치를 뛰어넘었습니다. 또한, 아시아 태평양 및 남미 지역의 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777661561799,
+          "title": "테슬라, AI 및 로봇 공학 투자 확대로 자본 지출 250억 달러 초과 예상",
+          "summary": "테슬라는 일론 머스크의 AI 및 로봇 공학 전환 노력을 지원하기 위해 올해 수십억 달러를 추가로 지출할 예정이며, 총 자본 지출은 250억 달러를 초과할 것으로 예상됩니다. 이는 작년 지출의 세 배에 달하는 금액입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Macro"
+        }
+      ],
+      "analyses": {
+        "1777661561790": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 세미 트럭용 충전 솔루션 출시는 상업용 EV 시장에서의 입지를 강화하고 미래 수익 성장에 기여할 수 있습니다.",
+          "key_factors": [
+            "세미 트럭 충전 인프라 확장",
+            "상업용 EV 시장 경쟁력 강화"
+          ]
+        },
+        "1777661561791": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크 소유 기업 간의 대규모 거래 공개는 테슬라 투자자들에게 잠재적인 이해 상충 및 자원 분산에 대한 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 소유 기업 간 거래",
+            "xAI 투자",
+            "잠재적 이해 상충"
+          ]
+        },
+        "1777661561792": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 네덜란드에서 FSD 일회성 구매를 중단하고 구독 모델로 전환하며 유럽 규제 승인을 받은 것은 FSD의 상업적 확장과 수익 모델 다각화에 긍정적입니다.",
+          "key_factors": [
+            "FSD 구독 모델 전환",
+            "유럽 규제 승인",
+            "수익 모델 다각화"
+          ]
+        },
+        "1777661561793": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R19"
+          ],
+          "reasoning": "일론 머스크의 대규모 보상 패키지 수령은 그가 테슬라에 계속 전념할 것이라는 긍정적인 신호로 해석될 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 보상 패키지",
+            "주주 승인",
+            "머스크의 테슬라 잔류 유인"
+          ]
+        },
+        "1777661561794": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 로봇 및 세미 트럭 생산을 위한 자본 지출 증가 예상과 이로 인한 마이너스 잉여 현금 흐름 전망은 단기적으로 투자자들에게 우려를 안겨주며 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "자본 지출 증가",
+            "마이너스 잉여 현금 흐름",
+            "로봇 및 세미 트럭 생산"
+          ]
+        },
+        "1777661561795": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 보안 비용 증가는 회사 운영에 미미한 영향을 미치며 주가에 직접적인 영향을 줄 만한 요인이 아닙니다.",
+          "key_factors": [
+            "보안 비용 증가"
+          ]
+        },
+        "1777661561796": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12",
+            "R13"
+          ],
+          "reasoning": "테슬라가 1분기 실적 예상치를 상회했음에도 불구하고, FSD 하드웨어의 완전 자율주행 한계를 인정하여 로보택시 야망에 대한 우려를 불러일으키며 주가가 하락했습니다.",
+          "key_factors": [
+            "1분기 실적 예상치 상회",
+            "FSD 하드웨어 한계 인정",
+            "로보택시 야망에 대한 의문"
+          ]
+        },
+        "1777661561797": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 우주 데이터 센터 관련 발언은 테슬라의 직접적인 사업이나 재무 성과에 미치는 영향이 미미하여 주가에 중립적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "일론 머스크 발언",
+            "우주 데이터 센터"
+          ]
+        },
+        "1777661561798": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 애널리스트 예상치를 20% 이상 상회하며 강력한 실적을 발표했고, 주요 지역에서 EV 수요 회복 조짐을 보였습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777661561799": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇 공학에 대한 대규모 투자를 확대하여 미래 성장 동력을 강화할 것으로 예상되어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 및 로봇 공학 투자 확대",
+            "자본 지출 증가",
+            "미래 성장 동력"
+          ]
+        }
+      },
+      "avgScore": 0.3,
+      "buyIndex": 59,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R24",
+        "R19"
+      ],
+      "bullish": 5,
+      "bearish": 3,
+      "neutral": 2,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-25",
+            "content": "Tesla는 글로벌 판매 부진에도 불구하고 Cybercab 로보택시 생산을 시작했습니다. 초기 생산은 공급망 및 생산 조직화에 시간이 걸려 매우 느릴 것이지만, 점차적으로 기하급수적으로 증가할 것이라고 언급했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-25",
+            "content": "Tesla는 FSD(Full Self-Driving) 개발 전략을 '품질 우선' 모델로 전환하여, 업데이트 횟수는 줄이고 각 업데이트는 차량에 적용하기 전에 더욱 엄격하게 테스트할 것이라고 밝혔습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Musk는 Tesla의 자율주행 로보택시인 Cybercab의 생산이 시작되었다고 X에 홍보 영상을 게시했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Tesla는 AI, 로봇 공학 및 칩에 대한 투자를 위해 2026년 지출 계획을 250억 달러 이상으로 대폭 늘렸습니다. Musk는 이러한 투자가 미래의 큰 수익 흐름을 창출하는 데 정당하다고 말했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Musk는 Q1 2026 실적 발표에서 소비자용 무인 FSD가 2026년 4분기에나 출시될 것이라고 확인하며, 이전 약속보다 일정이 지연되었음을 인정했습니다. 또한, HW3 차량 소유자는 FSD를 효과적으로 사용하려면 하드웨어 업그레이드가 필요하다고 언급했습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Tesla는 로보택시 서비스를 댈러스와 휴스턴으로 확장했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Musk는 Optimus 로봇이 내년 중 Tesla 외부에서 유용하게 사용될 수 있을 것이라고 언급하며, 초기 버전은 산업용 도구로 활용될 것이라고 밝혔습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Musk는 경쟁사들의 모방 때문에 Optimus 공개 일정이 지연되고 있다고 언급했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-25",
+            "content": "Musk는 Tesla Roadster가 Cybercab과 FSD가 주도하는 미래에서 마지막 운전자 중심의 차량이 될 수 있다고 말했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Musk는 Tesla의 에너지 저장 사업이 \"매우 강력하다\"고 말했지만, 2026년 실제 전망은 약하다고 언급되었습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-30",
+            "content": "Musk는 미국의 전력망 용량 활용률이 50%에 불과하며, 대규모 배터리가 이를 100%까지 끌어올려 연간 발전량을 두 배 이상 늘릴 수 있다고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 11,
+        "reasoning": "Elon Musk의 최근 Tesla 관련 게시물은 로보택시 생산 시작 및 FSD 전략 전환과 같은 긍정적인 소식과 함께, FSD 출시 지연 및 에너지 저장 사업의 약한 전망과 같은 부정적인 소식이 혼재되어 있어 전반적으로 중립적인 분위기를 보입니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product": 2,
+        "Musk": 4,
+        "Market": 1,
+        "Earnings": 2,
+        "Macro": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.03,
+        "qqqChg": 0.64,
+        "vixClose": 17,
+        "wtiChg": -2.84,
+        "cnyChg": 0.01,
+        "prevTslaChg": 2.56,
+        "rsi": 32.6,
+        "macd": {
+          "macd": -7.1667154975465905,
+          "signal": -3.655323019029413,
+          "hist": -3.5113924785171777,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.67,
+          "middle": 404.92,
+          "lower": 339.17,
+          "pos": 0.421
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 53,
+        "r24Discount": 9,
+        "catMuskDamp": -2,
+        "macdTrend": -2,
+        "muskXSentiment": 1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777661670749
+    },
+    {
       "id": "auto-1777641829550",
       "date": "2026-05-01",
       "displayDate": "2026.05.01",
@@ -6731,5 +7081,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-01 22:22 KST"
+  "lastUpdated": "2026-05-02 03:52 KST"
 }
