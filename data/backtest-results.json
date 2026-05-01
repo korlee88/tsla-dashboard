@@ -5697,18 +5697,13 @@
       }
     }
   ],
-  "generatedAt": "2026-04-27 10:34 KST",
+  "generatedAt": "2026-05-02 04:20 KST",
   "stats": {
     "totalWeeks": 52,
     "analyzedWeeks": 51,
     "accuracy": 57,
     "strongAccuracy": 69,
-    "significantAccuracy": 72,
-    "significantWeeks": 39,
-    "nonNeutralAccuracy": 73,
-    "nonNeutralWeeks": 40,
-    "avgScore": -0.2,
-    "modelVersion": "3.0"
+    "avgScore": -0.2
   },
   "lastRescored": "2026-04-27 19:45 KST"
 }
