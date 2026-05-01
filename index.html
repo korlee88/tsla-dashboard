@@ -2456,8 +2456,21 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
   weeklyData, weeklyLoading, currentPrice }) {
 
   const db = getNewsDB();
-  const allSessions = db.sessions || [];
-  const valid = allSessions.filter(s => s.buyIndex != null || s.avgScore != null);
+  // 자동수집 세션도 포함 (TrendPage와 동일한 데이터)
+  const [autoSessions, setAutoSessions] = useState([]);
+  useEffect(() => {
+    fetchAutoSessions().then(arr => setAutoSessions(arr)).catch(() => {});
+  }, []);
+  const mergedSessions = mergeWithAutoSessions(db.sessions || [], autoSessions);
+  // 날짜별 중복 제거: 같은 날짜는 buyIndex가 가장 높은 1건만
+  const dedupedByDate = Object.values(
+    mergedSessions.reduce((acc, s) => {
+      const k = s.date || '?';
+      if (!acc[k] || (s.buyIndex ?? -1) > (acc[k].buyIndex ?? -1)) acc[k] = s;
+      return acc;
+    }, {})
+  ).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  const valid = dedupedByDate.filter(s => s.buyIndex != null || s.avgScore != null);
 
   const [dailyData, setDailyData] = useState(() => {
     const c = loadDailyCache();
@@ -2500,13 +2513,22 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
     : null;
 
   const daily7 = forecast?.daily_forecasts || [];
-  const prediction7 = daily7.map((d, i) => ({
-    value:     d.buy_index ?? 50,
-    day:       i + 1,
-    dateLabel: d.date || `+${i + 1}일`,
-    confLabel: d.confidence || '',
-    signal:    d.signal || '',
-  }));
+  // daily_forecasts에는 buy_index가 없음 → 신호/change_pct로 역산
+  const signalToBi = { '적극매수': 88, '매수': 72, '관망': 50, '매도': 30, '적극매도': 12 };
+  const prediction7 = daily7.map((d, i) => {
+    // 1순위: 명시적 buy_index / 2순위: 신호 매핑 / 3순위: change_pct 역산
+    const rawBi = d.buy_index ?? signalToBi[d.signal]
+                  ?? (d.change_pct != null
+                      ? Math.min(100, Math.max(0, Math.round(50 + d.change_pct * 7)))
+                      : null);
+    return {
+      value:     rawBi ?? 50,
+      day:       i + 1,
+      dateLabel: d.date || `+${i + 1}일`,
+      confLabel: d.confidence || '',
+      signal:    d.signal || '',
+    };
+  });
 
   const priceStr = currentPrice
     ? `$${typeof currentPrice === 'number' ? currentPrice.toFixed(2) : currentPrice}`
@@ -2629,11 +2651,17 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
                 <span className="text-gray-600">주가</span>
               </span>
             )}
-            {(priceLoading || weeklyLoading) && (
-              <span className="text-blue-400 whitespace-nowrap" style={{ fontSize: 9 }}>⟳ 업데이트중</span>
-            )}
           </div>
         }>
+        {/* 주가 로딩 배너 — 섹션 최상단 */}
+        {(priceLoading || weeklyLoading) && (
+          <div className="mx-3 mb-2 mt-1 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs"
+            style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)' }}>
+            <span className="w-3 h-3 border-2 border-cyan-400 border-t-transparent rounded-full spinning shrink-0" />
+            <span className="text-cyan-400 font-semibold">TSLA 실제 주가 업데이트 중…</span>
+            <span className="text-gray-600 ml-auto" style={{fontSize:9}}>Yahoo Finance</span>
+          </div>
+        )}
         <p className="text-xs text-gray-700 px-3 pb-1">매수지수(0~100) · 65↑ 매수 / 45~64 관망 / 45↓ 매도 · 점선=7일 AI예측 · 실선=TSLA 실제주가</p>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
           <TrendChart
@@ -2716,15 +2744,7 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
       {valid.length > 0 && (
         <Section title="최근 수집 히스토리" icon="🕐" defaultOpen={false}>
           <div className="space-y-1.5">
-            {(() => {
-              // 날짜+kstTime 기준 중복 제거 (같은 날짜·시간대는 1건만 표시)
-              const seen = new Set();
-              return valid.filter(s => {
-                const key = `${s.date}-${s.kstTime || s.timestamp}`;
-                if (seen.has(key)) return false;
-                seen.add(key); return true;
-              }).slice(0, 10);
-            })().map((s, i) => {
+            {valid.slice(0, 10).map((s, i) => {
               const bi   = s.buyIndex;
               const biC  = bi != null ? bCol(bi) : '#6b7280';
               const sc   = SIGNAL_CFG[s.overallSignal];
@@ -2732,7 +2752,10 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
                 <div key={s.id || i}
                   className="flex items-center gap-3 rounded-lg px-3 py-2"
                   style={{ background: '#14171e' }}>
-                  <span className="text-xs text-gray-500 w-20 shrink-0">{s.date}</span>
+                  <div className="shrink-0 w-24">
+                    <p className="text-xs text-gray-400">{s.date}</p>
+                    <p className="text-gray-600" style={{fontSize:9}}>{s.kstTime ? s.kstTime + ' KST' : s.source === 'auto' ? '🤖 자동' : '🔍 수동'}</p>
+                  </div>
                   <span className="text-sm font-black w-8 text-center tabular-nums" style={{ color: biC }}>
                     {bi ?? '─'}
                   </span>
