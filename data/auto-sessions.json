@@ -1,6 +1,302 @@
 {
   "sessions": [
     {
+      "id": "auto-1777641829550",
+      "date": "2026-05-01",
+      "displayDate": "2026.05.01",
+      "kstTime": "22:22",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777641802372,
+          "title": "테슬라, 일론 머스크 소유 기업들과 5억 7,300만 달러 규모 거래 공개",
+          "summary": "테슬라의 수정된 연간 보고서에 따르면, 2025년에 일론 머스크가 소유한 다른 회사들(SpaceX, xAI, X, The Boring Company, 머스크 개인 보안 회사)과 총 5억 7,300만 달러 규모의 거래가 있었음이 밝혀졌습니다. 이 중 xAI로부터의 매출이 4억 3,010만 달러, SpaceX로부터의 매출이 1억 4,330만 달러를 차지하며, 주로 Megapack 에너지 저장 제품 판매와 차량 판매로 구성됩니다.",
+          "source": "Electrek",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777641802373,
+          "title": "테슬라, 20억 달러 xAI 투자, SpaceX 주식으로 전환",
+          "summary": "테슬라가 xAI Holdings의 시리즈 E 라운드에 20억 달러를 투자하기로 합의했으나, 몇 주 후 SpaceX가 xAI Holdings를 인수하면서 테슬라의 xAI 우선주가 SpaceX Class A 보통주로 전환되었습니다. 이로 인해 테슬라 주주들은 AI 회사 대신 로켓 회사의 소수 지분을 보유하게 되었습니다.",
+          "source": "Electrek",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777641802374,
+          "title": "일론 머스크, OpenAI 비영리 전환 소송에서 OpenAI 변호사와 공방",
+          "summary": "일론 머스크는 자신이 공동 설립한 OpenAI가 비영리 단체에서 영리 기업으로 전환된 것에 대한 소송에서 OpenAI 변호사와 공방을 벌였습니다. 머스크는 OpenAI가 비영리 정신을 배신했다고 주장하며, 이 재판은 2015년 회사 설립 당시의 약속에 초점을 맞추고 있습니다.",
+          "source": "Associated Press",
+          "date": "2026-05-01",
+          "category": "Legal"
+        },
+        {
+          "id": 1777641802375,
+          "title": "테슬라, 일론 머스크의 2025년 보상액 1,580억 달러 보고",
+          "summary": "테슬라는 2025년 일론 머스크의 보상액이 1,580억 달러에 달한다고 보고했습니다. 이는 주주들이 그의 성과 기반 보상 패키지를 승인한 후 처음 공개된 수치입니다. 하지만 테슬라는 이 수치가 실제로 머스크가 실현한 가치와는 상당한 차이가 있을 수 있다고 경고했습니다.",
+          "source": "TradingView",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777641802376,
+          "title": "테슬라, 5월 15일부로 네덜란드에서 FSD 일회성 구매 중단",
+          "summary": "테슬라는 5월 15일부터 네덜란드에서 FSD(Full Self-Driving)의 일회성 구매를 중단하고 구독 모델로 전환할 예정입니다. 네덜란드는 2026년 4월에 FSD(Supervised)에 대한 규제 승인을 받은 첫 유럽 국가입니다.",
+          "source": "basenor",
+          "date": "2026-05-01",
+          "category": "Product"
+        },
+        {
+          "id": 1777641802377,
+          "title": "일론 머스크의 보안 비용, 2025년 480만 달러로 증가",
+          "summary": "테슬라가 일론 머스크의 보안에 지출한 비용은 2024년 280만 달러에서 2025년 480만 달러로 증가했습니다. 이는 고위 경영진에 대한 위협이 증가함에 따라 발생한 것으로, 머스크는 작년 9월 X 게시물에서 보안 강화를 언급했습니다.",
+          "source": "Business Insider",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777641802378,
+          "title": "캘리포니아 규제 당국, SpaceX 소송 합의 후 일론 머스크에게 사과",
+          "summary": "캘리포니아 규제 당국은 SpaceX와 일론 머스크에 대한 정치적 편견을 주장하는 소송을 합의한 후 머스크에게 사과했습니다. SpaceX는 주 기관이 Falcon 9 로켓 발사 일정 확장에 반대하며 정치적 차별을 했다고 주장했습니다.",
+          "source": "Associated Press",
+          "date": "2026-04-30",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777641802379,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라는 1분기 조정 주당 순이익이 41센트로 월스트리트 예상치인 34센트를 상회하며, 전기차 수요가 전 세계적으로 회복되고 있다고 밝혔습니다. 이는 아시아 태평양 및 남미 지역의 지속적인 수요 증가와 북미 및 유럽-중동 지역의 회복에 힘입은 것입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777641802380,
+          "title": "테슬라, 사이버캡, 테슬라 세미, 메가팩 생산 2026년 시작 예정",
+          "summary": "테슬라는 사이버캡, 테슬라 세미, 메가팩 생산이 2026년에 시작될 것이라고 밝혔습니다. 또한, 휴머노이드 로봇인 Optimus의 1세대 생산 라인이 설치 중이며, 이는 프레몬트 공장의 Model S 및 Model X 라인을 대체할 예정입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1777641802381,
+          "title": "테슬라, Model S 및 Model X 생산 종료, 로봇에 집중",
+          "summary": "테슬라는 2026년에 Model S 및 Model X 차량 생산을 종료하고 로봇에 집중할 것이라고 밝혔습니다. 이는 Optimus 로봇의 1세대 생산 라인이 프레몬트 공장의 해당 라인을 대체할 것이라는 발표와 일치합니다.",
+          "source": "Fox Business",
+          "date": "2026-04-23",
+          "category": "Product"
+        }
+      ],
+      "analyses": {
+        "1777641802372": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 일론 머스크 소유의 다른 회사들과 상당한 규모의 거래를 공개하여 매출 증대에 기여할 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크 소유 기업과의 거래",
+            "Megapack 에너지 저장 제품 판매",
+            "차량 판매"
+          ]
+        },
+        "1777641802373": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "테슬라의 xAI 투자가 SpaceX 주식으로 전환되면서 테슬라 주주들이 AI 회사 대신 로켓 회사의 지분을 보유하게 되어 투자 목적과 다른 결과로 인해 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "xAI 투자 전환",
+            "SpaceX 지분 보유",
+            "투자 목적 불일치"
+          ]
+        },
+        "1777641802374": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 공동 설립한 OpenAI와의 소송 공방은 머스크의 다른 벤처 관련 법적 리스크가 테슬라에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크의 법적 분쟁",
+            "OpenAI 비영리 전환 소송"
+          ]
+        },
+        "1777641802375": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 2025년 보상액 보고는 주주 승인 후 예상된 결과이며, 실제 실현 가치와 차이가 있을 수 있다는 경고로 인해 주가에 미치는 직접적인 영향은 미미할 것으로 예상됩니다.",
+          "key_factors": [
+            "일론 머스크 보상 패키지",
+            "실현 가치와의 차이 경고"
+          ]
+        },
+        "1777641802376": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "네덜란드에서 FSD 일회성 구매 중단 및 구독 모델 전환은 FSD의 상업적 전략 변화를 나타내며, 규제 승인과 함께 장기적인 수익 모델에 긍정적일 수 있습니다.",
+          "key_factors": [
+            "FSD 구독 모델 전환",
+            "유럽 내 FSD 규제 승인"
+          ]
+        },
+        "1777641802377": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 보안 비용 증가는 그의 다른 벤처와 관련된 잠재적 위험 증가를 시사하며, 이는 테슬라에 간접적인 부정적 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 보안 비용 증가",
+            "고위 경영진 위협 증가"
+          ]
+        },
+        "1777641802378": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "SpaceX 소송 합의 및 캘리포니아 규제 당국의 사과는 일론 머스크와 그의 회사들에 대한 긍정적인 인식을 제공하지만, TSLA 주가에 미치는 직접적인 영향은 미미합니다.",
+          "key_factors": [
+            "일론 머스크 평판 개선",
+            "규제 기관과의 관계 개선"
+          ]
+        },
+        "1777641802379": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 상회하며 전 세계 전기차 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777641802380": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡, 세미, 메가팩의 2026년 생산 시작과 Optimus 로봇의 1세대 생산 라인 설치를 발표하며 미래 성장 동력에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "테슬라 세미 생산 시작",
+            "메가팩 생산 시작",
+            "Optimus 로봇 생산 라인 설치"
+          ]
+        },
+        "1777641802381": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 2026년에 Model S 및 Model X 생산을 종료하고 로봇에 집중한다는 소식은 단기적으로 차량 판매 감소 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "Model S 및 Model X 생산 종료",
+            "로봇 생산 집중"
+          ]
+        }
+      },
+      "avgScore": 0.1,
+      "buyIndex": 56,
+      "direction": "bullish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R12"
+      ],
+      "bullish": 5,
+      "bearish": 4,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-24",
+            "content": "Tesla의 자율주행 로보택시인 Cybercab의 생산이 시작되었다고 발표했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Tesla의 2026년 1분기 실적 발표에서, Musk는 Hardware 3가 완전한 자율주행(unsupervised FSD)을 달성할 능력이 없음을 인정했습니다. 그는 Hardware 3 차량을 Hardware 4로 개조하기 위한 '마이크로팩토리' 건설 계획과 할인된 보상 판매 프로그램을 언급했습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-20",
+            "content": "Optimus 로봇의 소프트웨어 발전과 관련하여 언급했습니다. Tesla가 오토파일럿 및 신경망 개발을 Optimus로 적극적으로 이전하고 있으며, 로봇이 실제 데이터로부터 학습할 수 있도록 한다고 밝혔습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 3,
+        "reasoning": "Elon Musk의 최근 게시물은 Robotaxi 생산 시작과 Optimus 로봇의 소프트웨어 발전에 대한 긍정적인 소식과 함께, FSD Hardware 3의 한계를 인정한 부정적인 소식이 혼재되어 있어 전반적인 분위기는 중립적입니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk": 4,
+        "Legal": 1,
+        "Product": 3,
+        "Regulatory": 1,
+        "Earnings": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.56,
+        "qqqChg": 0.37,
+        "vixClose": 16.81999969482422,
+        "wtiChg": -1.92,
+        "cnyChg": 0,
+        "prevTslaChg": 2.56,
+        "rsi": 32.6,
+        "macd": {
+          "macd": -8.19497633989431,
+          "signal": -3.860975187498957,
+          "hist": -4.334001152395354,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.67,
+          "middle": 404.28,
+          "lower": 337.88,
+          "pos": 0.329
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 51,
+        "r24Discount": 9,
+        "catMuskDamp": -2,
+        "macdTrend": -2
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777641829550
+    },
+    {
       "id": "auto-1777623214404",
       "date": "2026-05-01",
       "displayDate": "2026.05.01",
@@ -6435,5 +6731,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-01 17:13 KST"
+  "lastUpdated": "2026-05-01 22:22 KST"
 }
