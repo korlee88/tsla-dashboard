@@ -1,6 +1,329 @@
 {
   "sessions": [
     {
+      "id": "auto-1777747138804",
+      "date": "2026-05-03",
+      "displayDate": "2026.05.03",
+      "kstTime": "03:38",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777747109492,
+          "title": "일론 머스크, 테슬라와 스페이스X가 첨단 칩 제조 시설을 건설할 것이라고 밝혀",
+          "summary": "일론 머스크는 오스틴에 새로운 테라팹(Terafab) 칩 공장을 건설하여 연간 1테라와트의 컴퓨팅 용량을 생산하고, 중요한 AI 칩 부족 문제를 해결하는 것을 목표로 한다고 밝혔다. 이는 테슬라의 AI 및 로봇공학으로의 전환에 중요한 부분이다.",
+          "source": "Fox Business",
+          "date": "2026-05-02",
+          "category": "Musk|Product|AI"
+        },
+        {
+          "id": 1777747109493,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단, 2026년 로봇에 집중",
+          "summary": "일론 머스크는 모델 S와 모델 X의 생산을 중단하고 옵티머스 로봇의 대량 생산에 집중할 것이라고 발표하며, 테슬라가 전기차에서 자율 기술로 전환하고 있음을 시사했다.",
+          "source": "Fox Business",
+          "date": "2026-05-02",
+          "category": "Product|Strategy"
+        },
+        {
+          "id": 1777747109494,
+          "title": "일론 머스크, 테슬라 사이버캡(Cybercab) 가격 3만 달러 미만으로 확정",
+          "summary": "테슬라 CEO 일론 머스크는 완전 자율 주행 사이버캡 로보택시를 2027년 이전에 3만 달러 미만에 판매할 것이라고 확인했으며, 생산이 공식적으로 시작되었다.",
+          "source": "Fox Business",
+          "date": "2026-05-02",
+          "category": "Product|Musk"
+        },
+        {
+          "id": 1777747109495,
+          "title": "테슬라, 댈러스 텍사스에 무인 모델 Y 로보택시 추가",
+          "summary": "테슬라는 댈러스 텍사스에 무인 모델 Y 로보택시 1대를 추가했으며, 하루 만에 총 5대의 무인 차량을 추가하여 총 24대가 되었다. 이는 로보택시 서비스 확장에 대한 투자자들의 기대를 높이고 있다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Product|Market"
+        },
+        {
+          "id": 1777747109496,
+          "title": "테슬라 세미 트럭 대량 생산 공식 시작",
+          "summary": "일론 머스크와 테슬라가 테슬라 세미 트럭의 대량 생산이 공식적으로 시작되었음을 확인했다. 이는 테슬라의 상업용 차량 시장 진출에 중요한 진전이다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Product|Delivery"
+        },
+        {
+          "id": 1777747109497,
+          "title": "테슬라, 2025년 머스크 회사들로부터 5억 달러 이상 수익 창출",
+          "summary": "테슬라는 2025년에 XAI로부터 4억 3천만 달러, 스페이스X로부터 4억 4천 3백만 달러를 포함하여 머스크의 다른 회사들로부터 5억 달러 이상의 수익을 창출했다. 이는 AI, 에너지, 차량 등 테슬라 생태계의 연결성이 강화되고 있음을 보여준다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Musk|Earnings"
+        },
+        {
+          "id": 1777747109498,
+          "title": "테슬라, 1분기 예상치 상회하는 실적 발표 및 EV 수요 회복 시사",
+          "summary": "테슬라는 1분기 조정 주당 순이익이 예상치인 34센트를 상회하는 41센트를 기록하며 월스트리트의 이익 기대를 뛰어넘었다. 또한, 아시아 태평양, 남미, 북미 및 유럽-중동 지역에서 전기차 수요가 회복되고 있다고 밝혔다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777747109499,
+          "title": "테슬라, AI 및 로봇공학에 대한 지출 3배 증가 예상",
+          "summary": "테슬라는 일론 머스크의 전기차 회사를 AI 및 로봇공학 회사로 전환하려는 노력을 지원하기 위해 올해 250억 달러 이상을 지출할 것으로 예상하고 있으며, 이는 작년보다 3배 증가한 금액이다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "AI|Strategy"
+        },
+        {
+          "id": 1777747109500,
+          "title": "테슬라, 네덜란드에서 FSD 일회성 구매 종료 예정",
+          "summary": "테슬라는 2026년 5월 15일부로 네덜란드에서 FSD(Full Self-Driving) 일회성 구매를 종료할 예정이다. 이는 FSD가 특정 국가에서 출시되면 일회성 구매가 곧 종료될 것이라는 정책의 일환이다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Product|Market"
+        },
+        {
+          "id": 1777747109501,
+          "title": "테슬라 중고차, 다른 차량보다 빠르게 판매",
+          "summary": "새로운 연구에 따르면 테슬라 중고차는 평균 26일 만에 판매되어 일반적인 중고차보다 훨씬 빠르게 팔린다. 모델 Y와 모델 S는 각각 35일이 걸린다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1777747109492": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라와 스페이스X를 위한 첨단 칩 제조 시설인 테라팹 공장 건설 계획을 발표하여 AI 칩 부족 문제를 해결하고 테슬라의 AI 및 로봇공학 전환에 기여할 것으로 예상되어 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "첨단 칩 제조 시설 건설",
+            "AI 칩 부족 해결",
+            "테슬라의 AI 및 로봇공학 전환"
+          ]
+        },
+        "1777747109493": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 수익성이 높은 모델 S 및 모델 X 생산을 중단하고 아직 상용화되지 않은 로봇에 집중하는 것은 단기적인 매출 감소와 전략적 불확실성을 야기할 수 있습니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "옵티머스 로봇 대량 생산 집중",
+            "전기차에서 자율 기술로의 전략적 전환"
+          ]
+        },
+        "1777747109494": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 2027년 이전 3만 달러 미만의 사이버캡 로보택시 출시를 확정하고 생산을 시작했다는 소식은 테슬라의 신제품 마일스톤으로 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "사이버캡 로보택시 가격 확정",
+            "2027년 이전 출시",
+            "생산 시작"
+          ]
+        },
+        "1777747109495": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 댈러스에 무인 로보택시를 추가하며 로보택시 서비스 확장에 대한 기대감을 높여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "로보택시 서비스 확장",
+            "무인 차량 추가"
+          ]
+        },
+        "1777747109496": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 세미 트럭의 대량 생산 시작은 테슬라의 상업용 차량 시장 진출을 알리는 중요한 제품 이정표이며, 이는 매출 증대와 시장 확장에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "세미 트럭 대량 생산",
+            "상업용 차량 시장 진출"
+          ]
+        },
+        "1777747109497": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 머스크의 다른 회사들로부터 상당한 수익을 창출했다는 소식은 테슬라 생태계의 강화와 잠재적인 시너지 효과를 보여주며 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "머스크 회사들로부터의 수익 창출",
+            "테슬라 생태계 연결성 강화",
+            "AI 및 에너지 부문 시너지"
+          ]
+        },
+        "1777747109498": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익 예상치를 상회하는 실적을 발표하고 전기차 수요 회복을 시사하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777747109499": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇공학에 대한 지출을 3배 늘리는 것은 미래 성장 동력에 대한 강력한 투자로, 새로운 제품 및 기술 이정표 달성 가능성을 높여 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 및 로봇공학 투자 증가",
+            "미래 성장 동력 강화"
+          ]
+        },
+        "1777747109500": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 네덜란드에서 FSD 일회성 구매를 종료하는 것은 장기적으로 구독 모델로의 전환을 의미하며, 이는 단기적으로 판매 감소로 이어질 수 있습니다.",
+          "key_factors": [
+            "FSD 일회성 구매 종료",
+            "구독 모델 전환"
+          ]
+        },
+        "1777747109501": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라 중고차가 다른 차량보다 빠르게 판매된다는 연구 결과는 테슬라 차량의 높은 시장 수요와 가치 유지력을 보여주며, 이는 신차 판매에도 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "높은 중고차 판매 속도",
+            "테슬라 차량의 수요",
+            "잔존 가치"
+          ]
+        }
+      },
+      "avgScore": 1.9,
+      "buyIndex": 68,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12"
+      ],
+      "bullish": 8,
+      "bearish": 2,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-02",
+            "content": "Tesla는 산업 규모로 Optimus를 구축하는 것에 대해 농담하는 것이 아닙니다. 이제 시작입니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Cybercab 생산이 시작되었습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Tesla는 AI, 로봇 공학 및 칩에 250억 달러 이상을 투자할 계획입니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "FSD 14.3 버전이 무인 자율 주행의 마지막 퍼즐 조각이며, 인간보다 훨씬 빠릅니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Tesla의 에너지 저장 사업은 매우 강력하지만, 2026년 실제 예측은 약합니다.",
+            "sentiment": "neutral",
+            "engagement": "low"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Tesla의 로보택시 사업 출시는 예상보다 느리게 진행되고 있습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-27",
+            "content": "AI로 인한 실업 문제에 대처하기 위해 연방 정부가 발행하는 보편적 기본 소득이 최선의 방법입니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 7,
+        "reasoning": "일론 머스크의 최근 게시물은 Optimus 생산 시작, Cybercab 생산 시작, AI 및 로봇 공학에 대한 대규모 투자 계획, FSD의 발전 등 Tesla의 기술 발전에 대해 낙관적인 입장을 보였습니다. 그러나 로보택시 출시 지연과 에너지 저장 사업의 약한 예측에 대한 언급은 부정적인 측면도 보여주며, 전반적인 분위기는 중립적입니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Product|AI": 1,
+        "Product|Strategy": 1,
+        "Product|Musk": 1,
+        "Product|Market": 2,
+        "Product|Delivery": 1,
+        "Musk|Earnings": 1,
+        "Earnings|Market": 1,
+        "AI|Strategy": 1,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.08,
+        "qqqChg": 0.75,
+        "vixClose": 16.989999771118164,
+        "wtiChg": -3.04,
+        "cnyChg": 0,
+        "prevTslaChg": 5.03,
+        "rsi": 35.7,
+        "macd": {
+          "macd": -6.895854721404817,
+          "signal": -3.4838539665432293,
+          "hist": -3.4120007548615874,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.56,
+          "middle": 405.2,
+          "lower": 339.83,
+          "pos": 0.39
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 69,
+        "macdTrend": -2,
+        "muskXSentiment": 1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777747138804
+    },
+    {
       "id": "auto-1777727825118",
       "date": "2026-05-02",
       "displayDate": "2026.05.02",
@@ -7971,5 +8294,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-02 22:16 KST"
+  "lastUpdated": "2026-05-03 03:38 KST"
 }
