@@ -1,6 +1,271 @@
 {
   "sessions": [
     {
+      "id": "auto-1777727825118",
+      "date": "2026-05-02",
+      "displayDate": "2026.05.02",
+      "kstTime": "22:16",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777727798835,
+          "title": "일론 머스크의 1,580억 달러 보상 패키지, 테슬라 주식처럼 허황된 것인가",
+          "summary": "2026년 5월 1일, 테슬라의 최근 공시에서 일론 머스크의 1,580억 달러에 달하는 보상 패키지가 공개되어 논란이 되고 있다. 이 금액은 테슬라의 2010년 이후 EBITDA의 거의 두 배에 달하며, 주로 특정 운영 목표 및 시장 가치 달성에 따른 스톡옵션과 연계되어 있다. 전문가들은 이 보상 패키지가 회사의 수익에 비해 과대평가되었으며, 테슬라가 2025년 재무 목표를 달성하지 못했음에도 불구하고 이러한 보상 구조가 지속 가능한지에 대한 의문을 제기하고 있다.",
+          "source": "GuruFocus",
+          "date": "2026-05-01",
+          "category": "Musk"
+        },
+        {
+          "id": 1777727798836,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 조짐",
+          "summary": "테슬라가 올해 1분기 월스트리트의 이익 예상치를 뛰어넘는 실적을 발표하며, 전 세계적으로 전기차 수요가 회복되고 있음을 시사했다. 조정 주당 순이익은 41센트로, 블룸버그가 집계한 애널리스트 예상치 34센트를 상회했다. 이는 테슬라가 2분기 연속으로 예상치를 초과 달성한 것이다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777727798837,
+          "title": "일론 머스크, 테슬라에 희소식 전했지만 주식 매수는 신중해야",
+          "summary": "일론 머스크는 테슬라의 1분기 실적 발표 컨퍼런스 콜에서 사이버캡 로보택시와 옵티머스 휴머노이드 로봇과 같은 새로운 제품 플랫폼에 대한 좋은 소식을 전했다. 하지만 이러한 긍정적인 소식에도 불구하고 테슬라 주가는 12월 최고치 대비 23% 하락했으며, 현재 주가수익비율(P/E)이 341배로 나스닥 100 기술 지수의 10배에 달해 여전히 고평가되어 있다는 분석이 나왔다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-27",
+          "category": "Musk"
+        },
+        {
+          "id": 1777727798838,
+          "title": "테슬라, AI 계획 및 로보택시 서비스로 주가 형성",
+          "summary": "테슬라 주가는 부분적으로 AI 계획, 즉 로보택시와 휴머노이드 로봇에 대한 기대로 형성되고 있다. 테슬라는 텍사스에서 유료 로보택시 서비스를 시작했으며, 크라우드소싱 데이터에 따르면 지난 30일 동안 약 600대의 테슬라 차량이 서비스를 제공했다. 회사는 올해 최소 12개 주에서 단계적으로 서비스를 확대할 계획이다.",
+          "source": "TradingView",
+          "date": "2026-05-02",
+          "category": "Product"
+        },
+        {
+          "id": 1777727798839,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇에 집중",
+          "summary": "테슬라가 모델 S와 모델 X 차량 생산을 중단하고 2026년부터 로봇에 집중할 것이라고 밝혔다. 일론 머스크는 테슬라가 내년 말까지 휴머노이드 로봇을 판매할 가능성이 높다고 언급했다.",
+          "source": "Fox Business",
+          "date": "2026-05-02",
+          "category": "Product"
+        },
+        {
+          "id": 1777727798840,
+          "title": "테슬라, 2025년 엘론 머스크에게 5억 달러 이상 지급",
+          "summary": "테슬라는 작년에 CEO 일론 머스크와 관련된 회사들로부터 5억 달러 이상의 수익을 보고했다. 이 중 약 4억 3,010만 달러는 xAI(주로 메가팩 에너지 시스템)에서, 1억 4,330만 달러는 스페이스X 차량 판매에서 발생했다.",
+          "source": "TradingView",
+          "date": "2026-05-02",
+          "category": "Musk"
+        },
+        {
+          "id": 1777727798841,
+          "title": "테슬라 주가, 현재 39% 고평가 상태",
+          "summary": "GuruFocus에 따르면 테슬라의 GF 가치는 284.21달러로 계산되며, 현재 주가 394.97달러 대비 39.0% 고평가된 상태이다. 이는 투자자들이 주식의 내재 가치에 비해 프리미엄을 지불하고 있음을 시사한다. 또한, 테슬라의 지난 12개월간 주가수익비율(TTM P/E)은 362.36배로, 5년 평균 P/E인 107.37배와 비교했을 때 상당한 차이를 보인다.",
+          "source": "GuruFocus",
+          "date": "2026-05-01",
+          "category": "Market"
+        },
+        {
+          "id": 1777727798842,
+          "title": "테슬라, 캘리포니아 면허 정지 피하고 '오토파일럿' 마케팅 용어 삭제",
+          "summary": "테슬라가 오해의 소지가 있는 '오토파일럿' 마케팅 용어를 삭제한 후 캘리포니아 면허 정지를 피했다. 이는 규제 당국의 압력에 따른 조치로 보인다.",
+          "source": "Fox Business",
+          "date": "2026-05-02",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777727798843,
+          "title": "중국, 테슬라 차량의 특정 기능 금지 추진",
+          "summary": "중국이 승객 갇힘 우려로 테슬라 차량에서 흔히 볼 수 있는 특정 기능의 금지를 추진하고 있다. 이는 테슬라의 중국 시장 판매에 영향을 미 미칠 수 있는 규제 움직임이다.",
+          "source": "Fox Business",
+          "date": "2026-05-02",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1777727798844,
+          "title": "테슬라, 2026년 사이버캡 및 테슬라 세미 생산 예정",
+          "summary": "테슬라는 사이버캡과 테슬라 세미의 생산이 2026년에 시작될 예정이며, 옵티머스 휴머노이드 로봇의 1세대 생산 라인이 설치되고 있다고 밝혔다. 이는 회사의 미래 제품 로드맵에 대한 중요한 진전이다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Product"
+        }
+      ],
+      "analyses": {
+        "1777727798835": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 1,580억 달러 보상 패키지가 회사의 수익에 비해 과대평가되었고 지속 가능성에 대한 의문이 제기되어 투자자들에게 부정적인 인식을 줄 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 보상 패키지 규모",
+            "회사 수익 대비 과대평가 논란",
+            "재무 목표 미달성에도 보상 구조 지속"
+          ]
+        },
+        "1777727798836": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 상회하는 실적을 발표하여 전기차 수요 회복에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777727798837": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 사이버캡 로보택시와 옵티머스 휴머노이드 로봇과 같은 새로운 제품 플랫폼에 대한 긍정적인 소식을 전하여 미래 성장 동력에 대한 기대감을 높였습니다.",
+          "key_factors": [
+            "사이버캡 로보택시",
+            "옵티머스 휴머노이드 로봇",
+            "신제품 플랫폼"
+          ]
+        },
+        "1777727798838": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 로보택시 서비스 확장 및 AI 계획은 미래 성장 동력에 대한 긍정적인 기대를 불러일으켜 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "로보택시 서비스 확장",
+            "AI 계획",
+            "휴머노이드 로봇"
+          ]
+        },
+        "1777727798839": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X의 생산을 중단하고 로봇에 집중한다는 소식은 단기적으로 차량 판매 감소 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "로봇 사업 집중"
+          ]
+        },
+        "1777727798840": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 엘론 머스크 관련 회사들로부터 상당한 수익을 창출했다는 소식은 회사 매출에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "xAI로부터의 메가팩 에너지 시스템 판매",
+            "스페이스X 차량 판매"
+          ]
+        },
+        "1777727798841": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "GuruFocus가 테슬라 주가가 내재 가치 대비 39% 고평가되었다고 분석하며 높은 P/E 비율을 지적하여 투자 심리에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "GuruFocus 고평가 분석",
+            "높은 주가수익비율(P/E)"
+          ]
+        },
+        "1777727798842": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 오토파일럿 마케팅 용어 삭제를 통해 캘리포니아 면허 정지를 피함으로써 규제 리스크가 완화되었다.",
+          "key_factors": [
+            "규제 리스크 완화",
+            "오토파일럿 마케팅 용어 변경"
+          ]
+        },
+        "1777727798843": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "중국이 승객 갇힘 우려로 테슬라 차량의 특정 기능 금지를 추진하는 것은 테슬라의 중국 시장 판매에 부정적인 영향을 미칠 수 있는 규제 움직임입니다.",
+          "key_factors": [
+            "중국 규제",
+            "특정 기능 금지",
+            "판매 영향"
+          ]
+        },
+        "1777727798844": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡과 테슬라 세미의 2026년 생산 계획 및 옵티머스 로봇 생산 라인 설치를 발표하며 미래 제품 로드맵에 대한 긍정적인 진전을 보였습니다.",
+          "key_factors": [
+            "사이버캡 생산 예정",
+            "테슬라 세미 생산 예정",
+            "옵티머스 로봇 생산 라인"
+          ]
+        }
+      },
+      "avgScore": 0.3,
+      "buyIndex": 51,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": null,
+      "newsCategories": {
+        "total": 10,
+        "Musk": 3,
+        "Earnings": 1,
+        "Product": 3,
+        "Market": 1,
+        "Regulatory": 2
+      },
+      "macroCtx": {
+        "spyChg": -0.08,
+        "qqqChg": 0.75,
+        "vixClose": 16.989999771118164,
+        "wtiChg": -3.04,
+        "cnyChg": 0,
+        "prevTslaChg": 5.03,
+        "rsi": 35.7,
+        "macd": {
+          "macd": -6.895854721404817,
+          "signal": -3.4838539665432293,
+          "hist": -3.4120007548615874,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.56,
+          "middle": 405.2,
+          "lower": 339.83,
+          "pos": 0.39
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 53,
+        "macdTrend": -2
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777727825118
+    },
+    {
       "id": "auto-1777707996879",
       "date": "2026-05-02",
       "displayDate": "2026.05.02",
@@ -7706,5 +7971,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-02 16:46 KST"
+  "lastUpdated": "2026-05-02 22:16 KST"
 }
