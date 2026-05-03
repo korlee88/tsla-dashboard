@@ -182,6 +182,39 @@ async function collectMuskXSentiment(dateStr) {
   }
 }
 
+// ─── 구글 트렌드 수집 (Gemini Search Grounding) ──────────────────────────────
+
+async function collectGoogleTrends(dateStr) {
+  try {
+    const data = await geminiPost({
+      tools: [{ google_search: {} }],
+      contents: [{
+        role: 'user',
+        parts: [{ text: `Search Google Trends data for the keyword "Tesla" in the United States for the past 7 days (around ${dateStr}).
+
+Find the current relative search interest score (0-100 scale, where 100 = peak popularity for the time period), whether the trend is rising, stable, or falling compared to the prior week, and any breakout/spike in search interest.
+
+Return ONLY JSON:
+{"current_score":<0-100>,"week_avg":<0-100>,"trend":"rising|stable|falling","spike":true|false,"top_queries":["query1","query2","query3"],"reasoning":"(한국어 한 문장 설명)"}
+CRITICAL: Return ONLY the JSON object.` }],
+      }],
+      generationConfig: { maxOutputTokens: 512, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
+    });
+    const parts = data.candidates?.[0]?.content?.parts || [];
+    const raw   = parts.filter(p => !p.thought).map(p => p.text || '').join('') || parts[0]?.text || '';
+    const clean = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (!m) return null;
+    const result = JSON.parse(m[0]);
+    const trendEmoji = result.trend === 'rising' ? '↑' : result.trend === 'falling' ? '↓' : '→';
+    console.log(`   📈 구글 트렌드: ${result.current_score}/100 ${trendEmoji} (${result.trend})${result.spike ? ' 🔥급등' : ''}`);
+    return result;
+  } catch (e) {
+    console.warn(`   ⚠ 구글 트렌드 수집 실패: ${e.message}`);
+    return null;
+  }
+}
+
 // ─── 메인 ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -199,9 +232,14 @@ async function main() {
   const newsItems = await collectNews();
   console.log(`   ✅ ${newsItems.length}건 수집 완료`);
 
-  // 1-2. 머스크 X 센티먼트 수집 (Grok 제안 #1)
+  // 1-2. 머스크 X 센티먼트 수집
   console.log('\n🐦 머스크 X 센티먼트 수집 중...');
   const muskXData = await collectMuskXSentiment(dateStr);
+  console.log('');
+
+  // 1-3. 구글 트렌드 수집
+  console.log('📈 구글 트렌드 수집 중...');
+  const trendsData = await collectGoogleTrends(dateStr);
   console.log('');
 
   // 2. 개별 뉴스 분석 (Rate limit: 1.2초 간격)
@@ -262,9 +300,25 @@ async function main() {
   }
 
   const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx, newsCategories });
-  let buyIndex    = Math.max(0, Math.min(100, enhanced.buyIndex + muskXAdj));
+
+  // 구글 트렌드 보정 (소매 관심도 신호 — 방향 증폭기)
+  let trendsAdj = 0;
+  if (trendsData && trendsData.trend) {
+    if (trendsData.trend === 'rising') trendsAdj += 2;
+    else if (trendsData.trend === 'falling') trendsAdj -= 1;
+    // 급등 시 기존 방향 증폭 (나쁜 뉴스 바이럴도 있으므로 방향 독립 적용 안 함)
+    if (trendsData.spike) trendsAdj += Math.sign(avgScore || (enhanced.buyIndex - 50)) * 2;
+    trendsAdj = Math.max(-4, Math.min(4, trendsAdj));
+    console.log(`   📈 구글 트렌드 보정: ${trendsAdj >= 0 ? '+' : ''}${trendsAdj}pt (${trendsData.trend}${trendsData.spike ? ' 급등' : ''})`);
+  }
+
+  let buyIndex    = Math.max(0, Math.min(100, enhanced.buyIndex + muskXAdj + trendsAdj));
   const direction = buyIndex >= 57 ? 'bullish' : buyIndex <= 43 ? 'bearish' : enhanced.direction;
-  const scoringLayers = { ...enhanced.layers, ...(muskXAdj !== 0 ? { muskXSentiment: muskXAdj } : {}) };
+  const scoringLayers = {
+    ...enhanced.layers,
+    ...(muskXAdj  !== 0 ? { muskXSentiment: muskXAdj }  : {}),
+    ...(trendsAdj !== 0 ? { googleTrends: trendsAdj }    : {}),
+  };
   // ──────────────────────────────────────────────────────────────────────────
   // ────────────────────────────────────────────────────────────────────────
 
@@ -286,11 +340,12 @@ async function main() {
     bullish,
     bearish,
     neutral:     analyzed.length - bullish - bearish,
-    muskXSentiment: muskXData,   // 머스크 X 센티먼트 (Grok 제안 #1)
-    newsCategories,              // 카테고리별 뉴스 분포 (Grok 제안 #2)
-    macroCtx,                    // 매크로 컨텍스트 v3.0 (SPY/QQQ/VIX/TSLA/WTI/CNY/MACD/BB)
-    scoringLayers,               // 적용된 보정 레이어
-    modelVersion: '3.0',
+    muskXSentiment: muskXData,
+    googleTrends:   trendsData,
+    newsCategories,
+    macroCtx,
+    scoringLayers,
+    modelVersion: '3.1',
     timestamp:   Date.now(),
   };
 
