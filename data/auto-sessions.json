@@ -1,6 +1,338 @@
 {
   "sessions": [
     {
+      "id": "auto-1777795382785",
+      "date": "2026-05-03",
+      "displayDate": "2026.05.03",
+      "kstTime": "17:02",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777795353917,
+          "title": "일론 머스크, 테슬라와 스페이스X가 첨단 칩 제조 시설을 건설할 것이라고 밝혀",
+          "summary": "일론 머스크는 오스틴에 새로운 테라팹(Terafab) 칩 공장을 건설하여 연간 1테라와트의 컴퓨팅 용량을 생산하고, 심각한 AI 칩 부족 문제를 해결할 것이라고 말했습니다. 이는 테슬라의 AI 및 로봇 공학으로의 전환과 관련이 있습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-03",
+          "category": "Musk|Product|AI"
+        },
+        {
+          "id": 1777795353918,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 2026년 로봇에 집중",
+          "summary": "일론 머스크는 테슬라가 모델 S와 모델 X 생산을 중단하고 옵티머스 로봇의 대량 생산에 집중할 것이라고 발표하며 전기차에서 자율 기술로 전환하고 있음을 밝혔습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-03",
+          "category": "Product|Strategy|Robotics"
+        },
+        {
+          "id": 1777795353919,
+          "title": "일론 머스크, 테슬라의 사이버캡 가격 3만 달러 미만으로 공개",
+          "summary": "테슬라 CEO 일론 머스크는 완전 자율 사이버캡 로보택시를 2027년 이전에 3만 달러 미만에 판매할 것이라고 확인했으며, 생산이 공식적으로 시작되었습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-03",
+          "category": "Product|Pricing|AutonomousDriving"
+        },
+        {
+          "id": 1777795353920,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라는 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트의 예상치인 34센트를 상회했습니다. 이는 북미 및 유럽-중동 지역의 수요 반등과 함께 전 세계적으로 전기차 수요가 회복되고 있음을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1777795353921,
+          "title": "테슬라, 일론 머스크 소유 회사들과 5억 7,300만 달러 규모의 거래 공개",
+          "summary": "테슬라의 수정된 연간 보고서에 따르면 스페이스X와 xAI로부터 5억 7,300만 달러의 수익을 포함하여 일론 머스크 소유 회사들과 총 5억 7,300만 달러 규모의 거래가 있었습니다. 이는 테슬라가 스페이스X에 차량을 판매하고 xAI에 메가팩 에너지 저장 제품을 판매한 것 등을 포함합니다.",
+          "source": "Electrek",
+          "date": "2026-05-01",
+          "category": "Musk|Financial|RelatedPartyTransactions"
+        },
+        {
+          "id": 1777795353922,
+          "title": "일론 머스크, 내년 말까지 테슬라 휴머노이드 로봇 판매 가능성 언급",
+          "summary": "일론 머스크는 테슬라의 옵티머스 휴머노이드 로봇이 2027년 말까지 일반에 판매될 수 있으며, 로봇이 신뢰할 수 있고 안전하며 다양한 기능을 수행할 수 있을 것이라고 말했습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-03",
+          "category": "Product|Robotics|Musk"
+        },
+        {
+          "id": 1777795353923,
+          "title": "테슬라, 2026년에 사이버캡, 테슬라 세미, 메가팩 생산 시작 예정",
+          "summary": "테슬라는 사이버캡, 테슬라 세미, 메가팩 생산이 2026년에 시작될 것이라고 밝혔습니다. 또한 옵티머스 휴머노이드 로봇의 1세대 생산 라인이 설치 중이라고 언급했습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product|Production"
+        },
+        {
+          "id": 1777795353924,
+          "title": "일론 머스크, 워렌 버핏과 달리 자신의 회사들을 단일 지주회사로 통합할 의사 없음",
+          "summary": "테슬라 CEO 일론 머스크는 자신의 회사들을 버크셔 해서웨이와 같은 단일 지주회사로 통합할 의사가 없다고 밝혔습니다. 그는 자신을 투자자가 아닌 엔지니어이자 제조업자, 기술자로 정의했습니다.",
+          "source": "CNBC",
+          "date": "2026-05-02",
+          "category": "Musk|Strategy"
+        },
+        {
+          "id": 1777795353925,
+          "title": "테슬라, 1분기 이익 증가 및 신형 로드스터 출시 예고",
+          "summary": "테슬라의 1분기 이익이 증가했으며, 일론 머스크는 신형 로드스터의 출시를 예고했습니다.",
+          "source": "Associated Press",
+          "date": "2026-04-22",
+          "category": "Earnings|Product"
+        },
+        {
+          "id": 1777795353926,
+          "title": "일론 머스크 대 샘 알트만 재판, OpenAI의 미래 결정할 수도",
+          "summary": "일론 머스크와 샘 알트만 간의 재판이 진행 중이며, 이는 OpenAI의 미래를 결정할 수 있습니다. 머스크는 알트만과 OpenAI의 다른 리더들이 비영리 단체를 영리 회사로 전환하여 부당하게 이득을 취했다고 주장합니다.",
+          "source": "YouTube (Herbert Ong)",
+          "date": "2026-04-28",
+          "category": "Musk|Legal|AI"
+        }
+      ],
+      "analyses": {
+        "1777795353917": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라와 스페이스X를 위한 첨단 칩 제조 시설인 테라팹 건설 계획을 발표한 것은 AI 및 로봇 공학 분야에서 테슬라의 역량을 강화할 수 있는 중요한 진전입니다.",
+          "key_factors": [
+            "Terafab 칩 공장 건설",
+            "AI 칩 부족 해결",
+            "테슬라의 AI 및 로봇 공학 전환"
+          ]
+        },
+        "1777795353918": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X 생산을 중단하고 로봇에 집중한다는 발표는 단기적으로 주요 전기차 모델의 판매 감소를 야기할 수 있어 부정적입니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "옵티머스 로봇 대량 생산 집중",
+            "전기차에서 자율 기술로의 전략적 전환"
+          ]
+        },
+        "1777795353919": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 사이버캡 로보택시가 3만 달러 미만의 가격으로 2027년 이전에 출시될 것이라는 소식은 새로운 제품의 중요한 이정표를 나타내며 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "사이버캡 가격 공개",
+            "생산 시작",
+            "완전 자율 로보택시"
+          ]
+        },
+        "1777795353920": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라의 1분기 조정 주당 순이익이 월스트리트 예상치를 10% 이상 상회하여 긍정적인 실적을 보여주었습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV 수요 회복"
+          ]
+        },
+        "1777795353921": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 일론 머스크 소유 회사들과 상당한 규모의 거래를 통해 수익을 창출한 것은 긍정적인 신호입니다.",
+          "key_factors": [
+            "관계사 거래",
+            "수익 창출"
+          ]
+        },
+        "1777795353922": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라의 휴머노이드 로봇 옵티머스의 2027년 말 판매 가능성을 언급하며 새로운 제품 마일스톤에 대한 기대를 높였습니다.",
+          "key_factors": [
+            "휴머노이드 로봇 판매",
+            "옵티머스",
+            "신제품 마일스톤"
+          ]
+        },
+        "1777795353923": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡, 세미, 메가팩의 2026년 생산 시작과 옵티머스 로봇 1세대 생산 라인 설치를 발표하여 미래 성장 동력에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "테슬라 세미 생산 시작",
+            "메가팩 생산 시작",
+            "옵티머스 로봇 1세대 생산 라인"
+          ]
+        },
+        "1777795353924": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 자신의 회사들을 단일 지주회사로 통합할 의사가 없다는 발언은 테슬라의 현재 운영이나 미래 전망에 직접적인 영향을 미치지 않습니다.",
+          "key_factors": [
+            "지주회사 통합",
+            "일론 머스크의 역할 정의"
+          ]
+        },
+        "1777795353925": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12",
+            "R13"
+          ],
+          "reasoning": "테슬라의 1분기 이익 증가는 긍정적인 실적을 나타내며, 신형 로드스터 출시는 미래 성장 동력에 대한 기대를 높입니다.",
+          "key_factors": [
+            "1분기 이익 증가",
+            "신형 로드스터 출시 예고"
+          ]
+        },
+        "1777795353926": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크와 샘 알트만 간의 OpenAI 관련 소송은 머스크의 다른 벤처에서 발생한 위험이 테슬라에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "Musk lawsuit",
+            "OpenAI",
+            "Reputational risk"
+          ]
+        }
+      },
+      "avgScore": 1.6,
+      "buyIndex": 76,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R24"
+      ],
+      "bullish": 7,
+      "bearish": 2,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-04-24",
+            "content": "Elon Musk는 X(Twitter)에 Cybercab 생산이 시작되었다는 게시물과 비디오를 공유했습니다. 그는 초기 생산 속도는 느리겠지만 연말과 내년에는 증가할 것이라고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Tesla의 2026년 1분기 실적 발표에서 Elon Musk는 소비자용 완전자율주행(FSD) 무인 기능이 2026년 4분기에나 출시될 것이라고 확인하며, 이전 약속보다 일정이 또 다시 지연되었음을 시사했습니다. 그는 또한 무인 FSD 또는 로보택시 수익이 올해는 \"매우 중요하지 않을 것\"이라고 언급했지만, 내년에는 \"상당히 중요할 것\"이라고 덧붙였습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-22",
+            "content": "Elon Musk는 Tesla가 AI 소프트웨어 및 칩, 제조 및 설계 비용에 올해 250억 달러를 지출할 계획이라고 밝혔습니다. 그는 이러한 투자가 미래의 상당한 수익 흐름을 위해 \"충분히 정당화된다\"고 말했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Elon Musk는 Tesla의 에너지 저장 사업이 \"매우 강력하다\"고 말했지만, 2026년 실제 전망은 약합니다. 2026년 1분기 에너지 저장 배치는 전년 대비 15% 감소했습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-30",
+            "content": "Elon Musk는 Tesla의 Optimus 로봇 생산이 7월 말 또는 8월 초에 Fremont에서 시작될 것이며, 내년에는 Tesla 외부에서 유용하게 사용될 수 있을 것이라고 언급했습니다. 그는 초기 생산량은 느릴 것이라고 경고했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-27",
+            "content": "Elon Musk는 2023년 이전에 출고된 하드웨어 3(HW3) 칩셋이 장착된 Tesla 차량은 완전 무인 FSD를 달성할 수 없을 것이라고 밝혔습니다. 그는 HW3 소유자에게 \"할인된 보상 판매\" 또는 주요 도시의 \"마이크로 팩토리\"에서 컴퓨터 및 카메라를 물리적으로 교체하는 옵션을 제공할 것이라고 말했습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-02",
+            "content": "Elon Musk는 의도적으로 달성 가능성이 50% 정도인 마감 기한을 설정한다고 말하며, 이는 Tesla와 SpaceX와 같은 회사에서 속도, 집중력 및 혁신을 위한 강제 기능 역할을 한다고 주장했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": -1,
+        "post_count": 7,
+        "reasoning": "Elon Musk의 최근 Tesla 관련 발언은 로보택시 및 FSD의 지연과 HW3 차량의 무인 FSD 불가 발표로 인해 부정적인 측면이 있었지만, Cybercab 생산 시작, Optimus 로봇 생산 계획, AI 및 로봇 공학에 대한 상당한 투자 계획 발표로 인해 긍정적인 측면도 있어 전반적으로 중립적인 분위기를 보였습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Product|AI": 1,
+        "Product|Strategy|Robotics": 1,
+        "Product|Pricing|AutonomousDriving": 1,
+        "Earnings|Market": 1,
+        "Musk|Financial|RelatedPartyTransactions": 1,
+        "Product|Robotics|Musk": 1,
+        "Product|Production": 1,
+        "Musk|Strategy": 1,
+        "Earnings|Product": 1,
+        "Musk|Legal|AI": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.08,
+        "qqqChg": 0.75,
+        "vixClose": 16.989999771118164,
+        "wtiChg": -3.04,
+        "cnyChg": 0,
+        "prevTslaChg": 5.03,
+        "rsi": 35.7,
+        "macd": {
+          "macd": -6.895854721404817,
+          "signal": -3.4838539665432293,
+          "hist": -3.4120007548615874,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.56,
+          "middle": 405.2,
+          "lower": 339.83,
+          "pos": 0.39
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 66,
+        "r24Discount": 9,
+        "strongAmp": 4,
+        "macdTrend": -2,
+        "muskXSentiment": -1
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777795382785
+    },
+    {
       "id": "auto-1777780901558",
       "date": "2026-05-03",
       "displayDate": "2026.05.03",
@@ -8609,5 +8941,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-03 13:01 KST"
+  "lastUpdated": "2026-05-03 17:02 KST"
 }
