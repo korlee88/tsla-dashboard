@@ -1,6 +1,299 @@
 {
   "sessions": [
     {
+      "id": "auto-1777867119250",
+      "date": "2026-05-04",
+      "displayDate": "2026.05.04",
+      "kstTime": "12:58",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1777867094895,
+          "title": "일론 머스크, 테슬라와 스페이스X의 첨단 칩 제조 시설 건설 발표",
+          "summary": "일론 머스크는 테슬라와 스페이스X가 연간 1테라와트의 컴퓨팅 용량을 생산할 수 있는 첨단 칩 제조 시설인 '테라팹'을 건설할 것이라고 밝혔습니다. 이는 AI 칩 부족 문제를 해결하기 위한 노력의 일환입니다.",
+          "source": "Fox Business",
+          "date": "2026-05-04",
+          "category": "Musk"
+        },
+        {
+          "id": 1777867094896,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇에 집중",
+          "summary": "테슬라가 모델 S와 모델 X 차량 생산을 중단하고 옵티머스 로봇의 대량 생산에 집중할 것이라고 일론 머스크가 발표했습니다. 이는 테슬라가 전기차에서 자율 기술로 전환하고 있음을 시사합니다.",
+          "source": "Fox Business",
+          "date": "2026-05-04",
+          "category": "Product"
+        },
+        {
+          "id": 1777867094897,
+          "title": "일론 머스크, 테슬라 사이버캡 로보택시 가격 3만 달러 미만으로 공개",
+          "summary": "테슬라 CEO 일론 머스크는 완전 자율 주행 사이버캡 로보택시를 2027년 이전에 3만 달러 미만에 판매할 것이라고 확인했습니다. 현재 생산이 공식적으로 시작되었습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-04",
+          "category": "Product"
+        },
+        {
+          "id": 1777867094898,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했습니다. 또한 아시아-태평양 및 남미 지역의 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777867094899,
+          "title": "테슬라, 1분기 잉여현금흐름 14.4억 달러 기록",
+          "summary": "테슬라의 1분기 잉여현금흐름은 14.4억 달러로, 예상치였던 마이너스 18.6억 달러를 크게 상회했습니다. 이는 회사의 재무 건전성에 긍정적인 신호입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1777867094900,
+          "title": "테슬라 세미 트럭 대량 생산 공식 시작",
+          "summary": "일론 머스크와 테슬라에 의해 테슬라 세미 트럭의 대량 생산이 공식적으로 시작되었다는 소식이 확인되었습니다. 이는 테슬라 주가 상승의 원동력이 되고 있습니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Product"
+        },
+        {
+          "id": 1777867094901,
+          "title": "테슬라, 달라스 텍사스 로보택시 fleet에 무인 모델 Y 추가",
+          "summary": "테슬라가 달라스 텍사스 fleet에 5대의 무인 모델 Y 로보택시를 추가하여 총 24대가 되었습니다. 이는 로보택시 사업의 확장을 보여줍니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Product"
+        },
+        {
+          "id": 1777867094902,
+          "title": "테슬라, AI 및 로봇 공학 회사로의 전환 가속화",
+          "summary": "테슬라는 자동차 제조업체에서 AI 및 로봇 공학 회사로 전환하는 과정에 있으며, 옵티머스 로봇 생산이 올해에도 순조롭게 진행될 것으로 보입니다.",
+          "source": "CNBC Television",
+          "date": "2026-04-22",
+          "category": "Product"
+        },
+        {
+          "id": 1777867094903,
+          "title": "일론 머스크의 순자산 급증, 테슬라 주가 상승에 힘입어",
+          "summary": "테슬라 주가가 계속 상승하면서 일론 머스크의 순자산이 급증하여 가장 가까운 경쟁자의 두 배 이상이 되었습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-04",
+          "category": "Musk"
+        },
+        {
+          "id": 1777867094904,
+          "title": "테슬라, 2025년 머스크 회사들로부터 5억 달러 이상 수익 창출",
+          "summary": "테슬라는 2025년에 XAI로부터 4억 3천만 달러, 스페이스X로부터 4억 4천 3백만 달러를 포함하여 일론 머스크의 회사들로부터 5억 달러 이상의 수익을 창출했습니다. 이는 AI, 에너지, 차량 간의 생태계가 숫자로 나타나기 시작했음을 보여줍니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-01",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1777867094895": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크의 테라팹 건설 발표는 AI 칩 부족 문제를 해결하고 테슬라의 기술 독립성을 강화할 잠재력이 있어 긍정적입니다.",
+          "key_factors": [
+            "첨단 칩 제조 시설",
+            "AI 칩 부족 해결",
+            "기술 독립성 강화"
+          ]
+        },
+        "1777867094896": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 주력 모델인 모델 S와 모델 X의 생산을 중단하고 로봇 생산에 집중하는 것은 단기적으로 차량 판매 감소와 수익성 악화로 이어질 수 있어 부정적인 영향을 미 미칠 것입니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "옵티머스 로봇 대량 생산 집중",
+            "전기차에서 자율 기술로의 전환"
+          ]
+        },
+        "1777867094897": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 완전 자율 주행 사이버캡 로보택시의 3만 달러 미만 가격 공개 및 2027년 이전 출시 확정은 새로운 제품 이정표로서 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "사이버캡 로보택시",
+            "3만 달러 미만 가격",
+            "2027년 이전 출시"
+          ]
+        },
+        "1777867094898": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익 예상치를 상회하고 주요 지역에서 EV 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1777867094899": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 잉여현금흐름이 예상치를 크게 상회하여 회사의 재무 건전성에 긍정적인 신호로 작용합니다.",
+          "key_factors": [
+            "잉여현금흐름 예상치 상회",
+            "재무 건전성 개선"
+          ]
+        },
+        "1777867094900": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 세미 트럭의 대량 생산 공식 시작은 신제품 생산 이정표 달성으로 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "세미 트럭 대량 생산",
+            "신제품 이정표"
+          ]
+        },
+        "1777867094901": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 달라스 로보택시 fleet에 무인 모델 Y를 추가하며 로보택시 사업 확장을 보여주어 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "로보택시 사업 확장",
+            "무인 모델 Y 추가"
+          ]
+        },
+        "1777867094902": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇 공학 회사로의 전환을 가속화하고 옵티머스 로봇 생산이 순조롭게 진행될 것이라는 소식은 새로운 제품 및 기술 이정표로 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "AI 및 로봇 공학 회사로의 전환",
+            "옵티머스 로봇 생산 순조로운 진행"
+          ]
+        },
+        "1777867094903": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가 상승으로 일론 머스크의 순자산이 급증했다는 소식은 긍정적인 투자 심리를 반영합니다.",
+          "key_factors": [
+            "테슬라 주가 상승",
+            "일론 머스크 순자산 급증"
+          ]
+        },
+        "1777867094904": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 머스크의 다른 회사들로부터 상당한 수익을 창출했다는 소식은 회사 간의 시너지를 보여주며 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "회사 간 시너지",
+            "수익 창출"
+          ]
+        }
+      },
+      "avgScore": 2.2,
+      "buyIndex": 76,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12"
+      ],
+      "bullish": 9,
+      "bearish": 1,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-03",
+            "content": "Elon Musk는 Tesla가 산업 규모로 Optimus를 구축하는 것에 대해 농담하는 것이 아니라고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-27",
+            "content": "Tesla는 Elon Musk의 2018년 보상 패키지와 관련된 약 3억 4백만 주의 보통주를 등록하기 위해 서류를 제출했습니다. 이 패키지는 월요일 종가 기준으로 1,100억 달러 이상의 가치가 있습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-15",
+            "content": "Elon Musk는 AI4가 FSD에 대해 인간보다 훨씬 더 나은 안전성을 달성하기에 충분하다고 언급하며, 로보택시를 위해 AI5를 기다릴 필요가 없다고 말했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "bullish",
+        "sentiment_score": 2,
+        "post_count": 3,
+        "reasoning": "Elon Musk의 최근 커뮤니케이션은 Tesla의 Optimus 로봇 생산, 상당한 규모의 보상 패키지 진행, 그리고 FSD 및 로보택시 기술의 발전에 대한 긍정적인 전망을 강조하며 전반적으로 낙관적인 분위기를 나타냅니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk": 2,
+        "Product": 5,
+        "Earnings": 2,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.08,
+        "qqqChg": 0.75,
+        "vixClose": 16.989999771118164,
+        "wtiChg": 2.33,
+        "cnyChg": -0.13,
+        "prevTslaChg": 5.03,
+        "rsi": 35.7,
+        "macd": {
+          "macd": -6.895854721404817,
+          "signal": -3.4838539665432293,
+          "hist": -3.4120007548615874,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 470.56,
+          "middle": 405.2,
+          "lower": 339.83,
+          "pos": 0.39
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 72,
+        "strongAmp": 3,
+        "macdTrend": -2,
+        "muskXSentiment": 3
+      },
+      "modelVersion": "3.0",
+      "timestamp": 1777867119250
+    },
+    {
       "id": "auto-1777833576895",
       "date": "2026-05-04",
       "displayDate": "2026.05.04",
@@ -9488,5 +9781,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-04 03:38 KST"
+  "lastUpdated": "2026-05-04 12:58 KST"
 }
