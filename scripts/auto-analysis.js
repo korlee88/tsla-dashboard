@@ -45,19 +45,56 @@ R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buybac
 R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
 R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE)
 
-Score guidelines:
-±5: Extreme event (confirmed bankruptcy risk, historic milestone)
-±3~4: Major confirmed event (earnings beat/miss, delivery report, product launch)
-±1~2: Minor event (analyst note, speculation, rumor, incremental news)
-0: Neutral/irrelevant
+STRICT SCORE GUIDELINES (backtesting: previous scores were systematically too high — apply conservatively):
 
-IMPORTANT score caps (backtesting showed these rules cause noise when over-weighted):
-- R08 (Musk SNS/DOGE controversy): MAX impact_score = ±2. Short-term sentiment noise, reverts quickly.
-- R24 (Musk other ventures spillover): MAX impact_score = ±2 when appearing alone without R08.
-- R23 (recession fear): MAX impact_score = -1. Macro, not Tesla-specific.
-- Use "neutral" direction ONLY when evidence is truly balanced AND confidence is "low".
-  Prefer "bearish" over "neutral" when avgScore is slightly negative.
+±5: CATASTROPHIC or HISTORIC only — bankruptcy risk, >30% delivery miss confirmed, historic fraud
+    Frequency: 1–2 times per year at most. Almost never appropriate.
 
+±3~4: REQUIRES hard confirmed numbers — NOT speculation, NOT analyst opinion, NOT rumors
+    ✓ Actual quarterly delivery report published (beat/miss >5% vs consensus with official numbers)
+    ✓ Actual EPS reported with verified figures
+    ✓ Factory confirmed shutdown/fire with operational impact
+    ✗ "Expected to beat" / "analysts expect" / "reportedly" → MAX ±2
+    ✗ Analyst upgrades, price target changes → MAX ±2 (use R17, cap at ±2)
+    ✗ Follow-up or repeated story about already-known event → subtract 1 or score 0
+    Frequency target: 1–2 items per 10-article batch
+
+±2: Moderate confirmed news with clear, specific Tesla impact
+    ✓ Official partnership/deal announced with specific terms
+    ✓ Verified monthly sales data (China CPCA, etc.)
+    ✓ Regulatory decision directly affecting Tesla products
+    Frequency target: 3–4 items per 10-article batch
+
+±1: Minor, indirect, or speculative news
+    ✓ Analyst commentary/speculation without hard data
+    ✓ Industry trend with TSLA mention
+    ✓ Incremental product/software update
+    Frequency target: 3–4 items per 10-article batch
+
+0: Irrelevant, fully priced-in, or pure noise
+    ✓ Repeated/rehashed known information (same story >3 days old)
+    ✓ General market commentary without TSLA catalyst
+    Frequency target: 1–2 items per 10-article batch
+
+CONSERVATIVE SCORING RULES (mandatory):
+1. DEFAULT: When uncertain between two scores, ALWAYS choose the LOWER magnitude.
+2. SPECULATION: Any rumor, forecast, analyst view, or "reportedly" = MAX ±2.
+3. ALREADY KNOWN: Event/trend in news >3 days → subtract 1 from initial score.
+4. SELF-CHECK: Before assigning ±3 or higher, confirm: "Does this article contain officially published, quantified data?" If NO → reduce to ±2.
+
+Per-rule CAPS (hard limits regardless of context):
+- R08 (Musk SNS/DOGE): MAX ±2
+- R09 (subsidy reduction): MAX ±2 unless specific law confirmed
+- R13 (FSD/new product): MAX ±3; ±4 only if hardware shipping with date confirmed
+- R17 (analyst upgrade/downgrade): MAX ±2
+- R18 (fed rate signal): MAX ±1
+- R19 (Musk positive statement): MAX ±2
+- R20 (China sales): MAX ±2 unless official quarterly data published
+- R22 (short seller report): MAX ±2
+- R23 (recession fear): MAX -1
+- R24 (Musk ventures spillover): MAX ±2
+
+DIRECTION: bullish if score>0, bearish if score<0, neutral ONLY if score=0.
 CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
 
 // ─── 유틸 ────────────────────────────────────────────────────────────────────

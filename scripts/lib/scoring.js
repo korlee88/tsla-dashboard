@@ -288,12 +288,13 @@ function calculateEnhancedScore(input) {
   let bi = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
   layers.base = bi;
 
-  // ── [1] R24 단독 발동 노이즈 할인 ────────────────────────────────────────
+  // ── [1] R24 단독 발동 노이즈 할인 (중립 방향으로 25% 이동) ──────────────
   const hasR08 = topRules.includes('R08');
   const hasR24 = topRules.includes('R24');
   if (hasR24 && !hasR08) {
-    bi = Math.min(100, bi + 9);
-    layers.r24Discount = +9;
+    const before = bi;
+    bi = Math.round(50 + (bi - 50) * 0.75);
+    layers.r24Discount = bi - before;
   }
 
   // ── [2] 강한신호 증폭 ─────────────────────────────────────────────────────
