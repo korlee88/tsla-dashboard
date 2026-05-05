@@ -940,6 +940,31 @@ async function fetchPriceViaGemini(apiKey) {
 
 const PRED_ACCURACY_KEY = 'tsla_pred_accuracy_v1';
 
+// 주말(토·일)이면 다음 월요일로 보정 — 거래일 기준 D+N 계산용
+function toNextTradingDate(date) {
+  const d = new Date(date);
+  const day = d.getUTCDay(); // 0=일, 6=토
+  if (day === 6) d.setUTCDate(d.getUTCDate() + 2);
+  else if (day === 0) d.setUTCDate(d.getUTCDate() + 1);
+  return d.toISOString().split('T')[0];
+}
+
+// 정확한 날짜 bar 없을 때 다음 4일 이내 가장 가까운 거래일 bar 반환
+function findBarForDate(priceData, targetDateStr) {
+  const exact = priceData.find(d => {
+    const ds = (d.date instanceof Date ? d.date : new Date(d.date)).toISOString().split('T')[0];
+    return ds === targetDateStr;
+  });
+  if (exact) return exact;
+  // 주말/휴장일 처리: 이후 4 거래일 이내에서 가장 가까운 날
+  const target = new Date(targetDateStr + 'T00:00:00Z');
+  return priceData
+    .map(d => ({ bar: d, dt: d.date instanceof Date ? d.date : new Date(d.date) }))
+    .filter(({ dt }) => { const diff = (dt - target) / 86400000; return diff > 0 && diff <= 4; })
+    .sort((a, b) => a.dt - b.dt)
+    .map(({ bar }) => bar)[0] || null;
+}
+
 function loadPredAccuracy() {
   try { return JSON.parse(localStorage.getItem(PRED_ACCURACY_KEY) || '{"records":[]}'); } catch { return { records: [] }; }
 }
@@ -956,7 +981,8 @@ function recordForecastPredictions(forecast, basePrice) {
 
   forecast.daily_forecasts.forEach(df => {
     const targetTs  = now.getTime() + df.day * 86400000;
-    const targetDate = new Date(targetTs).toISOString().split('T')[0];
+    // 주말이면 다음 월요일(거래일)로 보정
+    const targetDate = toNextTradingDate(new Date(targetTs));
     // 같은 예측일+대상일 중복 방지
     if (db.records.some(r => r.forecastDate === forecastDate && r.targetDate === targetDate)) return;
     db.records.push({
@@ -990,10 +1016,7 @@ function resolvePredictionsWithActual(dailyPrices) {
 
   db.records.forEach(rec => {
     if (rec.matched !== null) return;                             // 이미 해소됨
-    const bar = dailyPrices.find(d => {
-      const ds = (d.date instanceof Date ? d.date : new Date(d.date)).toISOString().split('T')[0];
-      return ds === rec.targetDate;
-    });
+    const bar = findBarForDate(dailyPrices, rec.targetDate);
     if (!bar || !bar.close) return;
 
     rec.actualPrice      = Math.round(bar.close * 100) / 100;
@@ -1575,10 +1598,7 @@ function PredAccuracyCard({ dailyData }) {
     let updated = false;
     db.records.forEach(rec => {
       if (rec.matched !== null) return;
-      const bar = priceData.find(d => {
-        const ds = (d.date instanceof Date ? d.date : new Date(d.date)).toISOString().split('T')[0];
-        return ds === rec.targetDate;
-      });
+      const bar = findBarForDate(priceData, rec.targetDate);
       if (!bar?.close) return;
       rec.actualPrice     = Math.round(bar.close * 100) / 100;
       rec.actualChangePct = Math.round((bar.close - rec.basePrice) / rec.basePrice * 100 * 100) / 100;
