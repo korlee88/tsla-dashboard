@@ -1,6 +1,374 @@
 {
   "sessions": [
     {
+      "id": "auto-1778095006808",
+      "date": "2026-05-07",
+      "displayDate": "2026.05.07",
+      "kstTime": "04:15",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778094967485,
+          "title": "테슬라, 후방 카메라 이미지 지연 문제로 미국 내 21만 9천대 차량 리콜",
+          "summary": "테슬라가 후방 카메라 이미지 지연 문제로 미국에서 약 21만 9천대의 차량을 리콜할 예정이다. 이는 안전과 관련된 문제로, 주식 시장에 부정적인 영향을 미칠 수 있다.",
+          "source": "Reuters",
+          "date": "2026-05-06",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778094967486,
+          "title": "스페이스X, 텍사스에 550억 달러 규모 테라팹 AI 칩 공장 건설 제안",
+          "summary": "일론 머스크의 스페이스X가 텍사스 오스틴에 550억 달러 규모의 테라팹 반도체 제조 시설 건설을 제안했다. 이 시설은 테슬라 차량, 로보택시, 휴머노이드 로봇 및 우주 기반 AI 데이터 센터용 칩을 생산할 예정이다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-06",
+          "category": "AI|Product|Investment"
+        },
+        {
+          "id": 1778094967487,
+          "title": "일론 머스크, OpenAI 소송 합의 시도 후 공격적인 태세 전환",
+          "summary": "일론 머스크가 OpenAI와의 소송 재판 이틀 전 합의를 시도했으나, OpenAI 측의 제안을 거부하고 샘 알트만과 그렉 브록만을 '미국에서 가장 미움받는 사람'으로 만들겠다고 경고했다.",
+          "source": "Forbes",
+          "date": "2026-05-04",
+          "category": "Legal|Musk"
+        },
+        {
+          "id": 1778094967488,
+          "title": "테슬라, '완전 자율 주행' 시스템에 대한 유럽 규제 당국의 회의적인 시각 직면",
+          "summary": "일론 머스크는 유럽 연합이 테슬라의 '완전 자율 주행' 시스템을 곧 승인할 것이라고 밝혔지만, 로이터 통신에 따르면 유럽 규제 당국은 이 기술의 안전성에 대해 회의적인 입장을 보이고 있다.",
+          "source": "Reuters",
+          "date": "2026-05-05",
+          "category": "Regulatory|Product"
+        },
+        {
+          "id": 1778094967489,
+          "title": "일론 머스크 신탁, 트위터 소유권 신고 지연 관련 SEC에 150만 달러 합의금 지불",
+          "summary": "일론 머스크의 신탁이 트위터 주식 소유권 신고를 제때 하지 않아 증권거래위원회(SEC)에 150만 달러의 민사 벌금을 지불하기로 합의했다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-04",
+          "category": "Legal|Musk"
+        },
+        {
+          "id": 1778094967490,
+          "title": "테슬라, '상징적인' 자율 주행 마일스톤 달성했지만 실제 성공은 더 어려울 것",
+          "summary": "테슬라 고객들이 '완전 자율 주행(감독)' 첨단 운전자 보조 시스템으로 100억 마일 이상을 주행하며 새로운 이정표를 세웠다. 그러나 전문가들은 핵심 AI 프로그램의 상업화가 예상보다 점진적으로 이루어질 것이라며 주가 상승 여력이 제한적이라고 평가한다.",
+          "source": "MarketWatch",
+          "date": "2026-05-04",
+          "category": "Product|AI"
+        },
+        {
+          "id": 1778094967491,
+          "title": "스페이스X, Anthropic에 '콜로서스' 슈퍼컴퓨터 AI 훈련용으로 제공",
+          "summary": "일론 머스크의 스페이스X가 AI 훈련을 위해 Anthropic에 '콜로서스' 슈퍼컴퓨터를 제공할 예정이다. 이는 머스크의 AI 관련 사업 확장을 보여주는 움직임이다.",
+          "source": "Forbes",
+          "date": "2026-05-06",
+          "category": "AI|Musk"
+        },
+        {
+          "id": 1778094967492,
+          "title": "일론 머스크, OpenAI 소송에서 '세부 사항을 읽지 않았다'고 증언",
+          "summary": "일론 머스크는 OpenAI의 비영리에서 영리 법인 전환에 관한 2017년 계약 조건에 대해 '세부 사항을 읽지 않았다'고 법정에서 증언했다. 그는 OpenAI가 비영리 단체로 남을 것이라고 믿었다고 주장하며, 3,800만 달러의 초기 자금 지원이 '어리석은 짓'이었다고 말했다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-30",
+          "category": "Legal|Musk"
+        },
+        {
+          "id": 1778094967493,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 반등 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했다. 또한 아시아-태평양 및 남미 일부 지역에서 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 수요가 반등했다고 밝혔다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1778094967494,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 2026년 로봇에 집중",
+          "summary": "테슬라가 모델 S 및 모델 X 차량 생산을 중단하고 2026년에는 옵티머스 로봇의 대량 생산에 집중할 것이라고 발표했다. 이는 테슬라의 사업 전략 변화를 시사한다.",
+          "source": "Fox Business",
+          "date": "2026-01-28",
+          "category": "Product|AI"
+        }
+      ],
+      "analyses": {
+        "1778094967485": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 이미지 지연 문제로 미국에서 21만 9천대의 차량을 리콜하는 것은 안전 관련 문제로 주식에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "리콜",
+            "안전 문제",
+            "21만 9천대"
+          ]
+        },
+        "1778094967486": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X의 대규모 AI 칩 공장 건설 제안은 테슬라의 AI 및 로봇 공학 프로젝트에 긍정적인 시너지를 제공할 수 있지만, 이는 스페이스X의 투자이며 테슬라에 대한 직접적인 재정적 영향은 불확실합니다.",
+          "key_factors": [
+            "SpaceX 투자",
+            "AI 칩 생산",
+            "테슬라 프로젝트 시너지"
+          ]
+        },
+        "1778094967487": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI와의 소송에서 합의를 거부하고 공격적인 태도를 보이며 법적 분쟁이 심화될 가능성이 있어, 이는 머스크의 다른 벤처 관련 리스크가 테슬라에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "OpenAI 소송",
+            "일론 머스크의 공격적인 태도"
+          ]
+        },
+        "1778094967488": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "유럽 규제 당국이 테슬라의 완전 자율 주행 시스템 안전성에 대해 회의적인 시각을 보이며 승인 지연 가능성이 제기되어 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "유럽 규제 당국의 회의적인 시각",
+            "FSD 승인 지연 가능성"
+          ]
+        },
+        "1778094967489": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R05",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 신탁이 트위터 소유권 신고 지연으로 SEC에 벌금을 지불하기로 합의한 것은 머스크의 다른 벤처 관련 규제 문제를 보여주며 테슬라에 간접적인 부정적 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "SEC 합의금 지불",
+            "트위터 소유권 신고 지연"
+          ]
+        },
+        "1778094967490": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 FSD 시스템이 100억 마일 주행이라는 중요한 이정표를 달성했지만, 전문가들은 상업화가 점진적일 것으로 예상하여 주가에 미치는 긍정적 영향이 제한적입니다.",
+          "key_factors": [
+            "FSD 100억 마일 달성",
+            "FSD 상업화의 점진적 예상"
+          ]
+        },
+        "1778094967491": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 스페이스X가 Anthropic에 슈퍼컴퓨터를 제공하는 것은 머스크의 다른 벤처 사업 위험이 테슬라에 전이될 수 있다는 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "Musk's other ventures",
+            "AI business expansion"
+          ]
+        },
+        "1778094967492": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI 소송에서 계약 세부 사항을 읽지 않았다고 증언한 것은 그의 다른 벤처와 관련된 잠재적 리스크를 시사하며 투자자 신뢰에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "Musk's testimony",
+            "OpenAI lawsuit",
+            "credibility concerns"
+          ]
+        },
+        "1778094967493": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 월스트리트 예상치를 10% 이상 상회하여 긍정적인 실적을 발표했으며, 주요 지역에서 EV 수요 반등을 시사했다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand rebound"
+          ]
+        },
+        "1778094967494": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X 생산을 중단하고 로봇 생산에 집중한다는 소식은 기존 차량 판매 감소 우려와 사업 전략의 중대한 변화를 시사하여 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "2026년 옵티머스 로봇 대량 생산 집중",
+            "사업 전략 변화"
+          ]
+        }
+      },
+      "avgScore": -0.5,
+      "buyIndex": 39,
+      "direction": "bearish",
+      "topRules": [
+        "R24",
+        "R04",
+        "R05",
+        "R13",
+        "R12"
+      ],
+      "bullish": 3,
+      "bearish": 7,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-04",
+            "content": "Tesla의 FSD(Full Self-Driving) 감독 모드 주행 거리가 100억 마일을 돌파했습니다. 이는 Elon Musk가 안전한 무인 자율주행에 필요하다고 언급했던 데이터 임계값과 일치합니다. 또한, 텍사스 오스틴의 로보택시가 저녁 시간에도 무인으로 운행되기 시작했으며, 달라스와 휴스턴에서도 무인 차량이 추가로 배치되어 총 33대의 무인 차량이 운행 중입니다. 사이버캡 생산도 점진적으로 증가하고 있으며, 로보택시 차량으로 투입될 준비를 하고 있습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-04",
+            "content": "Tesla Semi 트럭이 네바다 공장에서 대량 생산 라인에서 첫 유닛을 출하했습니다. 캘리포니아의 운송 회사인 Forum Mobility는 40대의 Tesla Semi를 추가 주문하여 전기 트럭 운송을 확대할 예정입니다. Musk는 사이버캡과 Semi 트럭의 초기 생산은 느리겠지만, 연말과 내년에는 기하급수적으로 증가할 것이라고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-05",
+            "content": "Elon Musk는 OpenAI와의 소송과 관련하여 Greg Brockman에게 합의 의사를 타진했으나, Brockman이 상호 소송 취하를 제안하자 \"이번 주말까지 당신과 Sam은 미국에서 가장 미움받는 사람이 될 것이다. 고집한다면 그렇게 될 것이다\"라고 답하며 강경한 입장을 보였습니다. 이는 Musk가 개인적으로 소송 결과에 깊이 관여하고 있음을 시사합니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-05",
+            "content": "Tesla의 FSD(Full Self-Driving) 시스템이 유럽 규제 당국의 반발에 직면했습니다. 또한, 2023년 이전에 출고된 Tesla 차량은 완전 무인 FSD를 달성할 수 없을 것이라는 Elon Musk의 발언에 일부 Tesla 소유주들이 불만을 표출하며 '미끼 상품' 같다고 비판했습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-06",
+            "content": "Elon Musk는 2026년 3월 4일 X에 \"Tesla는 AGI를 만들 회사 중 하나가 될 것이며, 아마도 휴머노이드/원자 형성 형태로 처음 만들 것\"이라고 게시했지만, 8주 후 오클랜드 연방 법원에서 Tesla가 AGI를 추구할 구체적인 계획이 있는지 질문받았을 때 \"없다\"고 답변했습니다. 이는 Musk의 AI 관련 발언과 실제 계획 간의 모순을 보여줍니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": -1,
+        "post_count": 5,
+        "reasoning": "Elon Musk의 최근 게시물은 로보택시 및 Semi 생산 시작과 FSD 마일스톤 달성과 같은 긍정적인 소식과 함께, Optimus 출시 지연, 에너지 저장 사업의 약세, 그리고 OpenAI 소송 및 AI 관련 발언의 모순과 같은 부정적인 소식이 혼재되어 있어 전반적인 분위기는 중립적입니다."
+      },
+      "googleTrends": {
+        "current_score": 45,
+        "week_avg": 48,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "TSLA",
+          "Tesla Model Y"
+        ],
+        "reasoning": "지난 7일간 'Tesla' 키워드에 대한 검색 관심도는 소폭 하락했으며, 주간 평균 대비 현재 점수가 낮습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Regulatory": 1,
+        "AI|Product|Investment": 1,
+        "Legal|Musk": 3,
+        "Regulatory|Product": 1,
+        "Product|AI": 2,
+        "AI|Musk": 1,
+        "Earnings|Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.77,
+        "qqqChg": 1.02,
+        "vixClose": 17.15999984741211,
+        "wtiChg": -7.5,
+        "cnyChg": -0.28,
+        "prevTslaChg": -0.22,
+        "rsi": 39,
+        "macd": {
+          "macd": -5.507181445423896,
+          "signal": -3.9023977142805277,
+          "hist": -1.6047837311433684,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 458.39,
+          "middle": 401.41,
+          "lower": 344.42,
+          "pos": 0.495
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 45,
+        "r24Discount": 1,
+        "macdTrend": -2,
+        "wtiDown": -3,
+        "muskXSentiment": -1,
+        "googleTrends": -1
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/7(목)",
+          "change_pct": -1.8,
+          "signal": "매도"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/8(금)",
+          "change_pct": -1.2,
+          "signal": "매도"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/11(월)",
+          "change_pct": 0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/12(화)",
+          "change_pct": -0.3,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/13(수)",
+          "change_pct": 0.1,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778095006808
+    },
+    {
       "id": "auto-1778077179025",
       "date": "2026-05-06",
       "displayDate": "2026.05.06",
@@ -12207,5 +12575,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-06 23:18 KST"
+  "lastUpdated": "2026-05-07 04:15 KST"
 }
