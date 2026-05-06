@@ -252,6 +252,64 @@ CRITICAL: Return ONLY the JSON object.` }],
   }
 }
 
+// ─── D+1~D+5 일별 예측 생성 (예측 정확도 추적용) ────────────────────────────
+
+async function generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr) {
+  try {
+    const dayNames = ['일','월','화','수','목','금','토'];
+    const dayRows = Array.from({ length: 5 }, (_, i) => {
+      const d = new Date(Date.now() + (i + 1) * 86400000);
+      // 주말이면 다음 월요일로 보정
+      const day = d.getUTCDay();
+      if (day === 6) d.setUTCDate(d.getUTCDate() + 2);
+      else if (day === 0) d.setUTCDate(d.getUTCDate() + 1);
+      const label = i === 0 ? '내일' : `D+${i + 1}`;
+      const dateLabel = `${d.getUTCMonth()+1}/${d.getUTCDate()}(${dayNames[d.getUTCDay()]})`;
+      return `  {"day":${i+1},"label":"${label}","date":"${dateLabel}","change_pct":<float -5.0 to +5.0>,"signal":"<매수|관망|매도>"}`;
+    }).join(',\n');
+
+    const macroSummary = macroCtx
+      ? `SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} RSI:${macroCtx.rsi ?? '-'} MACD:${macroCtx.macd?.trend || '-'}`
+      : 'N/A';
+
+    const data = await geminiPost({
+      system_instruction: { parts: [{ text: 'You are a TSLA stock prediction AI. Return ONLY valid JSON with no explanation.' }] },
+      contents: [{ role: 'user', parts: [{ text: `TSLA Analysis (${dateStr}):
+- buyIndex: ${buyIndex}/100 (≥65=bullish, 45-64=neutral, ≤44=bearish)
+- avgNewsScore: ${avgScore >= 0 ? '+' : ''}${avgScore} (range -5 to +5)
+- Macro: ${macroSummary}
+
+Predict TSLA daily closing price change % for the next 5 trading days (skip weekends).
+Rules: Be conservative — typical daily range is -3% to +3%. Use ±1~2% for normal signals.
+signal: "매수" if change_pct > 0.8, "매도" if change_pct < -0.8, else "관망"
+
+Return ONLY this JSON (no markdown):
+{"daily_forecasts":[
+${dayRows}
+]}` }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        maxOutputTokens: 512,
+        temperature: 0.3,
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    });
+    const parts = data.candidates?.[0]?.content?.parts || [];
+    const raw   = parts.filter(p => !p.thought).map(p => p.text || '').join('') || parts[0]?.text || '';
+    const clean = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (!m) return null;
+    const result = JSON.parse(m[0]);
+    const forecasts = result.daily_forecasts || [];
+    const preview = forecasts.map(f => `${f.label}:${f.change_pct >= 0 ? '+' : ''}${f.change_pct}%`).join(' ');
+    console.log(`   🔮 D+1~D+5 예측: ${preview}`);
+    return forecasts;
+  } catch (e) {
+    console.warn(`   ⚠ 일별 예측 생성 실패: ${e.message}`);
+    return null;
+  }
+}
+
 // ─── 메인 ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -356,8 +414,11 @@ async function main() {
     ...(muskXAdj  !== 0 ? { muskXSentiment: muskXAdj }  : {}),
     ...(trendsAdj !== 0 ? { googleTrends: trendsAdj }    : {}),
   };
-  // ──────────────────────────────────────────────────────────────────────────
-  // ────────────────────────────────────────────────────────────────────────
+
+  // 4-a. 일별 예측 생성 (D+1~D+5) — 예측 정확도 추적용
+  console.log('\n🔮 일별 예측 생성 중 (D+1~D+5)...');
+  const dailyForecasts = await generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr);
+  console.log('');
 
   // 4. 세션 객체
   const session = {
@@ -382,6 +443,7 @@ async function main() {
     newsCategories,
     macroCtx,
     scoringLayers,
+    dailyForecasts: dailyForecasts || [],
     modelVersion: '3.1',
     timestamp:   Date.now(),
   };

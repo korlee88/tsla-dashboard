@@ -1069,6 +1069,61 @@ function resolvePredictionsWithActual(dailyPrices) {
   return db;
 }
 
+/**
+ * auto-sessions의 dailyForecasts를 predAccuracy localStorage에 씨드 (자동 복원)
+ * - localStorage가 초기화돼도 GitHub에서 다시 로드해 재구성
+ */
+function seedAccuracyFromAutoSessions(autoSessions) {
+  if (!autoSessions?.length) return;
+  const db = loadPredAccuracy();
+  let added = 0;
+  const cutoff = new Date(Date.now() - 14 * 86400000).toISOString().split('T')[0];
+
+  for (const session of autoSessions) {
+    const forecasts = session.dailyForecasts;
+    if (!Array.isArray(forecasts) || forecasts.length === 0) continue;
+    // 세션 날짜 기준 basePrice 유추: macroCtx 없으면 skip
+    // basePrice는 session에 저장된 macroCtx.prevTslaClose 또는 skip
+    // 단순하게: macroCtx가 없어도 change_pct 기반 방향 비교만 필요하므로 basePrice=100 placeholder 사용
+    const forecastDate = session.date || session.timestamp
+      ? (session.date || new Date(session.timestamp).toISOString().split('T')[0])
+      : null;
+    if (!forecastDate) continue;
+
+    forecasts.forEach(df => {
+      if (!df?.day || df.change_pct == null) return;
+      // 예측 대상일 계산: forecastDate + df.day 거래일
+      const targetTs = new Date(forecastDate + 'T00:00:00Z').getTime() + df.day * 86400000;
+      const targetDate = toNextTradingDate(new Date(targetTs));
+      if (targetDate < cutoff) return; // 너무 오래된 것 제외
+      // 중복 방지
+      if (db.records.some(r => r.forecastDate === forecastDate && r.targetDate === targetDate && r.source === 'auto')) return;
+      db.records.push({
+        forecastDate,
+        targetDate,
+        dayLabel:           df.label || `D+${df.day}`,
+        basePrice:          null,  // auto-sessions에 basePrice 없음 — 방향 비교만 사용
+        predictedChangePct: typeof df.change_pct === 'number' ? df.change_pct : parseFloat(df.change_pct) || 0,
+        predictedPrice:     null,
+        predictedSignal:    df.signal || '',
+        actualPrice:        null,
+        actualChangePct:    null,
+        matched:            null,
+        source:             'auto',
+      });
+      added++;
+    });
+  }
+
+  if (added > 0) {
+    db.records = db.records
+      .filter(r => r.targetDate >= cutoff)
+      .sort((a, b) => b.targetDate.localeCompare(a.targetDate) || b.forecastDate.localeCompare(a.forecastDate));
+    savePredAccuracy(db);
+  }
+  return added;
+}
+
 // ─── 포캐스트 API ──────────────────────────────────────────────────────────
 
 const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
@@ -1612,10 +1667,17 @@ function ForecastBuyIndexChart({ forecasts }) {
 
 // ─── 컴포넌트: PredAccuracyCard ──────────────────────────────────────────────
 
-function PredAccuracyCard({ dailyData }) {
+function PredAccuracyCard({ dailyData, autoSessions }) {
   const [records, setRecords]       = React.useState(() => loadPredAccuracy().records);
   const [ownDaily, setOwnDaily]     = React.useState(null);
   const [loadingD,  setLoadingD]    = React.useState(false);
+
+  // auto-sessions 도착 시 누락된 레코드 씨드 & 재렌더
+  React.useEffect(() => {
+    if (!autoSessions?.length) return;
+    const added = seedAccuracyFromAutoSessions(autoSessions);
+    if (added > 0) setRecords([...loadPredAccuracy().records]);
+  }, [autoSessions]);
 
   // 일봉 데이터 자체 로드 (3개월치) — prop이 없거나 주봉만 있을 때 직접 fetch
   React.useEffect(() => {
@@ -2530,7 +2592,11 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
   // 자동수집 세션도 포함 (TrendPage와 동일한 데이터)
   const [autoSessions, setAutoSessions] = useState([]);
   useEffect(() => {
-    fetchAutoSessions().then(arr => setAutoSessions(arr)).catch(() => {});
+    fetchAutoSessions().then(arr => {
+      setAutoSessions(arr);
+      // auto-sessions의 dailyForecasts로 예측 정확도 레코드 자동 복원
+      seedAccuracyFromAutoSessions(arr);
+    }).catch(() => {});
   }, []);
   const mergedSessions = mergeWithAutoSessions(db.sessions || [], autoSessions);
   // 날짜별 중복 제거: 같은 날짜는 buyIndex가 가장 높은 1건만
@@ -2662,6 +2728,109 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
           </div>
         </div>
       </div>
+
+      {/* ── 두 지표 종합 해석 카드 ───────────────────────────────── */}
+      {(() => {
+        // 매수지수 추세 방향: 최근 3회 평균 vs 이전 3회 평균
+        const r3 = valid.slice(0, 3);
+        const p3 = valid.slice(3, 6);
+        const r3avg = r3.length ? Math.round(r3.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / r3.length) : null;
+        const p3avg = p3.length ? Math.round(p3.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / p3.length) : null;
+        const trendDir = r3avg != null && p3avg != null
+          ? (r3avg > p3avg + 3 ? 'rising' : r3avg < p3avg - 3 ? 'falling' : 'flat') : 'flat';
+        const trendLabel = trendDir === 'rising' ? '↑ 상승 중' : trendDir === 'falling' ? '↓ 하락 중' : '→ 보합';
+        const trendColor = trendDir === 'rising' ? '#22c55e' : trendDir === 'falling' ? '#ef4444' : '#f59e0b';
+
+        // 방향 분류
+        const biDir = buyIndex >= 57 ? 'bullish' : buyIndex <= 43 ? 'bearish' : 'neutral';
+        const forecastDir = signalState
+          ? (['strong_bull','cautionary_bull','bull'].includes(signalState) ? 'bullish'
+           : ['strong_bear','cautionary_bear','bear'].includes(signalState) ? 'bearish' : 'neutral')
+          : null;
+        const agree = forecastDir != null && (biDir === forecastDir || (biDir === 'neutral' && forecastDir === 'neutral'));
+
+        // 해석 메시지
+        let msg = '', msgColor = '#9ca3af', tip = '';
+        if (!forecastDir) {
+          msg = '투자 전망을 생성하면 두 지표를 종합 해석할 수 있습니다.';
+          tip = '대시보드 탭에서 "투자 전망 생성" 버튼을 눌러주세요.';
+        } else if (agree) {
+          if (biDir === 'bullish') {
+            msg = '두 지표 모두 강세 신호 — 매수 방향이 일치합니다. 신뢰도가 높습니다.';
+            msgColor = '#22c55e';
+            tip = '매수지수 추세와 AI 전망이 동일 방향. 분할 매수 진입을 고려할 수 있습니다.';
+          } else if (biDir === 'bearish') {
+            msg = '두 지표 모두 약세 신호 — 리스크 관리 우선입니다. 비중 축소를 고려하세요.';
+            msgColor = '#ef4444';
+            tip = '두 지표가 동시에 약세일 때는 현금 비중 유지 또는 비중 축소가 원칙입니다.';
+          } else {
+            msg = '두 지표 모두 중립 — 방향성이 불명확합니다. 추가 신호를 대기하세요.';
+            msgColor = '#f59e0b';
+            tip = '중립 구간에서는 무리한 포지션보다 다음 이벤트(실적·인도량) 전후 재판단을 권장합니다.';
+          }
+        } else {
+          // 괴리
+          if (biDir !== 'bullish' && forecastDir === 'bullish') {
+            msg = '매수지수는 현재 뉴스 감성(현재), 전망은 반등 가능성(미래)을 포착한 정상적인 괴리입니다.';
+            msgColor = '#f59e0b';
+            tip = '매수지수가 저점 근처일 때 전망이 반등을 예측하는 경우, 전망 방향을 우선 참고하세요.';
+          } else if (biDir === 'bullish' && forecastDir !== 'bullish') {
+            msg = '매수지수는 강세이나 AI 전망은 조정을 시사합니다. 분할 관리가 권장됩니다.';
+            msgColor = '#f97316';
+            tip = '이미 상승한 뒤 전망이 꺾이는 패턴 — 신규 진입보다 기존 포지션 점검을 권장합니다.';
+          } else {
+            msg = '두 지표가 혼조세입니다. 추가 뉴스 수집 후 재판단을 권장합니다.';
+            msgColor = '#f97316';
+            tip = '혼조세 구간에서는 포지션 비중을 줄이고 다음 자동 분석 결과를 확인하세요.';
+          }
+        }
+
+        return (
+          <div className="rounded-xl border p-4" style={{ background: '#14171e', borderColor: msgColor + '35' }}>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">지표 종합 해석</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+              {/* 매수지수 추세 */}
+              <div className="rounded-lg p-3 flex items-center gap-3" style={{ background: '#1C1F26', border: `1px solid ${bCol(buyIndex ?? 50)}28` }}>
+                <span style={{ fontSize: 22 }}>📈</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-gray-300">매수지수 추세</p>
+                  <p className="text-xs text-gray-600">최근 뉴스 감성 + 기술지표 (현재 상태)</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-xl font-black tabular-nums" style={{ color: bCol(buyIndex ?? 50) }}>{buyIndex ?? '─'}</p>
+                  <p className="text-xs" style={{ color: trendColor }}>{trendLabel}</p>
+                </div>
+              </div>
+              {/* 투자 전망 */}
+              <div className="rounded-lg p-3 flex items-center gap-3" style={{ background: '#1C1F26', border: `1px solid ${ssCfg.color}28` }}>
+                <span style={{ fontSize: 22 }}>🔮</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-gray-300">투자 전망 신호</p>
+                  <p className="text-xs text-gray-600">AI 종합 예측 (캘린더·매크로 포함)</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-base font-black" style={{ color: ssCfg.color }}>{forecastDir ? ssCfg.label : '미생성'}</p>
+                  {daily7[0] != null && (
+                    <p className="text-xs" style={{ color: ssCfg.color + 'bb' }}>
+                      내일 {daily7[0].change_pct >= 0 ? '+' : ''}{daily7[0].change_pct?.toFixed(1)}%
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* 해석 메시지 */}
+            <div className="rounded-lg px-4 py-2.5" style={{ background: msgColor + '10', border: `1px solid ${msgColor}28` }}>
+              <p className="text-xs leading-relaxed font-semibold" style={{ color: msgColor }}>
+                {agree && forecastDir ? '✓ ' : forecastDir ? '⚡ ' : '○ '}{msg}
+              </p>
+              {tip && <p className="text-xs text-gray-600 mt-1">{tip}</p>}
+              <p className="text-xs text-gray-700 mt-1.5 border-t pt-1.5" style={{ borderColor: msgColor + '20' }}>
+                매수지수 = 과거 뉴스 기반 현재 감성 스냅샷 &nbsp;·&nbsp; 투자 전망 = 미래 방향 AI 예측 — 두 지표가 다를 때는 <span className="text-gray-500">투자 전망을 우선</span> 참고하세요.
+              </p>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── 핵심 지표 카드 ─────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -4432,7 +4601,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       {/* ── Section 5: 예측 정확도 ─────────────────────────────────────────── */}
       <Section title="예측 정확도 추적" icon="🎯" accent="#f59e0b">
       {/* 일별 종가 예측 정확도 카드 */}
-      <PredAccuracyCard dailyData={weeklyData} />
+      <PredAccuracyCard dailyData={weeklyData} autoSessions={autoSessions} />
       </Section>{/* /Section 5 */}
 
       {/* ── Section 6: 등급표 (기본 닫힘) ─────────────────────────────────── */}
