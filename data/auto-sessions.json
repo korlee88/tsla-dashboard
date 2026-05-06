@@ -1,6 +1,332 @@
 {
   "sessions": [
     {
+      "id": "auto-1778077179025",
+      "date": "2026-05-06",
+      "displayDate": "2026.05.06",
+      "kstTime": "23:18",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778077126198,
+          "title": "일론 머스크, 테슬라와 스페이스X가 첨단 칩 제조 시설을 건설할 것이라고 밝혀",
+          "summary": "일론 머스크는 오스틴에 새로운 테라팹(Terafab) 칩 공장을 건설하여 연간 1테라와트의 컴퓨팅 용량을 생산하고, 심각한 AI 칩 부족 문제를 해결할 것이라고 밝혔습니다. 이는 테슬라의 AI 및 로봇공학으로의 전환에 중요한 부분입니다.",
+          "source": "Fox Business",
+          "date": "2026-05-06",
+          "category": "Musk|Product|AI"
+        },
+        {
+          "id": 1778077126199,
+          "title": "테슬라, 사이버캡 로보택시 가격 3만 달러 미만으로 책정",
+          "summary": "테슬라 CEO 일론 머스크는 완전 자율주행 사이버캡 로보택시를 2027년 이전에 3만 달러 미만에 판매할 것이라고 확인했습니다. 생산은 공식적으로 시작되었습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-06",
+          "category": "Product|Musk"
+        },
+        {
+          "id": 1778077126200,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇에 집중",
+          "summary": "테슬라는 모델 S 및 모델 X 생산을 중단하고 옵티머스 로봇 대량 생산에 집중할 것이라고 일론 머스크가 발표하면서 전기차에서 자율 기술로 전환하고 있습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-06",
+          "category": "Product|Strategy"
+        },
+        {
+          "id": 1778077126201,
+          "title": "일론 머스크, 테슬라 휴머노이드 로봇 내년 말까지 판매 가능성 언급",
+          "summary": "일론 머스크는 테슬라의 옵티머스 휴머노이드 로봇이 2027년 말까지 일반에 판매될 수 있을 것이라고 말했습니다. 그는 로봇이 신뢰할 수 있고 안전하며 다양한 기능을 수행할 수 있어야 한다고 언급했습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-06",
+          "category": "Product|Musk|AI"
+        },
+        {
+          "id": 1778077126202,
+          "title": "UBS, 테슬라 투자의견 '중립'으로 상향 조정",
+          "summary": "UBS는 테슬라(TSLA)에 대한 투자의견을 '매도'에서 '중립'으로 상향 조정하고 목표 주가를 352달러로 올렸습니다. 이는 단기적인 전기차 수요 문제와 테슬라의 '물리적 AI' 이니셔티브의 장기적인 잠재력 사이의 균형을 반영한 것입니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-14",
+          "category": "Market|Analyst"
+        },
+        {
+          "id": 1778077126203,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 전기차 수요 반등 시사",
+          "summary": "테슬라는 1분기 월스트리트의 이익 예상치를 상회했으며, 전 세계적으로 전기차 수요가 반등하고 있다고 밝혔습니다. 조정 주당 순이익은 41센트로, 예상치인 34센트를 넘어섰습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "id": 1778077126204,
+          "title": "테슬라, AI 지출 대폭 증가 예상",
+          "summary": "테슬라는 일론 머스크의 전기차 선구자를 AI 및 로봇공학 회사로 전환하려는 노력을 지원하기 위해 올해 수십억 달러를 더 지출할 것으로 예상됩니다. 이는 작년보다 3배 많은 250억 달러 이상이 될 것입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "AI|Investment"
+        },
+        {
+          "id": 1778077126205,
+          "title": "테슬라, 사이버캡, 테슬라 세미, 메가팩 생산 2026년 시작 예정",
+          "summary": "테슬라는 사이버캡, 테슬라 세미, 메가팩 생산이 2026년에 시작될 것이라고 밝혔습니다. 또한, 휴머노이드 로봇인 옵티머스의 1세대 생산 라인이 설치 중이라고 언급했습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product|Production"
+        },
+        {
+          "id": 1778077126206,
+          "title": "테슬라, 유럽에서 FSD(Full Self-Driving) 감독형 첫 승인 획득",
+          "summary": "테슬라는 네덜란드에서 FSD(Full Self-Driving) 감독형에 대한 첫 유럽 승인을 받았습니다. 이는 테슬라의 자율주행 기술 확장에 중요한 진전입니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-14",
+          "category": "Regulatory|Product"
+        },
+        {
+          "id": 1778077126207,
+          "title": "테슬라, 1분기 잉여현금흐름 예상치 크게 상회",
+          "summary": "테슬라는 1분기 잉여현금흐름이 14억 4천만 달러를 기록하여, 예상치였던 마이너스 18억 6천만 달러를 크게 상회했습니다. 이는 회사의 재무 건전성에 긍정적인 신호입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Financial"
+        }
+      ],
+      "analyses": {
+        "1778077126198": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라의 AI 및 로봇공학 전환에 중요한 새로운 첨단 칩 제조 시설 건설 계획을 밝혀 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "Terafab 칩 공장 건설",
+            "AI 칩 부족 해결",
+            "테슬라의 AI 및 로봇공학 전환"
+          ]
+        },
+        "1778077126199": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡 로보택시를 3만 달러 미만에 2027년 이전 출시 및 생산 시작을 확인하여 신제품 출시에 대한 긍정적인 전망을 제시합니다.",
+          "key_factors": [
+            "사이버캡 로보택시",
+            "3만 달러 미만 가격",
+            "2027년 이전 출시"
+          ]
+        },
+        "1778077126200": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X 생산을 중단하고 로봇 생산에 집중한다는 소식은 단기적으로 주력 전기차 판매 감소 우려로 인해 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "옵티머스 로봇 대량 생산 집중",
+            "전기차에서 자율 기술로의 전략적 전환"
+          ]
+        },
+        "1778077126201": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라의 휴머노이드 로봇 옵티머스가 2027년 말까지 판매될 수 있다고 언급하며 새로운 제품 출시에 대한 긍정적인 전망을 제시했습니다.",
+          "key_factors": [
+            "옵티머스 로봇 판매 가능성",
+            "일론 머스크 발언"
+          ]
+        },
+        "1778077126202": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R17"
+          ],
+          "reasoning": "UBS가 테슬라의 투자의견을 '매도'에서 '중립'으로 상향 조정하고 목표 주가를 352달러로 올린 것은 단기적인 전기차 수요 문제에도 불구하고 장기적인 '물리적 AI' 잠재력을 긍정적으로 평가한 것으로, 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "UBS 투자의견 상향",
+            "목표 주가 352달러 상향",
+            "물리적 AI 이니셔티브 잠재력"
+          ]
+        },
+        "1778077126203": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익 예상치를 10% 이상 상회하며 전기차 수요 반등을 시사하여 주가에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "1분기 EPS 예상치 상회",
+            "전기차 수요 반등"
+          ]
+        },
+        "1778077126204": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇공학으로의 전환을 위해 올해 수십억 달러의 지출을 늘릴 것이라는 예상은 장기적인 성장 잠재력에 긍정적입니다.",
+          "key_factors": [
+            "AI 투자 증가",
+            "로봇공학 전환"
+          ]
+        },
+        "1778077126205": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 사이버캡, 세미, 메가팩 생산을 2026년에 시작하고 옵티머스 1세대 생산 라인을 설치 중이라고 밝히면서 미래 성장 동력에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "테슬라 세미 생산 시작",
+            "메가팩 생산 시작",
+            "옵티머스 1세대 생산 라인 설치"
+          ]
+        },
+        "1778077126206": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 유럽에서 FSD 감독형 첫 승인을 획득하여 자율주행 기술 확장에 중요한 진전을 이루었으며, 이는 향후 유럽 시장에서의 FSD 도입 가능성을 높입니다.",
+          "key_factors": [
+            "FSD 유럽 승인",
+            "자율주행 기술 확장"
+          ]
+        },
+        "1778077126207": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 잉여현금흐름이 예상치를 크게 상회하여 회사의 재무 건전성에 긍정적인 신호입니다.",
+          "key_factors": [
+            "잉여현금흐름 예상치 상회",
+            "재무 건전성"
+          ]
+        }
+      },
+      "avgScore": 1.8,
+      "buyIndex": 63,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R17",
+        "R12"
+      ],
+      "bullish": 9,
+      "bearish": 1,
+      "neutral": 0,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": 33,
+        "trend": "stable",
+        "spike": false,
+        "top_queries": [],
+        "reasoning": "AltIndex에 따르면 Tesla의 Google 트렌드 점수는 현재 33이며, 이는 지난주와 비교하여 안정적인 추세입니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Product|AI": 1,
+        "Product|Musk": 1,
+        "Product|Strategy": 1,
+        "Product|Musk|AI": 1,
+        "Market|Analyst": 1,
+        "Earnings|Delivery": 1,
+        "AI|Investment": 1,
+        "Product|Production": 1,
+        "Regulatory|Product": 1,
+        "Earnings|Financial": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.25,
+        "qqqChg": 0.14,
+        "vixClose": 17.139999389648438,
+        "wtiChg": -6.17,
+        "cnyChg": -0.28,
+        "prevTslaChg": -0.22,
+        "rsi": 39,
+        "macd": {
+          "macd": -6.086811979278025,
+          "signal": -4.018323821051354,
+          "hist": -2.068488158226671,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 458.13,
+          "middle": 401.04,
+          "lower": 343.95,
+          "pos": 0.434
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 68,
+        "macdTrend": -2,
+        "wtiDown": -3
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/7(목)",
+          "change_pct": 0.9,
+          "signal": "매수"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/8(금)",
+          "change_pct": 1.1,
+          "signal": "매수"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/11(월)",
+          "change_pct": 0.7,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/12(화)",
+          "change_pct": -0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/13(수)",
+          "change_pct": 0.6,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778077179025
+    },
+    {
       "id": "auto-1778039746123",
       "date": "2026-05-06",
       "displayDate": "2026.05.06",
@@ -11881,5 +12207,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-06 12:55 KST"
+  "lastUpdated": "2026-05-06 23:18 KST"
 }
