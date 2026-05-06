@@ -1128,7 +1128,7 @@ function seedAccuracyFromAutoSessions(autoSessions) {
 
 const FORECAST_CACHE_KEY = 'tsla_forecast_cache_v1';
 
-function makeForecastPrompt(currentPrice, calendarEvents = [], scoringCtx = null) {
+function makeForecastPrompt(currentPrice, calendarEvents = [], scoringCtx = null, recentBuyIndexes = []) {
   const dayNames = ['일','월','화','수','목','금','토'];
   const dailyRows = Array.from({length: 7}, (_, i) => {
     const d = new Date(Date.now() + (i + 1) * 86400000);
@@ -1145,6 +1145,42 @@ function makeForecastPrompt(currentPrice, calendarEvents = [], scoringCtx = null
         (ev.description ? ` | ${ev.description}` : '')
       ).join('\n')
     : '';
+
+  // ── 추세 섹션: 최근 buyIndex 변화 방향을 일별 예측에 반영 ──────────────────
+  let trendSection = '';
+  const currentBi = scoringCtx?.buyIndex ?? null;
+  const trendHistory = currentBi != null ? [currentBi, ...recentBuyIndexes] : recentBuyIndexes;
+  if (trendHistory.length >= 3) {
+    const newest   = trendHistory[0];
+    const oldest   = trendHistory[Math.min(trendHistory.length - 1, 6)];
+    const delta    = newest - oldest;
+    const nSess    = Math.min(trendHistory.length, 7);
+    const dir      = delta >  8 ? 'RISING'  : delta < -8 ? 'FALLING' : 'FLAT';
+    const speed    = Math.abs(delta) > 20 ? 'fast' : Math.abs(delta) > 10 ? 'moderate' : 'slow';
+    const histStr  = [...trendHistory].slice(0, 7).reverse().join(' → ');
+    const weeklySum = dir === 'FALLING' && speed === 'fast'   ? '−3% ~ +2%'
+                    : dir === 'FALLING'                        ? '−1% ~ +2%'
+                    : dir === 'FLAT'                           ? '−2% ~ +3%'
+                    : speed === 'fast'                         ? '+5% ~ +10%'
+                    :                                            '+2% ~ +5%';
+    trendSection = `
+
+[BUY INDEX TREND — Must calibrate daily_forecasts accordingly]
+History (oldest → newest): ${histStr}
+Direction: ${dir} (${delta >= 0 ? '+' : ''}${delta} pts over ${nSess} sessions) | Velocity: ${speed}
+
+TREND-CALIBRATED DAILY FORECAST RULES (mandatory):
+${dir === 'FALLING'
+  ? `• Trend is ${speed.toUpperCase()} FALLING → D+4~7 MUST converge toward 0% or slightly negative
+${speed === 'fast' ? '• At least 2 of D+5~7 should be ≤ 0%' : '• D+5~7 should be within ±0.5%'}
+• DO NOT predict all 7 days uniformly positive when buy index is declining`
+  : dir === 'RISING'
+  ? `• Trend is ${speed.toUpperCase()} RISING → modest positive bias across days is appropriate
+• Avoid extreme highs — remain conservative`
+  : `• Trend is FLAT → daily predictions should cluster near ±0.5% (pure volatility)`}
+• 7-day cumulative sum guideline: ${weeklySum}
+• Negative days are realistic and expected — include them when trend warrants it`;
+  }
 
   // v4.0: 매크로 컨텍스트 섹션 (보유 시 포함)
   let macroSection = '';
@@ -1174,6 +1210,7 @@ Macro Context:
 ## Task
 You are given pre-computed quantitative signals from a v4.0 multi-layer model (13 layers: news sentiment, macro overlay, technical indicators, volatility regime, momentum). Synthesize ALL signals into a unified investment forecast.
 ${macroSection}
+${trendSection}
 ${calSection}
 
 ## Chain-of-Thought Instructions (think step by step)
@@ -1220,7 +1257,7 @@ change_pct: conservative daily % estimate. Do NOT use absolute prices in daily_f
 Price targets must be realistic vs $${currentPrice}. ONLY return JSON.`;
 }
 
-async function generateForecast(apiKey, items, currentPrice = 247, calendarEvents = [], scoringCtx = null) {
+async function generateForecast(apiKey, items, currentPrice = 247, calendarEvents = [], scoringCtx = null, recentBuyIndexes = []) {
   const summary = items.map(it =>
     `• [${it.result.direction?.toUpperCase()} ${it.result.impact_score >= 0 ? '+' : ''}${it.result.impact_score}] "${it.title}"\n  Rules:[${it.result.triggered_rules?.join(',')}] Conf:${it.result.confidence}\n  근거: ${it.result.reasoning}`
   ).join('\n\n');
@@ -1230,7 +1267,7 @@ async function generateForecast(apiKey, items, currentPrice = 247, calendarEvent
     : '';
 
   const body = {
-    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice, calendarEvents, scoringCtx) }] },
+    system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice, calendarEvents, scoringCtx, recentBuyIndexes) }] },
     contents: [{ role: 'user', parts: [{ text: `[TSLA 뉴스 분석 결과 — ${items.length}건]${calNote}\n\n${summary}\n\n위 데이터를 바탕으로 Chain-of-Thought 방식으로 분석 후 JSON 전망을 생성하세요.` }] }],
     generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.25, thinkingConfig: { thinkingBudget: 0 } },
   };
@@ -5168,8 +5205,14 @@ function App() {
     return isPriceCacheValid(c) && !!c?.price; // 캐시 유효하면 즉시 준비
   });
   const [calendarEvents, setCalendarEvents] = useState([]);
+  const [autoSessionsForTrend, setAutoSessionsForTrend] = useState([]);
   const sessionIdRef    = useRef(null);
   const sessionSavedRef = useRef(false);
+
+  // 자동 세션 로드 — runForecast의 추세 계산에 사용
+  useEffect(() => {
+    fetchAutoSessions().then(arr => setAutoSessionsForTrend(arr)).catch(() => {});
+  }, []);
 
   // 캘린더 이벤트 로드 (예측 모델에 활용)
   useEffect(() => {
@@ -5205,7 +5248,14 @@ function App() {
     setForecastLoading(true); setForecastError(null);
     try {
       const items = currentNews.filter(n => results[n.id]).map(n => ({ title: n.title, result: results[n.id] }));
-      const f = await generateForecast(apiKey, items, currentPrice, calendarEvents);
+      // 최근 buyIndex 추세 — 로컬 세션 + 자동 세션 병합 후 최신 8개
+      const merged = mergeWithAutoSessions(getNewsDB().sessions || [], autoSessionsForTrend);
+      const recentBuyIndexes = merged
+        .filter(s => typeof s.buyIndex === 'number')
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+        .slice(0, 8)
+        .map(s => s.buyIndex);
+      const f = await generateForecast(apiKey, items, currentPrice, calendarEvents, null, recentBuyIndexes);
       setForecast(f);
       try { localStorage.setItem(FORECAST_CACHE_KEY, JSON.stringify(f)); } catch {}
       // 예측 정확도 추적: D+1~D+7 레코드 저장

@@ -254,12 +254,11 @@ CRITICAL: Return ONLY the JSON object.` }],
 
 // ─── D+1~D+5 일별 예측 생성 (예측 정확도 추적용) ────────────────────────────
 
-async function generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr) {
+async function generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr, recentBuyIndexes = []) {
   try {
     const dayNames = ['일','월','화','수','목','금','토'];
     const dayRows = Array.from({ length: 5 }, (_, i) => {
       const d = new Date(Date.now() + (i + 1) * 86400000);
-      // 주말이면 다음 월요일로 보정
       const day = d.getUTCDay();
       if (day === 6) d.setUTCDate(d.getUTCDate() + 2);
       else if (day === 0) d.setUTCDate(d.getUTCDate() + 1);
@@ -272,15 +271,42 @@ async function generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr) {
       ? `SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} RSI:${macroCtx.rsi ?? '-'} MACD:${macroCtx.macd?.trend || '-'}`
       : 'N/A';
 
+    // 추세 계산 (최근 세션 buyIndex 기반)
+    const trendHistory = [buyIndex, ...recentBuyIndexes].slice(0, 7);
+    let trendRule = '';
+    if (trendHistory.length >= 3) {
+      const oldest    = trendHistory[trendHistory.length - 1];
+      const delta     = buyIndex - oldest;
+      const dir       = delta >  8 ? 'RISING' : delta < -8 ? 'FALLING' : 'FLAT';
+      const speed     = Math.abs(delta) > 20 ? 'fast' : Math.abs(delta) > 10 ? 'moderate' : 'slow';
+      const histStr   = [...trendHistory].reverse().join(' → ');
+      const weeklySum = dir === 'FALLING' && speed === 'fast' ? '−3% ~ +2%'
+                      : dir === 'FALLING'                     ? '−1% ~ +2%'
+                      : dir === 'FLAT'                        ? '−2% ~ +3%'
+                      : speed === 'fast'                      ? '+5% ~ +10%'
+                      :                                         '+2% ~ +5%';
+      trendRule = `\nBuyIndex trend (oldest→newest): ${histStr}
+Trend: ${dir} (${delta >= 0 ? '+' : ''}${delta} pts, ${speed})
+${dir === 'FALLING'
+  ? `RULE: D+3~5 MUST converge toward 0%. ${speed === 'fast' ? 'At least 2 of D+3~5 should be ≤ 0%.' : 'D+4~5 should be near ±0.5%.'}
+DO NOT predict all 5 days uniformly positive.`
+  : dir === 'RISING'
+  ? `RULE: positive bias appropriate across days.`
+  : `RULE: cluster near ±0.5% — no strong directional bias.`}
+7-day cumulative sum guideline: ${weeklySum}`;
+    }
+
     const data = await geminiPost({
       system_instruction: { parts: [{ text: 'You are a TSLA stock prediction AI. Return ONLY valid JSON with no explanation.' }] },
       contents: [{ role: 'user', parts: [{ text: `TSLA Analysis (${dateStr}):
 - buyIndex: ${buyIndex}/100 (≥65=bullish, 45-64=neutral, ≤44=bearish)
 - avgNewsScore: ${avgScore >= 0 ? '+' : ''}${avgScore} (range -5 to +5)
 - Macro: ${macroSummary}
+${trendRule}
 
 Predict TSLA daily closing price change % for the next 5 trading days (skip weekends).
 Rules: Be conservative — typical daily range is -3% to +3%. Use ±1~2% for normal signals.
+Negative days are realistic — include them when trend warrants.
 signal: "매수" if change_pct > 0.8, "매도" if change_pct < -0.8, else "관망"
 
 Return ONLY this JSON (no markdown):
@@ -415,9 +441,21 @@ async function main() {
     ...(trendsAdj !== 0 ? { googleTrends: trendsAdj }    : {}),
   };
 
-  // 4-a. 일별 예측 생성 (D+1~D+5) — 예측 정확도 추적용
+  // 4-a. 기존 세션에서 buyIndex 추세 추출 (파일 선행 로드)
+  let recentBuyIndexes = [];
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      const existing = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+      recentBuyIndexes = (existing.sessions || [])
+        .slice(0, 7)
+        .map(s => s.buyIndex)
+        .filter(b => typeof b === 'number');
+    }
+  } catch {}
+
+  // 4-b. 일별 예측 생성 (D+1~D+5) — 예측 정확도 추적용
   console.log('\n🔮 일별 예측 생성 중 (D+1~D+5)...');
-  const dailyForecasts = await generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr);
+  const dailyForecasts = await generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr, recentBuyIndexes);
   console.log('');
 
   // 4. 세션 객체
