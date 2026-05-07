@@ -1,6 +1,381 @@
 {
   "sessions": [
     {
+      "id": "auto-1778126045595",
+      "date": "2026-05-07",
+      "displayDate": "2026.05.07",
+      "kstTime": "12:53",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778126012777,
+          "title": "일론 머스크, 테슬라와 스페이스X가 첨단 칩 제조 시설 건설 예정 발표",
+          "summary": "일론 머스크는 테슬라와 스페이스X가 연간 1테라와트의 컴퓨팅 용량을 생산하는 것을 목표로 하는 첨단 칩 제조 시설인 '테라팹(Terafab)'을 오스틴에 건설할 것이라고 밝혔다. 이는 심각한 AI 칩 부족 문제를 해결하기 위한 노력의 일환이다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Musk|Product"
+        },
+        {
+          "id": 1778126012778,
+          "title": "테슬라, 사이버캡 로보택시 3만 달러 미만으로 판매 예정",
+          "summary": "일론 머스크 테슬라 CEO는 완전 자율주행 사이버캡 로보택시를 2027년 이전에 3만 달러 미만으로 판매할 것이라고 확인했으며, 현재 생산이 공식적으로 시작되었다고 덧붙였다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778126012779,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇에 집중",
+          "summary": "테슬라가 모델 S와 모델 X 차량 생산을 중단하고 옵티머스 로봇의 대량 생산에 집중할 것이라고 일론 머스크가 발표하면서 전기차에서 자율 기술로 전환하고 있다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778126012780,
+          "title": "일론 머스크, 테슬라 휴머노이드 로봇 내년 말까지 판매 가능성 언급",
+          "summary": "일론 머스크는 테슬라의 휴머노이드 로봇 '옵티머스'가 2027년 말까지 일반에 판매될 수 있으며, 로봇이 신뢰할 수 있고 안전하며 다양한 기능을 수행할 수 있을 것이라고 말했다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778126012781,
+          "title": "'빅 쇼트' 투자자 마이클 버리, 테슬라에 대한 새로운 비판 제기",
+          "summary": "'빅 쇼트' 투자자 마이클 버리는 테슬라가 '터무니없이 고평가'되어 있다고 비판했으며, 일론 머스크는 AI 로봇 공학이 부채 위기의 해결책이라고 옹호하며 두 사람의 대조적인 견해를 부각시켰다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Market"
+        },
+        {
+          "id": 1778126012782,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 전기차 수요 회복 시사",
+          "summary": "테슬라는 1분기 월스트리트의 이익 예상치를 상회했으며, 전 세계적으로 전기차 수요가 회복되고 있다고 밝히며 어려움을 겪던 자동차 사업의 회복 가능성을 시사했다. 조정 주당 순이익은 41센트로, 애널리스트 예상치인 34센트를 넘어섰다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778126012783,
+          "title": "테슬라, 1분기 매출 및 잉여현금흐름 예상치 상회",
+          "summary": "테슬라의 1분기 매출은 223억 9천만 달러로 예상치인 221억 9천만 달러를 약간 상회했다. 또한, 잉여현금흐름은 14억 4천만 달러로, 예상치인 마이너스 18억 6천만 달러를 크게 웃돌았다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778126012784,
+          "title": "테슬라, 2026년 자본 지출 250억 달러 이상 계획",
+          "summary": "테슬라는 2026년에 공장 확장, AI 인프라 구축, 로보택시 및 옵티머스 제품 출시를 위해 250억 달러 이상의 자본 지출을 계획하고 있다.",
+          "source": "Investing.com",
+          "date": "2026-04-23",
+          "category": "Market"
+        },
+        {
+          "id": 1778126012785,
+          "title": "UBS, 테슬라 투자의견 '중립'으로 상향 조정",
+          "summary": "UBS는 테슬라(TSLA)에 대한 투자의견을 '매도'에서 '중립'으로 상향 조정하고 목표 주가를 352달러로 올렸다. 이는 단기적인 전기차 수요 역풍과 장기적인 AI 잠재력 사이의 위험-보상 프로필이 더 유리해졌다는 분석에 따른 것이다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-14",
+          "category": "Market"
+        },
+        {
+          "id": 1778126012786,
+          "title": "테슬라, 네덜란드에서 완전자율주행(FSD) 승인 획득",
+          "summary": "테슬라는 4월에 네덜란드에서 완전자율주행(FSD) 시스템에 대한 승인을 받았다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Regulatory"
+        }
+      ],
+      "analyses": {
+        "1778126012777": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라와 스페이스X를 위한 첨단 칩 제조 시설인 '테라팹' 건설 계획을 발표하여 AI 칩 부족 문제 해결 및 장기적인 기술 자립 가능성을 제시했습니다.",
+          "key_factors": [
+            "첨단 칩 제조 시설 건설",
+            "AI 칩 부족 해결",
+            "장기적인 기술 자립"
+          ]
+        },
+        "1778126012778": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 2027년 이전 3만 달러 미만의 사이버캡 로보택시 판매 계획을 확인하고 생산을 시작했다는 소식은 새로운 제품의 출시와 가격 경쟁력을 통해 긍정적인 영향을 미칠 것으로 예상된다.",
+          "key_factors": [
+            "사이버캡 로보택시 생산 시작",
+            "3만 달러 미만 가격",
+            "2027년 이전 판매 목표"
+          ]
+        },
+        "1778126012779": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X 생산을 중단하고 로봇 생산에 집중한다는 소식은 단기적으로 전기차 판매 감소 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "모델 S/X 생산 중단",
+            "옵티머스 로봇 대량 생산 집중",
+            "전기차에서 자율 기술로의 전환"
+          ]
+        },
+        "1778126012780": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라의 휴머노이드 로봇 '옵티머스'의 2027년 말 판매 가능성을 언급하며 신제품에 대한 긍정적인 전망을 제시했습니다.",
+          "key_factors": [
+            "휴머노이드 로봇 '옵티머스' 판매 가능성",
+            "일론 머스크 발언"
+          ]
+        },
+        "1778126012781": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R22"
+          ],
+          "reasoning": "유명 투자자가 테슬라가 고평가되었다고 비판했지만, 이는 새로운 정보가 아니며 구체적인 행동이나 데이터에 기반한 것이 아니므로 영향은 제한적입니다.",
+          "key_factors": [
+            "마이클 버리의 비판",
+            "고평가 주장"
+          ]
+        },
+        "1778126012782": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 애널리스트 예상치를 10% 이상 상회하며 전기차 수요 회복 가능성을 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "전기차 수요 회복"
+          ]
+        },
+        "1778126012783": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 매출이 예상치를 약간 상회하고 잉여현금흐름이 예상치를 크게 웃돌아 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "매출 예상치 상회",
+            "잉여현금흐름 예상치 크게 상회"
+          ]
+        },
+        "1778126012784": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 2026년 대규모 자본 지출 계획은 공장 확장, AI 인프라 및 신제품 출시에 대한 투자를 통해 미래 성장 잠재력을 보여주므로 주가에 긍정적입니다.",
+          "key_factors": [
+            "자본 지출 계획",
+            "공장 확장",
+            "AI 인프라 구축",
+            "로보택시 및 옵티머스 출시"
+          ]
+        },
+        "1778126012785": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R17"
+          ],
+          "reasoning": "UBS가 테슬라의 투자의견을 '매도'에서 '중립'으로 상향 조정하고 목표 주가를 352달러로 올린 것은 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "UBS 투자의견 상향",
+            "목표 주가 352달러"
+          ]
+        },
+        "1778126012786": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 네덜란드에서 완전자율주행(FSD) 시스템 승인을 획득하여 유럽 시장 확장에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "FSD 승인",
+            "네덜란드 시장",
+            "유럽 시장 확장"
+          ]
+        }
+      },
+      "avgScore": 1.5,
+      "buyIndex": 66,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R22",
+        "R12",
+        "R17"
+      ],
+      "bullish": 8,
+      "bearish": 2,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-06",
+            "content": "SpaceX는 텍사스에 550억 달러 규모의 Terafab 칩 제조 시설을 건설할 계획을 제출했으며, 이 시설은 Tesla의 자율주행 시스템, 휴머노이드 로봇 및 AI 데이터 센터용 칩을 공급할 예정입니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-06",
+            "content": "Tesla는 중국에서 FSD(Full Self-Driving) 소프트웨어의 완전한 기능을 갖춘 버전을 직원들과 함께 내부적으로 테스트하기 시작했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-05",
+            "content": "Tesla의 FSD 시스템이 전 세계적으로 100억 마일 이상의 주행 데이터를 기록했습니다. Elon Musk는 이전에 안전한 무인 자율주행을 달성하는 데 약 100억 마일의 훈련 데이터가 필요하다고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-04",
+            "content": "Tesla의 로보택시 서비스가 오스틴에서 처음으로 저녁 시간에도 무인으로 운영되기 시작했습니다. 또한, 달라스와 휴스턴을 포함한 텍사스 전역에서 무인 로보택시 차량이 7대 추가로 발견되어 총 33대로 늘어났습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-01",
+            "content": "Elon Musk의 Optimus Gen-X 컨셉은 AI 지능을 새로운 수준으로 끌어올리는 데 중점을 둔 로봇 공학의 주요 발전으로 묘사되고 있습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-27",
+            "content": "Elon Musk는 AI로 인한 실업 문제에 대처하기 위해 연방 정부가 발행하는 보편적 고소득 수표가 최선의 방법이라고 주장했습니다. 그는 AI/로봇 공학이 통화량 증가를 훨씬 초과하는 상품과 서비스를 생산할 것이므로 인플레이션은 없을 것이라고 덧붙였습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Tesla는 AI, 로봇 공학 및 칩에 막대한 투자를 하면서 올해 지출 계획을 250억 달러 이상으로 대폭 늘렸습니다. Musk는 이러한 움직임이 미래의 막대한 수익원을 창출하는 데 \"충분히 정당하다\"고 말했습니다. Tesla는 더 이상 자동차 제조업체가 아닌 일반 로봇 지능 제조업체로 자리매김하고 있습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "bullish",
+        "sentiment_score": 2,
+        "post_count": 7,
+        "reasoning": "Elon Musk의 최근 게시물과 관련 뉴스들은 Tesla의 로보택시, FSD, Optimus, 에너지 저장 및 AI 기술 발전에 대한 긍정적인 소식을 주로 다루고 있으며, 특히 AI 및 로봇 공학에 대한 대규모 투자를 강조하고 있습니다."
+      },
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": 33,
+        "trend": "stable",
+        "spike": false,
+        "top_queries": [
+          "Tesla Model X",
+          "Tesla Model S",
+          "Cybertruck"
+        ],
+        "reasoning": "현재 Tesla의 Google 검색 관심도 점수는 33이며, 이는 지난주와 비교하여 안정적인 추세를 보입니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Product": 1,
+        "Product": 3,
+        "Market": 3,
+        "Earnings": 2,
+        "Regulatory": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.78,
+        "qqqChg": 1.16,
+        "vixClose": 17.389999389648438,
+        "wtiChg": -0.77,
+        "cnyChg": -0.09,
+        "prevTslaChg": 2.18,
+        "rsi": 41.8,
+        "macd": {
+          "macd": -5.096619092985065,
+          "signal": -3.7008183745797965,
+          "hist": -1.395800718405269,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 458.52,
+          "middle": 401.77,
+          "lower": 345.02,
+          "pos": 0.473
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 65,
+        "macdTrend": -2,
+        "muskXSentiment": 3
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/8(금)",
+          "change_pct": -1.2,
+          "signal": "매도"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/11(월)",
+          "change_pct": -0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/12(화)",
+          "change_pct": 0.2,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/13(수)",
+          "change_pct": -0.7,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/14(목)",
+          "change_pct": 0.8,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778126045595
+    },
+    {
       "id": "auto-1778095006808",
       "date": "2026-05-07",
       "displayDate": "2026.05.07",
@@ -12575,5 +12950,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-07 04:15 KST"
+  "lastUpdated": "2026-05-07 12:53 KST"
 }
