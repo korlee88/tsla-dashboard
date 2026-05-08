@@ -1,6 +1,377 @@
 {
   "sessions": [
     {
+      "id": "auto-1778211903976",
+      "date": "2026-05-08",
+      "displayDate": "2026.05.08",
+      "kstTime": "12:44",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778211870269,
+          "title": "테슬라 모델 Y, 미국 신형 운전자 보조 시스템 안전성 기준 첫 통과",
+          "summary": "테슬라 모델 Y가 미국 도로교통안전국(NHTSA)의 새로운 첨단 운전자 보조 시스템 안전성 기준을 충족한 최초의 차량이 되었다. 이는 규제 마찰을 완화하고 완전 자율 주행(FSD) 채택을 강화할 수 있는 긍정적인 소식이다.",
+          "source": "Reuters",
+          "date": "2026-05-08",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778211870270,
+          "title": "테슬라, 4월 중국산 전기차 판매량 36% 증가로 반등세 지속",
+          "summary": "테슬라의 4월 중국산 전기차 판매량이 전년 동기 대비 약 36% 증가하며 6개월 연속 상승세를 기록했다. 이는 테슬라가 중국 시장에서 점유율을 방어하는 능력에 대한 투자자들의 신뢰를 높이고 매출 모멘텀을 뒷받침한다.",
+          "source": "MarketBeat",
+          "date": "2026-05-08",
+          "category": "Delivery"
+        },
+        {
+          "id": 1778211870271,
+          "title": "일론 머스크, 테슬라와 스페이스X의 첨단 칩 제조 시설 건설 계획 발표",
+          "summary": "일론 머스크는 테슬라와 스페이스X가 텍사스에 첨단 칩 제조 시설인 '테라팹(Terafab)'을 건설할 것이라고 밝혔다. 이 시설은 연간 1테라와트의 컴퓨팅 용량을 생산하여 AI 칩 부족 문제를 해결하는 것을 목표로 한다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Musk"
+        },
+        {
+          "id": 1778211870272,
+          "title": "테슬라, 사이버캡 로보택시 3만 달러 미만으로 판매 예정",
+          "summary": "일론 머스크 테슬라 CEO는 완전 자율 주행 사이버캡 로보택시를 2027년 이전에 3만 달러 미만으로 판매할 것이라고 확인했다. 생산은 이미 공식적으로 시작되었다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778211870273,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇에 집중",
+          "summary": "테슬라가 모델 S 및 모델 X 차량 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중할 것이라고 일론 머스크가 발표했다. 이는 테슬라가 전기차에서 자율 기술로 전환하는 전략적 변화를 보여준다.",
+          "source": "Fox Business",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778211870274,
+          "title": "테슬라, 21만 9천 대 차량 리콜 발표",
+          "summary": "테슬라가 미국에서 21만 9천 대의 차량을 리콜했다는 소식이 전해졌다. 이는 테슬라 주가에 부정적인 영향을 미칠 수 있는 잠재적인 규제 및 안전 문제로 해석될 수 있다.",
+          "source": "TipRanks",
+          "date": "2026-05-07",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778211870275,
+          "title": "울프 리서치, 테슬라 목표 주가 상향 조정",
+          "summary": "울프 리서치(Wolfe Research)는 테슬라에 대한 'Peerperform' 등급을 재확인하고 2026년 예상 수익을 상향 조정했다. 이는 테슬라의 향후 실적에 대한 긍정적인 전망을 나타낸다.",
+          "source": "Investing.com",
+          "date": "2026-05-07",
+          "category": "Market"
+        },
+        {
+          "id": 1778211870276,
+          "title": "일론 머스크, OpenAI 분할 전 샘 알트만 영입 시도",
+          "summary": "법원 문서에 따르면 일론 머스크가 OpenAI 분할 이전에 샘 알트만을 테슬라로 영입하려 시도했던 것으로 밝혀졌다. 이는 머스크의 AI 분야에 대한 지속적인 관심과 인재 확보 노력을 보여준다.",
+          "source": "TipRanks",
+          "date": "2026-05-07",
+          "category": "Musk"
+        },
+        {
+          "id": 1778211870277,
+          "title": "테슬라, 로드스터 신규 로고 상표 출원",
+          "summary": "테슬라가 오랫동안 기다려온 로드스터 공개를 앞두고 새로운 로드스터 로고에 대한 상표를 출원했다. 이는 신제품 출시에 대한 기대감을 높일 수 있다.",
+          "source": "Business Insider",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778211870278,
+          "title": "캐나다, BYD 및 테슬라에 대한 중국 EV 쿼터 검토 중",
+          "summary": "캐나다가 BYD와 테슬라를 포함한 중국산 전기차에 대한 수입 쿼터를 검토하고 있다. 이는 테슬라의 캐나다 시장 전략에 영향을 미칠 수 있는 잠재적인 규제 변화이다.",
+          "source": "Financial Post",
+          "date": "2026-05-07",
+          "category": "Regulatory"
+        }
+      ],
+      "analyses": {
+        "1778211870269": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 모델 Y가 미국 NHTSA의 신형 운전자 보조 시스템 안전성 기준을 최초로 통과하여 규제 마찰을 완화하고 FSD 채택을 강화할 수 있는 긍정적인 소식입니다.",
+          "key_factors": [
+            "NHTSA 안전성 기준 통과",
+            "FSD 채택 강화"
+          ]
+        },
+        "1778211870270": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라의 4월 중국산 전기차 판매량이 전년 동기 대비 36% 증가하여 중국 시장에서의 매출 모멘텀과 투자자 신뢰를 높였습니다.",
+          "key_factors": [
+            "중국 판매량 증가",
+            "시장 점유율 방어"
+          ]
+        },
+        "1778211870271": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R19"
+          ],
+          "reasoning": "일론 머스크가 테슬라와 스페이스X를 위한 첨단 칩 제조 시설인 '테라팹' 건설 계획을 발표하여 AI 칩 부족 문제를 해결하고 컴퓨팅 역량을 강화할 것으로 예상된다.",
+          "key_factors": [
+            "첨단 칩 제조 시설 건설",
+            "AI 칩 부족 해결",
+            "컴퓨팅 용량 증대"
+          ]
+        },
+        "1778211870272": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 2027년 이전에 3만 달러 미만의 사이버캡 로보택시를 판매하고 생산을 시작했다는 소식은 새로운 제품의 중요한 이정표를 나타낸다.",
+          "key_factors": [
+            "사이버캡 로보택시",
+            "3만 달러 미만 가격",
+            "2027년 이전 출시"
+          ]
+        },
+        "1778211870273": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X 생산을 중단하고 로봇 생산에 집중한다는 소식은 기존 주력 제품의 판매 감소 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "모델 S 및 모델 X 생산 중단",
+            "옵티머스 로봇 대량 생산 집중",
+            "전략적 변화"
+          ]
+        },
+        "1778211870274": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 미국에서 21만 9천 대의 차량을 리콜했다는 소식은 규제 및 안전 문제로 인해 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "차량 리콜",
+            "안전 문제",
+            "규제"
+          ]
+        },
+        "1778211870275": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R17"
+          ],
+          "reasoning": "울프 리서치가 테슬라의 목표 주가를 상향 조정하고 2026년 예상 수익을 높게 평가하여 긍정적인 투자 심리를 유발할 수 있습니다.",
+          "key_factors": [
+            "목표 주가 상향 조정",
+            "2026년 예상 수익 상향"
+          ]
+        },
+        "1778211870276": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 샘 알트만을 테슬라로 영입하려 시도했다는 소식은 머스크의 AI 분야에 대한 지속적인 관심과 인재 확보 노력을 보여주지만, 주가에 미치는 직접적인 영향은 제한적입니다.",
+          "key_factors": [
+            "일론 머스크의 AI 관심",
+            "인재 확보 노력"
+          ]
+        },
+        "1778211870277": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 로드스터 신규 로고 상표를 출원하여 신제품 출시에 대한 기대감을 높이고 있습니다.",
+          "key_factors": [
+            "신규 로고 상표 출원",
+            "로드스터 출시 기대감"
+          ]
+        },
+        "1778211870278": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R09"
+          ],
+          "reasoning": "캐나다가 BYD와 테슬라를 포함한 중국산 전기차에 대한 수입 쿼터를 검토 중이라는 소식은 테슬라의 캐나다 시장 전략에 부정적인 영향을 미칠 수 있는 잠재적인 규제 변화를 시사합니다.",
+          "key_factors": [
+            "캐나다 수입 쿼터 검토",
+            "중국산 전기차",
+            "테슬라 캐나다 시장 전략"
+          ]
+        }
+      },
+      "avgScore": 0.5,
+      "buyIndex": 56,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R20",
+        "R19",
+        "R04",
+        "R17"
+      ],
+      "bullish": 7,
+      "bearish": 3,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-07",
+            "content": "Elon Musk는 X에 부유층의 세금 납부에 대한 게시물에 답변하며, 잠재적인 세금 납부액이 수조 달러에 달할 수 있다고 언급했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-07",
+            "content": "2026년형 테슬라 로드스터는 0-60mph 가속 시간이 1초 미만(SpaceX 패키지 포함)이며, 620마일의 주행 거리와 로켓 공학에서 직접 가져온 냉간 가스 추진기를 자랑합니다. Musk는 이 차가 테슬라의 마지막 인간 운전 슈퍼카가 될 수 있다고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-06",
+            "content": "Elon Musk는 3월 4일 X에 '테슬라가 AGI를 만들 회사 중 하나가 될 것이며, 아마도 휴머노이드/원자 형성 형태로 처음 만들 것'이라고 게시했습니다. 그러나 8주도 채 되지 않아 그는 오클랜드 연방 법정에서 테슬라가 AGI를 추구할 구체적인 계획이 있는지 질문받았을 때 '아니오'라고 답했습니다.",
+            "sentiment": "bearish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-05",
+            "content": "Elon Musk는 트위터 주식 매입 지연 공개에 대한 미국 증권거래위원회(SEC) 소송을 해결하기 위해 150만 달러의 민사 벌금을 지불하기로 합의했습니다. 그는 잘못을 인정하지 않았으며, 지연으로 인해 절약했다고 알려진 1억 5천만 달러는 포기하지 않을 것입니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-04",
+            "content": "테슬라는 네바다주 스파크스 공장에서 첫 번째 세미트럭이 고용량 생산 라인에서 출고되었다고 발표했습니다. 테슬라는 연간 50,000대의 트럭 생산 능력을 목표로 하고 있습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-03",
+            "content": "테슬라(TSLA)는 로봇, EV 및 SpaceX AI 궤도 데이터 센터를 위한 자체 칩 제조를 확립하기 위해 야심찬 반도체 파운드리인 테라팹(Terafab)을 건설하고 있습니다. Elon Musk는 기술의 중요한 병목 현상을 통제하기 위해 전례 없는 규모로 칩 제조 독립을 추구하고 있습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 6,
+        "reasoning": "Elon Musk의 최근 Tesla 관련 공개 커뮤니케이션은 Tesla Semi의 생산 시작 및 Terafab 건설과 같은 긍정적인 소식과 Roadster의 인상적인 사양 발표를 포함합니다. 그러나 AGI 개발에 대한 상충되는 진술과 SEC 합의와 같은 부정적인 소식도 있었습니다. 전반적으로 긍정적인 소식과 부정적인 소식이 혼재되어 있어 전반적인 분위기는 중립적입니다."
+      },
+      "googleTrends": {
+        "current_score": 45,
+        "week_avg": 40,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "TSLA",
+          "Elon Musk"
+        ],
+        "reasoning": "Google Trends API에 직접 접근할 수 없어 정확한 실시간 데이터를 제공할 수 없지만, 최근 뉴스 기사를 바탕으로 Tesla에 대한 관심이 증가하고 있음을 추론했습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Regulatory": 3,
+        "Delivery": 1,
+        "Musk": 2,
+        "Product": 3,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.47,
+        "qqqChg": -0.24,
+        "vixClose": 17.079999923706055,
+        "wtiChg": -2.88,
+        "cnyChg": 0.03,
+        "prevTslaChg": 5.52,
+        "rsi": 45.5,
+        "macd": {
+          "macd": -3.2504253325409422,
+          "signal": -3.164887915760201,
+          "hist": -0.08553741678074145,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 460.09,
+          "middle": 403.08,
+          "lower": 346.06,
+          "pos": 0.576
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 55,
+        "macdTrend": -2,
+        "muskXSentiment": 1,
+        "googleTrends": 2
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/11(월)",
+          "change_pct": -0.7,
+          "signal": "관망"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/12(화)",
+          "change_pct": 0.2,
+          "signal": "관망"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/13(수)",
+          "change_pct": -1.1,
+          "signal": "매도"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/14(목)",
+          "change_pct": 0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/15(금)",
+          "change_pct": -0.3,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778211903976
+    },
+    {
       "id": "auto-1778181726403",
       "date": "2026-05-08",
       "displayDate": "2026.05.08",
@@ -13996,5 +14367,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-08 04:21 KST"
+  "lastUpdated": "2026-05-08 12:44 KST"
 }
