@@ -1002,6 +1002,16 @@ function findBarForDate(priceData, targetDateStr) {
     .map(({ bar }) => bar)[0] || null;
 }
 
+/** 주어진 날짜 직전 거래일 bar 반환 — basePrice 역산용 */
+function findPrevTradingBar(priceData, dateStr) {
+  const target = new Date(dateStr + 'T00:00:00Z');
+  return priceData
+    .map(d => ({ bar: d, dt: d.date instanceof Date ? d.date : new Date(d.date) }))
+    .filter(({ dt }) => { const diff = (target - dt) / 86400000; return diff > 0 && diff <= 7; })
+    .sort((a, b) => b.dt - a.dt)
+    .map(({ bar }) => bar)[0] || null;
+}
+
 function loadPredAccuracy() {
   try { return JSON.parse(localStorage.getItem(PRED_ACCURACY_KEY) || '{"records":[]}'); } catch { return { records: [] }; }
 }
@@ -1118,13 +1128,19 @@ function seedAccuracyFromAutoSessions(autoSessions) {
       if (targetDate < cutoff) return; // 너무 오래된 것 제외
       // 중복 방지
       if (db.records.some(r => r.forecastDate === forecastDate && r.targetDate === targetDate && r.source === 'auto')) return;
+      const basePrice = df.basePrice ?? session.latestTslaPrice ?? null;
+      const predictedPrice = df.predictedPrice ?? (
+        basePrice != null && df.change_pct != null
+          ? Math.round(basePrice * (1 + df.change_pct / 100) * 100) / 100
+          : null
+      );
       db.records.push({
         forecastDate,
         targetDate,
         dayLabel:           df.label || `D+${df.day}`,
-        basePrice:          null,  // auto-sessions에 basePrice 없음 — 방향 비교만 사용
+        basePrice,
         predictedChangePct: typeof df.change_pct === 'number' ? df.change_pct : parseFloat(df.change_pct) || 0,
-        predictedPrice:     null,
+        predictedPrice,
         predictedSignal:    df.signal || '',
         actualPrice:        null,
         actualChangePct:    null,
@@ -1753,6 +1769,17 @@ function PredAccuracyCard({ dailyData, autoSessions }) {
     const db = loadPredAccuracy();
     let updated = false;
     db.records.forEach(rec => {
+      // basePrice 없는 구형 레코드: 예측일 직전 거래일 종가로 역산
+      if (rec.basePrice == null && rec.source === 'auto') {
+        const prevBar = findPrevTradingBar(priceData, rec.forecastDate);
+        if (prevBar?.close) {
+          rec.basePrice = Math.round(prevBar.close * 100) / 100;
+          if (rec.predictedPrice == null && rec.predictedChangePct != null) {
+            rec.predictedPrice = Math.round(rec.basePrice * (1 + rec.predictedChangePct / 100) * 100) / 100;
+          }
+          updated = true;
+        }
+      }
       if (rec.matched !== null) return;
       if (!isPredResolvable(rec.targetDate)) return;          // KST 07:00 미경과
       const bar = findBarForDate(priceData, rec.targetDate);
