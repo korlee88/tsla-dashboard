@@ -1,6 +1,357 @@
 {
   "sessions": [
     {
+      "id": "auto-1778266852757",
+      "date": "2026-05-09",
+      "displayDate": "2026.05.09",
+      "kstTime": "04:00",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778266819691,
+          "title": "테슬라, 캘리포니아에서 370대의 세미트럭 1억 달러 규모 계약 체결",
+          "summary": "테슬라가 WattEV로부터 370대의 Class 8 전기 트럭을 수주하며 역대 최대 규모인 1억 달러 상당의 테슬라 세미(Semi) 주문을 확보했습니다. 이 주문은 캘리포니아에서 단일 전기 트럭 주문으로는 가장 큰 규모가 될 것으로 예상됩니다. 첫 50대의 테슬라 세미는 2026년에 인도될 예정이며, 전체 차량은 2027년 말까지 운행될 것으로 보입니다.",
+          "source": "MarketWatch",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778266819692,
+          "title": "테슬라 세미 배터리 용량 공식 발표: 822 kWh 및 548 kWh",
+          "summary": "테슬라 세미 트럭의 공식 배터리 용량이 822 kWh와 548 kWh로 공개되었습니다. 이는 이전에 알려지지 않았던 정보로, 테슬라의 전기 트럭 기술 사양에 대한 중요한 세부 사항을 제공합니다.",
+          "source": "Electrek",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778266819693,
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 2026년 로봇에 집중",
+          "summary": "테슬라가 모델 S와 모델 X 차량 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중할 것이라고 일론 머스크가 발표했습니다. 이는 테슬라가 전기차에서 자율 기술로 전환하는 중요한 변화를 의미합니다.",
+          "source": "Fox Business",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778266819694,
+          "title": "일론 머스크, 테슬라 사이버캡 로보택시 가격 3만 달러 미만으로 확정",
+          "summary": "테슬라 CEO 일론 머스크는 완전 자율 사이버캡(Cybercab) 로보택시를 2027년 이전에 3만 달러 미만에 판매할 것이라고 확인했습니다. 생산이 공식적으로 시작됨에 따라 테슬라의 로보택시 서비스 출시가 가시화되고 있습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778266819695,
+          "title": "테슬라, 캐나다에서 모델 3 충전 속도 및 보증 하향 조정으로 반발 직면",
+          "summary": "테슬라가 캐나다에서 모델 3의 충전 속도와 보증을 낮추면서 소비자들의 반발에 직면했습니다. 이는 특정 시장에서 테슬라의 제품 전략과 고객 만족도에 영향을 미칠 수 있습니다.",
+          "source": "EV",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778266819696,
+          "title": "테슬라 주가, 높은 유가로 인한 EV 판매 증가 조짐에 상승",
+          "summary": "테슬라 주가가 목요일에 상승했는데, 이는 높은 유가가 전기차 판매를 촉진하고 있다는 최신 신호 때문입니다. 중국 승용차 협회(CPCA) 데이터에 따르면 4월 테슬라의 중국산 차량 인도량은 전년 대비 36% 증가했습니다.",
+          "source": "MarketWatch",
+          "date": "2026-05-07",
+          "category": "Market"
+        },
+        {
+          "id": 1778266819697,
+          "title": "일론 머스크, OpenAI 소송 전 합의 시도 보도",
+          "summary": "일론 머스크가 OpenAI와의 소송이 시작되기 이틀 전, OpenAI 사장 그렉 브록만에게 잠재적 합의에 대해 문자 메시지를 보낸 것으로 알려졌습니다. 머스크는 OpenAI가 비영리 약속을 어기고 영리 기업으로 전환했다고 주장하며 1,300억 달러 이상의 소송을 제기했습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-04",
+          "category": "Legal"
+        },
+        {
+          "id": 1778266819698,
+          "title": "일론 머스크 신탁, 트위터 소유권 신고 지연 관련 SEC에 150만 달러 합의금 지불",
+          "summary": "일론 머스크의 신탁이 트위터 주식 5% 이상 소유권 보고서를 제때 제출하지 않아 증권거래위원회(SEC)에 150만 달러의 민사 벌금을 지불하기로 합의했습니다. 이는 머스크의 법적 문제 중 하나가 해결되었음을 의미합니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-04",
+          "category": "Legal"
+        },
+        {
+          "id": 1778266819699,
+          "title": "테슬라, 후방 카메라 이미지 지연 문제로 21만 8천 대 이상 리콜",
+          "summary": "테슬라가 후방 카메라 이미지 지연 문제로 21만 8천 대 이상의 차량을 리콜하고 있습니다. 이 결함은 충돌 위험을 증가시킬 수 있으며, 소프트웨어 업데이트를 통해 해결될 예정입니다.",
+          "source": "Fox Business",
+          "date": "2026-05-06",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778266819700,
+          "title": "일론 머스크, OpenAI와의 갈등 전 샘 알트만을 테슬라로 영입 시도",
+          "summary": "일론 머스크가 2018년에 OpenAI의 창립 팀, 특히 샘 알트만을 테슬라의 새로운 AI 연구소를 운영하도록 영입하려 했으며, OpenAI를 테슬라의 자회사로 만드는 방안도 고려했던 것으로 법원 문서에서 밝혀졌습니다.",
+          "source": "Financial Times",
+          "date": "2026-05-07",
+          "category": "Musk"
+        }
+      ],
+      "analyses": {
+        "1778266819691": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 캘리포니아에서 1억 달러 규모의 세미트럭 대량 계약을 체결하여 신제품인 세미트럭의 판매 호조를 보여주며 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "1억 달러 규모 계약",
+            "370대 세미트럭 주문",
+            "WattEV"
+          ]
+        },
+        "1778266819692": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 세미 트럭의 공식 배터리 용량 공개는 제품 사양에 대한 새로운 정보를 제공하며, 이는 신제품 마일스톤으로 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "세미 트럭 배터리 용량 공개",
+            "제품 기술 사양 명확화"
+          ]
+        },
+        "1778266819693": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 모델 S와 모델 X 생산을 중단하고 로봇 생산에 집중한다는 소식은 단기적으로 차량 판매 감소 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "모델 S/X 생산 중단",
+            "로봇 생산 집중",
+            "전기차에서 자율 기술로의 전환"
+          ]
+        },
+        "1778266819694": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 사이버캡 로보택시의 3만 달러 미만 가격과 2027년 이전 출시를 확인하여 테슬라의 신제품 및 서비스 출시에 대한 긍정적인 전망을 제시합니다.",
+          "key_factors": [
+            "사이버캡 로보택시 가격 확정",
+            "2027년 이전 출시 목표"
+          ]
+        },
+        "1778266819695": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 캐나다에서 모델 3의 충전 속도와 보증을 하향 조정하여 소비자 불만을 야기하며 제품 전략 및 고객 만족도에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "충전 속도 하향 조정",
+            "보증 기간 단축",
+            "소비자 불만"
+          ]
+        },
+        "1778266819696": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "높은 유가로 인한 전기차 판매 증가 조짐과 4월 테슬라의 중국산 차량 인도량이 전년 대비 36% 증가했다는 CPCA 데이터는 긍정적인 영향을 미칩니다.",
+          "key_factors": [
+            "높은 유가",
+            "중국 4월 인도량 36% 증가"
+          ]
+        },
+        "1778266819697": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI와의 소송 전 합의를 시도했다는 보도는 머스크의 다른 벤처 관련 법적 분쟁이 지속되고 있음을 보여주며, 이는 테슬라에 대한 투자자들의 우려를 야기할 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 법적 분쟁",
+            "OpenAI 소송"
+          ]
+        },
+        "1778266819698": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R05",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 신탁이 트위터 소유권 신고 지연으로 SEC에 벌금을 지불하기로 합의한 것은 머스크의 법적 문제와 관련된 리스크가 여전히 존재함을 보여주며, 이는 테슬라에 간접적인 부정적 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "SEC 합의금 지불",
+            "일론 머스크 법적 문제"
+          ]
+        },
+        "1778266819699": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 이미지 지연 문제로 21만 8천 대 이상의 차량을 리콜하여 충돌 위험을 증가시키고 있으며, 이는 소프트웨어 업데이트로 해결될 예정입니다.",
+          "key_factors": [
+            "리콜",
+            "소프트웨어 결함"
+          ]
+        },
+        "1778266819700": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "이 뉴스는 2018년의 과거 사건에 대한 것으로, 현재 테슬라의 운영이나 미래 전망에 직접적인 영향을 미치지 않아 주가에 중립적입니다.",
+          "key_factors": [
+            "과거 사건",
+            "현재 영향 없음"
+          ]
+        }
+      },
+      "avgScore": -0.1,
+      "buyIndex": 54,
+      "direction": "bearish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R20",
+        "R05",
+        "R04"
+      ],
+      "bullish": 4,
+      "bearish": 5,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-05",
+            "content": "Elon Musk는 2026년 2월 Tesla가 61.1%의 재구매율로 미국 브랜드 충성도 1위를 차지했다고 언급했습니다. 또한, 네덜란드 Tesla 소유주들이 FSD supervised를 통해 한 달도 안 되어 1천만 km를 주행했다고 언급하며 네덜란드 도로를 더 안전하게 만들어준 것에 대해 감사를 표했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-05",
+            "content": "Elon Musk는 Tesla, SpaceX, Starlink가 모두 인류가 사용할 수 있는 에너지의 양을 늘리는 방향으로 나아가고 있으며, 이는 단일 행성을 넘어선 문명 전략이라고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-03",
+            "content": "Tesla는 스티어링 휠과 페달이 없는 2인승 자율주행차인 Cybercab 생산을 시작했다고 발표했습니다. 이는 스마트 택시 네트워크로 계획되어 있지만, 2027년 이전에는 상당한 수익이 예상되지 않습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-08",
+            "content": "Tesla는 후방 카메라 이미지 문제로 218,800대 이상의 차량을 리콜할 예정입니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 4,
+        "reasoning": "Elon Musk의 Tesla 관련 최근 게시물은 FSD의 성공적인 배포와 장기적인 문명 전략에 대한 낙관적인 전망을 보여주지만, Cybercab의 초기 수익 기대치에 대한 신중한 입장과 차량 리콜 소식으로 인해 전반적인 정서는 중립적입니다."
+      },
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": null,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [],
+        "reasoning": "Google Trends 데이터에 따르면 Tesla의 현재 검색 관심도는 33이며, 이는 지난주에 비해 하락세를 보이고 있습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product": 5,
+        "Market": 1,
+        "Legal": 2,
+        "Regulatory": 1,
+        "Musk": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.23,
+        "qqqChg": 1.28,
+        "vixClose": 17.450000762939453,
+        "wtiChg": -2.98,
+        "cnyChg": -0.01,
+        "prevTslaChg": 5.52,
+        "rsi": 45.5,
+        "macd": {
+          "macd": -2.087349480622379,
+          "signal": -2.932272745376488,
+          "hist": 0.844923264754109,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 461.61,
+          "middle": 403.8,
+          "lower": 346,
+          "pos": 0.695
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 49,
+        "r24Discount": 0,
+        "macdCross": 6,
+        "googleTrends": -1
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/12(월)",
+          "change_pct": -1.2,
+          "signal": "매도"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/13(화)",
+          "change_pct": -0.8,
+          "signal": "매도"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/14(수)",
+          "change_pct": 0.2,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/15(목)",
+          "change_pct": -0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/16(금)",
+          "change_pct": 0.1,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778266852757
+    },
+    {
       "id": "auto-1778248458080",
       "date": "2026-05-08",
       "displayDate": "2026.05.08",
@@ -15080,5 +15431,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-08 22:53 KST"
+  "lastUpdated": "2026-05-09 04:00 KST"
 }
