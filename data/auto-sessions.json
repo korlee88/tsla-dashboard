@@ -1,6 +1,334 @@
 {
   "sessions": [
     {
+      "id": "auto-1778313519903",
+      "date": "2026-05-09",
+      "displayDate": "2026.05.09",
+      "kstTime": "16:57",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778313485000,
+          "title": "테슬라, 캘리포니아에서 370대 세미트럭 1억 달러 규모 계약 체결",
+          "summary": "테슬라가 WattEV로부터 370대의 세미트럭을 수주하며 1억 달러 규모의 역대 최대 계약을 체결했습니다. 이 중 300대 이상은 오클랜드 항만 프로그램을 통해 화물 운송에 사용될 예정입니다. 테슬라는 2026년에 세미트럭 생산량을 늘릴 계획입니다.",
+          "source": "Zacks.com",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778313485001,
+          "title": "테슬라, 2026년까지 '수천 대'의 세미트럭 생산 목표",
+          "summary": "테슬라의 세미 프로그램 디렉터 댄 프리슬리는 회사가 2026년 말까지 '수천 대'의 Class 8 배터리-전기 세미트럭을 생산할 것으로 예상한다고 밝혔습니다. 테슬라는 연간 5만 대 생산 목표를 달성하기 위해 노력하고 있습니다.",
+          "source": "Transport Topics",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778313485002,
+          "title": "테슬라, 사이버트럭 및 기타 모델 리콜 실시",
+          "summary": "테슬라가 휠 스터드 분리 가능성으로 인해 173대의 사이버트럭을 리콜하고, 후방 카메라 소프트웨어 문제로 20만 대 이상의 Model Y, Model S, Model X, Model 3 차량을 리콜합니다. 테슬라는 이 문제로 인한 사고나 부상은 없다고 밝혔습니다.",
+          "source": "Associated Press",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778313485003,
+          "title": "프랑스 검찰, 일론 머스크와 X에 Grok 콘텐츠 관련 기소 추진",
+          "summary": "프랑스 검찰이 일론 머스크와 그의 소셜 플랫폼 X에 대해 Grok 콘텐츠에 포함된 아동 성 학대 이미지, 딥페이크, 허위 정보 및 반인도적 범죄 부인 공모 혐의로 기소를 추진하고 있습니다. 파리 검찰청은 아동 성 학대 이미지 소지 및 배포 공모, 개인 데이터 불법 수집 등의 혐의로 X에 대한 수사를 시작했습니다.",
+          "source": "Go Local Prov",
+          "date": "2026-05-08",
+          "category": "Musk"
+        },
+        {
+          "id": 1778313485004,
+          "title": "일론 머스크 대 샘 알트만 소송: OpenAI의 비영리 이념 이탈 증언",
+          "summary": "일론 머스크가 샘 알트만과 OpenAI를 상대로 제기한 소송에서 증인들은 OpenAI가 안전 및 비영리 이념에서 벗어나 상업적 제품에 집중하고 있다고 증언했습니다. 이는 OpenAI가 자선 단체로서의 사명을 포기하고 내부자들을 부유하게 만들고 있다는 머스크의 주장을 뒷받침합니다.",
+          "source": "Bay City News",
+          "date": "2026-05-08",
+          "category": "Musk"
+        },
+        {
+          "id": 1778313485005,
+          "title": "일론 머스크의 스타링크, 노후 위성 교체로 우주 환경에 영향",
+          "summary": "일론 머스크의 스타링크 네트워크가 노후 위성을 폐기하고 새로운 위성으로 교체하면서 우주 환경에 미치는 영향에 대한 우려가 제기되고 있습니다. 스타링크는 2025년에 114억 달러의 매출과 44억 달러의 영업 이익을 기록할 것으로 예상되는 SpaceX의 주요 수익원입니다.",
+          "source": "OkDiario",
+          "date": "2026-05-08",
+          "category": "Musk"
+        },
+        {
+          "id": 1778313485006,
+          "title": "월스트리트, 테슬라 주식에 대한 의견 분분",
+          "summary": "월스트리트는 테슬라 주식에 대해 엇갈린 견해를 보이고 있습니다. 테슬라 주가는 연초 대비 약 9% 하락했으며, 190배에 달하는 선행 주가수익비율(P/E)이 약세론자들의 주요 논점입니다. 반면, 테슬라의 AI 및 로봇공학 분야에서의 성과에 대한 기대감은 강세론을 지지하고 있습니다.",
+          "source": "Gotrade",
+          "date": "2026-05-08",
+          "category": "Market"
+        },
+        {
+          "id": 1778313485007,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당순이익(EPS) 0.41달러를 기록하며 월스트리트 예상치인 0.34달러를 상회했습니다. 또한, 아시아 태평양 및 남미 지역의 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778313485008,
+          "title": "인텔, 일론 머스크의 테라팹 프로젝트에 참여",
+          "summary": "인텔이 일론 머스크의 야심찬 테라팹(Terafab) 반도체 생산 프로젝트에 참여합니다. 이 소식으로 인텔 주가는 상승했으며, 1테라와트 AI 파트너십이 인텔 주가를 70달러 목표로 이끌고 있습니다.",
+          "source": "FinancialContent",
+          "date": "2026-04-02",
+          "category": "Product"
+        },
+        {
+          "id": 1778313485009,
+          "title": "Anthropic, 일론 머스크 및 SpaceX와 새로운 동맹",
+          "summary": "Anthropic이 일론 머스크와 SpaceX를 새로운 강력한 동맹으로 맞이했습니다. 이는 AI 기술 및 비즈니스 환경에 중요한 영향을 미칠 수 있습니다.",
+          "source": "Marketplace",
+          "date": "2026-05-08",
+          "category": "Musk"
+        }
+      ],
+      "analyses": {
+        "1778313485000": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 WattEV와 1억 달러 규모의 세미트럭 계약을 체결하여 신제품에 대한 상당한 수요를 확인했습니다.",
+          "key_factors": [
+            "1억 달러 규모 계약",
+            "370대 세미트럭 수주",
+            "2026년 생산량 증대 계획"
+          ]
+        },
+        "1778313485001": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 2026년 말까지 수천 대의 세미트럭 생산 목표를 밝히며 신제품 생산 확대에 대한 긍정적인 전망을 제시했습니다.",
+          "key_factors": [
+            "세미트럭 생산 목표",
+            "생산 능력 확대"
+          ]
+        },
+        "1778313485002": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 휠 스터드 문제로 사이버트럭 173대와 후방 카메라 소프트웨어 문제로 20만 대 이상의 다른 모델 차량을 리콜하여 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "사이버트럭 리콜",
+            "후방 카메라 소프트웨어 리콜",
+            "20만 대 이상 차량 리콜"
+          ]
+        },
+        "1778313485003": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R05",
+            "R24"
+          ],
+          "reasoning": "프랑스 검찰이 일론 머스크와 X에 대해 아동 성 학대 이미지 및 허위 정보 관련 혐의로 기소를 추진하고 있어 머스크의 다른 사업 리스크가 테슬라에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "프랑스 검찰 기소 추진",
+            "X 플랫폼 관련 논란",
+            "일론 머스크의 평판 리스크"
+          ]
+        },
+        "1778313485004": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI를 상대로 제기한 소송에서 OpenAI가 비영리 이념에서 벗어나 상업적 제품에 집중하고 있다는 증언이 나오면서, 머스크의 다른 벤처와 관련된 법적 분쟁이 투자자들의 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 소송",
+            "OpenAI 비영리 이념 이탈"
+          ]
+        },
+        "1778313485005": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 다른 벤처인 스타링크의 우주 환경 영향 우려가 테슬라에 대한 투자 심리에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "스타링크 우주 환경 영향 우려",
+            "일론 머스크 관련 기업"
+          ]
+        },
+        "1778313485006": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "월스트리트의 테슬라 주식에 대한 엇갈린 의견은 새로운 정보가 아니며, 이미 시장에 반영된 다양한 관점을 재확인하는 내용입니다.",
+          "key_factors": [
+            "월스트리트 의견 분분",
+            "높은 P/E 비율",
+            "AI 및 로봇공학 기대감"
+          ]
+        },
+        "1778313485007": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당순이익(EPS)이 월스트리트 예상치를 10% 이상 상회했으며, 주요 지역에서 EV 수요 회복 및 증가를 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1778313485008": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "인텔이 일론 머스크의 테라팹 프로젝트에 참여한다는 소식은 테슬라에 간접적인 긍정적 영향을 줄 수 있으나, 테슬라의 직접적인 사업 성과와는 거리가 있어 영향이 제한적입니다.",
+          "key_factors": [
+            "일론 머스크의 프로젝트 참여",
+            "인텔 주가 상승"
+          ]
+        },
+        "1778313485009": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 다른 벤처인 Anthropic과 SpaceX의 동맹은 AI 기술 발전에 긍정적이지만, TSLA에 대한 직접적인 영향은 간접적이고 제한적입니다.",
+          "key_factors": [
+            "Musk's other ventures",
+            "AI technology development"
+          ]
+        }
+      },
+      "avgScore": 0.2,
+      "buyIndex": 56,
+      "direction": "bullish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R04",
+        "R05",
+        "R12"
+      ],
+      "bullish": 5,
+      "bearish": 4,
+      "neutral": 1,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 75,
+        "week_avg": 70,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "Tesla news",
+          "Elon Musk"
+        ],
+        "reasoning": "Google Trends 데이터는 직접적으로 제공되지 않지만, 최근 Tesla 주가 상승 및 Q1 2026 실적 발표와 같은 뉴스로 인해 검색 관심도가 증가했을 것으로 예상됩니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product": 4,
+        "Musk": 4,
+        "Market": 1,
+        "Earnings": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.62,
+        "vixClose": 17.190000534057617,
+        "wtiChg": -2.88,
+        "cnyChg": -0.01,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 52,
+        "r24Discount": 0,
+        "catMuskDamp": -2,
+        "macdCross": 6,
+        "bbHigh": -2,
+        "googleTrends": 2
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/11(월)",
+          "change_pct": 0.9,
+          "signal": "매수"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/11(월)",
+          "change_pct": -0.2,
+          "signal": "관망"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/12(화)",
+          "change_pct": 1.1,
+          "signal": "매수"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/13(수)",
+          "change_pct": 0.4,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/14(목)",
+          "change_pct": -0.7,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778313519903
+    },
+    {
       "id": "auto-1778298422804",
       "date": "2026-05-09",
       "displayDate": "2026.05.09",
@@ -15815,5 +16143,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-09 12:46 KST"
+  "lastUpdated": "2026-05-09 16:57 KST"
 }
