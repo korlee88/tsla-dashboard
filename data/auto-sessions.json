@@ -1,6 +1,360 @@
 {
   "sessions": [
     {
+      "id": "auto-1778332936967",
+      "date": "2026-05-09",
+      "displayDate": "2026.05.09",
+      "kstTime": "22:21",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778332905122,
+          "title": "테슬라, 사이버트럭 휠 스터드 분리 우려로 리콜 실시",
+          "summary": "테슬라가 2024년부터 2026년형 사이버트럭 일부 모델에 대해 휠 스터드 분리 가능성으로 리콜을 실시합니다. 이는 운전자가 차량 통제력을 잃을 위험을 증가시킬 수 있는 안전 문제입니다. 총 173대의 차량이 영향을 받습니다.",
+          "source": "Gizmodo",
+          "date": "2026-05-08",
+          "category": "Recall"
+        },
+        {
+          "id": 1778332905123,
+          "title": "일론 머스크, X 플랫폼에 'X Pay' 출시하며 디지털 금융 진출",
+          "summary": "일론 머스크가 X 플랫폼을 통해 'X Pay'를 출시하며 디지털 금융 시장에 진출합니다. 그는 미국 50개 주에서 송금업 면허를 성공적으로 확보했으며, X Pay는 개인 및 상업 사용자에게 실시간 P2P 글로벌 결제를 제공할 예정입니다.",
+          "source": "Distill",
+          "date": "2026-05-08",
+          "category": "Musk"
+        },
+        {
+          "id": 1778332905124,
+          "title": "일론 머스크의 xAI, Grok Imagine Quality Mode API 출시 및 생산성 도구 통합",
+          "summary": "일론 머스크의 xAI가 사실적인 이미지 생성을 위한 Grok Imagine Quality Mode API를 출시하고, Google Workspace 및 Outlook과 같은 생산성 도구를 Grok 웹 인터페이스에 통합했습니다.",
+          "source": "Distill",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778332905125,
+          "title": "테슬라, Model S 및 Model X 생산 중단하고 로봇에 집중",
+          "summary": "테슬라가 Model S 및 Model X 프리미엄 세단과 SUV 생산을 중단하고 2026년부터 로봇 생산에 집중할 것이라고 일론 머스크가 확인했습니다. 프레몬트 공장의 Model S 및 Model X 생산 라인을 연간 최대 100만 대의 Optimus 로봇을 생산할 수 있는 라인으로 교체할 계획입니다.",
+          "source": "FOX Business",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778332905126,
+          "title": "일론 머스크 대 OpenAI 재판, 내부 기록 공개되며 논란 가중",
+          "summary": "일론 머스크 대 샘 알트만 재판에서 OpenAI의 내부 기록이 공개되며 샘 알트만의 2023년 축출, 안전 기준에 대한 부정직성 의혹 등이 드러났습니다. 머스크는 OpenAI가 비영리 모델을 포기하고 영리 모델로 전환했다고 주장하고 있습니다.",
+          "source": "Gizmodo",
+          "date": "2026-05-08",
+          "category": "Legal"
+        },
+        {
+          "id": 1778332905127,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했습니다. 또한 아시아 태평양, 남미, 북미 및 유럽-중동 지역에서 전기차 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778332905128,
+          "title": "테슬라, 21만 8천대 이상 차량 리콜 및 사이버트럭 휠 안전 문제 직면",
+          "summary": "테슬라가 후방 카메라 지연 및 예산형 사이버트럭 휠의 안전 문제로 21만 8천대 이상의 차량을 리콜했습니다.",
+          "source": "Distill",
+          "date": "2026-05-08",
+          "category": "Recall"
+        },
+        {
+          "id": 1778332905129,
+          "title": "일론 머스크의 X 트윗 수, 예측 시장에서 40~64개 범위에 베팅",
+          "summary": "일론 머스크의 X(이전 트위터) 게시물 수가 예측 시장에서 5월 9일부터 11일까지 40개에서 64개 사이가 될 것이라는 베팅이 이루어지고 있습니다. 이는 머스크의 일반적인 일일 게시물 수를 기반으로 한 통계적 예측입니다.",
+          "source": "Lines.com",
+          "date": "2026-05-08",
+          "category": "Musk"
+        },
+        {
+          "id": 1778332905130,
+          "title": "테슬라, 완전 자율 주행(FSD) 시스템에 대한 NHTSA 조사 직면",
+          "summary": "테슬라가 완전 자율 주행(FSD) 시스템의 안개, 눈부심, 먼지 속 시야 문제로 인해 320만 대 이상의 차량에 대한 NHTSA 조사를 받고 있습니다. 이는 이전에 의도치 않은 가속 문제로 인한 226만 대 리콜을 피한 후 발생한 추가적인 안전 문제입니다.",
+          "source": "Autonocion.com",
+          "date": "2026-03-20",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778332905131,
+          "title": "일론 머스크, xAI를 SpaceX에 통합하여 'SpaceXAI' 설립",
+          "summary": "일론 머스크가 xAI를 별도 회사로 해산하고 SpaceX에 통합하여 'SpaceXAI'를 설립했습니다. 이는 인공지능과 우주 탐사 기술의 융합을 목표로 하는 것으로 보입니다.",
+          "source": "YouTube (Tech Daily)",
+          "date": "2026-05-08",
+          "category": "Musk"
+        }
+      ],
+      "analyses": {
+        "1778332905122": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 사이버트럭 휠 스터드 분리 문제로 173대의 차량에 대해 리콜을 실시하며, 이는 안전 문제로 인해 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "사이버트럭 리콜",
+            "안전 문제",
+            "휠 스터드 분리"
+          ]
+        },
+        "1778332905123": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 X 플랫폼을 통해 'X Pay'를 출시하며 디지털 금융 시장에 진출하는 것은 X의 잠재적 성장을 보여주지만, 테슬라에 대한 직접적인 영향은 제한적입니다.",
+          "key_factors": [
+            "X Pay 출시",
+            "디지털 금융 시장 진출",
+            "미국 송금업 면허 확보"
+          ]
+        },
+        "1778332905124": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 xAI가 새로운 AI 기능을 출시하고 생산성 도구와 통합하여 기술 혁신에 대한 긍정적인 인식을 높일 수 있습니다.",
+          "key_factors": [
+            "xAI Grok Imagine Quality Mode API 출시",
+            "생산성 도구 통합"
+          ]
+        },
+        "1778332905125": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 Model S 및 Model X 생산을 중단하고 로봇 생산에 집중한다는 소식은 단기적으로 자동차 판매 감소 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "Model S/X 생산 중단",
+            "로봇 생산 전환",
+            "2026년 계획"
+          ]
+        },
+        "1778332905126": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크와 관련된 OpenAI 재판에서 내부 기록이 공개되며 논란이 가중되는 것은 머스크의 다른 벤처 리스크가 테슬라에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크 대 OpenAI 재판",
+            "내부 기록 공개",
+            "논란 가중"
+          ]
+        },
+        "1778332905127": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 월스트리트 예상치를 10% 이상 상회하며 전기차 수요 회복을 시사했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1778332905128": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 지연 및 사이버트럭 휠 안전 문제로 21만 8천대 이상의 차량을 리콜하여 부정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "차량 리콜",
+            "사이버트럭 휠 안전 문제"
+          ]
+        },
+        "1778332905129": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 X 트윗 수에 대한 예측 시장 베팅은 TSLA 주가에 직접적인 영향을 미치지 않는 일반적인 통계적 예측입니다.",
+          "key_factors": [
+            "예측 시장",
+            "일론 머스크 X 트윗 수"
+          ]
+        },
+        "1778332905130": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R05"
+          ],
+          "reasoning": "테슬라가 FSD 시스템의 시야 문제로 인해 320만 대 이상의 차량에 대한 NHTSA 조사를 받고 있어 규제 위험과 잠재적 리콜 가능성이 증가했습니다.",
+          "key_factors": [
+            "NHTSA 조사",
+            "FSD 시스템 시야 문제",
+            "320만 대 차량"
+          ]
+        },
+        "1778332905131": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 xAI를 SpaceX에 통합하는 것은 테슬라의 핵심 사업과 직접적인 관련이 없어 투자자들의 주의를 분산시키고 다른 벤처의 위험을 증가시킬 수 있습니다.",
+          "key_factors": [
+            "Musk other ventures risk spillover",
+            "focus shift"
+          ]
+        }
+      },
+      "avgScore": -0.7,
+      "buyIndex": 51,
+      "direction": "bearish",
+      "topRules": [
+        "R24",
+        "R04",
+        "R12",
+        "R05"
+      ],
+      "bullish": 3,
+      "bearish": 6,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-05",
+            "content": "Tesla는 2026년 2월에 61.1%의 반복 구매자를 기록하며 미국 브랜드 충성도에서 선두를 달리고 있습니다. 또한, 네덜란드에서 FSD(Supervised)를 통해 1000만 km를 주행했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-04",
+            "content": "Tesla Semi의 첫 번째 고용량 생산 라인 차량이 네바다 공장에서 출고되었습니다. Tesla는 연간 50,000대의 트럭 생산을 목표로 하고 있습니다. 또한, Tesla는 마이애미 F1 그랑프리 팬 페스티벌에서 Cybercab 로보택시 컨셉을 공개했습니다. 마이애미는 2026년 상반기 로보택시 확장을 위한 Tesla의 목표 도시 중 하나입니다. Tesla는 FSD(Supervised)로 100억 마일 이상을 주행했다고 발표했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-03",
+            "content": "Tesla는 Cybercab 로보택시 생산을 시작했으며, 이는 스티어링 휠이나 페달이 없는 2인승 자율주행차입니다. 이 차량은 Tesla의 로보택시 네트워크의 일부가 될 예정이며, 오스틴에서 제한적으로 운영을 시작하여 댈러스와 휴스턴으로 확장되었습니다. 그러나 로보택시 서비스에서 상당한 수익은 2027년 이전에 예상되지 않습니다. Tesla는 또한 SpaceX와 xAI에 차량 및 배터리 기술을 판매하여 5억 7,300만 달러 이상을 벌어들였습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-02",
+            "content": "Elon Musk는 Tesla Model S 및 Model X의 생산이 중단되었으며, 재고가 몇 백 대만 남았다고 확인했습니다. 이 결정은 Optimus 휴머노이드 로봇 생산을 위한 공장 공간 확보와 자율주행 미래로의 전환의 일환입니다. Musk는 이 '시대의 끝'을 기념하는 공식 행사를 가질 것이라고 언급했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "bullish",
+        "sentiment_score": 2,
+        "post_count": 4,
+        "reasoning": "Elon Musk의 최근 게시물은 주로 로보택시, Optimus, FSD 및 Semi 트럭 생산의 진전에 초점을 맞추고 있으며, 이는 Tesla의 미래 전략에 대한 긍정적인 전망을 제시합니다."
+      },
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": null,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [],
+        "reasoning": "현재 Google 트렌드 점수는 Tesla에 대한 검색량이 감소하고 있음을 나타냅니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Recall": 2,
+        "Musk": 3,
+        "Product": 2,
+        "Legal": 1,
+        "Earnings": 1,
+        "Regulatory": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.62,
+        "vixClose": 17.190000534057617,
+        "wtiChg": -2.88,
+        "cnyChg": -0.01,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 43,
+        "r24Discount": 2,
+        "macdCross": 6,
+        "bbHigh": -2,
+        "muskXSentiment": 3,
+        "googleTrends": -1
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/11(월)",
+          "change_pct": 0.4,
+          "signal": "관망"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/11(월)",
+          "change_pct": -0.2,
+          "signal": "관망"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/12(화)",
+          "change_pct": 0.7,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/13(수)",
+          "change_pct": -0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/14(목)",
+          "change_pct": 0.3,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778332936967
+    },
+    {
       "id": "auto-1778313519903",
       "date": "2026-05-09",
       "displayDate": "2026.05.09",
@@ -16143,5 +16497,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-09 16:57 KST"
+  "lastUpdated": "2026-05-09 22:21 KST"
 }
