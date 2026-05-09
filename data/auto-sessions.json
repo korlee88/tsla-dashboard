@@ -1,6 +1,390 @@
 {
   "sessions": [
     {
+      "id": "auto-1778298422804",
+      "date": "2026-05-09",
+      "displayDate": "2026.05.09",
+      "kstTime": "12:46",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778298389843,
+          "title": "테슬라, 사이버트럭 휠 문제로 리콜 실시",
+          "summary": "테슬라가 사이버트럭의 휠이 주행 중 떨어져 나갈 수 있다는 우려로 리콜을 실시합니다. 이는 잠재적인 안전 문제를 야기할 수 있어 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-09",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778298389844,
+          "title": "테슬라, 4월 중국 판매량 36% 급증",
+          "summary": "테슬라의 4월 중국 내 Model 3 및 Model Y 인도량이 전년 대비 36% 증가한 79,478대를 기록했습니다. 이는 견조한 수요 모멘텀을 보여주며 테슬라 주가 상승에 기여했습니다.",
+          "source": "Investing.com",
+          "date": "2026-05-08",
+          "category": "Delivery"
+        },
+        {
+          "id": 1778298389845,
+          "title": "일론 머스크, 테슬라 사이버캡 가격 3만 달러 미만으로 책정",
+          "summary": "일론 머스크 테슬라 CEO는 완전 자율주행 로보택시인 사이버캡을 2027년 이전에 3만 달러 미만에 판매할 것이라고 밝혔습니다. 사이버캡의 생산이 공식적으로 시작되었습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-09",
+          "category": "Product"
+        },
+        {
+          "id": 1778298389846,
+          "title": "테슬라 세미 트럭, 고용량 생산 시작",
+          "summary": "테슬라 세미 트럭이 네바다 공장에서 고용량 생산 라인에서 첫 번째 차량을 출고했습니다. 테슬라는 연간 5만 대의 트럭 생산을 목표로 하고 있으며, 이는 장기적인 성장 동력이 될 수 있습니다.",
+          "source": "TheStreet",
+          "date": "2026-05-04",
+          "category": "Product"
+        },
+        {
+          "id": 1778298389847,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했습니다. 또한 아시아 태평양, 남미 지역의 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 회복세를 보였다고 언급했습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778298389848,
+          "title": "일론 머스크, 테슬라 휴머노이드 로봇 '옵티머스' 2027년 말까지 판매 예상",
+          "summary": "일론 머스크는 테슬라의 휴머노이드 로봇인 옵티머스가 2027년 말까지 일반에 판매될 수 있을 것이라고 언급했습니다. 이 로봇은 신뢰성, 안전성, 다양한 기능 수행 능력을 갖출 것으로 예상됩니다.",
+          "source": "Fox Business",
+          "date": "2026-05-09",
+          "category": "Product"
+        },
+        {
+          "id": 1778298389849,
+          "title": "테슬라, 스페이스X와 첨단 칩 제조 시설 건설 계획",
+          "summary": "일론 머스크는 테슬라와 스페이스X가 오스틴에 새로운 테라팹(Terafab) 칩 공장을 건설하여 연간 1테라와트의 컴퓨팅 용량을 생산하고 AI 칩 부족 문제를 해결할 것이라고 밝혔습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-09",
+          "category": "Product"
+        },
+        {
+          "id": 1778298389850,
+          "title": "테슬라, FSD 구독자 130만 명 돌파 및 로보택시 시범 프로그램 확대",
+          "summary": "테슬라의 완전자율주행(FSD) 구독 패키지 가입자가 약 130만 명에 달하며, 오스틴, 댈러스, 휴스턴에서 로보택시 시범 프로그램을 시작했습니다. 이는 테슬라의 AI 및 자율주행 기술 발전에 대한 낙관론을 강화합니다.",
+          "source": "Investing.com",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778298389851,
+          "title": "테슬라 주가, 기술적 반등으로 400달러 선 회복",
+          "summary": "테슬라 주가가 강력한 거래량으로 400달러 선을 회복하며 상당한 기술적 반등을 보였습니다. 이는 AI 수익화에 대한 개선된 심리와 최근 인도량 데이터에 힘입은 것으로 분석됩니다.",
+          "source": "Barchart.com",
+          "date": "2026-05-08",
+          "category": "Market"
+        },
+        {
+          "id": 1778298389852,
+          "title": "테슬라, Model S 및 Model X 생산 중단하고 로봇에 집중",
+          "summary": "테슬라가 Model S 및 Model X 차량 생산을 중단하고 2026년부터 옵티머스 로봇의 대량 생산에 집중할 것이라고 일론 머스크가 발표했습니다. 이는 테슬라의 사업 전략 변화를 시사합니다.",
+          "source": "Fox Business",
+          "date": "2026-05-09",
+          "category": "Product"
+        }
+      ],
+      "analyses": {
+        "1778298389843": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "사이버트럭의 휠 문제로 인한 리콜은 잠재적인 안전 문제를 야기하며 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "사이버트럭 리콜",
+            "안전 문제"
+          ]
+        },
+        "1778298389844": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라의 4월 중국 판매량이 전년 대비 36% 급증하여 견조한 수요를 보여주며 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "중국 판매량 급증",
+            "수요 모멘텀"
+          ]
+        },
+        "1778298389845": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 2027년 이전 사이버캡 출시 및 3만 달러 미만 가격 책정을 언급하며 신제품에 대한 긍정적인 기대감을 높였습니다.",
+          "key_factors": [
+            "사이버캡 가격",
+            "출시 시기"
+          ]
+        },
+        "1778298389846": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 세미 트럭의 고용량 생산 시작은 새로운 제품의 중요한 생산 이정표이며, 장기적인 성장 동력이 될 수 있습니다.",
+          "key_factors": [
+            "세미 트럭 고용량 생산 시작",
+            "연간 5만 대 생산 목표"
+          ]
+        },
+        "1778298389847": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당순이익이 월스트리트 예상치를 10% 이상 상회했으며, 주요 지역에서 차량 수요 회복 및 증가를 시사하여 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "EPS beat",
+            "수요 회복"
+          ]
+        },
+        "1778298389848": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라의 휴머노이드 로봇 옵티머스가 2027년 말까지 판매될 것이라고 언급하며 미래 제품 라인업에 대한 긍정적인 전망을 제시했습니다.",
+          "key_factors": [
+            "옵티머스 로봇 판매 예상",
+            "미래 제품 라인업 확장"
+          ]
+        },
+        "1778298389849": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R24"
+          ],
+          "reasoning": "테슬라와 스페이스X가 AI 칩 부족 문제를 해결하기 위해 첨단 칩 제조 시설을 건설한다는 계획은 테슬라의 장기적인 기술 자립과 AI 역량 강화에 긍정적이지만, 아직 계획 단계이므로 중간 정도의 영향으로 평가됩니다.",
+          "key_factors": [
+            "AI 칩 자체 생산",
+            "기술 자립",
+            "스페이스X와의 협력"
+          ]
+        },
+        "1778298389850": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 FSD 구독자 130만 명 돌파와 로보택시 시범 프로그램 확대는 자율주행 기술 발전에 대한 긍정적인 신호입니다.",
+          "key_factors": [
+            "FSD 구독자 증가",
+            "로보택시 시범 프로그램 확대"
+          ]
+        },
+        "1778298389851": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가가 기술적 반등으로 400달러 선을 회복했으나, 이는 시장 심리와 최근 인도량 데이터에 힘입은 것으로 분석되어 직접적인 새로운 호재는 아닙니다.",
+          "key_factors": [
+            "기술적 반등",
+            "AI 수익화 심리 개선",
+            "최근 인도량 데이터"
+          ]
+        },
+        "1778298389852": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 Model S 및 Model X 생산을 중단하고 로봇 생산에 집중한다는 일론 머스크의 발표는 핵심 차량 모델의 단종으로 인한 매출 감소 우려를 불러일으킵니다.",
+          "key_factors": [
+            "Model S/X 생산 중단",
+            "옵티머스 로봇 대량 생산 전환"
+          ]
+        }
+      },
+      "avgScore": 1.1,
+      "buyIndex": 64,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R04",
+        "R20",
+        "R12",
+        "R24"
+      ],
+      "bullish": 8,
+      "bearish": 2,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-07",
+            "content": "Elon Musk는 2026년형 Tesla Roadster가 0-60mph를 1초 이내에 도달하고 620마일의 주행 거리를 가지며 SpaceX 패키지에 냉간 가스 추진기가 포함될 것이라고 언급했습니다. 그는 이 차가 Tesla의 마지막 인간 운전 슈퍼카가 될 것이라고 말했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-05",
+            "content": "Elon Musk는 Tesla의 FSD(Full Self-Driving) 시스템이 100억 마일 이상 주행했으며, 곧 '안전한 무인' 주행이 가능할 것이라고 주장했습니다. 그러나 그는 FSD가 약속했던 자율 주행 수준에는 미치지 못한다고 인정했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-02",
+            "content": "Elon Musk는 Tesla의 Cybercab이 2026년 4월에 대량 생산에 들어갔으며, 새로운 50,000톤 기가프레스와 '언박스드' 제조 공정을 통해 10초 이내에 차량을 생산할 수 있다고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-29",
+            "content": "Elon Musk는 Tesla의 2026년 1분기 실적 발표에서 Cybercab의 초기 생산이 매우 느릴 것이지만, 연말과 내년에는 기하급수적으로 증가할 것이라고 밝혔습니다. 그는 또한 AI5 칩 개발 진행 상황과 로보택시 및 Optimus 로봇을 지원하기 위한 AI 인프라에 대한 투자를 언급했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-24",
+            "content": "Elon Musk는 Tesla의 자율주행 '로보택시'인 Cybercab의 생산이 시작되었다고 발표했습니다. 그는 X에 홍보 영상을 게시하며 Cybercab이 공장에서 출고되어 도로를 주행하는 모습을 보여주었습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-23",
+            "content": "Elon Musk는 Tesla가 인공지능, 로봇 공학 및 칩에 250억 달러 이상을 투자할 계획이며, 이는 미래 수익 흐름을 구축하는 데 정당하다고 말했습니다. 그는 또한 에너지 저장 사업의 수요가 매우 강하다고 언급했지만, 2026년 1분기 에너지 저장 배포는 전년 대비 15% 감소했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-04-21",
+            "content": "Elon Musk는 Tesla Optimus 로봇의 업데이트된 버전을 공개하며, 이전보다 훨씬 더 인간과 유사한 모습과 부드러운 움직임을 보여주었다고 언급했습니다. 그는 Optimus가 AI에 신체를 부여하는 첫 단계이며, 궁극적으로 인간의 일상생활에 통합될 것이라고 강조했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-04-20",
+            "content": "Elon Musk는 Tesla의 2026년 프로젝트에 인공지능, 로봇 공학, 에너지 시스템 및 차세대 운송 기술의 발전이 포함될 것이라고 밝혔습니다. 그는 Optimus 로봇이 회사의 가장 대량 생산되는 제품이 될 수 있다고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "bullish",
+        "sentiment_score": 2,
+        "post_count": 8,
+        "reasoning": "Elon Musk의 최근 게시물은 Cybercab 생산 시작, Optimus 로봇의 발전, AI 및 로봇 공학에 대한 대규모 투자 계획 등 Tesla의 미래 기술과 생산 능력에 대한 긍정적인 전망을 주로 다루고 있습니다. FSD에 대한 일부 현실적인 언급이 있었지만, 전반적인 메시지는 Tesla의 혁신과 성장에 대한 낙관적인 기대를 반영합니다."
+      },
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": 40,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "TSLA",
+          "Tesla Model Y",
+          "Tesla Cybertruck",
+          "Elon Musk"
+        ],
+        "reasoning": "지난 7일간 'Tesla' 키워드에 대한 검색 관심도는 하락세를 보였으며, 현재 점수는 33점으로 주간 평균인 40점보다 낮습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Regulatory": 1,
+        "Delivery": 1,
+        "Product": 6,
+        "Earnings": 1,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.62,
+        "vixClose": 17.190000534057617,
+        "wtiChg": -3.63,
+        "cnyChg": -0.01,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 61,
+        "r24Discount": -3,
+        "macdCross": 6,
+        "bbHigh": -2,
+        "muskXSentiment": 3,
+        "googleTrends": -1
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/11(월)",
+          "change_pct": 1.8,
+          "signal": "매수"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/12(화)",
+          "change_pct": 1.2,
+          "signal": "매수"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/13(수)",
+          "change_pct": 0.7,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/14(목)",
+          "change_pct": -0.5,
+          "signal": "관망"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/15(금)",
+          "change_pct": 1,
+          "signal": "매수"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778298422804
+    },
+    {
       "id": "auto-1778266852757",
       "date": "2026-05-09",
       "displayDate": "2026.05.09",
@@ -15431,5 +15815,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-09 04:00 KST"
+  "lastUpdated": "2026-05-09 12:46 KST"
 }
