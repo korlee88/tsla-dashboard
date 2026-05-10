@@ -2820,6 +2820,12 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
     ? Math.round(recent.reduce((s, x) => s + (x.avgScore ?? 0), 0) / recent.length * 10) / 10
     : null;
 
+  // 추세 방향 (종합 해석 카드 + 하락세 뉴스 섹션에서 공용)
+  const r3avg = valid.slice(0,3).length ? Math.round(valid.slice(0,3).reduce((s,x) => s+(x.buyIndex??50),0)/valid.slice(0,3).length) : null;
+  const p3avg = valid.slice(3,6).length ? Math.round(valid.slice(3,6).reduce((s,x) => s+(x.buyIndex??50),0)/valid.slice(3,6).length) : null;
+  const trendDir = r3avg != null && p3avg != null
+    ? (r3avg > p3avg + 3 ? 'rising' : r3avg < p3avg - 3 ? 'falling' : 'flat') : 'flat';
+
   const daily7 = forecast?.daily_forecasts || [];
   // daily_forecasts에는 buy_index가 없음 → 신호/change_pct로 역산
   const signalToBi = { '적극매수': 88, '매수': 72, '관망': 50, '매도': 30, '적극매도': 12 };
@@ -2902,13 +2908,6 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
 
       {/* ── 두 지표 종합 해석 카드 ───────────────────────────────── */}
       {(() => {
-        // 매수지수 추세 방향: 최근 3회 평균 vs 이전 3회 평균
-        const r3 = valid.slice(0, 3);
-        const p3 = valid.slice(3, 6);
-        const r3avg = r3.length ? Math.round(r3.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / r3.length) : null;
-        const p3avg = p3.length ? Math.round(p3.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / p3.length) : null;
-        const trendDir = r3avg != null && p3avg != null
-          ? (r3avg > p3avg + 3 ? 'rising' : r3avg < p3avg - 3 ? 'falling' : 'flat') : 'flat';
         const trendLabel = trendDir === 'rising' ? '↑ 상승 중' : trendDir === 'falling' ? '↓ 하락 중' : '→ 보합';
         const trendColor = trendDir === 'rising' ? '#22c55e' : trendDir === 'falling' ? '#ef4444' : '#f59e0b';
 
@@ -3084,6 +3083,58 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
           />
         </div>
       </Section>
+
+      {/* ── 하락세 핵심 뉴스 ───────────────────────────────────── */}
+      {trendDir === 'falling' && (() => {
+        // 최근 2개 세션에서 bearish 뉴스 추출 → impact_score 오름차순(가장 부정적 먼저)
+        const items = [];
+        for (const sess of valid.slice(0, 2)) {
+          if (!sess.news?.length || !sess.analyses) continue;
+          sess.news.forEach(n => {
+            const a = sess.analyses[n.id];
+            if (a?.direction === 'bearish') {
+              items.push({ title: n.title, score: a.impact_score ?? 0,
+                           reasoning: a.reasoning, rules: a.triggered_rules,
+                           date: sess.date, time: sess.kstTime });
+            }
+          });
+        }
+        items.sort((a, b) => a.score - b.score);
+        const top = items.slice(0, 5);
+        if (!top.length) return null;
+        return (
+          <Section title={`하락세 원인 · 핵심 뉴스 (${top.length}건)`} icon="📉" accent="#ef4444" defaultOpen={true}>
+            <p className="text-xs text-gray-700 px-3 pb-2">
+              최근 세션 약세 뉴스 · 매수지수 하락을 주도한 뉴스입니다
+            </p>
+            <div className="space-y-2 px-3 pb-3">
+              {top.map((it, i) => (
+                <div key={i} className="p-3 rounded-lg" style={{ background: '#1C1F26', border: '1px solid rgba(239,68,68,0.18)' }}>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-xs font-black tabular-nums shrink-0 mt-0.5 w-6 text-right"
+                      style={{ color: '#ef4444' }}>{it.score}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-gray-300 font-semibold leading-snug">{it.title}</p>
+                      {it.reasoning && (
+                        <p className="text-xs text-gray-500 mt-1 leading-relaxed">{it.reasoning}</p>
+                      )}
+                      <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                        {it.rules?.slice(0, 3).map(r => {
+                          const m = RULES_META[r];
+                          return m
+                            ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span>
+                            : null;
+                        })}
+                        <span className="text-gray-700" style={{ fontSize: 9 }}>{it.date}{it.time ? ' ' + it.time + ' KST' : ''}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        );
+      })()}
 
       {/* ── 7일 일별 예측 ─────────────────────────────────────── */}
       {daily7.length > 0 && (
