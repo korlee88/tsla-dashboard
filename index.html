@@ -102,7 +102,9 @@ R11=delivery beat(>5%), R12=EPS beat(>10%), R13=new product/FSD milestone,
 R14=EV incentive expansion, R15=large energy storage deal, R16=new market entry(India/SEA),
 R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buyback/positive statement,
 R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
-R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE)
+R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE),
+R25=optimus/humanoid robot production scale-up or commercialization(B2B contract/factory ramp/shipment confirmed),
+R26=vehicle production cut/pause for robot factory transition(bullish if paired with R25, bearish offset)
 
 STRICT SCORE GUIDELINES (backtesting: previous scores were systematically too high — apply conservatively):
 
@@ -152,6 +154,9 @@ Per-rule CAPS (hard limits regardless of context):
 - R22 (short seller report): MAX ±2
 - R23 (recession fear): MAX -1
 - R24 (Musk ventures spillover): MAX ±2
+- R25 (Optimus/robot scale-up): MAX +4; +3 if confirmed ramp plan, +4 only if shipment/B2B contract confirmed
+  NOTE: R25+R07 together → score R25 as +3~+4, score R07 as -1 only (robot pivot overrides shutdown penalty)
+- R26 (vehicle production cut for robot transition): -1 to -2 standalone; score 0 if R25 present
 
 DIRECTION: bullish if score>0, bearish if score<0, neutral ONLY if score=0.
 CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
@@ -180,7 +185,9 @@ const RULES_META = {
   R21:{cat:'Legal',label:'소송 승소',color:'#10b981',bg:'rgba(16,185,129,0.15)'},
   R22:{cat:'Short',label:'공매도 보고서',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
   R23:{cat:'Macro',label:'경기침체',color:'#ef4444',bg:'rgba(239,68,68,0.15)'},
-  R24:{cat:'Musk',label:'사업 리스크',color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+  R24:{cat:'Musk',  label:'사업 리스크',    color:'#f97316',bg:'rgba(249,115,22,0.15)'},
+  R25:{cat:'Robot', label:'Optimus 확대',   color:'#a78bfa',bg:'rgba(167,139,250,0.2)'},
+  R26:{cat:'Robot', label:'차량생산 조정',   color:'#f59e0b',bg:'rgba(245,158,11,0.15)'},
 };
 
 // ─── 캘린더 카테고리 메타 ─────────────────────────────────────────────────────
@@ -604,7 +611,7 @@ function RuleEnginePanel({ open, onToggle }) {
         className="w-full flex items-center justify-between px-4 py-3 text-xs text-gray-400 hover:text-gray-200 transition-colors"
         onClick={onToggle}
       >
-        <span className="font-semibold uppercase tracking-wider">룰 엔진 R01~R24 참조표</span>
+        <span className="font-semibold uppercase tracking-wider">룰 엔진 R01~R26 참조표</span>
         <span>{open ? '▲' : '▼'}</span>
       </button>
       {open && (
@@ -5014,6 +5021,7 @@ function BacktestPage({ apiKey }) {
     R13:'신제품/FSD 마일스톤', R14:'EV 인센티브 확대', R15:'대형 에너지 계약', R16:'신시장 진출',
     R17:'목표가 상향(>20%)', R18:'연준 금리 인하 신호', R19:'머스크 자사주매입/호재', R20:'중국 판매 성장',
     R21:'주요 소송 승리', R22:'공매도 리포트', R23:'경기침체 우려', R24:'머스크 사업 리스크',
+    R25:'Optimus/로봇 생산 확대', R26:'차량생산 조정(로봇 전환)',
   };
 
   return (
@@ -5766,7 +5774,7 @@ function App() {
         <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
         <div>
           <h1 className="text-xl font-bold text-white tracking-tight">TSLA 주가 영향 분석</h1>
-          <p className="text-xs text-gray-500">Tesla / Elon Musk · Rule Engine R01~R24</p>
+          <p className="text-xs text-gray-500">Tesla / Elon Musk · Rule Engine R01~R26</p>
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -5932,7 +5940,7 @@ function App() {
           <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
             <div className="px-3 py-2.5 border-b flex items-center gap-2" style={{ borderColor: '#2A2D35', background: '#14171e' }}>
               <span className="text-xs font-bold tracking-wider text-gray-300">룰 엔진 참조</span>
-              <span className="text-xs text-gray-500">R01~R24</span>
+              <span className="text-xs text-gray-500">R01~R26</span>
             </div>
             {/* Bearish Rules */}
             <div className="px-3 pt-2.5 pb-1">

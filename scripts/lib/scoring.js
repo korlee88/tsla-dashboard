@@ -3,6 +3,7 @@
  *
  * 레이어 구조:
  *   [Base] 원본 매수지수 (avgScore → buyIndex)
+ *   [14] R25 Optimus/로봇 생산·상업화 부스트 (+8pt, R07 동반 시 +5 추가)
  *   [1]  R24 단독 발동 노이즈 할인 (+9pt)
  *   [2]  강한신호 증폭 (±20 이탈 시 ×1.15)
  *   [3]  매크로 오버레이 (SPY+QQQ 평균 × Tesla beta 2.5)
@@ -287,6 +288,30 @@ function calculateEnhancedScore(input) {
   // ── [Base] 원본 매수지수 ──────────────────────────────────────────────────
   let bi = Math.min(100, Math.max(0, Math.round((avgScore + 5) / 10 * 100)));
   layers.base = bi;
+
+  // ── [14] R25 Optimus/로봇 생산·상업화 부스트 ─────────────────────────────
+  const hasR25 = topRules.includes('R25');
+  const hasR26 = topRules.includes('R26');
+  const hasR07 = topRules.includes('R07');
+  if (hasR25) {
+    // Optimus 확대는 장기 고강도 긍정 촉매 (+8pt)
+    const before = bi;
+    bi = Math.min(100, bi + 8);
+    layers.optimusBoost = bi - before;
+    // R07(공장 셧다운) + R25(로봇 전환 목적) 동시 → R07 부정 효과 상쇄 (+5pt 추가)
+    if (hasR07) {
+      const corr = 5;
+      bi = Math.min(100, bi + corr);
+      layers.optimusR07Offset = corr;
+    }
+  }
+  // R26 단독(생산 축소, 로봇 전환 언급 없음): 약한 bearish → -3pt
+  // R26 + R25 동반: 이미 R25 부스트로 상쇄됨 → 추가 조정 없음
+  if (hasR26 && !hasR25) {
+    const before = bi;
+    bi = Math.max(0, bi - 3);
+    layers.prodCutPenalty = bi - before;
+  }
 
   // ── [1] R24 단독 발동 노이즈 할인 (중립 방향으로 25% 이동) ──────────────
   const hasR08 = topRules.includes('R08');
