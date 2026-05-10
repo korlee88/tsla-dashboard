@@ -1,6 +1,377 @@
 {
   "sessions": [
     {
+      "id": "auto-1778438514164",
+      "date": "2026-05-11",
+      "displayDate": "2026.05.11",
+      "kstTime": "03:41",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778438480678,
+          "title": "테슬라, 후방 카메라 이미지 문제로 21만 8천대 이상 리콜",
+          "summary": "테슬라가 후방 카메라 이미지 문제로 인해 21만 8천대 이상의 차량을 리콜한다. 이 문제는 충돌 위험을 야기할 수 있다. 해당 리콜은 Model S, 3, X, Y 차량에 영향을 미친다.",
+          "source": "Fox Business",
+          "date": "2026-05-08",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778438480679,
+          "title": "일론 머스크, 테슬라와 스페이스X의 첨단 칩 제조 시설 건설 계획 발표",
+          "summary": "일론 머스크는 테슬라와 스페이스X가 AI, 자율주행, 로봇 공학 및 우주 프로젝트용 칩을 공급하기 위한 첨단 칩 제조 시설인 '테라팹(Terafab)'을 건설할 것이라고 밝혔다. 이 시설은 텍사스에 위치할 예정이다.",
+          "source": "Fox Business",
+          "date": "2026-05-08",
+          "category": "Musk"
+        },
+        {
+          "id": 1778438480680,
+          "title": "테슬라, 2026년에 모델 S 및 모델 X 생산 중단하고 로봇에 집중",
+          "summary": "테슬라가 2026년에 모델 S와 모델 X 차량 생산을 중단하고 로봇 개발에 집중할 것이라고 발표했다. 일론 머스크는 내년 말까지 휴머노이드 로봇을 판매할 가능성이 있다고 언급했다.",
+          "source": "Fox Business",
+          "date": "2026-05-08",
+          "category": "Product"
+        },
+        {
+          "id": 1778438480682,
+          "title": "테슬라, 사이버트럭 바퀴 이탈 우려로 리콜 실시",
+          "summary": "테슬라가 주행 중 바퀴가 떨어질 수 있다는 우려로 사이버트럭을 리콜한다. 이는 사이버트럭 소유주들에게 중요한 안전 문제로 작용할 수 있다.",
+          "source": "Fox Business",
+          "date": "2026-05-08",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778438480683,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 조짐",
+          "summary": "테슬라가 1분기 조정 주당순이익(EPS) 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했다. 또한, 아시아 태평양, 남미, 북미 및 유럽-중동 지역에서 전기차 수요가 회복되고 있다고 밝혔다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778438480684,
+          "title": "테슬라, 2026년 사이버캡, 테슬라 세미, 메가팩 생산 및 옵티머스 로봇 생산 라인 설치 예정",
+          "summary": "테슬라는 2026년에 사이버캡, 테슬라 세미, 메가팩 생산을 시작하고, 휴머노이드 로봇인 옵티머스의 1세대 생산 라인을 설치할 예정이라고 밝혔다. 이는 테슬라의 미래 제품 로드맵을 보여준다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1778438480685,
+          "title": "테슬라 모델 Y, 새로운 미국 운전자 보조 시스템 안전 기준 충족",
+          "summary": "테슬라 모델 Y가 새로운 미국 운전자 보조 시스템 안전 기준을 충족하는 최초의 차량이 되었다. 이는 테슬라의 자율주행 기술 발전을 보여주는 중요한 지표이다.",
+          "source": "Reuters",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778438480686,
+          "title": "테슬라, 새로운 로드스터 로고 상표 출원",
+          "summary": "테슬라가 오랫동안 기다려온 로드스터 공개를 앞두고 새로운 로드스터 로고 상표를 출원했다. 이는 신형 로드스터의 출시가 임박했음을 시사한다.",
+          "source": "Business Insider",
+          "date": "2026-05-07",
+          "category": "Product"
+        },
+        {
+          "id": 1778438480687,
+          "title": "우버의 100억 달러 로보택시 추진, 테슬라와 웨이모에 도전할 수 있어",
+          "summary": "우버가 100억 달러 규모의 로보택시 사업을 추진하며 테슬라와 웨이모의 지배력에 도전할 수 있다는 분석이 나왔다. 이는 자율주행 시장의 경쟁 심화를 예고한다.",
+          "source": "Benzinga",
+          "date": "2026-05-10",
+          "category": "Competition"
+        },
+        {
+          "id": 1778438480688,
+          "title": "일론 머스크, OpenAI 자금 지원에 대해 '바보였다'고 언급",
+          "summary": "일론 머스크가 OpenAI에 자금을 지원한 것에 대해 '바보였다'고 언급했다는 보도가 나왔다. 이는 OpenAI와의 법적 분쟁과 관련된 발언으로 보인다.",
+          "source": "Fox Business",
+          "date": "2026-05-06",
+          "category": "Musk"
+        }
+      ],
+      "analyses": {
+        "1778438480678": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 이미지 문제로 21만 8천대 이상의 차량을 리콜하며 충돌 위험을 야기할 수 있어 부정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "리콜",
+            "후방 카메라 문제",
+            "충돌 위험"
+          ]
+        },
+        "1778438480679": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 테슬라와 스페이스X를 위한 첨단 칩 제조 시설인 '테라팹' 건설 계획을 발표하여 AI, 자율주행, 로봇 공학 역량 강화에 대한 긍정적인 전망을 제시하지만, 이는 아직 계획 단계이며 스페이스X와의 연관성으로 인해 R24 리스크도 존재합니다.",
+          "key_factors": [
+            "첨단 칩 제조 시설 건설",
+            "AI 및 자율주행 역량 강화",
+            "스페이스X와의 공동 프로젝트"
+          ]
+        },
+        "1778438480680": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R25",
+            "R26"
+          ],
+          "reasoning": "테슬라가 2026년 모델 S 및 X 생산 중단과 함께 로봇 개발에 집중하고 내년 말까지 휴머노이드 로봇 판매 가능성을 언급하며 로봇 사업 확장에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "로봇 개발 집중",
+            "휴머노이드 로봇 판매 가능성",
+            "모델 S/X 생산 중단"
+          ]
+        },
+        "1778438480682": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 주행 중 바퀴 이탈 우려로 사이버트럭을 리콜하는 것은 안전 문제와 잠재적 생산 차질로 인해 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "사이버트럭 리콜",
+            "안전 문제"
+          ]
+        },
+        "1778438480683": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당순이익(EPS)이 시장 예상치를 10% 이상 상회하여 긍정적인 실적을 발표했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1778438480684": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R25"
+          ],
+          "reasoning": "테슬라가 2026년에 사이버캡, 세미, 메가팩 생산을 시작하고 옵티머스 로봇 생산 라인을 설치할 예정이라는 소식은 미래 제품 로드맵에 대한 긍정적인 신호입니다.",
+          "key_factors": [
+            "사이버캡 생산 시작",
+            "테슬라 세미 생산 시작",
+            "메가팩 생산 시작",
+            "옵티머스 로봇 생산 라인 설치"
+          ]
+        },
+        "1778438480685": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 모델 Y가 새로운 미국 운전자 보조 시스템 안전 기준을 충족한 최초의 차량이 되었다는 소식은 테슬라의 자율주행 기술 발전을 보여주며 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "운전자 보조 시스템 안전 기준 충족",
+            "자율주행 기술 발전"
+          ]
+        },
+        "1778438480686": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 새로운 로드스터 로고 상표 출원은 신형 로드스터 출시가 임박했음을 시사하며, 이는 신제품 출시에 대한 긍정적인 신호입니다.",
+          "key_factors": [
+            "로드스터 로고 상표 출원",
+            "신형 로드스터 출시 임박"
+          ]
+        },
+        "1778438480687": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "우버의 로보택시 시장 진출은 테슬라의 자율주행 부문 경쟁 심화를 야기할 수 있습니다.",
+          "key_factors": [
+            "경쟁 심화",
+            "로보택시 시장"
+          ]
+        },
+        "1778438480688": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI에 자금을 지원한 것에 대해 '바보였다'고 언급한 것은 그의 다른 벤처와 관련된 논란이 테슬라에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크 발언",
+            "OpenAI 법적 분쟁"
+          ]
+        }
+      },
+      "avgScore": 0.7,
+      "buyIndex": 68,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R04",
+        "R24",
+        "R25",
+        "R26"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-04",
+            "content": "Elon Musk는 Tesla의 61.1% 충성도와 캘리포니아에서 가장 많이 팔린 자동차로서의 위치를 강조했습니다. 그는 또한 SpaceX의 달과 화성 계획, Starlink의 싱가포르 항공 채택, 비용 효율적인 로켓 기술에 대해 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-07",
+            "content": "Musk는 자신의 막대한 세금 납부 가능성에 대해 언급하며, 스톡옵션 행사 및 판매 시 연방 및 주 세금으로 45%를 납부하고, 사후에는 재산세로 40%가 추가될 수 있다고 밝혔습니다. 그는 또한 Tesla의 장기 보상 패키지에 대해 언급했는데, 여기에는 Tesla의 시가총액을 8.5조 달러로 늘리고, 연간 2천만 대의 차량을 인도하며, 1백만 대의 로보택시를 상업 서비스에 배치하고, 1백만 대의 Optimus 휴머노이드 로봇을 판매하는 등의 목표가 포함됩니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-04",
+            "content": "Musk는 비트코인이 72,000달러에 도달하고 여름 중반까지 150,000달러로 더 성장할 것이라는 게시물에 대해 'Yes!'라고 짧게 답했습니다. 이는 암호화폐 커뮤니티와 Tesla 투자자들 사이에서 새로운 논의를 불러일으켰습니다. 일부 사용자들은 이 답변이 Tesla Roadster의 '차세대' 발표와 관련이 있을 수 있다고 추측했습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 3,
+        "reasoning": "Elon Musk의 최근 게시물은 Tesla의 높은 고객 충성도와 미래 성장 잠재력(로보택시, Optimus)에 대한 긍정적인 측면을 강조했지만, 동시에 세금 문제와 같은 중립적인 주제도 다루었으며, 비트코인 관련 발언은 Tesla에 직접적인 영향을 미 미치지 않아 전반적으로 중립적인 입장을 유지했습니다."
+      },
+      "googleTrends": {
+        "current_score": 50,
+        "week_avg": 45,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "Tesla Model 3",
+          "Elon Musk"
+        ],
+        "reasoning": "Google Trends API에 직접 접근할 수 없으므로, 제공된 검색 결과와 일반적인 Google Trends 작동 방식을 기반으로 추정했습니다. 'Tesla' 키워드에 대한 정확한 실시간 점수와 주간 평균은 Google Trends API를 통해서만 얻을 수 있습니다. 하지만 현재 시점(2026년 5월 11일)에 대한 직접적인 Google Trends 데이터는 제공되지 않았습니다. 따라서, 검색 결과에서 Tesla의 전반적인 시장 상황과 검색 관심도에 대한 언급을 바탕으로 추정치를 제공합니다. 예를 들어, 2025년 2월에 'Sell Tesla' 검색이 12개월 최고치를 기록했다는 정보나 2025년 중반 Tesla의 미국 시장 점유율이 하락했다는 정보는 검색 관심도가 변동성이 있음을 시사합니다. 또한, 2026년 1분기 Tesla의 실적 발표와 같은 최근 뉴스는 검색 관심도에 영향을 미칠 수 있습니다. 'rising' 추세는 최근 실적 발표와 같은 이벤트로 인한 일시적인 관심 증가를 가정하며, 'spike'는 명확한 정보가 없어 'false'로 설정했습니다. 상위 쿼리는 일반적인 Tesla 관련 검색어를 기반으로 합니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Regulatory": 2,
+        "Musk": 2,
+        "Product": 4,
+        "Earnings": 1,
+        "Competition": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.59,
+        "vixClose": 17.190000534057617,
+        "wtiChg": -2.88,
+        "cnyChg": 0,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 57,
+        "optimusBoost": 8,
+        "r24Discount": -4,
+        "macdCross": 6,
+        "bbHigh": -2,
+        "muskXSentiment": 1,
+        "googleTrends": 2
+      },
+      "latestTslaPrice": 428.35,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/11(월)",
+          "change_pct": 1.8,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 436.06
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/12(화)",
+          "change_pct": 1.5,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 434.78
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/13(수)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 432.21
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/14(목)",
+          "change_pct": -0.5,
+          "signal": "관망",
+          "basePrice": 428.35,
+          "predictedPrice": 426.21
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/15(금)",
+          "change_pct": 1.2,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 433.49
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778438514164
+    },
+    {
       "id": "auto-1778419397219",
       "date": "2026-05-10",
       "displayDate": "2026.05.10",
@@ -17887,5 +18258,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-10 22:22 KST"
+  "lastUpdated": "2026-05-11 03:41 KST"
 }
