@@ -1,6 +1,338 @@
 {
   "sessions": [
     {
+      "id": "auto-1778385803720",
+      "date": "2026-05-10",
+      "displayDate": "2026.05.10",
+      "kstTime": "13:02",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778385770295,
+          "title": "일론 머스크, 프랑스 검찰의 X 플랫폼 조사에 맹비난",
+          "summary": "일론 머스크가 자신의 소셜 네트워크 X(이전 트위터)의 남용 가능성을 조사하는 프랑스 사법 당국을 맹렬히 비난했습니다. 프랑스는 2025년 1월 X가 프랑스 정치에 개입하는 데 사용되었다는 의혹에 대한 조사를 시작했으며, 이 조사는 홀로코스트 부정, 성적 딥페이크 배포, 아동 성 학대 이미지 배포 공모 가능성 의혹으로 확대되었습니다.",
+          "source": "The Straits Times",
+          "date": "2026-05-09",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1778385770296,
+          "title": "테슬라, 스페이스X, 인텔의 테라팹 반도체 공장 계획 및 웨드부시의 평가",
+          "summary": "일론 머스크는 테슬라, 스페이스X, 인텔이 공동 개발하는 반도체 제조 시설인 '테라팹' 프로젝트에 대한 구체적인 계획을 발표했습니다. 스페이스X는 텍사스주 그라임스 카운티에 550억 달러를 초기 투자하여 시설을 건설할 예정이며, 총 투자액은 1,190억 달러에 달할 수 있습니다. 웨드부시는 이 프로젝트가 인텔과 반도체 장비 공급업체에 상당한 의미를 가질 것이라고 평가했습니다.",
+          "source": "TheStreet",
+          "date": "2026-05-09",
+          "category": "Product|AI|Market"
+        },
+        {
+          "id": 1778385770297,
+          "title": "테슬라 사이버트럭, 휠 문제로 리콜 및 판매 부진 지속",
+          "summary": "테슬라가 2024년부터 2026년 사이에 판매된 사이버트럭 173대에 대해 휠 로터 균열 가능성으로 인한 리콜을 발표했습니다. 이는 휠 스터드가 휠 허브에서 분리될 수 있는 문제로, 특히 험한 도로 주행 시 발생할 수 있습니다. 사이버트럭의 판매는 계속 부진하여 2026년 1분기에도 전년 대비 48% 감소했습니다.",
+          "source": "Mashable",
+          "date": "2026-05-09",
+          "category": "Product|Recall"
+        },
+        {
+          "id": 1778385770298,
+          "title": "테슬라, 2026년 자본 지출 250억 달러 초과 예상 및 마이너스 잉여 현금 흐름 전망",
+          "summary": "테슬라는 2026년 자본 지출이 250억 달러를 초과할 것으로 예상하며, 이는 2025년 지출의 거의 세 배에 달하는 금액입니다. 또한, 2026년 남은 3분기 동안 잉여 현금 흐름이 마이너스를 기록할 것이라고 밝혔습니다. 이러한 대규모 투자는 주로 AI, 로봇 공학 및 칩 개발 야망을 지원하기 위한 것입니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Market|AI"
+        },
+        {
+          "id": 1778385770299,
+          "title": "테슬라, 엔비디아 칩 지속 구매 및 자체 AI 칩 개발 추진",
+          "summary": "일론 머스크는 테슬라와 스페이스X가 자체 AI 칩 개발을 추진하고 있음에도 불구하고 엔비디아 칩을 계속해서 대규모로 주문할 것이라고 밝혔습니다. 이는 장기적인 컴퓨팅 용량 확보를 위한 광범위한 노력의 일환이며, 엔비디아가 머스크의 AI 생태계에서 핵심적인 역할을 하고 있음을 강조합니다.",
+          "source": "Stocktwits",
+          "date": "2026-03-19",
+          "category": "AI|Product|Market"
+        },
+        {
+          "id": 1778385770300,
+          "title": "테슬라 주가, 실적 발표 후 최저점에서 회복",
+          "summary": "테슬라 주가는 4월 23일 실적 발표 후 최저점인 373달러에서 5월 8일 428달러 이상으로 급격히 회복했습니다. 이는 회사가 2026년 남은 기간 동안 마이너스 잉여 현금 흐름을 예상하고 250억 달러 이상의 자본 지출을 안내했음에도 불구하고 발생했습니다.",
+          "source": "TIKR.com",
+          "date": "2026-05-10",
+          "category": "Market"
+        },
+        {
+          "id": 1778385770301,
+          "title": "테슬라, 20만 대 이상의 차량 후방 카메라 문제로 리콜",
+          "summary": "테슬라가 후방 카메라 이미지가 일시적으로 작동하지 않는 소프트웨어 문제로 인해 20만 대 이상의 모델 Y, 모델 S, 모델 X, 모델 3 차량을 리콜합니다. 이 결함은 운전자의 시야에 영향을 미쳐 충돌 위험을 증가시킬 수 있습니다.",
+          "source": "Global News Select",
+          "date": "2026-05-06",
+          "category": "Recall|Regulatory"
+        },
+        {
+          "id": 1778385770302,
+          "title": "일론 머스크 대 샘 알트만 소송, 중간 지점 도달",
+          "summary": "일론 머스크가 샘 알트만, 그렉 브록만, OpenAI 및 마이크로소프트를 상대로 제기한 소송이 중간 지점에 도달했습니다. 이 소송은 OpenAI가 알트만과 브록만의 리더십 아래 자선적 사명을 포기했다는 머스크의 주장에 기반하고 있습니다.",
+          "source": "Bay City News",
+          "date": "2026-05-09",
+          "category": "Musk|Legal"
+        },
+        {
+          "id": 1778385770303,
+          "title": "테슬라 2026년 1분기 인도량 예상치 하회 및 재고 증가",
+          "summary": "테슬라의 2026년 1분기 인도량은 358,023대로 월스트리트 컨센서스인 365,645대를 하회했습니다. 이는 테슬라 역사상 가장 큰 단일 분기 재고 증가로 이어졌으며, 5만 대 이상의 차량이 재고로 쌓였습니다. 특히 유럽 지역 인도량이 보조금 삭감과 중국 EV 경쟁으로 인해 전년 대비 약 49% 감소했습니다.",
+          "source": "Gotrade",
+          "date": "2026-05-08",
+          "category": "Delivery|Competition|Market"
+        },
+        {
+          "id": 1778385770304,
+          "title": "테슬라 주가, 한 달 만에 19% 상승 후 '5월에 팔고 떠나라' 전략 논의",
+          "summary": "테슬라 주가가 한 달 만에 약 19% 상승하여 최근 하락분을 상당 부분 만회했습니다. 이에 따라 투자자들 사이에서는 '5월에 팔고 떠나라'는 계절적 투자 격언을 따를지 여부에 대한 논의가 활발합니다.",
+          "source": "24/7 Wall St.",
+          "date": "2026-05-08",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1778385770295": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R05",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 X 플랫폼에 대한 프랑스 사법 당국의 조사는 머스크의 다른 사업체에서 발생한 법적 문제로 인해 테슬라에 대한 투자자 신뢰에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "프랑스 사법 당국의 X 플랫폼 조사",
+            "일론 머스크의 다른 벤처 리스크"
+          ]
+        },
+        "1778385770296": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R24"
+          ],
+          "reasoning": "테슬라가 스페이스X 및 인텔과 함께 테라팹 반도체 공장을 공동 개발한다는 소식은 장기적으로 테슬라의 기술 자립도를 높일 수 있지만, 초기에는 스페이스X의 대규모 투자와 머스크의 다른 벤처 관련 위험이 존재합니다.",
+          "key_factors": [
+            "테라팹 반도체 공장 공동 개발",
+            "스페이스X의 대규모 초기 투자",
+            "웨드부시의 긍정적 평가"
+          ]
+        },
+        "1778385770297": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "사이버트럭의 휠 로터 균열 가능성으로 인한 리콜과 지속적인 판매 부진은 테슬라의 제품 품질 및 시장 수요에 대한 우려를 증가시킵니다.",
+          "key_factors": [
+            "사이버트럭 리콜",
+            "판매 부진"
+          ]
+        },
+        "1778385770298": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 2026년 자본 지출이 250억 달러를 초과하고 잉여 현금 흐름이 마이너스를 기록할 것이라는 전망은 단기적인 재정 압박을 시사하며 투자자들에게 부정적인 신호입니다.",
+          "key_factors": [
+            "2026년 자본 지출 250억 달러 초과",
+            "2026년 남은 3분기 마이너스 잉여 현금 흐름 전망",
+            "AI, 로봇 공학 및 칩 개발 투자"
+          ]
+        },
+        "1778385770299": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 엔비디아 칩을 계속 구매하고 자체 AI 칩 개발을 추진하는 것은 장기적인 컴퓨팅 역량 확보와 AI 기술 발전에 긍정적인 신호입니다.",
+          "key_factors": [
+            "AI 칩 개발",
+            "엔비디아 칩 구매"
+          ]
+        },
+        "1778385770300": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "이 뉴스는 이미 발표된 실적과 그 이후의 주가 회복에 대한 설명으로, 새로운 정보나 주가에 직접적인 영향을 미칠 만한 요인이 포함되어 있지 않습니다.",
+          "key_factors": [
+            "주가 회복",
+            "이전 실적 발표"
+          ]
+        },
+        "1778385770301": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 20만 대 이상의 차량에 대한 후방 카메라 소프트웨어 문제로 리콜을 발표하여 충돌 위험을 증가시킬 수 있습니다.",
+          "key_factors": [
+            "후방 카메라 문제",
+            "20만 대 이상 리콜",
+            "충돌 위험 증가"
+          ]
+        },
+        "1778385770302": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI를 상대로 제기한 소송이 진행 중이며, 이는 머스크의 다른 벤처와 관련된 법적 위험이 테슬라에 간접적으로 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크 소송",
+            "OpenAI",
+            "법적 위험"
+          ]
+        },
+        "1778385770303": {
+          "impact_score": -4,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R01",
+            "R09"
+          ],
+          "reasoning": "테슬라의 2026년 1분기 인도량이 컨센서스를 5% 이상 하회하고 재고가 크게 증가했으며, 유럽 지역의 보조금 삭감으로 인한 인도량 감소가 확인되어 주가에 부정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "인도량 예상치 하회",
+            "재고 증가",
+            "유럽 보조금 삭감"
+          ]
+        },
+        "1778385770304": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가가 한 달 만에 19% 상승하여 최근 하락분을 만회했지만, 이는 이미 발생한 주가 움직임에 대한 분석이며 미래에 대한 직접적인 촉매는 아닙니다.",
+          "key_factors": [
+            "주가 상승",
+            "계절적 투자 격언"
+          ]
+        }
+      },
+      "avgScore": -1.1,
+      "buyIndex": 48,
+      "direction": "bearish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R04",
+        "R05",
+        "R01"
+      ],
+      "bullish": 3,
+      "bearish": 6,
+      "neutral": 1,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 60,
+        "week_avg": 55,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "Tesla Model Y",
+          "Cybertruck"
+        ],
+        "reasoning": "지난주에 비해 검색 관심도가 약간 증가했으며, 특정 검색어에서 큰 급증은 없었습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Legal": 2,
+        "Product|AI|Market": 1,
+        "Product|Recall": 1,
+        "Earnings|Market|AI": 1,
+        "AI|Product|Market": 1,
+        "Market": 2,
+        "Recall|Regulatory": 1,
+        "Delivery|Competition|Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.62,
+        "vixClose": 17.190000534057617,
+        "wtiChg": -2.88,
+        "cnyChg": -0.01,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 39,
+        "r24Discount": 3,
+        "macdCross": 6,
+        "bbHigh": -2,
+        "googleTrends": 2
+      },
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/11(월)",
+          "change_pct": -1.2,
+          "signal": "매도"
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/12(화)",
+          "change_pct": -0.7,
+          "signal": "관망"
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/13(수)",
+          "change_pct": 0.1,
+          "signal": "관망"
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/14(목)",
+          "change_pct": -0.9,
+          "signal": "매도"
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/15(금)",
+          "change_pct": 0.5,
+          "signal": "관망"
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778385803720
+    },
+    {
       "id": "auto-1778352031880",
       "date": "2026-05-10",
       "displayDate": "2026.05.10",
@@ -16872,5 +17204,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-10 03:39 KST"
+  "lastUpdated": "2026-05-10 13:02 KST"
 }
