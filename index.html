@@ -1978,6 +1978,23 @@ const RISK_CFG = {
 };
 
 function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLoading, weeklyError, currentPrice, priceLastFetch, priceFromCache, priceReady, newsItems = [], newsResults = {}, calendarEvents = [] }) {
+  const scrollRef = React.useRef(null);
+
+  // 첫 거래일 카드로 자동 스크롤 (주말·경과일 건너뜀)
+  React.useEffect(() => {
+    if (!scrollRef.current || !forecast?.daily_forecasts?.length) return;
+    const todayMs = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00Z').getTime();
+    const firstIdx = forecast.daily_forecasts.findIndex(d => {
+      if (d.date?.includes('(일)') || d.date?.includes('(토)')) return false;
+      const m = d.date?.match(/(\d+)\/(\d+)/);
+      if (!m) return true;
+      const cardMs = new Date(new Date().getFullYear() + '-' +
+        String(parseInt(m[1])).padStart(2,'0') + '-' +
+        String(parseInt(m[2])).padStart(2,'0')).getTime();
+      return cardMs >= todayMs;
+    });
+    if (firstIdx > 0) scrollRef.current.scrollLeft = firstIdx * 80;
+  }, [forecast]);
   if (loading) return (
     <div className="rounded-xl p-8 border mt-6 flex items-center justify-center gap-3"
       style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
@@ -2145,9 +2162,21 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
       {forecast.daily_forecasts?.length > 0 && (
         <div className="px-5 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">📅 일주일 일별 등락 예측</p>
-          <p className="text-xs text-gray-700 mb-2">현재가 기준 예상 등락률 · 실제 주가는 실시간 API 기준</p>
+          {(() => {
+            const d1 = forecast.daily_forecasts?.[0];
+            let genNote = '';
+            if (d1?.date) {
+              const m = d1.date.match(/(\d+)\/(\d+)/);
+              if (m) {
+                const d1Date = new Date(new Date().getFullYear(), parseInt(m[1])-1, parseInt(m[2]));
+                const genDate = new Date(d1Date.getTime() - 86400000);
+                genNote = ` · ${genDate.getMonth()+1}/${genDate.getDate()} 발행`;
+              }
+            }
+            return <p className="text-xs text-gray-700 mb-2">현재가 기준 예상 등락률 · 비거래일·경과일은 흐리게 표시{genNote}</p>;
+          })()}
           {/* 모바일: 가로 스크롤 */}
-          <div className="md:hidden overflow-x-auto pb-1" style={{ WebkitOverflowScrolling: 'touch' }}>
+          <div ref={scrollRef} className="md:hidden overflow-x-auto pb-1" style={{ WebkitOverflowScrolling: 'touch' }}>
             <div className="flex gap-2" style={{ width: 'max-content' }}>
               {forecast.daily_forecasts.map(d => {
                 const pct = typeof d.change_pct === 'number' ? d.change_pct : 0;
@@ -2155,12 +2184,26 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
                 const pctColor = isFlat ? '#94a3b8' : isUp ? '#22c55e' : '#ef4444';
                 const isFirst = d.day === 1;
                 const sig = SIGNAL_CFG[d.signal] || SIGNAL_CFG['관망'];
+                const isWeekend = d.date?.includes('(일)') || d.date?.includes('(토)');
+                const dm = d.date?.match(/(\d+)\/(\d+)/);
+                const cardMs = dm ? new Date(new Date().getFullYear() + '-' +
+                  String(parseInt(dm[1])).padStart(2,'0') + '-' +
+                  String(parseInt(dm[2])).padStart(2,'0')).getTime() : null;
+                const todayMs = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00Z').getTime();
+                const isPast = cardMs != null && cardMs < todayMs;
+                const dim = isWeekend || isPast;
                 return (
                   <div key={d.day} className="rounded-lg p-2.5 flex flex-col items-center gap-1 text-center shrink-0"
                     style={{ minWidth: 72, background: isFirst ? pctColor + '15' : '#14171e',
-                             border: `1px solid ${isFirst ? pctColor + '50' : '#2A2D35'}` }}>
+                             border: `1px solid ${isFirst ? pctColor + '50' : '#2A2D35'}`,
+                             opacity: dim ? 0.4 : 1 }}>
                     <p className="font-bold" style={{ color: isFirst ? pctColor : '#6b7280', fontSize: 11 }}>{d.label}</p>
                     <p className="text-gray-600" style={{ fontSize: 9 }}>{d.date}</p>
+                    {isWeekend
+                      ? <p style={{ fontSize: 7, color: '#6b7280', background: '#1a1d24', borderRadius: 3, padding: '1px 3px' }}>비거래일</p>
+                      : isPast
+                        ? <p style={{ fontSize: 7, color: '#6b7280', background: '#1a1d24', borderRadius: 3, padding: '1px 3px' }}>경과</p>
+                        : null}
                     <p className="font-black" style={{ color: pctColor, fontSize: 15 }}>
                       {isUp ? '+' : ''}{pct.toFixed(1)}%
                     </p>
@@ -2180,11 +2223,25 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
               const pctBorder = isFlat ? '#2A2D35' : isUp ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)';
               const isFirst = d.day === 1;
               const sig = SIGNAL_CFG[d.signal] || SIGNAL_CFG['관망'];
+              const isWeekend = d.date?.includes('(일)') || d.date?.includes('(토)');
+              const dm = d.date?.match(/(\d+)\/(\d+)/);
+              const cardMs = dm ? new Date(new Date().getFullYear() + '-' +
+                String(parseInt(dm[1])).padStart(2,'0') + '-' +
+                String(parseInt(dm[2])).padStart(2,'0')).getTime() : null;
+              const todayMs = new Date(new Date().toISOString().split('T')[0] + 'T00:00:00Z').getTime();
+              const isPast = cardMs != null && cardMs < todayMs;
+              const dim = isWeekend || isPast;
               return (
                 <div key={d.day} className="rounded-lg p-2 flex flex-col items-center gap-1 text-center"
-                  style={{ background: isFirst ? pctBg : '#14171e', border: `1px solid ${isFirst ? pctBorder : '#2A2D35'}` }}>
+                  style={{ background: isFirst ? pctBg : '#14171e', border: `1px solid ${isFirst ? pctBorder : '#2A2D35'}`,
+                           opacity: dim ? 0.4 : 1 }}>
                   <p className="text-xs font-bold" style={{ color: isFirst ? pctColor : '#6b7280' }}>{d.label}</p>
                   <p className="text-gray-600" style={{ fontSize: 9 }}>{d.date}</p>
+                  {isWeekend
+                    ? <p style={{ fontSize: 7, color: '#6b7280', background: '#1a1d24', borderRadius: 3, padding: '1px 3px' }}>비거래일</p>
+                    : isPast
+                      ? <p style={{ fontSize: 7, color: '#6b7280', background: '#1a1d24', borderRadius: 3, padding: '1px 3px' }}>경과</p>
+                      : null}
                   <p className="text-base font-black" style={{ color: pctColor }}>
                     {isUp ? '+' : ''}{pct.toFixed(1)}%
                   </p>
