@@ -399,15 +399,20 @@ async function main() {
 
   // ── 다층 강화 채점 모델 v3.0 (백테스트 ±2% 이상 주 72%) ─────────────────
   let macroCtx = null;
+  let latestTslaPrice = null;   // dailyForecasts basePrice 계산용
   try {
     console.log('   📊 매크로 컨텍스트 로드 중 (SPY/QQQ/VIX/TSLA/WTI/CNY)...');
     const macroData = await loadMacroData();
     macroCtx = buildMacroContext(macroData, dateStr);
+    // TSLA 최신 주봉 종가 → 일별 예측 기준가로 사용
+    if (macroData.tsla?.length) {
+      latestTslaPrice = Math.round(macroData.tsla[macroData.tsla.length - 1].close * 100) / 100;
+    }
     const wtiStr = macroCtx.wtiChg >= 0 ? '+' : '';
     const cnyStr = macroCtx.cnyChg >= 0 ? '+' : '';
     const macdStr = macroCtx.macd?.crossover ? `MACD ${macroCtx.macd.crossover}` : `MACD ${macroCtx.macd?.trend || '-'}`;
     const bbStr   = macroCtx.bb ? `BB:${Math.round(macroCtx.bb.pos*100)}%` : '';
-    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}`);
+    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}${latestTslaPrice ? ` TSLA:$${latestTslaPrice}` : ''}`);
   } catch (e) {
     console.warn('   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용:', e.message);
   }
@@ -481,7 +486,14 @@ async function main() {
     newsCategories,
     macroCtx,
     scoringLayers,
-    dailyForecasts: dailyForecasts || [],
+    latestTslaPrice,
+    dailyForecasts: (dailyForecasts || []).map(f => ({
+      ...f,
+      basePrice: latestTslaPrice,
+      predictedPrice: latestTslaPrice != null && f.change_pct != null
+        ? Math.round(latestTslaPrice * (1 + f.change_pct / 100) * 100) / 100
+        : null,
+    })),
     modelVersion: '3.1',
     timestamp:   Date.now(),
   };
