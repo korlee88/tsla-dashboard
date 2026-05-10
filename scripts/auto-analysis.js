@@ -43,7 +43,9 @@ R11=delivery beat(>5%), R12=EPS beat(>10%), R13=new product/FSD milestone,
 R14=EV incentive expansion, R15=large energy storage deal, R16=new market entry(India/SEA),
 R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buyback/positive statement,
 R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
-R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE)
+R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE),
+R25=optimus/humanoid robot production scale-up or commercialization(B2B contract/factory ramp/shipment confirmed),
+R26=vehicle production cut/pause for robot factory transition(bullish if paired with R25, bearish offset)
 
 STRICT SCORE GUIDELINES (backtesting: previous scores were systematically too high — apply conservatively):
 
@@ -93,6 +95,10 @@ Per-rule CAPS (hard limits regardless of context):
 - R22 (short seller report): MAX ±2
 - R23 (recession fear): MAX -1
 - R24 (Musk ventures spillover): MAX ±2
+- R25 (Optimus/robot scale-up): MAX +4; +3 if confirmed ramp plan, +4 only if shipment/B2B contract confirmed
+  NOTE: R25 is BULLISH even when co-occurring with R07 (factory shutdown for robot pivot).
+        When R25+R07 together: score R25 as +3~+4, score R07 as -1 only (pivot context overrides shutdown penalty)
+- R26 (vehicle production cut for robot transition): score -1 to -2 standalone; score 0 if R25 present (pivot rationale neutralizes)
 
 DIRECTION: bullish if score>0, bearish if score<0, neutral ONLY if score=0.
 CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
