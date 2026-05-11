@@ -30,6 +30,19 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Python 의존성 설치
+        run: pip install google-api-python-client --quiet
+
+      - name: YouTube 관심도 수집
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/youtube_sentiment.py
+
       - name: TSLA 뉴스 수집 & 분석
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -39,7 +52,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "TSLA Auto Bot"
-          git add data/auto-sessions.json
+          git add data/auto-sessions.json data/youtube-sentiment.json
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else

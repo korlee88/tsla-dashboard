@@ -369,6 +369,20 @@ async function main() {
   const trendsData = await collectGoogleTrends(dateStr);
   console.log('');
 
+  // 1-4. YouTube 관심도 데이터 로드 (youtube_sentiment.py 실행 결과)
+  let youtubeData = null;
+  try {
+    const ytFile = path.join(__dirname, '..', 'data', 'youtube-sentiment.json');
+    if (fs.existsSync(ytFile)) {
+      youtubeData = JSON.parse(fs.readFileSync(ytFile, 'utf-8'));
+      if (typeof youtubeData.score === 'number' && youtubeData.video_count > 0) {
+        console.log(`📺 YouTube 관심도: ${youtubeData.score >= 0 ? '+' : ''}${youtubeData.score} (${youtubeData.video_count}개 영상, 총 ${(youtubeData.total_views || 0).toLocaleString()}회)`);
+      }
+    }
+  } catch (e) {
+    console.warn('   ⚠ YouTube 데이터 로드 실패:', e.message);
+  }
+
   // 2. 개별 뉴스 분석 (Rate limit: 1.2초 간격)
   console.log('🔍 뉴스 분석 중...');
   const analyses = {};
@@ -444,12 +458,21 @@ async function main() {
     console.log(`   📈 구글 트렌드 보정: ${trendsAdj >= 0 ? '+' : ''}${trendsAdj}pt (${trendsData.trend}${trendsData.spike ? ' 급등' : ''})`);
   }
 
-  let buyIndex    = Math.max(0, Math.min(100, enhanced.buyIndex + muskXAdj + trendsAdj));
+  // YouTube 관심도 보정 (소매 투자자 관심 신호 — 방향 증폭기, 범위 -3 ~ +3)
+  let youtubeAdj = 0;
+  if (youtubeData && typeof youtubeData.score === 'number' && youtubeData.video_count > 0) {
+    // score(-3~+3) → adj(-3~+3)pt: 구글 트렌드보다 약하게, 방향성 보조 신호로 사용
+    youtubeAdj = Math.max(-3, Math.min(3, youtubeData.score));
+    console.log(`   📺 YouTube 관심도 보정: ${youtubeAdj >= 0 ? '+' : ''}${youtubeAdj}pt (${youtubeData.velocity_label || ''})`);
+  }
+
+  let buyIndex    = Math.max(0, Math.min(100, enhanced.buyIndex + muskXAdj + trendsAdj + youtubeAdj));
   const direction = buyIndex >= 57 ? 'bullish' : buyIndex <= 43 ? 'bearish' : enhanced.direction;
   const scoringLayers = {
     ...enhanced.layers,
-    ...(muskXAdj  !== 0 ? { muskXSentiment: muskXAdj }  : {}),
-    ...(trendsAdj !== 0 ? { googleTrends: trendsAdj }    : {}),
+    ...(muskXAdj   !== 0 ? { muskXSentiment: muskXAdj }   : {}),
+    ...(trendsAdj  !== 0 ? { googleTrends: trendsAdj }     : {}),
+    ...(youtubeAdj !== 0 ? { youtubeInterest: youtubeAdj } : {}),
   };
 
   // 4-a. 기존 세션에서 buyIndex 추세 추출 (파일 선행 로드)
@@ -489,6 +512,7 @@ async function main() {
     neutral:     analyzed.length - bullish - bearish,
     muskXSentiment: muskXData,
     googleTrends:   trendsData,
+    youtubeInterest: youtubeData,
     newsCategories,
     macroCtx,
     scoringLayers,
