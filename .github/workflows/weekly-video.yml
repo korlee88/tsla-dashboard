@@ -1,0 +1,47 @@
+name: TSLA 주간 영상 자료 생성
+
+# 매주 월요일 KST 09:00 (UTC 00:00) — 지난 한 주 데이터 정리
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # 월요일 KST 09:00
+  workflow_dispatch:        # 수동 실행 가능
+
+jobs:
+  build-video-assets:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 한글 폰트 설치
+        run: sudo apt-get install -y fonts-nanum --quiet
+
+      - name: Python 의존성 설치
+        run: pip install anthropic google-generativeai Pillow --quiet
+
+      - name: 주간 영상 자료 생성
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/weekly_video_prep.py
+
+      - name: 결과 커밋 & 푸시
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "TSLA Auto Bot"
+          git add data/weekly-report/
+          if git diff --staged --quiet; then
+            echo "변경 사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "auto: TSLA 주간 영상 자료 $(TZ='Asia/Seoul' date +'%Y-%m-%d KST')"
+            git pull --rebase origin master
+            git push
+          fi
