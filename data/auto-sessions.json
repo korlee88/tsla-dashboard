@@ -1,6 +1,339 @@
 {
   "sessions": [
     {
+      "id": "auto-1778472870187",
+      "date": "2026-05-11",
+      "displayDate": "2026.05.11",
+      "kstTime": "13:13",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778472841207,
+          "title": "테슬라, 4월 중국산 EV 판매량 36% 증가로 수요 회복 조짐",
+          "summary": "테슬라의 4월 중국산 전기차 판매량이 전년 대비 36% 증가하며 6개월 연속 상승세를 기록했다. 이는 주요 시장 중 하나인 중국에서의 수요 약화 우려를 완화하고, 치열한 경쟁 속에서도 수요가 회복되고 있음을 시사한다.",
+          "source": "MarketBeat",
+          "date": "2026-05-09",
+          "category": "Market"
+        },
+        {
+          "id": 1778472841208,
+          "title": "테슬라, 370대 세미 트럭 1억 달러 규모 계약 체결",
+          "summary": "테슬라가 370대의 세미 트럭에 대한 1억 달러 규모의 기록적인 계약을 체결했다. 이는 테슬라의 트럭 플랫폼에 대한 실제 상업적 수요를 나타내며, 회사의 중형 트럭 사업의 상업적 생존 가능성을 뒷받침한다.",
+          "source": "MarketBeat",
+          "date": "2026-05-09",
+          "category": "Product"
+        },
+        {
+          "id": 1778472841209,
+          "title": "2026년형 모델 Y, 미국 신규 운전자 보조 시스템 테스트 통과",
+          "summary": "2026년형 테슬라 모델 Y가 미국 신규 운전자 보조 시스템 테스트를 통과한 최초의 차량이 되었다. 이는 테슬라의 자율주행 및 안전 기술을 강화하는 긍정적인 소식이다.",
+          "source": "MarketBeat",
+          "date": "2026-05-09",
+          "category": "Product"
+        },
+        {
+          "id": 1778472841210,
+          "title": "일론 머스크, 10조 달러 순자산 목표 언급 및 스페이스X IPO 영향",
+          "summary": "일론 머스크는 X(구 트위터)에 '10조 달러 아니면 파산'이라는 글을 올리며 10조 달러의 순자산 목표를 언급했다. 한편, 대규모 스페이스X IPO를 앞두고 투자자들이 테슬라를 포함한 대형 기술주를 매각하여 자금을 조달할 가능성이 제기되고 있다.",
+          "source": "Stocktwits",
+          "date": "2026-05-04",
+          "category": "Musk"
+        },
+        {
+          "id": 1778472841211,
+          "title": "테슬라, 2026년 1분기 자본 지출 가이던스 상향 조정",
+          "summary": "테슬라의 1분기 실적은 전년 대비 영업 이익과 잉여 현금 흐름이 크게 증가했지만, 경영진이 2026년 자본 지출 가이던스를 상향 조정하면서 주가는 소폭 하락했다. 회사는 공장 확장, AI 인프라 구축, 로보택시 및 옵티머스 제품 출시를 위해 2026년에 250억 달러 이상을 투자할 계획이다.",
+          "source": "Morningstar",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778472841212,
+          "title": "테슬라, 20만 대 이상 차량 리어뷰 카메라 이미지 지연 문제로 리콜",
+          "summary": "테슬라가 리어뷰 카메라 이미지 지연 문제로 미국에서 20만 대 이상의 차량을 리콜할 예정이다.",
+          "source": "Global News Select",
+          "date": "2026-05-06",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778472841213,
+          "title": "테슬라, 1분기 매출 16% 증가 및 마진 확대",
+          "summary": "테슬라는 2026년 1분기에 223억 9천만 달러의 매출을 기록하며 전년 대비 16% 성장했다. 이는 2023년 중반 이후 가장 높은 성장률이며, 총 마진은 478bp 확대되었다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-07",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778472841214,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했다. 회사는 아시아 태평양 및 남미 일부 지역에서 차량 수요가 지속적으로 증가하고 있으며, 북미 및 유럽-중동 지역에서도 수요가 회복되고 있다고 밝혔다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778472841215,
+          "title": "테슬라, 로드스터 상표권 출원",
+          "summary": "테슬라가 새로운 로드스터 상표권을 출원하며 오랫동안 기다려온 미래 제품 공개에 대한 추측을 더하고 있다.",
+          "source": "Business Insider",
+          "date": "2026-05-09",
+          "category": "Product"
+        },
+        {
+          "id": 1778472841216,
+          "title": "테슬라, 배터리 수리/교체 시 앱 내 공식 인증서 제공 기능 개발",
+          "summary": "테슬라가 고전압 배터리 수리 또는 교체 시 공식 앱 내 인증서를 제공하는 새로운 기능을 개발 중이다. 이는 중고차 시장에서 재판매 가치와 구매자 신뢰를 높이는 데 도움이 될 것으로 예상된다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-06",
+          "category": "Product"
+        }
+      ],
+      "analyses": {
+        "1778472841207": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라의 4월 중국산 전기차 판매량이 전년 대비 36% 증가하며 중국 시장의 수요 회복 조짐을 보여주어 긍정적입니다.",
+          "key_factors": [
+            "중국 판매량 증가",
+            "수요 회복"
+          ]
+        },
+        "1778472841208": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 370대의 세미 트럭에 대한 1억 달러 규모의 계약을 체결하여 상업적 수요와 중형 트럭 사업의 생존 가능성을 입증했습니다.",
+          "key_factors": [
+            "세미 트럭 1억 달러 계약",
+            "370대 세미 트럭",
+            "상업적 수요 입증"
+          ]
+        },
+        "1778472841209": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "2026년형 모델 Y가 미국 신규 운전자 보조 시스템 테스트를 통과한 최초의 차량이 되었다는 소식은 테슬라의 자율주행 및 안전 기술 발전을 보여주는 긍정적인 신호입니다.",
+          "key_factors": [
+            "운전자 보조 시스템 테스트 통과",
+            "안전 기술 강화"
+          ]
+        },
+        "1778472841210": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R08",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 비현실적인 순자산 목표 언급과 스페이스X IPO를 위한 테슬라 주식 매각 가능성 제기는 투자자들에게 부정적인 영향을 미 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 SNS 발언",
+            "스페이스X IPO",
+            "테슬라 주식 매각 가능성"
+          ]
+        },
+        "1778472841211": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 실적은 영업 이익과 잉여 현금 흐름이 증가했음에도 불구하고, 2026년 자본 지출 가이던스 상향 조정으로 인해 주가가 소폭 하락했다.",
+          "key_factors": [
+            "자본 지출 가이던스 상향 조정",
+            "영업 이익 증가",
+            "잉여 현금 흐름 증가"
+          ]
+        },
+        "1778472841212": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 리어뷰 카메라 이미지 지연 문제로 20만 대 이상의 차량을 리콜하여 부정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "리어뷰 카메라 문제",
+            "20만 대 이상 리콜"
+          ]
+        },
+        "1778472841213": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기에 전년 대비 16%의 매출 성장을 기록하고 총 마진이 478bp 확대되어 시장 기대치를 상회하는 실적을 달성했습니다.",
+          "key_factors": [
+            "매출 성장",
+            "마진 확대"
+          ]
+        },
+        "1778472841214": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 주당 순이익이 월스트리트 예상치를 10% 이상 상회하며 EV 수요 회복을 시사하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1778472841215": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 새로운 로드스터 상표권을 출원하여 미래 제품 출시에 대한 기대를 높이고 있습니다.",
+          "key_factors": [
+            "로드스터 상표권 출원",
+            "미래 제품 기대"
+          ]
+        },
+        "1778472841216": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 배터리 수리/교체 시 앱 내 공식 인증서를 제공하는 기능은 중고차 가치와 구매자 신뢰를 높여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "중고차 재판매 가치 증대",
+            "구매자 신뢰도 향상"
+          ]
+        }
+      },
+      "avgScore": 0.8,
+      "buyIndex": 65,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R20",
+        "R08",
+        "R24"
+      ],
+      "bullish": 7,
+      "bearish": 3,
+      "neutral": 0,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": 33,
+        "trend": "stable",
+        "spike": false,
+        "top_queries": [],
+        "reasoning": "Google Trends 데이터에 직접적으로 접근할 수 없어 정확한 실시간 점수와 주간 평균을 제공하기는 어렵지만, AltIndex에 따르면 Tesla의 Google Trends 실적은 업계 평균보다 낮으며 33번째 백분위수에 해당합니다. 최근 7일간의 검색량 추세나 급등에 대한 구체적인 정보는 찾을 수 없었습니다. 관련 검색어 또한 제공되지 않았습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Market": 1,
+        "Product": 4,
+        "Musk": 1,
+        "Earnings": 3,
+        "Regulatory": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.59,
+        "vixClose": 17.190000534057617,
+        "wtiChg": 2.01,
+        "cnyChg": -0.07,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 58,
+        "catFinancial": 3,
+        "macdCross": 6,
+        "bbHigh": -2
+      },
+      "latestTslaPrice": 428.35,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/12(화)",
+          "change_pct": 1.8,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 436.06
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/13(수)",
+          "change_pct": 1.2,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 433.49
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/14(목)",
+          "change_pct": 0.7,
+          "signal": "관망",
+          "basePrice": 428.35,
+          "predictedPrice": 431.35
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/15(금)",
+          "change_pct": -0.5,
+          "signal": "관망",
+          "basePrice": 428.35,
+          "predictedPrice": 426.21
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/18(월)",
+          "change_pct": 1.5,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 434.78
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778472870187
+    },
+    {
       "id": "auto-1778438514164",
       "date": "2026-05-11",
       "displayDate": "2026.05.11",
@@ -18258,5 +18591,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-11 03:41 KST"
+  "lastUpdated": "2026-05-11 13:13 KST"
 }
