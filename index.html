@@ -4517,7 +4517,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                   const vix  = mCtx?.vixClose ?? null;
                   const macdInfo = mCtx?.macd;
                   const bbInfo   = mCtx?.bb;
-                  const trendsInfo = todaySession?.googleTrends;
+                  const trendsInfo  = todaySession?.googleTrends;
+                  const youtubeInfo = todaySession?.youtubeInterest;
                   const sState   = todaySession?.analysis?.signalState || (latest >= 75 && rsi > 75 ? 'cautionary_bull' : latest >= 75 ? 'strong_bull' : latest >= 57 ? 'bull' : latest <= 32 ? 'strong_bear' : latest <= 43 ? 'bear' : 'neutral');
                   const ss = SIGNAL_STATE_CFG[sState] || SIGNAL_STATE_CFG['neutral'];
                   return (
@@ -4546,7 +4547,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                         )}
                       </div>
                       {/* 기술적 지표 요약 */}
-                      {(rsi || vix || macdInfo || bbInfo || trendsInfo) && (
+                      {(rsi || vix || macdInfo || bbInfo || trendsInfo || youtubeInfo) && (
                         <div className="grid grid-cols-2 gap-1 text-xs">
                           {rsi && <div className="px-1.5 py-1 rounded text-center" style={{ background: '#14171e' }}>
                             <p className="text-gray-600" style={{fontSize:9}}>RSI</p>
@@ -4573,6 +4574,15 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                               {trendsInfo.spike && <span style={{color:'#f97316'}}> 🔥</span>}
                             </p>
                           </div>}
+                          {youtubeInfo && youtubeInfo.video_count > 0 && (
+                            <div className="px-1.5 py-1 rounded text-center col-span-2" style={{ background: '#14171e' }}
+                              title={youtubeInfo.reason || ''}>
+                              <p className="text-gray-600" style={{fontSize:9}}>YouTube관심</p>
+                              <p className="font-bold" style={{ color: youtubeInfo.score > 0 ? '#22c55e' : youtubeInfo.score < 0 ? '#ef4444' : '#94a3b8', fontSize: 10 }}>
+                                {youtubeInfo.score >= 0 ? '+' : ''}{youtubeInfo.score} · {(youtubeInfo.total_views || 0) >= 1000000 ? ((youtubeInfo.total_views/1000000).toFixed(1) + 'M') : ((youtubeInfo.total_views/1000).toFixed(0) + 'K')}뷰
+                              </p>
+                            </div>
+                          )}
                         </div>
                       )}
                     </>
