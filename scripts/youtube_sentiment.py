@@ -142,11 +142,15 @@ def calc_interest_score(videos: list[dict]) -> dict:
 
     total_views = hot_views + baseline_views
 
-    # 조회수 속도 비율 (기준선이 없으면 hot 조회수 자체를 판단)
-    if baseline_views > 0:
+    # 조회수 속도 비율
+    if baseline_views > 0 and hot_views > 0:
         velocity = hot_views / baseline_views
+    elif hot_views > 0:
+        velocity = 2.0   # 최근 영상만 있음 → 상승
+    elif baseline_views > 0:
+        velocity = 0.4   # 최근 3일 영상 없음 → 약한 감소 (0.0 → -3 과도 패널티 방지)
     else:
-        velocity = 2.0 if hot_views > 0 else 0.0
+        velocity = 0.5   # 7일간 영상 없음 → 보합 처리
 
     # velocity → velocity_score
     if velocity >= 2.5:
