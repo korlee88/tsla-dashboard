@@ -3608,6 +3608,258 @@ function SettingsPage({ onBack,
   );
 }
 
+// ─── 컴포넌트: VideoScriptPage ────────────────────────────────────────────────
+function VideoScriptPage({ onBack }) {
+  const [scripts, setScripts]     = useState([]);
+  const [selected, setSelected]   = useState(null);
+  const [loading, setLoading]     = useState(true);
+  const [activeScene, setActiveScene] = useState(null);
+
+  useEffect(() => {
+    // data/weekly-report/ 하위 최신 script.json 로드
+    const tryDates = [];
+    const today = new Date();
+    for (let i = 0; i < 14; i++) {
+      const d = new Date(today); d.setDate(d.getDate() - i);
+      tryDates.push(d.toISOString().split('T')[0]);
+    }
+    const attempts = tryDates.map(date =>
+      fetch(`data/weekly-report/${date}/script.json?_=${Date.now()}`)
+        .then(r => r.ok ? r.json().then(j => ({ ...j, _date: date })) : null)
+        .catch(() => null)
+    );
+    Promise.all(attempts).then(results => {
+      const found = results.filter(Boolean);
+      setScripts(found);
+      if (found.length > 0) setSelected(found[0]);
+      setLoading(false);
+    });
+  }, []);
+
+  const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
+  const SCENE_ACCENTS = ['#a78bfa', '#22c55e', '#ef4444', '#f59e0b', '#06b6d4'];
+
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center py-24 gap-4 text-gray-500">
+      <span className="w-8 h-8 border-2 border-purple-400 border-t-transparent rounded-full spinning" />
+      <p className="text-sm">주간 각본 불러오는 중…</p>
+    </div>
+  );
+
+  if (!selected) return (
+    <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+      <p className="text-4xl mb-4">🎬</p>
+      <p className="text-lg font-bold text-gray-300 mb-2">아직 생성된 각본이 없습니다</p>
+      <p className="text-sm text-gray-600 mb-1">매주 월요일 GitHub Actions가 자동으로 각본을 생성합니다.</p>
+      <p className="text-sm text-gray-600">수동 실행: GitHub → Actions → "TSLA 주간 영상 자료 생성" → Run workflow</p>
+    </div>
+  );
+
+  const sc = selected;
+  const biColor = bCol(sc.avg_buy_index ?? 50);
+
+  return (
+    <div className="max-w-3xl mx-auto px-3 py-4 md:px-4 md:py-6">
+      {/* 헤더 */}
+      <div className="flex items-center gap-2 mb-4">
+        <button onClick={onBack} className="text-xs px-2.5 py-1.5 rounded-lg text-gray-400 hover:text-white shrink-0"
+          style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 뒤로</button>
+        <div className="flex-1 min-w-0">
+          <h1 className="text-base font-bold text-white truncate">🎬 주간 영상 각본</h1>
+          <p className="text-xs text-gray-600">AI 자동 생성 · CapCut / Premiere 자막용</p>
+        </div>
+        {scripts.length > 1 && (
+          <select className="text-xs rounded-lg px-2 py-1 text-gray-300"
+            style={{ background: '#252830', border: '1px solid #2A2D35' }}
+            value={sc._date} onChange={e => setSelected(scripts.find(s => s._date === e.target.value))}>
+            {scripts.map(s => <option key={s._date} value={s._date}>{s._date}</option>)}
+          </select>
+        )}
+      </div>
+
+      {/* 타이틀 카드 */}
+      <div className="rounded-xl p-4 mb-4 border" style={{ background: 'linear-gradient(135deg,#1a1040 0%,#0d1520 100%)', borderColor: '#a78bfa40' }}>
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-purple-400 font-semibold mb-1">{sc._date} · {sc.subtitle || ''}</p>
+            <h2 className="text-base font-black text-white leading-snug">{sc.title}</h2>
+          </div>
+          <div className="text-center shrink-0">
+            <p className="text-3xl font-black tabular-nums" style={{ color: biColor }}>{sc.avg_buy_index}</p>
+            <p className="text-xs font-bold" style={{ color: biColor }}>{sc.overall_signal}</p>
+          </div>
+        </div>
+        {/* 매수지수 바 */}
+        <div className="rounded-full overflow-hidden mb-3" style={{ background: '#252830', height: 6 }}>
+          <div className="h-full rounded-full" style={{ width: `${sc.avg_buy_index}%`, background: biColor, transition: 'width 1s ease' }} />
+        </div>
+        {/* 핵심 지표 그리드 */}
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            ['현재가', `$${sc.latest_price}`],
+            ['매수지수', `${sc.avg_buy_index}pt`],
+            ['신호', sc.overall_signal],
+            ['생성', sc.generated_by?.replace('Claude ','') || 'AI'],
+          ].map(([k, v]) => (
+            <div key={k} className="rounded-lg p-2 text-center" style={{ background: '#0d1117', border: '1px solid #2A2D35' }}>
+              <p className="text-xs font-bold text-gray-200 truncate">{v}</p>
+              <p className="text-gray-600" style={{ fontSize: 9 }}>{k}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 점수 분해 */}
+      {sc.meta?.scoring_breakdown && (
+        <div className="rounded-xl p-4 mb-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">매수지수 구성 분해</p>
+          <div className="space-y-1.5">
+            {Object.entries(sc.meta.scoring_breakdown).filter(([k]) => k !== 'total').map(([k, v]) => {
+              const labels = { base: '기본 뉴스', optimus_boost: '🤖 옵티머스 부스트', macd_cross: '📊 MACD 크로스', musk_x: '🐦 머스크 X', google_trends: '🔍 구글 트렌드', youtube: '📺 YouTube' };
+              const col = v > 0 ? '#22c55e' : v < 0 ? '#ef4444' : '#9ca3af';
+              return (
+                <div key={k} className="flex items-center gap-2">
+                  <span className="text-xs text-gray-400 w-36 shrink-0">{labels[k] || k}</span>
+                  <div className="flex-1 rounded-full overflow-hidden" style={{ background: '#252830', height: 5 }}>
+                    <div className="h-full rounded-full" style={{ width: `${Math.min(100, Math.abs(v) / 10 * 100)}%`, background: col, marginLeft: v < 0 ? 'auto' : 0 }} />
+                  </div>
+                  <span className="text-xs font-bold tabular-nums w-8 text-right" style={{ color: col }}>{v >= 0 ? '+' : ''}{v}</span>
+                </div>
+              );
+            })}
+            <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: '#2A2D35' }}>
+              <span className="text-xs font-bold text-gray-300">최종 합계</span>
+              <span className="text-base font-black" style={{ color: biColor }}>{sc.meta.scoring_breakdown.total}pt</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 씬 목록 */}
+      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-1">📽 씬별 대본</p>
+      <div className="space-y-3 mb-4">
+        {(sc.scenes || []).map((scene, i) => {
+          const accent = SCENE_ACCENTS[i] || '#a78bfa';
+          const isOpen = activeScene === i;
+          return (
+            <div key={i} className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: accent + '40' }}>
+              {/* 씬 헤더 — 탭으로 열기 */}
+              <button className="w-full flex items-center gap-3 px-4 py-3 text-left"
+                onClick={() => setActiveScene(isOpen ? null : i)}>
+                <span className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black shrink-0"
+                  style={{ background: accent + '20', color: accent }}>
+                  {scene.index}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-white">{scene.title}</p>
+                  {scene.duration_hint && (
+                    <p className="text-xs text-gray-600">⏱ {scene.duration_hint}</p>
+                  )}
+                </div>
+                <span className="text-gray-600 text-xs">{isOpen ? '▲' : '▼'}</span>
+              </button>
+              {/* 씬 내용 */}
+              {isOpen && (
+                <div className="px-4 pb-4 border-t" style={{ borderColor: accent + '30' }}>
+                  <div className="mt-3 space-y-1">
+                    {(scene.lines || []).map((line, j) => (
+                      line === '' ? <div key={j} className="h-2" /> :
+                      <p key={j} className="text-sm leading-relaxed"
+                        style={{ color: line.startsWith('【') || line.startsWith('①') || line.startsWith('②') || line.startsWith('③') || line.startsWith('④') || line.startsWith('⑤')
+                          ? accent : '#d1d5db' }}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                  {scene.note && (
+                    <p className="text-xs text-gray-700 mt-3 pt-2 border-t italic" style={{ borderColor: '#2A2D35' }}>
+                      📝 {scene.note}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* 호재/악재 요약 */}
+      {sc.meta && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+          {/* 호재 */}
+          <div className="rounded-xl border p-4" style={{ background: '#1C1F26', borderColor: '#22c55e30' }}>
+            <p className="text-xs font-semibold text-green-400 mb-2">🟢 주요 호재 ({(sc.meta.top_bullish_news||[]).length}건)</p>
+            <div className="space-y-1.5">
+              {(sc.meta.top_bullish_news||[]).map((n, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-xs font-black shrink-0 tabular-nums" style={{ color: '#22c55e' }}>{n.score >= 0 ? '+' : ''}{n.score}</span>
+                  <p className="text-xs text-gray-300 leading-snug">{n.title}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* 악재 */}
+          <div className="rounded-xl border p-4" style={{ background: '#1C1F26', borderColor: '#ef444430' }}>
+            <p className="text-xs font-semibold text-red-400 mb-2">🔴 주요 리스크 ({(sc.meta.top_bearish_news||[]).length}건)</p>
+            <div className="space-y-1.5">
+              {(sc.meta.top_bearish_news||[]).map((n, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-xs font-black shrink-0 tabular-nums" style={{ color: '#ef4444' }}>{n.score}</span>
+                  <p className="text-xs text-gray-300 leading-snug">{n.title}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 기술 지표 */}
+      {sc.meta?.technical && (
+        <div className="rounded-xl border p-4 mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">기술적 지표 요약</p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              ['RSI', `${sc.meta.technical.rsi} (중립)`],
+              ['MACD', sc.meta.technical.macd_signal],
+              ['볼린저밴드', sc.meta.technical.bb_position],
+              ['VIX', sc.meta.technical.vix],
+              ['전일 TSLA', `${sc.meta.technical.prev_tsla_chg >= 0 ? '+' : ''}${sc.meta.technical.prev_tsla_chg}%`],
+              ['현재가', `$${sc.latest_price}`],
+            ].map(([k, v]) => (
+              <div key={k} className="flex items-center justify-between px-3 py-2 rounded-lg" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
+                <span className="text-xs text-gray-500">{k}</span>
+                <span className="text-xs font-bold text-gray-200">{v}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 머스크 X / YouTube 요약 */}
+      {sc.meta && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+          {sc.meta.musk_x_summary && (
+            <div className="rounded-xl border p-3" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+              <p className="text-xs font-semibold text-blue-400 mb-1">🐦 머스크 X 동향</p>
+              <p className="text-xs text-gray-400 leading-relaxed">{sc.meta.musk_x_summary}</p>
+            </div>
+          )}
+          {sc.meta.youtube_summary && (
+            <div className="rounded-xl border p-3" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+              <p className="text-xs font-semibold text-red-400 mb-1">📺 YouTube 관심도</p>
+              <p className="text-xs text-gray-400 leading-relaxed">{sc.meta.youtube_summary}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      <p className="text-xs text-gray-700 text-center pb-4">
+        🤖 {sc.generated_by || 'AI'} 생성 · {sc._date} · 본 각본은 투자 조언이 아닙니다
+      </p>
+    </div>
+  );
+}
+
 // ─── 모바일: 하단 탭 네비게이션 ──────────────────────────────────────────────
 function MobileBottomNav({ page, setPage, dbCount }) {
   const tabs = [
@@ -3615,6 +3867,7 @@ function MobileBottomNav({ page, setPage, dbCount }) {
     { key: 'signal',    icon: '🎯', label: '매매신호' },
     { key: 'trend',     icon: '📈', label: '트렌드',  badge: dbCount },
     { key: 'calendar',  icon: '📅', label: '캘린더' },
+    { key: 'script',    icon: '🎬', label: '주간각본' },
     { key: 'settings',  icon: '⚙',  label: '설정' },
   ];
   return (
@@ -5989,6 +6242,11 @@ function App() {
             <BacktestPage apiKey={apiKey} />
           </div>
         )}
+        {page === 'script' && (
+          <div style={{ paddingBottom: 72 }}>
+            <VideoScriptPage onBack={() => setPage('signal')} />
+          </div>
+        )}
         <MobileBottomNav page={page} setPage={setPage} dbCount={dbCount} />
       </div>
     );
@@ -6012,6 +6270,7 @@ function App() {
           { key: 'trend',     icon: '📈', label: '트렌드 분석', badge: dbCount > 0 ? dbCount : null },
           { key: 'calendar',  icon: '📅', label: '캘린더' },
           { key: 'backtest',  icon: '🔬', label: '백테스트' },
+          { key: 'script',    icon: '🎬', label: '주간각본' },
           { key: 'settings',  icon: '⚙',  label: '설정' },
         ].map(({ key, icon, label, badge }) => (
           <button key={key} onClick={() => setPage(key)}
@@ -6053,6 +6312,13 @@ function App() {
     <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
       <DesktopHeader />
       <BacktestPage apiKey={apiKey} />
+    </div>
+  );
+
+  if (page === 'script') return (
+    <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+      <DesktopHeader />
+      <VideoScriptPage onBack={() => setPage('signal')} />
     </div>
   );
 
