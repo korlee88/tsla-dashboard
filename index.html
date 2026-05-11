@@ -1809,19 +1809,19 @@ function PredAccuracyCard({ dailyData, autoSessions }) {
     .sort((a, b) => b.targetDate.localeCompare(a.targetDate))
     .slice(0, 7);
 
-  // 아직 KST 07:00 미경과 — 마감 대기 예측
+  // 아직 KST 07:00 미경과 — 마감 대기 예측 (matched===null 이고 아직 해소 불가한 레코드)
   const pending = records
-    .filter(r => (r.dayLabel === '내일' || r.dayLabel === 'D+1') && !isPredResolvable(r.targetDate))
+    .filter(r => r.matched === null && r.actualPrice == null && !isPredResolvable(r.targetDate))
     .filter((r, i, arr) => arr.findIndex(x => x.targetDate === r.targetDate) === i)
     .sort((a, b) => a.targetDate.localeCompare(b.targetDate))
-    .slice(0, 2);
+    .slice(0, 3);
 
-  // KST 기준 다음 마감 시각 표시
+  // KST 기준 다음 마감 시각 — 간결하게
   const nextCloseKST = (() => {
     const nowKST = new Date(Date.now() + 9 * 3600000);
     const h = nowKST.getUTCHours(), m = nowKST.getUTCMinutes();
-    if (h < 7) return `오늘 KST 07:00 (${7 - h}시간 ${60 - m}분 후)`;
-    return '데이터 갱신 대기 중 (장 마감 후 반영)';
+    if (h < 7) return `KST 07:00 (${7 - h}h ${60 - m}m 후)`;
+    return '장 마감 후 반영';
   })();
 
   const resolved  = daily1.filter(r => r.matched !== null);
@@ -1858,18 +1858,22 @@ function PredAccuracyCard({ dailyData, autoSessions }) {
 
       {/* 마감 대기 행 (KST 07:00 미경과 예측) */}
       {pending.map(r => (
-        <div key={r.targetDate} className="px-5 py-3 border-b flex items-center gap-3 text-xs"
+        <div key={r.targetDate} className="px-4 py-2.5 border-b"
           style={{ borderColor: '#2A2D35', background: 'rgba(99,102,241,0.04)' }}>
-          <span className="text-indigo-400 font-bold w-16 shrink-0">📅 {r.targetDate.slice(5).replace('-','/')}</span>
-          <span className="text-gray-600 w-16 shrink-0">마감 대기</span>
-          <span style={{ color: pctColor(r.predictedChangePct) }} className="font-bold w-16 text-right shrink-0">
-            {pctStr(r.predictedChangePct)}
-          </span>
-          {r.predictedPrice
-            ? <span className="text-gray-700 w-16 text-right shrink-0">${r.predictedPrice}</span>
-            : <span className="text-gray-700 w-16 text-right shrink-0 opacity-40">─</span>}
-          <span className="text-xs px-1.5 py-0.5 rounded ml-1 shrink-0" style={{ background: '#252830', color: '#9ca3af' }}>{r.predictedSignal}</span>
-          <span className="ml-auto text-xs text-indigo-400">{nextCloseKST}</span>
+          {/* 상단 행: 날짜 + 상태 + 예측값 */}
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-indigo-400 font-bold shrink-0">📅 {r.targetDate.slice(5).replace('-','/')}</span>
+            <span className="text-gray-600 shrink-0">마감 대기</span>
+            <span style={{ color: pctColor(r.predictedChangePct) }} className="font-bold tabular-nums shrink-0">
+              {pctStr(r.predictedChangePct)}
+            </span>
+            {r.predictedPrice && (
+              <span className="text-gray-600 tabular-nums shrink-0">${r.predictedPrice}</span>
+            )}
+            <span className="px-1.5 py-0.5 rounded shrink-0" style={{ background: '#252830', color: '#9ca3af', fontSize: 10 }}>{r.predictedSignal}</span>
+          </div>
+          {/* 하단: 해소 예정 */}
+          <p className="text-indigo-400 mt-0.5" style={{ fontSize: 10 }}>{nextCloseKST} 해소</p>
         </div>
       ))}
 
