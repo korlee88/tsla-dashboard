@@ -2827,6 +2827,15 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
     ? Math.round(recent.reduce((s, x) => s + (x.avgScore ?? 0), 0) / recent.length * 10) / 10
     : null;
 
+  // YouTube 관심도 데이터 (지표 종합해석용)
+  const [ytSignal, setYtSignal] = useState(null);
+  useEffect(() => {
+    fetch('data/youtube-sentiment.json?_=' + Date.now())
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d?.video_count > 0) setYtSignal(d); })
+      .catch(() => {});
+  }, []);
+
   // 추세 방향 (종합 해석 카드 + 하락세 뉴스 섹션에서 공용)
   const r3avg = valid.slice(0,3).length ? Math.round(valid.slice(0,3).reduce((s,x) => s+(x.buyIndex??50),0)/valid.slice(0,3).length) : null;
   const p3avg = valid.slice(3,6).length ? Math.round(valid.slice(3,6).reduce((s,x) => s+(x.buyIndex??50),0)/valid.slice(3,6).length) : null;
@@ -2995,8 +3004,24 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
                 </div>
               </div>
             </div>
+            {/* YouTube 관심도 행 */}
+            {ytSignal && (
+              <div className="rounded-lg p-3 flex items-center gap-3 mt-2" style={{ background: '#1C1F26', border: '1px solid rgba(239,68,68,0.15)' }}>
+                <span style={{ fontSize: 22 }}>📺</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-gray-300">YouTube 관심도</p>
+                  <p className="text-xs text-gray-600 truncate">{ytSignal.velocity_label || ''} · {ytSignal.video_count}개 영상 · {ytSignal.total_views >= 1_000_000 ? (ytSignal.total_views/1_000_000).toFixed(1)+'M' : (ytSignal.total_views/1000).toFixed(0)+'K'}뷰</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-xl font-black tabular-nums" style={{ color: ytSignal.score > 0 ? '#22c55e' : ytSignal.score < 0 ? '#ef4444' : '#9ca3af' }}>
+                    {ytSignal.score >= 0 ? '+' : ''}{ytSignal.score}
+                  </p>
+                  <p className="text-xs text-gray-600">±3pt 반영</p>
+                </div>
+              </div>
+            )}
             {/* 해석 메시지 */}
-            <div className="rounded-lg px-4 py-2.5" style={{ background: msgColor + '10', border: `1px solid ${msgColor}28` }}>
+            <div className="rounded-lg px-4 py-2.5 mt-2" style={{ background: msgColor + '10', border: `1px solid ${msgColor}28` }}>
               <p className="text-xs leading-relaxed font-semibold" style={{ color: msgColor }}>
                 {agree && forecastDir ? '✓ ' : forecastDir ? '⚡ ' : '○ '}{msg}
               </p>
