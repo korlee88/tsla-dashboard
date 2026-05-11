@@ -1,6 +1,376 @@
 {
   "sessions": [
     {
+      "id": "auto-1778492506391",
+      "date": "2026-05-11",
+      "displayDate": "2026.05.11",
+      "kstTime": "18:41",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778492475375,
+          "title": "테슬라, 4월 중국산 EV 판매량 36% 증가",
+          "summary": "테슬라의 4월 중국산 전기차 판매량이 36% 증가하며 6개월 연속 회복세를 보였다. 이는 주요 시장 중 하나인 중국에서의 수요 약화 우려를 완화하는 데 도움이 되었다.",
+          "source": "MarketBeat",
+          "date": "2026-05-11",
+          "category": "Sales"
+        },
+        {
+          "id": 1778492475376,
+          "title": "테슬라, 370대 세미 트럭 1억 달러 규모 계약 체결",
+          "summary": "테슬라가 370대의 세미 트럭에 대한 1억 달러 규모의 기록적인 계약을 체결하며, 회사 트럭 플랫폼에 대한 실제 상업적 수요를 나타냈다.",
+          "source": "MarketBeat",
+          "date": "2026-05-11",
+          "category": "Product"
+        },
+        {
+          "id": 1778492475377,
+          "title": "일론 머스크, 테슬라 AI 비전 에어백 '충돌 전 전개'로 부상 위험 감소 언급",
+          "summary": "일론 머스크는 테슬라 AI 비전이 에어백을 '충돌 전에' 전개하여 부상 및 사망 위험을 줄인다고 밝혔다. 이 업그레이드는 모든 신차에 무료로 제공된다고 덧붙였다.",
+          "source": "Benzinga",
+          "date": "2026-05-11",
+          "category": "Musk"
+        },
+        {
+          "id": 1778492475378,
+          "title": "테슬라, 2026년 1분기 실적 예상치 상회 및 자본 지출 가이던스 상향",
+          "summary": "테슬라의 1분기 실적은 영업 이익과 잉여 현금 흐름에서 전년 대비 강력한 성장을 보였다. 그러나 경영진이 2026년 자본 지출 가이던스를 상향 조정함에 따라 주가는 시간 외 거래에서 소폭 하락했다.",
+          "source": "Morningstar",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778492475379,
+          "title": "테슬라, 로보택시 및 옵티머스 제품 출시를 위해 2026년 250억 달러 이상 투자 계획",
+          "summary": "테슬라는 공장 확장, AI 인프라 구축, 로보택시 및 옵티머스 제품 출시를 위해 2026년에 250억 달러 이상을 투자할 계획이다.",
+          "source": "Investing.com",
+          "date": "2026-04-23",
+          "category": "Product"
+        },
+        {
+          "id": 1778492475380,
+          "title": "테슬라, 20만 대 이상 차량 리콜: 후방 카메라 이미지 지연 문제",
+          "summary": "테슬라가 후방 카메라 이미지 지연 문제로 미국에서 20만 대 이상의 차량을 리콜할 예정이다.",
+          "source": "MarketWatch",
+          "date": "2026-05-07",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778492475381,
+          "title": "테슬라, 중국산 EV의 유럽 수출 증가로 주가 상승세",
+          "summary": "테슬라 주가는 중국산 전기차의 유럽 수출 증가라는 새로운 신호에 힘입어 상승하고 있다.",
+          "source": "Barchart",
+          "date": "2026-05-10",
+          "category": "Market"
+        },
+        {
+          "id": 1778492475382,
+          "title": "우버의 100억 달러 로보택시 추진, 테슬라와 웨이모에 도전 가능성",
+          "summary": "우버의 100억 달러 규모 로보택시 사업 추진이 테슬라와 웨이모의 지배력에 도전할 수 있다는 분석이 나왔다.",
+          "source": "Benzinga",
+          "date": "2026-05-10",
+          "category": "Competition"
+        },
+        {
+          "id": 1778492475383,
+          "title": "테슬라, 1분기 실적 호조 및 EV 수요 회복 조짐",
+          "summary": "테슬라가 월스트리트의 1분기 수익 예상치를 상회했으며, 전 세계적으로 전기차 수요가 회복되고 있다는 조짐을 보였다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778492475384,
+          "title": "테슬라, 네덜란드에서 완전 자율 주행 승인 획득",
+          "summary": "테슬라가 4월에 네덜란드에서 완전 자율 주행(FSD) 승인을 받았다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Regulatory"
+        }
+      ],
+      "analyses": {
+        "1778492475375": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라의 4월 중국산 전기차 판매량이 36% 증가하며 주요 시장인 중국에서의 수요 회복세를 보여주어 긍정적입니다.",
+          "key_factors": [
+            "중국 판매량 증가",
+            "수요 회복"
+          ]
+        },
+        "1778492475376": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 370대의 세미 트럭에 대한 1억 달러 규모의 계약을 체결하며 상업적 수요를 입증하여 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "세미 트럭 370대 계약",
+            "1억 달러 규모",
+            "상업적 수요 입증"
+          ]
+        },
+        "1778492475377": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 테슬라 AI 비전 에어백 시스템의 개선을 언급하며 충돌 전 전개 기능으로 안전성이 향상될 것이라고 밝혔으며, 이는 신차에 무료로 제공되어 제품 경쟁력에 긍정적입니다.",
+          "key_factors": [
+            "AI 비전 에어백 시스템",
+            "충돌 전 전개",
+            "안전성 향상"
+          ]
+        },
+        "1778492475378": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라의 1분기 실적이 영업 이익과 잉여 현금 흐름에서 예상치를 상회하며 긍정적인 영향을 주었으나, 자본 지출 가이던스 상향 조정으로 시간 외 거래에서 주가가 소폭 하락했다.",
+          "key_factors": [
+            "실적 예상치 상회",
+            "자본 지출 가이던스 상향"
+          ]
+        },
+        "1778492475379": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R25"
+          ],
+          "reasoning": "테슬라가 로보택시와 옵티머스 제품 출시를 위해 2026년까지 250억 달러 이상을 투자할 계획이라는 소식은 미래 성장 동력에 대한 강력한 의지를 보여주며 긍정적입니다.",
+          "key_factors": [
+            "로보택시 출시 계획",
+            "옵티머스 제품 출시 계획",
+            "대규모 투자 계획"
+          ]
+        },
+        "1778492475380": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 이미지 지연 문제로 20만 대 이상의 차량을 리콜하여 부정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "리콜",
+            "후방 카메라 문제",
+            "20만 대 이상"
+          ]
+        },
+        "1778492475381": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "중국산 전기차의 유럽 수출 증가는 테슬라의 중국 생산 차량에 대한 수요 증가를 시사하며 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "중국산 EV 유럽 수출 증가",
+            "테슬라 주가 상승세"
+          ]
+        },
+        "1778492475382": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R06"
+          ],
+          "reasoning": "우버의 100억 달러 규모 로보택시 사업 추진은 테슬라의 잠재적 경쟁 심화를 시사합니다.",
+          "key_factors": [
+            "우버 로보택시 사업",
+            "경쟁 심화"
+          ]
+        },
+        "1778492475383": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 수익 예상치를 상회하며 전반적인 전기차 수요 회복 조짐을 보여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "1분기 수익 예상치 상회",
+            "전기차 수요 회복 조짐"
+          ]
+        },
+        "1778492475384": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 네덜란드에서 완전 자율 주행(FSD) 승인을 획득하여 FSD 기술의 글로벌 확장에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "FSD 승인",
+            "네덜란드 시장"
+          ]
+        }
+      },
+      "avgScore": 1.3,
+      "buyIndex": 80,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R12",
+        "R20",
+        "R25",
+        "R04"
+      ],
+      "bullish": 8,
+      "bearish": 2,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-04",
+            "content": "Elon Musk는 Tesla의 61.1% 충성도와 캘리포니아에서 가장 많이 팔린 차종인 Model Y를 강조하며 Tesla의 성공을 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-06",
+            "content": "Elon Musk는 Tesla의 무인 로보택시 배치가 증가하고 있으며, 이는 회사의 미래에 매우 긍정적인 변화라고 언급했습니다. 그는 또한 Tesla가 연간 약 2백만 대의 로보택시를 생산할 수 있는 능력을 가지고 있다고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-07",
+            "content": "Elon Musk는 주식 옵션 행사 및 판매 시 45%의 연방 및 주 소득세를 납부하며, 사망 후에는 40%의 추가 세금이 부과될 것이라고 언급했습니다. 그는 자신이 \"역사상 그 누구보다 많은\" 100억 달러 이상의 세금을 납부했다고 주장했습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "bullish",
+        "sentiment_score": 2,
+        "post_count": 3,
+        "reasoning": "Elon Musk의 최근 게시물은 Tesla의 높은 고객 충성도, Model Y의 판매 성공, 로보택시의 확장 및 생산 능력에 대한 긍정적인 전망을 강조하며 전반적으로 낙관적인 분위기를 보여줍니다. 세금 관련 언급은 사실 전달에 가까워 중립적인 것으로 판단됩니다."
+      },
+      "googleTrends": {
+        "current_score": 50,
+        "week_avg": 55,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "Tesla price",
+          "Elon Musk"
+        ],
+        "reasoning": "지난 7일간 'Tesla' 키워드에 대한 검색 관심도는 평균 대비 하락했으며, 특별한 급등은 없었습니다."
+      },
+      "newsCategories": {
+        "total": 10,
+        "Sales": 1,
+        "Product": 2,
+        "Musk": 1,
+        "Earnings": 2,
+        "Regulatory": 2,
+        "Market": 1,
+        "Competition": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.37,
+        "qqqChg": 1.59,
+        "vixClose": 18.1200008392334,
+        "wtiChg": -0.53,
+        "cnyChg": -0.08,
+        "prevTslaChg": 9.77,
+        "rsi": 49.5,
+        "macd": {
+          "macd": -0.9094628608040694,
+          "signal": -2.485331350009703,
+          "hist": 1.5758684892056336,
+          "crossover": "bullish",
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 463.59,
+          "middle": 404.73,
+          "lower": 345.87,
+          "pos": 0.701
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 63,
+        "optimusBoost": 8,
+        "strongAmp": 3,
+        "macdCross": 6,
+        "bbHigh": -2,
+        "muskXSentiment": 3,
+        "googleTrends": -1
+      },
+      "latestTslaPrice": 428.35,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/12(화)",
+          "change_pct": 1.8,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 436.06
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/13(수)",
+          "change_pct": 1.5,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 434.78
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/14(목)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 432.21
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/15(금)",
+          "change_pct": -0.5,
+          "signal": "관망",
+          "basePrice": 428.35,
+          "predictedPrice": 426.21
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/18(월)",
+          "change_pct": 1.2,
+          "signal": "매수",
+          "basePrice": 428.35,
+          "predictedPrice": 433.49
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778492506391
+    },
+    {
       "id": "auto-1778472870187",
       "date": "2026-05-11",
       "displayDate": "2026.05.11",
@@ -18591,5 +18961,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-11 13:13 KST"
+  "lastUpdated": "2026-05-11 18:41 KST"
 }
