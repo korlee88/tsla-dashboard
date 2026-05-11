@@ -4353,6 +4353,16 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
     });
   }, []);
 
+  // YouTube 관심도 데이터
+  const [ytData, setYtData] = useState(null);
+  const [ytLoading, setYtLoading] = useState(true);
+  useEffect(() => {
+    fetch('data/youtube-sentiment.json?_=' + Date.now())
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { setYtData(d); setYtLoading(false); })
+      .catch(() => setYtLoading(false));
+  }, []);
+
   // 차트용 일봉 데이터 (주봉보다 정밀한 가격) — KST 7시 기준 하루 1회 캐시
   const [chartDailyData, setChartDailyData] = useState(() => {
     const c = loadDailyCache();
@@ -4769,6 +4779,82 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         </div>
       </div>
       </Section>{/* /Section 2 */}
+
+      {/* ── Section 2.5: YouTube 관심도 ─────────────────────────────────────── */}
+      <Section title="YouTube 관심도" icon="📺" accent="#ff0000"
+        badge={ytData?.collected_at && ytData.video_count > 0
+          ? (ytData.score > 0 ? `+${ytData.score}` : `${ytData.score}`)
+          : null}>
+        {ytLoading ? (
+          <div className="py-8 text-center text-sm text-gray-600">로딩 중…</div>
+        ) : !ytData?.collected_at ? (
+          <div className="px-4 py-6 text-center">
+            <p className="text-2xl mb-2">📭</p>
+            <p className="text-sm text-gray-500 font-semibold">아직 수집되지 않음</p>
+            <p className="text-xs text-gray-700 mt-1">GitHub Actions 자동 수집 후 데이터가 표시됩니다 (하루 4회)</p>
+          </div>
+        ) : (
+          <div className="px-4 pb-4 space-y-3">
+            {/* 헤더 요약 */}
+            <div className="rounded-xl p-3 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold text-gray-400">Tesla YouTube 관심 지수</span>
+                <span className="text-xs font-bold" style={{ color: ytData.score > 0 ? '#22c55e' : ytData.score < 0 ? '#ef4444' : '#9ca3af' }}>
+                  {ytData.score >= 0 ? '+' : ''}{ytData.score} / 3
+                </span>
+              </div>
+              {/* 점수 바 */}
+              <div className="rounded-full overflow-hidden mb-2" style={{ background: '#252830', height: 6 }}>
+                <div className="h-full rounded-full transition-all" style={{
+                  width: `${((ytData.score + 3) / 6) * 100}%`,
+                  background: ytData.score > 0 ? '#22c55e' : ytData.score < 0 ? '#ef4444' : '#6b7280'
+                }} />
+              </div>
+              <p className="text-gray-600 leading-snug" style={{ fontSize: 10 }}>
+                {ytData.velocity_label || ''}{ytData.velocity_label && ' · '}
+                {ytData.reason?.slice(0, 80) || ''}
+              </p>
+            </div>
+            {/* 통계 그리드 */}
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                ['마지막 수집', (() => { const d = new Date(ytData.collected_at); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; })()],
+                ['수집 영상', `${ytData.video_count}개`],
+                ['총 조회수', ytData.total_views >= 1_000_000 ? (ytData.total_views/1_000_000).toFixed(1)+'M' : (ytData.total_views/1000).toFixed(0)+'K'],
+              ].map(([k, v]) => (
+                <div key={k} className="rounded-lg p-2 text-center" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
+                  <p className="text-xs font-bold text-gray-200">{v}</p>
+                  <p className="text-gray-600" style={{ fontSize: 9 }}>{k}</p>
+                </div>
+              ))}
+            </div>
+            {/* 최근 인기 영상 */}
+            {ytData.top_videos?.length > 0 && (
+              <div className="rounded-xl border overflow-hidden" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+                <p className="text-xs text-gray-600 font-semibold px-3 pt-2 pb-1">📋 최근 인기 영상 Top {Math.min(3, ytData.top_videos.length)}</p>
+                {ytData.top_videos.slice(0, 3).map((v, i) => (
+                  <div key={i} className="px-3 py-2 border-t" style={{ borderColor: '#2A2D35' }}>
+                    <p className="text-xs text-gray-300 font-semibold leading-snug truncate">{v.title}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-xs font-bold" style={{ color: '#a78bfa' }}>
+                        {v.viewCount >= 1_000_000 ? (v.viewCount/1_000_000).toFixed(1)+'M' : (v.viewCount/1000).toFixed(0)+'K'}뷰
+                      </span>
+                      <span className="text-gray-700" style={{ fontSize: 9 }}>{v.channel}</span>
+                      <span className="text-gray-700" style={{ fontSize: 9 }}>
+                        {(() => { try { const d = new Date(v.publishedAt); return `${d.getMonth()+1}/${d.getDate()}`; } catch(e) { return ''; } })()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* 매수지수 반영 안내 */}
+            <p className="text-xs text-gray-700 text-center">
+              📊 YouTube 관심 지수는 매수지수에 ±3pt 반영됩니다
+            </p>
+          </div>
+        )}
+      </Section>
 
       {/* ── Section 3: 수집 타임라인 ──────────────────────────────────────── */}
       <Section title="수집 타임라인" icon="📋"
