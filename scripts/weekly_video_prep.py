@@ -112,11 +112,12 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 
 === 출력 규칙 (반드시 준수) ===
 • 전체 5개 씬, 씬당 나레이션 읽는 시간 8~10초 분량
-• 각 씬 최대 4줄, 줄당 최대 20자 (짧고 강렬하게!)
-• PPT 낭독 금지 — 뉴스 헤드라인 + 핵심 숫자 중심으로
-• 첫 줄 = 임팩트 있는 헤드라인 (5~10자)
-• 나머지 = 핵심 숫자/키워드 나열
-• 나레이션 톤: 빠르고 활기찬 뉴스 앵커
+• 각 씬 최대 4줄, 줄당 최대 20자
+• PPT 낭독 절대 금지! — 유재석처럼 밝고 에너지 넘치는 MC 어투로
+• 첫 줄 = 감탄사 또는 강렬한 한마디 ("와!", "대박!", "여러분!" 등)
+• 나머지 = 핵심 숫자/키워드를 짧고 임팩트 있게
+• 문장 끝에 "!", "~", "죠?" 등 생동감 있는 종결어 사용
+• 나레이션 톤: 예능 MC + 경제 뉴스 앵커 믹스 (기분 좋아지는 어투)
 
 === 출력 형식 ===
 SCENE_1_TITLE: [6자 이내 제목]
@@ -553,13 +554,6 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         for line in strat_lines[:4]:
             draw.text((W // 2, y), line[:36], font=f_md, fill=LGRAY, anchor="mt")
             y += 48
-
-    # ── 로봇 마스코트 (우하단 고정) ──────────────────────────────────────
-    mood = SCENE_MOODS[idx - 1]
-    if idx == 1:
-        bi = summary.get("latest_buy_index") or 50
-        mood = "excited" if bi >= 65 else "worried" if bi < 45 else "neutral"
-    img = draw_robot(img, W - 218, H - 310, mood=mood, accent=accent)
 
     return img
 

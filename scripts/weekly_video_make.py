@@ -11,8 +11,9 @@ import os, json, sys, asyncio, math
 from pathlib import Path
 
 REPORT_BASE   = Path(__file__).parent.parent / "data" / "weekly-report"
-VOICE         = "ko-KR-InJoonNeural"
-RATE          = "+80%"
+VOICE         = "ko-KR-HyunsuNeural"   # 캐주얼 남성 (활기찬 MC 톤)
+RATE          = "+50%"                 # 약간 여유있게 (너무 빠르면 전달력↓)
+PITCH         = "+12%"                 # 톤업 → 밝고 에너지 넘치는 느낌
 FPS           = 24
 W, H          = 1280, 720
 MIN_SCENE_SEC = 5.0
@@ -72,7 +73,7 @@ def clean_for_tts(lines):
 
 async def gen_audio(text, path):
     import edge_tts
-    comm = edge_tts.Communicate(text, VOICE, rate=RATE)
+    comm = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
     await comm.save(str(path))
 
 # ── 로봇 마스코트 ─────────────────────────────────────────────────────────────
