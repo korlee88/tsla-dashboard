@@ -554,13 +554,6 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             draw.text((W // 2, y), line[:36], font=f_md, fill=LGRAY, anchor="mt")
             y += 48
 
-    # ── 로봇 마스코트 (우하단 고정) ──────────────────────────────────────
-    mood = SCENE_MOODS[idx - 1]
-    if idx == 1:
-        bi = summary.get("latest_buy_index") or 50
-        mood = "excited" if bi >= 65 else "worried" if bi < 45 else "neutral"
-    img = draw_robot(img, W - 218, H - 310, mood=mood, accent=accent)
-
     return img
 
 
