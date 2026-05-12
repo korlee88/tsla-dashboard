@@ -1,6 +1,381 @@
 {
   "sessions": [
     {
+      "id": "auto-1778613929681",
+      "date": "2026-05-13",
+      "displayDate": "2026.05.13",
+      "kstTime": "04:24",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778613899885,
+          "title": "테슬라, 독일 기가팩토리 배터리 셀 생산에 2억 5천만 달러 투자",
+          "summary": "테슬라가 독일 공장의 배터리 셀 생산 확대를 위해 약 2억 5천만 달러를 투자할 것이라고 발표했다. 이는 연간 생산 목표를 높이고 유럽 성장 계획을 강화하기 위함이다. 이 소식은 장기적인 관점에서 긍정적인 영향을 미칠 것으로 보인다.",
+          "source": "MarketBeat",
+          "date": "2026-05-12",
+          "category": "Energy"
+        },
+        {
+          "id": 1778613899886,
+          "title": "테슬라 로보택시 텍사스 출시, 예상치 못한 문제 직면",
+          "summary": "로이터 통신에 따르면 테슬라의 텍사스 로보택시 출시가 잘못된 하차 지점 및 긴 대기 시간과 같은 문제에 직면하고 있다. 이는 회사의 자율주행 기술 일정에 대한 신뢰를 약화시킬 수 있다.",
+          "source": "Reuters",
+          "date": "2026-05-12",
+          "category": "Product"
+        },
+        {
+          "id": 1778613899887,
+          "title": "테슬라, 4월 중국 판매량 전년 대비 10% 감소",
+          "summary": "테슬라의 4월 중국 내수 판매량이 전년 대비 약 10% 감소한 25,956대를 기록하며 3월 수준에도 미치지 못했다. 중국 신에너지차 시장 점유율은 3%로 하락하여 2025년 11월 이후 최저치를 기록했다.",
+          "source": "Stocktwits",
+          "date": "2026-05-12",
+          "category": "Market"
+        },
+        {
+          "id": 1778613899888,
+          "title": "일론 머스크, 트럼프 대통령의 중국 방문에 동행 예정",
+          "summary": "일론 머스크 테슬라 CEO가 도널드 트럼프 미국 대통령의 5월 13일부터 15일까지 베이징 방문에 동행할 예정이다. 투자자들은 중국이 테슬라의 완전자율주행(FSD) 소프트웨어 승인을 마침내 승인할지 여부를 면밀히 주시하고 있다.",
+          "source": "Stocktwits",
+          "date": "2026-05-12",
+          "category": "Musk"
+        },
+        {
+          "id": 1778613899889,
+          "title": "테슬라 상하이 공장, 4월 수출량 강세 유지",
+          "summary": "중국 내수 판매는 약화되었지만, 테슬라 상하이 공장은 4월에 53,000대 이상의 차량을 해외로 선적하며 강력한 수출 실적을 기록했다. 이는 시설 역사상 가장 강력한 수출 월 중 하나이다.",
+          "source": "Stocktwits",
+          "date": "2026-05-12",
+          "category": "Delivery"
+        },
+        {
+          "id": 1778613899890,
+          "title": "테슬라, 1분기 자본 지출 가이던스 상향 조정 후 주가 소폭 하락",
+          "summary": "테슬라의 1분기 실적은 영업 이익과 잉여 현금 흐름에서 전년 대비 강력한 성장을 보였다. 그러나 경영진이 2026년 자본 지출 가이던스를 상향 조정함에 따라 주가는 시간 외 거래에서 1% 하락했다.",
+          "source": "Morningstar",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1778613899891,
+          "title": "파이퍼 샌들러, 테슬라 주식에 대한 낙관적 평가 유지",
+          "summary": "파이퍼 샌들러는 테슬라의 현재 가치 평가에서 옵티머스 로봇의 잠재력을 '무료로' 얻는 것과 같다고 주장하며, 로봇 잠재력에 대한 낙관적인 평가를 재확인했다. 이는 테슬라의 장기적인 AI 및 자율성 잠재력에 대한 긍정적인 시각을 반영한다.",
+          "source": "Investing.com",
+          "date": "2026-05-11",
+          "category": "Market"
+        },
+        {
+          "id": 1778613899892,
+          "title": "테슬라, 충전 대기열 혼란 완화를 위한 슈퍼차저 '대기 목록' 기능 시범 운영",
+          "summary": "테슬라가 슈퍼차저 '대기 목록' 기능을 시범 운영하여 충전 대기열의 혼란을 줄이려 한다. 이는 고객 서비스 개선에 유용하지만, 즉각적인 수익에는 큰 영향을 미 미치지 않을 것으로 예상된다.",
+          "source": "MarketBeat",
+          "date": "2026-05-12",
+          "category": "Product"
+        },
+        {
+          "id": 1778613899893,
+          "title": "테슬라, 중국 FSD 출시 지연 지속",
+          "summary": "일론 머스크가 이전에 2월 또는 3월에 승인이 있을 수 있다고 시사했음에도 불구하고 테슬라의 중국 FSD(Full Self-Driving) 출시가 계속 지연되고 있으며, 현재는 3분기로 예상된다.",
+          "source": "Stocktwits",
+          "date": "2026-05-12",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778613899894,
+          "title": "테슬라, 1분기 매출 전년 대비 16% 증가 및 마진 확대",
+          "summary": "테슬라는 2026년 1분기에 전년 대비 16% 증가한 223억 9천만 달러의 매출을 기록하며 예상치를 상회했다. 또한 마진이 확대되고 자동차 생산 및 인도량이 눈에 띄게 개선되었다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-07",
+          "category": "Earnings"
+        }
+      ],
+      "analyses": {
+        "1778613899885": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 독일 기가팩토리 배터리 셀 생산에 대한 2억 5천만 달러 투자는 유럽 시장에서의 생산 능력과 장기적인 성장 잠재력을 강화할 것입니다.",
+          "key_factors": [
+            "배터리 셀 생산 확대",
+            "유럽 시장 성장 계획 강화"
+          ]
+        },
+        "1778613899886": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 로보택시 출시가 잘못된 하차 지점 및 긴 대기 시간과 같은 문제에 직면하여 자율주행 기술 일정에 대한 신뢰를 약화시킬 수 있습니다.",
+          "key_factors": [
+            "로보택시 출시 문제",
+            "자율주행 기술 신뢰도 하락"
+          ]
+        },
+        "1778613899887": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라의 4월 중국 내수 판매량이 전년 대비 10% 감소하여 시장 점유율이 최저치를 기록하면서 부정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "중국 판매량 감소",
+            "시장 점유율 하락"
+          ]
+        },
+        "1778613899888": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R20"
+          ],
+          "reasoning": "일론 머스크가 트럼프 대통령의 중국 방문에 동행하여 테슬라의 FSD 소프트웨어 승인 가능성에 대한 기대감을 높이고 있으며, 이는 중국 시장에서의 성장 잠재력을 시사합니다.",
+          "key_factors": [
+            "FSD 승인 기대",
+            "중국 시장 접근성"
+          ]
+        },
+        "1778613899889": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라 상하이 공장의 4월 강력한 수출 실적은 중국 내수 판매 약세에도 불구하고 긍정적인 해외 수요를 나타내며 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "상하이 공장 수출량",
+            "해외 수요"
+          ]
+        },
+        "1778613899890": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 실적은 영업 이익과 잉여 현금 흐름에서 강한 성장을 보였지만, 2026년 자본 지출 가이던스 상향 조정으로 인해 주가가 소폭 하락했습니다.",
+          "key_factors": [
+            "자본 지출 가이던스 상향 조정",
+            "주가 소폭 하락"
+          ]
+        },
+        "1778613899891": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "파이퍼 샌들러가 테슬라의 옵티머스 로봇 잠재력에 대한 낙관적인 평가를 재확인했지만, 이는 새로운 정보가 아닌 분석가의 의견이며 구체적인 데이터나 사건을 포함하지 않습니다.",
+          "key_factors": [
+            "분석가 의견",
+            "옵티머스 로봇 잠재력"
+          ]
+        },
+        "1778613899892": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 슈퍼차저 대기 목록 기능 시범 운영은 고객 경험을 개선하여 장기적인 브랜드 충성도에 긍정적이지만, 단기적인 수익에 미치는 영향은 제한적입니다.",
+          "key_factors": [
+            "고객 서비스 개선",
+            "충전 경험 향상"
+          ]
+        },
+        "1778613899893": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 중국 FSD 출시가 일론 머스크의 이전 발언에도 불구하고 3분기로 지연될 것으로 예상되어 잠재적인 매출 및 시장 확대 기회에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "중국 FSD 출시 지연",
+            "일론 머스크의 이전 발언 불일치"
+          ]
+        },
+        "1778613899894": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 1분기 매출이 전년 대비 16% 증가하여 예상치를 상회하고 마진이 확대되었으며 생산 및 인도량이 개선되었다는 공식적인 실적 발표는 긍정적인 영향을 미칩니다.",
+          "key_factors": [
+            "매출 증가",
+            "마진 확대",
+            "생산 및 인도량 개선"
+          ]
+        }
+      },
+      "avgScore": 0.4,
+      "buyIndex": 54,
+      "direction": "bullish",
+      "topRules": [
+        "R20",
+        "R13"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 0,
+        "reasoning": "지난 7일간(2026년 5월 6일 ~ 2026년 5월 13일) @elonmusk의 Tesla, TSLA, 전기차, Robotaxi, FSD, Optimus, 에너지 저장 또는 Tesla 사업 전략과 관련된 직접적인 게시물을 찾을 수 없었습니다. 검색 결과는 주로 Tesla 주식 분석 및 Elon Musk의 과거 트윗 영향에 대한 기사였습니다."
+      },
+      "googleTrends": {
+        "current_score": 40,
+        "week_avg": 45,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "Elon Musk",
+          "Tesla FSD"
+        ],
+        "reasoning": "지난주 Tesla의 검색 관심도는 하락세를 보였으며, 이는 주로 주가 하락, Elon Musk의 중국 방문, 그리고 FSD 관련 문제에 대한 관심 때문입니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.26,
+        "velocity_label": "급감 (×0.3)",
+        "reason": "조회수 속도 급감 (×0.3) | 최근 3일 482,469회 / 이전 4~7일 1,883,131회 | 총 2,365,600회 (44개 영상)",
+        "video_count": 44,
+        "total_views": 2365600,
+        "hot_views": 482469,
+        "baseline_views": 1883131,
+        "top_videos": [
+          {
+            "title": "REAL Transformers One Optimus Prime Helmet! 🤖",
+            "channel": "Kyle Krueger",
+            "publishedAt": "2026-05-07T00:23:16Z",
+            "viewCount": 1009777
+          },
+          {
+            "title": "Nobody Sees What Amazon Just Did to Tesla",
+            "channel": "Farzad",
+            "publishedAt": "2026-05-11T12:00:06Z",
+            "viewCount": 154111
+          },
+          {
+            "title": "Why this Optimus Prime feels too heavy and complicated?! #transformers #aoe #tlk #optimusprime",
+            "channel": "scoremia",
+            "publishedAt": "2026-05-06T16:15:39Z",
+            "viewCount": 132489
+          },
+          {
+            "title": "This Stock will mint more Millionaires than Nvidia did‼️",
+            "channel": "Jeremy Lefebvre Makes Money",
+            "publishedAt": "2026-05-06T00:14:23Z",
+            "viewCount": 124664
+          },
+          {
+            "title": "特斯拉开源“肌腱手”！机器人终于像人一样灵活了？#特斯拉 #机器人手 #肌腱驱动 #AI机器人 #Optimus #科技前沿 #科技 #youtubeshorts #黑科技",
+            "channel": "超越認知",
+            "publishedAt": "2026-05-06T09:17:02Z",
+            "viewCount": 114492
+          }
+        ],
+        "collected_at": "2026-05-12T19:24:49Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Energy": 1,
+        "Product": 2,
+        "Market": 2,
+        "Musk": 1,
+        "Delivery": 1,
+        "Earnings": 2,
+        "Regulatory": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.02,
+        "qqqChg": -0.58,
+        "vixClose": 18.040000915527344,
+        "wtiChg": 3.9,
+        "cnyChg": -0.04,
+        "prevTslaChg": 5.41,
+        "rsi": 57.7,
+        "macd": {
+          "macd": 2.8079299346222797,
+          "signal": -1.2174379674799096,
+          "hist": 4.0253679021021895,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 465.37,
+          "middle": 405.29,
+          "lower": 345.21,
+          "pos": 0.728
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 54,
+        "catFinancial": 3,
+        "macdTrend": 2,
+        "bbHigh": -2,
+        "googleTrends": -1,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 432.64,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/13(수)",
+          "change_pct": -1.2,
+          "signal": "매도",
+          "basePrice": 432.64,
+          "predictedPrice": 427.45
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/14(목)",
+          "change_pct": -0.8,
+          "signal": "매도",
+          "basePrice": 432.64,
+          "predictedPrice": 429.18
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/15(금)",
+          "change_pct": 0.1,
+          "signal": "관망",
+          "basePrice": 432.64,
+          "predictedPrice": 433.07
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/18(월)",
+          "change_pct": -0.3,
+          "signal": "관망",
+          "basePrice": 432.64,
+          "predictedPrice": 431.34
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/18(월)",
+          "change_pct": 0.5,
+          "signal": "관망",
+          "basePrice": 432.64,
+          "predictedPrice": 434.8
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778613929681
+    },
+    {
       "id": "auto-1778596305353",
       "date": "2026-05-12",
       "displayDate": "2026.05.12",
@@ -21033,5 +21408,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-12 23:29 KST"
+  "lastUpdated": "2026-05-13 04:24 KST"
 }
