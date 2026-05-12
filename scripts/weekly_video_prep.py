@@ -138,10 +138,13 @@ def _build_prompt(summary):
 
 
 def generate_script_gemini(prompt):
-    import google.generativeai as genai
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    return model.generate_content(prompt).text
+    from google import genai
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash-lite",
+        contents=prompt,
+    )
+    return response.text
 
 
 def generate_script(summary):
