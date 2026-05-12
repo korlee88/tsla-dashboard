@@ -12,9 +12,10 @@ from pathlib import Path
 
 REPORT_BASE   = Path(__file__).parent.parent / "data" / "weekly-report"
 VOICE         = "ko-KR-InJoonNeural"   # 남성 뉴스 톤 (대안: ko-KR-SunHiNeural)
+RATE          = "+80%"                 # 나레이션 속도 (1분 이내 목표)
 FPS           = 24
 W, H          = 1280, 720
-MIN_SCENE_SEC = 8.0
+MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
     (167, 139, 250),  # scene1 purple
@@ -70,7 +71,7 @@ def clean_for_tts(lines: list) -> str:
 
 async def gen_audio(text: str, path: Path):
     import edge_tts
-    comm = edge_tts.Communicate(text, VOICE)
+    comm = edge_tts.Communicate(text, VOICE, rate=RATE)
     await comm.save(str(path))
 
 # ── 프레임 생성 (Pillow → numpy) ──────────────────────────────────────────────
@@ -80,26 +81,23 @@ def make_frame(img_path: Path | None, subtitle_lines: list,
     from PIL import Image, ImageDraw, ImageFont
     import numpy as np
 
-    # 베이스 이미지
+    # 베이스 이미지 (씬 PNG 그대로 사용)
     if img_path and img_path.exists():
         img = Image.open(img_path).convert("RGB")
     else:
         img = Image.new("RGB", (W, H), (14, 17, 23))
         draw0 = ImageDraw.Draw(img)
-        draw0.rectangle([0, 0, W, 7], fill=accent)
-        draw0.rectangle([36, 36, W - 36, H - 36], fill=(28, 31, 38))
+        draw0.rectangle([0, 0, W, 6], fill=accent)
 
-    # 하단 그라데이션 오버레이
+    # 하단 자막 영역 그라데이션 (얇게)
     ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     od = ImageDraw.Draw(ov)
-    for dy in range(220):
-        alpha = int(dy / 220 * 185)
-        od.line([(0, H - 220 + dy), (W, H - 220 + dy)], fill=(0, 0, 0, alpha))
+    for dy in range(130):
+        alpha = int(dy / 130 * 200)
+        od.line([(0, H - 130 + dy), (W, H - 130 + dy)], fill=(0, 0, 0, alpha))
     img = Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
     draw = ImageDraw.Draw(img)
-    # 액센트 구분선
-    draw.rectangle([60, H - 208, W - 60, H - 204], fill=accent)
 
     def fnt(size):
         try:
@@ -107,19 +105,23 @@ def make_frame(img_path: Path | None, subtitle_lines: list,
         except Exception:
             return ImageFont.load_default()
 
-    y = H - 198
-    for i, line in enumerate(subtitle_lines[:4]):
-        if not line.strip():
-            y += 8
-            continue
-        size = 32 if i == 0 else 25
+    # 자막: 첫 줄만 크게 (핵심 키워드), 두 번째 줄은 보조
+    active = [l for l in subtitle_lines if l.strip()][:2]
+    sizes  = [38, 26]
+    colors = [accent, (220, 225, 235)]
+    y = H - 118
+
+    for i, line in enumerate(active):
+        size = sizes[i] if i < len(sizes) else 24
+        col  = colors[i] if i < len(colors) else (180, 185, 195)
         f    = fnt(size)
-        col  = accent if i == 0 else (210, 218, 228)
         bbox = draw.textbbox((0, 0), line, font=f)
         tw   = bbox[2] - bbox[0]
         x    = max(40, (W - tw) // 2)
+        # 텍스트 그림자 (가독성)
+        draw.text((x + 2, y + 2), line, font=f, fill=(0, 0, 0))
         draw.text((x, y), line, font=f, fill=col)
-        y   += (bbox[3] - bbox[1]) + 10
+        y += (bbox[3] - bbox[1]) + 10
 
     return np.array(img)
 
