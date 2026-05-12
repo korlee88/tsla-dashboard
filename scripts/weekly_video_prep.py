@@ -6,7 +6,7 @@ TSLA 주간 영상 자료 생성 스크립트
 - 저장: data/weekly-report/YYYY-MM-DD/
 """
 
-import os, json, sys, textwrap
+import os, json, sys, textwrap, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -31,6 +31,15 @@ CYAN    = (6, 182, 212)
 W, H    = 1280, 720
 
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER, CYAN]
+
+# 씬별 Wikipedia 배경 이미지 소스
+SCENE_WIKI_ARTICLES = [
+    "Tesla, Inc.",              # scene 1 - 테슬라 개요
+    "Tesla Cybertruck",         # scene 2 - 신제품/호재
+    "Elon Musk",                # scene 3 - 머스크 리스크
+    "Gigafactory Nevada",       # scene 4 - 생산/기술
+    "Tesla Model S",            # scene 5 - 결론/미래
+]
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
 
@@ -264,9 +273,41 @@ def render_lines(draw, text, x, y, font, fill, max_px, line_gap=8):
     return y
 
 
-def make_canvas(accent):
+def fetch_wiki_image(article: str, out_path: Path) -> bool:
+    """Wikipedia 기사 대표 이미지를 다운로드. 실패 시 False 반환."""
+    headers = {"User-Agent": "TSLA-Dashboard/2.0 (github.com/korlee88/tsla-dashboard)"}
+    try:
+        params = urllib.parse.urlencode({
+            "action": "query", "titles": article,
+            "prop": "pageimages", "pithumbsize": "1280",
+            "format": "json",
+        })
+        req = urllib.request.Request(
+            f"https://en.wikipedia.org/w/api.php?{params}", headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+        pages = data.get("query", {}).get("pages", {})
+        for p in pages.values():
+            img_url = p.get("thumbnail", {}).get("source", "")
+            if img_url:
+                req2 = urllib.request.Request(img_url, headers=headers)
+                with urllib.request.urlopen(req2, timeout=15) as r2:
+                    out_path.write_bytes(r2.read())
+                return True
+    except Exception as e:
+        print(f"   ⚠ 배경 이미지 다운로드 실패 ({article}): {e}", file=sys.stderr)
+    return False
+
+
+def make_canvas(accent, bg_path: Path | None = None):
     from PIL import Image, ImageDraw
-    img  = Image.new("RGB", (W, H), BG)
+    if bg_path and bg_path.exists():
+        # 실제 사진을 배경으로 — 어두운 오버레이 적용
+        bg = Image.open(bg_path).convert("RGB").resize((W, H), Image.LANCZOS)
+        overlay = Image.new("RGBA", (W, H), (8, 10, 16, 195))
+        img = Image.alpha_composite(bg.convert("RGBA"), overlay).convert("RGB")
+    else:
+        img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
     draw.rectangle([0, 0, W, 6], fill=accent)
     draw.rectangle([0, H - 48, W, H], fill=(8, 10, 16))
@@ -301,14 +342,14 @@ def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
     draw.text((x + w // 2, y + h - 22), value, font=fnt_val, fill=col, anchor="mb")
 
 
-def build_scene_image(scene, summary, font_reg, font_bold):
+def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None = None):
     from PIL import ImageFont
     idx    = scene["index"]
     title  = scene["title"] or f"씬 {idx}"
     lines  = scene.get("lines") or [l.strip() for l in (scene.get("body") or "").split("\n") if l.strip()]
     accent = SCENE_ACCENTS[idx - 1]
 
-    img, draw = make_canvas(accent)
+    img, draw = make_canvas(accent, bg_path)
 
     def fnt(path, size):
         try:
@@ -443,11 +484,24 @@ def build_images(scenes, summary, out_dir):
         print("   ⚠ 한글 폰트 없음 — 이미지 건너뜀", file=sys.stderr)
         return
 
+    # Wikipedia 배경 이미지 사전 다운로드
+    print("   🖼 Wikipedia 배경 이미지 다운로드 중...")
+    bg_paths = {}
     for scene in scenes:
-        img  = build_scene_image(scene, summary, font_reg, font_bold)
-        path = out_dir / f"scene_{scene['index']:02d}.png"
+        idx     = scene["index"]
+        article = SCENE_WIKI_ARTICLES[idx - 1]
+        bg_path = out_dir / f"bg_{idx:02d}.jpg"
+        ok = fetch_wiki_image(article, bg_path)
+        bg_paths[idx] = bg_path if ok else None
+        status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
+        print(f"      씬{idx} [{article[:20]}] {status}")
+
+    for scene in scenes:
+        idx  = scene["index"]
+        img  = build_scene_image(scene, summary, font_reg, font_bold, bg_paths.get(idx))
+        path = out_dir / f"scene_{idx:02d}.png"
         img.save(path, "PNG")
-        print(f"   ✅ scene_{scene['index']:02d}.png 저장")
+        print(f"   ✅ scene_{idx:02d}.png 저장")
 
 # ── 메인 ──────────────────────────────────────────────────────────────────
 
