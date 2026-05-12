@@ -142,9 +142,7 @@ async def process_scene(scene: dict, report_dir: Path, font_path: str | None):
     await gen_audio(tts_text, audio_path)
 
     audio = AudioFileClip(str(audio_path))
-    dur   = max(audio.duration + 0.5, MIN_SCENE_SEC)
-
-    # ── 자막 청크 분할 ────────────────────────────────────────────────────────
+    dur   = max(audio.duration + 0.5, MIN_SCENE_SEC)    # ── 자막 청크 분할 ────────────────────────────────────────────────────────
     chunks: list[list[str]] = []
     buf: list[str] = []
     for line in lines:
@@ -177,8 +175,8 @@ async def process_scene(scene: dict, report_dir: Path, font_path: str | None):
     else:
         video = concatenate_videoclips(sub_clips, method="compose")
 
-    # moviepy 2.x: with_audio() 대신 audio 속성 직접 설정
-    video = video.with_audio(audio.with_duration(dur))
+    # 오디오는 실제 길이 그대로 — with_duration으로 늘리면 범위 초과 에러 발생
+    video = video.with_audio(audio)
 
     print(f"   ✅ 씬 {idx} 완료 ({dur:.1f}초, 자막 {len(chunks)}구간)")
     return video
