@@ -10,7 +10,8 @@ import os, json, sys, textwrap
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY", "")
 AUTO_SESSIONS     = Path(__file__).parent.parent / "data" / "auto-sessions.json"
 OUTPUT_BASE       = Path(__file__).parent.parent / "data" / "weekly-report"
 LOOKBACK_DAYS     = 7
@@ -137,6 +138,17 @@ def _build_prompt(summary):
     )
 
 
+def generate_script_opus(prompt):
+    import anthropic
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    msg = client.messages.create(
+        model="claude-opus-4-7",
+        max_tokens=2048,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return msg.content[0].text
+
+
 def generate_script_gemini(prompt):
     from google import genai
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -149,10 +161,16 @@ def generate_script_gemini(prompt):
 
 def generate_script(summary):
     prompt = _build_prompt(summary)
-    if not GEMINI_API_KEY:
-        raise RuntimeError("GEMINI_API_KEY 환경변수 필요")
-    print("   🤖 Gemini Flash로 대본 생성 중...")
-    return generate_script_gemini(prompt)
+    if ANTHROPIC_API_KEY:
+        try:
+            print("   🤖 Claude Opus 4로 대본 생성 중...")
+            return generate_script_opus(prompt)
+        except Exception as e:
+            print(f"   ⚠ Opus 실패 ({e}) — Gemini로 전환", file=sys.stderr)
+    if GEMINI_API_KEY:
+        print("   🤖 Gemini Flash로 대본 생성 중...")
+        return generate_script_gemini(prompt)
+    raise RuntimeError("ANTHROPIC_API_KEY 또는 GEMINI_API_KEY 필요")
 
 
 def parse_script(raw):
@@ -356,8 +374,8 @@ def main():
     print(f"   평균 매수지수: {summary['avg_buy_index']} / 현재가: ${summary['latest_price']}")
 
     # ── 대본 ──
-    if not GEMINI_API_KEY:
-        print("⚠ GEMINI_API_KEY 없음 — 대본 생성 건너뜀", file=sys.stderr)
+    if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
+        print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
         scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(1, 6)]
     else:
         print("✍ 대본 생성 중...")
