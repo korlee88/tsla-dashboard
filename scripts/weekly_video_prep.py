@@ -161,13 +161,15 @@ def generate_script_gemini(prompt):
 def generate_script(summary):
     prompt = _build_prompt(summary)
     if ANTHROPIC_API_KEY:
-        print("   🤖 Claude Opus 4로 대본 생성 중...")
-        return generate_script_opus(prompt)
-    elif GEMINI_API_KEY:
-        print("   🤖 Gemini Flash로 대본 생성 중 (fallback)...")
+        try:
+            print("   🤖 Claude Opus 4로 대본 생성 중...")
+            return generate_script_opus(prompt)
+        except Exception as e:
+            print(f"   ⚠ Opus 실패 ({e}) — Gemini로 전환", file=sys.stderr)
+    if GEMINI_API_KEY:
+        print("   🤖 Gemini Flash로 대본 생성 중...")
         return generate_script_gemini(prompt)
-    else:
-        raise RuntimeError("ANTHROPIC_API_KEY 또는 GEMINI_API_KEY 필요")
+    raise RuntimeError("ANTHROPIC_API_KEY 또는 GEMINI_API_KEY 필요")
 
 
 def parse_script(raw):
@@ -185,7 +187,9 @@ def parse_script(raw):
             s   = raw.index(bk) + len(bk)
             nxt = raw.find(f"SCENE_{i+1}_TITLE:", s) if i < 5 else len(raw)
             body = raw[s:nxt].strip()
-        scenes.append({"index": i, "title": title, "body": body})
+        # weekly_video_make.py expects "lines" as a list
+        lines = [l.strip() for l in body.split("\n")]
+        scenes.append({"index": i, "title": title, "lines": lines, "body": body})
     return scenes
 
 # ── 이미지 생성 ───────────────────────────────────────────────────────────
