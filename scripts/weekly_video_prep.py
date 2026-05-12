@@ -31,6 +31,7 @@ CYAN    = (6, 182, 212)
 W, H    = 1280, 720
 
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER, CYAN]
+SCENE_MOODS   = ["excited", "happy", "worried", "focused", "happy"]
 
 # 씬별 Wikipedia 배경 이미지 소스
 SCENE_WIKI_ARTICLES = [
@@ -273,6 +274,92 @@ def render_lines(draw, text, x, y, font, fill, max_px, line_gap=8):
     return y
 
 
+def draw_robot(img, rx: int, ry: int, mood: str = "neutral", accent: tuple = (167, 139, 250)):
+    """씬 위에 귀여운 로봇 마스코트 합성."""
+    from PIL import Image, ImageDraw
+
+    layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    d     = ImageDraw.Draw(layer)
+    BODY  = (38, 44, 60)
+    METAL = (78, 88, 112)
+    SHINE = (215, 225, 240)
+
+    # ── 안테나 ──────────────────────────────────────
+    ax = rx + 50
+    d.line([ax, ry - 26, ax, ry], fill=METAL, width=3)
+    d.ellipse([ax - 8, ry - 36, ax + 8, ry - 20], fill=accent, outline=SHINE, width=1)
+
+    # ── 머리 ──────────────────────────────────────
+    d.rounded_rectangle([rx, ry, rx + 100, ry + 86], radius=18,
+                        fill=BODY, outline=METAL, width=2)
+
+    # ── 눈 (mood별 표정) ──────────────────────────
+    ey = ry + 22
+    lx, rx2 = rx + 13, rx + 57
+    ew, eh  = 28, 22
+
+    if mood == "happy":
+        d.arc([lx, ey, lx+ew, ey+eh], start=200, end=340, fill=accent, width=4)
+        d.arc([rx2, ey, rx2+ew, ey+eh], start=200, end=340, fill=accent, width=4)
+    elif mood == "excited":
+        d.ellipse([lx, ey-2, lx+ew, ey+ew-2], fill=accent)
+        d.ellipse([rx2, ey-2, rx2+ew, ey+ew-2], fill=accent)
+        d.ellipse([lx+4, ey+2, lx+9, ey+7], fill=SHINE)
+        d.ellipse([rx2+4, ey+2, rx2+9, ey+7], fill=SHINE)
+    elif mood == "worried":
+        d.line([lx, ey+10, lx+ew, ey+4], fill=(239, 68, 68), width=5)
+        d.line([rx2, ey+4, rx2+ew, ey+10], fill=(239, 68, 68), width=5)
+    elif mood == "focused":
+        d.rectangle([lx, ey+7, lx+ew, ey+15], fill=accent)
+        d.rectangle([rx2, ey+7, rx2+ew, ey+15], fill=accent)
+    else:
+        d.rectangle([lx, ey, lx+ew, ey+eh], fill=accent)
+        d.rectangle([rx2, ey, rx2+ew, ey+eh], fill=accent)
+        d.ellipse([lx+4, ey+3, lx+9, ey+9], fill=SHINE)
+        d.ellipse([rx2+4, ey+3, rx2+9, ey+9], fill=SHINE)
+
+    # ── 입 ────────────────────────────────────────
+    my = ry + 60
+    if mood in ("happy", "excited"):
+        d.arc([rx+26, my - 8, rx+74, my + 14], start=0, end=180, fill=accent, width=3)
+    elif mood == "worried":
+        d.arc([rx+26, my, rx+74, my + 18], start=180, end=360, fill=(239, 68, 68), width=3)
+    else:
+        d.line([rx+30, my + 6, rx+70, my + 6], fill=METAL, width=3)
+
+    # ── 몸통 ──────────────────────────────────────
+    bx, by = rx + 12, ry + 94
+    d.rounded_rectangle([bx, by, bx+76, by+66], radius=10, fill=BODY, outline=METAL, width=2)
+
+    # 가슴 엠블럼 (T자 마크)
+    d.rounded_rectangle([bx+18, by+10, bx+58, by+44], radius=6, fill=accent)
+    tx = bx + 28
+    d.line([tx, by+16, tx+20, by+16], fill=(255,255,255), width=3)
+    d.line([tx+10, by+16, tx+10, by+40], fill=(255,255,255), width=3)
+
+    # 가슴 LED (오른쪽 하단)
+    led_col = GREEN if mood in ("happy","excited") else RED if mood=="worried" else AMBER
+    d.ellipse([bx+56, by+46, bx+66, by+56], fill=led_col)
+
+    # ── 팔 ────────────────────────────────────────
+    d.rounded_rectangle([bx-20, by+8, bx-5, by+48], radius=6, fill=METAL)
+    d.rounded_rectangle([bx+81, by+8, bx+96, by+48], radius=6, fill=METAL)
+
+    # 손 (동그라미)
+    d.ellipse([bx-24, by+42, bx-6, by+60], fill=METAL)
+    d.ellipse([bx+82, by+42, bx+100, by+60], fill=METAL)
+
+    # ── 다리 ──────────────────────────────────────
+    d.rounded_rectangle([bx+8,  by+70, bx+30, by+88], radius=6, fill=METAL)
+    d.rounded_rectangle([bx+46, by+70, bx+68, by+88], radius=6, fill=METAL)
+
+    # 발
+    d.rounded_rectangle([bx+4,  by+84, bx+34, by+96], radius=4, fill=(55,62,80))
+    d.rounded_rectangle([bx+42, by+84, bx+72, by+96], radius=4, fill=(55,62,80))
+
+    return Image.alpha_composite(img.convert("RGBA"), layer).convert("RGB")
+
+
 def fetch_wiki_image(article: str, out_path: Path) -> bool:
     """Wikipedia 기사 대표 이미지를 다운로드. 실패 시 False 반환."""
     headers = {"User-Agent": "TSLA-Dashboard/2.0 (github.com/korlee88/tsla-dashboard)"}
@@ -458,16 +545,21 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         bi_col = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
         sig   = "매 수" if bi >= 65 else "관 망" if bi >= 45 else "매 도"
 
-        # 중앙 대형 시그널
         draw.text((W // 2, 270), sig, font=f_xl, fill=bi_col, anchor="mm")
         draw.rectangle([W // 2 - 160, 310, W // 2 + 160, 316], fill=bi_col)
 
-        # 전략 줄
         strat_lines = [l for l in lines if l.strip()]
         y = 350
         for line in strat_lines[:4]:
             draw.text((W // 2, y), line[:36], font=f_md, fill=LGRAY, anchor="mt")
             y += 48
+
+    # ── 로봇 마스코트 (우하단 고정) ──────────────────────────────────────
+    mood = SCENE_MOODS[idx - 1]
+    if idx == 1:
+        bi = summary.get("latest_buy_index") or 50
+        mood = "excited" if bi >= 65 else "worried" if bi < 45 else "neutral"
+    img = draw_robot(img, W - 218, H - 310, mood=mood, accent=accent)
 
     return img
 
