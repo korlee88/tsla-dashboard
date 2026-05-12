@@ -353,9 +353,9 @@ def main():
     print(f"   평균 매수지수: {summary['avg_buy_index']} / 현재가: ${summary['latest_price']}")
 
     # ── 대본 ──
-    if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
-        print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
-        scenes = [{"index": i, "title": f"씬 {i}", "body": ""} for i in range(1, 6)]
+    if not GEMINI_API_KEY:
+        print("⚠ GEMINI_API_KEY 없음 — 대본 생성 건너뜀", file=sys.stderr)
+        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(1, 6)]
     else:
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
