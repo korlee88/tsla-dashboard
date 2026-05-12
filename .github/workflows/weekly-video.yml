@@ -1,10 +1,10 @@
 name: TSLA 주간 영상 자료 생성
 
-# 매주 월요일 KST 09:00 (UTC 00:00) — 지난 한 주 데이터 정리
+# 매주 월요일 KST 09:00 (UTC 00:00)
 on:
   schedule:
-    - cron: '0 0 * * 1'   # 월요일 KST 09:00
-  workflow_dispatch:        # 수동 실행 가능
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
 
 jobs:
   build-video-assets:
@@ -25,19 +25,31 @@ jobs:
         run: sudo apt-get install -y fonts-nanum --quiet
 
       - name: Python 의존성 설치
-        run: pip install anthropic google-generativeai Pillow --quiet
+        run: pip install anthropic google-generativeai Pillow edge-tts moviepy numpy --quiet
 
-      - name: 주간 영상 자료 생성
+      - name: 오늘 날짜 환경변수
+        run: echo "TODAY=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      # ── STEP 1: 대본 + 씬 이미지 생성 ──────────────────────────────────────
+      - name: 주간 대본 및 이미지 생성
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/weekly_video_prep.py
 
-      - name: 결과 커밋 & 푸시
+      # ── STEP 2: AI 나레이션 + 영상 합성 ────────────────────────────────────
+      - name: AI 나레이션 영상 생성
+        run: python scripts/weekly_video_make.py
+
+      # ── STEP 3: 대본·이미지 커밋 (영상은 아티팩트로 분리) ────────────────
+      - name: 대본·이미지 커밋 & 푸시
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "TSLA Auto Bot"
           git add data/weekly-report/
+          # 대용량 MP3/MP4는 커밋 제외
+          git restore --staged 'data/weekly-report/**/*.mp3' 2>/dev/null || true
+          git restore --staged 'data/weekly-report/**/*.mp4' 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
@@ -45,3 +57,12 @@ jobs:
             git pull --rebase origin master
             git push
           fi
+
+      # ── STEP 4: 영상 아티팩트 업로드 (30일 보관) ────────────────────────
+      - name: 영상 아티팩트 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: tsla-weekly-video-${{ env.TODAY }}
+          path: data/weekly-report/*/video.mp4
+          retention-days: 30
+          if-no-files-found: warn
