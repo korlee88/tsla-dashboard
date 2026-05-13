@@ -3618,6 +3618,8 @@ function VideoScriptPage({ onBack }) {
   const [selected, setSelected]   = useState(null);
   const [loading, setLoading]     = useState(true);
   const [activeScene, setActiveScene] = useState(null);
+  const [imagesOpen, setImagesOpen]   = useState(false);
+  const [openImage, setOpenImage]     = useState(null);
 
   useEffect(() => {
     // data/weekly-report/ 하위 최신 script.json 로드
@@ -3641,7 +3643,7 @@ function VideoScriptPage({ onBack }) {
   }, []);
 
   const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
-  const SCENE_ACCENTS = ['#a78bfa', '#22c55e', '#ef4444', '#f59e0b', '#06b6d4'];
+  const SCENE_ACCENTS = ['#a78bfa', '#22c55e', '#ef4444', '#f59e0b', '#06b6d4', '#3b82f6'];
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4 text-gray-500">
@@ -3856,6 +3858,51 @@ function VideoScriptPage({ onBack }) {
           )}
         </div>
       )}
+
+      {/* 씬 이미지 미리보기 드롭다운 */}
+      <div className="rounded-xl border overflow-hidden mb-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <button className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors"
+          onClick={() => { setImagesOpen(o => !o); setOpenImage(null); }}>
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">🖼 씬 이미지 미리보기</p>
+          <span className="text-gray-600 text-xs">{imagesOpen ? '▲' : '▼'}</span>
+        </button>
+        {imagesOpen && (
+          <div className="border-t divide-y" style={{ borderColor: '#2A2D35' }}>
+            {(sc.scenes || []).map((scene, i) => {
+              const accent = SCENE_ACCENTS[i] || '#a78bfa';
+              const imgSrc = `data/weekly-report/${sc._date}/scene_${String(scene.index).padStart(2,'0')}.png`;
+              const isOpenImg = openImage === i;
+              return (
+                <div key={i} style={{ borderColor: '#2A2D35' }}>
+                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-white/5 transition-colors"
+                    onClick={() => setOpenImage(isOpenImg ? null : i)}>
+                    <span className="w-6 h-6 rounded flex items-center justify-center text-xs font-black shrink-0"
+                      style={{ background: accent + '25', color: accent }}>
+                      {scene.index}
+                    </span>
+                    <span className="flex-1 text-sm text-gray-300">{scene.title}</span>
+                    <span className="text-xs text-gray-600">{isOpenImg ? '▲' : '▼'}</span>
+                  </button>
+                  {isOpenImg && (
+                    <div className="px-4 pb-4">
+                      <img src={imgSrc} alt={`씬 ${scene.index}`}
+                        className="w-full rounded-lg border"
+                        style={{ borderColor: accent + '50' }}
+                        onError={e => {
+                          e.target.replaceWith(Object.assign(document.createElement('p'), {
+                            className: 'text-xs text-gray-600 text-center py-4',
+                            textContent: '이미지를 불러올 수 없습니다 (워크플로 실행 후 생성됩니다)'
+                          }));
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       <p className="text-xs text-gray-700 text-center pb-4">
         🤖 {sc.generated_by || 'AI'} 생성 · {sc._date} · 본 각본은 투자 조언이 아닙니다
