@@ -3643,7 +3643,7 @@ function VideoScriptPage({ onBack }) {
   }, []);
 
   const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
-  const SCENE_ACCENTS = ['#a78bfa', '#22c55e', '#ef4444', '#f59e0b', '#06b6d4', '#3b82f6'];
+  const SCENE_ACCENTS = ['#a78bfa', '#22c55e', '#ef4444', '#f59e0b'];
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4 text-gray-500">
@@ -3870,7 +3870,7 @@ function VideoScriptPage({ onBack }) {
           <div className="border-t divide-y" style={{ borderColor: '#2A2D35' }}>
             {(sc.scenes || []).map((scene, i) => {
               const accent = SCENE_ACCENTS[i] || '#a78bfa';
-              const imgSrc = `data/weekly-report/${sc._date}/scene_${String(scene.index).padStart(2,'0')}.png`;
+              const imgSrc = `data/weekly-report/${sc._date}/scene_${String(scene.index).padStart(2,'0')}.png?v=${sc._date}`;
               const isOpenImg = openImage === i;
               return (
                 <div key={i} style={{ borderColor: '#2A2D35' }}>
