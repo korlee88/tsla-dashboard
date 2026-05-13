@@ -5894,6 +5894,52 @@ function BacktestPage({ apiKey }) {
   );
 }
 
+// ─── 컴포넌트: 배포 상태 배너 ────────────────────────────────────────────────
+function DeployBanner() {
+  const [run, setRun] = useState(null);
+
+  useEffect(() => {
+    const REPO = 'korlee88/tsla-dashboard';
+    const check = () =>
+      fetch(`https://api.github.com/repos/${REPO}/actions/runs?per_page=5`, {
+        headers: { Accept: 'application/vnd.github+json' },
+      })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (!data) return;
+          const active = (data.workflow_runs || []).find(
+            r => r.status === 'in_progress' || r.status === 'queued'
+          );
+          setRun(active || null);
+        })
+        .catch(() => {});
+    check();
+    const id = setInterval(check, 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (!run) return null;
+
+  const isQueued = run.status === 'queued';
+  const label    = isQueued ? '대기 중' : '실행 중';
+  const name     = run.name || run.workflow_id || 'workflow';
+  const elapsed  = run.run_started_at
+    ? Math.floor((Date.now() - new Date(run.run_started_at)) / 60000)
+    : null;
+
+  return (
+    <div className="flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold"
+      style={{ background: '#92400e', color: '#fde68a', borderBottom: '1px solid #b45309' }}>
+      <span className="w-2 h-2 rounded-full animate-pulse shrink-0"
+        style={{ background: '#fbbf24' }} />
+      <span>⚙️ GitHub Actions {label} — {name}</span>
+      {elapsed !== null && <span className="text-yellow-300/70">({elapsed}분 경과)</span>}
+      <a href={run.html_url} target="_blank" rel="noreferrer"
+        className="underline opacity-70 hover:opacity-100">상세 보기</a>
+    </div>
+  );
+}
+
 // ─── 메인 App ──────────────────────────────────────────────────────────────
 
 function App() {
@@ -6248,6 +6294,7 @@ function App() {
     };
     return (
       <div style={{ background: '#0D0F14', minHeight: '100vh' }}>
+        <DeployBanner />
         {page === 'dashboard' && <MobileDashboard {...mobileProps} />}
         {page === 'signal' && (
           <div style={{ paddingBottom: 72 }}>
@@ -6305,7 +6352,9 @@ function App() {
 
   // ── PC 공통 헤더 + 페이지 라우팅 ────────────────────────────────────────
   const DesktopHeader = () => (
-    <div className="flex items-center justify-between sticky top-0 z-50 py-3 px-6"
+    <div className="sticky top-0 z-50">
+      <DeployBanner />
+    <div className="flex items-center justify-between py-3 px-6"
       style={{ background: 'rgba(13,15,20,0.97)', backdropFilter: 'blur(8px)', borderBottom: '1px solid #1C1F26' }}>
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
@@ -6338,6 +6387,7 @@ function App() {
           <p className="text-xs font-mono text-gray-400">{new Date().toLocaleDateString('ko-KR')}</p>
         </div>
       </div>
+    </div>
     </div>
   );
 
