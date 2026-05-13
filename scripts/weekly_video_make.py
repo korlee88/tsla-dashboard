@@ -13,7 +13,7 @@ from pathlib import Path
 REPORT_BASE   = Path(__file__).parent.parent / "data" / "weekly-report"
 VOICE         = "ko-KR-HyunsuNeural"   # 캐주얼 남성 (활기찬 MC 톤)
 RATE          = "+50%"                 # 약간 여유있게 (너무 빠르면 전달력↓)
-PITCH         = "+12%"                 # 톤업 → 밝고 에너지 넘치는 느낌
+PITCH         = "+12Hz"                # 톤업 → 밝고 에너지 넘치는 느낌
 FPS           = 24
 W, H          = 1280, 720
 MIN_SCENE_SEC = 5.0
