@@ -185,7 +185,7 @@ def generate_script_gemini(prompt):
     from google import genai
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
-        model="gemini-2.0-flash-lite",
+        model="gemini-1.5-flash",
         contents=prompt,
     )
     return response.text
