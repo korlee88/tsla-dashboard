@@ -89,7 +89,7 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 ```python
 VOICE = "ko-KR-HyunsuNeural"  # 캐주얼 남성
 RATE  = "+50%"                 # 속도 (2배에 가깝게)
-PITCH = "+12%"                 # 톤업 (밝고 에너지 넘침)
+PITCH = "+12Hz"                # 톤업 (밝고 에너지 넘침)
 ```
 
 **애니메이션 시스템** (moviepy 2.x `VideoClip`):
@@ -196,5 +196,5 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 | 2026-05 | Wikipedia 테슬라 공식 사진 배경 적용 |
 | 2026-05 | 로봇 마스코트 캐릭터 추가 (씬별 표정 변화) |
 | 2026-05 | 전체 애니메이션화 (`VideoClip` 기반 퍼-프레임 렌더링) |
-| 2026-05 | 유재석 스타일 MC 목소리 설정 (`+50%` 속도, `+12%` 피치) |
+| 2026-05 | 유재석 스타일 MC 목소리 설정 (`+50%` 속도, `+12Hz` 피치) |
 | 2026-05 | `gemini-2.0-flash-lite` → `gemini-1.5-flash` 모델 변경 |
