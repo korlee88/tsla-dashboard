@@ -1,6 +1,413 @@
 {
   "sessions": [
     {
+      "id": "auto-1778700455317",
+      "date": "2026-05-14",
+      "displayDate": "2026.05.14",
+      "kstTime": "04:26",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778700424120,
+          "title": "테슬라, 베를린 기가팩토리 배터리 생산에 2억 5천만 달러 투자 및 모델 Y ADAS 테스트 통과",
+          "summary": "테슬라가 베를린 기가팩토리에 2억 5천만 달러를 투자하여 배터리 셀 생산을 늘리고 연간 4680 셀 생산량을 18GWh로 확대할 계획이다. 또한, 2026년형 테슬라 모델 Y가 미국 도로교통안전국(NHTSA)의 새로운 첨단 운전자 보조 시스템(ADAS) 테스트를 통과한 최초의 차량이 되었다. 이러한 소식으로 테슬라 주가는 3.31% 상승했다.",
+          "source": "MarketWatch",
+          "date": "2026-05-13",
+          "category": "Product"
+        },
+        {
+          "id": 1778700424121,
+          "title": "일론 머스크, 트럼프 대통령과 함께 중국 방문 및 모델 S/X 단종 발표",
+          "summary": "일론 머스크 테슬라 CEO가 도널드 트럼프 미국 대통령과 함께 중국을 방문할 예정이며, 테슬라는 모델 S와 모델 X 차량의 생산을 중단한다고 발표했다. 이 소식으로 테슬라 주가는 화요일에 2.6% 하락했지만, 수요일 프리마켓 거래에서는 1.07% 상승하며 회복세를 보였다.",
+          "source": "FXLeaders",
+          "date": "2026-05-13",
+          "category": "Musk"
+        },
+        {
+          "id": 1778700424122,
+          "title": "테슬라, 벨기에에서 자율주행 소프트웨어 테스트 승인",
+          "summary": "테슬라가 벨기에 플랑드르 지역에서 감독 하에 자율주행 소프트웨어 테스트를 진행할 수 있도록 승인받았다. 이는 유럽 시장에서 테슬라의 자율주행 기술 확장에 중요한 진전이며, 주가 상승에 긍정적인 영향을 미쳤다.",
+          "source": "GuruFocus",
+          "date": "2026-05-13",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778700424123,
+          "title": "테슬라 주가, 중국 FSD 승인 기대감 및 벨기에 테스트 허가로 3% 상승",
+          "summary": "테슬라 주가는 중국 규제 당국이 테슬라의 완전자율주행(FSD) 소프트웨어 승인을 앞두고 있다는 낙관론과 벨기에 당국의 자율주행 테스트 허가 소식에 힘입어 수요일에 약 3% 반등했다. 이는 FSD의 해외 출시 가능성을 높여 구독 수익 엔진 확장에 기여할 것으로 보인다.",
+          "source": "Invezz",
+          "date": "2026-05-13",
+          "category": "FSD"
+        },
+        {
+          "id": 1778700424124,
+          "title": "일론 머스크, 에어 포스 원에 스타링크 인터넷 서비스 제공 확인",
+          "summary": "일론 머스크는 스페이스X의 스타링크 인터넷이 에어 포스 원에 적용되어 미국 대통령 전용기에서 끊김 없는 고속 위성 연결을 제공하고 있다고 확인했다. 이는 스페이스X의 기술력을 보여주는 동시에, 머스크의 다른 회사들과의 시너지 가능성을 시사한다.",
+          "source": "Teslarati",
+          "date": "2026-05-13",
+          "category": "Musk"
+        },
+        {
+          "id": 1778700424125,
+          "title": "일론 머스크의 xAI, 대기오염 방지법 위반 논란 지속",
+          "summary": "일론 머스크의 xAI가 미시시피주 사우스헤이븐에 위치한 AI 데이터 센터에 허가받지 않은 천연가스 터빈 19개를 추가로 설치하여 대기오염 방지법 위반 소송에 직면했다. 이는 xAI가 이미 멤피스에 있는 다른 시설에서 허가 없이 27개의 메탄가스 발전기를 운영하고 있다는 주장이 제기된 상황에서 발생했다.",
+          "source": "Engadget",
+          "date": "2026-05-13",
+          "category": "Legal"
+        },
+        {
+          "id": 1778700424126,
+          "title": "테슬라 에너지 저장 사업, 1분기 배포량 감소에도 높은 마진 유지",
+          "summary": "테슬라의 에너지 저장 사업은 2026년 1분기에 8.8GWh의 배포량을 기록하며 전 분기 대비 38%, 전년 동기 대비 15% 감소했다. 하지만 에너지 부문은 39.5%의 매출 총이익률을 기록하며 회사 사업 중 가장 높은 수익성을 보였다.",
+          "source": "Zacks.com",
+          "date": "2026-05-13",
+          "category": "Energy"
+        },
+        {
+          "id": 1778700424127,
+          "title": "일론 머스크, OpenAI 샘 알트만과의 소송에서 증언",
+          "summary": "일론 머스크가 OpenAI의 공동 창립자 샘 알트만을 상대로 제기한 소송에서 알트만이 '자선 단체를 훔쳤다'는 주장을 방어하기 위해 알트만이 증언대에 섰다. 이 소송은 OpenAI의 비영리에서 영리 전환에 대한 논란을 다루고 있다.",
+          "source": "NPR",
+          "date": "2026-05-13",
+          "category": "Legal"
+        },
+        {
+          "id": 1778700424128,
+          "title": "스페이스X, 테슬라와의 합병 가능성 검토 보도",
+          "summary": "스페이스X가 AI 스타트업 xAI 외에 전기차 대기업 테슬라와의 잠재적 합병을 고려하고 있다는 보도가 나왔다. 블룸버그는 소식통을 인용하여 스페이스X가 테슬라와의 합병 가능성을 논의했다고 전했다.",
+          "source": "Bloomberg",
+          "date": "2026-01-30",
+          "category": "Market"
+        },
+        {
+          "id": 1778700424129,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트 예상치인 34센트를 상회했다. 또한, 아시아 태평양 및 남미 지역에서 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 수요가 회복되고 있다고 밝혔다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        }
+      ],
+      "analyses": {
+        "1778700424120": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라의 베를린 기가팩토리 배터리 생산 투자와 모델 Y의 ADAS 테스트 통과는 생산 능력 확장 및 제품 경쟁력 강화를 시사하여 주가에 긍정적인 영향을 미쳤습니다.",
+          "key_factors": [
+            "배터리 생산 능력 확장",
+            "ADAS 테스트 통과"
+          ]
+        },
+        "1778700424121": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 트럼프 대통령과의 중국 방문 소식과 모델 S/X 단종 발표는 테슬라 주가에 부정적인 영향을 미쳤으나, 프리마켓에서 일부 회복세를 보였습니다.",
+          "key_factors": [
+            "모델 S/X 단종",
+            "일론 머스크의 중국 방문"
+          ]
+        },
+        "1778700424122": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 벨기에에서 자율주행 소프트웨어 테스트 승인을 받은 것은 유럽 시장에서의 자율주행 기술 확장에 긍정적인 진전입니다.",
+          "key_factors": [
+            "자율주행 소프트웨어 테스트 승인",
+            "유럽 시장 확장"
+          ]
+        },
+        "1778700424123": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R16"
+          ],
+          "reasoning": "중국 FSD 승인 기대감과 벨기에 자율주행 테스트 허가는 FSD의 해외 시장 확장 및 구독 수익 증대 가능성을 높여 테슬라 주가에 긍정적인 영향을 미쳤습니다.",
+          "key_factors": [
+            "중국 FSD 승인 기대감",
+            "벨기에 자율주행 테스트 허가"
+          ]
+        },
+        "1778700424124": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 다른 회사인 스페이스X의 스타링크가 에어 포스 원에 서비스를 제공한다는 소식은 머스크의 기술력을 간접적으로 보여주며 테슬라에 대한 긍정적인 투자 심리에 미미하게 기여할 수 있습니다.",
+          "key_factors": [
+            "Musk's technological prowess",
+            "Synergy potential (indirect)"
+          ]
+        },
+        "1778700424125": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R05",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 xAI가 대기오염 방지법 위반으로 소송에 직면했으며, 이는 머스크의 다른 벤처에서 발생한 법적 문제가 테슬라에 대한 투자 심리에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "xAI 대기오염 방지법 위반 소송",
+            "일론 머스크의 다른 벤처 리스크"
+          ]
+        },
+        "1778700424126": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 에너지 저장 사업은 배포량 감소에도 불구하고 높은 매출 총이익률을 유지하여 수익성이 견고함을 보여주었습니다.",
+          "key_factors": [
+            "에너지 저장 배포량 감소",
+            "높은 매출 총이익률"
+          ]
+        },
+        "1778700424127": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI 공동 창립자 샘 알트만을 상대로 제기한 소송에서 알트만이 증언대에 섰다는 소식은 머스크의 다른 벤처 관련 법적 분쟁이 투자자들의 주의를 분산시키고 잠재적인 평판 위험을 초래할 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크의 법적 분쟁",
+            "OpenAI 소송"
+          ]
+        },
+        "1778700424128": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X가 테슬라와의 잠재적 합병을 고려하고 있다는 보도는 테슬라의 사업 확장 및 시너지 효과에 대한 기대를 높일 수 있습니다.",
+          "key_factors": [
+            "합병 가능성",
+            "사업 확장",
+            "시너지 효과"
+          ]
+        },
+        "1778700424129": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 월스트리트 예상치를 10% 이상 상회하여 긍정적인 실적을 발표했으며, 주요 지역에서 EV 수요 회복 및 증가를 시사했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        }
+      },
+      "avgScore": 0.8,
+      "buyIndex": 56,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R24",
+        "R16",
+        "R05",
+        "R12"
+      ],
+      "bullish": 7,
+      "bearish": 3,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-07",
+            "content": "Elon Musk posted 13 times on May 7th, including a cryptic three-word philosophy post (\"incentives drive outcomes\") that garnered 14 million views, and posts related to Cybertruck, Tesla Semi, and Grok.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-12",
+            "content": "Tesla's stock (TSLA) dropped approximately 5% intraday as Elon Musk traveled to China for discussions on FSD approval, amidst reports of Robotaxi operational glitches and Panasonic battery production delays.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-13",
+            "content": "Elon Musk's potential payout at Tesla for 2025 could be $158 billion.",
+            "sentiment": "bullish",
+            "engagement": "low"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 3,
+        "reasoning": "Elon Musk's posts and related news from the past 7 days show a mix of positive (high engagement on general posts, large potential payout) and negative (TSLA stock drop due to FSD approval concerns, Robotaxi glitches, battery delays) sentiment, resulting in an overall neutral assessment."
+      },
+      "googleTrends": {
+        "current_score": 70,
+        "week_avg": 65,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "TSLA",
+          "Tesla Model Y"
+        ],
+        "reasoning": "지난주 대비 검색 관심도가 상승했으며, 특정 검색어에서 큰 폭의 상승은 없었지만 전반적으로 관심이 증가했습니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.29,
+        "velocity_label": "급감 (×0.3)",
+        "reason": "조회수 속도 급감 (×0.3) | 최근 3일 391,562회 / 이전 4~7일 1,343,237회 | 총 1,734,799회 (44개 영상)",
+        "video_count": 44,
+        "total_views": 1734799,
+        "hot_views": 391562,
+        "baseline_views": 1343237,
+        "top_videos": [
+          {
+            "title": "REAL Transformers One Optimus Prime Helmet! 🤖",
+            "channel": "Kyle Krueger",
+            "publishedAt": "2026-05-07T00:23:16Z",
+            "viewCount": 1043532
+          },
+          {
+            "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-11T13:30:38Z",
+            "viewCount": 51831
+          },
+          {
+            "title": "GET OUT Before Wall Street SCREWS Palantir Stock?",
+            "channel": "Stealth Wealth Investing",
+            "publishedAt": "2026-05-10T16:00:54Z",
+            "viewCount": 37602
+          },
+          {
+            "title": "Tesla Just Got Several Massive Catalysts",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-12T18:37:57Z",
+            "viewCount": 36349
+          },
+          {
+            "title": "Transformer Optimus Prime Commander 🦾 #bumblebee #transformers #optimusprime #transformation",
+            "channel": "Transformers World",
+            "publishedAt": "2026-05-07T03:38:19Z",
+            "viewCount": 36106
+          }
+        ],
+        "collected_at": "2026-05-13T19:26:53Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product": 1,
+        "Musk": 2,
+        "Regulatory": 1,
+        "FSD": 1,
+        "Legal": 2,
+        "Energy": 1,
+        "Market": 1,
+        "Earnings": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.67,
+        "qqqChg": 0.81,
+        "vixClose": 17.850000381469727,
+        "wtiChg": -1.03,
+        "cnyChg": -0.02,
+        "prevTslaChg": 2.67,
+        "rsi": 55.4,
+        "macd": {
+          "macd": 3.0853379473824702,
+          "signal": -1.3093750125418389,
+          "hist": 4.394712959924309,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 465.5,
+          "middle": 405.34,
+          "lower": 345.17,
+          "pos": 0.83
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 58,
+        "r24Discount": -2,
+        "macdTrend": 2,
+        "bbHigh": -2,
+        "googleTrends": 2,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 445.04,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/14(목)",
+          "change_pct": -0.9,
+          "signal": "매도",
+          "basePrice": 445.04,
+          "predictedPrice": 441.03
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/15(금)",
+          "change_pct": -0.7,
+          "signal": "관망",
+          "basePrice": 445.04,
+          "predictedPrice": 441.92
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/18(월)",
+          "change_pct": 0.1,
+          "signal": "관망",
+          "basePrice": 445.04,
+          "predictedPrice": 445.49
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/19(화)",
+          "change_pct": -0.2,
+          "signal": "관망",
+          "basePrice": 445.04,
+          "predictedPrice": 444.15
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/20(수)",
+          "change_pct": 0.5,
+          "signal": "관망",
+          "basePrice": 445.04,
+          "predictedPrice": 447.27
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778700455317
+    },
+    {
       "id": "auto-1778683191540",
       "date": "2026-05-13",
       "displayDate": "2026.05.13",
@@ -22589,5 +22996,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-13 23:39 KST"
+  "lastUpdated": "2026-05-14 04:26 KST"
 }
