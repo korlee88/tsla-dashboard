@@ -393,19 +393,50 @@ def fetch_wiki_image(article: str, out_path: Path) -> bool:
     return False
 
 
-def make_canvas(accent, bg_path: Path | None = None):
+def make_canvas(accent):
+    """다크 배경 캔버스 생성 (사진은 draw_photo_card로 별도 삽입)."""
     from PIL import Image, ImageDraw
-    if bg_path and bg_path.exists():
-        # 실제 사진을 배경으로 — 어두운 오버레이 적용
-        bg = Image.open(bg_path).convert("RGB").resize((W, H), Image.LANCZOS)
-        overlay = Image.new("RGBA", (W, H), (8, 10, 16, 195))
-        img = Image.alpha_composite(bg.convert("RGBA"), overlay).convert("RGB")
-    else:
-        img = Image.new("RGB", (W, H), BG)
+    img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
     draw.rectangle([0, 0, W, 6], fill=accent)
     draw.rectangle([0, H - 48, W, H], fill=(8, 10, 16))
     return img, draw
+
+
+def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
+    """Wikipedia 사진을 지정 프레임 안에 삽입. 없으면 빈 프레임 표시."""
+    from PIL import Image as PILImage
+    # 외곽 테두리
+    draw.rounded_rectangle([x - 3, y - 3, x + w + 3, y + h + 3],
+                           radius=8, outline=accent, width=2)
+    if not bg_path or not bg_path.exists():
+        draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=(20, 24, 32))
+        return
+    try:
+        photo = PILImage.open(bg_path).convert("RGB")
+        pw, ph = photo.size
+        # 대상 비율에 맞춰 중앙 크롭
+        target_ratio = w / h
+        if pw / ph > target_ratio:
+            new_w = int(ph * target_ratio)
+            left = (pw - new_w) // 2
+            photo = photo.crop([left, 0, left + new_w, ph])
+        else:
+            new_h = int(pw / target_ratio)
+            top = (ph - new_h) // 2
+            photo = photo.crop([0, top, pw, top + new_h])
+        photo = photo.resize((w, h), PILImage.LANCZOS)
+        # 약한 어두운 오버레이 (사진 식별 가능한 수준)
+        ov = PILImage.new("RGBA", (w, h), (8, 10, 16, 70))
+        photo = PILImage.alpha_composite(photo.convert("RGBA"), ov).convert("RGB")
+        img.paste(photo, (x, y))
+        # 재-draw (paste 이후 draw 객체 갱신)
+        from PIL import ImageDraw as ID
+        d2 = ID.Draw(img)
+        d2.rounded_rectangle([x - 3, y - 3, x + w + 3, y + h + 3],
+                             radius=8, outline=accent, width=2)
+    except Exception as e:
+        draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=(20, 24, 32))
 
 
 def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
@@ -468,7 +499,14 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     lines  = scene.get("lines") or [l.strip() for l in (scene.get("body") or "").split("\n") if l.strip()]
     accent = SCENE_ACCENTS[idx - 1]
 
-    img, draw = make_canvas(accent, bg_path)
+    img, draw = make_canvas(accent)
+
+    # ── 오른쪽 사진 프레임 (모든 씬 공통) ──────────────────────────────────
+    PHOTO_X, PHOTO_Y = 812, 88
+    PHOTO_W, PHOTO_H = 422, 488
+    draw_photo_card(img, draw, accent, bg_path, PHOTO_X, PHOTO_Y, PHOTO_W, PHOTO_H)
+    from PIL import ImageDraw
+    draw = ImageDraw.Draw(img)   # paste 이후 draw 갱신
 
     def fnt(path, size):
         try:
@@ -491,9 +529,11 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     draw.text((W // 2, H - 28), "TSLA Impact Analyzer  ·  본 영상은 투자 조언이 아닙니다",
               font=f_xs, fill=(50, 55, 68), anchor="mm")
 
-    PAD    = 52
-    CARD_H = 112
-    CARD_W = W - PAD * 2
+    # 왼쪽 콘텐츠 영역: x=52 ~ 790 (오른쪽 810~은 사진 프레임)
+    PAD     = 52
+    COL_W   = 790          # 왼쪽 컬럼 끝 x
+    CARD_H  = 112
+    CARD_W  = COL_W - PAD  # 738
     START_Y = 104
 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
@@ -509,8 +549,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬 5: 예측 ────────────────────────────────────────────────────────
     elif idx == 5:
         forecasts = summary.get("forecasts", [])
-        # 예측 박스 (상단)
-        box_w = (W - PAD * 2 - 20) // 2
+        box_w = (COL_W - PAD - 20) // 2
         for j, fc in enumerate(forecasts[:2]):
             pct  = fc.get("change_pct") or 0
             sig  = fc.get("signal", "")
@@ -527,10 +566,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             draw.text((bx + box_w // 2, START_Y + 210), sig,
                       font=f_sm, fill=col, anchor="mm")
 
-        # 매수지수 바 (하단)
         bi       = summary.get("latest_buy_index") or 50
         bi_col   = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
-        bar_maxw = W - PAD * 2 - 100
+        bar_maxw = COL_W - PAD - 100
         bar_fill = int(bar_maxw * bi / 100)
         ty       = START_Y + 270
         draw.text((PAD, ty + 6), "매수지수", font=f_sm, fill=GRAY)
@@ -538,11 +576,10 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         draw.rectangle([PAD + 100, ty, PAD + 100 + bar_fill,  ty + 34], fill=bi_col)
         draw.text((PAD + 100 + bar_maxw + 12, ty + 6), str(bi), font=f_sm, fill=bi_col)
 
-        # 예측 나레이션 라인
         y = ty + 60
         for line in news_lines[:2]:
             _, content = parse_news_line(line)
-            draw.text((PAD, y), content[:46], font=f_sm, fill=LGRAY)
+            draw.text((PAD, y), content[:38], font=f_sm, fill=LGRAY)
             y += 34
 
     # ── 씬 6: 결론 / 매매 시그널 ──────────────────────────────────────────
@@ -551,15 +588,15 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         bi_col = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
         sig    = "매 수" if bi >= 65 else "관 망" if bi >= 45 else "매 도"
 
-        # 대형 시그널 텍스트
-        draw.text((W // 2, 290), sig, font=f_xl, fill=bi_col, anchor="mm")
-        draw.rectangle([W // 2 - 180, 332, W // 2 + 180, 338], fill=bi_col)
+        # 왼쪽 컬럼 중앙 기준
+        cx = (PAD + COL_W) // 2
+        draw.text((cx, 290), sig, font=f_xl, fill=bi_col, anchor="mm")
+        draw.rectangle([cx - 160, 332, cx + 160, 338], fill=bi_col)
 
-        # 결론 라인
         strat = [l for l in lines if l.strip()]
         y = 358
         for line in strat[:3]:
-            draw.text((W // 2, y), line[:38], font=f_md, fill=LGRAY, anchor="mt")
+            draw.text((cx, y), line[:28], font=f_md, fill=LGRAY, anchor="mt")
             y += 52
 
     return img
