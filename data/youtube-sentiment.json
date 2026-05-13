@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.26,
+  "velocity": 0.29,
   "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 449,997회 / 이전 4~7일 1,729,687회 | 총 2,179,684회 (44개 영상)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 391,562회 / 이전 4~7일 1,343,237회 | 총 1,734,799회 (44개 영상)",
   "video_count": 44,
-  "total_views": 2179684,
-  "hot_views": 449997,
-  "baseline_views": 1729687,
+  "total_views": 1734799,
+  "hot_views": 391562,
+  "baseline_views": 1343237,
   "top_videos": [
     {
       "title": "REAL Transformers One Optimus Prime Helmet! 🤖",
       "channel": "Kyle Krueger",
       "publishedAt": "2026-05-07T00:23:16Z",
-      "viewCount": 1035745
+      "viewCount": 1043532
     },
     {
-      "title": "Why this Optimus Prime feels too heavy and complicated?! #transformers #aoe #tlk #optimusprime",
-      "channel": "scoremia",
-      "publishedAt": "2026-05-06T16:15:39Z",
-      "viewCount": 139421
-    },
-    {
-      "title": "Elon Musk Reveals Tesla Optimus Gen 3 Upgrade: AI5 Thinks Alone, 1M Ships in 2027!",
-      "channel": "Tech Revolution",
-      "publishedAt": "2026-05-06T15:00:42Z",
-      "viewCount": 102276
-    },
-    {
-      "title": "$20,000 Tesla Bot: Free for Seniors on Social Security? — Cooks, Cleans, Never Sleeps",
-      "channel": "Visionary Vault",
-      "publishedAt": "2026-05-06T19:19:44Z",
-      "viewCount": 92843
-    },
-    {
-      "title": "Tesla Semi Orders Are Pouring In Right Now",
+      "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-06T18:30:51Z",
-      "viewCount": 62756
+      "publishedAt": "2026-05-11T13:30:38Z",
+      "viewCount": 51831
+    },
+    {
+      "title": "GET OUT Before Wall Street SCREWS Palantir Stock?",
+      "channel": "Stealth Wealth Investing",
+      "publishedAt": "2026-05-10T16:00:54Z",
+      "viewCount": 37602
+    },
+    {
+      "title": "Tesla Just Got Several Massive Catalysts",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-05-12T18:37:57Z",
+      "viewCount": 36349
+    },
+    {
+      "title": "Transformer Optimus Prime Commander 🦾 #bumblebee #transformers #optimusprime #transformation",
+      "channel": "Transformers World",
+      "publishedAt": "2026-05-07T03:38:19Z",
+      "viewCount": 36106
     }
   ],
-  "collected_at": "2026-05-13T14:39:10Z"
+  "collected_at": "2026-05-13T19:26:53Z"
 }
