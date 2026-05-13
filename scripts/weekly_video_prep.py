@@ -108,28 +108,33 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 - 주요 악재:
 {r_txt}
 
-=== 씬 구성 (총 4씬, 전체 뉴스) ===
+=== 씬 구성 (총 4씬) ===
 
 【씬 1 — 주간 브리핑】
-이번 주 가장 중요한 뉴스 1건을 소개하는 MC 어투 내러티브.
-- 첫 줄: 감탄사로 시작하는 헤드라인 한 줄 (예: "와! 이번 주 테슬라 대박 났습니다!")
-- 둘째 줄: 뉴스 핵심 사실 (수치 포함, 20자 이내)
-- 셋째 줄: 이 뉴스의 의미/영향 (20자 이내)
-- 넷째 줄: 마무리 한마디 (MC 톤, 20자 이내)
+이번 주 가장 중요한 뉴스 1건을 상세히 소개. 4줄 형식.
+- 첫 줄: 감탄사로 시작하는 헤드라인 (20자 이내, 예: "와! 이번 주 테슬라 빅뉴스 떴습니다!")
+- 둘째 줄: 언론사·날짜 (예: "Reuters · {week_start} 보도")
+- 셋째 줄: 뉴스 핵심 내용 (수치 포함, 24자 이내)
+- 넷째 줄: 전망 평가 (긍정/부정/중립 한마디, 20자 이내)
 
 【씬 2 — 호재 뉴스】
-긍정적 뉴스 4건. 각 줄 형식: "카테고리: 핵심내용 | 언론사·날짜·신뢰도"
+긍정적 뉴스 **TOP 2건**. 각 줄 형식: "카테고리: 핵심내용 | 언론사·날짜·신뢰도"
 - 카테고리: 5자 이내
-- 핵심내용: 18자 이내, 수치 포함
+- 핵심내용: 24자 이내, 수치 포함
 - 언론사: Reuters/Bloomberg/CNBC/WSJ/YahooFinance 등 실제 경제매체
 - 날짜: MM/DD 형식 (이번 주 범위 {week_start}~{week_end} 내)
-- 신뢰도: "참고할만" (공신력 있는 매체) / "~라더라" (비공식 소식) / "찌라시" (루머)
+- 신뢰도: "참고할만" (공신력) / "~라더라" (비공식) / "찌라시" (루머)
 
 【씬 3 — 리스크 뉴스】
-부정적/위험 뉴스 4건. 씬 2와 동일한 형식.
+부정적/위험/루머 뉴스 **TOP 2건**. 씬 2와 동일한 형식.
+※ 확실하지 않은 "~라더라" 또는 "찌라시"도 포함 가능.
 
-【씬 4 — 시장 동향】
-중립적 시장/기술 뉴스 4건. 씬 2와 동일한 형식.
+【씬 4 — 시장 반응】
+유튜브 조회·검색량·커뮤니티 반응 기반 시황 내러티브. 4줄 형식.
+- 첫 줄: 시장 전체 분위기 한마디 (감탄사 포함, 20자 이내)
+- 둘째 줄: 검색량/유튜브 트렌드 (예: "구글 검색량 +35% 급증")
+- 셋째 줄: 커뮤니티/투자자 반응 (예: "투자자들 매수세 강해지는 중")
+- 넷째 줄: 종합 시황 한 줄 (20자 이내)
 
 === 공통 규칙 ===
 • 유재석처럼 밝고 에너지 넘치는 MC 어투
@@ -140,30 +145,26 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 SCENE_1_TITLE: [6자 이내]
 SCENE_1:
 [감탄사+헤드라인]
-[핵심 사실]
-[의미/영향]
-[마무리]
+[언론사·날짜]
+[뉴스 핵심]
+[전망 평가]
 
 SCENE_2_TITLE: [6자 이내]
 SCENE_2:
 카테고리1: 호재내용1 | 언론사·날짜·신뢰도
 카테고리2: 호재내용2 | 언론사·날짜·신뢰도
-카테고리3: 호재내용3 | 언론사·날짜·신뢰도
-카테고리4: 호재내용4 | 언론사·날짜·신뢰도
 
 SCENE_3_TITLE: [6자 이내]
 SCENE_3:
 카테고리1: 리스크1 | 언론사·날짜·신뢰도
 카테고리2: 리스크2 | 언론사·날짜·신뢰도
-카테고리3: 리스크3 | 언론사·날짜·신뢰도
-카테고리4: 리스크4 | 언론사·날짜·신뢰도
 
 SCENE_4_TITLE: [6자 이내]
 SCENE_4:
-카테고리1: 동향1 | 언론사·날짜·신뢰도
-카테고리2: 동향2 | 언론사·날짜·신뢰도
-카테고리3: 동향3 | 언론사·날짜·신뢰도
-카테고리4: 동향4 | 언론사·날짜·신뢰도"""
+[시장 분위기]
+[검색량/유튜브]
+[투자자 반응]
+[종합 시황]"""
 
 
 def _build_prompt(summary):
@@ -551,10 +552,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
-    # ── 씬 1: 주간 브리핑 — 내러티브 피처 카드 ───────────────────────────
+    # ── 씬 1: 주간 브리핑 — 핵심 뉴스 1건 상세 ───────────────────────────
     if idx == 1:
-        # 대형 피처 카드 (뉴스 헤드라인 + 설명)
-        FC_H = 200
+        FC_H = 280
         draw.rounded_rectangle([PAD, START_Y, COL_W, START_Y + FC_H],
                                radius=10, fill=(20, 24, 34), outline=accent, width=2)
         draw.rounded_rectangle([PAD, START_Y, COL_W, START_Y + 46],
@@ -562,14 +562,22 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         draw.text((PAD + 18, START_Y + 23), "이번 주 핵심 뉴스", font=f_ch,
                   fill=(10, 12, 20), anchor="lm")
 
-        y = START_Y + 58
-        for line in news_lines[:3]:
-            # 첫 줄: 헤드라인 (강조)
-            col = WHITE if y == START_Y + 58 else LGRAY
-            draw.text((PAD + 16, y), line[:34], font=f_md if y == START_Y + 58 else f_sm,
-                      fill=col)
-            bb = draw.textbbox((0, 0), line[:34], font=f_md if y == START_Y + 58 else f_sm)
-            y += (bb[3] - bb[1]) + 10
+        # 4줄 구조: 헤드라인 / 언론사·날짜 / 뉴스 핵심 / 전망 평가
+        labels = ["", "출처", "내용", "전망"]
+        body_y = START_Y + 64
+        for i, line in enumerate(news_lines[:4]):
+            txt = line[:36]
+            if i == 0:
+                # 헤드라인 (강조)
+                draw.text((PAD + 16, body_y), txt, font=f_md, fill=WHITE)
+                body_y += 44
+            else:
+                # 라벨 + 내용
+                if labels[i]:
+                    draw.text((PAD + 16, body_y + 4), labels[i],
+                              font=f_src, fill=accent)
+                draw.text((PAD + 80, body_y), txt, font=f_sm, fill=LGRAY)
+                body_y += 36
 
         # 가격 + 매수지수 작은 스트립 (하단)
         bi    = summary.get("latest_buy_index") or 50
@@ -584,25 +592,48 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         sw = (COL_W - PAD - 20) // 3
         for j, (lbl, val, col) in enumerate(strip_items):
             bx = PAD + j * (sw + 10)
-            draw.rounded_rectangle([bx, SY, bx + sw, SY + 80], radius=6,
+            draw.rounded_rectangle([bx, SY, bx + sw, SY + 90], radius=6,
                                    fill=(18, 21, 30), outline=(40, 44, 54), width=1)
-            draw.text((bx + sw // 2, SY + 22), lbl, font=f_src, fill=GRAY, anchor="mm")
-            draw.text((bx + sw // 2, SY + 56), val, font=f_sm, fill=col, anchor="mm")
+            draw.text((bx + sw // 2, SY + 26), lbl, font=f_src, fill=GRAY, anchor="mm")
+            draw.text((bx + sw // 2, SY + 62), val, font=f_sm, fill=col, anchor="mm")
 
-        # 4번째 줄 (마무리)
-        if len(news_lines) >= 4:
-            draw.text((PAD, SY + 96), news_lines[3][:40], font=f_sm, fill=LGRAY)
-
-    # ── 씬 2~4: 뉴스 카드 (챕터|내용|소스 분리) ─────────────────────────
-    else:
-        CARD_H = 126   # 소스 행 포함해 높이 증가
+    # ── 씬 2~3: 호재/리스크 — 대형 뉴스 카드 2장 ────────────────────────
+    elif idx in (2, 3):
+        CARD_H = 220
         CARD_W = COL_W - PAD
-        for i, line in enumerate(news_lines[:4]):
+        for i, line in enumerate(news_lines[:2]):
             chapter, content, source = parse_news_line(line)
-            y = START_Y + i * (CARD_H + 10)
+            y = START_Y + i * (CARD_H + 20)
             draw_news_card_split(draw, PAD, y, CARD_W, CARD_H,
                                  chapter, content, accent, f_ch, f_ct,
                                  fnt_src=f_src, source=source)
+
+    # ── 씬 4: 시장 반응 — 검색량/유튜브/투자자 반응 내러티브 ─────────────
+    else:
+        FC_H = 360
+        draw.rounded_rectangle([PAD, START_Y, COL_W, START_Y + FC_H],
+                               radius=10, fill=(20, 24, 34), outline=accent, width=2)
+        draw.rounded_rectangle([PAD, START_Y, COL_W, START_Y + 46],
+                               radius=10, fill=accent)
+        draw.text((PAD + 18, START_Y + 23), "시장·커뮤니티 반응",
+                  font=f_ch, fill=(10, 12, 20), anchor="lm")
+
+        # 4줄: 분위기 / 검색량·유튜브 / 투자자반응 / 종합시황
+        labels = ["분위기", "검색·영상", "투자자", "시황"]
+        body_y = START_Y + 70
+        ROW_H  = 70
+        for i, line in enumerate(news_lines[:4]):
+            # 라벨 박스
+            lab_w = 140
+            draw.rounded_rectangle([PAD + 16, body_y, PAD + 16 + lab_w, body_y + 46],
+                                   radius=6, fill=(28, 32, 44), outline=accent, width=1)
+            draw.text((PAD + 16 + lab_w // 2, body_y + 23),
+                      labels[i] if i < len(labels) else "",
+                      font=f_ch, fill=accent, anchor="mm")
+            # 내용
+            draw.text((PAD + 16 + lab_w + 16, body_y + 23),
+                      line[:32], font=f_sm, fill=LGRAY, anchor="lm")
+            body_y += ROW_H
 
     return img
 
@@ -658,7 +689,7 @@ def main():
     # ── 대본 ──
     if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
         print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
-        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(1, 6)]
+        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(1, 5)]
     else:
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
