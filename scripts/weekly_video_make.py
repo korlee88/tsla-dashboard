@@ -23,10 +23,8 @@ ACCENT_COLORS = [
     (34,  197,  94),  # scene2 green   - 호재 뉴스
     (239,  68,  68),  # scene3 red     - 리스크 뉴스
     (245, 158,  11),  # scene4 amber   - 시장 동향
-    (6,  182, 212),   # scene5 cyan    - 예측
-    (59, 130, 246),   # scene6 blue    - 결론
 ]
-SCENE_MOODS = ["excited", "happy", "worried", "focused", "focused", "happy"]
+SCENE_MOODS = ["excited", "happy", "worried", "focused"]
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -65,6 +63,8 @@ def clean_for_tts(lines):
         line = line.strip()
         if not line:
             continue
+        if '|' in line:
+            line = line.split('|')[0].strip()
         for k, v in table.items():
             line = line.replace(k, v)
         result.append(line)
