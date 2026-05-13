@@ -2,6 +2,7 @@
 TSLA 주간 나레이션 영상 생성 (moviepy 2.x + 애니메이션)
 weekly_video_prep.py 실행 후 사용.
 script.json + scene_XX.png → edge-tts MP3 → 애니메이션 MP4
+출력: 1080×1920 (YouTube Shorts 세로 포맷)
 
 필요 패키지:
   pip install edge-tts moviepy pillow numpy
@@ -15,7 +16,7 @@ VOICE         = "ko-KR-HyunsuNeural"   # 캐주얼 남성 (활기찬 MC 톤)
 RATE          = "+50%"                 # 약간 여유있게 (너무 빠르면 전달력↓)
 PITCH         = "+12Hz"                # 톤업 → 밝고 에너지 넘치는 느낌
 FPS           = 24
-W, H          = 1280, 720
+W, H          = 1080, 1920
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
@@ -257,7 +258,7 @@ def make_anime_frame(t, base_arr, accent, subtitle_lines, dur,
     # 로봇 바운싱 애니메이션
     mood     = SCENE_MOODS[scene_idx - 1]
     robot_dy = int(math.sin(t * 3.5) * 6)
-    img = draw_robot_pil(img, W - 218, H - 310 + robot_dy, mood, accent)
+    img = draw_robot_pil(img, W - 150, H - 280 + robot_dy, mood, accent)
 
     img = fx_fade_in(img, t, 0.28)
     img = fx_fade_out(img, t, dur, 0.22)
