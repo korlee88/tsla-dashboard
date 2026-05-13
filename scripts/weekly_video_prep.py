@@ -28,18 +28,20 @@ RED     = (239, 68, 68)
 AMBER   = (245, 158, 11)
 PURPLE  = (167, 139, 250)
 CYAN    = (6, 182, 212)
+BLUE    = (59, 130, 246)
 W, H    = 1280, 720
 
-SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER, CYAN]
-SCENE_MOODS   = ["excited", "happy", "worried", "focused", "happy"]
+SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER, CYAN, BLUE]
+SCENE_MOODS   = ["excited", "happy", "worried", "focused", "focused", "happy"]
 
 # 씬별 Wikipedia 배경 이미지 소스
 SCENE_WIKI_ARTICLES = [
-    "Tesla, Inc.",              # scene 1 - 테슬라 개요
-    "Tesla Cybertruck",         # scene 2 - 신제품/호재
-    "Elon Musk",                # scene 3 - 머스크 리스크
-    "Gigafactory Nevada",       # scene 4 - 생산/기술
-    "Tesla Model S",            # scene 5 - 결론/미래
+    "Tesla, Inc.",              # scene 1 - 브리핑
+    "Tesla Cybertruck",         # scene 2 - 호재 뉴스
+    "Elon Musk",                # scene 3 - 리스크 뉴스
+    "Gigafactory Nevada",       # scene 4 - 시장 동향
+    "Tesla Model 3",            # scene 5 - 예측
+    "Tesla Model S",            # scene 6 - 결론
 ]
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
@@ -111,48 +113,53 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 {f_txt}
 
 === 출력 규칙 (반드시 준수) ===
-• 전체 5개 씬, 씬당 나레이션 읽는 시간 8~10초 분량
-• 각 씬 최대 4줄, 줄당 최대 20자
-• PPT 낭독 절대 금지! — 유재석처럼 밝고 에너지 넘치는 MC 어투로
-• 첫 줄 = 감탄사 또는 강렬한 한마디 ("와!", "대박!", "여러분!" 등)
-• 나머지 = 핵심 숫자/키워드를 짧고 임팩트 있게
-• 문장 끝에 "!", "~", "죠?" 등 생동감 있는 종결어 사용
-• 나레이션 톤: 예능 MC + 경제 뉴스 앵커 믹스 (기분 좋아지는 어투)
+• 전체 6개 씬 — 뉴스 4씬(80%) + 예측 1씬(10%) + 결론 1씬(10%)
+• 씬 1~4 (뉴스): 각 씬 나레이션 10~12초 분량, 4개 뉴스카드 형식
+  - 카드 형식: "카테고리: 핵심내용" (콜론으로 반드시 구분)
+  - 카테고리: 5자 이내 (예: 주가, 생산, 계약, 규제, 경쟁사, 신제품)
+  - 핵심내용: 18자 이내, 핵심 수치 포함
+• 씬 5 (예측): 나레이션 5~6초 분량, 2개 카드 형식 "날짜: 방향 ±퍼센트"
+• 씬 6 (결론): 나레이션 5~6초 분량, 2줄 이내 매매 시그널 + 한 줄 요약
+• 유재석처럼 밝고 에너지 넘치는 MC 어투, 감탄사 적극 활용
+• PPT 낭독 절대 금지!
 
 === 출력 형식 ===
 SCENE_1_TITLE: [6자 이내 제목]
 SCENE_1:
-[헤드라인]
-[핵심 숫자1]
-[핵심 숫자2]
-[핵심 숫자3]
+카테고리1: 핵심내용1
+카테고리2: 핵심내용2
+카테고리3: 핵심내용3
+카테고리4: 핵심내용4
 
 SCENE_2_TITLE: [6자 이내]
 SCENE_2:
-[호재 헤드라인]
-[호재1 — 한줄 핵심]
-[호재2 — 한줄 핵심]
-[호재3 — 한줄 핵심]
+카테고리1: 호재내용1
+카테고리2: 호재내용2
+카테고리3: 호재내용3
+카테고리4: 호재내용4
 
 SCENE_3_TITLE: [6자 이내]
 SCENE_3:
-[리스크 헤드라인]
-[리스크1 — 한줄 핵심]
-[리스크2 — 한줄 핵심]
-[리스크3 — 한줄 핵심]
+카테고리1: 리스크내용1
+카테고리2: 리스크내용2
+카테고리3: 리스크내용3
+카테고리4: 리스크내용4
 
 SCENE_4_TITLE: [6자 이내]
 SCENE_4:
-[전망 헤드라인]
-[예측1: 날짜 방향 퍼센트]
-[예측2: 날짜 방향 퍼센트]
-[기술지표 한줄 요약]
+카테고리1: 동향내용1
+카테고리2: 동향내용2
+카테고리3: 동향내용3
+카테고리4: 동향내용4
 
 SCENE_5_TITLE: [6자 이내]
 SCENE_5:
-[결론 헤드라인]
-[전략 한줄]
-[손절 기준]
+날짜1: 방향 퍼센트
+날짜2: 방향 퍼센트
+
+SCENE_6_TITLE: [6자 이내]
+SCENE_6:
+[매매 시그널 결론 2줄 이내]
 본 영상은 투자 조언이 아닙니다"""
 
 
@@ -207,7 +214,7 @@ def generate_script(summary):
 
 def parse_script(raw):
     scenes = []
-    for i in range(1, 6):
+    for i in range(1, 7):
         tk = f"SCENE_{i}_TITLE:"
         bk = f"SCENE_{i}:"
         title = ""
@@ -218,9 +225,8 @@ def parse_script(raw):
             title = raw[s:e].strip() if e != -1 else raw[s:].strip()
         if bk in raw:
             s   = raw.index(bk) + len(bk)
-            nxt = raw.find(f"SCENE_{i+1}_TITLE:", s) if i < 5 else len(raw)
+            nxt = raw.find(f"SCENE_{i+1}_TITLE:", s) if i < 6 else len(raw)
             body = raw[s:nxt].strip()
-        # weekly_video_make.py expects "lines" as a list
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})
     return scenes
@@ -424,10 +430,35 @@ def draw_news_card(draw, x, y, w, h, icon, text, col, fnt_icon, fnt_text):
     draw.text((x + 58, y + h // 2), text, font=fnt_text, fill=WHITE, anchor="lm")
 
 
+def draw_news_card_split(draw, x, y, w, h, chapter, content, accent, fnt_ch, fnt_ct):
+    """챕터(좌측 컬럼) | 내용(우측 컬럼) 명확 분리 뉴스카드."""
+    CH_W = 168
+    # 전체 배경 + 테두리
+    draw.rectangle([x, y, x + w, y + h], fill=(16, 19, 27), outline=accent, width=2)
+    # 챕터 열 (accent 배경)
+    draw.rectangle([x, y, x + CH_W, y + h], fill=accent)
+    # 구분선 강조
+    draw.rectangle([x + CH_W, y, x + CH_W + 3, y + h], fill=(255, 255, 255))
+    # 챕터 텍스트 (굵게, 어두운 색)
+    draw.text((x + CH_W // 2, y + h // 2), chapter[:6], font=fnt_ch,
+              fill=(10, 12, 20), anchor="mm")
+    # 내용 텍스트
+    draw.text((x + CH_W + 18, y + h // 2), content[:28], font=fnt_ct,
+              fill=(225, 232, 245), anchor="lm")
+
+
 def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
     draw.rectangle([x, y, x + w, y + h], fill=(18, 21, 30), outline=(40, 44, 54), width=1)
     draw.text((x + w // 2, y + 18), label, font=fnt_lbl, fill=GRAY, anchor="mt")
     draw.text((x + w // 2, y + h - 22), value, font=fnt_val, fill=col, anchor="mb")
+
+
+def parse_news_line(line):
+    """'카테고리: 내용' 형식 분리. 콜론 없으면 ('뉴스', 전체) 반환."""
+    if ": " in line:
+        ch, ct = line.split(": ", 1)
+        return ch.strip()[:6], ct.strip()
+    return "뉴스", line.strip()
 
 
 def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None = None):
@@ -445,115 +476,91 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         except Exception:
             return ImageFont.load_default()
 
-    f_xl    = fnt(font_bold, 80)
-    f_lg    = fnt(font_bold, 44)
-    f_md    = fnt(font_reg,  30)
-    f_sm    = fnt(font_reg,  22)
-    f_xs    = fnt(font_reg,  17)
-    f_icon  = fnt(font_bold, 28)
+    f_xl   = fnt(font_bold, 80)
+    f_lg   = fnt(font_bold, 44)
+    f_md   = fnt(font_reg,  30)
+    f_sm   = fnt(font_reg,  22)
+    f_xs   = fnt(font_reg,  17)
+    f_ch   = fnt(font_bold, 24)   # 뉴스카드 챕터 폰트
+    f_ct   = fnt(font_reg,  26)   # 뉴스카드 내용 폰트
 
-    # 상단: 씬 번호 + 제목
+    # 상단: 씬 제목
     draw.text((52, 18), f"  {title}", font=f_lg, fill=WHITE)
     draw.text((52, 18), "▌", font=f_lg, fill=accent)
     # 하단 워터마크
-    draw.text((W // 2, H - 28), "TSLA Impact Analyzer  ·  본 영상은 투자 조언이 아닙니다", font=f_xs, fill=(50, 55, 68), anchor="mm")
+    draw.text((W // 2, H - 28), "TSLA Impact Analyzer  ·  본 영상은 투자 조언이 아닙니다",
+              font=f_xs, fill=(50, 55, 68), anchor="mm")
 
-    PAD = 60
+    PAD    = 52
+    CARD_H = 112
+    CARD_W = W - PAD * 2
+    START_Y = 104
 
-    # ── Scene 1: 매수지수 게이지 + 핵심 3 통계 ──────────────────────────────
-    if idx == 1:
-        bi    = summary.get("latest_buy_index") or 50
-        price = summary.get("latest_price")
-        bi_col = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
-        sig   = "매수" if bi >= 65 else "관망" if bi >= 45 else "매도"
+    news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
-        # 게이지 (좌측)
-        draw_buy_index_gauge(draw, 310, 420, 200, bi, f_xl, f_md)
-        draw.text((310, 560), sig, font=f_lg, fill=bi_col, anchor="mm")
+    # ── 씬 1~4: 뉴스 카드 (챕터|내용 분리) ────────────────────────────────
+    if idx in (1, 2, 3, 4):
+        for i, line in enumerate(news_lines[:4]):
+            chapter, content = parse_news_line(line)
+            y = START_Y + i * (CARD_H + 12)
+            draw_news_card_split(draw, PAD, y, CARD_W, CARD_H,
+                                 chapter, content, accent, f_ch, f_ct)
 
-        # 우측 통계 박스 3개
-        bw, bh = 340, 110
-        bx = 660
-        stats = [
-            ("현재가", f"${price:,.2f}" if price else "N/A", WHITE),
-            ("주간 평균", f"매수지수 {summary.get('avg_buy_index', '-')}", AMBER),
-            ("세션 수", f"최근 7일  {summary.get('session_count', 0)}건", CYAN),
-        ]
-        for i, (lbl, val, col) in enumerate(stats):
-            draw_stat_box(draw, bx, 160 + i * (bh + 16), bw, bh, lbl, val, col, f_md, f_sm)
-
-    # ── Scene 2: 호재 뉴스카드 ─────────────────────────────────────────────
-    elif idx == 2:
-        news = [l for l in lines if l.strip() and not l.startswith("SCENE")]
-        card_h = 108
-        icons  = ["▲", "▲", "▲", "▲"]
-        for i, (line, icon) in enumerate(zip(news[:4], icons)):
-            draw_news_card(draw, PAD, 110 + i * (card_h + 14), W - PAD * 2, card_h,
-                           icon, line[:34], GREEN, f_icon, f_md)
-
-    # ── Scene 3: 리스크 카드 ──────────────────────────────────────────────
-    elif idx == 3:
-        news  = [l for l in lines if l.strip() and not l.startswith("SCENE")]
-        card_h = 108
-        icons  = ["▼", "▼", "▼", "▼"]
-        for i, (line, icon) in enumerate(zip(news[:4], icons)):
-            draw_news_card(draw, PAD, 110 + i * (card_h + 14), W - PAD * 2, card_h,
-                           icon, line[:34], RED, f_icon, f_md)
-
-    # ── Scene 4: 예측 차트 + 기술지표 ─────────────────────────────────────
-    elif idx == 4:
+    # ── 씬 5: 예측 ────────────────────────────────────────────────────────
+    elif idx == 5:
         forecasts = summary.get("forecasts", [])
-        price     = summary.get("latest_price") or 0
-        box_w     = (W - PAD * 2 - 28) // 3
-
-        for j, fc in enumerate(forecasts[:3]):
+        # 예측 박스 (상단)
+        box_w = (W - PAD * 2 - 20) // 2
+        for j, fc in enumerate(forecasts[:2]):
             pct  = fc.get("change_pct") or 0
             sig  = fc.get("signal", "")
             date = str(fc.get("date", f"D+{j+1}"))[-5:]
             col  = GREEN if pct > 0.3 else RED if pct < -0.3 else AMBER
-            bx   = PAD + j * (box_w + 14)
-            draw.rectangle([bx, 110, bx + box_w, 280], fill=(18, 21, 30), outline=col, width=2)
-            draw.text((bx + box_w // 2, 130), date, font=f_sm, fill=GRAY, anchor="mt")
-            draw.text((bx + box_w // 2, 185), f"{pct:+.1f}%", font=f_lg, fill=col, anchor="mm")
-            draw.text((bx + box_w // 2, 258), sig, font=f_sm, fill=col, anchor="mb")
+            bx   = PAD + j * (box_w + 20)
+            draw.rectangle([bx, START_Y, bx + box_w, START_Y + 240],
+                           fill=(16, 20, 30), outline=col, width=2)
+            draw.rectangle([bx, START_Y, bx + box_w, START_Y + 42], fill=col)
+            draw.text((bx + box_w // 2, START_Y + 21), date,
+                      font=f_sm, fill=(12, 14, 20), anchor="mm")
+            draw.text((bx + box_w // 2, START_Y + 140), f"{pct:+.1f}%",
+                      font=f_lg, fill=col, anchor="mm")
+            draw.text((bx + box_w // 2, START_Y + 210), sig,
+                      font=f_sm, fill=col, anchor="mm")
 
-        # 기술지표 바 (하단)
-        tech_items = [
-            ("RSI", summary.get("avg_buy_index") or 50, 100, PURPLE),
-            ("매수지수", summary.get("latest_buy_index") or 50, 100, GREEN),
-        ]
-        ty = 320
-        bar_max_w = W - PAD * 2 - 120
-        for label, val, max_val, col in tech_items:
-            ratio    = min(max(val / max_val, 0), 1)
-            bar_fill = int(bar_max_w * ratio)
-            draw.text((PAD, ty + 8), label, font=f_sm, fill=GRAY)
-            draw.rectangle([PAD + 110, ty, PAD + 110 + bar_max_w, ty + 32], fill=(28, 31, 40))
-            draw.rectangle([PAD + 110, ty, PAD + 110 + bar_fill, ty + 32], fill=col)
-            draw.text((PAD + 110 + bar_max_w + 14, ty + 8), str(val), font=f_sm, fill=col)
-            ty += 52
+        # 매수지수 바 (하단)
+        bi       = summary.get("latest_buy_index") or 50
+        bi_col   = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
+        bar_maxw = W - PAD * 2 - 100
+        bar_fill = int(bar_maxw * bi / 100)
+        ty       = START_Y + 270
+        draw.text((PAD, ty + 6), "매수지수", font=f_sm, fill=GRAY)
+        draw.rectangle([PAD + 100, ty, PAD + 100 + bar_maxw, ty + 34], fill=(28, 31, 40))
+        draw.rectangle([PAD + 100, ty, PAD + 100 + bar_fill,  ty + 34], fill=bi_col)
+        draw.text((PAD + 100 + bar_maxw + 12, ty + 6), str(bi), font=f_sm, fill=bi_col)
 
-        # 나머지 본문 텍스트
-        y = ty + 10
-        for line in lines[-2:]:
-            if line.strip():
-                draw.text((PAD, y), line[:48], font=f_sm, fill=LGRAY)
-                y += 34
+        # 예측 나레이션 라인
+        y = ty + 60
+        for line in news_lines[:2]:
+            _, content = parse_news_line(line)
+            draw.text((PAD, y), content[:46], font=f_sm, fill=LGRAY)
+            y += 34
 
-    # ── Scene 5: 결론 카드 ────────────────────────────────────────────────
+    # ── 씬 6: 결론 / 매매 시그널 ──────────────────────────────────────────
     else:
-        bi    = summary.get("latest_buy_index") or 50
+        bi     = summary.get("latest_buy_index") or 50
         bi_col = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
-        sig   = "매 수" if bi >= 65 else "관 망" if bi >= 45 else "매 도"
+        sig    = "매 수" if bi >= 65 else "관 망" if bi >= 45 else "매 도"
 
-        draw.text((W // 2, 270), sig, font=f_xl, fill=bi_col, anchor="mm")
-        draw.rectangle([W // 2 - 160, 310, W // 2 + 160, 316], fill=bi_col)
+        # 대형 시그널 텍스트
+        draw.text((W // 2, 290), sig, font=f_xl, fill=bi_col, anchor="mm")
+        draw.rectangle([W // 2 - 180, 332, W // 2 + 180, 338], fill=bi_col)
 
-        strat_lines = [l for l in lines if l.strip()]
-        y = 350
-        for line in strat_lines[:4]:
-            draw.text((W // 2, y), line[:36], font=f_md, fill=LGRAY, anchor="mt")
-            y += 48
+        # 결론 라인
+        strat = [l for l in lines if l.strip()]
+        y = 358
+        for line in strat[:3]:
+            draw.text((W // 2, y), line[:38], font=f_md, fill=LGRAY, anchor="mt")
+            y += 52
 
     return img
 

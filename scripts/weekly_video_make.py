@@ -19,13 +19,14 @@ W, H          = 1280, 720
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
-    (167, 139, 250),  # scene1 purple
-    (34,  197,  94),  # scene2 green
-    (239,  68,  68),  # scene3 red
-    (245, 158,  11),  # scene4 amber
-    (6,  182, 212),   # scene5 cyan
+    (167, 139, 250),  # scene1 purple  - 브리핑
+    (34,  197,  94),  # scene2 green   - 호재 뉴스
+    (239,  68,  68),  # scene3 red     - 리스크 뉴스
+    (245, 158,  11),  # scene4 amber   - 시장 동향
+    (6,  182, 212),   # scene5 cyan    - 예측
+    (59, 130, 246),   # scene6 blue    - 결론
 ]
-SCENE_MOODS = ["excited", "happy", "worried", "focused", "happy"]
+SCENE_MOODS = ["excited", "happy", "worried", "focused", "focused", "happy"]
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 

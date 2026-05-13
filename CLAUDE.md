@@ -67,14 +67,19 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
 ```
 
-**씬 구성**:
+**씬 구성 (뉴스 80% / 예측 10% / 결론 10%)**:
 | 씬 | 주제 | Wikipedia 배경 | 색상 |
 |----|------|---------------|------|
-| 1 | 이번 주 TSLA 요약 | Tesla, Inc. | Purple |
-| 2 | 호재/뉴스 | Tesla Cybertruck | Green |
-| 3 | 리스크/우려 | Elon Musk | Red |
-| 4 | 기술/생산 전망 | Gigafactory Nevada | Amber |
-| 5 | 결론/매매 시그널 | Tesla Model S | Cyan |
+| 1 | 이번주 뉴스 브리핑 | Tesla, Inc. | Purple |
+| 2 | 호재 뉴스 | Tesla Cybertruck | Green |
+| 3 | 리스크 뉴스 | Elon Musk | Red |
+| 4 | 시장 동향 뉴스 | Gigafactory Nevada | Amber |
+| 5 | 주가 예측 (10%) | Tesla Model 3 | Cyan |
+| 6 | 매매 결론 (10%) | Tesla Model S | Blue |
+
+**뉴스 카드 레이아웃** (`draw_news_card_split`):
+- 챕터 열 (168px, accent 배경, 굵은 폰트) | 구분선 | 내용 열 (나머지, 어두운 배경)
+- 스크립트 형식: `카테고리: 핵심내용` (콜론으로 분리)
 
 **이미지 레이어**:
 - Wikipedia 무료 사진 (API 키 불필요) → 배경
