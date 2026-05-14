@@ -138,7 +138,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 【씬 2 — 호재 뉴스】
 긍정적 뉴스 TOP 2건. 각 줄 형식: "카테고리: 핵심내용 | 언론사·날짜·등급"
 - 카테고리: 5자 이내
-- 핵심내용: **100~150자, 4~5문장** — 무슨 일이 있었는지, 수치와 배경, 주가에 미치는 영향을 자세히 설명
+- 핵심내용: **반드시 최소 4문장, 최소 120자** — 무슨 일인지, 구체적 수치, 배경 이유, 주가 영향 순서로 자세히. 너무 짧으면 예시와 비교를 추가해 길이를 채울 것.
 - 언론사: Reuters/Bloomberg/CNBC/WSJ/YahooFinance 등 실제 경제매체
 - 날짜: MM/DD 형식 ({week_start}~{week_end} 내)
 - 등급: 호재 / 참고 / 고려 중 하나
@@ -146,12 +146,12 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 【씬 3 — 리스크 뉴스】
 부정적/위험 뉴스 TOP 2건. 씬 2와 동일한 형식.
 ※ 확실하지 않은 루머도 포함 가능.
-- 핵심내용: **100~150자, 4~5문장** — 리스크 원인, 규모, 향후 전망 상세 설명
+- 핵심내용: **반드시 최소 4문장, 최소 120자** — 리스크 원인, 구체적 규모, 투자자 반응, 향후 전망 순서로. 짧으면 유사 사례나 배경을 추가해 길이를 채울 것.
 - 등급: 악재 / 주의 / 참고 중 하나
 
 【씬 4 — 시장 반응】
 유튜브 조회·검색량·커뮤니티 반응 기반 시황 내러티브. 정확히 4줄로 작성.
-각 줄 형식: "[라벨] 내용" — **각 줄 60~100자, 2~3문장**으로 구체적 묘사
+각 줄 형식: "[라벨] 내용" — **각 줄 반드시 최소 2문장, 최소 60자**로 구체적 묘사
 - 줄1: [분위기] 이번 주 시장·투자자 전체 분위기 (감탄사 포함, 구체적 수치나 사례 포함)
 - 줄2: [검색·영상] 구글 검색량/유튜브 조회수 트렌드 구체적 묘사
 - 줄3: [투자자] 커뮤니티·SNS 투자자 반응 구체적 묘사 (긍정/부정 비율 등)
@@ -161,7 +161,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 • 유재석처럼 밝고 에너지 넘치는 MC 어투
 • 전문 용어는 쉬운 말로 바꿔서 (예: "EPS" → "주당 순이익", "guidance" → "앞으로 예상")
 • PPT 낭독 절대 금지! 생동감 있게!
-• **내용은 길게, 자세하게** — 짧으면 빈 공간이 생김
+• **내용은 길게, 자세하게** — 각 항목이 지정 최소 길이보다 짧으면 구체적 사례나 비교를 추가해 반드시 채울 것
 
 === 출력 형식 ===
 SCENE_1_TITLE: [6자 이내]
@@ -501,12 +501,13 @@ def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
 
 
 def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, accent,
-                             fnt_bold, fnt_content, fnt_source):
-    """세로 포맷 전용 뉴스카드 (헤더 + 내용 + 하단 출처)."""
+                             fnt_bold, fnt_content, fnt_source,
+                             fnt_content_xl=None, fnt_content_sm=None):
+    """세로 포맷 전용 뉴스카드 (헤더 + 내용 수직중앙 + 하단 출처)."""
     from PIL import ImageDraw
 
-    HEADER_H = 80
-    FOOTER_H = 54
+    HEADER_H = 90
+    FOOTER_H = 60
 
     grade_map = {
         "호재": GREEN, "악재": RED, "주의": AMBER,
@@ -534,32 +535,45 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
 
     # 등급 배지 (헤더 오른쪽)
     if badge_text:
-        badge_w = 100
-        badge_h = 46
+        badge_w = 110
+        badge_h = 52
         badge_x = x + w - badge_w - 16
         badge_y = y + (HEADER_H - badge_h) // 2
         draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
-                               radius=8, fill=(10, 12, 20))
+                               radius=10, fill=(10, 12, 20))
         draw.text((badge_x + badge_w // 2, badge_y + badge_h // 2),
                   badge_text, font=fnt_bold, fill=badge_col, anchor="mm")
 
-    # 내용 영역 (HEADER ~ FOOTER)
-    content_x = x + 22
-    content_y = y + HEADER_H + 20
-    content_max_w = w - 44
-    content_area_h = h - HEADER_H - FOOTER_H - 30
+    # ── 적응형 폰트: 콘텐츠 길이에 따라 자동 선택 ──────────────────────────
+    char_count = len(content)
+    if fnt_content_xl and char_count < 60:
+        adaptive_font = fnt_content_xl   # 48px — 짧은 콘텐츠는 크게
+    elif fnt_content_sm and char_count >= 120:
+        adaptive_font = fnt_content_sm   # 28px — 긴 콘텐츠는 작게
+    else:
+        adaptive_font = fnt_content      # 36px — 기본
 
-    content_lines = wrap_text(draw, content, fnt_content, content_max_w)
-    cy = content_y
-    # 줄 간격을 컨텐츠량에 따라 자동 조절
-    bb_test = draw.textbbox((0, 0), "가", font=fnt_content)
+    # 내용 영역
+    content_x = x + 22
+    content_y = y + HEADER_H + 16
+    content_max_w = w - 44
+    content_area_h = h - HEADER_H - FOOTER_H - 32
+
+    content_lines = wrap_text(draw, content, adaptive_font, content_max_w)
+    bb_test = draw.textbbox((0, 0), "가", font=adaptive_font)
     char_h = bb_test[3] - bb_test[1]
-    max_lines = content_area_h // (char_h + 10)
-    line_h = min(char_h + 16, content_area_h // max(len(content_lines), 1)) if content_lines else char_h + 16
-    for line in content_lines[:max_lines]:
-        if cy + char_h > y + h - FOOTER_H - 10:
+    line_h = char_h + 14
+    max_lines = max(1, content_area_h // line_h)
+
+    # 수직 중앙 정렬
+    display_lines = content_lines[:max_lines]
+    total_text_h = len(display_lines) * line_h
+    cy = content_y + max(0, (content_area_h - total_text_h) // 2)
+
+    for line in display_lines:
+        if cy + char_h > y + h - FOOTER_H - 8:
             break
-        draw.text((content_x, cy), line, font=fnt_content, fill=(225, 232, 245))
+        draw.text((content_x, cy), line, font=adaptive_font, fill=(225, 232, 245))
         cy += line_h
 
     # 하단 출처 바
@@ -570,7 +584,7 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
     src_display = source
     for grade in grade_map:
         src_display = src_display.replace("·" + grade, "").replace(grade + "·", "").replace(grade, "").strip("· ")
-    draw.text((x + 18, footer_y + FOOTER_H // 2), f"▸ {src_display[:50]}",
+    draw.text((x + 18, footer_y + FOOTER_H // 2), src_display[:50],
               font=fnt_source, fill=LGRAY, anchor="lm")
 
 
@@ -614,15 +628,18 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             return ImageFont.load_default()
 
     f_xl    = fnt(font_bold, 72)
+    f_xl_h  = fnt(font_bold, 44)   # 씬1 헤드라인
     f_lg    = fnt(font_bold, 40)
     f_md    = fnt(font_bold, 32)
     f_md_r  = fnt(font_reg,  32)
-    f_nm    = fnt(font_reg,  26)
+    f_nm    = fnt(font_reg,  30)   # 26 → 30
     f_sm    = fnt(font_reg,  22)
     f_xs    = fnt(font_reg,  18)
     f_src   = fnt(font_reg,  20)
-    f_ch    = fnt(font_bold, 32)   # 뉴스카드 챕터/헤더 폰트
-    f_ct    = fnt(font_reg,  32)   # 뉴스카드 내용 폰트
+    f_ch    = fnt(font_bold, 34)   # 뉴스카드 챕터/헤더 폰트
+    f_ct    = fnt(font_reg,  36)   # 뉴스카드 내용 기본 폰트
+    f_ct_xl = fnt(font_reg,  48)   # 뉴스카드 내용 — 짧은 콘텐츠용
+    f_ct_sm = fnt(font_reg,  28)   # 뉴스카드 내용 — 긴 콘텐츠용
 
     # ── 상단 제목 바 (Y=0~90) — 좌측 accent 스트라이프 + 제목 ──────────────
     draw.rectangle([0, 0, W, 90], fill=(10, 12, 18))
@@ -640,7 +657,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         # Feature card: Y=400~1140 (740px)
         FC_Y = START_Y
         FC_H = 740
-        FC_W = COL_W
+        FC_W = COL_W - PAD   # 우측 여백 확보 (씬2/3와 동일)
 
         draw.rounded_rectangle([PAD, FC_Y, PAD + FC_W, FC_Y + FC_H],
                                radius=12, fill=(20, 24, 34), outline=accent, width=2)
@@ -656,56 +673,61 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         for i, line in enumerate(news_lines[:4]):
             if i == 0:
                 # 헤드라인 — 크고 굵게, 최대 3줄
-                wrapped = wrap_text(draw, line, f_md, INNER_W)
+                wrapped = wrap_text(draw, line, f_xl_h, INNER_W)
                 for wl in wrapped[:3]:
-                    draw.text((PAD + 20, body_y), wl, font=f_md, fill=WHITE)
-                    bb = draw.textbbox((0, 0), wl, font=f_md)
-                    body_y += (bb[3] - bb[1]) + 10
-                body_y += 18
+                    draw.text((PAD + 20, body_y), wl, font=f_xl_h, fill=WHITE)
+                    bb = draw.textbbox((0, 0), wl, font=f_xl_h)
+                    body_y += (bb[3] - bb[1]) + 12
+                body_y += 20
             elif i == 1:
                 # 출처·날짜
                 draw.rectangle([PAD + 20, body_y, PAD + 20 + INNER_W, body_y + 1],
                                fill=(accent[0], accent[1], accent[2]))
-                body_y += 12
-                draw.text((PAD + 20, body_y + 2), "▸ 출처",
+                body_y += 14
+                draw.text((PAD + 20, body_y + 2), "출처",
                           font=f_src, fill=accent)
-                draw.text((PAD + 100, body_y), line[:60],
+                draw.text((PAD + 90, body_y), line[:60],
                           font=f_sm, fill=accent)
-                body_y += 46
+                body_y += 48
             elif i == 2:
                 # 내용 — 멀티라인
-                draw.text((PAD + 20, body_y + 2), "▸ 내용",
+                draw.text((PAD + 20, body_y + 2), "내용",
                           font=f_src, fill=GRAY)
-                body_y += 36
+                body_y += 38
                 content_wrapped = wrap_text(draw, line, f_nm, INNER_W)
-                for wl in content_wrapped[:5]:
+                for wl in content_wrapped[:6]:
                     draw.text((PAD + 20, body_y), wl, font=f_nm, fill=LGRAY)
                     bb = draw.textbbox((0, 0), wl, font=f_nm)
-                    body_y += (bb[3] - bb[1]) + 8
-                body_y += 14
+                    body_y += (bb[3] - bb[1]) + 10
+                body_y += 16
             else:
-                # 전망
-                draw.text((PAD + 20, body_y + 2), "▸ 전망",
+                # 전망 — accent 색상으로 강조
+                draw.rectangle([PAD + 20, body_y, PAD + 20 + INNER_W, body_y + 1],
+                               fill=(accent[0]//2, accent[1]//2, accent[2]//2))
+                body_y += 14
+                draw.text((PAD + 20, body_y + 2), "전망",
                           font=f_src, fill=GRAY)
-                body_y += 36
+                body_y += 38
                 outlook_wrapped = wrap_text(draw, line, f_nm, INNER_W)
-                for wl in outlook_wrapped[:2]:
+                for wl in outlook_wrapped[:3]:
                     draw.text((PAD + 20, body_y), wl, font=f_nm, fill=accent)
                     bb = draw.textbbox((0, 0), wl, font=f_nm)
-                    body_y += (bb[3] - bb[1]) + 8
+                    body_y += (bb[3] - bb[1]) + 10
 
-        # 주간 주가 흐름 스트립 (Y=1160~1800)
-        STRIP_Y = FC_Y + FC_H + 20
-        draw.text((PAD, STRIP_Y), "주간 주가 흐름",
-                  font=f_sm, fill=GRAY)
+        # 주간 주가 흐름 스트립 — 피처카드 아래, 하단까지 채움
+        STRIP_Y = FC_Y + FC_H + 24
+        STRIP_LABEL_H = 40
+        BOX_Y  = STRIP_Y + STRIP_LABEL_H + 10
+        BOX_H  = max(180, H - 100 - BOX_Y)   # 푸터 바로 위까지
+
+        draw.text((PAD, STRIP_Y + STRIP_LABEL_H // 2), "주간 주가 흐름",
+                  font=f_sm, fill=GRAY, anchor="lm")
 
         daily_prices = summary.get("daily_prices", [])
-        BOX_Y  = STRIP_Y + 50
-        BOX_H  = 580   # 크게 배치
         if daily_prices:
             n = min(len(daily_prices), 5)
             box_gap = 14
-            box_w = (COL_W - box_gap * (n - 1)) // n
+            box_w = (COL_W - PAD - box_gap * (n - 1)) // n
             for j, (date_str, price_val) in enumerate(daily_prices[:n]):
                 bx = PAD + j * (box_w + box_gap)
                 try:
@@ -726,11 +748,11 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         else:
             price = summary.get("latest_price")
             price_str = f"${float(price):,.2f}" if price else "N/A"
-            draw.rounded_rectangle([PAD, BOX_Y, PAD + COL_W, BOX_Y + BOX_H],
+            draw.rounded_rectangle([PAD, BOX_Y, PAD + COL_W - PAD, BOX_Y + BOX_H],
                                    radius=10, fill=(18, 21, 30), outline=(40, 44, 54), width=1)
-            draw.text((PAD + COL_W // 2, BOX_Y + BOX_H // 3), "현재가",
+            draw.text((PAD + (COL_W - PAD) // 2, BOX_Y + BOX_H // 3), "현재가",
                       font=f_sm, fill=GRAY, anchor="mm")
-            draw.text((PAD + COL_W // 2, BOX_Y + BOX_H * 2 // 3), price_str,
+            draw.text((PAD + (COL_W - PAD) // 2, BOX_Y + BOX_H * 2 // 3), price_str,
                       font=f_lg, fill=WHITE, anchor="mm")
 
     # ── 씬 2~3: 호재/리스크 — 세로형 대형 카드 2장 ──────────────────────
@@ -749,6 +771,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 chapter=chapter, content=content, source=source,
                 accent=accent,
                 fnt_bold=f_ch, fnt_content=f_ct, fnt_source=f_src,
+                fnt_content_xl=f_ct_xl, fnt_content_sm=f_ct_sm,
             )
             draw = ImageDraw.Draw(img)
 
@@ -765,7 +788,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             draw.rounded_rectangle([PAD, iy, PAD + COL_W - PAD, iy + ITEM_H],
                                    radius=10, fill=(16, 19, 27), outline=accent, width=1)
             # 왼쪽 라벨 컬럼 (accent 배경, 전체 높이)
-            LAB_W = 120
+            LAB_W = 140
             draw.rounded_rectangle([PAD, iy, PAD + LAB_W, iy + ITEM_H],
                                    radius=10, fill=accent)
             draw.rectangle([PAD + LAB_W - 10, iy, PAD + LAB_W, iy + ITEM_H], fill=accent)
@@ -779,15 +802,17 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 bracket_end = line.index("]") + 1
                 content_text = line[bracket_end:].strip()
 
-            # 내용 텍스트
+            # 내용 텍스트 (수직 중앙 정렬)
             content_x   = PAD + LAB_W + 18
             content_maxw = COL_W - PAD - LAB_W - 36
             wrapped = wrap_text(draw, content_text, f_nm, content_maxw)
             bb_h = draw.textbbox((0, 0), "가", font=f_nm)
-            lh = (bb_h[3] - bb_h[1]) + 12
-            total_h = len(wrapped[:4]) * lh
+            lh = (bb_h[3] - bb_h[1]) + 14
+            total_h = len(wrapped[:5]) * lh
             start_y = iy + (ITEM_H - total_h) // 2
-            for wl in wrapped[:4]:
+            for wl in wrapped[:5]:
+                if start_y + lh > iy + ITEM_H - 10:
+                    break
                 draw.text((content_x, start_y), wl, font=f_nm, fill=LGRAY)
                 start_y += lh
 
