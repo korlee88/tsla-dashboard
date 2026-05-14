@@ -1,6 +1,395 @@
 {
   "sessions": [
     {
+      "id": "auto-1778768456386",
+      "date": "2026-05-14",
+      "displayDate": "2026.05.14",
+      "kstTime": "23:18",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778768312572,
+          "title": "일론 머스크, 스페이스X IPO 기대감 속 테슬라 주가 상승 방어",
+          "summary": "일론 머스크 테슬라 CEO가 스타링크의 항공사 전략을 옹호하고 스페이스X의 잠재적 IPO에 대한 기대감이 커지면서 테슬라(TSLA) 주가가 목요일 개장 전 거래에서 1% 상승했다. 스페이스X의 IPO는 1조 7,500억 달러에서 2조 달러 사이로 평가될 수 있으며, 이는 테슬라와 스페이스X 간의 잠재적 합병 논의를 다시 불러일으키고 있다.",
+          "source": "Stocktwits",
+          "date": "2026-05-13",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1778768312573,
+          "title": "테슬라, 독일 기가팩토리 배터리 생산에 2억 5천만 달러 투자 및 로보택시 문제 직면",
+          "summary": "테슬라가 독일 공장의 배터리 셀 생산 확대를 위해 2억 5천만 달러를 투자한다고 발표했다. 이는 유럽 생산량을 지원하고 성장에 대한 지속적인 자본 투입을 시사한다. 한편, 텍사스 로보택시 출시에서 긴 대기 시간과 경로 오류를 포함한 문제들이 보고되어 자율주행 기술에 대한 신뢰에 압박을 가할 수 있다.",
+          "source": "MarketBeat",
+          "date": "2026-05-13",
+          "category": "Product|Regulatory"
+        },
+        {
+          "id": 1778768312574,
+          "title": "일론 머스크, 트럼프 대통령과 중국 방문 예정: FSD 승인 지연 및 시장 점유율 하락 우려",
+          "summary": "일론 머스크 CEO가 도널드 트럼프 미국 대통령의 베이징 방문에 동행할 예정이며, 투자자들은 중국의 테슬라 완전자율주행(FSD) 소프트웨어 승인 지연 여부를 면밀히 주시하고 있다. 테슬라의 4월 중국 판매량은 전년 대비 약 10% 감소했으며, 중국 신에너지차 시장 점유율은 3%로 하락하여 경쟁 심화를 보여준다.",
+          "source": "Stocktwits",
+          "date": "2026-05-12",
+          "category": "Musk|Regulatory|Competition"
+        },
+        {
+          "id": 1778768312575,
+          "title": "테슬라 주가 하락: 로보택시 결함, 배터리 생산 지연, 중국 FSD 승인 불확실성",
+          "summary": "테슬라(TSLA) 주가는 화요일에 약 5% 하락하여 423달러 근처에서 거래되었다. 이는 일론 머스크의 중국 방문, 로보택시 운영 결함 보고, 파나소닉 배터리 생산 지연에 대한 우려가 복합적으로 작용한 결과이다. 특히 로보택시 서비스의 긴 대기 시간과 잦은 취소는 주요 강세론의 현실성을 시험하고 있다.",
+          "source": "24/7 Wall St.",
+          "date": "2026-05-12",
+          "category": "Market|Product|Regulatory"
+        },
+        {
+          "id": 1778768312576,
+          "title": "테슬라, 에너지 및 로봇 사업에서 중요한 발전: 옵티머스 로봇 6개월 내 공개 예정",
+          "summary": "테슬라는 에너지 및 로봇 부문에서 중요한 발전을 이루었다. 영국 전기 공급 라이선스 획득은 유럽 에너지 사업 성장의 촉매제가 될 것이며, xAI와의 공동 프로젝트인 휴머노이드 로봇 '디지털 옵티머스'는 6개월 이내에 사용자들이 경험할 수 있을 것으로 예상된다.",
+          "source": "Seeking Alpha",
+          "date": "2026-03-14",
+          "category": "Energy|Product"
+        },
+        {
+          "id": 1778768312577,
+          "title": "테슬라, 유럽 차량 등록 감소로 주가 하락 및 일론 머스크의 양극화된 이미지 우려",
+          "summary": "테슬라 주가는 화요일에 8.4% 하락하여 302.80달러를 기록했으며, 1월 유럽 테슬라 차량 등록이 45% 감소한 9,945대에 그쳤다는 보도가 나왔다. 일론 머스크 CEO가 대서양 양쪽에서 양극화된 인물이 되면서 많은 구매자들이 다른 전기차를 찾고 있다는 우려도 제기되었다.",
+          "source": "TheStreet",
+          "date": "2025-02-25",
+          "category": "Market|Musk|Competition"
+        },
+        {
+          "id": 1778768312578,
+          "title": "테슬라, 21만 9천 대 차량 리콜에도 주가 영향 미미",
+          "summary": "테슬라가 후방 카메라 이미지 문제로 미국에서 약 21만 9천 대의 차량을 리콜했지만, 테슬라(TSLA) 주가는 크게 영향을 받지 않았다.",
+          "source": "Markets Insider",
+          "date": "2026-05-09",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1778768312579,
+          "title": "일론 머스크, 트럼프 대통령의 중국 방문단 합류로 테슬라 주가 상승",
+          "summary": "일론 머스크가 이번 주 트럼프 대통령의 중국 방문단에 합류한다는 소식에 월요일 테슬라(TSLA) 주가가 상승했다. 중국은 테슬라에게 중요한 시장이며, 현지 제조업체와의 치열한 경쟁 속에서 사업을 안정화하기 위해 노력하고 있다.",
+          "source": "Bloomberg",
+          "date": "2026-05-12",
+          "category": "Musk|Market|Regulatory"
+        },
+        {
+          "id": 1778768312580,
+          "title": "일론 머스크, 테슬라의 부담으로 작용하나? 다른 사업에 대한 관심과 중국 EV 경쟁 심화",
+          "summary": "테슬라(TSLA)의 거버넌스 문제는 일론 머스크 CEO의 행동과 인센티브가 회사 방향을 결정하는 데 중요한 역할을 하기 때문에 중요하다. 머스크의 다른 사업에 대한 관심과 중국 EV 제조업체들의 유럽 시장 확장으로 인한 가격 경쟁 심화는 테슬라에게 부담으로 작용할 수 있다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-09",
+          "category": "Musk|Competition"
+        },
+        {
+          "id": 1778768312581,
+          "title": "테슬라, AI 및 자율주행에 대한 막대한 투자에도 불구하고 핵심 EV 사업 부진",
+          "summary": "테슬라는 AI 및 자율주행 기술에 막대한 투자를 하고 있지만, 핵심 EV 사업은 어려움을 겪고 있다. 2025년 자동차 판매는 전년 대비 9.8% 감소했으며, 이는 인도량과 생산 수준 간의 격차 심화로 인해 악화되고 있다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-09",
+          "category": "Product|Market"
+        }
+      ],
+      "analyses": {
+        "1778768312572": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X의 잠재적 IPO 기대감과 테슬라와의 합병 논의 재점화는 머스크의 다른 벤처가 테슬라에 긍정적인 영향을 미칠 수 있다는 기대를 불러일으키며 주가 상승을 방어하는 데 기여했습니다.",
+          "key_factors": [
+            "SpaceX IPO 기대감",
+            "테슬라-SpaceX 합병 논의"
+          ]
+        },
+        "1778768312573": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 독일 기가팩토리 배터리 생산 투자는 유럽 생산량 증대에 긍정적이지만, 로보택시의 초기 문제는 자율주행 기술 신뢰에 부정적인 영향을 미칠 수 있어 상쇄된다.",
+          "key_factors": [
+            "독일 기가팩토리 배터리 생산 투자",
+            "로보택시 초기 문제 발생"
+          ]
+        },
+        "1778768312574": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R05",
+            "R20",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 트럼프 대통령 동행 소식과 FSD 승인 지연 우려, 그리고 4월 중국 판매량 감소 및 시장 점유율 하락은 테슬라에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "FSD 승인 지연 우려",
+            "4월 중국 판매량 감소",
+            "중국 시장 점유율 하락"
+          ]
+        },
+        "1778768312575": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "로보택시 운영 결함 보고, 파나소닉 배터리 생산 지연, 중국 FSD 승인 불확실성 등 여러 부정적 요인이 복합적으로 작용하여 테슬라 주가가 하락했습니다.",
+          "key_factors": [
+            "로보택시 운영 결함",
+            "파나소닉 배터리 생산 지연",
+            "중국 FSD 승인 불확실성"
+          ]
+        },
+        "1778768312576": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R16",
+            "R25"
+          ],
+          "reasoning": "테슬라의 영국 전기 공급 라이선스 획득은 유럽 에너지 시장 확장을 의미하며, 옵티머스 로봇의 6개월 내 공개는 로봇 사업의 중요한 진전을 나타내어 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "영국 전기 공급 라이선스 획득",
+            "옵티머스 로봇 6개월 내 공개"
+          ]
+        },
+        "1778768312577": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "유럽에서의 테슬라 차량 등록이 45% 감소했다는 보도는 판매량 감소 우려를 불러일으키며, 일론 머스크의 양극화된 이미지가 구매자 이탈에 영향을 미칠 수 있다는 분석이 나왔습니다.",
+          "key_factors": [
+            "유럽 차량 등록 45% 감소",
+            "일론 머스크의 양극화된 이미지"
+          ]
+        },
+        "1778768312578": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 문제로 21만 9천 대의 차량을 리콜했지만, 시장은 이미 해당 소식을 인지하고 있어 주가에 미미한 영향을 미쳤습니다.",
+          "key_factors": [
+            "리콜",
+            "후방 카메라 문제"
+          ]
+        },
+        "1778768312579": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "일론 머스크가 트럼프 대통령의 중국 방문단에 합류하여 테슬라의 중요한 중국 시장 사업 안정화에 긍정적인 영향을 미칠 것으로 예상된다.",
+          "key_factors": [
+            "일론 머스크 중국 방문",
+            "중국 시장 안정화 기대"
+          ]
+        },
+        "1778768312580": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R06",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 다른 사업에 대한 관심과 중국 EV 경쟁 심화가 테슬라에 부담으로 작작용할 수 있다는 분석으로 인해 부정적인 영향이 예상됩니다.",
+          "key_factors": [
+            "일론 머스크의 다른 사업 관심",
+            "중국 EV 경쟁 심화"
+          ]
+        },
+        "1778768312581": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R01"
+          ],
+          "reasoning": "테슬라의 핵심 EV 사업 부진으로 2025년 자동차 판매가 전년 대비 9.8% 감소하여 인도량과 생산 수준 간의 격차가 심화되고 있어 부정적인 영향을 미칠 것으로 예상된다.",
+          "key_factors": [
+            "EV 사업 부진",
+            "2025년 자동차 판매 9.8% 감소",
+            "인도량 및 생산 수준 격차 심화"
+          ]
+        }
+      },
+      "avgScore": -0.5,
+      "buyIndex": 49,
+      "direction": "bearish",
+      "topRules": [
+        "R24",
+        "R20",
+        "R05",
+        "R16",
+        "R25"
+      ],
+      "bullish": 4,
+      "bearish": 6,
+      "neutral": 0,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 45,
+        "week_avg": 48,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "tesla stock",
+          "tesla news",
+          "elon musk"
+        ],
+        "reasoning": "지난주 대비 검색 관심도가 약간 하락했으며, 특정 검색어에서 큰 폭의 상승은 없었습니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.3,
+        "velocity_label": "급감 (×0.3)",
+        "reason": "조회수 속도 급감 (×0.3) | 최근 3일 236,633회 / 이전 4~7일 793,103회 | 총 1,029,736회 (44개 영상)",
+        "video_count": 44,
+        "total_views": 1029736,
+        "hot_views": 236633,
+        "baseline_views": 793103,
+        "top_videos": [
+          {
+            "title": "Bumblebee Jaisa Transformer Bana Future Autobot Leader  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-08T04:34:10Z",
+            "viewCount": 195308
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 57706
+          },
+          {
+            "title": "Tesla’s Robotaxi Expansion Accelerates Again",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-08T13:30:08Z",
+            "viewCount": 56173
+          },
+          {
+            "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-11T13:30:38Z",
+            "viewCount": 53884
+          },
+          {
+            "title": "Tesla Just Got Several Massive Catalysts",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-12T18:37:57Z",
+            "viewCount": 38735
+          }
+        ],
+        "collected_at": "2026-05-14T14:18:20Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Market": 1,
+        "Product|Regulatory": 1,
+        "Musk|Regulatory|Competition": 1,
+        "Market|Product|Regulatory": 1,
+        "Energy|Product": 1,
+        "Market|Musk|Competition": 1,
+        "Regulatory": 1,
+        "Musk|Market|Regulatory": 1,
+        "Musk|Competition": 1,
+        "Product|Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.35,
+        "qqqChg": 0.59,
+        "vixClose": 17.850000381469727,
+        "wtiChg": 0.07,
+        "cnyChg": -0.08,
+        "prevTslaChg": 5.47,
+        "rsi": 57.8,
+        "macd": {
+          "macd": 3.792586332151757,
+          "signal": -1.0170606743522175,
+          "hist": 4.809647006503974,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 467.35,
+          "middle": 405.91,
+          "lower": 344.47,
+          "pos": 0.816
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 45,
+        "optimusBoost": 8,
+        "r24Discount": -1,
+        "macdTrend": 2,
+        "bbHigh": -2,
+        "googleTrends": -1,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 444.78,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/15(금)",
+          "change_pct": -0.7,
+          "signal": "관망",
+          "basePrice": 444.78,
+          "predictedPrice": 441.67
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/18(월)",
+          "change_pct": 0.2,
+          "signal": "관망",
+          "basePrice": 444.78,
+          "predictedPrice": 445.67
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/19(화)",
+          "change_pct": -1.1,
+          "signal": "매도",
+          "basePrice": 444.78,
+          "predictedPrice": 439.89
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/20(수)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 444.78,
+          "predictedPrice": 448.78
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/21(목)",
+          "change_pct": -0.4,
+          "signal": "관망",
+          "basePrice": 444.78,
+          "predictedPrice": 443
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778768456386
+    },
+    {
       "id": "auto-1778747993976",
       "date": "2026-05-14",
       "displayDate": "2026.05.14",
@@ -23830,5 +24219,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-14 17:39 KST"
+  "lastUpdated": "2026-05-14 23:18 KST"
 }

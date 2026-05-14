@@ -1,43 +1,43 @@
 {
-  "score": -1,
-  "velocity": 0.45,
-  "velocity_label": "소폭 감소 (×0.4)",
-  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 315,211회 / 이전 4~7일 708,112회 | 총 1,023,323회 (45개 영상)",
-  "video_count": 45,
-  "total_views": 1023323,
-  "hot_views": 315211,
-  "baseline_views": 708112,
+  "score": -2,
+  "velocity": 0.3,
+  "velocity_label": "급감 (×0.3)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 236,633회 / 이전 4~7일 793,103회 | 총 1,029,736회 (44개 영상)",
+  "video_count": 44,
+  "total_views": 1029736,
+  "hot_views": 236633,
+  "baseline_views": 793103,
   "top_videos": [
     {
       "title": "Bumblebee Jaisa Transformer Bana Future Autobot Leader  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-08T04:34:10Z",
-      "viewCount": 192207
+      "viewCount": 195308
     },
     {
-      "title": "I Don&#39;t Think You Understand What 50x Actually Means",
-      "channel": "Farzad",
-      "publishedAt": "2026-05-07T11:19:50Z",
-      "viewCount": 126933
+      "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+      "channel": "Mosh Brutal",
+      "publishedAt": "2026-05-13T03:35:39Z",
+      "viewCount": 57706
+    },
+    {
+      "title": "Tesla’s Robotaxi Expansion Accelerates Again",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-05-08T13:30:08Z",
+      "viewCount": 56173
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 53350
+      "viewCount": 53884
     },
     {
       "title": "Tesla Just Got Several Massive Catalysts",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-12T18:37:57Z",
-      "viewCount": 38174
-    },
-    {
-      "title": "Tesla AI5 Just SHOCKED Nvidia: Optimus&#39; 8x Brain Needs ZERO Cloud!",
-      "channel": "Tech Revolution",
-      "publishedAt": "2026-05-11T12:00:24Z",
-      "viewCount": 34409
+      "viewCount": 38735
     }
   ],
-  "collected_at": "2026-05-14T08:39:09Z"
+  "collected_at": "2026-05-14T14:18:20Z"
 }
