@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.63,
-  "velocity_label": "소폭 감소 (×0.6)",
-  "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 330,216회 / 이전 4~7일 522,615회 | 총 852,831회 (45개 영상)",
+  "velocity": 0.45,
+  "velocity_label": "소폭 감소 (×0.4)",
+  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 315,211회 / 이전 4~7일 708,112회 | 총 1,023,323회 (45개 영상)",
   "video_count": 45,
-  "total_views": 852831,
-  "hot_views": 330216,
-  "baseline_views": 522615,
+  "total_views": 1023323,
+  "hot_views": 315211,
+  "baseline_views": 708112,
   "top_videos": [
+    {
+      "title": "Bumblebee Jaisa Transformer Bana Future Autobot Leader  #shorts #optimusprime #transformers",
+      "channel": "Mosh Brutal",
+      "publishedAt": "2026-05-08T04:34:10Z",
+      "viewCount": 192207
+    },
     {
       "title": "I Don&#39;t Think You Understand What 50x Actually Means",
       "channel": "Farzad",
       "publishedAt": "2026-05-07T11:19:50Z",
-      "viewCount": 126437
+      "viewCount": 126933
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 52851
-    },
-    {
-      "title": "‘아틀라스’ 머스크 ‘옵티머스’ 찢었다… “L자 버티기에 전세계 경악”",
-      "channel": "서울경제TV",
-      "publishedAt": "2026-05-07T05:01:02Z",
-      "viewCount": 49621
+      "viewCount": 53350
     },
     {
       "title": "Tesla Just Got Several Massive Catalysts",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-12T18:37:57Z",
-      "viewCount": 37757
+      "viewCount": 38174
     },
     {
       "title": "Tesla AI5 Just SHOCKED Nvidia: Optimus&#39; 8x Brain Needs ZERO Cloud!",
       "channel": "Tech Revolution",
       "publishedAt": "2026-05-11T12:00:24Z",
-      "viewCount": 34238
+      "viewCount": 34409
     }
   ],
-  "collected_at": "2026-05-14T04:05:07Z"
+  "collected_at": "2026-05-14T08:39:09Z"
 }
