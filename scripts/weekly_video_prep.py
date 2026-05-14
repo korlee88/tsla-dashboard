@@ -52,7 +52,7 @@ SCENE_MOODS   = ["excited", "happy", "worried", "focused"]
 
 # 씬별 Wikipedia 배경 이미지 소스
 SCENE_WIKI_ARTICLES = [
-    "Tesla, Inc.",              # scene 1 - 브리핑
+    "Tesla Model Y",            # scene 1 - 브리핑 (가로 차량 사진)
     "Tesla Cybertruck",         # scene 2 - 호재 뉴스
     "Elon Musk",                # scene 3 - 리스크 뉴스
     "Gigafactory Nevada",       # scene 4 - 시장 동향
@@ -462,8 +462,10 @@ def make_canvas(accent):
 
 
 def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
-    """Wikipedia 사진을 세로 포맷 상단 배너에 삽입. 없으면 빈 프레임 표시."""
-    from PIL import Image as PILImage
+    """Wikipedia 사진을 프레임에 삽입.
+    비율이 안 맞으면 blurred-cover 배경 + contain-fit 전경으로 프레임 가득 채움.
+    """
+    from PIL import Image as PILImage, ImageFilter
     # 외곽 테두리
     draw.rounded_rectangle([x - 3, y - 3, x + w + 3, y + h + 3],
                            radius=8, outline=accent, width=2)
@@ -473,27 +475,47 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
     try:
         photo = PILImage.open(bg_path).convert("RGB")
         pw, ph = photo.size
-        # 대상 비율에 맞춰 중앙 크롭
         target_ratio = w / h
-        if pw / ph > target_ratio:
+        img_ratio    = pw / ph
+
+        # ── 배경 레이어: cover-crop + 블러 (비율 차이 영역을 가림) ──
+        bg = photo.copy()
+        if img_ratio > target_ratio:
             new_w = int(ph * target_ratio)
             left = (pw - new_w) // 2
-            photo = photo.crop([left, 0, left + new_w, ph])
+            bg = bg.crop([left, 0, left + new_w, ph])
         else:
             new_h = int(pw / target_ratio)
             top = (ph - new_h) // 2
-            photo = photo.crop([0, top, pw, top + new_h])
-        photo = photo.resize((w, h), PILImage.LANCZOS)
-        # 어두운 오버레이 (120/255 — 사진 가시성 확보)
-        ov = PILImage.new("RGBA", (w, h), (8, 10, 16, 130))
-        photo = PILImage.alpha_composite(photo.convert("RGBA"), ov).convert("RGB")
-        img.paste(photo, (x, y))
-        # 재-draw (paste 이후 draw 객체 갱신)
+            bg = bg.crop([0, top, pw, top + new_h])
+        bg = bg.resize((w, h), PILImage.LANCZOS)
+        bg = bg.filter(ImageFilter.GaussianBlur(radius=24))
+        # 배경에 어두운 오버레이
+        bg_ov = PILImage.new("RGBA", (w, h), (8, 10, 16, 170))
+        bg = PILImage.alpha_composite(bg.convert("RGBA"), bg_ov).convert("RGB")
+
+        # ── 전경 레이어: contain-fit (프레임 안에 사진 전체 표시) ──
+        if img_ratio > target_ratio:
+            fg_w = w
+            fg_h = int(w / img_ratio)
+        else:
+            fg_h = h
+            fg_w = int(h * img_ratio)
+        fg = photo.resize((fg_w, fg_h), PILImage.LANCZOS)
+        # 전경에 약한 어두운 오버레이 (텍스트 가독성용)
+        fg_ov = PILImage.new("RGBA", (fg_w, fg_h), (8, 10, 16, 80))
+        fg = PILImage.alpha_composite(fg.convert("RGBA"), fg_ov).convert("RGB")
+
+        # ── 합성: 배경 위에 전경을 중앙 정렬 ──
+        bg.paste(fg, ((w - fg_w) // 2, (h - fg_h) // 2))
+        img.paste(bg, (x, y))
+
+        # 외곽 테두리 재그리기 (paste 이후)
         from PIL import ImageDraw as ID
         d2 = ID.Draw(img)
         d2.rounded_rectangle([x - 3, y - 3, x + w + 3, y + h + 3],
                              radius=8, outline=accent, width=2)
-    except Exception as e:
+    except Exception:
         draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=(20, 24, 32))
 
 
