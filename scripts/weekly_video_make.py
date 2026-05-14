@@ -12,9 +12,9 @@ import os, json, sys, asyncio, math
 from pathlib import Path
 
 REPORT_BASE   = Path(__file__).parent.parent / "data" / "weekly-report"
-VOICE         = "ko-KR-HyunsuNeural"   # 캐주얼 남성 (활기찬 MC 톤)
-RATE          = "+50%"                 # 약간 여유있게 (너무 빠르면 전달력↓)
-PITCH         = "+12Hz"                # 톤업 → 밝고 에너지 넘치는 느낌
+VOICE         = "ko-KR-SunHiNeural"    # 젊은 한국 여성 (밝고 에너지 넘치는 톤)
+RATE          = "+35%"                  # 여성 목소리 특성상 남성보다 소폭 낮게
+PITCH         = "+8Hz"                  # 약간 밝게 올림 → 활기찬 느낌
 FPS           = 24
 W, H          = 1080, 1920
 MIN_SCENE_SEC = 5.0
