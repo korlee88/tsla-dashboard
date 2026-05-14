@@ -207,7 +207,23 @@ SCENE_4:
 [분위기] 내용
 [검색·영상] 내용
 [투자자] 내용
-[시황] 내용"""
+[시황] 내용
+
+=== 배경 이미지 프롬프트 (Gemini Imagen용) ===
+이번 주 뉴스 내용을 반영한 씬별 배경 이미지 프롬프트를 영어로 작성해줘.
+규칙:
+- 반드시 영어로 작성
+- 각 프롬프트 60~80 단어
+- 반드시 포함: "no text, no letters, no watermark, no logo"
+- 반드시 포함: "9:16 vertical aspect ratio, ultra-high resolution"
+- 테슬라·전기차·미래기술 관련 시각 요소 포함
+- 씬 분위기에 맞는 색감 지정 (씬1 보라, 씬2 초록, 씬3 빨강, 씬4 주황)
+- 이번 주 실제 뉴스 키워드를 시각화할 것
+
+IMAGE_PROMPT_1: [씬1 — 이번 주 메인 뉴스 주제 시각화, 보라빛 미래적 분위기]
+IMAGE_PROMPT_2: [씬2 — 호재 뉴스 주제 시각화, 밝고 활기찬 초록빛 분위기]
+IMAGE_PROMPT_3: [씬3 — 리스크 뉴스 주제 시각화, 긴장감 있는 붉은빛 분위기]
+IMAGE_PROMPT_4: [씬4 — 시장 반응 시각화, 도시·금융·군중 주황빛 분위기]"""
 
 
 def _build_prompt(summary):
@@ -237,7 +253,7 @@ def generate_script_opus(prompt):
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     msg = client.messages.create(
         model="claude-opus-4-7",
-        max_tokens=2048,
+        max_tokens=3072,
         messages=[{"role": "user", "content": prompt}],
     )
     return msg.content[0].text
@@ -285,6 +301,23 @@ def parse_script(raw):
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})
     return scenes
+
+
+def parse_image_prompts(raw):
+    """대본에서 씬별 Imagen 프롬프트 추출 → {1: "...", 2: "...", ...}"""
+    prompts = {}
+    for i in range(1, 5):
+        key = f"IMAGE_PROMPT_{i}:"
+        if key in raw:
+            s = raw.index(key) + len(key)
+            e = raw.find("\n", s)
+            val = (raw[s:e] if e != -1 else raw[s:]).strip()
+            # 대괄호 설명 텍스트 제거 (AI가 그대로 반환하는 경우)
+            if val.startswith("[") and val.endswith("]"):
+                val = ""
+            if val:
+                prompts[i] = val
+    return prompts
 
 # ── 이미지 생성 ───────────────────────────────────────────────────────────
 
@@ -1086,12 +1119,29 @@ def main():
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
         scenes = parse_script(raw)
+        img_prompts = parse_image_prompts(raw)
 
         with open(out_dir / "script.txt", "w", encoding="utf-8") as f:
             f.write(raw)
         with open(out_dir / "script.json", "w", encoding="utf-8") as f:
-            json.dump({"generated_at": today, "summary": summary, "scenes": scenes},
+            json.dump({"generated_at": today, "summary": summary, "scenes": scenes,
+                       "image_prompts": img_prompts},
                       f, ensure_ascii=False, indent=2)
+
+        # ── 이미지 프롬프트 별도 저장 (Imagen 복붙용) ──
+        if img_prompts:
+            lines = [f"# TSLA 주간 배경 이미지 프롬프트 — {today}",
+                     "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
+            scene_names = {1: "씬1 주간브리핑", 2: "씬2 호재뉴스",
+                           3: "씬3 리스크뉴스", 4: "씬4 시장반응"}
+            for i in range(1, 5):
+                if i in img_prompts:
+                    lines.append(f"## {scene_names[i]}")
+                    lines.append(img_prompts[i])
+                    lines.append("")
+            with open(out_dir / "image_prompts.txt", "w", encoding="utf-8") as f:
+                f.write("\n".join(lines))
+            print(f"   🎨 image_prompts.txt 저장 완료 ({len(img_prompts)}개 씬)")
         print(f"   ✅ 대본 저장 완료")
 
     # ── 이미지 ──
