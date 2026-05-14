@@ -1,6 +1,398 @@
 {
   "sessions": [
     {
+      "id": "auto-1778786749456",
+      "date": "2026-05-15",
+      "displayDate": "2026.05.15",
+      "kstTime": "04:25",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778786719271,
+          "title": "일론 머스크, 스페이스X IPO 및 테슬라-스페이스X 합병 가능성 언급",
+          "summary": "일론 머스크는 스페이스X의 항공사 전략을 옹호하며 스타링크의 항공사 계약을 '의도적으로' 낮게 체결했다고 밝혔습니다. 스페이스X의 잠재적 IPO에 대한 기대감이 커지면서 테슬라 주가도 상승했으며, 스페이스X와 xAI의 합병으로 스페이스X의 가치는 1조 달러, xAI는 2,500억 달러로 평가되어 총 1조 2,500억 달러 규모의 통합 법인이 탄생했습니다. 테슬라는 xAI에 대한 20억 달러 투자를 이번 합병 후 스페이스X 지분으로 전환했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-05-13",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1778786719272,
+          "title": "테슬라, 로보택시 서비스 확장 및 2026년 말까지 미국 내 수십 개 도시 진출 목표",
+          "summary": "테슬라의 로보택시 서비스가 댈러스와 휴스턴에서 시작되어 현재 4개 도시에서 운영 중입니다. 일론 머스크 CEO는 2026년 말까지 미국 내 수십 개 도시에 로보택시를 도입할 것으로 예상하고 있습니다. 모건 스탠리 분석가들은 로보택시가 미국에서 최소 1조 달러 규모의 시장을 형성할 것으로 전망하고 있습니다.",
+          "source": "The Motley Fool",
+          "date": "2026-04-20",
+          "category": "Product|Market"
+        },
+        {
+          "id": 1778786719273,
+          "title": "테슬라, AI 및 로봇 개발에 250억 달러 이상 투자 계획 발표",
+          "summary": "테슬라는 인공지능, 로봇 공학 및 칩 개발에 막대한 자금을 투입하기 위해 올해 지출 계획을 250억 달러 이상으로 대폭 상향 조정했습니다. 일론 머스크는 이러한 투자가 미래의 막대한 수익원을 창출하는 데 '충분히 정당하다'고 밝혔습니다.",
+          "source": "Reuters",
+          "date": "2026-04-23",
+          "category": "Product|AI|Robotics"
+        },
+        {
+          "id": 1778786719274,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 전기차 수요 회복 조짐",
+          "summary": "테슬라는 1분기 조정 주당 순이익이 41센트로 월스트리트 예상치인 34센트를 상회하며 두 분기 연속으로 예상치를 뛰어넘는 실적을 기록했습니다. 또한, 아시아-태평양 및 남미 지역의 차량 수요가 지속적으로 증가하고 북미 및 유럽-중동 지역에서 수요가 회복되고 있다고 밝혔습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1778786719275,
+          "title": "론 바론, 테슬라-스페이스X 합병 가능성에 대한 일론 머스크 지지 표명",
+          "summary": "바론 캐피탈의 포트폴리오 매니저이자 테슬라 투자자인 론 바론은 스페이스X와 테슬라의 잠재적 합병 결정에 대해 일론 머스크 CEO를 지지했습니다. 바론은 향후 10년 내에 테슬라 주가가 2,000달러에서 2,500달러까지 상승하여 회사 시가총액이 8조 달러를 넘어설 것으로 기대하고 있습니다.",
+          "source": "Stocktwits",
+          "date": "2026-05-12",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1778786719276,
+          "title": "테슬라, AI, 로봇 공학 및 에너지 분야에 대한 고위험 고수익 투자 전환",
+          "summary": "테슬라의 투자 사례는 이제 AI, 로봇 공학 및 에너지 분야에 대한 고위험 고수익 자본 지출에 달려 있습니다. 2026년 250억 달러의 자본 지출 계획은 예상치를 훨씬 웃돌며, 2026년 이후 잠재적인 확장을 앞두고 마이너스 현금 흐름과 수익 압박을 초래할 것입니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-24",
+          "category": "AI|Robotics|Energy"
+        },
+        {
+          "id": 1778786719277,
+          "title": "테슬라 세미 트럭, 캘리포니아에서 370대 대규모 배치 발표",
+          "summary": "EV는 캘리포니아에서 단일 전기 트럭 배치로는 역대 최대 규모인 370대의 테슬라 세미 트럭을 배치할 것이라고 발표했습니다. 이는 1억 달러 규모의 계약으로, 첫 50대는 2026년에 인도될 예정이며 전체 차량은 2027년 말까지 인도될 예정입니다.",
+          "source": "YouTube (Just in: Elon Musk Confirms Huge News For Tesla)",
+          "date": "2026-05-06",
+          "category": "Product"
+        },
+        {
+          "id": 1778786719278,
+          "title": "테슬라, 중국 내 FSD 시스템 확장 승인 추진",
+          "summary": "테슬라는 중국 규제 당국이 신중한 입장을 유지하고 국내 전기차 경쟁이 심화되는 가운데, 중국 내 완전 자율 주행(FSD) 시스템 확장을 위한 승인을 모색하고 있습니다. 이는 중국 내 FSD 배포 또는 더 광범위한 사용을 허가받기 위한 것입니다.",
+          "source": "TradingView",
+          "date": "2026-05-14",
+          "category": "Regulatory|Product"
+        },
+        {
+          "id": 1778786719279,
+          "title": "테슬라, 에너지 사업 부문 마진 개선",
+          "summary": "테슬라의 에너지 사업 부문 총 마진은 2025년에 29.8%를 기록하여 2024년 26.2%, 2023년 18.9% 대비 크게 개선되었습니다. 이는 자동차 사업 부문 마진인 2025년 17.8%보다 높은 수치이며, 에너지 부문의 연간 마진 상승을 보여줍니다.",
+          "source": "TradingView",
+          "date": "2026-05-14",
+          "category": "Energy|Earnings"
+        },
+        {
+          "id": 1778786719280,
+          "title": "테슬라, 텍사스에 새로운 기가팩토리 건설 가능성 시사",
+          "summary": "일론 머스크는 텍사스에 새로운 기가팩토리 건설 가능성을 시사했으며, 6월 3일 그림스 카운티에서 재산세 감면 협정을 고려하기 위한 공청회가 열릴 예정입니다. 이는 테슬라와 스페이스X에 더 나은 조건을 협상하기 위한 것으로 보입니다.",
+          "source": "YouTube (Just in: Elon Musk Confirms Huge News For Tesla)",
+          "date": "2026-05-06",
+          "category": "Product|Musk"
+        }
+      ],
+      "analyses": {
+        "1778786719271": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R19",
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 스페이스X IPO 및 테슬라-스페이스X 합병 가능성 언급은 테슬라에 대한 긍정적인 투자 심리를 유발할 수 있지만, 아직 구체적인 계획이 확정되지 않아 영향은 제한적입니다.",
+          "key_factors": [
+            "스페이스X IPO 가능성",
+            "테슬라-스페이스X 합병 가능성",
+            "xAI와 스페이스X 합병"
+          ]
+        },
+        "1778786719272": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 로보택시 서비스를 확장하고 2026년 말까지 미국 내 수십 개 도시 진출을 목표로 한다는 소식은 미래 성장 동력에 대한 긍정적인 기대를 높이지만, 아직은 분석가 전망과 목표치에 기반한 소식입니다.",
+          "key_factors": [
+            "로보택시 서비스 확장",
+            "미국 내 수십 개 도시 진출 목표",
+            "모건 스탠리 시장 전망"
+          ]
+        },
+        "1778786719273": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R25"
+          ],
+          "reasoning": "테슬라가 AI 및 로봇 개발에 250억 달러 이상을 투자할 계획을 발표하며 미래 수익원에 대한 기대를 높였습니다.",
+          "key_factors": [
+            "AI 및 로봇 개발 투자",
+            "미래 수익원 창출 기대"
+          ]
+        },
+        "1778786719274": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 월스트리트 예상치를 10% 이상 상회하며 두 분기 연속으로 실적을 뛰어넘었고, 주요 지역에서 전기차 수요 회복 조짐을 보인다는 소식은 긍정적입니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand recovery"
+          ]
+        },
+        "1778786719275": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R19"
+          ],
+          "reasoning": "테슬라의 주요 투자자가 스페이스X와의 합병 가능성에 대해 일론 머스크를 지지하고 장기적인 주가 상승을 전망했지만, 이는 추측성 발언이며 구체적인 합병 계획이나 공식적인 발표가 아니므로 영향은 제한적입니다.",
+          "key_factors": [
+            "론 바론의 머스크 지지",
+            "테슬라-스페이스X 합병 가능성 언급",
+            "장기 주가 전망"
+          ]
+        },
+        "1778786719276": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 AI, 로봇 공학 및 에너지 분야에 대한 고위험 고수익 투자 전환과 예상치를 훨씬 웃도는 자본 지출 계획은 단기적으로 마이너스 현금 흐름과 수익 압박을 초래할 것으로 예상됩니다.",
+          "key_factors": [
+            "고위험 고수익 투자 전환",
+            "예상치를 웃도는 자본 지출 계획",
+            "마이너스 현금 흐름 및 수익 압박"
+          ]
+        },
+        "1778786719277": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 캘리포니아에서 370대의 세미 트럭을 배치하는 1억 달러 규모의 대규모 계약을 체결하여 장기적인 매출 성장에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "대규모 세미 트럭 배치",
+            "1억 달러 계약",
+            "장기적인 매출 기여"
+          ]
+        },
+        "1778786719278": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R20"
+          ],
+          "reasoning": "테슬라가 중국 내 FSD 시스템 확장을 위한 승인을 추진하는 것은 잠재적으로 새로운 수익원을 창출하고 중국 시장에서의 경쟁력을 강화할 수 있어 긍정적입니다.",
+          "key_factors": [
+            "FSD 시스템 확장",
+            "중국 규제 승인",
+            "중국 시장 경쟁력"
+          ]
+        },
+        "1778786719279": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 에너지 사업 부문 마진이 2025년에 자동차 사업 부문 마진을 상회하며 크게 개선될 것으로 예상되어 긍정적인 영향을 미칩니다.",
+          "key_factors": [
+            "에너지 사업 부문 마진 개선",
+            "자동차 사업 부문 마진 상회"
+          ]
+        },
+        "1778786719280": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 텍사스에 새로운 기가팩토리 건설 가능성을 시사하고 재산세 감면 협정을 논의할 예정이어서 테슬라의 생산 능력 확장 및 비용 절감 가능성에 대한 긍정적인 신호입니다.",
+          "key_factors": [
+            "기가팩토리 건설 가능성",
+            "재산세 감면 협정"
+          ]
+        }
+      },
+      "avgScore": 1.6,
+      "buyIndex": 66,
+      "direction": "bullish",
+      "topRules": [
+        "R19",
+        "R13",
+        "R24",
+        "R25",
+        "R12"
+      ],
+      "bullish": 9,
+      "bearish": 1,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 0,
+        "reasoning": "지난 7일(2026년 5월 8일~2026년 5월 15일) 동안 Elon Musk가 Tesla, TSLA, 전기차, Robotaxi, FSD, Optimus, 에너지 저장 또는 Tesla 사업 전략과 관련된 게시물을 올렸다는 직접적인 증거를 찾을 수 없었습니다. 검색 결과는 주로 Elon Musk의 트윗 수 예측 및 과거 트윗이 Tesla 주가에 미치는 영향에 대한 분석이었습니다."
+      },
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": 33,
+        "trend": "stable",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "TSLA",
+          "Tesla AI"
+        ],
+        "reasoning": "AltIndex에 따르면 Tesla의 현재 Google 트렌드 점수는 33이며, 이는 업계 평균보다 낮은 수치로, 검색 관심도가 안정적임을 나타냅니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.4,
+        "velocity_label": "급감 (×0.4)",
+        "reason": "조회수 속도 급감 (×0.4) | 최근 3일 296,775회 / 이전 4~7일 742,716회 | 총 1,039,491회 (43개 영상)",
+        "video_count": 43,
+        "total_views": 1039491,
+        "hot_views": 296775,
+        "baseline_views": 742716,
+        "top_videos": [
+          {
+            "title": "Bumblebee Jaisa Transformer Bana Future Autobot Leader  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-08T04:34:10Z",
+            "viewCount": 197762
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 61727
+          },
+          {
+            "title": "Tesla’s Robotaxi Expansion Accelerates Again",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-08T13:30:08Z",
+            "viewCount": 56352
+          },
+          {
+            "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-11T13:30:38Z",
+            "viewCount": 54372
+          },
+          {
+            "title": "Tesla Just Got Several Massive Catalysts",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-12T18:37:57Z",
+            "viewCount": 39246
+          }
+        ],
+        "collected_at": "2026-05-14T19:25:08Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Musk|Market": 2,
+        "Product|Market": 1,
+        "Product|AI|Robotics": 1,
+        "Earnings|Market": 1,
+        "AI|Robotics|Energy": 1,
+        "Product": 1,
+        "Regulatory|Product": 1,
+        "Energy|Earnings": 1,
+        "Product|Musk": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.64,
+        "qqqChg": 0.82,
+        "vixClose": 17.270000457763672,
+        "wtiChg": 0.59,
+        "cnyChg": -0.08,
+        "prevTslaChg": 5.47,
+        "rsi": 57.8,
+        "macd": {
+          "macd": 3.7239810776334252,
+          "signal": -1.030781725255884,
+          "hist": 4.754762802889309,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 467.2,
+          "middle": 405.87,
+          "lower": 344.54,
+          "pos": 0.81
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 66,
+        "optimusBoost": 8,
+        "r24Discount": -6,
+        "macdTrend": 2,
+        "bbHigh": -2,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 443.92,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/15(금)",
+          "change_pct": 1.2,
+          "signal": "매수",
+          "basePrice": 443.92,
+          "predictedPrice": 449.25
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/18(월)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 443.92,
+          "predictedPrice": 447.92
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/19(화)",
+          "change_pct": -0.5,
+          "signal": "관망",
+          "basePrice": 443.92,
+          "predictedPrice": 441.7
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/20(수)",
+          "change_pct": 1,
+          "signal": "매수",
+          "basePrice": 443.92,
+          "predictedPrice": 448.36
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/21(목)",
+          "change_pct": 0.7,
+          "signal": "관망",
+          "basePrice": 443.92,
+          "predictedPrice": 447.03
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778786749456
+    },
+    {
       "id": "auto-1778768456386",
       "date": "2026-05-14",
       "displayDate": "2026.05.14",
@@ -24219,5 +24611,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-14 23:18 KST"
+  "lastUpdated": "2026-05-15 04:25 KST"
 }
