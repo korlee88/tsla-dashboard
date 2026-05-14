@@ -33,10 +33,19 @@ W, H    = 1080, 1920
 
 PAD     = 40
 COL_W   = W - PAD          # 1040
-START_Y = 400               # 콘텐츠 시작 Y (사진 배너 아래)
 SAFE_BOTTOM = 1680          # 자막 + YouTube Shorts UI 회피 (여기서 콘텐츠 끝)
 KEY     = (255, 215, 0)     # 강조 키워드 노랑 (gold)
 STROKE  = (0, 0, 0)         # 텍스트 윤곽선
+
+# MBC NEWS 쇼츠 스타일 레이아웃 (1080×1920)
+HEADER_H    = 500            # 상단 헤드라인 영역 0~500
+PHOTO_Y     = HEADER_H       # 500
+PHOTO_H     = 500            # 사진 영역 500~1000
+BODY_Y      = PHOTO_Y + PHOTO_H   # 1000
+START_Y     = BODY_Y         # 본문 시작
+NAVY        = (15, 32, 70)
+NAVY_DEEP   = (10, 22, 50)
+CYAN_LIGHT  = (135, 220, 255)
 
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER]
 SCENE_MOODS   = ["excited", "happy", "worried", "focused"]
@@ -488,6 +497,58 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
         draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=(20, 24, 32))
 
 
+def draw_mbc_header(draw, brand: str, title_main: str, title_sub: str, accent,
+                     fnt_brand, fnt_main, fnt_sub):
+    """MBC NEWS 쇼츠 스타일 상단 헤더 — 네이비 박스 + 두줄 헤드라인.
+
+    brand: 좌측 상단 채널 라벨 (예: 'TSLA WEEKLY')
+    title_main: 메인 헤드라인 (흰색, 큰따옴표 권장)
+    title_sub:  부제 (시안 강조)
+    """
+    # 네이비 그라데이션 배경
+    for yy in range(HEADER_H):
+        t = yy / HEADER_H
+        r = int(NAVY[0] * (1 - t * 0.3) + NAVY_DEEP[0] * (t * 0.3))
+        g = int(NAVY[1] * (1 - t * 0.3) + NAVY_DEEP[1] * (t * 0.3))
+        b = int(NAVY[2] * (1 - t * 0.3) + NAVY_DEEP[2] * (t * 0.3))
+        draw.line([(0, yy), (W, yy)], fill=(r, g, b))
+
+    # 좌측 accent 스트라이프
+    draw.rectangle([0, 0, 10, HEADER_H], fill=accent)
+
+    # 브랜드 배지 (중앙 상단)
+    brand_y = 70
+    bw = max(220, len(brand) * 22)
+    bx0 = (W - bw) // 2
+    draw.rounded_rectangle([bx0, brand_y - 26, bx0 + bw, brand_y + 26],
+                           radius=6, fill=(255, 255, 255, 0), outline=WHITE, width=0)
+    draw.text((W // 2, brand_y), brand, font=fnt_brand, fill=WHITE, anchor="mm",
+              stroke_width=1, stroke_fill=STROKE)
+    # 브랜드 아래 짧은 가로선
+    draw.line([(W // 2 - 60, brand_y + 32), (W // 2 + 60, brand_y + 32)],
+              fill=WHITE, width=2)
+
+    # 메인 헤드라인 (흰색)
+    main_y = 220
+    main_lines = wrap_text(draw, title_main, fnt_main, W - 80)
+    for i, wl in enumerate(main_lines[:2]):
+        bb = draw.textbbox((0, 0), wl, font=fnt_main)
+        tw = bb[2] - bb[0]
+        draw.text(((W - tw) // 2, main_y), wl, font=fnt_main, fill=WHITE,
+                  stroke_width=3, stroke_fill=STROKE)
+        main_y += (bb[3] - bb[1]) + 14
+
+    # 부제 (시안)
+    if title_sub:
+        sub_y = main_y + 8
+        sub_lines = wrap_text(draw, title_sub, fnt_sub, W - 80)
+        for wl in sub_lines[:1]:
+            bb = draw.textbbox((0, 0), wl, font=fnt_sub)
+            tw = bb[2] - bb[0]
+            draw.text(((W - tw) // 2, sub_y), wl, font=fnt_sub, fill=CYAN_LIGHT,
+                      stroke_width=3, stroke_fill=STROKE)
+
+
 def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
     col = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
     # 배경 반원 (회색)
@@ -622,113 +683,132 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     img, draw = make_canvas(accent)
 
-    # ── 상단 사진 배너 (Y=90, h=310, 전체 폭) ──────────────────────────────
-    draw_photo_card(img, draw, accent, bg_path, x=0, y=90, w=W, h=310)
-    draw = ImageDraw.Draw(img)   # paste 이후 draw 갱신
-
     def fnt(path, size):
         try:
             return ImageFont.truetype(path, size) if path else ImageFont.load_default()
         except Exception:
             return ImageFont.load_default()
 
+    # ── 폰트 ──
     f_xl    = fnt(font_bold, 72)
-    f_xl_h  = fnt(font_bold, 44)   # 씬1 헤드라인
     f_lg    = fnt(font_bold, 40)
     f_md    = fnt(font_bold, 32)
-    f_md_r  = fnt(font_reg,  32)
-    f_nm    = fnt(font_reg,  30)   # 26 → 30
+    f_nm    = fnt(font_reg,  30)
     f_sm    = fnt(font_reg,  22)
     f_xs    = fnt(font_reg,  18)
     f_src   = fnt(font_reg,  20)
-    f_ch    = fnt(font_bold, 34)   # 뉴스카드 챕터/헤더 폰트
-    f_ct    = fnt(font_reg,  36)   # 뉴스카드 내용 기본 폰트
-    f_ct_xl = fnt(font_reg,  48)   # 뉴스카드 내용 — 짧은 콘텐츠용
-    f_ct_sm = fnt(font_reg,  28)   # 뉴스카드 내용 — 긴 콘텐츠용
-
-    # ── 상단 제목 바 (Y=0~90) — 좌측 accent 스트라이프 + 제목 ──────────────
-    draw.rectangle([0, 0, W, 90], fill=(10, 12, 18))
-    draw.rectangle([0, 0, 8, 90], fill=accent)
-    draw.text((PAD + 16, 45), title, font=f_lg, fill=WHITE, anchor="lm",
-              stroke_width=2, stroke_fill=STROKE)
-
-    # 푸터 텍스트는 자막+UI에 가려지므로 제거 (대시보드 웹에서 별도 표시)
+    f_ch    = fnt(font_bold, 34)
+    f_ct    = fnt(font_reg,  34)
+    f_ct_xl = fnt(font_reg,  44)
+    f_ct_sm = fnt(font_reg,  28)
+    # MBC 스타일 헤더 폰트
+    f_brand = fnt(font_bold, 32)
+    f_head_main = fnt(font_bold, 80)
+    f_head_sub  = fnt(font_bold, 64)
 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
-    # ── 씬 1: 주간 브리핑 ──────────────────────────────────────────────────
+    # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 1:
-        # Feature card: SAFE_BOTTOM(1680) 안에 모든 콘텐츠 위치
-        FC_Y = START_Y
-        FC_H = 720
+        # 메인: 대본 첫 줄 그대로 (감탄사 포함). 큰따옴표 추가.
+        first = (news_lines[0] if news_lines else "이번 주 테슬라").strip()
+        # 큰따옴표 적용
+        if not (first.startswith('"') or first.startswith("'")):
+            first = f'"{first}"'
+        head_main = first
+        # 부제: 매수지수 + 주가
+        bi = summary.get("avg_buy_index") or 50
+        price = summary.get("latest_price")
+        try:
+            head_sub = f"매수지수 {bi}점 · ${float(price):,.0f}" if price else f"매수지수 {bi}점"
+        except Exception:
+            head_sub = f"매수지수 {bi}점"
+    elif idx == 2:
+        head_main = '"이번 주 빅 호재"'
+        chs = []
+        for ln in news_lines[:2]:
+            ch, _, _ = parse_news_line(ln)
+            chs.append(ch)
+        head_sub = " · ".join(chs) if chs else "주요 호재 정리"
+    elif idx == 3:
+        head_main = '"이번 주 리스크"'
+        chs = []
+        for ln in news_lines[:2]:
+            ch, _, _ = parse_news_line(ln)
+            chs.append(ch)
+        head_sub = " · ".join(chs) if chs else "주요 리스크 정리"
+    else:
+        bi = summary.get("avg_buy_index") or 50
+        head_main = '"이번 주 시장 반응"'
+        head_sub = f"매수지수 {bi}점"
+
+    # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
+    draw_mbc_header(draw, "TSLA WEEKLY", head_main, head_sub, accent,
+                    f_brand, f_head_main, f_head_sub)
+
+    # ── 사진 배너 (Y=500~1000, 500px) ────────────────────────────────────
+    draw_photo_card(img, draw, accent, bg_path, x=0, y=PHOTO_Y, w=W, h=PHOTO_H)
+    draw = ImageDraw.Draw(img)
+
+    # 푸터 텍스트는 자막+UI에 가려지므로 제거
+
+    # ── 씬 1: 주간 브리핑 — 본문 영역 Y=1000~1680 (680px) ────────────────
+    if idx == 1:
+        BODY_H = SAFE_BOTTOM - START_Y   # 680
         FC_W = COL_W - PAD
 
-        draw.rounded_rectangle([PAD, FC_Y, PAD + FC_W, FC_Y + FC_H],
-                               radius=12, fill=(20, 24, 34), outline=accent, width=2)
-        # 헤더바
-        draw.rounded_rectangle([PAD, FC_Y, PAD + FC_W, FC_Y + 70],
-                               radius=12, fill=accent)
-        draw.rectangle([PAD, FC_Y + 58, PAD + FC_W, FC_Y + 70], fill=accent)
-        draw.text((PAD + 20, FC_Y + 35), "이번 주 핵심 뉴스",
-                  font=f_ch, fill=(10, 12, 20), anchor="lm")
-
-        body_y = FC_Y + 90
+        # 본문: 한 단락 카드 + 가격 스트립
+        # 상단 단락 카드 (출처/내용/전망) 약 480px
+        FC_H = 460
+        draw.rounded_rectangle([PAD, START_Y, PAD + FC_W, START_Y + FC_H],
+                               radius=14, fill=(20, 24, 34), outline=accent, width=2)
+        body_y = START_Y + 24
         INNER_W = FC_W - 40
-        for i, line in enumerate(news_lines[:4]):
-            if i == 0:
-                # 헤드라인 — 노랑 강조 + 검은 stroke
-                wrapped = wrap_text(draw, line, f_xl_h, INNER_W)
-                for wl in wrapped[:3]:
-                    draw.text((PAD + 20, body_y), wl, font=f_xl_h, fill=KEY,
-                              stroke_width=3, stroke_fill=STROKE)
-                    bb = draw.textbbox((0, 0), wl, font=f_xl_h)
-                    body_y += (bb[3] - bb[1]) + 12
-                body_y += 18
-            elif i == 1:
-                # 출처·날짜 — 라벨은 회색, 값은 KEY 노랑
-                draw.rectangle([PAD + 20, body_y, PAD + 20 + INNER_W, body_y + 1],
-                               fill=accent)
-                body_y += 14
-                draw.text((PAD + 20, body_y + 2), "출처",
-                          font=f_src, fill=GRAY)
-                draw.text((PAD + 90, body_y), line[:60],
-                          font=f_sm, fill=KEY,
+
+        # 출처 라인
+        if len(news_lines) >= 2:
+            draw.text((PAD + 20, body_y), "출처",
+                      font=f_src, fill=GRAY)
+            draw.text((PAD + 100, body_y - 2), news_lines[1][:60],
+                      font=f_sm, fill=KEY,
+                      stroke_width=1, stroke_fill=STROKE)
+            body_y += 38
+            draw.rectangle([PAD + 20, body_y, PAD + 20 + INNER_W, body_y + 1],
+                           fill=accent)
+            body_y += 14
+
+        # 내용
+        if len(news_lines) >= 3:
+            draw.text((PAD + 20, body_y), "내용",
+                      font=f_src, fill=GRAY)
+            body_y += 32
+            content_wrapped = wrap_text(draw, news_lines[2], f_nm, INNER_W)
+            for wl in content_wrapped[:5]:
+                draw.text((PAD + 20, body_y), wl, font=f_nm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                body_y += 46
-            elif i == 2:
-                # 내용 — 흰색 본문 + stroke
-                draw.text((PAD + 20, body_y + 2), "내용",
-                          font=f_src, fill=GRAY)
-                body_y += 36
-                content_wrapped = wrap_text(draw, line, f_nm, INNER_W)
-                for wl in content_wrapped[:6]:
-                    draw.text((PAD + 20, body_y), wl, font=f_nm, fill=WHITE,
-                              stroke_width=1, stroke_fill=STROKE)
-                    bb = draw.textbbox((0, 0), wl, font=f_nm)
-                    body_y += (bb[3] - bb[1]) + 10
-                body_y += 14
-            else:
-                # 전망 — 노랑 강조
-                draw.rectangle([PAD + 20, body_y, PAD + 20 + INNER_W, body_y + 1],
-                               fill=(accent[0]//2, accent[1]//2, accent[2]//2))
-                body_y += 14
-                draw.text((PAD + 20, body_y + 2), "전망",
-                          font=f_src, fill=GRAY)
-                body_y += 36
-                outlook_wrapped = wrap_text(draw, line, f_nm, INNER_W)
-                for wl in outlook_wrapped[:3]:
-                    draw.text((PAD + 20, body_y), wl, font=f_nm, fill=KEY,
-                              stroke_width=2, stroke_fill=STROKE)
-                    bb = draw.textbbox((0, 0), wl, font=f_nm)
-                    body_y += (bb[3] - bb[1]) + 10
+                bb = draw.textbbox((0, 0), wl, font=f_nm)
+                body_y += (bb[3] - bb[1]) + 8
+            body_y += 8
 
-        # 주간 주가 흐름 — 피처카드 아래, SAFE_BOTTOM 안에 배치
-        STRIP_Y = FC_Y + FC_H + 24
-        STRIP_LABEL_H = 36
-        BOX_Y  = STRIP_Y + STRIP_LABEL_H + 6
-        BOX_H  = SAFE_BOTTOM - BOX_Y - 10
+        # 전망 (강조)
+        if len(news_lines) >= 4:
+            outlook_y = START_Y + FC_H - 80
+            draw.rectangle([PAD + 20, outlook_y - 12, PAD + 20 + INNER_W, outlook_y - 11],
+                           fill=(accent[0]//2, accent[1]//2, accent[2]//2))
+            draw.text((PAD + 20, outlook_y - 2), "전망 ▶",
+                      font=f_src, fill=KEY,
+                      stroke_width=1, stroke_fill=STROKE)
+            outlook_wrapped = wrap_text(draw, news_lines[3], f_md, INNER_W - 110)
+            if outlook_wrapped:
+                draw.text((PAD + 130, outlook_y - 4), outlook_wrapped[0][:36],
+                          font=f_md, fill=KEY,
+                          stroke_width=2, stroke_fill=STROKE)
 
-        draw.text((PAD, STRIP_Y + STRIP_LABEL_H // 2), "주간 주가 흐름",
+        # 가격 스트립 — 카드 아래
+        STRIP_Y = START_Y + FC_H + 16
+        BOX_Y = STRIP_Y + 36
+        BOX_H = SAFE_BOTTOM - BOX_Y - 10
+        draw.text((PAD, STRIP_Y + 16), "주간 주가 흐름 ($)",
                   font=f_sm, fill=LGRAY, anchor="lm",
                   stroke_width=1, stroke_fill=STROKE)
 
@@ -746,7 +826,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                     lbl = date_str[-5:]
                 draw.rounded_rectangle([bx, BOX_Y, bx + box_w, BOX_Y + BOX_H],
                                        radius=10, fill=(18, 21, 30), outline=accent, width=2)
-                draw.text((bx + box_w // 2, BOX_Y + 36), lbl,
+                draw.text((bx + box_w // 2, BOX_Y + 26), lbl,
                           font=f_sm, fill=LGRAY, anchor="mm")
                 try:
                     price_str = f"${float(price_val):,.0f}"
@@ -760,7 +840,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             price_str = f"${float(price):,.2f}" if price else "N/A"
             draw.rounded_rectangle([PAD, BOX_Y, PAD + COL_W - PAD, BOX_Y + BOX_H],
                                    radius=10, fill=(18, 21, 30), outline=accent, width=2)
-            draw.text((PAD + (COL_W - PAD) // 2, BOX_Y + 40), "현재가",
+            draw.text((PAD + (COL_W - PAD) // 2, BOX_Y + 30), "현재가",
                       font=f_sm, fill=LGRAY, anchor="mm")
             draw.text((PAD + (COL_W - PAD) // 2, BOX_Y + BOX_H // 2 + 20), price_str,
                       font=f_lg, fill=KEY, anchor="mm",
