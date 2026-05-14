@@ -214,7 +214,7 @@ def fx_pulse_glow(img, t, accent):
 
 
 def fx_subtitle(img, lines, accent, font_path, t_local):
-    """자막 슬라이드업 + 텍스트 그림자."""
+    """자막 슬라이드업 + 텍스트 그림자. 화면 폭 초과시 자동 폰트 축소."""
     from PIL import Image, ImageDraw, ImageFont
     ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
     d  = ImageDraw.Draw(ov)
@@ -229,17 +229,27 @@ def fx_subtitle(img, lines, accent, font_path, t_local):
     dy    = int((1 - slide) * 38)
 
     active = [l for l in lines if l.strip()][:2]
-    y = H - 112 + dy
+    max_w  = W - 80
+    y = H - 130 + dy
     for i, line in enumerate(active):
-        size = 38 if i == 0 else 26
-        col  = (*accent, 255) if i == 0 else (220, 225, 235, 255)
+        base_size = 42 if i == 0 else 30
+        col  = (*accent, 255) if i == 0 else (235, 240, 250, 255)
+        # 화면 폭 초과시 폰트 축소 (최소 18px)
+        size = base_size
+        while size > 18:
+            f = fnt(size)
+            bb = d.textbbox((0, 0), line, font=f)
+            if bb[2] - bb[0] <= max_w:
+                break
+            size -= 2
         f    = fnt(size)
         bbox = d.textbbox((0, 0), line, font=f)
         tw   = bbox[2] - bbox[0]
         x    = max(40, (W - tw) // 2)
-        d.text((x+2, y+2), line, font=f, fill=(0, 0, 0, 200))
-        d.text((x, y),     line, font=f, fill=col)
-        y += (bbox[3] - bbox[1]) + 10
+        # 검은 stroke로 가독성
+        d.text((x, y), line, font=f, fill=col,
+               stroke_width=3, stroke_fill=(0, 0, 0))
+        y += (bbox[3] - bbox[1]) + 12
 
     return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
@@ -255,10 +265,10 @@ def make_anime_frame(t, base_arr, accent, subtitle_lines, dur,
     img = fx_scanline(img, t)
     img = fx_pulse_glow(img, t, accent)
 
-    # 로봇 바운싱 애니메이션
+    # 로봇 바운싱 애니메이션 — 헤더 영역 안쪽으로 이동 (콘텐츠 가림 방지)
     mood     = SCENE_MOODS[scene_idx - 1]
-    robot_dy = int(math.sin(t * 3.5) * 6)
-    img = draw_robot_pil(img, W - 150, H - 280 + robot_dy, mood, accent)
+    robot_dy = int(math.sin(t * 3.5) * 4)
+    img = draw_robot_pil(img, W - 130, 40 + robot_dy, mood, accent)
 
     img = fx_fade_in(img, t, 0.28)
     img = fx_fade_out(img, t, dur, 0.22)
