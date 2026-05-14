@@ -49,6 +49,60 @@ tsla-dashboard/
 
 ---
 
+## GWS 통합 시크릿 (선택)
+
+각 통합은 독립적으로 동작. 해당 시크릿이 없으면 해당 단계만 건너뜀. 기존 파이프라인에 영향 없음.
+
+| Secret | 용도 | 담당 기능 |
+|--------|------|---------|
+| `GWS_YOUTUBE_TOKEN` | YouTube OAuth2 token.json 내용 | YouTube 자동 업로드 |
+| `GWS_SA_CREDENTIALS` | Google Service Account JSON 전체 | Sheets 기록 |
+| `GOOGLE_SHEET_ID` | Sheets 문서 ID (URL `/d/` 뒤 문자열) | Sheets 기록 |
+| `GMAIL_USER` | 발신 Gmail 주소 | Gmail 다이제스트 |
+| `GMAIL_APP_PASSWORD` | Gmail 앱 비밀번호 (16자리) | Gmail 다이제스트 |
+| `GMAIL_TO` | 수신자 이메일 | Gmail 다이제스트 |
+
+### GWS 최초 설정 순서
+
+**YouTube 업로드 설정** (`GWS_YOUTUBE_TOKEN`):
+1. [console.cloud.google.com](https://console.cloud.google.com) → 프로젝트 생성
+2. API 라이브러리 → **YouTube Data API v3** 활성화
+3. OAuth 동의 화면 → 외부 → 테스트 사용자에 본인 계정 추가
+4. 사용자 인증 정보 → OAuth 2.0 클라이언트 ID → **데스크톱 앱** → `credentials.json` 다운로드
+5. 로컬에서 실행:
+   ```bash
+   pip install google-auth-oauthlib
+   python scripts/setup_gws_auth.py credentials.json
+   ```
+6. 생성된 `token.json` 내용 → GitHub Secret **`GWS_YOUTUBE_TOKEN`** 등록
+
+**Sheets 기록 설정** (`GWS_SA_CREDENTIALS`, `GOOGLE_SHEET_ID`):
+1. 같은 Google Cloud 프로젝트 → **Google Sheets API** 활성화
+2. 사용자 인증 정보 → 서비스 계정 → 새 서비스 계정 생성 → JSON 키 다운로드
+3. JSON 파일 전체 내용 → GitHub Secret **`GWS_SA_CREDENTIALS`** 등록
+4. Google Sheets 새 문서 생성 → 서비스 계정 이메일로 **편집자 공유**
+5. Sheets URL의 `/d/` 뒤 ID → GitHub Secret **`GOOGLE_SHEET_ID`** 등록
+
+**Gmail 다이제스트 설정** (`GMAIL_USER`, `GMAIL_APP_PASSWORD`, `GMAIL_TO`):
+1. Gmail → Google 계정 → 보안 → **2단계 인증** 활성화
+2. 앱 비밀번호 생성 (앱: 메일, 기기: 기타) → 16자리 비밀번호 생성
+3. GitHub Secrets 등록:
+   - `GMAIL_USER`: Gmail 주소 (예: yourname@gmail.com)
+   - `GMAIL_APP_PASSWORD`: 생성된 16자리 앱 비밀번호
+   - `GMAIL_TO`: 수신자 이메일
+
+### GWS 파이프라인 위치
+
+```
+STEP 1: weekly_video_prep.py (대본 + 이미지)
+STEP 2: weekly_video_make.py (TTS + 영상)
+STEP 3: git commit & push
+STEP 4: GitHub Artifact 업로드 (video.mp4, 30일)
+STEP 5: gws_publish.py ← 신규 (YouTube · Sheets · Gmail)
+```
+
+---
+
 ## 파이프라인 상세
 
 ### STEP 1: `weekly_video_prep.py`

@@ -5,3 +5,7 @@ Thumbs.db
 .claude/
 scripts/__pycache__/
 *.pyc
+
+# GWS OAuth2 (민감 정보 — GitHub Secret으로만 관리)
+token.json
+credentials.json
