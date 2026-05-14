@@ -3620,6 +3620,8 @@ function VideoScriptPage({ onBack }) {
   const [activeScene, setActiveScene] = useState(null);
   const [imagesOpen, setImagesOpen]   = useState(false);
   const [openImage, setOpenImage]     = useState(null);
+  const [promptsOpen, setPromptsOpen] = useState(false);
+  const [copiedIdx, setCopiedIdx]     = useState(null);
 
   useEffect(() => {
     // data/weekly-report/ 하위 최신 script.json 로드
@@ -3788,6 +3790,66 @@ function VideoScriptPage({ onBack }) {
           );
         })}
       </div>
+
+      {/* 🎨 Gemini Imagen 배경 이미지 프롬프트 드롭다운 */}
+      {sc.image_prompts && Object.keys(sc.image_prompts).length > 0 && (
+        <div className="rounded-xl border mb-4 overflow-hidden"
+          style={{ background: '#1C1F26', borderColor: '#a78bfa40' }}>
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-left"
+            onClick={() => setPromptsOpen(!promptsOpen)}>
+            <span className="w-7 h-7 rounded-lg flex items-center justify-center text-sm shrink-0"
+              style={{ background: '#a78bfa20', color: '#a78bfa' }}>🎨</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-white">Gemini Imagen 배경 프롬프트</p>
+              <p className="text-xs text-gray-600">씬별 배경 이미지 생성용 영어 프롬프트 4개</p>
+            </div>
+            <span className="text-gray-600 text-xs">{promptsOpen ? '▲' : '▼'}</span>
+          </button>
+          {promptsOpen && (
+            <div className="px-4 pb-4 border-t" style={{ borderColor: '#a78bfa30' }}>
+              <p className="text-xs text-gray-500 mt-3 mb-3 leading-relaxed">
+                💡 각 프롬프트를 복사해서 Gemini Imagen에 붙여넣으면 해당 씬의 배경 이미지가 생성됩니다.
+              </p>
+              <div className="space-y-3">
+                {[1,2,3,4].map(i => {
+                  const labels = {1: '씬1 주간브리핑', 2: '씬2 호재뉴스', 3: '씬3 리스크뉴스', 4: '씬4 시장반응'};
+                  const colors = {1: '#a78bfa', 2: '#22c55e', 3: '#ef4444', 4: '#f59e0b'};
+                  const prompt = sc.image_prompts[i] || sc.image_prompts[String(i)];
+                  if (!prompt) return null;
+                  return (
+                    <div key={i} className="rounded-lg border" style={{ background: '#14171e', borderColor: colors[i] + '30' }}>
+                      <div className="flex items-center justify-between px-3 py-2 border-b" style={{ borderColor: colors[i] + '20' }}>
+                        <span className="text-xs font-bold" style={{ color: colors[i] }}>{labels[i]}</span>
+                        <button
+                          className="text-xs px-2 py-1 rounded transition-colors"
+                          style={{
+                            background: copiedIdx === i ? colors[i] + '30' : '#252830',
+                            color: copiedIdx === i ? colors[i] : '#9ca3af',
+                            border: '1px solid ' + (copiedIdx === i ? colors[i] : '#2A2D35'),
+                          }}
+                          onClick={() => {
+                            navigator.clipboard.writeText(prompt).then(() => {
+                              setCopiedIdx(i);
+                              setTimeout(() => setCopiedIdx(null), 1500);
+                            });
+                          }}>
+                          {copiedIdx === i ? '✓ 복사됨' : '📋 복사'}
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-300 leading-relaxed p-3 font-mono break-words whitespace-pre-wrap">
+                        {prompt}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-gray-700 mt-3 pt-3 border-t italic" style={{ borderColor: '#2A2D35' }}>
+                📝 생성된 이미지를 <code className="bg-gray-800 px-1 rounded">data/scene-backgrounds/</code>에 저장하면 다음 영상에 자동 반영됩니다.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 호재/악재 요약 */}
       {sc.meta && (
