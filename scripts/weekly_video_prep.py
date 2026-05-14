@@ -50,12 +50,21 @@ CYAN_LIGHT  = (135, 220, 255)
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER]
 SCENE_MOODS   = ["excited", "happy", "worried", "focused"]
 
-# 씬별 Wikipedia 배경 이미지 소스
+# 씬별 Wikipedia 배경 이미지 소스 (후보 순서대로 시도 — 로고/세로 이미지 skip)
 SCENE_WIKI_ARTICLES = [
-    "Tesla Model Y",            # scene 1 - 브리핑 (가로 차량 사진)
-    "Tesla Cybertruck",         # scene 2 - 호재 뉴스
-    "Elon Musk",                # scene 3 - 리스크 뉴스
-    "Gigafactory Nevada",       # scene 4 - 시장 동향
+    ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],  # scene 1 - 가로 차량/도로 사진 우선
+    ["Tesla Cybertruck"],                                  # scene 2 - 호재 뉴스
+    ["Elon Musk"],                                         # scene 3 - 리스크 뉴스
+    ["Gigafactory Nevada"],                                # scene 4 - 시장 동향
+]
+
+# 씬별 고정 배경 이미지 (있으면 Wikipedia 다운로드 건너뜀)
+SCENE_BG_DIR = Path(__file__).parent.parent / "data" / "scene-backgrounds"
+SCENE_STATIC_BG = [
+    None,                                        # scene 1 - 매주 새 사진 다운로드
+    SCENE_BG_DIR / "bg_scene_02.jpg",           # scene 2 - Cybertruck 고정
+    SCENE_BG_DIR / "bg_scene_03.jpg",           # scene 3 - Elon Musk 고정
+    SCENE_BG_DIR / "bg_scene_04.jpg",           # scene 4 - Gigafactory 고정
 ]
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
@@ -426,7 +435,9 @@ def draw_robot(img, rx: int, ry: int, mood: str = "neutral", accent: tuple = (16
 
 
 def fetch_wiki_image(article: str, out_path: Path) -> bool:
-    """Wikipedia 기사 대표 이미지를 다운로드. 실패 시 False 반환."""
+    """Wikipedia 기사 대표 이미지를 다운로드. 실패하거나 세로(로고) 이미지면 False 반환."""
+    from PIL import Image as _PILImg
+    import io as _io
     headers = {"User-Agent": "TSLA-Dashboard/2.0 (github.com/korlee88/tsla-dashboard)"}
     try:
         params = urllib.parse.urlencode({
@@ -444,10 +455,28 @@ def fetch_wiki_image(article: str, out_path: Path) -> bool:
             if img_url:
                 req2 = urllib.request.Request(img_url, headers=headers)
                 with urllib.request.urlopen(req2, timeout=15) as r2:
-                    out_path.write_bytes(r2.read())
+                    raw = r2.read()
+                # 세로 비율(로고/아이콘) 이미지 거부 — 가로형만 허용
+                try:
+                    pimg = _PILImg.open(_io.BytesIO(raw))
+                    pw, ph = pimg.size
+                    if ph > pw * 1.2:   # 세로가 가로보다 20% 이상 크면 로고 가능성
+                        print(f"   ⚠ 세로형 이미지 skip ({article}: {pw}×{ph})", file=sys.stderr)
+                        return False
+                except Exception:
+                    pass
+                out_path.write_bytes(raw)
                 return True
     except Exception as e:
         print(f"   ⚠ 배경 이미지 다운로드 실패 ({article}): {e}", file=sys.stderr)
+    return False
+
+
+def fetch_wiki_image_with_fallback(articles, out_path: Path) -> bool:
+    """후보 기사 목록 중 가로형 이미지를 찾을 때까지 순서대로 시도."""
+    for article in (articles if isinstance(articles, list) else [articles]):
+        if fetch_wiki_image(article, out_path):
+            return True
     return False
 
 
@@ -945,17 +974,26 @@ def build_images(scenes, summary, out_dir):
         print("   ⚠ 한글 폰트 없음 — 이미지 건너뜀", file=sys.stderr)
         return
 
-    # Wikipedia 배경 이미지 사전 다운로드
-    print("   🖼 Wikipedia 배경 이미지 다운로드 중...")
+    # 배경 이미지 준비 (고정 파일 우선, 없으면 Wikipedia 다운로드)
+    print("   🖼 배경 이미지 준비 중...")
     bg_paths = {}
     for scene in scenes:
-        idx     = scene["index"]
-        article = SCENE_WIKI_ARTICLES[idx - 1]
-        bg_path = out_dir / f"bg_{idx:02d}.jpg"
-        ok = fetch_wiki_image(article, bg_path)
-        bg_paths[idx] = bg_path if ok else None
-        status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
-        print(f"      씬{idx} [{article[:20]}] {status}")
+        idx        = scene["index"]
+        static_bg  = SCENE_STATIC_BG[idx - 1]
+        articles   = SCENE_WIKI_ARTICLES[idx - 1]
+        bg_path    = out_dir / f"bg_{idx:02d}.jpg"
+
+        if static_bg and static_bg.exists():
+            import shutil as _shutil
+            _shutil.copy2(static_bg, bg_path)
+            bg_paths[idx] = bg_path
+            print(f"      씬{idx} [고정 이미지] ✅")
+        else:
+            ok = fetch_wiki_image_with_fallback(articles, bg_path)
+            bg_paths[idx] = bg_path if ok else None
+            status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
+            label  = (articles[0] if isinstance(articles, list) else articles)[:20]
+            print(f"      씬{idx} [Wikipedia: {label}] {status}")
 
     for scene in scenes:
         idx  = scene["index"]
