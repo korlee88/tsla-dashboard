@@ -705,6 +705,53 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
               stroke_width=1, stroke_fill=STROKE)
 
 
+def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
+    """하단 안전 영역에 매수지수 범례 + 현재 점수 표시 (y=1700~1870)."""
+    LX  = PAD
+    LY  = SAFE_BOTTOM + 20           # 1700
+    LW  = W - PAD * 2                # 1000
+    LH  = H - LY - 50                # ~170px
+
+    # 배경 패널
+    draw.rounded_rectangle([LX, LY, LX + LW, LY + LH],
+                           radius=14, fill=(14, 18, 28), outline=(40, 45, 60), width=1)
+
+    # 현재 매수지수 (왼쪽 강조)
+    bi_col = GREEN if avg_bi >= 65 else AMBER if avg_bi >= 45 else RED
+    bi_str = str(avg_bi) if avg_bi is not None else "?"
+    draw.text((LX + 24, LY + LH // 2), f"{bi_str}점",
+              font=fnt_val, fill=bi_col, anchor="lm",
+              stroke_width=2, stroke_fill=STROKE)
+
+    signal = "매수" if avg_bi is not None and avg_bi >= 65 else \
+             "관망" if avg_bi is not None and avg_bi >= 45 else "매도"
+    draw.text((LX + 24, LY + LH // 2 + 38), signal,
+              font=fnt_label, fill=bi_col, anchor="lm",
+              stroke_width=1, stroke_fill=STROKE)
+
+    # 구분선
+    SEP_X = LX + 140
+    draw.line([(SEP_X, LY + 16), (SEP_X, LY + LH - 16)], fill=(40, 45, 60), width=1)
+
+    # 오른쪽: 3단계 범례
+    ITEMS = [
+        (GREEN, "65점↑", "매수"),
+        (AMBER, "45-64점", "관망"),
+        (RED,   "44점↓", "매도"),
+    ]
+    slot_w = (LX + LW - SEP_X - 16) // 3
+    for j, (col, range_lbl, sig_lbl) in enumerate(ITEMS):
+        ix = SEP_X + 8 + j * slot_w
+        iy = LY + LH // 2 - 22
+
+        # 색상 원
+        draw.ellipse([ix, iy, ix + 22, iy + 22], fill=col)
+        draw.text((ix + 30, iy + 2), range_lbl,
+                  font=fnt_label, fill=LGRAY)
+        draw.text((ix + 30, iy + 26), sig_lbl,
+                  font=fnt_label, fill=col)
+
+
 def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
     draw.rectangle([x, y, x + w, y + h], fill=(18, 21, 30), outline=(40, 44, 54), width=1)
     draw.text((x + w // 2, y + 18), label, font=fnt_lbl, fill=GRAY, anchor="mt")
@@ -958,6 +1005,11 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 draw.text((content_x, start_y), wl, font=f_nm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
                 start_y += lh
+
+    # ── 하단 매수지수 범례 (모든 씬 공통) ─────────────────────────────────────
+    draw = ImageDraw.Draw(img)
+    avg_bi = summary.get("avg_buy_index") if summary else None
+    draw_bi_legend(draw, avg_bi, f_sm, f_md)
 
     return img
 

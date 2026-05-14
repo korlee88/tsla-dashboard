@@ -273,9 +273,6 @@ def make_anime_frame(t, base_arr, accent, subtitle_lines, dur,
     img = fx_fade_in(img, t, 0.28)
     img = fx_fade_out(img, t, dur, 0.22)
 
-    # 자막 (청크 내 경과 시간 기준 슬라이드)
-    img = fx_subtitle(img, subtitle_lines, accent, font_path, t)
-
     return np.array(img)
 
 # ── 씬 처리 ───────────────────────────────────────────────────────────────────
