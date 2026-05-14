@@ -57,10 +57,10 @@ def get_signal_label(avg_buy_index: int | None) -> str:
     if avg_buy_index is None:
         return "정보없음"
     if avg_buy_index >= 65:
-        return "매수"
+        return "긍정"
     if avg_buy_index >= 45:
-        return "관망"
-    return "매도"
+        return "중립"
+    return "신중"
 
 
 def get_youtube_credentials():

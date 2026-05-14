@@ -139,7 +139,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 전문 투자 용어 대신 일반인도 이해하기 쉬운 일상 언어로 작성해줘.
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
-- 매수지수: 주간 평균 {avg_bi}, 최신 {latest_bi} (0~100점, 65 이상=매수 신호)
+- 참고지수: 주간 평균 {avg_bi}, 최신 {latest_bi} (0~100점, 시장 관심도 참고 지표)
 - TSLA 주가: ${price}
 {daily_prices_txt}
 - 주요 호재:
@@ -176,7 +176,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 - 줄1: [분위기] 이번 주 시장·투자자 전체 분위기 (감탄사 포함, 구체적 수치나 사례 포함)
 - 줄2: [검색·영상] 구글 검색량/유튜브 조회수 트렌드 구체적 묘사
 - 줄3: [투자자] 커뮤니티·SNS 투자자 반응 구체적 묘사 (긍정/부정 비율 등)
-- 줄4: [시황] 종합 시황 — 매수/관망/매도 관점 의견 포함
+- 줄4: [시황] 종합 시황 — 긍정/중립/신중 관점 의견 포함 (투자 권유 아닌 개인 분석)
 
 === 공통 규칙 ===
 • 유재석처럼 밝고 에너지 넘치는 MC 어투
@@ -609,7 +609,7 @@ def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
     draw.arc([cx - r, cy - r, cx + r, cy + r], start=180, end=end_a, fill=col, width=22)
     # 중앙 숫자
     draw.text((cx, cy - 18), str(bi), font=fnt_big, fill=col, anchor="mm")
-    draw.text((cx, cy + 22), "매수지수", font=fnt_small, fill=GRAY, anchor="mm")
+    draw.text((cx, cy + 22), "참고지수", font=fnt_small, fill=GRAY, anchor="mm")
     # 범례
     draw.text((cx - r + 8, cy + 14), "0", font=fnt_small, fill=GRAY)
     draw.text((cx + r - 22, cy + 14), "100", font=fnt_small, fill=GRAY)
@@ -723,8 +723,8 @@ def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
               font=fnt_val, fill=bi_col, anchor="lm",
               stroke_width=2, stroke_fill=STROKE)
 
-    signal = "매수" if avg_bi is not None and avg_bi >= 65 else \
-             "관망" if avg_bi is not None and avg_bi >= 45 else "매도"
+    signal = "긍정" if avg_bi is not None and avg_bi >= 65 else \
+             "중립" if avg_bi is not None and avg_bi >= 45 else "신중"
     draw.text((LX + 24, LY + LH // 2 + 38), signal,
               font=fnt_label, fill=bi_col, anchor="lm",
               stroke_width=1, stroke_fill=STROKE)
@@ -735,21 +735,28 @@ def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
 
     # 오른쪽: 3단계 범례
     ITEMS = [
-        (GREEN, "65점↑", "매수"),
-        (AMBER, "45-64점", "관망"),
-        (RED,   "44점↓", "매도"),
+        (GREEN, "65점↑", "긍정"),
+        (AMBER, "45-64점", "중립"),
+        (RED,   "44점↓", "신중"),
     ]
     slot_w = (LX + LW - SEP_X - 16) // 3
     for j, (col, range_lbl, sig_lbl) in enumerate(ITEMS):
         ix = SEP_X + 8 + j * slot_w
-        iy = LY + LH // 2 - 22
+        iy = LY + LH // 2 - 28
 
         # 색상 원
-        draw.ellipse([ix, iy, ix + 22, iy + 22], fill=col)
-        draw.text((ix + 30, iy + 2), range_lbl,
+        draw.ellipse([ix, iy, ix + 20, iy + 20], fill=col)
+        draw.text((ix + 28, iy), range_lbl,
                   font=fnt_label, fill=LGRAY)
-        draw.text((ix + 30, iy + 26), sig_lbl,
+        draw.text((ix + 28, iy + 24), sig_lbl,
                   font=fnt_label, fill=col)
+
+    # 면책 문구 (우측 하단)
+    disclaimer = "※ 개인 분석 참고용 · 투자 판단은 본인 책임"
+    db = draw.textbbox((0, 0), disclaimer, font=fnt_label)
+    dw = db[2] - db[0]
+    draw.text((LX + LW - dw - 10, LY + LH - 26),
+              disclaimer, font=fnt_label, fill=(70, 78, 95))
 
 
 def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
@@ -818,9 +825,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         bi = summary.get("avg_buy_index") or 50
         price = summary.get("latest_price")
         try:
-            head_sub = f"매수지수 {bi}점 · ${float(price):,.0f}" if price else f"매수지수 {bi}점"
+            head_sub = f"참고지수 {bi}점 · ${float(price):,.0f}" if price else f"참고지수 {bi}점"
         except Exception:
-            head_sub = f"매수지수 {bi}점"
+            head_sub = f"참고지수 {bi}점"
     elif idx == 2:
         head_main = '"이번 주 빅 호재"'
         chs = []
@@ -838,7 +845,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     else:
         bi = summary.get("avg_buy_index") or 50
         head_main = '"이번 주 시장 반응"'
-        head_sub = f"매수지수 {bi}점"
+        head_sub = f"참고지수 {bi}점"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
     draw_mbc_header(draw, "TSLA WEEKLY", head_main, head_sub, accent,
