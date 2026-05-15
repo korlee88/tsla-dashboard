@@ -5478,6 +5478,9 @@ function BacktestPage({ apiKey }) {
   const [activeTab,      setActiveTab]      = React.useState('results');
   const [btError,        setBtError]        = React.useState(null);
 
+  // 첫 로드 시 빈 결과면 이전 연도로 자동 fallback (사용자가 클릭 후엔 비활성)
+  const initialFallbackRef = React.useRef(true);
+
   // ── 연도 변경 시 localStorage 캐시 우선 로드 ──
   React.useEffect(() => {
     const cached = loadBacktest(selectedYear);
@@ -5495,10 +5498,18 @@ function BacktestPage({ apiKey }) {
       .then(data => {
         if (data?.weeks?.length) {
           setStaticData(data);
-          // GitHub이 소스 오브 트루스 — 최신 결과로 덮어쓰기
           setResults(data.weeks);
           setSavedData({ results: data.weeks, savedAt: Date.now(), fromStatic: true });
           saveBacktest(selectedYear, { results: data.weeks, savedAt: Date.now(), fromStatic: true });
+          initialFallbackRef.current = false;
+        } else if (initialFallbackRef.current) {
+          // 초기 로드에서 빈 결과 → 데이터 있을 가능성 높은 이전 연도로 자동 전환
+          const idx = BACKTEST_YEARS.indexOf(selectedYear);
+          if (idx > 0) {
+            setSelectedYear(BACKTEST_YEARS[idx - 1]);
+          } else {
+            initialFallbackRef.current = false;
+          }
         }
       })
       .catch(() => {})
@@ -5661,7 +5672,7 @@ function BacktestPage({ apiKey }) {
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <span className="text-xs text-gray-400 shrink-0">연도:</span>
           {BACKTEST_YEARS.map(y => (
-            <button key={y} onClick={() => { setSelectedYear(y); setBtError(null); }}
+            <button key={y} onClick={() => { initialFallbackRef.current = false; setSelectedYear(y); setBtError(null); }}
               disabled={running}
               className="px-3 py-1 rounded-full text-xs font-medium transition-all disabled:opacity-40"
               style={selectedYear === y
