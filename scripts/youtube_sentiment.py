@@ -1,8 +1,9 @@
 """
-TSLA YouTube 관심도 수집 스크립트 (YouTube Data API v3)
+YouTube 관심도 수집 스크립트 (YouTube Data API v3)
 GitHub Actions에서 auto-analysis.js 실행 전에 호출됨.
 결과를 data/youtube-sentiment.json 에 저장.
 
+종목 설정: config/ticker.json
 필요 패키지: pip install google-api-python-client
 필요 환경변수: YOUTUBE_API_KEY
 """
@@ -10,18 +11,22 @@ GitHub Actions에서 auto-analysis.js 실행 전에 호출됨.
 import os
 import json
 import sys
+from pathlib import Path
 from datetime import datetime, timezone, timedelta
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # ── 설정 ──────────────────────────────────────────────────────────────────────
 
-YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", "")   # ← API Key 변수 (GitHub Secret)
+ROOT_DIR        = Path(__file__).parent.parent
+TICKER_CONFIG   = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encoding="utf-8"))
+SEARCH_QUERIES  = TICKER_CONFIG["youtube_search_queries"]
 
-SEARCH_QUERIES  = ["Tesla TSLA stock", "Tesla earnings", "Tesla Optimus robot"]
-MAX_RESULTS     = 15          # 쿼리당 최대 수집 영상 수
-LOOKBACK_DAYS   = 7           # 최근 7일치 영상
-OUTPUT_FILE     = os.path.join(os.path.dirname(__file__), "..", "data", "youtube-sentiment.json")
+YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", "")
+
+MAX_RESULTS     = 15
+LOOKBACK_DAYS   = 7
+OUTPUT_FILE     = ROOT_DIR / "data" / "youtube-sentiment.json"
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -41,7 +46,7 @@ def parse_view_count(stats: dict) -> int:
 # ── 수집 ──────────────────────────────────────────────────────────────────────
 
 def collect_videos(youtube) -> list[dict]:
-    """여러 쿼리로 Tesla 관련 최신 영상 수집 (중복 제거)"""
+    """여러 쿼리로 종목 관련 최신 영상 수집 (중복 제거)"""
     published_after = days_ago_iso(LOOKBACK_DAYS)
     seen_ids: set[str] = set()
     items: list[dict] = []

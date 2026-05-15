@@ -11,27 +11,82 @@ GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
 
 ---
 
+## 다른 종목으로 포크하기
+
+이 저장소는 멀티 종목 지원을 위해 설정 분리되어 있다. 다른 종목용 대시보드를 만들려면:
+
+### 1. 저장소 복제
+```bash
+gh repo create korlee88/nvda-dashboard --template korlee88/tsla-dashboard
+git clone https://github.com/korlee88/nvda-dashboard
+```
+
+### 2. `config/ticker.json` 수정
+
+| 필드 | TSLA 예시 | NVDA 예시 |
+|------|---------|----------|
+| `ticker` | `"TSLA"` | `"NVDA"` |
+| `company_en` | `"Tesla"` | `"Nvidia"` |
+| `company_ko` | `"테슬라"` | `"엔비디아"` |
+| `industry_ko` | `"전기차·미래기술"` | `"AI 반도체"` |
+| `brand_label` | `"TSLA WEEKLY"` | `"NVDA WEEKLY"` |
+| `repo` | `"korlee88/tsla-dashboard"` | `"korlee88/nvda-dashboard"` |
+| `beta_coefficient` | `2.5` | `1.7` |
+| `scene_wiki_articles` | Tesla 관련 4씬 | Nvidia/H100/Jensen Huang/HBM 등 |
+| `scene_static_bg_files` | Tesla 배경 | Nvidia 배경 (새로 준비 필요) |
+| `youtube_search_queries` | `["Tesla TSLA stock", ...]` | `["Nvidia NVDA stock", ...]` |
+| `video_tags` | `["테슬라", "TSLA", ...]` | `["엔비디아", "NVDA", ...]` |
+
+### 3. 씬 배경 이미지 교체
+`data/scene-backgrounds/bg_scene_02.jpg`, `bg_scene_03.jpg`, `bg_scene_04.jpg`를 새 종목에 맞게 교체.
+
+### 4. GitHub Secrets 재설정
+새 저장소에 `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `YOUTUBE_API_KEY` 등 동일하게 설정.
+
+### Phase 2 작업 예정 (현재 미적용)
+- JS 스크립트 (`auto-analysis.js`, `backtest-run.js`, `calendar-update.js`)도 설정 사용으로 변경
+- `index.html` 대시보드 — 종목 라벨, fetch URL 등 설정 사용
+- 데이터 모델 키 `latestTslaPrice` → `latestPrice` (호환성 마이그레이션 필요)
+- 한국 주식 지원 시 Yahoo Finance → KRX 데이터 소스 추상화
+
+---
+
 ## 아키텍처
 
 ```
 tsla-dashboard/
 ├── .github/workflows/
-│   └── weekly-video.yml       # 월요일 자동 실행 + workflow_dispatch
+│   ├── weekly-video.yml       # 월요일 자동 실행 + workflow_dispatch
+│   ├── auto-analysis.yml      # 하루 4회 자동 분석
+│   ├── backtest-run.yml       # 백테스트 (매일 자동 + 수동)
+│   └── calendar-update.yml    # 매주 일정 갱신
+├── config/
+│   └── ticker.json            # 종목 설정 (TSLA/NVDA/AAPL 등 분기점)
 ├── scripts/
-│   ├── weekly_video_prep.py   # STEP 1: 대본 생성 + 씬 이미지
-│   └── weekly_video_make.py   # STEP 2: TTS + 애니메이션 영상 합성
+│   ├── weekly_video_prep.py   # STEP 1: 대본 + 씬 이미지 4장
+│   ├── weekly_video_make.py   # STEP 2: TTS + 애니메이션 영상
+│   ├── gws_publish.py         # STEP 5: YouTube/Sheets/Gmail 게시
+│   ├── setup_gws_auth.py      # OAuth2 토큰 생성 헬퍼 (로컬 1회)
+│   └── youtube_sentiment.py   # YouTube 검색·관심도 수집
 ├── data/
-│   ├── auto-sessions.json     # 최근 7일 TSLA 세션 데이터 (원본)
+│   ├── auto-sessions.json     # 최근 7일 세션 데이터 (원본)
+│   ├── backtest-results-2025.json  # 2025 백테스트 (완료)
+│   ├── backtest-results-2026.json  # 2026 백테스트 (매일 증분 업데이트)
+│   ├── scene-backgrounds/     # 씬 2~4 고정 배경 이미지 (jpg)
 │   └── weekly-report/
 │       └── YYYY-MM-DD/
-│           ├── script.json    # 생성된 대본 (커밋됨)
-│           ├── scene_01.png   # 씬 이미지 (커밋됨)
+│           ├── script.json    # 생성된 대본 + image_prompts (커밋됨)
+│           ├── script.txt     # 대본 원문
+│           ├── image_prompts.txt  # Imagen 프롬프트 (Imagen 복붙용)
+│           ├── meta.json      # 요약 데이터 (gws_publish가 사용)
+│           ├── scene_01.png   # 씬 이미지 4장 (커밋됨)
 │           ├── scene_02.png
 │           ├── scene_03.png
 │           ├── scene_04.png
-│           ├── scene_05.png
 │           ├── *.mp3          # TTS 오디오 (커밋 제외)
 │           └── video.mp4      # 최종 영상 (커밋 제외, artifact 업로드)
+├── requirements.txt           # Python 의존성 (pip 캐시용)
+├── index.html                 # 대시보드 (단일 파일 React)
 └── CLAUDE.md                  # 이 파일
 ```
 
@@ -121,24 +176,28 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
 ```
 
-**씬 구성 (뉴스 80% / 예측 10% / 결론 10%)**:
-| 씬 | 주제 | Wikipedia 배경 | 색상 |
-|----|------|---------------|------|
-| 1 | 이번주 뉴스 브리핑 | Tesla, Inc. | Purple |
-| 2 | 호재 뉴스 | Tesla Cybertruck | Green |
-| 3 | 리스크 뉴스 | Elon Musk | Red |
-| 4 | 시장 동향 뉴스 | Gigafactory Nevada | Amber |
-| 5 | 주가 예측 (10%) | Tesla Model 3 | Cyan |
-| 6 | 매매 결론 (10%) | Tesla Model S | Blue |
+**씬 구성 (4씬 — YouTube Shorts 세로 포맷)**:
+| 씬 | 주제 | 배경 | 색상 | 로봇 무드 |
+|----|------|------|------|--------|
+| 1 | 주간 브리핑 | Wikipedia(Tesla Model 3 등) — 매주 동적 다운로드 | Purple | excited |
+| 2 | 호재 뉴스 | `bg_scene_02.jpg` (Cybertruck 고정) | Green | happy |
+| 3 | 리스크 뉴스 | `bg_scene_03.jpg` (Elon Musk 고정) | Red | worried |
+| 4 | 시장 동향 | `bg_scene_04.jpg` (Gigafactory 고정) | Amber | focused |
 
-**뉴스 카드 레이아웃** (`draw_news_card_split`):
-- 챕터 열 (168px, accent 배경, 굵은 폰트) | 구분선 | 내용 열 (나머지, 어두운 배경)
-- 스크립트 형식: `카테고리: 핵심내용` (콜론으로 분리)
+> 씬 1은 매주 Wikipedia에서 새 사진 다운로드, 세로형 이미지(로고)는 자동 skip + fallback 후보 시도.
+> 씬 2~4는 `data/scene-backgrounds/`의 고정 jpg를 사용해 품질·일관성 확보.
 
-**이미지 레이어**:
-- Wikipedia 무료 사진 (API 키 불필요) → 배경
-- 195/255 어두운 오버레이
-- 씬별 전용 UI (게이지/뉴스카드/예측박스/시그널)
+**레이아웃 (MBC 뉴스 쇼츠 스타일, 1080×1920)**:
+- 헤더 (y=0~500): 네이비 그라데이션 + 브랜드 라벨 + 두 줄 헤드라인
+- 사진 (y=500~1000): 배경 사진 contain-fit + 블러 cover
+- 본문 (y=1040~1680): 씬별 카드 (간격 40px)
+- 매수지수 범례 (y=1700~1870): 현재 점수 + 3단계 범례 + 면책 문구
+
+**참고지수 시그널** (YouTube 정책 준수):
+- 65점 이상 → 긍정 (초록)
+- 45~64점 → 중립 (앰버)
+- 44점 이하 → 신중 (빨강)
+- "매수/매도/관망" 같은 직접적 표현은 사용 안 함
 
 ### STEP 2: `weekly_video_make.py`
 
@@ -146,33 +205,52 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 
 **TTS 설정**:
 ```python
-VOICE = "ko-KR-HyunsuNeural"  # 캐주얼 남성
-RATE  = "+50%"                 # 속도 (2배에 가깝게)
-PITCH = "+12Hz"                # 톤업 (밝고 에너지 넘침)
+VOICE = "ko-KR-SunHiNeural"  # 젊은 한국 여성 (밝고 에너지 넘치는 톤)
+RATE  = "+35%"                # 여성 목소리 특성상 남성보다 소폭 낮게
+PITCH = "+8Hz"                # 약간 밝게 올림
 ```
 
 **애니메이션 시스템** (moviepy 2.x `VideoClip`):
-- `fx_speed_lines()` — 배경 속도감 효과
-- `fx_scanline()` — CRT 스캔라인
-- `fx_pulse_glow()` — 테두리 펄스 발광
-- `fx_subtitle()` — 자막 슬라이드인
-- `draw_robot_pil()` — 씬별 표정 변화하는 로봇 마스코트
+- `fx_ken_burns()` — 배경 이미지 줌인/줌아웃 + 패닝 (씬별 다른 방향, 7% 줌)
+- `fx_speed_lines()` — 씬 시작 속도선 (액션감)
+- `fx_scanline()` — CRT 스캔라인 + 이동 글로우
+- `fx_pulse_glow()` — 상하 바 박동 글로우
+- `fx_fade_in()` / `fx_fade_out()` — 씬 시작/끝 페이드
+- `draw_robot_pil()` — 씬별 표정 변화하는 로봇 마스코트 (헤더 우측)
 
 **로봇 마스코트 표정**:
-- `excited` → 웃는 눈, 오픈 마우스
-- `happy` → 일반 웃음
-- `worried` → 찡그린 눈
-- `focused` → 눈 가늘게
+- `excited` → 동그란 눈, 오픈 마우스 (씬 1)
+- `happy` → 웃는 호 모양 눈 (씬 2)
+- `worried` → 찡그린 눈, 빨간 입 (씬 3)
+- `focused` → 가늘게 뜬 눈 (씬 4)
 
-**출력**: 1280×720 @ 24fps, ~1분
+**출력**: 1080×1920 @ 24fps (YouTube Shorts 세로), 약 1~2분
+**자원 관리**: `audio.close()`, `final.close()` 명시 호출로 파일 핸들 누수 방지
+
+### STEP 5: `gws_publish.py` (선택, 시크릿 없으면 건너뜀)
+
+**역할**: 생성된 video.mp4를 YouTube/Sheets/Gmail로 배포
+
+- **YouTube**: OAuth2로 비공개 업로드(`unlisted`) → 직접 공개 전환 가능
+- **Sheets**: Service Account로 주간 행 추가 (날짜·참고지수·주가·시그널·세션수·YouTube URL)
+- **Gmail**: SMTP 587/STARTTLS, HTML 본문 + 씬 이미지 4장 CID 인라인
 
 ---
 
 ## 의존성
 
 ```bash
-pip install anthropic google-genai Pillow edge-tts moviepy numpy
+pip install -r requirements.txt
 ```
+
+`requirements.txt`에 명시된 패키지:
+- `anthropic` — Claude Opus 4 (1순위 대본)
+- `google-genai` — Gemini 1.5 Flash (폴백)
+- `google-api-python-client`, `google-auth`, `google-auth-httplib2` — YouTube/Sheets API
+- `gspread` — Sheets 쉬운 인터페이스
+- `Pillow`, `edge-tts`, `moviepy`, `numpy` — 이미지/오디오/영상
+
+**GitHub Actions pip 캐시**: `actions/setup-python@v5`에 `cache: 'pip'` 설정 + `requirements.txt`로 매 실행 ~30-60초 단축.
 
 **시스템 패키지** (GitHub Actions ubuntu-latest):
 ```bash
@@ -206,13 +284,17 @@ sudo apt-get install -y fonts-nanum
 - 수동: GitHub Actions 탭 → `workflow_dispatch`
 
 **주요 단계**:
-1. Python 3.11 설정
+1. Python 3.11 + pip 캐시 설정
 2. 한글 폰트 설치 (`fonts-nanum`)
-3. 의존성 설치
-4. `weekly_video_prep.py` (대본 + 이미지)
-5. `weekly_video_make.py` (TTS + 영상)
-6. 대본/이미지 커밋 (MP3/MP4 제외)
-7. video.mp4 → artifact 업로드 (30일 보관)
+3. `pip install -r requirements.txt`
+4. STEP 1: `weekly_video_prep.py` (대본 + 씬 이미지 4장)
+5. STEP 2: `weekly_video_make.py` (TTS + 영상)
+6. STEP 3: 대본/이미지 커밋 (MP3/MP4 제외)
+7. STEP 4: video.mp4 → artifact 업로드 (30일 보관)
+8. STEP 5: `gws_publish.py` — YouTube/Sheets/Gmail 게시 (시크릿 있을 때만, `continue-on-error: true`)
+
+> **주의**: workflow_dispatch 수동 실행 시 `Use workflow from` 드롭다운에서 브랜치 확인 필수.
+> 기본은 `master`라서 개발 브랜치의 새 코드를 테스트하려면 명시적 선택 필요.
 
 ---
 
@@ -246,14 +328,80 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 ## 개발 히스토리 요약
 
-| 날짜 | 변경 내용 |
-|------|---------|
-| 2026-05 | moviepy 2.x 호환성 수정 (`from moviepy import`, `with_*` API) |
-| 2026-05 | Gemini 폴백 추가 (Anthropic 크레딧 부족 대응) |
-| 2026-05 | `google-genai` SDK로 전환 (v1beta → v1 API) |
-| 2026-05 | 뉴스 스타일 UI + 2배 빠른 나레이션 + 1분 영상 목표 |
-| 2026-05 | Wikipedia 테슬라 공식 사진 배경 적용 |
-| 2026-05 | 로봇 마스코트 캐릭터 추가 (씬별 표정 변화) |
-| 2026-05 | 전체 애니메이션화 (`VideoClip` 기반 퍼-프레임 렌더링) |
-| 2026-05 | 유재석 스타일 MC 목소리 설정 (`+50%` 속도, `+12Hz` 피치) |
-| 2026-05 | `gemini-2.0-flash-lite` → `gemini-1.5-flash` 모델 변경 |
+### 2026-05 (주요 변경 묶음)
+
+**파이프라인 기반 구축**
+- moviepy 2.x 호환성 수정 (`from moviepy import`, `with_*` API)
+- Gemini 폴백 추가 (Anthropic 크레딧 부족 대응)
+- `google-genai` SDK로 전환 (v1beta → v1 API)
+- `gemini-2.0-flash-lite` → `gemini-1.5-flash` 모델 변경
+
+**영상 콘텐츠**
+- 뉴스 스타일 UI + 2배 빠른 나레이션 + 1분 영상 목표
+- Wikipedia 공식 사진 배경 적용 (씬 1은 매주 새 사진, 씬 2-4는 고정)
+- 로봇 마스코트 캐릭터 추가 (씬별 표정 변화: excited/happy/worried/focused)
+- 전체 애니메이션화 (`VideoClip` 기반 퍼-프레임 렌더링)
+- 4씬 구조 재설계 (씬 5/6 결론·예측 제거, 뉴스 중심으로 단순화)
+
+**YouTube Shorts 세로 포맷 전환**
+- 1280×720 가로 → 1080×1920 세로 포맷 전환
+- MBC 뉴스 쇼츠 스타일 레이아웃 (네이비 헤더 + 사진 + 본문 카드)
+- 본문 프레임 상단 40px 여백 (사진과의 간격 확보)
+
+**나레이션 / UI 다듬기**
+- 남성 캐주얼 톤(`HyunsuNeural`, +50%) → 젊은 한국 여성 톤(`SunHiNeural`, +35%, +8Hz)
+- 영상 하단 자막 오버레이 제거 (텍스트가 잘림 + 콘텐츠와 중복)
+- 매수지수 범례 프레임 추가 (씬 하단, y=1700~1870)
+- Ken Burns 효과 (배경 이미지 줌인/아웃 + 패닝, 씬별 다른 방향)
+
+**YouTube 정책 준수**
+- 매수/매도/관망 → 참고지수/긍정/중립/신중 (투자 권유 아닌 참고 표현)
+- 면책 문구: "개인 분석 참고용 · 투자 판단은 본인 책임"
+
+**Google Workspace 통합** (STEP 5)
+- YouTube 자동 업로드 (OAuth2, `unlisted` 상태)
+- Google Sheets 주간 히스토리 기록 (Service Account)
+- Gmail 다이제스트 (SMTP, 씬 이미지 4장 CID 인라인)
+- 시크릿 없으면 단계 건너뜀, 기존 파이프라인 무영향
+
+**대시보드 UX**
+- 각본 페이지에 Gemini Imagen 프롬프트 드롭다운 추가
+- 씬별 이미지 프롬프트가 `script.json`의 `image_prompts` 필드로 자동 생성
+
+### 2026-05 (코드 정리 + 멀티 종목 Phase 1)
+
+**백테스트 매일 자동 + 연도 분리**
+- `backtest-run.js` 일반화: `BACKTEST_YEAR` 환경변수 + `getCompletedWeeksForYear(year)` (이미 완료된 주만)
+- 데이터 파일 분리: `data/backtest-results-2025.json`, `data/backtest-results-2026.json`
+- 워크플로우: 매월 1일 → 매일 KST 03:00 (cron `0 18 * * *`). 이미 분석된 주는 skip
+- `index.html` BacktestPage: 연도 탭(2025/2026) 추가, `getWeeksForYear(year, range)`로 동적 주 생성
+- localStorage 캐시 키도 연도별 분리 (`tsla_backtest_v3_2025`, `tsla_backtest_v3_2026`)
+
+**코드 정리 (-169줄)**
+- 미사용 함수 삭제: `fx_subtitle()`, `find_font()` (make.py), `draw_robot()` (prep.py)
+- 미사용 상수 삭제: `CARD`, `BORDER`, `SCENE_MOODS` (prep.py 중복분)
+- 미사용 import 삭제: `textwrap`, `os` (make.py)
+- 파라미터 체인 정리: `subtitle_lines`, `font_path` 제거 (자막 제거 후 더 이상 불필요)
+- 청크 분할 로직 제거 (자막용이었으므로)
+- `AudioFileClip` / `VideoClip` `.close()` 명시 (자원 누수 방지)
+- `requirements.txt` 신규 + GitHub Actions `cache: 'pip'` (실행 ~30-60초 단축)
+
+**멀티 종목 지원 Phase 1**
+- `config/ticker.json` 신규 — 종목 설정 한 곳에 집중
+- Python 스크립트 4개 적용 (`weekly_video_prep.py`, `weekly_video_make.py`, `gws_publish.py`, `youtube_sentiment.py`)
+- 다른 종목 포크 시 `config/ticker.json`과 씬 배경 이미지 3장만 교체하면 동작
+- Phase 2 (다음 단계): JS 스크립트, `index.html`, 데이터 모델 키 마이그레이션
+
+---
+
+## 이번 세션 주요 결정 사항
+
+1. **GitHub Actions 브랜치 주의**: `workflow_dispatch`는 기본적으로 `master` 브랜치를 사용. 새 코드를 테스트하려면 드롭다운에서 명시적으로 dev 브랜치 선택, 또는 PR을 머지해야 함.
+
+2. **포크 모델 선택**: 한 인스턴스가 멀티 종목을 동시 처리하는 게 아니라, **종목별 별도 저장소 포크** (tsla-dashboard → nvda-dashboard, aapl-dashboard 등). 따라서 모든 종목 관련 설정은 단일 설정 파일에서 분기.
+
+3. **단계적 마이그레이션**: 멀티 종목 작업은 Phase 1 (Python만) → Phase 2 (JS/HTML) → Phase 3 (데이터 키)로 단계적 진행. 한 번에 다 바꾸면 위험.
+
+4. **자원 누수 방지**: moviepy 클립 사용 후 명시적 `.close()` 호출. GitHub Actions 환경에서 파일 핸들 누수 시 후속 단계 실패 가능.
+
+5. **YouTube 콘텐츠 정책**: 투자 권유로 해석될 표현(매수/매도/관망)을 사용하지 않음. 참고지수·긍정·중립·신중 + 면책 문구로 대체.

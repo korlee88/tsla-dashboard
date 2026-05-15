@@ -1,25 +1,33 @@
 """
-TSLA 주간 영상 자료 생성 스크립트
+주간 영상 자료 생성 스크립트
 - 최근 7일 auto-sessions.json 데이터 기반
 - Gemini API → 한국어 영상 대본(4 씬)
 - Pillow → 씬별 1080×1920 카드 이미지 (YouTube Shorts 세로 포맷)
 - 저장: data/weekly-report/YYYY-MM-DD/
+
+종목 설정: config/ticker.json
 """
 
-import os, json, sys, textwrap, urllib.request, urllib.parse
+import os, json, sys, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
+ROOT_DIR          = Path(__file__).parent.parent
+TICKER_CONFIG     = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encoding="utf-8"))
+TICKER            = TICKER_CONFIG["ticker"]
+COMPANY_KO        = TICKER_CONFIG["company_ko"]
+INDUSTRY_KO       = TICKER_CONFIG.get("industry_ko", "")
+BRAND_LABEL       = TICKER_CONFIG["brand_label"]
+REPO              = TICKER_CONFIG["repo"]
+
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY", "")
-AUTO_SESSIONS     = Path(__file__).parent.parent / "data" / "auto-sessions.json"
-OUTPUT_BASE       = Path(__file__).parent.parent / "data" / "weekly-report"
+AUTO_SESSIONS     = ROOT_DIR / "data" / "auto-sessions.json"
+OUTPUT_BASE       = ROOT_DIR / "data" / "weekly-report"
 LOOKBACK_DAYS     = 7
 
 # ── 팔레트 ────────────────────────────────────────────────────────────────
 BG      = (14, 17, 23)
-CARD    = (28, 31, 38)
-BORDER  = (42, 45, 53)
 WHITE   = (255, 255, 255)
 GRAY    = (107, 114, 128)
 LGRAY   = (156, 163, 175)
@@ -32,39 +40,28 @@ BLUE    = (59, 130, 246)
 W, H    = 1080, 1920
 
 PAD     = 40
-COL_W   = W - PAD          # 1040
-SAFE_BOTTOM = 1680          # 자막 + YouTube Shorts UI 회피 (여기서 콘텐츠 끝)
-KEY     = (255, 215, 0)     # 강조 키워드 노랑 (gold)
-STROKE  = (0, 0, 0)         # 텍스트 윤곽선
+COL_W   = W - PAD
+SAFE_BOTTOM = 1680
+KEY     = (255, 215, 0)
+STROKE  = (0, 0, 0)
 
-# MBC NEWS 쇼츠 스타일 레이아웃 (1080×1920)
-HEADER_H    = 500            # 상단 헤드라인 영역 0~500
-PHOTO_Y     = HEADER_H       # 500
-PHOTO_H     = 500            # 사진 영역 500~1000
-BODY_Y      = PHOTO_Y + PHOTO_H   # 1000
-START_Y     = BODY_Y         # 본문 시작
+HEADER_H    = 500
+PHOTO_Y     = HEADER_H
+PHOTO_H     = 500
+BODY_Y      = PHOTO_Y + PHOTO_H
+START_Y     = BODY_Y
 NAVY        = (15, 32, 70)
 NAVY_DEEP   = (10, 22, 50)
 CYAN_LIGHT  = (135, 220, 255)
 
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER]
-SCENE_MOODS   = ["excited", "happy", "worried", "focused"]
 
-# 씬별 Wikipedia 배경 이미지 소스 (후보 순서대로 시도 — 로고/세로 이미지 skip)
-SCENE_WIKI_ARTICLES = [
-    ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],  # scene 1 - 가로 차량/도로 사진 우선
-    ["Tesla Cybertruck"],                                  # scene 2 - 호재 뉴스
-    ["Elon Musk"],                                         # scene 3 - 리스크 뉴스
-    ["Gigafactory Nevada"],                                # scene 4 - 시장 동향
-]
+SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
 
-# 씬별 고정 배경 이미지 (있으면 Wikipedia 다운로드 건너뜀)
-SCENE_BG_DIR = Path(__file__).parent.parent / "data" / "scene-backgrounds"
+SCENE_BG_DIR = ROOT_DIR / "data" / "scene-backgrounds"
 SCENE_STATIC_BG = [
-    None,                                        # scene 1 - 매주 새 사진 다운로드
-    SCENE_BG_DIR / "bg_scene_02.jpg",           # scene 2 - Cybertruck 고정
-    SCENE_BG_DIR / "bg_scene_03.jpg",           # scene 3 - Elon Musk 고정
-    SCENE_BG_DIR / "bg_scene_04.jpg",           # scene 4 - Gigafactory 고정
+    (SCENE_BG_DIR / name) if name else None
+    for name in TICKER_CONFIG["scene_static_bg_files"]
 ]
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
@@ -135,12 +132,12 @@ def summarize(sessions):
 
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
-SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 유튜브 쇼츠 스타일 나레이션 대본을 작성해줘.
+SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 분석 데이터를 바탕으로 유튜브 쇼츠 스타일 나레이션 대본을 작성해줘.
 전문 투자 용어 대신 일반인도 이해하기 쉬운 일상 언어로 작성해줘.
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - 참고지수: 주간 평균 {avg_bi}, 최신 {latest_bi} (0~100점, 시장 관심도 참고 지표)
-- TSLA 주가: ${price}
+- {ticker} 주가: ${price}
 {daily_prices_txt}
 - 주요 호재:
 {b_txt}
@@ -151,7 +148,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 
 【씬 1 — 주간 브리핑】
 이번 주 가장 중요한 뉴스 1건을 상세히 소개. 정확히 4줄로 작성.
-- 줄1: 헤드라인 — 감탄사로 시작, 20자 이내 (예: "와! 이번 주 테슬라 빅뉴스!")
+- 줄1: 헤드라인 — 감탄사로 시작, 20자 이내 (예: "와! 이번 주 {company_ko} 빅뉴스!")
 - 줄2: 출처 — 언론사·날짜 (예: "Reuters · 05/12 보도")
 - 줄3: 상세 내용 — 수치·배경·영향을 구체적으로, **80~120자, 3~4문장** (충분히 길게!)
 - 줄4: 전망 — 40~60자, 투자자 관점에서 의미와 앞으로의 방향 설명
@@ -216,7 +213,7 @@ SCENE_4:
 - 각 프롬프트 60~80 단어
 - 반드시 포함: "no text, no letters, no watermark, no logo"
 - 반드시 포함: "9:16 vertical aspect ratio, ultra-high resolution"
-- 테슬라·전기차·미래기술 관련 시각 요소 포함
+- {company_ko}·{industry_ko} 관련 시각 요소 포함
 - 씬 분위기에 맞는 색감 지정 (씬1 보라, 씬2 초록, 씬3 빨강, 씬4 주황)
 - 이번 주 실제 뉴스 키워드를 시각화할 것
 
@@ -238,6 +235,9 @@ def _build_prompt(summary):
         daily_prices_txt = ""
 
     return SCRIPT_PROMPT_TEMPLATE.format(
+        ticker=TICKER,
+        company_ko=COMPANY_KO,
+        industry_ko=INDUSTRY_KO,
         week_start=summary["week_start"],
         week_end=summary["week_end"],
         avg_bi=summary["avg_buy_index"],
@@ -381,97 +381,11 @@ def render_lines(draw, text, x, y, font, fill, max_px, line_gap=8):
     return y
 
 
-def draw_robot(img, rx: int, ry: int, mood: str = "neutral", accent: tuple = (167, 139, 250)):
-    """씬 위에 귀여운 로봇 마스코트 합성."""
-    from PIL import Image, ImageDraw
-
-    layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    d     = ImageDraw.Draw(layer)
-    BODY  = (38, 44, 60)
-    METAL = (78, 88, 112)
-    SHINE = (215, 225, 240)
-
-    # ── 안테나 ──────────────────────────────────────
-    ax = rx + 50
-    d.line([ax, ry - 26, ax, ry], fill=METAL, width=3)
-    d.ellipse([ax - 8, ry - 36, ax + 8, ry - 20], fill=accent, outline=SHINE, width=1)
-
-    # ── 머리 ──────────────────────────────────────
-    d.rounded_rectangle([rx, ry, rx + 100, ry + 86], radius=18,
-                        fill=BODY, outline=METAL, width=2)
-
-    # ── 눈 (mood별 표정) ──────────────────────────
-    ey = ry + 22
-    lx, rx2 = rx + 13, rx + 57
-    ew, eh  = 28, 22
-
-    if mood == "happy":
-        d.arc([lx, ey, lx+ew, ey+eh], start=200, end=340, fill=accent, width=4)
-        d.arc([rx2, ey, rx2+ew, ey+eh], start=200, end=340, fill=accent, width=4)
-    elif mood == "excited":
-        d.ellipse([lx, ey-2, lx+ew, ey+ew-2], fill=accent)
-        d.ellipse([rx2, ey-2, rx2+ew, ey+ew-2], fill=accent)
-        d.ellipse([lx+4, ey+2, lx+9, ey+7], fill=SHINE)
-        d.ellipse([rx2+4, ey+2, rx2+9, ey+7], fill=SHINE)
-    elif mood == "worried":
-        d.line([lx, ey+10, lx+ew, ey+4], fill=(239, 68, 68), width=5)
-        d.line([rx2, ey+4, rx2+ew, ey+10], fill=(239, 68, 68), width=5)
-    elif mood == "focused":
-        d.rectangle([lx, ey+7, lx+ew, ey+15], fill=accent)
-        d.rectangle([rx2, ey+7, rx2+ew, ey+15], fill=accent)
-    else:
-        d.rectangle([lx, ey, lx+ew, ey+eh], fill=accent)
-        d.rectangle([rx2, ey, rx2+ew, ey+eh], fill=accent)
-        d.ellipse([lx+4, ey+3, lx+9, ey+9], fill=SHINE)
-        d.ellipse([rx2+4, ey+3, rx2+9, ey+9], fill=SHINE)
-
-    # ── 입 ────────────────────────────────────────
-    my = ry + 60
-    if mood in ("happy", "excited"):
-        d.arc([rx+26, my - 8, rx+74, my + 14], start=0, end=180, fill=accent, width=3)
-    elif mood == "worried":
-        d.arc([rx+26, my, rx+74, my + 18], start=180, end=360, fill=(239, 68, 68), width=3)
-    else:
-        d.line([rx+30, my + 6, rx+70, my + 6], fill=METAL, width=3)
-
-    # ── 몸통 ──────────────────────────────────────
-    bx, by = rx + 12, ry + 94
-    d.rounded_rectangle([bx, by, bx+76, by+66], radius=10, fill=BODY, outline=METAL, width=2)
-
-    # 가슴 엠블럼 (T자 마크)
-    d.rounded_rectangle([bx+18, by+10, bx+58, by+44], radius=6, fill=accent)
-    tx = bx + 28
-    d.line([tx, by+16, tx+20, by+16], fill=(255,255,255), width=3)
-    d.line([tx+10, by+16, tx+10, by+40], fill=(255,255,255), width=3)
-
-    # 가슴 LED (오른쪽 하단)
-    led_col = GREEN if mood in ("happy","excited") else RED if mood=="worried" else AMBER
-    d.ellipse([bx+56, by+46, bx+66, by+56], fill=led_col)
-
-    # ── 팔 ────────────────────────────────────────
-    d.rounded_rectangle([bx-20, by+8, bx-5, by+48], radius=6, fill=METAL)
-    d.rounded_rectangle([bx+81, by+8, bx+96, by+48], radius=6, fill=METAL)
-
-    # 손 (동그라미)
-    d.ellipse([bx-24, by+42, bx-6, by+60], fill=METAL)
-    d.ellipse([bx+82, by+42, bx+100, by+60], fill=METAL)
-
-    # ── 다리 ──────────────────────────────────────
-    d.rounded_rectangle([bx+8,  by+70, bx+30, by+88], radius=6, fill=METAL)
-    d.rounded_rectangle([bx+46, by+70, bx+68, by+88], radius=6, fill=METAL)
-
-    # 발
-    d.rounded_rectangle([bx+4,  by+84, bx+34, by+96], radius=4, fill=(55,62,80))
-    d.rounded_rectangle([bx+42, by+84, bx+72, by+96], radius=4, fill=(55,62,80))
-
-    return Image.alpha_composite(img.convert("RGBA"), layer).convert("RGB")
-
-
 def fetch_wiki_image(article: str, out_path: Path) -> bool:
     """Wikipedia 기사 대표 이미지를 다운로드. 실패하거나 세로(로고) 이미지면 False 반환."""
     from PIL import Image as _PILImg
     import io as _io
-    headers = {"User-Agent": "TSLA-Dashboard/2.0 (github.com/korlee88/tsla-dashboard)"}
+    headers = {"User-Agent": f"{TICKER}-Dashboard/2.0 (github.com/{REPO})"}
     try:
         params = urllib.parse.urlencode({
             "action": "query", "titles": article,
@@ -849,7 +763,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 1:
         # 메인: 대본 첫 줄 그대로 (감탄사 포함). 큰따옴표 추가.
-        first = (news_lines[0] if news_lines else "이번 주 테슬라").strip()
+        first = (news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
         # 큰따옴표 적용
         if not (first.startswith('"') or first.startswith("'")):
             first = f'"{first}"'
@@ -881,7 +795,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         head_sub = f"참고지수 {bi}점"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
-    draw_mbc_header(draw, "TSLA WEEKLY", head_main, head_sub, accent,
+    draw_mbc_header(draw, BRAND_LABEL, head_main, head_sub, accent,
                     f_brand, f_head_main, f_head_sub)
 
     # ── 사진 배너 (Y=500~1000, 500px) ────────────────────────────────────
@@ -1131,7 +1045,7 @@ def main():
 
         # ── 이미지 프롬프트 별도 저장 (Imagen 복붙용) ──
         if img_prompts:
-            lines = [f"# TSLA 주간 배경 이미지 프롬프트 — {today}",
+            lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
             scene_names = {1: "씬1 주간브리핑", 2: "씬2 호재뉴스",
                            3: "씬3 리스크뉴스", 4: "씬4 시장반응"}

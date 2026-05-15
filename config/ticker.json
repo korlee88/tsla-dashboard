@@ -1,0 +1,34 @@
+{
+  "ticker": "TSLA",
+  "company_en": "Tesla",
+  "company_ko": "테슬라",
+  "industry_ko": "전기차·미래기술",
+  "brand_label": "TSLA WEEKLY",
+  "repo": "korlee88/tsla-dashboard",
+  "data_source": "yahoo",
+  "beta_coefficient": 2.5,
+
+  "scene_wiki_articles": [
+    ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],
+    ["Tesla Cybertruck"],
+    ["Elon Musk"],
+    ["Gigafactory Nevada"]
+  ],
+
+  "scene_static_bg_files": [
+    null,
+    "bg_scene_02.jpg",
+    "bg_scene_03.jpg",
+    "bg_scene_04.jpg"
+  ],
+
+  "youtube_search_queries": [
+    "Tesla TSLA stock",
+    "Tesla earnings",
+    "Tesla Optimus robot"
+  ],
+
+  "video_title_template": "{ticker} 주간 분석 {date} | 참고지수 {bi}점 {signal}",
+  "video_tags": ["테슬라", "TSLA", "주식", "전기차", "Shorts"],
+  "email_subject_template": "{ticker} 주간 브리핑 {date} | 참고지수 {bi}점 ({signal})"
+}
