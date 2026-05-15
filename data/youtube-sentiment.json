@@ -1,43 +1,43 @@
 {
-  "score": -2,
-  "velocity": 0.39,
-  "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 299,468회 / 이전 4~7일 769,264회 | 총 1,068,732회 (43개 영상)",
-  "video_count": 43,
-  "total_views": 1068732,
-  "hot_views": 299468,
-  "baseline_views": 769264,
+  "score": -1,
+  "velocity": 0.51,
+  "velocity_label": "소폭 감소 (×0.5)",
+  "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 320,179회 / 이전 4~7일 626,898회 | 총 947,077회 (44개 영상)",
+  "video_count": 44,
+  "total_views": 947077,
+  "hot_views": 320179,
+  "baseline_views": 626898,
   "top_videos": [
-    {
-      "title": "Bumblebee Jaisa Transformer Bana Future Autobot Leader  #shorts #optimusprime #transformers",
-      "channel": "Mosh Brutal",
-      "publishedAt": "2026-05-08T04:34:10Z",
-      "viewCount": 200773
-    },
     {
       "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 63769
+      "viewCount": 65093
     },
     {
       "title": "Tesla’s Robotaxi Expansion Accelerates Again",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-08T13:30:08Z",
-      "viewCount": 56610
+      "viewCount": 56703
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 54987
+      "viewCount": 55363
+    },
+    {
+      "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
+      "channel": "Beyond Ordinary ",
+      "publishedAt": "2026-05-11T04:45:10Z",
+      "viewCount": 42477
     },
     {
       "title": "Tesla Just Got Several Massive Catalysts",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-12T18:37:57Z",
-      "viewCount": 39510
+      "viewCount": 39571
     }
   ],
-  "collected_at": "2026-05-15T04:10:13Z"
+  "collected_at": "2026-05-15T08:50:24Z"
 }
