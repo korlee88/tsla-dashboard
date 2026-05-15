@@ -213,6 +213,39 @@ def fx_pulse_glow(img, t, accent):
     return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
 
+def fx_ken_burns(img, t: float, dur: float, scene_idx: int):
+    """배경 이미지 느린 줌 + 패닝 (Ken Burns 효과). 씬마다 방향이 다름."""
+    from PIL import Image
+    progress = t / max(dur, 0.001)
+
+    # 씬별 줌/패닝 패턴 — 1.00~1.07 범위 (7% 줌, 자연스러운 움직임)
+    CONFIGS = [
+        # (zoom_start, zoom_end, pan_x_start, pan_x_end, pan_y_start, pan_y_end)
+        (1.00, 1.07,  0.00,  0.03,  0.00,  0.02),  # scene 0: 줌인 + 우하
+        (1.07, 1.00,  0.03,  0.00,  0.02,  0.00),  # scene 1: 줌아웃 + 좌상
+        (1.00, 1.07,  0.00, -0.03,  0.00,  0.02),  # scene 2: 줌인 + 좌하
+        (1.07, 1.00, -0.03,  0.00,  0.02,  0.00),  # scene 3: 줌아웃 + 우상
+    ]
+    zoom_s, zoom_e, px_s, px_e, py_s, py_e = CONFIGS[scene_idx % len(CONFIGS)]
+
+    zoom  = zoom_s + (zoom_e - zoom_s) * progress
+    pan_x = px_s  + (px_e  - px_s)   * progress
+    pan_y = py_s  + (py_e  - py_s)   * progress
+
+    ow, oh = img.size  # 1080, 1920
+    nw = max(int(ow * zoom), ow)
+    nh = max(int(oh * zoom), oh)
+    zoomed = img.resize((nw, nh), Image.LANCZOS)
+
+    # 중앙 기준으로 패닝 오프셋 적용 후 경계 클램핑
+    cx = (nw - ow) // 2 + int(pan_x * ow)
+    cy = (nh - oh) // 2 + int(pan_y * oh)
+    cx = max(0, min(cx, nw - ow))
+    cy = max(0, min(cy, nh - oh))
+
+    return zoomed.crop((cx, cy, cx + ow, cy + oh))
+
+
 def fx_subtitle(img, lines, accent, font_path, t_local):
     """자막 슬라이드업 + 텍스트 그림자. 화면 폭 초과시 자동 폰트 축소."""
     from PIL import Image, ImageDraw, ImageFont
@@ -260,6 +293,7 @@ def make_anime_frame(t, base_arr, accent, subtitle_lines, dur,
     import numpy as np
     from PIL import Image
     img = Image.fromarray(base_arr).copy()
+    img = fx_ken_burns(img, t, dur, scene_idx - 1)  # 배경 줌/패닝
 
     img = fx_speed_lines(img, t, accent)
     img = fx_scanline(img, t)
