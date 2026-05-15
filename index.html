@@ -670,12 +670,14 @@ async function getDriveAppDataSize(token) {
 
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
 const CALENDAR_DATA_URL   = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
-const BACKTEST_RESULTS_URL = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/backtest-results.json';
+const BACKTEST_YEARS = [2025, 2026];
+const DEFAULT_BACKTEST_YEAR = BACKTEST_YEARS[BACKTEST_YEARS.length - 1];
+const backtestUrl = (year) => `https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/backtest-results-${year}.json`;
 const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
 const DAILY_CACHE_KEY    = 'tsla_daily_cache_v1';
-const BACKTEST_CACHE_KEY = 'tsla_backtest_v3'; // v3: 재채점 모델 반영
-function loadBacktest()       { try { return JSON.parse(localStorage.getItem(BACKTEST_CACHE_KEY) || 'null'); } catch { return null; } }
-function saveBacktest(data)   { try { localStorage.setItem(BACKTEST_CACHE_KEY, JSON.stringify({ ...data, savedAt: Date.now() })); } catch {} }
+const backtestCacheKey = (year) => `tsla_backtest_v3_${year}`;
+function loadBacktest(year)       { try { return JSON.parse(localStorage.getItem(backtestCacheKey(year)) || 'null'); } catch { return null; } }
+function saveBacktest(year, data) { try { localStorage.setItem(backtestCacheKey(year), JSON.stringify({ ...data, savedAt: Date.now() })); } catch {} }
 
 // 일봉 캐시 로드/저장 (주봉과 동일한 KST 7시 기준 하루 1회)
 function loadDailyCache() {
@@ -5456,9 +5458,10 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
 // ─── 백테스트 페이지 ───────────────────────────────────────────────────────
 
 function BacktestPage({ apiKey }) {
-  const [savedData,      setSavedData]      = React.useState(() => loadBacktest());
-  const [results,        setResults]        = React.useState(() => loadBacktest()?.results || []);
-  const [staticData,     setStaticData]     = React.useState(null);   // GitHub repo JSON
+  const [selectedYear,   setSelectedYear]   = React.useState(DEFAULT_BACKTEST_YEAR);
+  const [savedData,      setSavedData]      = React.useState(() => loadBacktest(DEFAULT_BACKTEST_YEAR));
+  const [results,        setResults]        = React.useState(() => loadBacktest(DEFAULT_BACKTEST_YEAR)?.results || []);
+  const [staticData,     setStaticData]     = React.useState(null);
   const [staticLoading,  setStaticLoading]  = React.useState(true);
   const [btPrices,       setBtPrices]       = React.useState(null);
   const [pricesLoading,  setPricesLoading]  = React.useState(false);
@@ -5470,48 +5473,67 @@ function BacktestPage({ apiKey }) {
   const [activeTab,      setActiveTab]      = React.useState('results');
   const [btError,        setBtError]        = React.useState(null);
 
-  // ── GitHub repo 정적 결과 파일 로드 ──
+  // ── 연도 변경 시 localStorage 캐시 우선 로드 ──
+  React.useEffect(() => {
+    const cached = loadBacktest(selectedYear);
+    setSavedData(cached);
+    setResults(cached?.results || []);
+    setStaticData(null);
+    setBtError(null);
+  }, [selectedYear]);
+
+  // ── GitHub repo 정적 결과 파일 로드 (연도별) ──
   React.useEffect(() => {
     setStaticLoading(true);
-    fetch(BACKTEST_RESULTS_URL + '?t=' + Date.now(), { cache: 'no-store' })
+    fetch(backtestUrl(selectedYear) + '?t=' + Date.now(), { cache: 'no-store' })
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         if (data?.weeks?.length) {
           setStaticData(data);
-          // GitHub이 항상 소스 오브 트루스 — 재채점/업데이트 반영을 위해 항상 덮어쓰기
+          // GitHub이 소스 오브 트루스 — 최신 결과로 덮어쓰기
           setResults(data.weeks);
           setSavedData({ results: data.weeks, savedAt: Date.now(), fromStatic: true });
-          saveBacktest({ results: data.weeks, savedAt: Date.now(), fromStatic: true });
+          saveBacktest(selectedYear, { results: data.weeks, savedAt: Date.now(), fromStatic: true });
         }
       })
       .catch(() => {})
       .finally(() => setStaticLoading(false));
-  }, []);
+  }, [selectedYear]);
 
   const RANGE_LABELS = {
     q1:  'Q1 (1~3월)',
     q2:  'Q2 (4~6월)',
     q3:  'Q3 (7~9월)',
     q4:  'Q4 (10~12월)',
-    all: '전체 2025년',
+    all: `전체 ${selectedYear}년`,
   };
 
-  function get2025Weeks(range) {
+  function getWeeksForYear(year, range) {
     const map = {
-      q1:  { start: '2025-01-06', end: '2025-03-31' },
-      q2:  { start: '2025-04-07', end: '2025-06-30' },
-      q3:  { start: '2025-07-07', end: '2025-09-29' },
-      q4:  { start: '2025-10-06', end: '2025-12-29' },
-      all: { start: '2025-01-06', end: '2025-12-29' },
+      q1:  { startMonth: 1,  endMonth: 3  },
+      q2:  { startMonth: 4,  endMonth: 6  },
+      q3:  { startMonth: 7,  endMonth: 9  },
+      q4:  { startMonth: 10, endMonth: 12 },
+      all: { startMonth: 1,  endMonth: 12 },
     };
-    const { start, end } = map[range];
+    const { startMonth, endMonth } = map[range];
+    // 해당 연도의 첫 월요일부터 (백테스트 스크립트와 동일 로직)
+    const jan1 = new Date(`${year}-01-01T00:00:00Z`);
+    const dow  = jan1.getUTCDay();
+    const daysToAdd = dow === 0 ? 1 : (8 - dow) % 7;
+    let d = new Date(jan1.getTime() + daysToAdd * 86400000);
+    const yearEnd = new Date(`${year}-12-31T23:59:59Z`);
+    const now = new Date();
     const weeks = [];
-    let d = new Date(start + 'T00:00:00Z');
-    const endDate = new Date(end + 'T00:00:00Z');
-    while (d <= endDate) {
-      const ws = d.toISOString().split('T')[0];
-      const we = new Date(d.getTime() + 6 * 86400000).toISOString().split('T')[0];
-      weeks.push({ weekStart: ws, weekEnd: we });
+    while (d <= yearEnd) {
+      const weekEndDate = new Date(d.getTime() + 6 * 86400000);
+      if (weekEndDate >= now) break;
+      const mo = d.getUTCMonth() + 1;
+      if (mo >= startMonth && mo <= endMonth) {
+        const ws = d.toISOString().split('T')[0];
+        const we = weekEndDate.toISOString().split('T')[0];
+        weeks.push({ weekStart: ws, weekEnd: we });
+      }
       d = new Date(d.getTime() + 7 * 86400000);
     }
     return weeks;
@@ -5548,7 +5570,7 @@ function BacktestPage({ apiKey }) {
     setProgress({ current: 0, total: 0, phase: '매크로 데이터 로드 중', week: '' });
     // 매크로 데이터 로드 (SPY/QQQ/VIX/TSLA) — 한 번만
     const macroData = await loadMacroDataBrowser();
-    const weeks = get2025Weeks(selectedRange);
+    const weeks = getWeeksForYear(selectedYear, selectedRange);
     setProgress({ current: 0, total: weeks.length, phase: '초기화', week: '' });
     const newResults = [];
     for (let i = 0; i < weeks.length; i++) {
@@ -5569,7 +5591,7 @@ function BacktestPage({ apiKey }) {
         newResults.push({ weekStart, weekEnd, newsCount: 0, analysis: null, movement, match: null, strongSignal: false, error: e.message });
       }
       setResults([...newResults]);
-      saveBacktest({ results: newResults, range: selectedRange });
+      saveBacktest(selectedYear, { results: newResults, range: selectedRange });
       setSavedData({ results: newResults, range: selectedRange, savedAt: Date.now() });
       if (i < weeks.length - 1) await new Promise(r => setTimeout(r, 1500));
     }
@@ -5577,15 +5599,15 @@ function BacktestPage({ apiKey }) {
     setProgress(p => ({ ...p, phase: '완료' }));
   }
 
-  // ── 범위 필터링 ──
-  const QUARTER_RANGES = {
-    q1: { start: '2025-01-01', end: '2025-03-31' },
-    q2: { start: '2025-04-01', end: '2025-06-30' },
-    q3: { start: '2025-07-01', end: '2025-09-30' },
-    q4: { start: '2025-10-01', end: '2025-12-31' },
-    all: { start: '2025-01-01', end: '2025-12-31' },
+  // ── 범위 필터링 (선택된 연도 + 분기) ──
+  const quarterRanges = {
+    q1:  { start: `${selectedYear}-01-01`, end: `${selectedYear}-03-31` },
+    q2:  { start: `${selectedYear}-04-01`, end: `${selectedYear}-06-30` },
+    q3:  { start: `${selectedYear}-07-01`, end: `${selectedYear}-09-30` },
+    q4:  { start: `${selectedYear}-10-01`, end: `${selectedYear}-12-31` },
+    all: { start: `${selectedYear}-01-01`, end: `${selectedYear}-12-31` },
   };
-  const qRange = QUARTER_RANGES[selectedRange];
+  const qRange = quarterRanges[selectedRange];
   const filteredResults = results.filter(r => r.weekStart >= qRange.start && r.weekStart <= qRange.end);
 
   // ── 통계 계산 ──
@@ -5624,13 +5646,26 @@ function BacktestPage({ apiKey }) {
       <div className="mb-5">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
           🔬 AI 모델 백테스트
-          <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#9ca3af' }}>2025 과거 데이터 검증</span>
+          <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#9ca3af' }}>{selectedYear} 주간 분석 검증</span>
         </h2>
-        <p className="text-xs text-gray-500 mt-1">2025년 주간 뉴스를 AI로 분석하고, 실제 TSLA 주가 움직임과 비교하여 예측 정확도를 검증합니다.</p>
+        <p className="text-xs text-gray-500 mt-1">{selectedYear}년 주간 뉴스를 AI로 분석하고, 실제 TSLA 주가 움직임과 비교하여 예측 정확도를 검증합니다.</p>
       </div>
 
       {/* 컨트롤 패널 */}
       <div className="rounded-xl p-4 mb-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className="text-xs text-gray-400 shrink-0">연도:</span>
+          {BACKTEST_YEARS.map(y => (
+            <button key={y} onClick={() => { setSelectedYear(y); setBtError(null); }}
+              disabled={running}
+              className="px-3 py-1 rounded-full text-xs font-medium transition-all disabled:opacity-40"
+              style={selectedYear === y
+                ? { background: '#E31937', color: '#fff' }
+                : { background: '#14171e', border: '1px solid #2A2D35', color: '#9ca3af' }}>
+              {y}
+            </button>
+          ))}
+        </div>
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <span className="text-xs text-gray-400 shrink-0">분석 기간:</span>
           {Object.entries(RANGE_LABELS).map(([k, v]) => (
@@ -5657,7 +5692,7 @@ function BacktestPage({ apiKey }) {
                 : results.length > 0 ? '🔄 재실행' : '▶ 백테스트 시작'}
           </button>
           {results.length > 0 && !running && (
-            <button onClick={() => { setResults([]); setSavedData(null); try { localStorage.removeItem(BACKTEST_CACHE_KEY); } catch {} }}
+            <button onClick={() => { setResults([]); setSavedData(null); try { localStorage.removeItem(backtestCacheKey(selectedYear)); } catch {} }}
               className="px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-red-400 transition-colors"
               style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
               🗑 초기화
@@ -5851,7 +5886,7 @@ function BacktestPage({ apiKey }) {
               {/* 자주 발동된 룰 */}
               {topRulesAll.length > 0 && (
                 <div className="rounded-xl p-4 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
-                  <h3 className="text-sm font-bold text-white mb-3">🔥 자주 발동된 룰 (2025년)</h3>
+                  <h3 className="text-sm font-bold text-white mb-3">🔥 자주 발동된 룰 ({selectedYear}년)</h3>
                   <div className="space-y-2">
                     {topRulesAll.map(([rule, cnt]) => (
                       <div key={rule} className="flex items-center gap-3">

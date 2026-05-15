@@ -1,8 +1,13 @@
 /**
  * TSLA 백테스트 데이터 수집 스크립트
- * 2025년 52주 뉴스 수집 + AI 분석 + 실제 주가 방향 매칭
- * GitHub Actions에서 workflow_dispatch로 실행 (1회성 야간 작업)
+ * 연도별 주간 뉴스 수집 + AI 분석 + 실제 주가 방향 매칭
+ * GitHub Actions에서 workflow_dispatch 또는 cron으로 실행
+ * 매일 실행 시 이미 분석된 주는 skip, 새로 완료된 주만 추가
  * Node.js 22 내장 fetch 사용
+ *
+ * 환경변수:
+ *   BACKTEST_YEAR — 처리할 연도 (없으면 현재 KST 연도)
+ *   GEMINI_API_KEY — 필수
  */
 
 const fs            = require('fs');
@@ -13,10 +18,18 @@ const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
 
-const MODELS    = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-const makeUrl   = m => `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${API_KEY}`;
+// 현재 KST 연도를 기본값으로
+const nowKst = new Date(Date.now() + 9 * 3600000);
+const YEAR = parseInt(process.env.BACKTEST_YEAR || nowKst.getUTCFullYear(), 10);
+if (isNaN(YEAR) || YEAR < 2020 || YEAR > 2099) {
+  console.error(`❌ 잘못된 BACKTEST_YEAR: ${process.env.BACKTEST_YEAR}`);
+  process.exit(1);
+}
+
+const MODELS     = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+const makeUrl    = m => `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${API_KEY}`;
 const GEMINI_URL = makeUrl(MODELS[0]);
-const DATA_FILE  = path.join(__dirname, '..', 'data', 'backtest-results.json');
+const DATA_FILE  = path.join(__dirname, '..', 'data', `backtest-results-${YEAR}.json`);
 
 // ─── 시스템 프롬프트 (auto-analysis.js 와 동일) ──────────────────────────────
 
@@ -62,7 +75,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function gitCommitProgress(label) {
   try {
-    execSync('git add data/backtest-results.json', { stdio: 'pipe' });
+    execSync(`git add ${DATA_FILE}`, { stdio: 'pipe' });
     const diff = execSync('git diff --staged --name-only', { stdio: 'pipe' }).toString().trim();
     if (!diff) { console.log(`   ⏭  ${label} — 변경 없음, 커밋 건너뜀`); return; }
     const nowKST = new Date(Date.now() + 9 * 3600000).toISOString().replace('T',' ').slice(0,16) + ' KST';
@@ -240,15 +253,25 @@ async function analyzeWeekBatch(newsItems, macroCtx = null) {
   };
 }
 
-// ─── 2025 주 목록 생성 ───────────────────────────────────────────────────────
+// ─── 주 목록 생성 (연도별, 완료된 주만) ──────────────────────────────────────
 
-function get2025Weeks() {
+function getFirstMondayOfYear(year) {
+  const jan1 = new Date(`${year}-01-01T00:00:00Z`);
+  const dow  = jan1.getUTCDay();
+  const daysToAdd = dow === 0 ? 1 : (8 - dow) % 7;
+  return new Date(jan1.getTime() + daysToAdd * 86400000);
+}
+
+function getCompletedWeeksForYear(year) {
   const weeks = [];
-  let d = new Date('2025-01-06T00:00:00Z');
-  const end = new Date('2025-12-29T00:00:00Z');
-  while (d <= end) {
+  let d = getFirstMondayOfYear(year);
+  const yearEnd = new Date(`${year}-12-31T23:59:59Z`);
+  const now = new Date();
+  while (d <= yearEnd) {
+    const weekEndDate = new Date(d.getTime() + 6 * 86400000);
+    if (weekEndDate >= now) break;
     const ws = d.toISOString().split('T')[0];
-    const we = new Date(d.getTime() + 6 * 86400000).toISOString().split('T')[0];
+    const we = weekEndDate.toISOString().split('T')[0];
     const mo = d.getUTCMonth() + 1;
     const q  = mo <= 3 ? 'q1' : mo <= 6 ? 'q2' : mo <= 9 ? 'q3' : 'q4';
     weeks.push({ weekStart: ws, weekEnd: we, quarter: q });
@@ -263,11 +286,11 @@ async function main() {
   const nowKST = new Date(Date.now() + 9 * 3600000);
   const kstStr = nowKST.toISOString().replace('T', ' ').slice(0, 16) + ' KST';
 
-  console.log(`\n🔬 TSLA 백테스트 시작: ${kstStr}`);
+  console.log(`\n🔬 ${YEAR}년 백테스트 시작: ${kstStr}`);
   console.log('━'.repeat(60));
 
   // ── 1. 기존 데이터 로드 (중단 후 재시작 지원) ──
-  let db = { weeks: [], generatedAt: null };
+  let db = { year: YEAR, weeks: [], generatedAt: null };
   if (fs.existsSync(DATA_FILE)) {
     try {
       db = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
@@ -276,12 +299,24 @@ async function main() {
   }
   const doneSet = new Set((db.weeks || []).map(w => w.weekStart));
 
-  // ── 2. 주가 데이터 로드 ──
+  // ── 2. 주 목록 생성 (완료된 주만) ──
+  const allWeeks = getCompletedWeeksForYear(YEAR);
+  if (allWeeks.length === 0) {
+    console.log(`   ⏭  ${YEAR}년에 완료된 주가 아직 없음 — 종료`);
+    return;
+  }
+  const pending = allWeeks.filter(w => !doneSet.has(w.weekStart));
+  if (pending.length === 0) {
+    console.log(`   ✅ 처리할 새 주 없음 — ${doneSet.size}/${allWeeks.length}주 이미 완료. 종료.`);
+    return;
+  }
+
+  // ── 3. 주가 데이터 로드 ──
   console.log('\n📈 Yahoo Finance 2년 주봉 로드 중...');
   const prices = await fetchTSLA2YearWeekly();
   console.log(`   ✅ ${prices.length}개 주봉 로드 완료`);
 
-  // ── 2-2. 매크로 데이터 로드 (SPY, QQQ, VIX, TSLA) ──
+  // ── 4. 매크로 데이터 로드 (SPY, QQQ, VIX, TSLA) ──
   console.log('\n📊 매크로 데이터 로드 중 (SPY/QQQ/VIX/TSLA)...');
   let macroData = null;
   try {
@@ -291,9 +326,6 @@ async function main() {
     console.warn(`   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용: ${e.message}`);
   }
 
-  // ── 3. 주간 루프 ──
-  const allWeeks = get2025Weeks();
-  const pending  = allWeeks.filter(w => !doneSet.has(w.weekStart));
   console.log(`\n📅 처리 예정: ${pending.length}주 (완료: ${doneSet.size}주 / 전체: ${allWeeks.length}주)\n`);
 
   const results = [...(db.weeks || [])];
@@ -356,7 +388,7 @@ async function main() {
     const isLastWeek  = (i === pending.length - 1);
     if (isLastWeek || (nextQuarter && nextQuarter !== quarter && lastCommittedQuarter !== quarter)) {
       console.log(`\n📤 ${quarter.toUpperCase()} 완료 — 중간 커밋 중...`);
-      gitCommitProgress(`2025 ${quarter.toUpperCase()}`);
+      gitCommitProgress(`${YEAR} ${quarter.toUpperCase()}`);
       lastCommittedQuarter = quarter;
     }
 
@@ -379,13 +411,14 @@ async function main() {
   const topRules = Object.entries(ruleCnt).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
   // 최종 저장
+  db.year        = YEAR;
   db.weeks       = results.sort((a, b) => a.weekStart.localeCompare(b.weekStart));
   db.generatedAt = kstStr;
   db.stats = { totalWeeks: results.length, analyzedWeeks: analyzed.length, accuracy, strongAccuracy: strongAcc, avgScore };
   fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2), 'utf-8');
 
   console.log('\n' + '━'.repeat(60));
-  console.log(`✅ 백테스트 완료 | ${kstStr}`);
+  console.log(`✅ ${YEAR}년 백테스트 완료 | ${kstStr}`);
   console.log(`   총 ${results.length}주 처리 (분석 ${analyzed.length}주)`);
   console.log(`   방향 정확도: ${accuracy}%  (${matched}/${analyzed.length}건)`);
   console.log(`   강한신호 정확도: ${strongAcc}%  (${strongR.length}건)`);

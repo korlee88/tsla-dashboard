@@ -1,14 +1,19 @@
-name: 테슬라 백테스트 실행 (수동 + 월별 자동)
+name: 테슬라 백테스트 실행 (매일 자동 + 수동)
 
 on:
-  workflow_dispatch:        # 수동 실행 (즉시 트리거용)
+  workflow_dispatch:
+    inputs:
+      year:
+        description: '처리할 연도 (비우면 현재 KST 연도)'
+        required: false
+        default: ''
   schedule:
-    - cron: '0 18 1 * *'  # UTC 18:00 매월 1일 = KST 03:00 (밤새 실행 후 아침에 확인)
+    - cron: '0 18 * * *'  # UTC 18:00 매일 = KST 03:00
 
 jobs:
   run-backtest:
     runs-on: ubuntu-latest
-    timeout-minutes: 180   # 최대 3시간 (52주 × ~2분 = 약 1.5~2시간)
+    timeout-minutes: 180   # 초기 일괄 실행 대비 (한 해 ~52주 × ~2분); 매일 증분은 5~10분
     permissions:
       contents: write
     env:
@@ -26,17 +31,19 @@ jobs:
       - name: 백테스트 실행
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BACKTEST_YEAR: ${{ github.event.inputs.year }}
         run: node scripts/backtest-run.js
 
       - name: 결과 커밋 & 푸시
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "TSLA Backtest Bot"
-          git add data/backtest-results.json
+          git add data/backtest-results-*.json
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
-            git commit -m "backtest: 2025년 AI 예측 백테스트 결과 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            YEAR=$(TZ='Asia/Seoul' date +'%Y')
+            git commit -m "backtest: ${YEAR}년 백테스트 일일 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
             git pull --rebase origin master
             git push
           fi

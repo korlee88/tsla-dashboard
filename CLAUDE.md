@@ -58,7 +58,7 @@ tsla-dashboard/
 ├── .github/workflows/
 │   ├── weekly-video.yml       # 월요일 자동 실행 + workflow_dispatch
 │   ├── auto-analysis.yml      # 하루 4회 자동 분석
-│   ├── backtest-run.yml       # 백테스트 (수동/월별)
+│   ├── backtest-run.yml       # 백테스트 (매일 자동 + 수동)
 │   └── calendar-update.yml    # 매주 일정 갱신
 ├── config/
 │   └── ticker.json            # 종목 설정 (TSLA/NVDA/AAPL 등 분기점)
@@ -70,6 +70,8 @@ tsla-dashboard/
 │   └── youtube_sentiment.py   # YouTube 검색·관심도 수집
 ├── data/
 │   ├── auto-sessions.json     # 최근 7일 세션 데이터 (원본)
+│   ├── backtest-results-2025.json  # 2025 백테스트 (완료)
+│   ├── backtest-results-2026.json  # 2026 백테스트 (매일 증분 업데이트)
 │   ├── scene-backgrounds/     # 씬 2~4 고정 배경 이미지 (jpg)
 │   └── weekly-report/
 │       └── YYYY-MM-DD/
@@ -367,6 +369,13 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 - 씬별 이미지 프롬프트가 `script.json`의 `image_prompts` 필드로 자동 생성
 
 ### 2026-05 (코드 정리 + 멀티 종목 Phase 1)
+
+**백테스트 매일 자동 + 연도 분리**
+- `backtest-run.js` 일반화: `BACKTEST_YEAR` 환경변수 + `getCompletedWeeksForYear(year)` (이미 완료된 주만)
+- 데이터 파일 분리: `data/backtest-results-2025.json`, `data/backtest-results-2026.json`
+- 워크플로우: 매월 1일 → 매일 KST 03:00 (cron `0 18 * * *`). 이미 분석된 주는 skip
+- `index.html` BacktestPage: 연도 탭(2025/2026) 추가, `getWeeksForYear(year, range)`로 동적 주 생성
+- localStorage 캐시 키도 연도별 분리 (`tsla_backtest_v3_2025`, `tsla_backtest_v3_2026`)
 
 **코드 정리 (-169줄)**
 - 미사용 함수 삭제: `fx_subtitle()`, `find_font()` (make.py), `draw_robot()` (prep.py)
