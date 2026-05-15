@@ -670,7 +670,12 @@ async function getDriveAppDataSize(token) {
 
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
 const CALENDAR_DATA_URL   = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
-const BACKTEST_YEARS = [2025, 2026];
+const BACKTEST_START_YEAR = 2025;
+const BACKTEST_YEARS = (() => {
+  const currentYear = new Date(Date.now() + 9 * 3600000).getUTCFullYear();
+  const lastYear = Math.max(currentYear, BACKTEST_START_YEAR);
+  return Array.from({ length: lastYear - BACKTEST_START_YEAR + 1 }, (_, i) => BACKTEST_START_YEAR + i);
+})();
 const DEFAULT_BACKTEST_YEAR = BACKTEST_YEARS[BACKTEST_YEARS.length - 1];
 const backtestUrl = (year) => `https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/backtest-results-${year}.json`;
 const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
@@ -5505,7 +5510,7 @@ function BacktestPage({ apiKey }) {
     q2:  'Q2 (4~6월)',
     q3:  'Q3 (7~9월)',
     q4:  'Q4 (10~12월)',
-    all: `전체 ${selectedYear}년`,
+    all: '전체 연간',
   };
 
   function getWeeksForYear(year, range) {
@@ -5645,10 +5650,10 @@ function BacktestPage({ apiKey }) {
       {/* 헤더 */}
       <div className="mb-5">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
-          🔬 AI 모델 백테스트
-          <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#9ca3af' }}>{selectedYear} 주간 분석 검증</span>
+          🔬 AI 예측 누적 검증
+          <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#9ca3af' }}>매일 자동 갱신</span>
         </h2>
-        <p className="text-xs text-gray-500 mt-1">{selectedYear}년 주간 뉴스를 AI로 분석하고, 실제 TSLA 주가 움직임과 비교하여 예측 정확도를 검증합니다.</p>
+        <p className="text-xs text-gray-500 mt-1">주간 뉴스를 AI로 분석하고 실제 TSLA 주가 움직임과 비교해 예측 정확도를 누적 검증합니다. 매주 새 데이터가 추가되어 모델 정확도가 시간이 갈수록 정교해집니다.</p>
       </div>
 
       {/* 컨트롤 패널 */}
