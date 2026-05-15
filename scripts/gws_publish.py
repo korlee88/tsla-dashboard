@@ -26,7 +26,15 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
-REPORT_BASE        = Path(__file__).parent.parent / "data" / "weekly-report"
+ROOT_DIR           = Path(__file__).parent.parent
+TICKER_CONFIG      = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encoding="utf-8"))
+TICKER             = TICKER_CONFIG["ticker"]
+COMPANY_KO         = TICKER_CONFIG["company_ko"]
+BRAND_LABEL        = TICKER_CONFIG["brand_label"]
+REPO               = TICKER_CONFIG["repo"]
+VIDEO_TAGS         = TICKER_CONFIG.get("video_tags", [TICKER, "주식", "Shorts"])
+
+REPORT_BASE        = ROOT_DIR / "data" / "weekly-report"
 
 GWS_YOUTUBE_TOKEN  = os.environ.get("GWS_YOUTUBE_TOKEN", "")
 GWS_SA_CREDENTIALS = os.environ.get("GWS_SA_CREDENTIALS", "")
@@ -111,19 +119,19 @@ def upload_to_youtube(report_dir: Path, meta: dict, script_txt: str) -> str | No
     except (TypeError, ValueError):
         price_str = ""
 
-    title = f"TSLA 주간 분석 {date} | 매수지수 {bi}점 {signal}"
+    title = f"{TICKER} 주간 분석 {date} | 참고지수 {bi}점 {signal}"
     if price_str:
         title += f" · {price_str}"
     title = (title + " #Shorts")[:100]
 
-    description = (script_txt or "TSLA 주간 분석 자동 생성 영상")[:5000]
+    description = (script_txt or f"{TICKER} 주간 분석 자동 생성 영상")[:5000]
 
     body = {
         "snippet": {
             "title": title,
             "description": description,
-            "tags": ["테슬라", "TSLA", "주식", "투자", "전기차", "Shorts"],
-            "categoryId": "25",          # News & Politics
+            "tags": VIDEO_TAGS,
+            "categoryId": "25",
             "defaultLanguage": "ko",
         },
         "status": {
@@ -231,14 +239,14 @@ def _build_html(meta: dict, youtube_url: str | None, scene_count: int) -> str:
 <body style="margin:0;padding:0;background:#0e1117;font-family:'Apple SD Gothic Neo',sans-serif;color:#f9fafb;">
   <div style="max-width:600px;margin:0 auto;padding:24px;">
     <div style="background:#0f2046;border-radius:16px;padding:24px;margin-bottom:20px;">
-      <p style="color:#87dcff;font-size:13px;margin:0 0 8px;letter-spacing:2px;">TSLA WEEKLY</p>
+      <p style="color:#87dcff;font-size:13px;margin:0 0 8px;letter-spacing:2px;">{BRAND_LABEL}</p>
       <h1 style="color:#fff;font-size:24px;margin:0 0 4px;">{date} 주간 분석</h1>
     </div>
 
     <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
       <tr style="background:#1c1f26;">
         <td style="padding:16px;border-radius:10px 0 0 10px;">
-          <p style="color:#9ca3af;font-size:12px;margin:0 0 4px;">매수지수</p>
+          <p style="color:#9ca3af;font-size:12px;margin:0 0 4px;">참고지수</p>
           <p style="color:{signal_color};font-size:28px;font-weight:bold;margin:0;">{bi}점</p>
         </td>
         <td style="padding:16px;background:#141720;">
@@ -246,7 +254,7 @@ def _build_html(meta: dict, youtube_url: str | None, scene_count: int) -> str:
           <p style="color:#ffd700;font-size:28px;font-weight:bold;margin:0;">{price_str}</p>
         </td>
         <td style="padding:16px;background:#1c1f26;border-radius:0 10px 10px 0;">
-          <p style="color:#9ca3af;font-size:12px;margin:0 0 4px;">매매신호</p>
+          <p style="color:#9ca3af;font-size:12px;margin:0 0 4px;">시그널</p>
           <p style="color:{signal_color};font-size:28px;font-weight:bold;margin:0;">{signal}</p>
         </td>
       </tr>
@@ -260,7 +268,7 @@ def _build_html(meta: dict, youtube_url: str | None, scene_count: int) -> str:
     </div>
 
     <p style="color:#374151;font-size:12px;text-align:center;margin-top:32px;">
-      자동 생성 — TSLA Dashboard · korlee88/tsla-dashboard
+      자동 생성 — {TICKER} Dashboard · {REPO}
     </p>
   </div>
 </body>
@@ -273,7 +281,7 @@ def send_gmail_digest(report_dir: Path, meta: dict, youtube_url: str | None) -> 
     bi     = meta.get("avg_buy_index") or 0
     signal = get_signal_label(bi)
 
-    subject = f"TSLA 주간 브리핑 {date} | 매수지수 {bi}점 ({signal})"
+    subject = f"{TICKER} 주간 브리핑 {date} | 참고지수 {bi}점 ({signal})"
 
     # 씬 이미지 수집
     scene_paths = []
@@ -291,7 +299,7 @@ def send_gmail_digest(report_dir: Path, meta: dict, youtube_url: str | None) -> 
     msg["To"]      = GMAIL_TO
 
     alt = MIMEMultipart("alternative")
-    plain = f"TSLA 주간 분석 {date}\n매수지수: {bi}점 ({signal})\n{youtube_url or ''}"
+    plain = f"{TICKER} 주간 분석 {date}\n참고지수: {bi}점 ({signal})\n{youtube_url or ''}"
     alt.attach(MIMEText(plain, "plain", "utf-8"))
     alt.attach(MIMEText(html_body, "html", "utf-8"))
     msg.attach(alt)

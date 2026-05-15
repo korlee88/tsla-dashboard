@@ -1,19 +1,29 @@
 """
-TSLA 주간 영상 자료 생성 스크립트
+주간 영상 자료 생성 스크립트
 - 최근 7일 auto-sessions.json 데이터 기반
 - Gemini API → 한국어 영상 대본(4 씬)
 - Pillow → 씬별 1080×1920 카드 이미지 (YouTube Shorts 세로 포맷)
 - 저장: data/weekly-report/YYYY-MM-DD/
+
+종목 설정: config/ticker.json
 """
 
 import os, json, sys, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
+ROOT_DIR          = Path(__file__).parent.parent
+TICKER_CONFIG     = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encoding="utf-8"))
+TICKER            = TICKER_CONFIG["ticker"]
+COMPANY_KO        = TICKER_CONFIG["company_ko"]
+INDUSTRY_KO       = TICKER_CONFIG.get("industry_ko", "")
+BRAND_LABEL       = TICKER_CONFIG["brand_label"]
+REPO              = TICKER_CONFIG["repo"]
+
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY", "")
-AUTO_SESSIONS     = Path(__file__).parent.parent / "data" / "auto-sessions.json"
-OUTPUT_BASE       = Path(__file__).parent.parent / "data" / "weekly-report"
+AUTO_SESSIONS     = ROOT_DIR / "data" / "auto-sessions.json"
+OUTPUT_BASE       = ROOT_DIR / "data" / "weekly-report"
 LOOKBACK_DAYS     = 7
 
 # ── 팔레트 ────────────────────────────────────────────────────────────────
@@ -46,21 +56,12 @@ CYAN_LIGHT  = (135, 220, 255)
 
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER]
 
-# 씬별 Wikipedia 배경 이미지 소스 (후보 순서대로 시도 — 로고/세로 이미지 skip)
-SCENE_WIKI_ARTICLES = [
-    ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],  # scene 1 - 가로 차량/도로 사진 우선
-    ["Tesla Cybertruck"],                                  # scene 2 - 호재 뉴스
-    ["Elon Musk"],                                         # scene 3 - 리스크 뉴스
-    ["Gigafactory Nevada"],                                # scene 4 - 시장 동향
-]
+SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
 
-# 씬별 고정 배경 이미지 (있으면 Wikipedia 다운로드 건너뜀)
-SCENE_BG_DIR = Path(__file__).parent.parent / "data" / "scene-backgrounds"
+SCENE_BG_DIR = ROOT_DIR / "data" / "scene-backgrounds"
 SCENE_STATIC_BG = [
-    None,                                        # scene 1 - 매주 새 사진 다운로드
-    SCENE_BG_DIR / "bg_scene_02.jpg",           # scene 2 - Cybertruck 고정
-    SCENE_BG_DIR / "bg_scene_03.jpg",           # scene 3 - Elon Musk 고정
-    SCENE_BG_DIR / "bg_scene_04.jpg",           # scene 4 - Gigafactory 고정
+    (SCENE_BG_DIR / name) if name else None
+    for name in TICKER_CONFIG["scene_static_bg_files"]
 ]
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
@@ -131,12 +132,12 @@ def summarize(sessions):
 
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
-SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 유튜브 쇼츠 스타일 나레이션 대본을 작성해줘.
+SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 분석 데이터를 바탕으로 유튜브 쇼츠 스타일 나레이션 대본을 작성해줘.
 전문 투자 용어 대신 일반인도 이해하기 쉬운 일상 언어로 작성해줘.
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - 참고지수: 주간 평균 {avg_bi}, 최신 {latest_bi} (0~100점, 시장 관심도 참고 지표)
-- TSLA 주가: ${price}
+- {ticker} 주가: ${price}
 {daily_prices_txt}
 - 주요 호재:
 {b_txt}
@@ -147,7 +148,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 
 【씬 1 — 주간 브리핑】
 이번 주 가장 중요한 뉴스 1건을 상세히 소개. 정확히 4줄로 작성.
-- 줄1: 헤드라인 — 감탄사로 시작, 20자 이내 (예: "와! 이번 주 테슬라 빅뉴스!")
+- 줄1: 헤드라인 — 감탄사로 시작, 20자 이내 (예: "와! 이번 주 {company_ko} 빅뉴스!")
 - 줄2: 출처 — 언론사·날짜 (예: "Reuters · 05/12 보도")
 - 줄3: 상세 내용 — 수치·배경·영향을 구체적으로, **80~120자, 3~4문장** (충분히 길게!)
 - 줄4: 전망 — 40~60자, 투자자 관점에서 의미와 앞으로의 방향 설명
@@ -212,7 +213,7 @@ SCENE_4:
 - 각 프롬프트 60~80 단어
 - 반드시 포함: "no text, no letters, no watermark, no logo"
 - 반드시 포함: "9:16 vertical aspect ratio, ultra-high resolution"
-- 테슬라·전기차·미래기술 관련 시각 요소 포함
+- {company_ko}·{industry_ko} 관련 시각 요소 포함
 - 씬 분위기에 맞는 색감 지정 (씬1 보라, 씬2 초록, 씬3 빨강, 씬4 주황)
 - 이번 주 실제 뉴스 키워드를 시각화할 것
 
@@ -234,6 +235,9 @@ def _build_prompt(summary):
         daily_prices_txt = ""
 
     return SCRIPT_PROMPT_TEMPLATE.format(
+        ticker=TICKER,
+        company_ko=COMPANY_KO,
+        industry_ko=INDUSTRY_KO,
         week_start=summary["week_start"],
         week_end=summary["week_end"],
         avg_bi=summary["avg_buy_index"],
@@ -381,7 +385,7 @@ def fetch_wiki_image(article: str, out_path: Path) -> bool:
     """Wikipedia 기사 대표 이미지를 다운로드. 실패하거나 세로(로고) 이미지면 False 반환."""
     from PIL import Image as _PILImg
     import io as _io
-    headers = {"User-Agent": "TSLA-Dashboard/2.0 (github.com/korlee88/tsla-dashboard)"}
+    headers = {"User-Agent": f"{TICKER}-Dashboard/2.0 (github.com/{REPO})"}
     try:
         params = urllib.parse.urlencode({
             "action": "query", "titles": article,
@@ -759,7 +763,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 1:
         # 메인: 대본 첫 줄 그대로 (감탄사 포함). 큰따옴표 추가.
-        first = (news_lines[0] if news_lines else "이번 주 테슬라").strip()
+        first = (news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
         # 큰따옴표 적용
         if not (first.startswith('"') or first.startswith("'")):
             first = f'"{first}"'
@@ -791,7 +795,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         head_sub = f"참고지수 {bi}점"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
-    draw_mbc_header(draw, "TSLA WEEKLY", head_main, head_sub, accent,
+    draw_mbc_header(draw, BRAND_LABEL, head_main, head_sub, accent,
                     f_brand, f_head_main, f_head_sub)
 
     # ── 사진 배너 (Y=500~1000, 500px) ────────────────────────────────────
@@ -1041,7 +1045,7 @@ def main():
 
         # ── 이미지 프롬프트 별도 저장 (Imagen 복붙용) ──
         if img_prompts:
-            lines = [f"# TSLA 주간 배경 이미지 프롬프트 — {today}",
+            lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
             scene_names = {1: "씬1 주간브리핑", 2: "씬2 호재뉴스",
                            3: "씬3 리스크뉴스", 4: "씬4 시장반응"}

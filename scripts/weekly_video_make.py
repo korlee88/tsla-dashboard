@@ -1,17 +1,21 @@
 """
-TSLA 주간 나레이션 영상 생성 (moviepy 2.x + 애니메이션)
+주간 나레이션 영상 생성 (moviepy 2.x + 애니메이션)
 weekly_video_prep.py 실행 후 사용.
 script.json + scene_XX.png → edge-tts MP3 → 애니메이션 MP4
 출력: 1080×1920 (YouTube Shorts 세로 포맷)
 
-필요 패키지:
-  pip install edge-tts moviepy pillow numpy
+종목 설정: config/ticker.json
+필요 패키지: pip install -r requirements.txt
 """
 
 import json, sys, asyncio, math
 from pathlib import Path
 
-REPORT_BASE   = Path(__file__).parent.parent / "data" / "weekly-report"
+ROOT_DIR      = Path(__file__).parent.parent
+TICKER_CONFIG = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encoding="utf-8"))
+TICKER        = TICKER_CONFIG["ticker"]
+
+REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
 VOICE         = "ko-KR-SunHiNeural"    # 젊은 한국 여성 (밝고 에너지 넘치는 톤)
 RATE          = "+35%"                  # 여성 목소리 특성상 남성보다 소폭 낮게
 PITCH         = "+8Hz"                  # 약간 밝게 올림 → 활기찬 느낌
@@ -296,7 +300,7 @@ async def build_video_async(report_dir):
 
     script = json.loads((report_dir / "script.json").read_text(encoding="utf-8"))
     scenes = script.get("scenes", [])
-    title  = script.get("title", "TSLA 주간 분석")
+    title  = script.get("title", f"{TICKER} 주간 분석")
 
     print(f"📽 {len(scenes)}개 씬 처리 (애니메이션 모드, 음성: {VOICE})")
     print(f"   제목: {title}")

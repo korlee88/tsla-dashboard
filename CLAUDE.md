@@ -11,6 +11,46 @@ GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
 
 ---
 
+## 다른 종목으로 포크하기
+
+이 저장소는 멀티 종목 지원을 위해 설정 분리되어 있다. 다른 종목용 대시보드를 만들려면:
+
+### 1. 저장소 복제
+```bash
+gh repo create korlee88/nvda-dashboard --template korlee88/tsla-dashboard
+git clone https://github.com/korlee88/nvda-dashboard
+```
+
+### 2. `config/ticker.json` 수정
+
+| 필드 | TSLA 예시 | NVDA 예시 |
+|------|---------|----------|
+| `ticker` | `"TSLA"` | `"NVDA"` |
+| `company_en` | `"Tesla"` | `"Nvidia"` |
+| `company_ko` | `"테슬라"` | `"엔비디아"` |
+| `industry_ko` | `"전기차·미래기술"` | `"AI 반도체"` |
+| `brand_label` | `"TSLA WEEKLY"` | `"NVDA WEEKLY"` |
+| `repo` | `"korlee88/tsla-dashboard"` | `"korlee88/nvda-dashboard"` |
+| `beta_coefficient` | `2.5` | `1.7` |
+| `scene_wiki_articles` | Tesla 관련 4씬 | Nvidia/H100/Jensen Huang/HBM 등 |
+| `scene_static_bg_files` | Tesla 배경 | Nvidia 배경 (새로 준비 필요) |
+| `youtube_search_queries` | `["Tesla TSLA stock", ...]` | `["Nvidia NVDA stock", ...]` |
+| `video_tags` | `["테슬라", "TSLA", ...]` | `["엔비디아", "NVDA", ...]` |
+
+### 3. 씬 배경 이미지 교체
+`data/scene-backgrounds/bg_scene_02.jpg`, `bg_scene_03.jpg`, `bg_scene_04.jpg`를 새 종목에 맞게 교체.
+
+### 4. GitHub Secrets 재설정
+새 저장소에 `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `YOUTUBE_API_KEY` 등 동일하게 설정.
+
+### Phase 2 작업 예정 (현재 미적용)
+- JS 스크립트 (`auto-analysis.js`, `backtest-run.js`, `calendar-update.js`)도 설정 사용으로 변경
+- `index.html` 대시보드 — 종목 라벨, fetch URL 등 설정 사용
+- 데이터 모델 키 `latestTslaPrice` → `latestPrice` (호환성 마이그레이션 필요)
+- 한국 주식 지원 시 Yahoo Finance → KRX 데이터 소스 추상화
+
+---
+
 ## 아키텍처
 
 ```
