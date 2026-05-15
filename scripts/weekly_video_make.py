@@ -8,7 +8,7 @@ script.json + scene_XX.png → edge-tts MP3 → 애니메이션 MP4
   pip install edge-tts moviepy pillow numpy
 """
 
-import os, json, sys, asyncio, math
+import json, sys, asyncio, math
 from pathlib import Path
 
 REPORT_BASE   = Path(__file__).parent.parent / "data" / "weekly-report"
@@ -38,18 +38,6 @@ def find_latest_report():
         reverse=True,
     )
     return dirs[0] if dirs else None
-
-
-def find_font():
-    for p in [
-        "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
-        "/usr/share/fonts/truetype/nanum/NanumGothic.ttf",
-        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-        "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
-    ]:
-        if os.path.exists(p):
-            return p
-    return None
 
 
 def clean_for_tts(lines):
@@ -245,61 +233,18 @@ def fx_ken_burns(img, t: float, dur: float, scene_idx: int):
 
     return zoomed.crop((cx, cy, cx + ow, cy + oh))
 
-
-def fx_subtitle(img, lines, accent, font_path, t_local):
-    """자막 슬라이드업 + 텍스트 그림자. 화면 폭 초과시 자동 폰트 축소."""
-    from PIL import Image, ImageDraw, ImageFont
-    ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    d  = ImageDraw.Draw(ov)
-
-    def fnt(size):
-        try:
-            return ImageFont.truetype(font_path, size) if font_path else ImageFont.load_default()
-        except Exception:
-            return ImageFont.load_default()
-
-    slide = min(t_local / 0.22, 1.0)
-    dy    = int((1 - slide) * 38)
-
-    active = [l for l in lines if l.strip()][:2]
-    max_w  = W - 80
-    y = H - 130 + dy
-    for i, line in enumerate(active):
-        base_size = 42 if i == 0 else 30
-        col  = (*accent, 255) if i == 0 else (235, 240, 250, 255)
-        # 화면 폭 초과시 폰트 축소 (최소 18px)
-        size = base_size
-        while size > 18:
-            f = fnt(size)
-            bb = d.textbbox((0, 0), line, font=f)
-            if bb[2] - bb[0] <= max_w:
-                break
-            size -= 2
-        f    = fnt(size)
-        bbox = d.textbbox((0, 0), line, font=f)
-        tw   = bbox[2] - bbox[0]
-        x    = max(40, (W - tw) // 2)
-        # 검은 stroke로 가독성
-        d.text((x, y), line, font=f, fill=col,
-               stroke_width=3, stroke_fill=(0, 0, 0))
-        y += (bbox[3] - bbox[1]) + 12
-
-    return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
-
 # ── 애니메이션 프레임 합성 ────────────────────────────────────────────────────
 
-def make_anime_frame(t, base_arr, accent, subtitle_lines, dur,
-                     font_path, scene_idx):
+def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     import numpy as np
     from PIL import Image
     img = Image.fromarray(base_arr).copy()
-    img = fx_ken_burns(img, t, dur, scene_idx - 1)  # 배경 줌/패닝
+    img = fx_ken_burns(img, t, dur, scene_idx - 1)
 
     img = fx_speed_lines(img, t, accent)
     img = fx_scanline(img, t)
     img = fx_pulse_glow(img, t, accent)
 
-    # 로봇 바운싱 애니메이션 — 헤더 영역 안쪽으로 이동 (콘텐츠 가림 방지)
     mood     = SCENE_MOODS[scene_idx - 1]
     robot_dy = int(math.sin(t * 3.5) * 4)
     img = draw_robot_pil(img, W - 130, 40 + robot_dy, mood, accent)
@@ -311,7 +256,7 @@ def make_anime_frame(t, base_arr, accent, subtitle_lines, dur,
 
 # ── 씬 처리 ───────────────────────────────────────────────────────────────────
 
-async def process_scene(scene, report_dir, font_path):
+async def process_scene(scene, report_dir):
     from moviepy import VideoClip, AudioFileClip
     import numpy as np
     from PIL import Image
@@ -322,7 +267,6 @@ async def process_scene(scene, report_dir, font_path):
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
-    # TTS
     tts_text   = clean_for_tts(lines) or title
     audio_path = report_dir / f"scene_{idx:02d}.mp3"
     print(f"   🎙 씬 {idx} [{title[:20]}] 나레이션 생성...")
@@ -331,52 +275,24 @@ async def process_scene(scene, report_dir, font_path):
     audio = AudioFileClip(str(audio_path))
     dur   = max(audio.duration, MIN_SCENE_SEC)
 
-    # 배경 이미지 로드
     if img_path.exists():
         base_arr = np.array(Image.open(img_path).convert("RGB"))
     else:
         base_arr = np.full((H, W, 3), (14, 17, 23), dtype=np.uint8)
 
-    # 자막 청크
-    chunks: list[list[str]] = []
-    buf: list[str] = []
-    for line in lines:
-        if line.strip() == '':
-            if buf:
-                chunks.append(buf)
-                buf = []
-        else:
-            buf.append(line)
-            if len(buf) >= 3:
-                chunks.append(buf)
-                buf = []
-    if buf:
-        chunks.append(buf)
-    if not chunks:
-        chunks = [[title]]
-
-    chunk_dur = dur / len(chunks)
-
     def make_frame(t):
-        ci      = min(int(t / chunk_dur), len(chunks) - 1)
-        t_local = t - ci * chunk_dur
-        return make_anime_frame(t_local, base_arr, accent,
-                                chunks[ci], chunk_dur, font_path, idx)
+        return make_anime_frame(t, base_arr, accent, dur, idx)
 
     video = VideoClip(make_frame, duration=dur).with_fps(FPS)
     video = video.with_audio(audio)
 
-    print(f"   ✅ 씬 {idx} 완료 ({dur:.1f}초, 청크 {len(chunks)}개)")
+    print(f"   ✅ 씬 {idx} 완료 ({dur:.1f}초)")
     return video
 
 # ── 영상 합성 ─────────────────────────────────────────────────────────────────
 
 async def build_video_async(report_dir):
     from moviepy import concatenate_videoclips
-
-    font_path = find_font()
-    if not font_path:
-        print("⚠ 한글 폰트 없음", file=sys.stderr)
 
     script = json.loads((report_dir / "script.json").read_text(encoding="utf-8"))
     scenes = script.get("scenes", [])
@@ -387,7 +303,7 @@ async def build_video_async(report_dir):
 
     clips = []
     for scene in scenes:
-        clip = await process_scene(scene, report_dir, font_path)
+        clip = await process_scene(scene, report_dir)
         clips.append(clip)
 
     print("\n🎬 최종 영상 합성 중...")
@@ -406,6 +322,10 @@ async def build_video_async(report_dir):
     )
 
     dur = final.duration
+    final.close()
+    for c in clips:
+        c.close()
+
     print(f"\n✅ 영상 생성 완료!")
     print(f"   📁 {out_path}")
     print(f"   ⏱ 총 {dur:.1f}초 ({dur/60:.1f}분)")
