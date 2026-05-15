@@ -1,0 +1,1906 @@
+{
+  "year": 2026,
+  "weeks": [
+    {
+      "weekStart": "2026-01-05",
+      "weekEnd": "2026-01-11",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 2025년 판매량 감소에도 불구하고 로봇택시 및 로봇에 대한 투자 확대 계획 발표",
+          "source": "Associated Press",
+          "category": "Earnings|Delivery|Product|Musk"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇 생산 전환 발표",
+          "source": "BNN Bloomberg",
+          "category": "Product|Musk|Strategy"
+        },
+        {
+          "title": "테슬라, 2026년 자본 지출 250억 달러 이상으로 대폭 증액 계획",
+          "source": "Reuters",
+          "category": "Capital Expenditure|AI|Robotics"
+        },
+        {
+          "title": "일론 머스크, 2026년 말까지 테슬라 로봇택시 미국 전역에 '광범위하게' 보급될 것이라고 발언",
+          "source": "Forbes",
+          "category": "Musk|Product|Robotaxi"
+        },
+        {
+          "title": "테슬라, 2025년 연간 이익 팬데믹 이후 최저치 기록, 로봇택시 및 로봇에 대규모 투자 계획",
+          "source": "Associated Press",
+          "category": "Earnings|Product|Musk"
+        },
+        {
+          "title": "테슬라, 2026년 로봇택시 및 옵티머스 로봇 생산 시작",
+          "source": "Electrek",
+          "category": "Product|Robotics"
+        },
+        {
+          "title": "테슬라, 2025년 글로벌 판매량 6.7% 감소, 공장 가동률 하락",
+          "source": "Forbes",
+          "category": "Delivery|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI의 공동 프로젝트 '매크로하드' 공개",
+          "source": "Reuters",
+          "category": "Musk|AI|Product"
+        },
+        {
+          "title": "테슬라, 2026년 로봇택시 확장 목표 하향 조정 및 FSD 하드웨어 업그레이드 필요성 언급",
+          "source": "Reuters",
+          "category": "Product|Regulatory|Musk"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 월스트리트 예상치 상회, EV 수요 회복 조짐",
+          "source": "Bloomberg",
+          "category": "Earnings|Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.5,
+        "buyIndex": 49,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 55,
+          "macdCross": -6
+        },
+        "macroCtx": {
+          "spyChg": 1.1,
+          "qqqChg": 1.18,
+          "vixClose": 14.489999771118164,
+          "wtiChg": 2.87,
+          "cnyChg": -0.14,
+          "prevTslaChg": -6.59,
+          "rsi": 49.6,
+          "macd": {
+            "macd": 29.260276791429305,
+            "signal": 30.134811111438488,
+            "hist": -0.8745343200091824,
+            "crossover": "bearish",
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 498.82,
+            "middle": 426.43,
+            "lower": 354.04,
+            "pos": 0.628
+          },
+          "isDeliveryWeek": true,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -0.67,
+        "actual": "neutral",
+        "open": 447.99,
+        "close": 445.01
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-01-12",
+      "weekEnd": "2026-01-18",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 2026년 자본 지출 계획 25% 상향 조정…AI 및 로봇 사업에 집중",
+          "source": "Reuters",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 예상치 상회…로보택시 및 AI 투자 강조",
+          "source": "Bloomberg",
+          "category": "Earnings|Product|Musk"
+        },
+        {
+          "title": "테슬라, 로보택시 서비스 댈러스 및 휴스턴 확장 발표",
+          "source": "The Motley Fool",
+          "category": "Product|Musk"
+        },
+        {
+          "title": "테슬라, 2026년 잉여현금흐름 439억 달러 감소 예상",
+          "source": "Markets.com",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2025년 EV 판매량 감소로 BYD에 1위 자리 내줘",
+          "source": "Bloomberg",
+          "category": "Competition|Delivery|Market"
+        },
+        {
+          "title": "테슬라, 중국 FSD 승인 지연 우려 속 독일 배터리 생산 확장 발표",
+          "source": "Invezz",
+          "category": "Regulatory|Product|Energy|Market"
+        },
+        {
+          "title": "테슬라, 저가형 소형 전기 SUV 개발 중…중국 생산 계획",
+          "source": "Reuters",
+          "category": "Product|Competition"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 '극도로 밝은' 10년 미래 전망하며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk|Product|Market"
+        }
+      ],
+      "newsCount": 8,
+      "analysis": {
+        "avgScore": 1.1,
+        "buyIndex": 59,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12",
+          "R16"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 61,
+          "macdTrend": -2
+        },
+        "macroCtx": {
+          "spyChg": 0.14,
+          "qqqChg": -0.17,
+          "vixClose": 15.859999656677246,
+          "wtiChg": 0.75,
+          "cnyChg": -0.16,
+          "prevTslaChg": -0.67,
+          "rsi": 52.7,
+          "macd": {
+            "macd": 26.92067791124481,
+            "signal": 29.491984471399753,
+            "hist": -2.5713065601549445,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 490.3,
+            "middle": 431.61,
+            "lower": 372.92,
+            "pos": 0.55
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -0.85,
+        "actual": "neutral",
+        "open": 441.23,
+        "close": 437.5
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-01-19",
+      "weekEnd": "2026-01-25",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 1분기 이익 증가 및 신형 로드스터 공개 예고",
+          "source": "Associated Press",
+          "category": "Earnings|Product"
+        },
+        {
+          "title": "일론 머스크, 로보택시 서비스 연말까지 미국 전역에 확대될 것이라고 밝혀",
+          "source": "Forbes",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "title": "테슬라, 완전자율주행 기술 조사에 대한 답변 기한 연장 승인",
+          "source": "Associated Press",
+          "category": "Regulatory"
+        },
+        {
+          "title": "테슬라, 2026년 자율주행 및 로봇에 대규모 투자 계획",
+          "source": "Reuters",
+          "category": "Product|AI|Robotics|Market"
+        },
+        {
+          "title": "테슬라, 2025년 연간 이익 팬데믹 이후 최저치 기록, 로보택시 및 로봇에 집중",
+          "source": "Associated Press",
+          "category": "Earnings|Product|AI|Robotics"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇 생산에 집중",
+          "source": "Forbes",
+          "category": "Product|AI|Robotics"
+        },
+        {
+          "title": "테슬라, 2026년 자본 지출 250억 달러 이상으로 대폭 증액",
+          "source": "Reuters",
+          "category": "AI|Robotics|Market"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회하며 EV 수요 회복 조짐 보여",
+          "source": "Bloomberg",
+          "category": "Earnings|Market"
+        },
+        {
+          "title": "테슬라, 로보택시 확장 가속화 및 2026년 목표 설정으로 주가 상승",
+          "source": "TradingView",
+          "category": "Product|Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 xAI의 공동 프로젝트 '매크로하드' 공개",
+          "source": "Reuters",
+          "category": "Musk|AI|Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 2.3,
+        "buyIndex": 78,
+        "direction": "bullish",
+        "bullish": 8,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12",
+          "R05"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 73,
+          "strongAmp": 3,
+          "macroOverlay": 4,
+          "macdTrend": -2
+        },
+        "macroCtx": {
+          "spyChg": 1.14,
+          "qqqChg": 2,
+          "vixClose": 16.09000015258789,
+          "wtiChg": 3.49,
+          "cnyChg": 0.06,
+          "prevTslaChg": -0.85,
+          "rsi": 54.5,
+          "macd": {
+            "macd": 25.703035540717394,
+            "signal": 28.734194685263283,
+            "hist": -3.0311591445458888,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 482.39,
+            "middle": 436.52,
+            "lower": 390.65,
+            "pos": 0.637
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 4.59,
+        "actual": "bullish",
+        "open": 429.36,
+        "close": 449.06
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2026-01-26",
+      "weekEnd": "2026-02-01",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 4분기 실적 발표 후 주가 하락세 보이다 반등 조짐 (Barron's)",
+          "source": "Barron's",
+          "category": "Earnings|Product|Market"
+        },
+        {
+          "title": "테슬라, 모델 S 및 X 생산 종료 발표 및 로보틱스 전환 (TradingView)",
+          "source": "TradingView",
+          "category": "Product|Strategy"
+        },
+        {
+          "title": "테슬라, 2026년 로보택시 서비스 '매우 광범위하게' 확대 전망 (The Motley Fool)",
+          "source": "The Motley Fool",
+          "category": "Product|Musk"
+        },
+        {
+          "title": "테슬라, 2026년 200억 달러 이상 자본 지출 계획 발표 (Reuters)",
+          "source": "Reuters",
+          "category": "Capital Expenditure|AI|Robotics"
+        },
+        {
+          "title": "테슬라, 2026년 439억 달러의 잉여현금흐름 변동 및 부정적 전망 직면 (Markets.com)",
+          "source": "Markets.com",
+          "category": "Financial|Capital Expenditure"
+        },
+        {
+          "title": "테슬라, 2026년 초 주가 하락세 지속 (Seeking Alpha)",
+          "source": "Seeking Alpha",
+          "category": "Market|Regulatory"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 인도량 예상치 하회 및 재고 증가 (Electrek)",
+          "source": "Electrek",
+          "category": "Delivery|Competition|Musk"
+        },
+        {
+          "title": "테슬라, 중국 FSD 승인 지연 및 AI 야망에 대한 투자자 관심 (Invezz)",
+          "source": "Invezz",
+          "category": "Regulatory|AI|Market"
+        },
+        {
+          "title": "테슬라, 2026년 에너지 저장 및 로봇 사업 성장 기대 (Forbes)",
+          "source": "Forbes",
+          "category": "Energy|Robotics|Product"
+        },
+        {
+          "title": "테슬라, 2026년 4분기 실적 발표 예정 (The Economic Times)",
+          "source": "The Economic Times",
+          "category": "Earnings|Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": -0.8,
+        "buyIndex": 39,
+        "direction": "bearish",
+        "bullish": 3,
+        "bearish": 6,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R01",
+          "R08"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 42,
+          "macdTrend": -2,
+          "wtiUp": 2,
+          "earningsWeek": -3
+        },
+        "macroCtx": {
+          "spyChg": 0.21,
+          "qqqChg": -0.22,
+          "vixClose": 17.440000534057617,
+          "wtiChg": 6.52,
+          "cnyChg": -0.35,
+          "prevTslaChg": 4.59,
+          "rsi": 51.9,
+          "macd": {
+            "macd": 22.96838134368187,
+            "signal": 27.581032016947002,
+            "hist": -4.612650673265133,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 480.32,
+            "middle": 438.25,
+            "lower": 396.17,
+            "pos": 0.407
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -3.28,
+        "actual": "bearish",
+        "open": 445,
+        "close": 430.41
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-02-02",
+      "weekEnd": "2026-02-08",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 2026년 재무 전망 부정적으로 전환하며 439억 달러 잉여현금흐름 변동 직면",
+          "source": "Markets.com",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 기술주 매도세 속 2026년 최저치 기록",
+          "source": "Seeking Alpha",
+          "category": "Market|Regulatory"
+        },
+        {
+          "title": "일론 머스크의 트위터 인수 관련 평결에도 불구하고 테슬라 주가 시간 외 상승",
+          "source": "Stocktwits",
+          "category": "Musk|Legal"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 발표 후 주가 목표치 상향 가능성",
+          "source": "Capital.com EU",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, AI 칩 개발 이정표 발표에 주가 8% 급등",
+          "source": "Investing.com",
+          "category": "Product|AI"
+        },
+        {
+          "title": "테슬라, 중국 및 유럽 FSD 출시 가속화 등 긍정적 소식에 주가 2% 이상 상승",
+          "source": "Gelonghui",
+          "category": "Product|Delivery|Energy"
+        },
+        {
+          "title": "테슬라, 2026년까지 2조 달러 시장 가치 달성 가능성 - 최고 분석가",
+          "source": "Interactive Brokers",
+          "category": "Market|AI|Product"
+        },
+        {
+          "title": "테슬라, 2026년 모델 Y, NHTSA의 새로운 첨단 운전자 보조 시스템 테스트 통과",
+          "source": "TradingView",
+          "category": "Product|Regulatory"
+        },
+        {
+          "title": "테슬라 주가, 2월 5일 바닥 지점 매수 신호 이후 1.33% 상승",
+          "source": "StockInvest.us",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2026년 2월 종가 402.51달러로 월간 4.5% 하락",
+          "source": "StatMuse Money",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.1,
+        "buyIndex": 61,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R23",
+          "R24"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 61,
+          "r24Discount": -3,
+          "macdTrend": -2,
+          "bbLow": 2,
+          "earningsWeek": 3
+        },
+        "macroCtx": {
+          "spyChg": 0.15,
+          "qqqChg": -1.46,
+          "vixClose": 20.3700008392334,
+          "wtiChg": -1.81,
+          "cnyChg": -0.19,
+          "prevTslaChg": -3.28,
+          "rsi": 49.4,
+          "macd": {
+            "macd": 19.024495468312068,
+            "signal": 25.869724707220016,
+            "hist": -6.845229238907947,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 480.92,
+            "middle": 437.5,
+            "lower": 394.07,
+            "pos": 0.196
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -2.42,
+        "actual": "bearish",
+        "open": 421.29,
+        "close": 411.11
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-02-09",
+      "weekEnd": "2026-02-15",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 스페이스X와의 잠재적 합병 보도에 주가 상승",
+          "source": "Bloomberg",
+          "category": "Musk"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 '극도로 밝은' 10년 미래 전망하며 투자자들에게 주식 보유 촉구",
+          "source": "Stocktwits",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2026년까지 시가총액 2조 달러 달성 가능성, 'AI 시대' 본격화로 3조 달러도 가능",
+          "source": "Interactive Brokers",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가 분석: 2026년 2월 9일 주요 지지 및 저항선",
+          "source": "YouTube",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 로보택시 세차장 건설 시작하며 로보택시 계획 구체화",
+          "source": "TipRanks",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 텔레오퍼레이터 개입 로보택시 충돌 사고 2건 공개",
+          "source": "TechCrunch",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회하며 전기차 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 2026년 2월 종가 402.51달러로 월간 4.5% 하락",
+          "source": "StatMuse Money",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 워렌 버핏과 달리 회사 합병 의사 없음 표명",
+          "source": "CNBC",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 로보택시 우려 증가: TSLA 주식 여전히 보유할 가치 있는가?",
+          "source": "Zacks Investment Research",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.8,
+        "buyIndex": 56,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 3,
+        "neutral": 2,
+        "topRules": [
+          "R24",
+          "R19",
+          "R17"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 58,
+          "r24Discount": -2,
+          "macdTrend": -2,
+          "bbLow": 2
+        },
+        "macroCtx": {
+          "spyChg": -1.11,
+          "qqqChg": -0.93,
+          "vixClose": 20.600000381469727,
+          "wtiChg": -0.16,
+          "cnyChg": -0.56,
+          "prevTslaChg": -2.42,
+          "rsi": 41.3,
+          "macd": {
+            "macd": 16.222711653256965,
+            "signal": 23.94032209642741,
+            "hist": -7.717610443170443,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 480.61,
+            "middle": 436.35,
+            "lower": 392.09,
+            "pos": 0.286
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 1.84,
+        "actual": "bullish",
+        "open": 409.91,
+        "close": 417.44
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-02-16",
+      "weekEnd": "2026-02-22",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크, 2026년 테슬라 모델 S 및 모델 X 생산 중단 발표, 로봇에 집중",
+          "source": "BNN Bloomberg",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 로봇택시 및 로봇에 대한 대규모 투자로 2026년 지출 계획 상향 조정",
+          "source": "Reuters",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 로봇택시 서비스 확장 및 2026년 목표 설정으로 주가 상승",
+          "source": "TradingView",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 2026년까지 '수백만 대'의 자율주행 테슬라 차량 예상",
+          "source": "Axios",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 로봇 공학 및 자율주행차에 집중하며 예상치 상회하는 실적 발표",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 저가형 자동차 계획 폐기 보도에 대해 로이터가 '거짓말'하고 있다고 주장",
+          "source": "FOX Business",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2026년 '모델 2' 예산형 EV 개발 중",
+          "source": "Tech Digest",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 스페이스X와 AI 사업 통합 후 올해 IPO 예상",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 로봇 공학으로 전환하며 자동차 공장 가동률 저조",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 2026년 테슬라 프로젝트: 옵티머스 V, AI 넥서스 및 팔콘 X 공개",
+          "source": "YouTube (Elon Musk SHOCKS Tech Industry with Tesla's 2026 Projects: Optimus V, AI Nexus & Falcon X)",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.9,
+        "buyIndex": 61,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12",
+          "R24"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 59,
+          "r24Discount": -2,
+          "macroOverlay": 4,
+          "macdTrend": -2,
+          "bbLow": 2
+        },
+        "macroCtx": {
+          "spyChg": 1.37,
+          "qqqChg": 1.74,
+          "vixClose": 19.09000015258789,
+          "wtiChg": 4.88,
+          "cnyChg": 0,
+          "prevTslaChg": 1.84,
+          "rsi": 47.5,
+          "macd": {
+            "macd": 13.394388977945255,
+            "signal": 21.83113547273098,
+            "hist": -8.436746494785726,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 480.92,
+            "middle": 435.45,
+            "lower": 389.98,
+            "pos": 0.24
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -0.13,
+        "actual": "neutral",
+        "open": 412.36,
+        "close": 411.82
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-02-23",
+      "weekEnd": "2026-03-01",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 2026년 현금 흐름 전망치 대폭 하향 조정",
+          "source": "Markets.com",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "title": "테슬라, 사이버캡 및 테슬라 세미 2026년 출시 예정",
+          "source": "Bloomberg",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 완전자율주행(FSD) 네덜란드 승인 획득 및 로보택시 시범 운행",
+          "source": "Bloomberg",
+          "category": "Product|Regulatory"
+        },
+        {
+          "title": "테슬라, 2026년 250억 달러 이상 자본 지출 계획",
+          "source": "Investing.com",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2026년까지 시가총액 2조 달러 달성 가능성 제기",
+          "source": "Interactive Brokers",
+          "category": "Market|Musk"
+        }
+      ],
+      "newsCount": 6,
+      "analysis": {
+        "avgScore": 2,
+        "buyIndex": 75,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 1,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12",
+          "R17"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 70,
+          "strongAmp": 3,
+          "macdTrend": -2,
+          "bbLow": 2,
+          "cnyStrong": 2
+        },
+        "macroCtx": {
+          "spyChg": -0.27,
+          "qqqChg": 0.11,
+          "vixClose": 19.860000610351562,
+          "wtiChg": 1.71,
+          "cnyChg": -0.97,
+          "prevTslaChg": -0.13,
+          "rsi": 51.7,
+          "macd": {
+            "macd": 10.283146176625849,
+            "signal": 19.521537613509953,
+            "hist": -9.238391436884104,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 481.67,
+            "middle": 434.9,
+            "lower": 388.13,
+            "pos": 0.154
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -1.17,
+        "actual": "neutral",
+        "open": 407.29,
+        "close": 402.51
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2026-03-02",
+      "weekEnd": "2026-03-08",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크, 2026년 하반기 테슬라 주식 80% 폭락 경고",
+          "source": "MEXC News",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 2026년 지출 계획 상향 조정: AI 및 로봇 투자 확대",
+          "source": "Reuters",
+          "category": "AI|Product|Musk|Market"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회했지만, 높은 지출 전망에 주가 하락",
+          "source": "KCCU Radio",
+          "category": "Earnings|Musk|Market"
+        },
+        {
+          "title": "테슬라, 2026년 2조 달러 시장 가치 달성 가능성 제기 (Wedbush 분석가)",
+          "source": "Interactive Brokers",
+          "category": "Market|AI|Product"
+        },
+        {
+          "title": "테슬라, 1분기 실적 호조에도 불구하고 2026년 전망 약화로 주가 하락",
+          "source": "Investing.com",
+          "category": "Earnings|Market"
+        },
+        {
+          "title": "테슬라, 1분기 이익 예상치 상회 및 EV 수요 반등 시사",
+          "source": "Bloomberg",
+          "category": "Earnings|Delivery|Market"
+        },
+        {
+          "title": "테슬라 주가 전망: 2026년 25달러 또는 600달러?",
+          "source": "Barchart.com",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": 0.1,
+        "buyIndex": 57,
+        "direction": "bullish",
+        "bullish": 3,
+        "bearish": 3,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R12",
+          "R22"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 51,
+          "macdTrend": -2,
+          "bbOversold": 6,
+          "wtiUp": 2
+        },
+        "macroCtx": {
+          "spyChg": -0.93,
+          "qqqChg": 0.15,
+          "vixClose": 29.489999771118164,
+          "wtiChg": 21.2,
+          "cnyChg": 0.57,
+          "prevTslaChg": -1.17,
+          "rsi": 52.6,
+          "macd": {
+            "macd": 7.267293410558352,
+            "signal": 17.070688772919635,
+            "hist": -9.803395362361282,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 482.33,
+            "middle": 432.77,
+            "lower": 383.21,
+            "pos": 0.136
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 1.57,
+        "actual": "bullish",
+        "open": 390.6,
+        "close": 396.73
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-03-09",
+      "weekEnd": "2026-03-15",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, 2026년 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 2026년 현금 흐름 전망치 439억 달러 감소로 전환",
+          "source": "Markets.com",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가, 3월 초 390달러 지지선과 잠재적 촉매제 사이에서 거래",
+          "source": "Vertex AI Search",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라 투자자들에게 중요한 메시지 전달",
+          "source": "TheStreet",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2026년 로보택시 확장 계획 발표",
+          "source": "YouTube (TheCreativeInvestor)",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2026년 초 EV 왕좌 BYD에 내줘",
+          "source": "Bloomberg",
+          "category": "Competition"
+        },
+        {
+          "title": "테슬라 주가, 높은 인플레이션으로 하락 압력",
+          "source": "Invezz",
+          "category": "Macro"
+        },
+        {
+          "title": "테슬라, 중국 FSD 승인에 대한 기대감",
+          "source": "Invezz",
+          "category": "Regulatory"
+        }
+      ],
+      "newsCount": 8,
+      "analysis": {
+        "avgScore": 0.3,
+        "buyIndex": 57,
+        "direction": "bullish",
+        "bullish": 4,
+        "bearish": 3,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R12",
+          "R19"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 53,
+          "macdTrend": -2,
+          "bbOversold": 6
+        },
+        "macroCtx": {
+          "spyChg": -0.62,
+          "qqqChg": -0.09,
+          "vixClose": 27.190000534057617,
+          "wtiChg": 0.72,
+          "cnyChg": -0.4,
+          "prevTslaChg": 1.57,
+          "rsi": 41,
+          "macd": {
+            "macd": 4.380488139529575,
+            "signal": 14.532648646241624,
+            "hist": -10.152160506712049,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 483.41,
+            "middle": 430.65,
+            "lower": 377.88,
+            "pos": 0.126
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 0.29,
+        "actual": "neutral",
+        "open": 390.05,
+        "close": 391.2
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-03-16",
+      "weekEnd": "2026-03-22",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "일론 머스크, '테라팹' 칩 비전 공개 및 테슬라 주가 상승",
+          "source": "Invezz",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 예상치 상회 및 EV 수요 회복 조짐",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 390달러 지지선과 잠재적 촉매제 사이에서 기로에 서다",
+          "source": "Invezz",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 예상치 못한 실적에도 불구하고 2026년 전망 약화로 주가 하락",
+          "source": "Investing.com",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 중국산 EV 판매 호조로 상승세 지속",
+          "source": "Barchart.com",
+          "category": "Delivery"
+        },
+        {
+          "title": "일론 머스크의 백악관 사임, 테슬라 및 다른 사업에 대한 의문 재점화",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 인플레이션 우려로 하락했지만 중국 FSD 승인 및 AI 야망에 주목",
+          "source": "Invezz",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": 1.4,
+        "buyIndex": 61,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 1,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R20",
+          "R12"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 64,
+          "macroOverlay": -7,
+          "macdTrend": -2,
+          "bbOversold": 6
+        },
+        "macroCtx": {
+          "spyChg": -2.96,
+          "qqqChg": -3,
+          "vixClose": 26.780000686645508,
+          "wtiChg": -2.59,
+          "cnyChg": 0.05,
+          "prevTslaChg": 0.29,
+          "rsi": 30.8,
+          "macd": {
+            "macd": 0.21492123598051194,
+            "signal": 11.669103164189401,
+            "hist": -11.45418192820889,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 484.15,
+            "middle": 426.22,
+            "lower": 368.28,
+            "pos": 0
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -7.13,
+        "actual": "bearish",
+        "open": 396.22,
+        "close": 367.96
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-03-23",
+      "weekEnd": "2026-03-29",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, AI 칩 생산을 위한 반도체 공장 합작 투자 계획으로 주가 상승",
+          "source": "The Motley Fool",
+          "category": "AI"
+        },
+        {
+          "title": "테슬라 주가, 3월 23일~29일 주간 390달러 지지선과 잠재적 촉매제 사이에서 거래",
+          "source": "StockInvest.us",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2026년 자본 지출 250억 달러 이상으로 대폭 증액 계획",
+          "source": "Barchart.com",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 로보택시 우려 증가: TSLA 주식 여전히 보유할 가치 있는가?",
+          "source": "Zacks Investment Research",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 5,
+      "analysis": {
+        "avgScore": 0,
+        "buyIndex": 48,
+        "direction": "bullish",
+        "bullish": 2,
+        "bearish": 2,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R12"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 50,
+          "macroOverlay": -10,
+          "vixAdaptive": -2,
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbOversold": 6
+        },
+        "macroCtx": {
+          "spyChg": -3.64,
+          "qqqChg": -4.73,
+          "vixClose": 31.049999237060547,
+          "wtiChg": -0.87,
+          "cnyChg": 0.36,
+          "prevTslaChg": -7.13,
+          "rsi": 25.4,
+          "macd": {
+            "macd": -3.5401520407677936,
+            "signal": 8.627252123197964,
+            "hist": -12.167404163965758,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 487.16,
+            "middle": 422.83,
+            "lower": 358.5,
+            "pos": 0.026
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -3.02,
+        "actual": "bearish",
+        "open": 373.09,
+        "close": 361.83
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-03-30",
+      "weekEnd": "2026-04-05",
+      "quarter": "q1",
+      "news": [
+        {
+          "title": "테슬라, AI 및 로봇 개발에 250억 달러 추가 지출 계획 발표",
+          "source": "Reuters",
+          "category": "Musk|AI|Robotics|Market"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 발표: AI, 로봇, 자율주행 투자 확대 강조",
+          "source": "YouTube (Herbert Ong)",
+          "category": "Earnings|AI|Robotics|Product"
+        },
+        {
+          "title": "테슬라, 2026년 AI 및 로봇 추진을 위해 250억 달러 지출 계획 증액",
+          "source": "Bloomberg",
+          "category": "AI|Robotics|Market"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 예상치 상회하는 실적 발표, 로봇 및 자율주행차에 집중",
+          "source": "Bloomberg",
+          "category": "Earnings|Product|AI|Robotics"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 저가형 자동차 계획 폐기 보도에 '거짓말' 반박",
+          "source": "Reuters",
+          "category": "Product|Musk|Market"
+        },
+        {
+          "title": "테슬라, 2026년 새로운 저가형 전기차 개발 중",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 차량 인도량 부진으로 주가 하락",
+          "source": "Bloomberg",
+          "category": "Delivery|Market"
+        },
+        {
+          "title": "테슬라, 일론 머스크의 회사들 간 5억 7,300만 달러 규모 거래 공개",
+          "source": "Electrek",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "스페이스X IPO 기대감에 테슬라 주가 상승, 머스크의 회사들 간 통합 가속화",
+          "source": "Stocktwits",
+          "category": "Market|Musk|AI"
+        },
+        {
+          "title": "테슬라, 2026년 로보택시가 매출에 크게 기여할 것으로 예상",
+          "source": "The Motley Fool",
+          "category": "Product|AI"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.6,
+        "buyIndex": 74,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R24",
+          "R12"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 56,
+          "r24Discount": -1,
+          "macroOverlay": 7,
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbOversold": 6,
+          "wtiUp": 2
+        },
+        "macroCtx": {
+          "spyChg": 2.46,
+          "qqqChg": 3.1,
+          "vixClose": 23.8700008392334,
+          "wtiChg": 8.71,
+          "cnyChg": -0.38,
+          "prevTslaChg": -3.02,
+          "rsi": 14.7,
+          "macd": {
+            "macd": -6.540734005170123,
+            "signal": 5.593654897524347,
+            "hist": -12.13438890269447,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 490.11,
+            "middle": 420.64,
+            "lower": 351.18,
+            "pos": 0.068
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -1.44,
+        "actual": "neutral",
+        "open": 365.86,
+        "close": 360.59
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2026-04-06",
+      "weekEnd": "2026-04-12",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 상당 매입 공개 후 주가 상승",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 2026년 현금 흐름 전망치 하향 조정으로 439억 달러 변동 직면",
+          "source": "Markets.com",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 예상치 뛰어넘는 1분기 실적 발표 후 주가 4% 급등",
+          "source": "XTB",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 예상치 상회하는 실적 발표 및 EV 수요 회복 시사",
+          "source": "Bloomberg",
+          "category": "Earnings|Delivery|Product"
+        },
+        {
+          "title": "테슬라, 예상치 상회하는 실적에도 2026년 약한 전망으로 주가 하락",
+          "source": "Investing.com",
+          "category": "Earnings|Market"
+        },
+        {
+          "title": "테슬라, 224억 달러 매출로 월스트리트 충격… AI 허브 전환 계획",
+          "source": "The Motley Fool",
+          "category": "Product|Market"
+        },
+        {
+          "title": "테슬라 주식, '매도 후보'로 하향 조정",
+          "source": "StockInvest.us",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 판매 부진, NASA 달 탐사 임무의 다음 단계",
+          "source": "Bloomberg",
+          "category": "Delivery|Product"
+        }
+      ],
+      "newsCount": 8,
+      "analysis": {
+        "avgScore": 0.1,
+        "buyIndex": 73,
+        "direction": "bullish",
+        "bullish": 4,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R12",
+          "R13",
+          "R19"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 51,
+          "macroOverlay": 10,
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "bbOversold": 6,
+          "wtiDown": -3,
+          "deliveryWeek": 5
+        },
+        "macroCtx": {
+          "spyChg": 3.6,
+          "qqqChg": 4.24,
+          "vixClose": 19.229999542236328,
+          "wtiChg": -14.51,
+          "cnyChg": -0.74,
+          "prevTslaChg": -1.44,
+          "rsi": 15.1,
+          "macd": {
+            "macd": -9.745624773984957,
+            "signal": 2.525798963222486,
+            "hist": -12.271423737207444,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 493.77,
+            "middle": 418.54,
+            "lower": 343.3,
+            "pos": 0.038
+          },
+          "isDeliveryWeek": true,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -3.76,
+        "actual": "bearish",
+        "open": 362.59,
+        "close": 348.95
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2026-04-13",
+      "weekEnd": "2026-04-19",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "네덜란드, 테슬라 FSD 시스템 승인으로 유럽 시장 확대 기대",
+          "source": "Invezz",
+          "category": "Regulatory"
+        },
+        {
+          "title": "테슬라, 2026년 현금 흐름 전망 부정적으로 전환: 439억 달러 급변",
+          "source": "Markets.com",
+          "category": "Earnings"
+        },
+        {
+          "title": "일론 머스크, 10억 달러 상당의 테슬라 주식 추가 매입",
+          "source": "Associated Press",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 예상치 상회하는 1분기 실적 발표에도 대규모 투자 계획으로 주가 상승분 반납",
+          "source": "WUFT",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가, 애널리스트 상향 조정 및 로보택시 서사 재부각으로 400달러 돌파",
+          "source": "FXLeaders",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회하며 월스트리트 투자 심리 지지",
+          "source": "XTB",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 약한 인도량에도 불구하고 잠재적 반등 촉매제 보유",
+          "source": "Invezz",
+          "category": "Delivery"
+        }
+      ],
+      "newsCount": 7,
+      "analysis": {
+        "avgScore": 1.1,
+        "buyIndex": 76,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 2,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12",
+          "R19"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 61,
+          "macroOverlay": 14,
+          "rsiOversold": 6,
+          "macdTrend": -2,
+          "wtiDown": -3
+        },
+        "macroCtx": {
+          "spyChg": 4.83,
+          "qqqChg": 6.46,
+          "vixClose": 17.479999542236328,
+          "wtiChg": -17.79,
+          "cnyChg": -0.1,
+          "prevTslaChg": -3.76,
+          "rsi": 17.9,
+          "macd": {
+            "macd": -8.023695830519955,
+            "signal": 0.415900004473998,
+            "hist": -8.439595834993954,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 492.49,
+            "middle": 417.06,
+            "lower": 341.63,
+            "pos": 0.391
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 14.44,
+        "actual": "bullish",
+        "open": 350.07,
+        "close": 400.62
+      },
+      "match": true,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2026-04-20",
+      "weekEnd": "2026-04-26",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "테슬라, 예상치 뛰어넘는 1분기 실적 발표에도 불구하고 미래 투자 확대 계획으로 주가 상승세 꺾여",
+          "source": "WUFT",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라, 1분기 매출 224억 달러로 월스트리트 예상치 상회, AI 허브로의 전환 계획 강조",
+          "source": "The Motley Fool",
+          "category": "Earnings|Musk|AI"
+        },
+        {
+          "title": "테슬라, 1분기 실적 호조로 주가 4% 상승, 특히 마진과 현금 흐름 개선 돋보여",
+          "source": "XTB",
+          "category": "Earnings|Market"
+        },
+        {
+          "title": "테슬라, 예상치 상회하는 실적과 전기차 수요 회복 조짐에 주가 상승",
+          "source": "Bloomberg Talks",
+          "category": "Earnings|Delivery|Product"
+        },
+        {
+          "title": "테슬라, 1분기 실적 발표 후 주가 4% 상승, 전기차 수요 회복 및 AI/로봇 사업 강조",
+          "source": "Bloomberg",
+          "category": "Earnings|Market|AI|Product"
+        },
+        {
+          "title": "테슬라, 월스트리트 예상치 뛰어넘는 1분기 실적 발표, 전기차 수요 반등 시사",
+          "source": "Bloomberg Surveillance",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "title": "테슬라 주가 하락에도 불구하고 개인 투자자들은 FSD 및 AI 야망에 집중",
+          "source": "Stocktwits",
+          "category": "Market|AI|Product|Musk"
+        },
+        {
+          "title": "테슬라, 월스트리트 예상치 상회하는 실적 발표로 주가 상승",
+          "source": "Bloomberg",
+          "category": "Earnings|Market"
+        }
+      ],
+      "newsCount": 8,
+      "analysis": {
+        "avgScore": 3.5,
+        "buyIndex": 100,
+        "direction": "bullish",
+        "bullish": 8,
+        "bearish": 0,
+        "neutral": 0,
+        "topRules": [
+          "R12",
+          "R13",
+          "R19"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 85,
+          "strongAmp": 5,
+          "macroOverlay": 4,
+          "meanReversion": -6,
+          "macdTrend": -2,
+          "bbLow": 2,
+          "wtiUp": 2,
+          "earningsWeek": 10
+        },
+        "macroCtx": {
+          "spyChg": 0.73,
+          "qqqChg": 2.44,
+          "vixClose": 18.709999084472656,
+          "wtiChg": 6.07,
+          "cnyChg": 0.13,
+          "prevTslaChg": 14.44,
+          "rsi": 37.9,
+          "macd": {
+            "macd": -8.523225637651478,
+            "signal": -1.3719251239510974,
+            "hist": -7.151300513700381,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 488.43,
+            "middle": 413.12,
+            "lower": 337.81,
+            "pos": 0.256
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -6.53,
+        "actual": "bearish",
+        "open": 402.58,
+        "close": 376.3
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
+    },
+    {
+      "weekStart": "2026-04-27",
+      "weekEnd": "2026-05-03",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라에 희소식 전했지만 주식 매수는 서두르지 마라",
+          "source": "The Motley Fool",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 개발에 2026년 지출 계획 25% 증액",
+          "source": "Reuters",
+          "category": "AI"
+        },
+        {
+          "title": "테슬라, 2026년 439억 달러의 잉여현금흐름 변동 직면, 전망은 부정적",
+          "source": "Markets.com",
+          "category": "Earnings"
+        },
+        {
+          "title": "테슬라 주가 2.03% 하락, 일론 머스크와 유럽 규제 당국 간 법적 갈등 고조",
+          "source": "GuruFocus",
+          "category": "Legal"
+        },
+        {
+          "title": "일론 머스크, 테슬라 로보택시의 1조 달러 시장 가능성에 대한 희소식 전달",
+          "source": "The Motley Fool",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, AI5 칩 개발 완료 소식에 주가 12% 급등하며 2조 달러 가치 향해",
+          "source": "Forbes",
+          "category": "AI"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 호조에도 불구하고 주가 하락",
+          "source": "Invezz",
+          "category": "Earnings"
+        },
+        {
+          "title": "JPMorgan, 테슬라 주가 2026년 60% 추가 하락 가능성 경고",
+          "source": "Electrek",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 야망 지원 위해 250억 달러 추가 지출 계획",
+          "source": "Bloomberg",
+          "category": "AI"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 판매량 부진에도 불구하고 AI 및 로보택시 기대감으로 주가 상승",
+          "source": "Fast Company",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.1,
+        "buyIndex": 51,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R24",
+          "R08"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 51,
+          "macdTrend": -2,
+          "wtiUp": 2
+        },
+        "macroCtx": {
+          "spyChg": 1.05,
+          "qqqChg": 1.62,
+          "vixClose": 16.989999771118164,
+          "wtiChg": 6.63,
+          "cnyChg": -0.13,
+          "prevTslaChg": -6.53,
+          "rsi": 34.7,
+          "macd": {
+            "macd": -7.659172211826842,
+            "signal": -2.6293745415262464,
+            "hist": -5.029797670300596,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 482.55,
+            "middle": 409.72,
+            "lower": 336.88,
+            "pos": 0.37
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": true
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 5.03,
+        "actual": "bullish",
+        "open": 372.09,
+        "close": 390.82
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    },
+    {
+      "weekStart": "2026-05-04",
+      "weekEnd": "2026-05-10",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크의 중국 방문, 완전자율주행(FSD) 승인 불발로 테슬라 주가 4% 하락",
+          "source": "Invezz",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "title": "테슬라, 1분기 실적 예상치 상회에도 불구하고 미래 투자 비용 증가 경고",
+          "source": "KCCU Radio",
+          "category": "Earnings|Musk|Market"
+        },
+        {
+          "title": "미국 의원들, 중국 전기차 경쟁사 견제 촉구로 테슬라 주가 상승",
+          "source": "Stocktwits",
+          "category": "Competition|Regulatory|Market"
+        },
+        {
+          "title": "테슬라 주가, 중국 성장 및 로보택시 기대감으로 445달러 향해 급등",
+          "source": "FX Leaders",
+          "category": "Market|Product|Delivery"
+        },
+        {
+          "title": "일론 머스크의 Grok, AI 경쟁에서 뒤처지며 채택 둔화",
+          "source": "Morningstar",
+          "category": "Musk|Competition"
+        },
+        {
+          "title": "AI 알고리즘, 2026년 5월 31일 테슬라 주가 4.95% 상승 예측",
+          "source": "Finbold",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 지난 30일간 주가 10% 하락: 2026년 전망은?",
+          "source": "TIKR.com",
+          "category": "Market|Competition|Delivery"
+        },
+        {
+          "title": "2026년은 테슬라에게 또 다른 중요한 해가 될 것",
+          "source": "富途资讯",
+          "category": "Product|Market"
+        },
+        {
+          "title": "테슬라 주가 급등, 로보택시 및 옵티머스 로봇에 대한 시장의 믿음",
+          "source": "YouTube",
+          "category": "Market|Product"
+        },
+        {
+          "title": "월스트리트, 호르무즈 해협 긴장 고조로 유가 급등하며 신중한 움직임",
+          "source": "The Times of India",
+          "category": "Macro|Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.8,
+        "buyIndex": 66,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R12",
+          "R20"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 58,
+          "macroOverlay": 10,
+          "macdTrend": -2
+        },
+        "macroCtx": {
+          "spyChg": 2.44,
+          "qqqChg": 5.42,
+          "vixClose": 17.190000534057617,
+          "wtiChg": -4.32,
+          "cnyChg": -0.38,
+          "prevTslaChg": 5.03,
+          "rsi": 35.7,
+          "macd": {
+            "macd": -3.9010772067858284,
+            "signal": -2.883715074578163,
+            "hist": -1.0173621322076656,
+            "crossover": null,
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 472.83,
+            "middle": 407.07,
+            "lower": 341.32,
+            "pos": 0.662
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 9.77,
+        "actual": "bullish",
+        "open": 390.23,
+        "close": 428.35
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
+    }
+  ],
+  "generatedAt": "2026-05-16 04:48 KST",
+  "stats": {
+    "totalWeeks": 18,
+    "analyzedWeeks": 18,
+    "accuracy": 39,
+    "strongAccuracy": 33,
+    "avgScore": 0.9
+  }
+}
