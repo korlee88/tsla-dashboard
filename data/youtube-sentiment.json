@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.4,
+  "velocity": 0.39,
   "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 296,775회 / 이전 4~7일 742,716회 | 총 1,039,491회 (43개 영상)",
+  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 299,468회 / 이전 4~7일 769,264회 | 총 1,068,732회 (43개 영상)",
   "video_count": 43,
-  "total_views": 1039491,
-  "hot_views": 296775,
-  "baseline_views": 742716,
+  "total_views": 1068732,
+  "hot_views": 299468,
+  "baseline_views": 769264,
   "top_videos": [
     {
       "title": "Bumblebee Jaisa Transformer Bana Future Autobot Leader  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-08T04:34:10Z",
-      "viewCount": 197762
+      "viewCount": 200773
     },
     {
       "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 61727
+      "viewCount": 63769
     },
     {
       "title": "Tesla’s Robotaxi Expansion Accelerates Again",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-08T13:30:08Z",
-      "viewCount": 56352
+      "viewCount": 56610
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 54372
+      "viewCount": 54987
     },
     {
       "title": "Tesla Just Got Several Massive Catalysts",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-12T18:37:57Z",
-      "viewCount": 39246
+      "viewCount": 39510
     }
   ],
-  "collected_at": "2026-05-14T19:25:08Z"
+  "collected_at": "2026-05-15T04:10:13Z"
 }
