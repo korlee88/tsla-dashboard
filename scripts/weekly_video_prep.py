@@ -50,12 +50,21 @@ CYAN_LIGHT  = (135, 220, 255)
 SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER]
 SCENE_MOODS   = ["excited", "happy", "worried", "focused"]
 
-# 씬별 Wikipedia 배경 이미지 소스
+# 씬별 Wikipedia 배경 이미지 소스 (후보 순서대로 시도 — 로고/세로 이미지 skip)
 SCENE_WIKI_ARTICLES = [
-    "Tesla Model Y",            # scene 1 - 브리핑 (가로 차량 사진)
-    "Tesla Cybertruck",         # scene 2 - 호재 뉴스
-    "Elon Musk",                # scene 3 - 리스크 뉴스
-    "Gigafactory Nevada",       # scene 4 - 시장 동향
+    ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],  # scene 1 - 가로 차량/도로 사진 우선
+    ["Tesla Cybertruck"],                                  # scene 2 - 호재 뉴스
+    ["Elon Musk"],                                         # scene 3 - 리스크 뉴스
+    ["Gigafactory Nevada"],                                # scene 4 - 시장 동향
+]
+
+# 씬별 고정 배경 이미지 (있으면 Wikipedia 다운로드 건너뜀)
+SCENE_BG_DIR = Path(__file__).parent.parent / "data" / "scene-backgrounds"
+SCENE_STATIC_BG = [
+    None,                                        # scene 1 - 매주 새 사진 다운로드
+    SCENE_BG_DIR / "bg_scene_02.jpg",           # scene 2 - Cybertruck 고정
+    SCENE_BG_DIR / "bg_scene_03.jpg",           # scene 3 - Elon Musk 고정
+    SCENE_BG_DIR / "bg_scene_04.jpg",           # scene 4 - Gigafactory 고정
 ]
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
@@ -130,7 +139,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 전문 투자 용어 대신 일반인도 이해하기 쉬운 일상 언어로 작성해줘.
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
-- 매수지수: 주간 평균 {avg_bi}, 최신 {latest_bi} (0~100점, 65 이상=매수 신호)
+- 참고지수: 주간 평균 {avg_bi}, 최신 {latest_bi} (0~100점, 시장 관심도 참고 지표)
 - TSLA 주가: ${price}
 {daily_prices_txt}
 - 주요 호재:
@@ -167,7 +176,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 TSLA 주간 분석 데이터를 바탕으로 
 - 줄1: [분위기] 이번 주 시장·투자자 전체 분위기 (감탄사 포함, 구체적 수치나 사례 포함)
 - 줄2: [검색·영상] 구글 검색량/유튜브 조회수 트렌드 구체적 묘사
 - 줄3: [투자자] 커뮤니티·SNS 투자자 반응 구체적 묘사 (긍정/부정 비율 등)
-- 줄4: [시황] 종합 시황 — 매수/관망/매도 관점 의견 포함
+- 줄4: [시황] 종합 시황 — 긍정/중립/신중 관점 의견 포함 (투자 권유 아닌 개인 분석)
 
 === 공통 규칙 ===
 • 유재석처럼 밝고 에너지 넘치는 MC 어투
@@ -198,7 +207,23 @@ SCENE_4:
 [분위기] 내용
 [검색·영상] 내용
 [투자자] 내용
-[시황] 내용"""
+[시황] 내용
+
+=== 배경 이미지 프롬프트 (Gemini Imagen용) ===
+이번 주 뉴스 내용을 반영한 씬별 배경 이미지 프롬프트를 영어로 작성해줘.
+규칙:
+- 반드시 영어로 작성
+- 각 프롬프트 60~80 단어
+- 반드시 포함: "no text, no letters, no watermark, no logo"
+- 반드시 포함: "9:16 vertical aspect ratio, ultra-high resolution"
+- 테슬라·전기차·미래기술 관련 시각 요소 포함
+- 씬 분위기에 맞는 색감 지정 (씬1 보라, 씬2 초록, 씬3 빨강, 씬4 주황)
+- 이번 주 실제 뉴스 키워드를 시각화할 것
+
+IMAGE_PROMPT_1: [씬1 — 이번 주 메인 뉴스 주제 시각화, 보라빛 미래적 분위기]
+IMAGE_PROMPT_2: [씬2 — 호재 뉴스 주제 시각화, 밝고 활기찬 초록빛 분위기]
+IMAGE_PROMPT_3: [씬3 — 리스크 뉴스 주제 시각화, 긴장감 있는 붉은빛 분위기]
+IMAGE_PROMPT_4: [씬4 — 시장 반응 시각화, 도시·금융·군중 주황빛 분위기]"""
 
 
 def _build_prompt(summary):
@@ -228,7 +253,7 @@ def generate_script_opus(prompt):
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     msg = client.messages.create(
         model="claude-opus-4-7",
-        max_tokens=2048,
+        max_tokens=3072,
         messages=[{"role": "user", "content": prompt}],
     )
     return msg.content[0].text
@@ -276,6 +301,23 @@ def parse_script(raw):
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})
     return scenes
+
+
+def parse_image_prompts(raw):
+    """대본에서 씬별 Imagen 프롬프트 추출 → {1: "...", 2: "...", ...}"""
+    prompts = {}
+    for i in range(1, 5):
+        key = f"IMAGE_PROMPT_{i}:"
+        if key in raw:
+            s = raw.index(key) + len(key)
+            e = raw.find("\n", s)
+            val = (raw[s:e] if e != -1 else raw[s:]).strip()
+            # 대괄호 설명 텍스트 제거 (AI가 그대로 반환하는 경우)
+            if val.startswith("[") and val.endswith("]"):
+                val = ""
+            if val:
+                prompts[i] = val
+    return prompts
 
 # ── 이미지 생성 ───────────────────────────────────────────────────────────
 
@@ -426,7 +468,9 @@ def draw_robot(img, rx: int, ry: int, mood: str = "neutral", accent: tuple = (16
 
 
 def fetch_wiki_image(article: str, out_path: Path) -> bool:
-    """Wikipedia 기사 대표 이미지를 다운로드. 실패 시 False 반환."""
+    """Wikipedia 기사 대표 이미지를 다운로드. 실패하거나 세로(로고) 이미지면 False 반환."""
+    from PIL import Image as _PILImg
+    import io as _io
     headers = {"User-Agent": "TSLA-Dashboard/2.0 (github.com/korlee88/tsla-dashboard)"}
     try:
         params = urllib.parse.urlencode({
@@ -444,10 +488,28 @@ def fetch_wiki_image(article: str, out_path: Path) -> bool:
             if img_url:
                 req2 = urllib.request.Request(img_url, headers=headers)
                 with urllib.request.urlopen(req2, timeout=15) as r2:
-                    out_path.write_bytes(r2.read())
+                    raw = r2.read()
+                # 세로 비율(로고/아이콘) 이미지 거부 — 가로형만 허용
+                try:
+                    pimg = _PILImg.open(_io.BytesIO(raw))
+                    pw, ph = pimg.size
+                    if ph > pw * 1.2:   # 세로가 가로보다 20% 이상 크면 로고 가능성
+                        print(f"   ⚠ 세로형 이미지 skip ({article}: {pw}×{ph})", file=sys.stderr)
+                        return False
+                except Exception:
+                    pass
+                out_path.write_bytes(raw)
                 return True
     except Exception as e:
         print(f"   ⚠ 배경 이미지 다운로드 실패 ({article}): {e}", file=sys.stderr)
+    return False
+
+
+def fetch_wiki_image_with_fallback(articles, out_path: Path) -> bool:
+    """후보 기사 목록 중 가로형 이미지를 찾을 때까지 순서대로 시도."""
+    for article in (articles if isinstance(articles, list) else [articles]):
+        if fetch_wiki_image(article, out_path):
+            return True
     return False
 
 
@@ -580,7 +642,7 @@ def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
     draw.arc([cx - r, cy - r, cx + r, cy + r], start=180, end=end_a, fill=col, width=22)
     # 중앙 숫자
     draw.text((cx, cy - 18), str(bi), font=fnt_big, fill=col, anchor="mm")
-    draw.text((cx, cy + 22), "매수지수", font=fnt_small, fill=GRAY, anchor="mm")
+    draw.text((cx, cy + 22), "참고지수", font=fnt_small, fill=GRAY, anchor="mm")
     # 범례
     draw.text((cx - r + 8, cy + 14), "0", font=fnt_small, fill=GRAY)
     draw.text((cx + r - 22, cy + 14), "100", font=fnt_small, fill=GRAY)
@@ -676,6 +738,60 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
               stroke_width=1, stroke_fill=STROKE)
 
 
+def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
+    """하단 안전 영역에 매수지수 범례 + 현재 점수 표시 (y=1700~1870)."""
+    LX  = PAD
+    LY  = SAFE_BOTTOM + 20           # 1700
+    LW  = W - PAD * 2                # 1000
+    LH  = H - LY - 50                # ~170px
+
+    # 배경 패널
+    draw.rounded_rectangle([LX, LY, LX + LW, LY + LH],
+                           radius=14, fill=(14, 18, 28), outline=(40, 45, 60), width=1)
+
+    # 현재 매수지수 (왼쪽 강조)
+    bi_col = GREEN if avg_bi >= 65 else AMBER if avg_bi >= 45 else RED
+    bi_str = str(avg_bi) if avg_bi is not None else "?"
+    draw.text((LX + 24, LY + LH // 2), f"{bi_str}점",
+              font=fnt_val, fill=bi_col, anchor="lm",
+              stroke_width=2, stroke_fill=STROKE)
+
+    signal = "긍정" if avg_bi is not None and avg_bi >= 65 else \
+             "중립" if avg_bi is not None and avg_bi >= 45 else "신중"
+    draw.text((LX + 24, LY + LH // 2 + 38), signal,
+              font=fnt_label, fill=bi_col, anchor="lm",
+              stroke_width=1, stroke_fill=STROKE)
+
+    # 구분선
+    SEP_X = LX + 140
+    draw.line([(SEP_X, LY + 16), (SEP_X, LY + LH - 16)], fill=(40, 45, 60), width=1)
+
+    # 오른쪽: 3단계 범례
+    ITEMS = [
+        (GREEN, "65점↑", "긍정"),
+        (AMBER, "45-64점", "중립"),
+        (RED,   "44점↓", "신중"),
+    ]
+    slot_w = (LX + LW - SEP_X - 16) // 3
+    for j, (col, range_lbl, sig_lbl) in enumerate(ITEMS):
+        ix = SEP_X + 8 + j * slot_w
+        iy = LY + LH // 2 - 28
+
+        # 색상 원
+        draw.ellipse([ix, iy, ix + 20, iy + 20], fill=col)
+        draw.text((ix + 28, iy), range_lbl,
+                  font=fnt_label, fill=LGRAY)
+        draw.text((ix + 28, iy + 24), sig_lbl,
+                  font=fnt_label, fill=col)
+
+    # 면책 문구 (우측 하단)
+    disclaimer = "※ 개인 분석 참고용 · 투자 판단은 본인 책임"
+    db = draw.textbbox((0, 0), disclaimer, font=fnt_label)
+    dw = db[2] - db[0]
+    draw.text((LX + LW - dw - 10, LY + LH - 26),
+              disclaimer, font=fnt_label, fill=(70, 78, 95))
+
+
 def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
     draw.rectangle([x, y, x + w, y + h], fill=(18, 21, 30), outline=(40, 44, 54), width=1)
     draw.text((x + w // 2, y + 18), label, font=fnt_lbl, fill=GRAY, anchor="mt")
@@ -742,9 +858,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         bi = summary.get("avg_buy_index") or 50
         price = summary.get("latest_price")
         try:
-            head_sub = f"매수지수 {bi}점 · ${float(price):,.0f}" if price else f"매수지수 {bi}점"
+            head_sub = f"참고지수 {bi}점 · ${float(price):,.0f}" if price else f"참고지수 {bi}점"
         except Exception:
-            head_sub = f"매수지수 {bi}점"
+            head_sub = f"참고지수 {bi}점"
     elif idx == 2:
         head_main = '"이번 주 빅 호재"'
         chs = []
@@ -762,7 +878,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     else:
         bi = summary.get("avg_buy_index") or 50
         head_main = '"이번 주 시장 반응"'
-        head_sub = f"매수지수 {bi}점"
+        head_sub = f"참고지수 {bi}점"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
     draw_mbc_header(draw, "TSLA WEEKLY", head_main, head_sub, accent,
@@ -774,17 +890,18 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     # 푸터 텍스트는 자막+UI에 가려지므로 제거
 
-    # ── 씬 1: 주간 브리핑 — 본문 영역 Y=1000~1680 (680px) ────────────────
+    # ── 씬 1: 주간 브리핑 — 본문 영역 Y=1040~1680 (640px) ────────────────
+    CONTENT_Y = START_Y + 40   # 사진 하단과 본문 사이 40px 여백
     if idx == 1:
-        BODY_H = SAFE_BOTTOM - START_Y   # 680
+        BODY_H = SAFE_BOTTOM - CONTENT_Y   # 640
         FC_W = COL_W - PAD
 
         # 본문: 한 단락 카드 + 가격 스트립
-        # 상단 단락 카드 (출처/내용/전망) 약 480px
-        FC_H = 460
-        draw.rounded_rectangle([PAD, START_Y, PAD + FC_W, START_Y + FC_H],
+        # 상단 단락 카드 (출처/내용/전망) 약 420px
+        FC_H = 420
+        draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + FC_H],
                                radius=14, fill=(20, 24, 34), outline=accent, width=2)
-        body_y = START_Y + 24
+        body_y = CONTENT_Y + 24
         INNER_W = FC_W - 40
 
         # 출처 라인
@@ -814,7 +931,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
         # 전망 (강조)
         if len(news_lines) >= 4:
-            outlook_y = START_Y + FC_H - 80
+            outlook_y = CONTENT_Y + FC_H - 80
             draw.rectangle([PAD + 20, outlook_y - 12, PAD + 20 + INNER_W, outlook_y - 11],
                            fill=(accent[0]//2, accent[1]//2, accent[2]//2))
             draw.text((PAD + 20, outlook_y - 2), "전망 ▶",
@@ -827,7 +944,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                           stroke_width=2, stroke_fill=STROKE)
 
         # 가격 스트립 — 카드 아래
-        STRIP_Y = START_Y + FC_H + 16
+        STRIP_Y = CONTENT_Y + FC_H + 16
         BOX_Y = STRIP_Y + 36
         BOX_H = SAFE_BOTTOM - BOX_Y - 10
         draw.text((PAD, STRIP_Y + 16), "주간 주가 흐름 ($)",
@@ -871,9 +988,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬 2~3: 호재/리스크 — 세로형 대형 카드 2장 (SAFE_BOTTOM 안에) ──
     elif idx in (2, 3):
         GAP    = 20
-        CARD_H = (SAFE_BOTTOM - START_Y - GAP) // 2   # = 630
+        CARD_H = (SAFE_BOTTOM - CONTENT_Y - GAP) // 2
         CARD_W = COL_W - PAD   # 1000
-        card_positions = [START_Y, START_Y + CARD_H + GAP]
+        card_positions = [CONTENT_Y, CONTENT_Y + CARD_H + GAP]
 
         for i, line in enumerate(news_lines[:2]):
             chapter, content, source = parse_news_line(line)
@@ -891,8 +1008,8 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬 4: 시장 반응 — 카드형 4개 항목 (SAFE_BOTTOM 안에) ────────────
     else:
         GAP    = 18
-        ITEM_H = (SAFE_BOTTOM - START_Y - GAP * 3) // 4   # = 306
-        item_positions = [START_Y + i * (ITEM_H + GAP) for i in range(4)]
+        ITEM_H = (SAFE_BOTTOM - CONTENT_Y - GAP * 3) // 4
+        item_positions = [CONTENT_Y + i * (ITEM_H + GAP) for i in range(4)]
         labels = ["분위기", "검색·영상", "투자자", "시황"]
 
         for i, line in enumerate(news_lines[:4]):
@@ -930,6 +1047,11 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                           stroke_width=1, stroke_fill=STROKE)
                 start_y += lh
 
+    # ── 하단 매수지수 범례 (모든 씬 공통) ─────────────────────────────────────
+    draw = ImageDraw.Draw(img)
+    avg_bi = summary.get("avg_buy_index") if summary else None
+    draw_bi_legend(draw, avg_bi, f_sm, f_md)
+
     return img
 
 
@@ -945,17 +1067,26 @@ def build_images(scenes, summary, out_dir):
         print("   ⚠ 한글 폰트 없음 — 이미지 건너뜀", file=sys.stderr)
         return
 
-    # Wikipedia 배경 이미지 사전 다운로드
-    print("   🖼 Wikipedia 배경 이미지 다운로드 중...")
+    # 배경 이미지 준비 (고정 파일 우선, 없으면 Wikipedia 다운로드)
+    print("   🖼 배경 이미지 준비 중...")
     bg_paths = {}
     for scene in scenes:
-        idx     = scene["index"]
-        article = SCENE_WIKI_ARTICLES[idx - 1]
-        bg_path = out_dir / f"bg_{idx:02d}.jpg"
-        ok = fetch_wiki_image(article, bg_path)
-        bg_paths[idx] = bg_path if ok else None
-        status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
-        print(f"      씬{idx} [{article[:20]}] {status}")
+        idx        = scene["index"]
+        static_bg  = SCENE_STATIC_BG[idx - 1]
+        articles   = SCENE_WIKI_ARTICLES[idx - 1]
+        bg_path    = out_dir / f"bg_{idx:02d}.jpg"
+
+        if static_bg and static_bg.exists():
+            import shutil as _shutil
+            _shutil.copy2(static_bg, bg_path)
+            bg_paths[idx] = bg_path
+            print(f"      씬{idx} [고정 이미지] ✅")
+        else:
+            ok = fetch_wiki_image_with_fallback(articles, bg_path)
+            bg_paths[idx] = bg_path if ok else None
+            status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
+            label  = (articles[0] if isinstance(articles, list) else articles)[:20]
+            print(f"      씬{idx} [Wikipedia: {label}] {status}")
 
     for scene in scenes:
         idx  = scene["index"]
@@ -989,12 +1120,29 @@ def main():
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
         scenes = parse_script(raw)
+        img_prompts = parse_image_prompts(raw)
 
         with open(out_dir / "script.txt", "w", encoding="utf-8") as f:
             f.write(raw)
         with open(out_dir / "script.json", "w", encoding="utf-8") as f:
-            json.dump({"generated_at": today, "summary": summary, "scenes": scenes},
+            json.dump({"generated_at": today, "summary": summary, "scenes": scenes,
+                       "image_prompts": img_prompts},
                       f, ensure_ascii=False, indent=2)
+
+        # ── 이미지 프롬프트 별도 저장 (Imagen 복붙용) ──
+        if img_prompts:
+            lines = [f"# TSLA 주간 배경 이미지 프롬프트 — {today}",
+                     "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
+            scene_names = {1: "씬1 주간브리핑", 2: "씬2 호재뉴스",
+                           3: "씬3 리스크뉴스", 4: "씬4 시장반응"}
+            for i in range(1, 5):
+                if i in img_prompts:
+                    lines.append(f"## {scene_names[i]}")
+                    lines.append(img_prompts[i])
+                    lines.append("")
+            with open(out_dir / "image_prompts.txt", "w", encoding="utf-8") as f:
+                f.write("\n".join(lines))
+            print(f"   🎨 image_prompts.txt 저장 완료 ({len(img_prompts)}개 씬)")
         print(f"   ✅ 대본 저장 완료")
 
     # ── 이미지 ──
