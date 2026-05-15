@@ -890,17 +890,18 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     # 푸터 텍스트는 자막+UI에 가려지므로 제거
 
-    # ── 씬 1: 주간 브리핑 — 본문 영역 Y=1000~1680 (680px) ────────────────
+    # ── 씬 1: 주간 브리핑 — 본문 영역 Y=1040~1680 (640px) ────────────────
+    CONTENT_Y = START_Y + 40   # 사진 하단과 본문 사이 40px 여백
     if idx == 1:
-        BODY_H = SAFE_BOTTOM - START_Y   # 680
+        BODY_H = SAFE_BOTTOM - CONTENT_Y   # 640
         FC_W = COL_W - PAD
 
         # 본문: 한 단락 카드 + 가격 스트립
-        # 상단 단락 카드 (출처/내용/전망) 약 480px
-        FC_H = 460
-        draw.rounded_rectangle([PAD, START_Y, PAD + FC_W, START_Y + FC_H],
+        # 상단 단락 카드 (출처/내용/전망) 약 420px
+        FC_H = 420
+        draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + FC_H],
                                radius=14, fill=(20, 24, 34), outline=accent, width=2)
-        body_y = START_Y + 24
+        body_y = CONTENT_Y + 24
         INNER_W = FC_W - 40
 
         # 출처 라인
@@ -930,7 +931,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
         # 전망 (강조)
         if len(news_lines) >= 4:
-            outlook_y = START_Y + FC_H - 80
+            outlook_y = CONTENT_Y + FC_H - 80
             draw.rectangle([PAD + 20, outlook_y - 12, PAD + 20 + INNER_W, outlook_y - 11],
                            fill=(accent[0]//2, accent[1]//2, accent[2]//2))
             draw.text((PAD + 20, outlook_y - 2), "전망 ▶",
@@ -943,7 +944,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                           stroke_width=2, stroke_fill=STROKE)
 
         # 가격 스트립 — 카드 아래
-        STRIP_Y = START_Y + FC_H + 16
+        STRIP_Y = CONTENT_Y + FC_H + 16
         BOX_Y = STRIP_Y + 36
         BOX_H = SAFE_BOTTOM - BOX_Y - 10
         draw.text((PAD, STRIP_Y + 16), "주간 주가 흐름 ($)",
@@ -987,9 +988,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬 2~3: 호재/리스크 — 세로형 대형 카드 2장 (SAFE_BOTTOM 안에) ──
     elif idx in (2, 3):
         GAP    = 20
-        CARD_H = (SAFE_BOTTOM - START_Y - GAP) // 2   # = 630
+        CARD_H = (SAFE_BOTTOM - CONTENT_Y - GAP) // 2
         CARD_W = COL_W - PAD   # 1000
-        card_positions = [START_Y, START_Y + CARD_H + GAP]
+        card_positions = [CONTENT_Y, CONTENT_Y + CARD_H + GAP]
 
         for i, line in enumerate(news_lines[:2]):
             chapter, content, source = parse_news_line(line)
@@ -1007,8 +1008,8 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬 4: 시장 반응 — 카드형 4개 항목 (SAFE_BOTTOM 안에) ────────────
     else:
         GAP    = 18
-        ITEM_H = (SAFE_BOTTOM - START_Y - GAP * 3) // 4   # = 306
-        item_positions = [START_Y + i * (ITEM_H + GAP) for i in range(4)]
+        ITEM_H = (SAFE_BOTTOM - CONTENT_Y - GAP * 3) // 4
+        item_positions = [CONTENT_Y + i * (ITEM_H + GAP) for i in range(4)]
         labels = ["분위기", "검색·영상", "투자자", "시황"]
 
         for i, line in enumerate(news_lines[:4]):
