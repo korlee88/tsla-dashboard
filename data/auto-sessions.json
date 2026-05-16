@@ -1,6 +1,392 @@
 {
   "sessions": [
     {
+      "id": "auto-1778957069843",
+      "date": "2026-05-17",
+      "displayDate": "2026.05.17",
+      "kstTime": "03:43",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778957039883,
+          "title": "테슬라, 기록적인 세미 트럭 계약 및 AI 추진 후 7.9% 상승 - 강세론이 바뀌었나?",
+          "summary": "최근 몇 주 동안 테슬라는 중국산 전기차 판매 반등, WattEV로부터 약 1억 달러 규모의 사상 최대 세미 트럭 주문 확보, 마진 회복과 함께 강력한 분기별 실적 발표, 텍사스 테라팹 반도체 프로젝트를 포함한 주요 AI, 로보택시 및 칩 이니셔티브를 진전시켰습니다. 이러한 발전은 테슬라가 차량, 에너지, 자율주행 및 자체 칩 역량을 아우르는 수직 통합 '물리적 AI' 플랫폼으로 자리매김하려는 노력을 강조합니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-10",
+          "category": "Product|AI|Market"
+        },
+        {
+          "id": 1778957039884,
+          "title": "테슬라 주가, 중국 실망감에 하락했지만 주간 상승세 유지",
+          "summary": "테슬라 주가는 금요일 초 중국 관련 실망감으로 하락했지만, 3주 연속 주간 상승세를 이어가고 있습니다. 도널드 트럼프 대통령과 시진핑 주석 간의 정상회담이 무역이나 투자에 대한 실질적인 합의 없이 끝나면서 일부 여파가 있었을 수 있습니다.",
+          "source": "Barron's",
+          "date": "2026-05-15",
+          "category": "Market|Regulatory|Musk"
+        },
+        {
+          "id": 1778957039885,
+          "title": "테슬라 주가, AI 꿈이 리콜 우려를 압도하며 급등",
+          "summary": "테슬라 주가는 지난주 9.13% 상승했으며, 투자자들은 일련의 리콜을 간과하고 회사의 인공지능 야망과 예상보다 나은 재무 결과에 집중했습니다. 173대의 사이버트럭에 영향을 미치는 하드웨어 문제와 218,000대 이상의 차량에 대한 별도의 리콜에도 불구하고, 테슬라가 대부분의 문제를 소프트웨어로 해결하고 '수정 펌웨어'를 신속하게 배포하는 능력은 시장을 안심시켰습니다.",
+          "source": "TipRanks.com",
+          "date": "2026-05-09",
+          "category": "AI|Product|Market|Regulatory"
+        },
+        {
+          "id": 1778957039886,
+          "title": "테슬라, 예상치 상회하는 실적 발표 및 EV 수요 반등 시사",
+          "summary": "테슬라는 올해 초 월스트리트의 이익 기대치를 뛰어넘는 실적을 발표했으며, 전 세계적으로 전기차 수요가 반등하고 있다고 밝혀 오랫동안 어려움을 겪었던 자동차 사업의 회복 가능성을 시사했습니다. 조정 주당 순이익은 1분기에 41센트로 상승하여 블룸버그가 집계한 애널리스트 예상치 평균인 34센트를 상회했습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1778957039887,
+          "title": "테슬라: 이제 내리막길만 남았다?",
+          "summary": "테슬라의 1분기 보고서는 매출이 예상치를 초과했음에도 불구하고 핵심 사업에 주요 문제가 있음을 시사합니다. 보고서에 따르면 긍정적인 외환 효과가 없었다면 매출 예상치를 달성하지 못했을 것이며, 기본 마진은 압축되었고 재고 증가는 수요 약화를 나타냅니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-13",
+          "category": "Earnings|Market|Demand"
+        },
+        {
+          "id": 1778957039888,
+          "title": "일론 머스크, 테슬라에 대한 중대한 소식 확인",
+          "summary": "일론 머스크는 공식 서류를 통해 새로운 제조 시설에 대한 소식을 확인했습니다. 이 시설은 휴스턴에서 1시간 이내, 오스틴에서 약 2시간 30분 거리에 위치하며, 550억 달러 규모의 프로젝트가 될 것입니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-06",
+          "category": "Musk|Product|Market"
+        },
+        {
+          "id": 1778957039889,
+          "title": "테슬라, 미국 전기차 시장에서 커지는 위협에 직면",
+          "summary": "테슬라는 미국 배터리 전기차 시장의 약 80%를 점유하고 있지만, 모건 스탠리는 현재의 위치가 '장기적으로 지속 불가능하다'고 말합니다. 경쟁사인 리비안이 13억 달러의 자금 조달 라운드를 확보하면서 테슬라의 지배력에 대한 위협이 커지고 있습니다.",
+          "source": "Fox Business",
+          "date": "2019-12-25",
+          "category": "Competition|Market"
+        },
+        {
+          "id": 1778957039890,
+          "title": "테슬라, 기록적인 실적 발표, '다음 성장 단계'에 집중",
+          "summary": "테슬라는 수요일 기록적인 분기 실적을 달성하며 5분기 연속 흑자를 기록했고, 3분기에 139,300대의 차량을 인도하여 신기록을 세웠습니다. 테슬라의 실적은 월스트리트의 예상을 뛰어넘었으며, 일론 머스크 CEO와 그의 팀은 이제 '다음 성장 단계에 점점 더 집중하고 있다'고 밝혔습니다.",
+          "source": "Fox Business",
+          "date": "2020-10-21",
+          "category": "Earnings|Delivery"
+        },
+        {
+          "id": 1778957039891,
+          "title": "테슬라, 트럼프 대통령의 중국 방문 초청으로 주가 상승",
+          "summary": "테슬라 주가는 일론 머스크가 트럼프 대통령의 중국 방문에 초청받은 후 3.9% 상승했습니다. 이는 트럼프 대통령과 일론 머스크 간의 관계가 회복되었음을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-05-12",
+          "category": "Musk|Market|Regulatory"
+        },
+        {
+          "id": 1778957039892,
+          "title": "테슬라, 전기차 및 에너지 사업 지속",
+          "summary": "테슬라(Tesla, Inc.)는 전기차 및 에너지 생성 및 저장 시스템의 설계, 개발, 제조 및 판매에 참여하고 있습니다. 회사는 자동차 및 에너지 생성 및 저장 부문을 통해 운영됩니다.",
+          "source": "Fox Business",
+          "date": "2026-05-15",
+          "category": "Product|Energy"
+        }
+      ],
+      "analyses": {
+        "1778957039883": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R15",
+            "R20"
+          ],
+          "reasoning": "테슬라가 기록적인 세미 트럭 계약, 중국 판매 반등, AI 및 로보택시 이니셔티브 진전을 통해 긍정적인 모멘텀을 보이며 주가가 상승했습니다.",
+          "key_factors": [
+            "세미 트럭 계약",
+            "중국 전기차 판매 반등",
+            "AI 및 로보택시 이니셔티브"
+          ]
+        },
+        "1778957039884": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "중국 관련 실망감으로 테슬라 주가가 하락했지만, 이는 무역 협상에 대한 일반적인 시장 반응이며 테슬라에 대한 직접적인 부정적 소식은 아닙니다.",
+          "key_factors": [
+            "중국 무역 협상",
+            "시장 심리"
+          ]
+        },
+        "1778957039885": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "투자자들이 리콜 우려보다 테슬라의 AI 야망과 예상보다 나은 재무 결과에 집중하며 주가가 상승했으나, 리콜은 이미 알려진 정보로 새로운 악재는 아닙니다.",
+          "key_factors": [
+            "AI 야망",
+            "예상보다 나은 재무 결과",
+            "리콜 문제 해결 능력"
+          ]
+        },
+        "1778957039886": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 애널리스트 예상치를 20% 이상 상회하며 실적을 발표하여 전기차 수요 반등 가능성을 시사했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV demand rebound"
+          ]
+        },
+        "1778957039887": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 1분기 보고서에서 매출이 예상치를 초과했음에도 불구하고 외환 효과를 제외하면 예상치를 달성하지 못했을 것이며, 마진 압박과 재고 증가는 수요 약화를 시사하여 부정적인 영향을 미칩니다.",
+          "key_factors": [
+            "마진 압박",
+            "재고 증가",
+            "수요 약화"
+          ]
+        },
+        "1778957039888": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크가 텍사스에 550억 달러 규모의 새로운 제조 시설 건설을 공식 확인하여 테슬라의 생산 능력 확장에 대한 긍정적인 신호를 보냈습니다.",
+          "key_factors": [
+            "새로운 제조 시설",
+            "550억 달러 투자",
+            "생산 능력 확장"
+          ]
+        },
+        "1778957039889": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R06"
+          ],
+          "reasoning": "모건 스탠리가 테슬라의 시장 지배력이 장기적으로 지속 불가능하다고 평가하고 경쟁사인 리비안이 대규모 자금 조달에 성공하여 경쟁 심화 우려가 제기됩니다.",
+          "key_factors": [
+            "경쟁 심화",
+            "리비안 자금 조달"
+          ]
+        },
+        "1778957039890": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R11",
+            "R12"
+          ],
+          "reasoning": "테슬라가 월스트리트 예상을 뛰어넘는 기록적인 분기 실적과 139,300대의 차량 인도를 달성하며 5분기 연속 흑자를 기록하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "기록적인 분기 실적",
+            "차량 인도 신기록",
+            "월스트리트 예상치 상회"
+          ]
+        },
+        "1778957039891": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R19"
+          ],
+          "reasoning": "일론 머스크가 트럼프 대통령의 중국 방문에 초청받았다는 소식은 머스크와 트럼프 간의 관계 개선을 시사하며 테슬라에 긍정적인 영향을 미칠 수 있지만, 구체적인 사업적 이점은 불확실합니다.",
+          "key_factors": [
+            "일론 머스크-트럼프 관계 개선",
+            "중국 시장 잠재적 영향"
+          ]
+        },
+        "1778957039892": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "이 뉴스는 테슬라의 사업 분야에 대한 일반적인 설명으로, 주가에 영향을 미칠 만한 새로운 정보나 촉매가 포함되어 있지 않습니다.",
+          "key_factors": []
+        }
+      },
+      "avgScore": 0.9,
+      "buyIndex": 62,
+      "direction": "bullish",
+      "topRules": [
+        "R12",
+        "R13",
+        "R15",
+        "R20",
+        "R06"
+      ],
+      "bullish": 6,
+      "bearish": 3,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 0,
+        "reasoning": "지난 7일 동안 (2026년 5월 10일 ~ 2026년 5월 17일) Tesla, TSLA, 전기차, Robotaxi, FSD, Optimus, 에너지 저장 또는 Tesla 사업 전략과 관련된 Elon Musk의 게시물을 찾을 수 없었습니다. 검색 결과는 주로 이전 기간의 트윗이나 다른 주제에 대한 것이었습니다."
+      },
+      "googleTrends": {
+        "current_score": 75,
+        "week_avg": 70,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla Model Y",
+          "Tesla stock",
+          "Cybertruck"
+        ],
+        "reasoning": "지난주에 비해 검색 관심도가 약간 증가했으며, Model Y, Tesla 주식, Cybertruck이 인기 검색어입니다."
+      },
+      "youtubeInterest": {
+        "score": -1,
+        "velocity": 0.55,
+        "velocity_label": "소폭 감소 (×0.5)",
+        "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 359,240회 / 이전 4~7일 656,465회 | 총 1,015,705회 (44개 영상)",
+        "video_count": 44,
+        "total_views": 1015705,
+        "hot_views": 359240,
+        "baseline_views": 656465,
+        "top_videos": [
+          {
+            "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
+            "channel": "Beyond Ordinary ",
+            "publishedAt": "2026-05-11T04:45:10Z",
+            "viewCount": 95288
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 83513
+          },
+          {
+            "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-11T13:30:38Z",
+            "viewCount": 57108
+          },
+          {
+            "title": "40시간 째 일하는 모습 생중계 중… Figure 03 라이브가 보여준 휴머노이드의 진짜 시험",
+            "channel": "안될공학 - IT 테크 신기술",
+            "publishedAt": "2026-05-14T14:19:34Z",
+            "viewCount": 54053
+          },
+          {
+            "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+            "channel": "scoremia",
+            "publishedAt": "2026-05-15T08:39:33Z",
+            "viewCount": 47695
+          }
+        ],
+        "collected_at": "2026-05-16T18:43:49Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product|AI|Market": 1,
+        "Market|Regulatory|Musk": 1,
+        "AI|Product|Market|Regulatory": 1,
+        "Earnings|Market": 1,
+        "Earnings|Market|Demand": 1,
+        "Musk|Product|Market": 1,
+        "Competition|Market": 1,
+        "Earnings|Delivery": 1,
+        "Musk|Market|Regulatory": 1,
+        "Product|Energy": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.35,
+        "qqqChg": -0.17,
+        "vixClose": 18.43000030517578,
+        "wtiChg": -1.02,
+        "cnyChg": 0,
+        "prevTslaChg": 0.02,
+        "rsi": 52.7,
+        "macd": {
+          "macd": 0.5761032278220455,
+          "signal": -1.9543014391818316,
+          "hist": 2.530404667003877,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 460.63,
+          "middle": 403.63,
+          "lower": 346.64,
+          "pos": 0.663
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 59,
+        "macdTrend": 2,
+        "googleTrends": 2,
+        "youtubeInterest": -1
+      },
+      "latestTslaPrice": 422.24,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/18(월)",
+          "change_pct": 0.7,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 425.2
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/19(화)",
+          "change_pct": -0.3,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 420.97
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/20(수)",
+          "change_pct": 1.1,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 426.88
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/21(목)",
+          "change_pct": -0.6,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 419.71
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/22(금)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 426.04
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778957069843
+    },
+    {
       "id": "auto-1778938015379",
       "date": "2026-05-16",
       "displayDate": "2026.05.16",
@@ -27489,5 +27875,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-16 22:26 KST"
+  "lastUpdated": "2026-05-17 03:43 KST"
 }

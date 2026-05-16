@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.65,
-  "velocity_label": "소폭 감소 (×0.7)",
-  "reason": "조회수 속도 소폭 감소 (×0.7) | 최근 3일 398,947회 / 이전 4~7일 609,438회 | 총 1,008,385회 (44개 영상)",
+  "velocity": 0.55,
+  "velocity_label": "소폭 감소 (×0.5)",
+  "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 359,240회 / 이전 4~7일 656,465회 | 총 1,015,705회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1008385,
-  "hot_views": 398947,
-  "baseline_views": 609438,
+  "total_views": 1015705,
+  "hot_views": 359240,
+  "baseline_views": 656465,
   "top_videos": [
     {
       "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
       "channel": "Beyond Ordinary ",
       "publishedAt": "2026-05-11T04:45:10Z",
-      "viewCount": 90048
+      "viewCount": 95288
     },
     {
       "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 79008
+      "viewCount": 83513
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 56918
+      "viewCount": 57108
     },
     {
       "title": "40시간 째 일하는 모습 생중계 중… Figure 03 라이브가 보여준 휴머노이드의 진짜 시험",
       "channel": "안될공학 - IT 테크 신기술",
       "publishedAt": "2026-05-14T14:19:34Z",
-      "viewCount": 53133
+      "viewCount": 54053
     },
     {
       "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
       "channel": "scoremia",
       "publishedAt": "2026-05-15T08:39:33Z",
-      "viewCount": 44622
+      "viewCount": 47695
     }
   ],
-  "collected_at": "2026-05-16T13:26:15Z"
+  "collected_at": "2026-05-16T18:43:49Z"
 }
