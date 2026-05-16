@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.68,
+  "velocity": 0.65,
   "velocity_label": "소폭 감소 (×0.7)",
-  "reason": "조회수 속도 소폭 감소 (×0.7) | 최근 3일 406,919회 / 이전 4~7일 599,765회 | 총 1,006,684회 (44개 영상)",
+  "reason": "조회수 속도 소폭 감소 (×0.7) | 최근 3일 398,947회 / 이전 4~7일 609,438회 | 총 1,008,385회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1006684,
-  "hot_views": 406919,
-  "baseline_views": 599765,
+  "total_views": 1008385,
+  "hot_views": 398947,
+  "baseline_views": 609438,
   "top_videos": [
     {
       "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
       "channel": "Beyond Ordinary ",
       "publishedAt": "2026-05-11T04:45:10Z",
-      "viewCount": 84590
+      "viewCount": 90048
     },
     {
       "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 75936
+      "viewCount": 79008
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 56678
+      "viewCount": 56918
     },
     {
       "title": "40시간 째 일하는 모습 생중계 중… Figure 03 라이브가 보여준 휴머노이드의 진짜 시험",
       "channel": "안될공학 - IT 테크 신기술",
       "publishedAt": "2026-05-14T14:19:34Z",
-      "viewCount": 52008
+      "viewCount": 53133
     },
     {
-      "title": "Tesla Just Got Several Massive Catalysts",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-12T18:37:57Z",
-      "viewCount": 39927
+      "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+      "channel": "scoremia",
+      "publishedAt": "2026-05-15T08:39:33Z",
+      "viewCount": 44622
     }
   ],
-  "collected_at": "2026-05-16T08:06:12Z"
+  "collected_at": "2026-05-16T13:26:15Z"
 }
