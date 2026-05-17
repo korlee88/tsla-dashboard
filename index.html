@@ -666,6 +666,18 @@ async function getDriveAppDataSize(token) {
   } catch { return null; }
 }
 
+// ─── 앱 버전 ──────────────────────────────────────────────────────────────────
+const APP_VERSION = {
+  version: '2.1.0',
+  date: '2026-05-17',
+  changelog: [
+    { v: '2.1.0', date: '2026-05-17', label: '영상 매일 자동 생성 + 대시보드 실행 버튼' },
+    { v: '2.0.0', date: '2026-05-10', label: '멀티 종목 Phase 1 · Ken Burns · 로봇 마스코트 · 백테스트 연도 분리' },
+    { v: '1.5.0', date: '2026-04-20', label: 'YouTube Shorts 세로 포맷 전환 · GWS 통합 (YouTube/Sheets/Gmail)' },
+    { v: '1.0.0', date: '2026-03-01', label: '초기 릴리즈 · AI 자동 분석 · 백테스트 · 캘린더' },
+  ],
+};
+
 // ─── 자동 세션 로드 (GitHub repo data/auto-sessions.json) ────────────────────
 
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
@@ -3614,6 +3626,42 @@ function SettingsPage({ onBack,
           ))}
         </div>
         <p className="text-xs text-gray-600">자동 분석 결과는 트렌드 분석 페이지에서 확인하세요. GitHub Secret에 저장된 API 키로 서버에서 실행됩니다.</p>
+      </div>
+
+      {/* ── 앱 버전 정보 ── */}
+      <div className="rounded-xl p-5 border mt-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm">📦</span>
+            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">앱 버전</span>
+          </div>
+          <span className="text-xs font-black px-2.5 py-1 rounded-full text-purple-300"
+            style={{ background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)' }}>
+            v{APP_VERSION.version}
+          </span>
+        </div>
+        <div className="space-y-2">
+          {APP_VERSION.changelog.map((item, i) => (
+            <div key={item.v} className="flex items-start gap-3 py-2 border-b last:border-0"
+              style={{ borderColor: '#2A2D35' }}>
+              <span className="text-xs font-black tabular-nums shrink-0 mt-0.5"
+                style={{ color: i === 0 ? '#a78bfa' : '#4b5563' }}>
+                v{item.v}
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-300 leading-snug">{item.label}</p>
+                <p className="text-gray-600 mt-0.5" style={{ fontSize: 10 }}>{item.date}</p>
+              </div>
+              {i === 0 && (
+                <span className="text-xs px-1.5 py-0.5 rounded shrink-0"
+                  style={{ background: 'rgba(167,139,250,0.15)', color: '#a78bfa', fontSize: 10 }}>
+                  최신
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-gray-700 mt-3">TSLA Dashboard · korlee88/tsla-dashboard</p>
       </div>
     </div>
   );
