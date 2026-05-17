@@ -666,6 +666,18 @@ async function getDriveAppDataSize(token) {
   } catch { return null; }
 }
 
+// ─── 앱 버전 ──────────────────────────────────────────────────────────────────
+const APP_VERSION = {
+  version: '2.1.0',
+  date: '2026-05-17',
+  changelog: [
+    { v: '2.1.0', date: '2026-05-17', label: '영상 매일 자동 생성 + 대시보드 실행 버튼' },
+    { v: '2.0.0', date: '2026-05-10', label: '멀티 종목 Phase 1 · Ken Burns · 로봇 마스코트 · 백테스트 연도 분리' },
+    { v: '1.5.0', date: '2026-04-20', label: 'YouTube Shorts 세로 포맷 전환 · GWS 통합 (YouTube/Sheets/Gmail)' },
+    { v: '1.0.0', date: '2026-03-01', label: '초기 릴리즈 · AI 자동 분석 · 백테스트 · 캘린더' },
+  ],
+};
+
 // ─── 자동 세션 로드 (GitHub repo data/auto-sessions.json) ────────────────────
 
 const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
@@ -3615,6 +3627,42 @@ function SettingsPage({ onBack,
         </div>
         <p className="text-xs text-gray-600">자동 분석 결과는 트렌드 분석 페이지에서 확인하세요. GitHub Secret에 저장된 API 키로 서버에서 실행됩니다.</p>
       </div>
+
+      {/* ── 앱 버전 정보 ── */}
+      <div className="rounded-xl p-5 border mt-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm">📦</span>
+            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">앱 버전</span>
+          </div>
+          <span className="text-xs font-black px-2.5 py-1 rounded-full text-purple-300"
+            style={{ background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)' }}>
+            v{APP_VERSION.version}
+          </span>
+        </div>
+        <div className="space-y-2">
+          {APP_VERSION.changelog.map((item, i) => (
+            <div key={item.v} className="flex items-start gap-3 py-2 border-b last:border-0"
+              style={{ borderColor: '#2A2D35' }}>
+              <span className="text-xs font-black tabular-nums shrink-0 mt-0.5"
+                style={{ color: i === 0 ? '#a78bfa' : '#4b5563' }}>
+                v{item.v}
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-300 leading-snug">{item.label}</p>
+                <p className="text-gray-600 mt-0.5" style={{ fontSize: 10 }}>{item.date}</p>
+              </div>
+              {i === 0 && (
+                <span className="text-xs px-1.5 py-0.5 rounded shrink-0"
+                  style={{ background: 'rgba(167,139,250,0.15)', color: '#a78bfa', fontSize: 10 }}>
+                  최신
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-gray-700 mt-3">TSLA Dashboard · korlee88/tsla-dashboard</p>
+      </div>
     </div>
   );
 }
@@ -3665,8 +3713,13 @@ function VideoScriptPage({ onBack }) {
     <div className="max-w-3xl mx-auto px-4 py-12 text-center">
       <p className="text-4xl mb-4">🎬</p>
       <p className="text-lg font-bold text-gray-300 mb-2">아직 생성된 각본이 없습니다</p>
-      <p className="text-sm text-gray-600 mb-1">매주 월요일 GitHub Actions가 자동으로 각본을 생성합니다.</p>
-      <p className="text-sm text-gray-600">수동 실행: GitHub → Actions → "TSLA 주간 영상 자료 생성" → Run workflow</p>
+      <p className="text-sm text-gray-600 mb-4">매일 KST 09:00 GitHub Actions가 자동으로 각본을 생성합니다.</p>
+      <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+        target="_blank" rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+        style={{ background: '#7c3aed' }}>
+        ▶ 지금 영상 생성 실행
+      </a>
     </div>
   );
 
@@ -3676,12 +3729,12 @@ function VideoScriptPage({ onBack }) {
   return (
     <div className="max-w-3xl mx-auto px-3 py-4 md:px-4 md:py-6">
       {/* 헤더 */}
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-3">
         <button onClick={onBack} className="text-xs px-2.5 py-1.5 rounded-lg text-gray-400 hover:text-white shrink-0"
           style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 뒤로</button>
         <div className="flex-1 min-w-0">
           <h1 className="text-base font-bold text-white truncate">🎬 주간 영상 각본</h1>
-          <p className="text-xs text-gray-600">AI 자동 생성 · CapCut / Premiere 자막용</p>
+          <p className="text-xs text-gray-600">매일 자동 생성 · AI 나레이션 영상</p>
         </div>
         {scripts.length > 1 && (
           <select className="text-xs rounded-lg px-2 py-1 text-gray-300"
@@ -3690,6 +3743,21 @@ function VideoScriptPage({ onBack }) {
             {scripts.map(s => <option key={s._date} value={s._date}>{s._date}</option>)}
           </select>
         )}
+      </div>
+      {/* 액션 버튼 바 */}
+      <div className="flex gap-2 mb-4">
+        <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+          target="_blank" rel="noopener noreferrer"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold text-white"
+          style={{ background: '#7c3aed', border: '1px solid #9c5cf0' }}>
+          ▶ 영상 생성 실행
+        </a>
+        <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+          target="_blank" rel="noopener noreferrer"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold"
+          style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#60a5fa' }}>
+          ⬇ 영상 다운로드
+        </a>
       </div>
 
       {/* 타이틀 카드 */}
