@@ -26,12 +26,14 @@ PHOTO_H       = 500                     # 사진 영역 높이 (prep.py의 PHOTO
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
-    (167, 139, 250),  # scene1 purple  - 브리핑
-    (34,  197,  94),  # scene2 green   - 호재 뉴스
-    (239,  68,  68),  # scene3 red     - 리스크 뉴스
-    (245, 158,  11),  # scene4 amber   - 시장 동향
+    (6,   182, 212),  # scene 0 cyan    - 충격 인트로
+    (167, 139, 250),  # scene 1 purple  - 브리핑
+    (34,  197,  94),  # scene 2 green   - 호재 뉴스
+    (239,  68,  68),  # scene 3 red     - 리스크 뉴스
+    (245, 158,  11),  # scene 4 amber   - 시장 동향
+    (236,  72, 153),  # scene 5 magenta - 클로징 (다음주 예고)
 ]
-SCENE_MOODS = ["excited", "happy", "worried", "focused"]
+SCENE_MOODS = ["shocked", "excited", "happy", "worried", "focused", "celebrating"]
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -109,6 +111,22 @@ def draw_robot_pil(img, rx, ry, mood="neutral", accent=(167, 139, 250)):
     elif mood == "focused":
         d.rectangle([lx, ey+7, lx+ew, ey+15], fill=accent)
         d.rectangle([rx2, ey+7, rx2+ew, ey+15], fill=accent)
+    elif mood == "shocked":
+        # 동그란 큰 눈 + 동공 작게
+        d.ellipse([lx-2, ey-4, lx+ew+2, ey+ew], fill=SHINE)
+        d.ellipse([rx2-2, ey-4, rx2+ew+2, ey+ew], fill=SHINE)
+        d.ellipse([lx+ew//2-3, ey+ew//2-3, lx+ew//2+3, ey+ew//2+3], fill=_R)
+        d.ellipse([rx2+ew//2-3, ey+ew//2-3, rx2+ew//2+3, ey+ew//2+3], fill=_R)
+        # 머리 위 ! 표시
+        d.text((ax-4, ry-58), "!", fill=_R)
+    elif mood == "celebrating":
+        # 별 모양 눈 (대각선 + 가로 라인)
+        for cx_eye in (lx + ew // 2, rx2 + ew // 2):
+            cy_eye = ey + ew // 2
+            d.line([cx_eye-10, cy_eye, cx_eye+10, cy_eye], fill=accent, width=3)
+            d.line([cx_eye, cy_eye-10, cx_eye, cy_eye+10], fill=accent, width=3)
+            d.line([cx_eye-7, cy_eye-7, cx_eye+7, cy_eye+7], fill=accent, width=2)
+            d.line([cx_eye-7, cy_eye+7, cx_eye+7, cy_eye-7], fill=accent, width=2)
     else:
         d.rectangle([lx, ey, lx+ew, ey+eh], fill=accent)
         d.rectangle([rx2, ey, rx2+ew, ey+eh], fill=accent)
@@ -116,10 +134,13 @@ def draw_robot_pil(img, rx, ry, mood="neutral", accent=(167, 139, 250)):
         d.ellipse([rx2+4, ey+3, rx2+9, ey+9], fill=SHINE)
 
     my = ry + 60
-    if mood in ("happy", "excited"):
+    if mood in ("happy", "excited", "celebrating"):
         d.arc([rx+26, my-8, rx+74, my+14], start=0, end=180, fill=accent, width=3)
     elif mood == "worried":
         d.arc([rx+26, my, rx+74, my+18], start=180, end=360, fill=_R, width=3)
+    elif mood == "shocked":
+        # 입을 큰 동그라미 (놀란 표정)
+        d.ellipse([rx+38, my-4, rx+62, my+18], fill=_R, outline=SHINE, width=2)
     else:
         d.line([rx+30, my+6, rx+70, my+6], fill=METAL, width=3)
 
@@ -163,23 +184,35 @@ def fx_fade_out(img, t, total, dur=0.25):
     return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
 
-def fx_speed_lines(img, t, accent):
-    """씬 시작 속도선 (만화 액션씬 느낌)."""
+def fx_speed_lines(img, t, accent, intense=False):
+    """씬 시작 속도선 (만화 액션씬 느낌). intense=True면 인트로용 강화."""
     if t >= 0.55:
         return img
     from PIL import Image, ImageDraw
-    a  = int((0.55 - t) / 0.55 * 95)
+    a  = int((0.55 - t) / 0.55 * (130 if intense else 95))
     ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
     d  = ImageDraw.Draw(ov)
     cx, cy = W // 2, H // 2
-    for i in range(22):
-        angle = (i / 22) * 2 * math.pi
+    n_lines = 40 if intense else 22
+    width   = 4  if intense else 2
+    for i in range(n_lines):
+        angle = (i / n_lines) * 2 * math.pi
         x1 = cx + int(math.cos(angle) * 85)
         y1 = cy + int(math.sin(angle) * 55)
-        x2 = cx + int(math.cos(angle) * 950)
-        y2 = cy + int(math.sin(angle) * 950)
+        x2 = cx + int(math.cos(angle) * 1100)
+        y2 = cy + int(math.sin(angle) * 1100)
         la = a if i % 3 != 1 else a // 3
-        d.line([x1, y1, x2, y2], fill=(*accent, la), width=2)
+        d.line([x1, y1, x2, y2], fill=(*accent, la), width=width)
+    return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
+
+
+def fx_white_flash(img, t, dur=0.15):
+    """인트로 첫 순간 흰색 플래시 — 충격 효과."""
+    if t >= dur:
+        return img
+    from PIL import Image
+    a = int((1 - t / dur) * 200)
+    ov = Image.new("RGBA", img.size, (255, 255, 255, a))
     return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
 
@@ -212,13 +245,15 @@ def fx_ken_burns(img, t: float, dur: float, scene_idx: int):
     from PIL import Image
     progress = t / max(dur, 0.001)
 
-    # 씬별 줌/패닝 패턴 — 1.00~1.07 범위 (7% 줌, 자연스러운 움직임)
+    # 6씬 줌/패닝 패턴 — 1.00~1.10 범위
     CONFIGS = [
         # (zoom_start, zoom_end, pan_x_start, pan_x_end, pan_y_start, pan_y_end)
-        (1.00, 1.07,  0.00,  0.03,  0.00,  0.02),  # scene 0: 줌인 + 우하
-        (1.07, 1.00,  0.03,  0.00,  0.02,  0.00),  # scene 1: 줌아웃 + 좌상
-        (1.00, 1.07,  0.00, -0.03,  0.00,  0.02),  # scene 2: 줌인 + 좌하
-        (1.07, 1.00, -0.03,  0.00,  0.02,  0.00),  # scene 3: 줌아웃 + 우상
+        (1.00, 1.10,  0.00,  0.00,  0.00,  0.00),  # scene 0 인트로: 강한 줌인 (충격)
+        (1.00, 1.07,  0.00,  0.03,  0.00,  0.02),  # scene 1: 줌인 + 우하
+        (1.07, 1.00,  0.03,  0.00,  0.02,  0.00),  # scene 2: 줌아웃 + 좌상
+        (1.00, 1.07,  0.00, -0.03,  0.00,  0.02),  # scene 3: 줌인 + 좌하
+        (1.07, 1.00, -0.03,  0.00,  0.02,  0.00),  # scene 4: 줌아웃 + 우상
+        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 5 클로징: 부드러운 줌인
     ]
     zoom_s, zoom_e, px_s, px_e, py_s, py_e = CONFIGS[scene_idx % len(CONFIGS)]
 
@@ -246,16 +281,30 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     from PIL import Image
     img = Image.fromarray(base_arr).copy()
 
-    # Ken Burns: 전체 프레임이 아닌 사진 스트립(y=500~1000)에만 적용
-    photo = img.crop((0, PHOTO_Y, W, PHOTO_Y + PHOTO_H))
-    photo = fx_ken_burns(photo, t, dur, scene_idx - 1)
-    img.paste(photo, (0, PHOTO_Y))
+    is_intro   = (scene_idx == 0)
+    is_closing = (scene_idx == 5)
 
-    img = fx_speed_lines(img, t, accent)
+    # Ken Burns
+    # - 인트로/클로징은 커스텀 레이아웃이라 사진 스트립이 없음 → 전체 프레임에 부드러운 줌
+    # - 본편(idx 1~4)은 사진 스트립(y=500~1000)에만 적용
+    if is_intro or is_closing:
+        img = fx_ken_burns(img, t, dur, scene_idx)
+    else:
+        photo = img.crop((0, PHOTO_Y, W, PHOTO_Y + PHOTO_H))
+        photo = fx_ken_burns(photo, t, dur, scene_idx)
+        img.paste(photo, (0, PHOTO_Y))
+
+    # 인트로 충격 효과: 흰색 플래시 + 강화된 속도선
+    if is_intro:
+        img = fx_white_flash(img, t, dur=0.15)
+        img = fx_speed_lines(img, t, accent, intense=True)
+    else:
+        img = fx_speed_lines(img, t, accent)
+
     img = fx_scanline(img, t)
     img = fx_pulse_glow(img, t, accent)
 
-    mood     = SCENE_MOODS[scene_idx - 1]
+    mood     = SCENE_MOODS[scene_idx]
     robot_dy = int(math.sin(t * 3.5) * 4)
     img = draw_robot_pil(img, W - 130, 40 + robot_dy, mood, accent)
 
@@ -280,7 +329,7 @@ async def process_scene(scene, report_dir):
 
     idx      = scene["index"]
     lines    = [l for l in scene.get("lines", []) if l.strip()]
-    accent   = ACCENT_COLORS[idx - 1]
+    accent   = ACCENT_COLORS[idx]   # 0-based: 0=인트로, 1~4=본편, 5=클로징
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 

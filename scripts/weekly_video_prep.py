@@ -54,15 +54,18 @@ NAVY        = (15, 32, 70)
 NAVY_DEEP   = (10, 22, 50)
 CYAN_LIGHT  = (135, 220, 255)
 
-SCENE_ACCENTS = [PURPLE, GREEN, RED, AMBER]
+SCENE_ACCENTS = [CYAN, PURPLE, GREEN, RED, AMBER, (236, 72, 153)]  # 인트로/브리핑/호재/리스크/시황/클로징
 
 SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
+GOOGLE_TRENDS_KEYWORDS = TICKER_CONFIG.get("google_trends_keywords", [])
 
 SCENE_BG_DIR = ROOT_DIR / "data" / "scene-backgrounds"
 SCENE_STATIC_BG = [
     (SCENE_BG_DIR / name) if name else None
     for name in TICKER_CONFIG["scene_static_bg_files"]
 ]
+
+CALENDAR_JSON = ROOT_DIR / "data" / "calendar.json"
 
 # ── 데이터 로드 ───────────────────────────────────────────────────────────
 
@@ -114,6 +117,32 @@ def summarize(sessions):
     daily_prices = [(d, seen_dates[d]) for d in sorted_dates]
 
     latest = sessions[0]
+
+    # ── 인트로용: 오늘 vs 전일 변동률 ──
+    today_change_pct = None
+    if len(daily_prices) >= 2:
+        try:
+            today_p = float(daily_prices[0][1])
+            prev_p  = float(daily_prices[1][1])
+            if prev_p > 0:
+                today_change_pct = round((today_p - prev_p) / prev_p * 100, 2)
+        except (ValueError, TypeError):
+            pass
+
+    # ── 인트로용: 이번주 가장 큰 영향 사건 ──
+    biggest_impact = None
+    bull_top = bullish[0] if bullish else None
+    bear_top = bearish[0] if bearish else None
+    if bull_top and bear_top:
+        if abs(bull_top["score"]) >= abs(bear_top["score"]):
+            biggest_impact = {**bull_top, "direction_ko": "호재", "emoji": "🚀"}
+        else:
+            biggest_impact = {**bear_top, "direction_ko": "악재", "emoji": "⚠"}
+    elif bull_top:
+        biggest_impact = {**bull_top, "direction_ko": "호재", "emoji": "🚀"}
+    elif bear_top:
+        biggest_impact = {**bear_top, "direction_ko": "악재", "emoji": "⚠"}
+
     return {
         "week_start":      sessions[-1].get("date", ""),
         "week_end":        sessions[0].get("date", ""),
@@ -124,49 +153,140 @@ def summarize(sessions):
         "price_start":     prices[-1] if prices else None,
         "price_end":       prices[0]  if prices else None,
         "latest_price":    latest.get("latestTslaPrice"),
+        "today_price":     latest.get("latestTslaPrice"),
+        "today_change_pct": today_change_pct,
+        "biggest_impact":  biggest_impact,
         "top_bullish":     bullish[:3],
         "top_bearish":     bearish[:3],
         "forecasts":       latest.get("dailyForecasts", [])[:3],
         "daily_prices":    daily_prices,
+        "trends":          None,        # fetch_google_trends()로 채움
+        "next_events":     [],          # load_next_events()로 채움
     }
+
+
+def fetch_google_trends(keywords, days=7):
+    """지난 7일 vs 직전 7일 검색량 비교 → 증감비율 + 최고 키워드."""
+    if not keywords:
+        return None
+    try:
+        from pytrends.request import TrendReq
+    except ImportError:
+        print("   ⚠ pytrends 미설치 — Google Trends 건너뜀", file=sys.stderr)
+        return None
+    try:
+        py = TrendReq(hl='ko-KR', tz=540, timeout=(5, 15))
+        py.build_payload(keywords[:5], timeframe=f'now {days*2}-d', geo='KR')
+        df = py.interest_over_time()
+        if df.empty:
+            return None
+        kw_cols = [k for k in keywords if k in df.columns]
+        if not kw_cols:
+            return None
+        half = len(df) // 2
+        if half < 1:
+            return None
+        recent = float(df.iloc[half:][kw_cols].mean().mean())
+        prev   = float(df.iloc[:half][kw_cols].mean().mean())
+        ratio  = round(recent / max(prev, 1), 1)
+        top_kw = df[kw_cols].iloc[half:].mean().idxmax()
+        return {
+            "ratio": ratio,
+            "top_keyword": str(top_kw),
+            "recent_avg": round(recent),
+        }
+    except Exception as e:
+        print(f"   ⚠ Google Trends 실패: {e}", file=sys.stderr)
+        return None
+
+
+def load_next_events(days=14, max_n=2):
+    """calendar.json에서 향후 N일 내 high/medium importance 이벤트 추출."""
+    if not CALENDAR_JSON.exists():
+        return []
+    try:
+        with open(CALENDAR_JSON, encoding="utf-8") as f:
+            raw = json.load(f)
+        events = raw if isinstance(raw, list) else raw.get("events", [])
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        cutoff = (datetime.now(timezone.utc) + timedelta(days=days)).strftime("%Y-%m-%d")
+        upcoming = [
+            e for e in events
+            if today < e.get("date", "") <= cutoff
+        ]
+        # importance: high > medium > low, 그리고 빠른 날짜 우선
+        importance_rank = {"high": 0, "medium": 1, "low": 2}
+        upcoming.sort(key=lambda e: (
+            importance_rank.get(e.get("importance", "low"), 3),
+            e.get("date", ""),
+        ))
+        return upcoming[:max_n]
+    except Exception as e:
+        print(f"   ⚠ calendar.json 로드 실패: {e}", file=sys.stderr)
+        return []
 
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
-SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 나레이션 대본을 작성해줘.
-유재석처럼 밝고 에너지 넘치는 어투. 전문 용어 대신 쉬운 일상 언어. 각 씬 정확히 2줄, 한 줄 30자 이내.
+SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 바이럴 나레이션 대본을 작성해줘.
+**자극적 이벤트형 톤**으로 시청자가 첫 3초에 멈춰서 보게 만들어야 한다.
+
+=== 톤 가이드 (반드시 준수) ===
+• 강한 감탄사 필수: "충격!", "와!", "헐!", "대박!", "이게 실화!", "헉!"
+• 강조 표현: "역대급", "사상 최대", "예측 불가", "충격적", "초비상", "역대 1위"
+• 긴급성: "지금 당장", "놓치면 큰일", "오늘만", "단 1주", "마지막 기회"
+• 호기심 유발: "여러분 모르셨죠?", "이거 보면 깜짝", "진짜 충격이에요"
+• 절대 평이한 설명조 금지 — 모든 줄에 감정 텐션 + 호기심 트리거 필수
+• 각 씬 **정확히 2줄**, 한 줄 30자 이내
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - 참고지수: 평균 {avg_bi}점 / 최신 {latest_bi}점
 - {ticker} 주가: ${price}
+- 오늘 변동률: {today_change_pct_str}
+- 이번주 최대 영향: {biggest_impact_str}
+- 검색량 트렌드: {trends_str}
+- 다음주 예정 이벤트: {next_events_str}
 {daily_prices_txt}
 - 주요 호재:
 {b_txt}
 - 주요 악재:
 {r_txt}
 
-=== 씬 구성 (각 씬 정확히 2줄) ===
+=== 씬 구성 (총 6씬, 각 정확히 2줄) ===
 
-【씬 1 — 주간 브리핑】 정확히 2줄
-- 줄1: 감탄사로 시작하는 핵심 헤드라인 (20자 이내, 예: "와! {company_ko} 빅뉴스!")
+【씬 0 — 충격 인트로】 시청자 시선 강탈, 0.5초도 못 떼게
+- 줄1: "충격! 오늘 TSLA {today_change_pct_short}!" (15자 이내, 이모지 1개)
+- 줄2: 이번주 최대 영향 사건 자극적 한 문장 (25자 이내, 감탄사+호기심)
+
+【씬 1 — 주간 브리핑】
+- 줄1: 감탄사로 시작하는 핵심 헤드라인 (20자 이내)
 - 줄2: 핵심 수치·영향 한 문장 (30자 이내, 구체적 숫자 포함)
 
-【씬 2 — 호재 뉴스 TOP 2】 정확히 2줄
-- 줄1: "카테고리: 핵심 내용 1문장 | 언론사·날짜·호재" (카테고리 5자 이내)
-- 줄2: "카테고리: 핵심 내용 1문장 | 언론사·날짜·호재"
+【씬 2 — 호재 뉴스 TOP 2】 자극적 카테고리명
+- 줄1: "카테고리: 충격 내용 1문장 | 언론사·날짜·호재"
+- 줄2: "카테고리: 충격 내용 1문장 | 언론사·날짜·호재"
 
-【씬 3 — 리스크 뉴스 TOP 2】 정확히 2줄
-- 줄1: "카테고리: 핵심 내용 1문장 | 언론사·날짜·악재" (카테고리 5자 이내)
-- 줄2: "카테고리: 핵심 내용 1문장 | 언론사·날짜·악재"
+【씬 3 — 리스크 뉴스 TOP 2】 긴장감 폭발
+- 줄1: "카테고리: 위기 내용 1문장 | 언론사·날짜·악재"
+- 줄2: "카테고리: 위기 내용 1문장 | 언론사·날짜·악재"
 
-【씬 4 — 시장 반응】 정확히 2줄
-- 줄1: "[분위기] 이번 주 시장·투자심리 한 문장 (감탄사 포함)"
-- 줄2: "[전망] 긍정/중립/신중 관점 한 문장 (투자 권유 금지, 개인 분석)"
+【씬 4 — 시장 반응】
+- 줄1: "[분위기] 이번 주 투자심리 자극적 한 문장 (감탄사 필수)"
+- 줄2: "[전망] 긍정/중립/신중 관점 한 문장 (투자 권유 금지)"
+
+【씬 5 — 다음주 예고 + CTA】
+- 줄1: "다음주 [이벤트] 임박! 절대 놓치지 마!" (calendar 이벤트 활용)
+- 줄2: "🔔 구독+알림으로 1초도 늦지 마세요!"
 
 === 출력 형식 (반드시 준수) ===
+SCENE_0_TITLE: [6자 이내, "충격속보" 같은 강한 단어]
+SCENE_0:
+[줄1 — 충격 헤드라인]
+[줄2 — 최대 영향 사건]
+
 SCENE_1_TITLE: [6자 이내]
 SCENE_1:
-[줄1 — 헤드라인]
-[줄2 — 핵심 내용]
+[줄1]
+[줄2]
 
 SCENE_2_TITLE: [6자 이내]
 SCENE_2:
@@ -183,14 +303,21 @@ SCENE_4:
 [분위기] 내용
 [전망] 내용
 
-=== 배경 이미지 프롬프트 (Gemini Imagen용, 영어) ===
+SCENE_5_TITLE: [6자 이내, "예고편" 같은 단어]
+SCENE_5:
+[줄1 — 다음주 예고]
+[줄2 — 구독 CTA]
+
+=== 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 6개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "9:16 vertical aspect ratio, ultra-high resolution".
 {company_ko}·{industry_ko} 관련 시각 요소 포함. 씬별 색감 지정.
 
-IMAGE_PROMPT_1: [씬1 — {company_ko} 관련, 보라빛 미래적 분위기, 이번 주 메인 뉴스 시각화]
-IMAGE_PROMPT_2: [씬2 — 호재 뉴스 주제 시각화, 밝고 활기찬 초록빛 분위기]
-IMAGE_PROMPT_3: [씬3 — 리스크 뉴스 주제 시각화, 긴장감 있는 붉은빛 분위기]
-IMAGE_PROMPT_4: [씬4 — 시장 반응 시각화, 도시·금융 주황빛 분위기]"""
+IMAGE_PROMPT_0: [씬0 — 충격 인트로, 시안+검정 강한 대비, 번개·폭발 등 임팩트 요소]
+IMAGE_PROMPT_1: [씬1 — {company_ko} 관련 보라빛 미래적 분위기]
+IMAGE_PROMPT_2: [씬2 — 호재 시각화, 밝고 활기찬 초록빛]
+IMAGE_PROMPT_3: [씬3 — 리스크 시각화, 긴장감 붉은빛]
+IMAGE_PROMPT_4: [씬4 — 시장 반응 시각화, 도시·금융 주황빛]
+IMAGE_PROMPT_5: [씬5 — 미래 전망, 마젠타·핑크빛, 별·반짝임]"""
 
 
 def _build_prompt(summary):
@@ -204,6 +331,39 @@ def _build_prompt(summary):
     else:
         daily_prices_txt = ""
 
+    # 인트로용 변동률 문자열
+    tcp = summary.get("today_change_pct")
+    if tcp is not None:
+        sign = "+" if tcp >= 0 else ""
+        today_change_pct_str = f"{sign}{tcp}% (전일 대비)"
+        today_change_pct_short = f"{sign}{tcp}%"
+    else:
+        today_change_pct_str = "변동 데이터 없음"
+        today_change_pct_short = "주목!"
+
+    # 인트로용 최대 영향 사건
+    bi = summary.get("biggest_impact")
+    if bi:
+        biggest_impact_str = f"[{bi['direction_ko']} {bi['score']:+d}점] {bi['title']}: {bi.get('reason', '')[:80]}"
+    else:
+        biggest_impact_str = "큰 사건 없음"
+
+    # Google Trends
+    trends = summary.get("trends")
+    if trends:
+        trends_str = f"검색량 {trends['ratio']}배 변화 (최고 키워드: {trends['top_keyword']})"
+    else:
+        trends_str = "데이터 없음"
+
+    # 다음주 이벤트
+    next_events = summary.get("next_events", [])
+    if next_events:
+        next_events_str = "; ".join(
+            f"{e.get('date', '')} {e.get('title', '')}" for e in next_events
+        )
+    else:
+        next_events_str = "예정 이벤트 없음 (실적 발표·신제품 발표 등 일반 모니터링)"
+
     return SCRIPT_PROMPT_TEMPLATE.format(
         ticker=TICKER,
         company_ko=COMPANY_KO,
@@ -215,6 +375,11 @@ def _build_prompt(summary):
         price=summary["latest_price"],
         b_txt=b_txt, r_txt=r_txt,
         daily_prices_txt=daily_prices_txt,
+        today_change_pct_str=today_change_pct_str,
+        today_change_pct_short=today_change_pct_short,
+        biggest_impact_str=biggest_impact_str,
+        trends_str=trends_str,
+        next_events_str=next_events_str,
     )
 
 
@@ -255,7 +420,8 @@ def generate_script(summary):
 
 def parse_script(raw):
     scenes = []
-    for i in range(1, 5):
+    SCENE_RANGE = range(0, 6)   # 씬 0(인트로) ~ 씬 5(클로징)
+    for i in SCENE_RANGE:
         tk = f"SCENE_{i}_TITLE:"
         bk = f"SCENE_{i}:"
         title = ""
@@ -266,7 +432,7 @@ def parse_script(raw):
             title = raw[s:e].strip() if e != -1 else raw[s:].strip()
         if bk in raw:
             s   = raw.index(bk) + len(bk)
-            nxt = raw.find(f"SCENE_{i+1}_TITLE:", s) if i < 4 else len(raw)
+            nxt = raw.find(f"SCENE_{i+1}_TITLE:", s) if i < 5 else len(raw)
             body = raw[s:nxt].strip()
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})
@@ -274,9 +440,9 @@ def parse_script(raw):
 
 
 def parse_image_prompts(raw):
-    """대본에서 씬별 Imagen 프롬프트 추출 → {1: "...", 2: "...", ...}"""
+    """대본에서 씬별 Imagen 프롬프트 추출 → {0: "...", 1: "...", ...}"""
     prompts = {}
-    for i in range(1, 5):
+    for i in range(0, 6):
         key = f"IMAGE_PROMPT_{i}:"
         if key in raw:
             s = raw.index(key) + len(key)
@@ -701,7 +867,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     idx    = scene["index"]
     title  = scene["title"] or f"씬 {idx}"
     lines  = scene.get("lines") or [l.strip() for l in (scene.get("body") or "").split("\n") if l.strip()]
-    accent = SCENE_ACCENTS[idx - 1]
+    accent = SCENE_ACCENTS[idx]   # 0-based: 0=인트로, 1~4=본편, 5=클로징
 
     img, draw = make_canvas(accent)
 
@@ -727,8 +893,188 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     f_brand = fnt(font_bold, 32)
     f_head_main = fnt(font_bold, 80)
     f_head_sub  = fnt(font_bold, 64)
+    # 인트로 전용: 대형 % 숫자
+    f_huge      = fnt(font_bold, 200)
+    f_huge_sub  = fnt(font_bold, 56)
 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
+
+    # ╔══════════════════════════════════════════════════════════════════╗
+    # ║ 씬 0 — 충격 인트로 (custom layout)                                ║
+    # ╚══════════════════════════════════════════════════════════════════╝
+    if idx == 0:
+        # 전체 배경: 검정 → 시안 그라데이션
+        for yy in range(H):
+            t = yy / H
+            r = int(0 + (6 - 0) * t)
+            g = int(0 + (60 - 0) * t)
+            b = int(20 + (90 - 20) * t)
+            draw.line([(0, yy), (W, yy)], fill=(r, g, b))
+
+        # 상단 충격 라벨
+        draw.text((W // 2, 90), "🚨 TODAY TSLA",
+                  font=f_brand, fill=accent, anchor="mt",
+                  stroke_width=2, stroke_fill=STROKE)
+
+        # 거대한 % 숫자
+        tcp = summary.get("today_change_pct")
+        if tcp is not None:
+            pct_str = f"{'+' if tcp >= 0 else ''}{tcp}%"
+            pct_color = GREEN if tcp >= 0 else RED
+        else:
+            pct_str = "TSLA"
+            pct_color = accent
+        draw.text((W // 2, 350), pct_str,
+                  font=f_huge, fill=pct_color, anchor="mm",
+                  stroke_width=6, stroke_fill=STROKE)
+
+        # 오늘 주가
+        price = summary.get("today_price") or summary.get("latest_price")
+        if price:
+            try:
+                draw.text((W // 2, 540), f"${float(price):,.2f}",
+                          font=f_huge_sub, fill=KEY, anchor="mm",
+                          stroke_width=2, stroke_fill=STROKE)
+            except (ValueError, TypeError):
+                pass
+
+        # 충격 멘트 카드 (대본 줄 1, 2 표시)
+        IMPACT_Y = 700
+        IMPACT_H = 380
+        draw.rounded_rectangle([PAD, IMPACT_Y, W - PAD, IMPACT_Y + IMPACT_H],
+                               radius=20, fill=(15, 25, 45), outline=accent, width=3)
+
+        # 대본 줄 1 (헤드라인)
+        if len(news_lines) >= 1:
+            hl_wrapped = wrap_text(draw, news_lines[0], f_lg, W - PAD * 2 - 50)
+            ky = IMPACT_Y + 50
+            for wl in hl_wrapped[:2]:
+                bb = draw.textbbox((0, 0), wl, font=f_lg)
+                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
+                          font=f_lg, fill=accent, anchor="lt",
+                          stroke_width=2, stroke_fill=STROKE)
+                ky += 56
+
+        # 구분선
+        draw.line([(PAD + 60, IMPACT_Y + 180), (W - PAD - 60, IMPACT_Y + 180)],
+                  fill=accent, width=2)
+
+        # 대본 줄 2 (충격 사건)
+        if len(news_lines) >= 2:
+            ev_wrapped = wrap_text(draw, news_lines[1], f_md, W - PAD * 2 - 50)
+            ky = IMPACT_Y + 220
+            for wl in ev_wrapped[:3]:
+                bb = draw.textbbox((0, 0), wl, font=f_md)
+                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
+                          font=f_md, fill=WHITE, anchor="lt",
+                          stroke_width=1, stroke_fill=STROKE)
+                ky += 44
+
+        # 검색량 트렌드 칩 (있을 때만)
+        trends = summary.get("trends")
+        if trends and trends.get("ratio") and trends["ratio"] >= 1.3:
+            chip_y = IMPACT_Y + IMPACT_H + 40
+            chip_text = f"🔥 검색량 {trends['ratio']}배 폭발!"
+            cb = draw.textbbox((0, 0), chip_text, font=f_lg)
+            cw = cb[2] - cb[0]
+            chip_x = (W - cw) // 2 - 30
+            draw.rounded_rectangle([chip_x, chip_y, chip_x + cw + 60, chip_y + 80],
+                                   radius=40, fill=(80, 20, 20), outline=RED, width=3)
+            draw.text((W // 2, chip_y + 40), chip_text,
+                      font=f_lg, fill=KEY, anchor="mm",
+                      stroke_width=2, stroke_fill=STROKE)
+
+        # 매수지수 범례
+        draw = ImageDraw.Draw(img)
+        avg_bi = summary.get("avg_buy_index") if summary else None
+        draw_bi_legend(draw, avg_bi, f_sm, f_md)
+        return img
+
+    # ╔══════════════════════════════════════════════════════════════════╗
+    # ║ 씬 5 — 다음주 예고 + 구독 CTA (custom layout)                     ║
+    # ╚══════════════════════════════════════════════════════════════════╝
+    if idx == 5:
+        # 전체 배경: 검정 → 마젠타 그라데이션
+        for yy in range(H):
+            t = yy / H
+            r = int(20 + (60 - 20) * t)
+            g = int(0 + (20 - 0) * t)
+            b = int(40 + (90 - 40) * t)
+            draw.line([(0, yy), (W, yy)], fill=(r, g, b))
+
+        # 상단: "다음주 예고"
+        draw.text((W // 2, 100), "다음주 예고",
+                  font=f_huge_sub, fill=WHITE, anchor="mt",
+                  stroke_width=3, stroke_fill=STROKE)
+        draw.line([(W // 2 - 200, 180), (W // 2 + 200, 180)],
+                  fill=accent, width=4)
+
+        # 다음주 이벤트 카드
+        next_events = summary.get("next_events", [])
+        EV_Y = 260
+        EV_H = 400
+        draw.rounded_rectangle([PAD, EV_Y, W - PAD, EV_Y + EV_H],
+                               radius=20, fill=(25, 15, 35), outline=accent, width=3)
+
+        if next_events:
+            ev = next_events[0]
+            date_s = ev.get("date", "")
+            title_s = ev.get("title", "")[:40]
+            imp = ev.get("importance", "medium")
+            imp_label = {"high": "⚡ HIGH", "medium": "📌 MED", "low": "🔹 LOW"}.get(imp, "📌")
+            imp_col = {"high": RED, "medium": AMBER, "low": GRAY}.get(imp, GRAY)
+
+            draw.text((W // 2, EV_Y + 60), imp_label,
+                      font=f_lg, fill=imp_col, anchor="mm",
+                      stroke_width=2, stroke_fill=STROKE)
+            draw.text((W // 2, EV_Y + 130), date_s,
+                      font=f_huge_sub, fill=KEY, anchor="mm",
+                      stroke_width=2, stroke_fill=STROKE)
+            # 이벤트 제목 (래핑)
+            title_wrapped = wrap_text(draw, title_s, f_md, W - PAD * 2 - 60)
+            ky = EV_Y + 220
+            for wl in title_wrapped[:3]:
+                bb = draw.textbbox((0, 0), wl, font=f_md)
+                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
+                          font=f_md, fill=WHITE, anchor="lt",
+                          stroke_width=1, stroke_fill=STROKE)
+                ky += 50
+        else:
+            # 대본 줄1 폴백
+            line1 = news_lines[0] if news_lines else "다음주도 주목!"
+            wrapped = wrap_text(draw, line1, f_lg, W - PAD * 2 - 60)
+            ky = EV_Y + 100
+            for wl in wrapped[:4]:
+                bb = draw.textbbox((0, 0), wl, font=f_lg)
+                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
+                          font=f_lg, fill=WHITE, anchor="lt",
+                          stroke_width=2, stroke_fill=STROKE)
+                ky += 60
+
+        # 큰 CTA 박스: 구독 + 알림
+        CTA_Y = 720
+        CTA_H = 320
+        # 빨강 그라데이션 박스
+        for yy in range(CTA_Y, CTA_Y + CTA_H):
+            t = (yy - CTA_Y) / CTA_H
+            r = int(220 + (180 - 220) * t)
+            g = int(40 + (20 - 40) * t)
+            b = int(40 + (60 - 40) * t)
+            draw.line([(PAD, yy), (W - PAD, yy)], fill=(r, g, b))
+        draw.rounded_rectangle([PAD, CTA_Y, W - PAD, CTA_Y + CTA_H],
+                               radius=24, outline=WHITE, width=4)
+
+        draw.text((W // 2, CTA_Y + 60), "🔔",
+                  font=f_huge, fill=WHITE, anchor="mt")
+        draw.text((W // 2, CTA_Y + 230), "구독 + 알림 설정",
+                  font=f_huge_sub, fill=WHITE, anchor="mm",
+                  stroke_width=3, stroke_fill=STROKE)
+
+        # 하단 매수지수 범례
+        draw = ImageDraw.Draw(img)
+        avg_bi = summary.get("avg_buy_index") if summary else None
+        draw_bi_legend(draw, avg_bi, f_sm, f_md)
+        return img
 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 1:
@@ -921,8 +1267,8 @@ def build_images(scenes, summary, out_dir):
     bg_paths = {}
     for scene in scenes:
         idx        = scene["index"]
-        static_bg  = SCENE_STATIC_BG[idx - 1]
-        articles   = SCENE_WIKI_ARTICLES[idx - 1]
+        static_bg  = SCENE_STATIC_BG[idx] if idx < len(SCENE_STATIC_BG) else None
+        articles   = SCENE_WIKI_ARTICLES[idx] if idx < len(SCENE_WIKI_ARTICLES) else ["Tesla, Inc."]
         bg_path    = out_dir / f"bg_{idx:02d}.jpg"
 
         if static_bg and static_bg.exists():
@@ -960,11 +1306,24 @@ def main():
     summary = summarize(sessions)
     print(f"   {summary['week_start']} ~ {summary['week_end']} / {summary['session_count']}개 세션")
     print(f"   평균 매수지수: {summary['avg_buy_index']} / 현재가: ${summary['latest_price']}")
+    if summary.get("today_change_pct") is not None:
+        print(f"   오늘 변동: {summary['today_change_pct']:+.2f}%")
+
+    # ── Google Trends 수집 ──
+    print("📈 Google Trends 수집 중...")
+    summary["trends"] = fetch_google_trends(GOOGLE_TRENDS_KEYWORDS)
+    if summary["trends"]:
+        print(f"   검색량 {summary['trends']['ratio']}배 변화 (최고: {summary['trends']['top_keyword']})")
+
+    # ── Calendar 이벤트 ──
+    summary["next_events"] = load_next_events()
+    if summary["next_events"]:
+        print(f"   다음주 이벤트 {len(summary['next_events'])}건 발견")
 
     # ── 대본 ──
     if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
         print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
-        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(1, 5)]
+        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 6)]
     else:
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
@@ -982,9 +1341,10 @@ def main():
         if img_prompts:
             lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
-            scene_names = {1: "씬1 주간브리핑", 2: "씬2 호재뉴스",
-                           3: "씬3 리스크뉴스", 4: "씬4 시장반응"}
-            for i in range(1, 5):
+            scene_names = {0: "씬0 충격인트로", 1: "씬1 주간브리핑",
+                           2: "씬2 호재뉴스", 3: "씬3 리스크뉴스",
+                           4: "씬4 시장반응", 5: "씬5 다음주예고"}
+            for i in range(0, 6):
                 if i in img_prompts:
                     lines.append(f"## {scene_names[i]}")
                     lines.append(img_prompts[i])
@@ -1007,12 +1367,13 @@ def main():
             "avg_buy_index":   summary["avg_buy_index"],
             "latest_price":    summary["latest_price"],
             "session_count":   summary["session_count"],
+            "today_change_pct": summary.get("today_change_pct"),
+            "trends":          summary.get("trends"),
         }, f, ensure_ascii=False, indent=2)
 
     print(f"\n✅ 완료: data/weekly-report/{today}/")
-    print(f"   📄 script.txt  — 영상 대본 (자막용)")
-    print(f"   🖼 scene_01~04.png — 씬별 배경 카드 이미지 (1080×1920, YouTube Shorts 세로 포맷)")
-    print(f"   CapCut / Premiere 등에서 이미지+자막 조합 후 영상 제작 가능합니다.")
+    print(f"   📄 script.txt  — 영상 대본 (6씬, 인트로+클로징 포함)")
+    print(f"   🖼 scene_00~05.png — 씬별 배경 카드 이미지 (1080×1920, YouTube Shorts 세로 포맷)")
 
 
 if __name__ == "__main__":

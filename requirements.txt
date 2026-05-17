@@ -8,3 +8,4 @@ Pillow
 edge-tts
 moviepy
 numpy
+pytrends
