@@ -1,0 +1,14 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-17
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬1 주간브리핑
+A futuristic humanoid Optimus robot standing on a glowing Tesla factory assembly line, with a sleek Cybercab autonomous taxi and Tesla Semi truck silhouetted in the background, deep purple and violet neon lighting, holographic AI interface glowing softly, cinematic atmosphere, sense of technological breakthrough, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
+
+## 씬2 호재뉴스
+A bright emerald green futuristic Tesla showroom with rows of electric vehicles glowing under fresh green light, ascending financial chart bars made of light particles, AI neural network patterns floating in the air, energetic and optimistic atmosphere, vibrant green and lime tones, success and growth visualization, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
+
+## 씬3 리스크뉴스
+A dramatic scene of a Tesla Cybertruck under red warning spotlights in a dim factory bay, scattered camera parts and wheel components on the floor, descending red chart arrows in the background, tense crimson and dark red atmosphere, broken glass reflections, sense of caution and recall crisis, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
+
+## 씬4 시장반응
+A bustling night cityscape with crowds of investors looking up at giant glowing stock ticker screens displaying Tesla vehicle silhouettes, warm orange and amber sunset lighting reflecting on skyscrapers, mixed emotions of excitement and concern on faces, financial district atmosphere, dynamic urban energy, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo

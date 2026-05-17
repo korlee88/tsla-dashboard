@@ -1,43 +1,43 @@
 {
-  "score": -1,
-  "velocity": 0.58,
-  "velocity_label": "소폭 감소 (×0.6)",
-  "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 345,780회 / 이전 4~7일 594,621회 | 총 940,401회 (45개 영상)",
+  "score": -2,
+  "velocity": 0.26,
+  "velocity_label": "급감 (×0.3)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 265,785회 / 이전 4~7일 1,041,177회 | 총 1,306,962회 (45개 영상)",
   "video_count": 45,
-  "total_views": 940401,
-  "hot_views": 345780,
-  "baseline_views": 594621,
+  "total_views": 1306962,
+  "hot_views": 265785,
+  "baseline_views": 1041177,
   "top_videos": [
     {
-      "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
-      "channel": "Mosh Brutal",
-      "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 67799
-    },
-    {
-      "title": "Is Tesla About to Skyrocket? 5 Real Answers",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 55694
-    },
-    {
-      "title": "DRAM Stocks, Tesla, China, and Massive Volatility Coming Tomorrow",
-      "channel": "StockedUp",
-      "publishedAt": "2026-05-11T22:00:07Z",
-      "viewCount": 47433
+      "title": "Nobody Sees What Amazon Just Did to Tesla",
+      "channel": "Farzad",
+      "publishedAt": "2026-05-11T12:00:06Z",
+      "viewCount": 203648
     },
     {
       "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
       "channel": "Beyond Ordinary ",
       "publishedAt": "2026-05-11T04:45:10Z",
-      "viewCount": 46607
+      "viewCount": 109521
     },
     {
-      "title": "40시간 째 일하는 모습 생중계 중… Figure 03 라이브가 보여준 휴머노이드의 진짜 시험",
-      "channel": "안될공학 - IT 테크 신기술",
-      "publishedAt": "2026-05-14T14:19:34Z",
-      "viewCount": 43265
+      "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+      "channel": "Mosh Brutal",
+      "publishedAt": "2026-05-13T03:35:39Z",
+      "viewCount": 88853
+    },
+    {
+      "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-05-11T13:30:38Z",
+      "viewCount": 57511
+    },
+    {
+      "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+      "channel": "scoremia",
+      "publishedAt": "2026-05-15T08:39:33Z",
+      "viewCount": 53727
     }
   ],
-  "collected_at": "2026-05-15T14:10:57Z"
+  "collected_at": "2026-05-17T13:24:28Z"
 }

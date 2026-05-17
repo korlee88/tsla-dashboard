@@ -1,0 +1,31 @@
+SCENE_1_TITLE: 빅뉴스
+SCENE_1:
+와! 테슬라 미래가 왔어요!
+Reuters · 05/14 보도
+테슬라가 드디어 사람처럼 움직이는 옵티머스 로봇의 1세대 생산 라인을 본격 설치하기 시작했어요! 게다가 무인 택시 사이버캡과 대형 트럭 세미까지 2026년 안에 줄줄이 출시한다고 발표했죠. 자동차 회사를 넘어 로봇·AI 기업으로 변신하는 신호탄입니다. 시장이 흥분할 만하죠!
+미래 성장 동력이 현실로! 장기 투자자에겐 큰 그림이 그려지는 한 주였어요.
+
+SCENE_2_TITLE: 굿뉴스
+SCENE_2:
+실적호조: 와! 테슬라가 또 한 번 시장을 놀라게 했어요. 월스트리트 예상치를 가뿐히 뛰어넘는 분기 실적을 발표했고, 차량 인도량도 무려 13만 9300대를 기록했답니다. 게다가 5분기 연속 흑자라는 안정적인 모습까지! 이런 흐름이면 투자자들이 다시 몰려들 만하죠. 주가에도 든든한 버팀목이 되는 소식이에요. | CNBC · 05/13 · 호재
+AI투자: 자, 여기 또 좋은 소식! 1분기 주당 순이익이 예상보다 높게 나왔고요, 일론 머스크는 AI와 로봇 분야에 대규모로 돈을 쏟아붓겠다고 선언했어요. 단순히 차 파는 회사가 아니라 미래 기술 기업으로 가겠다는 거죠. 구글, 엔비디아랑 경쟁하는 그림이에요. 성장 기대감이 확 살아났습니다! | Bloomberg · 05/12 · 호재
+
+SCENE_3_TITLE: 빨간불
+SCENE_3:
+인도부진: 어이쿠, 이건 좀 아쉽네요. 2026년 1분기 차량 인도량이 시장 예상보다 5% 넘게 부족했고, 안 팔린 재고가 창고에 쌓이고 있어요. 특히 유럽에서 전기차 보조금이 줄면서 판매가 뚝 떨어졌죠. 이러면 단기 매출에 빨간불이 켜질 수밖에 없어요. 투자자들 표정이 굳어진 이유입니다. | WSJ · 05/15 · 악재
+대량리콜: 또 하나 걱정거리가 터졌어요. 사이버트럭은 바퀴 문제로, 다른 차량 20만 대 이상은 카메라 결함으로 줄줄이 리콜됐답니다. 차 한두 대도 아니고 20만 대요! 품질 관리에 대한 불신이 커지면서 SNS에선 "이래서 사도 되나?"라는 글이 쏟아졌죠. 브랜드 이미지에 타격이 불가피해요. | Reuters · 05/16 · 주의
+
+SCENE_4_TITLE: 시장반응
+SCENE_4:
+[분위기] 와! 이번 주 테슬라는 그야말로 롤러코스터였어요. 주가가 445달러에서 422달러까지 슬금슬금 빠지면서 투자자들 심장이 쫄깃해진 한 주였습니다.
+[검색·영상] 구글에서 "테슬라 옵티머스" 검색량이 확 치솟았어요! 유튜브에선 로봇 생산 라인 분석 영상이 조회수 100만을 넘기며 핫이슈로 떠올랐답니다.
+[투자자] 커뮤니티 반응은 딱 반반이에요. "미래 보고 들어간다"는 장기 투자파가 약 55%, "리콜 무섭다 잠깐 쉬자"는 신중파가 45% 정도로 의견이 팽팽하게 갈렸어요.
+[시황] 종합하면 호재와 악재가 동시에 터진 혼조 장세였어요. 개인적으론 미래 비전은 분명 매력적이지만, 단기 변동성은 충분히 각오해야 할 구간으로 보입니다.
+
+IMAGE_PROMPT_1: A futuristic humanoid Optimus robot standing on a glowing Tesla factory assembly line, with a sleek Cybercab autonomous taxi and Tesla Semi truck silhouetted in the background, deep purple and violet neon lighting, holographic AI interface glowing softly, cinematic atmosphere, sense of technological breakthrough, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: A bright emerald green futuristic Tesla showroom with rows of electric vehicles glowing under fresh green light, ascending financial chart bars made of light particles, AI neural network patterns floating in the air, energetic and optimistic atmosphere, vibrant green and lime tones, success and growth visualization, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_3: A dramatic scene of a Tesla Cybertruck under red warning spotlights in a dim factory bay, scattered camera parts and wheel components on the floor, descending red chart arrows in the background, tense crimson and dark red atmosphere, broken glass reflections, sense of caution and recall crisis, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_4: A bustling night cityscape with crowds of investors looking up at giant glowing stock ticker screens displaying Tesla vehicle silhouettes, warm orange and amber sunset lighting reflecting on skyscrapers, mixed emotions of excitement and concern on faces, financial district atmosphere, dynamic urban energy, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo
