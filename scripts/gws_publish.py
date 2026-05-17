@@ -225,9 +225,9 @@ def _build_html(meta: dict, youtube_url: str | None, scene_count: int) -> str:
         </p>"""
 
     scene_imgs = ""
-    scene_labels = ["주간 브리핑", "호재 뉴스", "리스크 뉴스", "시장 반응"]
-    for i in range(1, scene_count + 1):
-        label = scene_labels[i - 1] if i <= len(scene_labels) else f"씬 {i}"
+    scene_labels = ["충격 인트로", "주간 브리핑", "호재 뉴스", "리스크 뉴스", "시장 반응", "다음주 예고"]
+    for i in range(0, scene_count):
+        label = scene_labels[i] if i < len(scene_labels) else f"씬 {i}"
         scene_imgs += f"""
         <div style="margin:20px 0;">
           <p style="color:#9ca3af;font-size:13px;margin:0 0 6px;">씬 {i} — {label}</p>
@@ -283,9 +283,9 @@ def send_gmail_digest(report_dir: Path, meta: dict, youtube_url: str | None) -> 
 
     subject = f"{TICKER} 주간 브리핑 {date} | 참고지수 {bi}점 ({signal})"
 
-    # 씬 이미지 수집
+    # 씬 이미지 수집 (0~5: 인트로 + 본편 4 + 클로징)
     scene_paths = []
-    for i in range(1, 5):
+    for i in range(0, 6):
         p = report_dir / f"scene_{i:02d}.png"
         if p.exists():
             scene_paths.append((i, p))

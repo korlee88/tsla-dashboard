@@ -9,17 +9,21 @@
   "beta_coefficient": 2.5,
 
   "scene_wiki_articles": [
+    ["Tesla, Inc.", "Tesla logo"],
     ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],
     ["Tesla Cybertruck"],
     ["Elon Musk"],
-    ["Gigafactory Nevada"]
+    ["Gigafactory Nevada"],
+    ["Tesla, Inc.", "Tesla Model Y"]
   ],
 
   "scene_static_bg_files": [
     null,
+    null,
     "bg_scene_02.jpg",
     "bg_scene_03.jpg",
-    "bg_scene_04.jpg"
+    "bg_scene_04.jpg",
+    null
   ],
 
   "youtube_search_queries": [
@@ -27,6 +31,8 @@
     "Tesla earnings",
     "Tesla Optimus robot"
   ],
+
+  "google_trends_keywords": ["테슬라", "TSLA", "일론머스크", "전기차"],
 
   "video_title_template": "{ticker} 주간 분석 {date} | 참고지수 {bi}점 {signal}",
   "video_tags": ["테슬라", "TSLA", "주식", "전기차", "Shorts"],
