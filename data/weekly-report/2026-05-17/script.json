@@ -3,8 +3,9 @@
   "summary": {
     "week_start": "2026-05-10",
     "week_end": "2026-05-17",
-    "session_count": 31,
+    "session_count": 32,
     "buy_indices": [
+      62,
       64,
       67,
       62,
@@ -38,10 +39,19 @@
       64
     ],
     "avg_buy_index": 64,
-    "latest_buy_index": 64,
+    "latest_buy_index": 62,
     "price_start": 428.35,
     "price_end": 422.24,
     "latest_price": 422.24,
+    "today_price": 422.24,
+    "today_change_pct": 0.0,
+    "biggest_impact": {
+      "title": "테슬라, 옵티머스 로봇 생산 라인 설치 및 사이버캡, 세미 2026년 출시 예정",
+      "score": 4,
+      "reason": "테슬라가 옵티머스 로봇의 1세대 생산 라인을 설치 중이며 2026년 사이버캡과 세미 출시를 예고하여 미래 성장 동력에 대한 기대감을 높이고, 프리몬트 공장 라인 전환은 로봇 생산의 구체적인 계획을 보여줍니다.",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
     "top_bullish": [
       {
         "title": "테슬라, 옵티머스 로봇 생산 라인 설치 및 사이버캡, 세미 2026년 출시 예정",
@@ -90,10 +100,10 @@
         "day": 2,
         "label": "D+2",
         "date": "5/19(화)",
-        "change_pct": -0.3,
+        "change_pct": -0.2,
         "signal": "관망",
         "basePrice": 422.24,
-        "predictedPrice": 420.97
+        "predictedPrice": 421.4
       },
       {
         "day": 3,
@@ -126,62 +136,84 @@
         "2026-05-13",
         445.75
       ]
-    ]
+    ],
+    "trends": null,
+    "next_events": []
   },
   "scenes": [
     {
-      "index": 1,
-      "title": "빅뉴스",
+      "index": 0,
+      "title": "충격속보",
       "lines": [
-        "와! 테슬라 미래가 왔어요!",
-        "Reuters · 05/14 보도",
-        "테슬라가 드디어 사람처럼 움직이는 옵티머스 로봇의 1세대 생산 라인을 본격 설치하기 시작했어요! 게다가 무인 택시 사이버캡과 대형 트럭 세미까지 2026년 안에 줄줄이 출시한다고 발표했죠. 자동차 회사를 넘어 로봇·AI 기업으로 변신하는 신호탄입니다. 시장이 흥분할 만하죠!",
-        "미래 성장 동력이 현실로! 장기 투자자에겐 큰 그림이 그려지는 한 주였어요."
+        "충격! 오늘 TSLA +0.0%! ⚡",
+        "헐! 옵티머스 생산라인 깔린다!"
       ],
-      "body": "와! 테슬라 미래가 왔어요!\nReuters · 05/14 보도\n테슬라가 드디어 사람처럼 움직이는 옵티머스 로봇의 1세대 생산 라인을 본격 설치하기 시작했어요! 게다가 무인 택시 사이버캡과 대형 트럭 세미까지 2026년 안에 줄줄이 출시한다고 발표했죠. 자동차 회사를 넘어 로봇·AI 기업으로 변신하는 신호탄입니다. 시장이 흥분할 만하죠!\n미래 성장 동력이 현실로! 장기 투자자에겐 큰 그림이 그려지는 한 주였어요."
+      "body": "충격! 오늘 TSLA +0.0%! ⚡\n헐! 옵티머스 생산라인 깔린다!"
+    },
+    {
+      "index": 1,
+      "title": "주간브리핑",
+      "lines": [
+        "대박! 주가 $422 사수!",
+        "이번주 -5% 흔들렸지만 버텼다!"
+      ],
+      "body": "대박! 주가 $422 사수!\n이번주 -5% 흔들렸지만 버텼다!"
     },
     {
       "index": 2,
-      "title": "굿뉴스",
+      "title": "호재폭발",
       "lines": [
-        "실적호조: 와! 테슬라가 또 한 번 시장을 놀라게 했어요. 월스트리트 예상치를 가뿐히 뛰어넘는 분기 실적을 발표했고, 차량 인도량도 무려 13만 9300대를 기록했답니다. 게다가 5분기 연속 흑자라는 안정적인 모습까지! 이런 흐름이면 투자자들이 다시 몰려들 만하죠. 주가에도 든든한 버팀목이 되는 소식이에요. | CNBC · 05/13 · 호재",
-        "AI투자: 자, 여기 또 좋은 소식! 1분기 주당 순이익이 예상보다 높게 나왔고요, 일론 머스크는 AI와 로봇 분야에 대규모로 돈을 쏟아붓겠다고 선언했어요. 단순히 차 파는 회사가 아니라 미래 기술 기업으로 가겠다는 거죠. 구글, 엔비디아랑 경쟁하는 그림이에요. 성장 기대감이 확 살아났습니다! | Bloomberg · 05/12 · 호재"
+        "로봇혁명: 옵티머스 1세대 생산 돌입 | 테슬라 공식·5월·+4",
+        "실적충격: 분기 13.9만대 인도 신기록 | 월가리포트·5월·+4"
       ],
-      "body": "실적호조: 와! 테슬라가 또 한 번 시장을 놀라게 했어요. 월스트리트 예상치를 가뿐히 뛰어넘는 분기 실적을 발표했고, 차량 인도량도 무려 13만 9300대를 기록했답니다. 게다가 5분기 연속 흑자라는 안정적인 모습까지! 이런 흐름이면 투자자들이 다시 몰려들 만하죠. 주가에도 든든한 버팀목이 되는 소식이에요. | CNBC · 05/13 · 호재\nAI투자: 자, 여기 또 좋은 소식! 1분기 주당 순이익이 예상보다 높게 나왔고요, 일론 머스크는 AI와 로봇 분야에 대규모로 돈을 쏟아붓겠다고 선언했어요. 단순히 차 파는 회사가 아니라 미래 기술 기업으로 가겠다는 거죠. 구글, 엔비디아랑 경쟁하는 그림이에요. 성장 기대감이 확 살아났습니다! | Bloomberg · 05/12 · 호재"
+      "body": "로봇혁명: 옵티머스 1세대 생산 돌입 | 테슬라 공식·5월·+4\n실적충격: 분기 13.9만대 인도 신기록 | 월가리포트·5월·+4"
     },
     {
       "index": 3,
-      "title": "빨간불",
+      "title": "리스크경보",
       "lines": [
-        "인도부진: 어이쿠, 이건 좀 아쉽네요. 2026년 1분기 차량 인도량이 시장 예상보다 5% 넘게 부족했고, 안 팔린 재고가 창고에 쌓이고 있어요. 특히 유럽에서 전기차 보조금이 줄면서 판매가 뚝 떨어졌죠. 이러면 단기 매출에 빨간불이 켜질 수밖에 없어요. 투자자들 표정이 굳어진 이유입니다. | WSJ · 05/15 · 악재",
-        "대량리콜: 또 하나 걱정거리가 터졌어요. 사이버트럭은 바퀴 문제로, 다른 차량 20만 대 이상은 카메라 결함으로 줄줄이 리콜됐답니다. 차 한두 대도 아니고 20만 대요! 품질 관리에 대한 불신이 커지면서 SNS에선 \"이래서 사도 되나?\"라는 글이 쏟아졌죠. 브랜드 이미지에 타격이 불가피해요. | Reuters · 05/16 · 주의"
+        "인도쇼크: 1분기 인도량 예상 5% 미달 | 로이터·5월·-4",
+        "리콜폭탄: 차량 20만대 카메라 결함 회수 | CNBC·5월·-3"
       ],
-      "body": "인도부진: 어이쿠, 이건 좀 아쉽네요. 2026년 1분기 차량 인도량이 시장 예상보다 5% 넘게 부족했고, 안 팔린 재고가 창고에 쌓이고 있어요. 특히 유럽에서 전기차 보조금이 줄면서 판매가 뚝 떨어졌죠. 이러면 단기 매출에 빨간불이 켜질 수밖에 없어요. 투자자들 표정이 굳어진 이유입니다. | WSJ · 05/15 · 악재\n대량리콜: 또 하나 걱정거리가 터졌어요. 사이버트럭은 바퀴 문제로, 다른 차량 20만 대 이상은 카메라 결함으로 줄줄이 리콜됐답니다. 차 한두 대도 아니고 20만 대요! 품질 관리에 대한 불신이 커지면서 SNS에선 \"이래서 사도 되나?\"라는 글이 쏟아졌죠. 브랜드 이미지에 타격이 불가피해요. | Reuters · 05/16 · 주의"
+      "body": "인도쇼크: 1분기 인도량 예상 5% 미달 | 로이터·5월·-4\n리콜폭탄: 차량 20만대 카메라 결함 회수 | CNBC·5월·-3"
     },
     {
       "index": 4,
       "title": "시장반응",
       "lines": [
-        "[분위기] 와! 이번 주 테슬라는 그야말로 롤러코스터였어요. 주가가 445달러에서 422달러까지 슬금슬금 빠지면서 투자자들 심장이 쫄깃해진 한 주였습니다.",
-        "[검색·영상] 구글에서 \"테슬라 옵티머스\" 검색량이 확 치솟았어요! 유튜브에선 로봇 생산 라인 분석 영상이 조회수 100만을 넘기며 핫이슈로 떠올랐답니다.",
-        "[투자자] 커뮤니티 반응은 딱 반반이에요. \"미래 보고 들어간다\"는 장기 투자파가 약 55%, \"리콜 무섭다 잠깐 쉬자\"는 신중파가 45% 정도로 의견이 팽팽하게 갈렸어요.",
-        "[시황] 종합하면 호재와 악재가 동시에 터진 혼조 장세였어요. 개인적으론 미래 비전은 분명 매력적이지만, 단기 변동성은 충분히 각오해야 할 구간으로 보입니다.",
-        "",
-        "IMAGE_PROMPT_1: A futuristic humanoid Optimus robot standing on a glowing Tesla factory assembly line, with a sleek Cybercab autonomous taxi and Tesla Semi truck silhouetted in the background, deep purple and violet neon lighting, holographic AI interface glowing softly, cinematic atmosphere, sense of technological breakthrough, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo",
-        "",
-        "IMAGE_PROMPT_2: A bright emerald green futuristic Tesla showroom with rows of electric vehicles glowing under fresh green light, ascending financial chart bars made of light particles, AI neural network patterns floating in the air, energetic and optimistic atmosphere, vibrant green and lime tones, success and growth visualization, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo",
-        "",
-        "IMAGE_PROMPT_3: A dramatic scene of a Tesla Cybertruck under red warning spotlights in a dim factory bay, scattered camera parts and wheel components on the floor, descending red chart arrows in the background, tense crimson and dark red atmosphere, broken glass reflections, sense of caution and recall crisis, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo",
-        "",
-        "IMAGE_PROMPT_4: A bustling night cityscape with crowds of investors looking up at giant glowing stock ticker screens displaying Tesla vehicle silhouettes, warm orange and amber sunset lighting reflecting on skyscrapers, mixed emotions of excitement and concern on faces, financial district atmosphere, dynamic urban energy, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo"
+        "[분위기] 와! 공포와 기대가 정면충돌!",
+        "[전망] 신중 관점, 변동성 확대 주의 구간"
       ],
-      "body": "[분위기] 와! 이번 주 테슬라는 그야말로 롤러코스터였어요. 주가가 445달러에서 422달러까지 슬금슬금 빠지면서 투자자들 심장이 쫄깃해진 한 주였습니다.\n[검색·영상] 구글에서 \"테슬라 옵티머스\" 검색량이 확 치솟았어요! 유튜브에선 로봇 생산 라인 분석 영상이 조회수 100만을 넘기며 핫이슈로 떠올랐답니다.\n[투자자] 커뮤니티 반응은 딱 반반이에요. \"미래 보고 들어간다\"는 장기 투자파가 약 55%, \"리콜 무섭다 잠깐 쉬자\"는 신중파가 45% 정도로 의견이 팽팽하게 갈렸어요.\n[시황] 종합하면 호재와 악재가 동시에 터진 혼조 장세였어요. 개인적으론 미래 비전은 분명 매력적이지만, 단기 변동성은 충분히 각오해야 할 구간으로 보입니다.\n\nIMAGE_PROMPT_1: A futuristic humanoid Optimus robot standing on a glowing Tesla factory assembly line, with a sleek Cybercab autonomous taxi and Tesla Semi truck silhouetted in the background, deep purple and violet neon lighting, holographic AI interface glowing softly, cinematic atmosphere, sense of technological breakthrough, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_2: A bright emerald green futuristic Tesla showroom with rows of electric vehicles glowing under fresh green light, ascending financial chart bars made of light particles, AI neural network patterns floating in the air, energetic and optimistic atmosphere, vibrant green and lime tones, success and growth visualization, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_3: A dramatic scene of a Tesla Cybertruck under red warning spotlights in a dim factory bay, scattered camera parts and wheel components on the floor, descending red chart arrows in the background, tense crimson and dark red atmosphere, broken glass reflections, sense of caution and recall crisis, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_4: A bustling night cityscape with crowds of investors looking up at giant glowing stock ticker screens displaying Tesla vehicle silhouettes, warm orange and amber sunset lighting reflecting on skyscrapers, mixed emotions of excitement and concern on faces, financial district atmosphere, dynamic urban energy, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo"
+      "body": "[분위기] 와! 공포와 기대가 정면충돌!\n[전망] 신중 관점, 변동성 확대 주의 구간"
+    },
+    {
+      "index": 5,
+      "title": "예고편",
+      "lines": [
+        "다음주 옵티머스 공개 임박! 놓치면 큰일!",
+        "🔔 구독+알림으로 1초도 늦지 마세요!",
+        "",
+        "IMAGE_PROMPT_0: A dramatic cinematic close-up of a futuristic Tesla electric car silhouette exploding with cyan lightning bolts and sparks against a deep black background, intense contrast between glowing cyan blue and pitch black, shockwave energy radiating outward, broken glass shards floating mid-air, dynamic motion blur, hyper-realistic 3D render, dramatic rim lighting, electric storm atmosphere, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_1: A sleek futuristic Tesla vehicle parked on a glowing neon highway under a deep purple twilight sky, holographic data charts and stock graphs floating in the air around it, violet and indigo gradient atmosphere, soft purple fog drifting, reflective wet asphalt with purple light reflections, cyberpunk aesthetic, cinematic depth of field, ultra-detailed metallic surfaces, futuristic mood, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_2: A vibrant futuristic Tesla factory interior with humanoid Optimus robots assembling vehicles on a glowing production line, bright emerald green and lime accents illuminating the scene, rising green arrow holograms symbolizing growth, energetic atmosphere with sparks and light particles, clean industrial design, optimistic and powerful vibe, cinematic wide angle, hyper-realistic 3D render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_3: A dark ominous scene of a Tesla Cybertruck partially shrouded in red warning lights and smoke inside a dim factory, falling red downward arrows and cracked glass overlays, intense crimson and deep black atmosphere, glowing red alert symbols radiating tension, dramatic shadows, recall warning mood, cinematic thriller lighting, hyper-realistic detail, ominous fog, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_4: A bustling futuristic financial cityscape at sunset with towering skyscrapers reflecting warm orange and amber light, holographic stock tickers and candlestick charts floating between buildings, Tesla vehicles driving on elevated highways, dramatic golden hour glow, mix of optimism and tension in the air, cinematic urban skyline, vibrant orange and copper tones, hyper-realistic render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_5: A dreamy futuristic horizon featuring a Tesla Cybercab and Semi truck silhouettes driving toward a glowing magenta and pink sunrise, sparkling stars and shimmering light particles filling the sky, soft pink clouds and neon magenta gradients, hopeful and magical atmosphere, lens flares and bokeh sparkles, cinematic anticipation mood, hyper-realistic 3D render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution"
+      ],
+      "body": "다음주 옵티머스 공개 임박! 놓치면 큰일!\n🔔 구독+알림으로 1초도 늦지 마세요!\n\nIMAGE_PROMPT_0: A dramatic cinematic close-up of a futuristic Tesla electric car silhouette exploding with cyan lightning bolts and sparks against a deep black background, intense contrast between glowing cyan blue and pitch black, shockwave energy radiating outward, broken glass shards floating mid-air, dynamic motion blur, hyper-realistic 3D render, dramatic rim lighting, electric storm atmosphere, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_1: A sleek futuristic Tesla vehicle parked on a glowing neon highway under a deep purple twilight sky, holographic data charts and stock graphs floating in the air around it, violet and indigo gradient atmosphere, soft purple fog drifting, reflective wet asphalt with purple light reflections, cyberpunk aesthetic, cinematic depth of field, ultra-detailed metallic surfaces, futuristic mood, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_2: A vibrant futuristic Tesla factory interior with humanoid Optimus robots assembling vehicles on a glowing production line, bright emerald green and lime accents illuminating the scene, rising green arrow holograms symbolizing growth, energetic atmosphere with sparks and light particles, clean industrial design, optimistic and powerful vibe, cinematic wide angle, hyper-realistic 3D render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_3: A dark ominous scene of a Tesla Cybertruck partially shrouded in red warning lights and smoke inside a dim factory, falling red downward arrows and cracked glass overlays, intense crimson and deep black atmosphere, glowing red alert symbols radiating tension, dramatic shadows, recall warning mood, cinematic thriller lighting, hyper-realistic detail, ominous fog, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_4: A bustling futuristic financial cityscape at sunset with towering skyscrapers reflecting warm orange and amber light, holographic stock tickers and candlestick charts floating between buildings, Tesla vehicles driving on elevated highways, dramatic golden hour glow, mix of optimism and tension in the air, cinematic urban skyline, vibrant orange and copper tones, hyper-realistic render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_5: A dreamy futuristic horizon featuring a Tesla Cybercab and Semi truck silhouettes driving toward a glowing magenta and pink sunrise, sparkling stars and shimmering light particles filling the sky, soft pink clouds and neon magenta gradients, hopeful and magical atmosphere, lens flares and bokeh sparkles, cinematic anticipation mood, hyper-realistic 3D render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution"
     }
   ],
   "image_prompts": {
-    "1": "A futuristic humanoid Optimus robot standing on a glowing Tesla factory assembly line, with a sleek Cybercab autonomous taxi and Tesla Semi truck silhouetted in the background, deep purple and violet neon lighting, holographic AI interface glowing softly, cinematic atmosphere, sense of technological breakthrough, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo",
-    "2": "A bright emerald green futuristic Tesla showroom with rows of electric vehicles glowing under fresh green light, ascending financial chart bars made of light particles, AI neural network patterns floating in the air, energetic and optimistic atmosphere, vibrant green and lime tones, success and growth visualization, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo",
-    "3": "A dramatic scene of a Tesla Cybertruck under red warning spotlights in a dim factory bay, scattered camera parts and wheel components on the floor, descending red chart arrows in the background, tense crimson and dark red atmosphere, broken glass reflections, sense of caution and recall crisis, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo",
-    "4": "A bustling night cityscape with crowds of investors looking up at giant glowing stock ticker screens displaying Tesla vehicle silhouettes, warm orange and amber sunset lighting reflecting on skyscrapers, mixed emotions of excitement and concern on faces, financial district atmosphere, dynamic urban energy, 9:16 vertical aspect ratio, ultra-high resolution, no text, no letters, no watermark, no logo"
+    "0": "A dramatic cinematic close-up of a futuristic Tesla electric car silhouette exploding with cyan lightning bolts and sparks against a deep black background, intense contrast between glowing cyan blue and pitch black, shockwave energy radiating outward, broken glass shards floating mid-air, dynamic motion blur, hyper-realistic 3D render, dramatic rim lighting, electric storm atmosphere, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "1": "A sleek futuristic Tesla vehicle parked on a glowing neon highway under a deep purple twilight sky, holographic data charts and stock graphs floating in the air around it, violet and indigo gradient atmosphere, soft purple fog drifting, reflective wet asphalt with purple light reflections, cyberpunk aesthetic, cinematic depth of field, ultra-detailed metallic surfaces, futuristic mood, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "2": "A vibrant futuristic Tesla factory interior with humanoid Optimus robots assembling vehicles on a glowing production line, bright emerald green and lime accents illuminating the scene, rising green arrow holograms symbolizing growth, energetic atmosphere with sparks and light particles, clean industrial design, optimistic and powerful vibe, cinematic wide angle, hyper-realistic 3D render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "3": "A dark ominous scene of a Tesla Cybertruck partially shrouded in red warning lights and smoke inside a dim factory, falling red downward arrows and cracked glass overlays, intense crimson and deep black atmosphere, glowing red alert symbols radiating tension, dramatic shadows, recall warning mood, cinematic thriller lighting, hyper-realistic detail, ominous fog, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "4": "A bustling futuristic financial cityscape at sunset with towering skyscrapers reflecting warm orange and amber light, holographic stock tickers and candlestick charts floating between buildings, Tesla vehicles driving on elevated highways, dramatic golden hour glow, mix of optimism and tension in the air, cinematic urban skyline, vibrant orange and copper tones, hyper-realistic render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "5": "A dreamy futuristic horizon featuring a Tesla Cybercab and Semi truck silhouettes driving toward a glowing magenta and pink sunrise, sparkling stars and shimmering light particles filling the sky, soft pink clouds and neon magenta gradients, hopeful and magical atmosphere, lens flares and bokeh sparkles, cinematic anticipation mood, hyper-realistic 3D render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution"
   }
 }
