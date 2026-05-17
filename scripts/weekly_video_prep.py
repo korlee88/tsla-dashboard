@@ -788,8 +788,33 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
               stroke_width=1, stroke_fill=STROKE)
 
 
+def draw_bell_icon(draw, cx, cy, size, color):
+    """PIL 도형으로 그린 벨 아이콘 (🔔 이모지 대체)."""
+    s = size
+    # 돔 (반원 — 벨 상단)
+    draw.pieslice([cx - s // 2, cy - s, cx + s // 2, cy], 180, 0, fill=color)
+    # 몸통 (아래로 퍼지는 사다리꼴)
+    body = [
+        (cx - s // 2,       cy - s // 6),
+        (cx + s // 2,       cy - s // 6),
+        (cx + s // 2 + s // 5, cy + s // 2),
+        (cx - s // 2 - s // 5, cy + s // 2),
+    ]
+    draw.polygon(body, fill=color)
+    # 하단 챙 (가로 타원 아크)
+    hw = s // 2 + s // 5 + 8
+    draw.arc([cx - hw, cy + s // 3, cx + hw, cy + s // 2 + s // 4],
+             0, 180, fill=color, width=max(s // 6, 5))
+    # 손잡이 (상단 작은 아치)
+    draw.arc([cx - s // 8, cy - s - s // 8, cx + s // 8, cy - s + s // 8],
+             180, 0, outline=color, width=max(s // 10, 4))
+    # 추 (하단 작은 원)
+    cr = s // 8
+    draw.ellipse([cx - cr, cy + s // 2, cx + cr, cy + s // 2 + cr * 2], fill=color)
+
+
 def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
-    """하단 안전 영역에 매수지수 범례 + 현재 점수 표시 (y=1700~1870)."""
+    """하단 안전 영역에 매수지수 범례 + 현재 점수 표시 (y=1700~1870). 씬 5에만 사용."""
     LX  = PAD
     LY  = SAFE_BOTTOM + 20           # 1700
     LW  = W - PAD * 2                # 1000
@@ -834,12 +859,12 @@ def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
         draw.text((ix + 28, iy + 24), sig_lbl,
                   font=fnt_label, fill=col)
 
-    # 면책 문구 (우측 하단)
-    disclaimer = "※ 개인 분석 참고용 · 투자 판단은 본인 책임"
+    # 면책 문구 + 참고 뉴스 강조 (우측)
+    disclaimer = "※ 투자 권유 아님 · 참고 뉴스 · 투자 판단은 본인 책임"
     db = draw.textbbox((0, 0), disclaimer, font=fnt_label)
     dw = db[2] - db[0]
     draw.text((LX + LW - dw - 10, LY + LH - 26),
-              disclaimer, font=fnt_label, fill=(70, 78, 95))
+              disclaimer, font=fnt_label, fill=(200, 160, 80))
 
 
 def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
@@ -984,10 +1009,6 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                       font=f_lg, fill=KEY, anchor="mm",
                       stroke_width=2, stroke_fill=STROKE)
 
-        # 매수지수 범례
-        draw = ImageDraw.Draw(img)
-        avg_bi = summary.get("avg_buy_index") if summary else None
-        draw_bi_legend(draw, avg_bi, f_sm, f_md)
         return img
 
     # ╔══════════════════════════════════════════════════════════════════╗
@@ -1064,8 +1085,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         draw.rounded_rectangle([PAD, CTA_Y, W - PAD, CTA_Y + CTA_H],
                                radius=24, outline=WHITE, width=4)
 
-        draw.text((W // 2, CTA_Y + 60), "🔔",
-                  font=f_huge, fill=WHITE, anchor="mt")
+        draw_bell_icon(draw, W // 2, CTA_Y + 160, 80, WHITE)
         draw.text((W // 2, CTA_Y + 230), "구독 + 알림 설정",
                   font=f_huge_sub, fill=WHITE, anchor="mm",
                   stroke_width=3, stroke_fill=STROKE)
@@ -1241,11 +1261,6 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 draw.text((content_x, start_y), wl, font=f_ct, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
                 start_y += lh
-
-    # ── 하단 매수지수 범례 (모든 씬 공통) ─────────────────────────────────────
-    draw = ImageDraw.Draw(img)
-    avg_bi = summary.get("avg_buy_index") if summary else None
-    draw_bi_legend(draw, avg_bi, f_sm, f_md)
 
     return img
 
