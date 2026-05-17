@@ -4,5 +4,7 @@
   "week_end": "2026-05-17",
   "avg_buy_index": 64,
   "latest_price": 422.24,
-  "session_count": 31
+  "session_count": 32,
+  "today_change_pct": 0.0,
+  "trends": null
 }
