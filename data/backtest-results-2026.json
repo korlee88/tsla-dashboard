@@ -1893,14 +1893,125 @@
       "match": true,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-05-11",
+      "weekEnd": "2026-05-17",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "테슬라, 모델 Y 가격 최대 1,000달러 인상 - 2년 만에 첫 인상",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 독일 기가팩토리 배터리 생산 투자 확대",
+          "source": "Reuters",
+          "category": "Energy"
+        },
+        {
+          "title": "일론 머스크, 중국 방문 중 완전자율주행(FSD) 승인 추진 및 로보택시 문제 직면",
+          "source": "24/7 Wall St.",
+          "category": "Regulatory|Product|Musk"
+        },
+        {
+          "title": "테슬라, 중국 시장에서 전기차 판매 부진으로 상위 10위권 밖으로 밀려나",
+          "source": "Benzinga",
+          "category": "Market|Competition"
+        },
+        {
+          "title": "테슬라, 로보택시 확장 지연 및 경쟁 심화로 투자자 우려 증폭",
+          "source": "Zacks Investment Research",
+          "category": "Product|Competition"
+        },
+        {
+          "title": "일론 머스크, 텍사스에 최대 1,190억 달러 규모의 칩 공장 건설 계획",
+          "source": "Benzinga",
+          "category": "Musk|Product"
+        },
+        {
+          "title": "테슬라, 일론 머스크 소유 회사들과의 거래로 5억 달러 이상 수익",
+          "source": "Electrek",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 야망에 따라 2026년 지출 계획 250억 달러 이상으로 상향",
+          "source": "Reuters",
+          "category": "AI|Product|Musk"
+        },
+        {
+          "title": "테슬라, AI5 칩 설계 완료로 주가 상승",
+          "source": "Forbes",
+          "category": "Product|AI"
+        },
+        {
+          "title": "테슬라, 로보택시 서비스 댈러스 및 휴스턴 출시, 연말까지 수십 개 도시 확장 목표",
+          "source": "Forbes",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.3,
+        "buyIndex": 71,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 2,
+        "neutral": 1,
+        "topRules": [
+          "R13",
+          "R20",
+          "R10"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 63,
+          "macdCross": 6,
+          "wtiUp": 2
+        },
+        "macroCtx": {
+          "spyChg": 0.37,
+          "qqqChg": -0.2,
+          "vixClose": 18.43000030517578,
+          "wtiChg": 7.36,
+          "cnyChg": -0.23,
+          "prevTslaChg": 9.77,
+          "rsi": 49.5,
+          "macd": {
+            "macd": -1.3996527313513525,
+            "signal": -2.586902605932801,
+            "hist": 1.1872498745814486,
+            "crossover": "bullish",
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 462.86,
+            "middle": 404.43,
+            "lower": 346,
+            "pos": 0.652
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 0.02,
+        "actual": "neutral",
+        "open": 422.16,
+        "close": 422.24
+      },
+      "match": false,
+      "strongSignal": true,
+      "error": null
     }
   ],
-  "generatedAt": "2026-05-16 04:48 KST",
+  "generatedAt": "2026-05-18 04:18 KST",
   "stats": {
-    "totalWeeks": 18,
-    "analyzedWeeks": 18,
-    "accuracy": 39,
-    "strongAccuracy": 33,
+    "totalWeeks": 19,
+    "analyzedWeeks": 19,
+    "accuracy": 37,
+    "strongAccuracy": 29,
     "avgScore": 0.9
   }
 }
