@@ -1,6 +1,436 @@
 {
   "sessions": [
     {
+      "id": "auto-1778991092808",
+      "date": "2026-05-17",
+      "displayDate": "2026.05.17",
+      "kstTime": "13:10",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1778991062186,
+          "title": "트럼프의 중국 방문, 무역 합의 불발로 테슬라 주가 하락",
+          "summary": "도널드 트럼프 대통령의 중국 방문이 무역 관련 '실질적인 합의' 없이 끝나면서 테슬라 주가가 금요일 개장 초 1.9% 하락하여 434.72달러를 기록했습니다. 일론 머스크가 공식 수행단에 포함되었음에도 불구하고, 이번 합의 불발은 투자자들의 우려를 낳았습니다. 테슬라는 중국에서 완전자율주행(FSD) 소프트웨어 판매 승인을 얻어 세계 최대 전기차 시장에 진출하는 것을 목표로 하고 있습니다.",
+          "source": "TipRanks",
+          "date": "2026-05-15",
+          "category": "Regulatory|Musk|Market"
+        },
+        {
+          "id": 1778991062187,
+          "title": "스페이스X IPO 기대감에 테슬라 주가 상승, 머스크 스타링크 항공사 계약 옹호",
+          "summary": "스페이스X의 잠재적 IPO에 대한 기대감이 커지면서 테슬라 주가가 목요일 개장 전 1% 상승했습니다. 일론 머스크는 스타링크의 항공사 전략을 옹호하며, 스타링크를 승객들에게 더 간단하게 만들기 위해 의도적으로 낮은 항공사 계약을 수락했다고 밝혔습니다. 스페이스X는 최근 xAI와 합병하여 1조 2,500억 달러 규모의 통합 법인을 설립했으며, 테슬라는 xAI에 대한 20억 달러 투자를 스페이스X 지분으로 전환했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-05-13",
+          "category": "Musk|Market|Product"
+        },
+        {
+          "id": 1778991062188,
+          "title": "일론 머스크의 백악관 사임, 테슬라 및 기타 사업에 대한 의문 재점화",
+          "summary": "일론 머스크가 트럼프 행정부와의 관계를 끊으면서 투자자들은 그가 테슬라를 비롯한 자신의 사업에 다시 집중하기를 바라고 있습니다. 테슬라는 판매 부진을 겪고 있으며, 스페이스X의 최근 로켓 발사도 기대에 미치지 못했습니다. 머스크의 백악관 사임은 테슬라 투자자들에게 다소 위안을 주었지만, 애널리스트들은 판매 부진을 해결하기 위한 더 깊은 운영 개선이 필요하다고 말합니다.",
+          "source": "Reuters",
+          "date": "2025-05-29",
+          "category": "Musk|Regulatory|Market"
+        },
+        {
+          "id": 1778991062189,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
+          "summary": "테슬라가 1분기 조정 주당 순이익 41센트를 기록하며 월스트리트의 예상치인 34센트를 상회했습니다. 회사는 아시아 태평양 및 남미 지역에서 차량 수요가 지속적으로 증가했으며, 북미 및 유럽-중동 지역에서도 수요가 회복되고 있다고 밝혔습니다. 이는 수년간 부진했던 자동차 사업의 회복 가능성을 시사합니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-22",
+          "category": "Earnings|Market"
+        },
+        {
+          "id": 1778991062190,
+          "title": "테슬라 로보택시, 오스틴에서 무인 운행 시작 및 FSD 주행 거리 100억 마일 달성",
+          "summary": "일론 머스크는 테슬라 로보택시가 오스틴에서 처음으로 무인으로 야간 운행을 시작했다고 확인했습니다. 또한, 테슬라의 FSD(완전자율주행) 시스템이 누적 100억 마일의 감독 주행 거리를 달성했습니다. 이는 테슬라의 자율주행 기술 발전의 중요한 이정표이며, 투자자들은 이를 긍정적으로 평가하고 있습니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-04",
+          "category": "Product|Technology|Musk"
+        },
+        {
+          "id": 1778991062191,
+          "title": "테슬라, 캐나다에서 새로운 모델 3 라인업 출시 및 가격 인하",
+          "summary": "테슬라가 캐나다에서 새로운 모델 3 라인업을 출시하며, 모델 3 프리미엄 후륜 구동 모델을 39,000 캐나다 달러(미화 약 29,000달러)부터 판매한다고 발표했습니다. 또한, 모델 3 퍼포먼스 가격을 17% 인하하여 75,000달러로 책정했습니다. 이는 캐나다 시장에서 테슬라 차량의 접근성을 높여 판매량에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-04",
+          "category": "Product|Market"
+        },
+        {
+          "id": 1778991062192,
+          "title": "테슬라 메가팩 공장, 주당 200개 생산 달성",
+          "summary": "테슬라가 캘리포니아 랄롭에 위치한 메가팩 공장에서 주당 200개의 메가팩을 생산하고 있다고 밝혔습니다. 이는 테슬라의 에너지 저장 사업 확장에 중요한 진전이며, 회사의 전반적인 성장 전략에 기여할 것입니다.",
+          "source": "YouTube (Matt Pocius)",
+          "date": "2026-05-04",
+          "category": "Energy|Product"
+        },
+        {
+          "id": 1778991062193,
+          "title": "테슬라 주가, 중국 FSD 승인 및 로보택시 출시 일정에 주목",
+          "summary": "트럼프 대통령의 중국 방문이 무역 합의 없이 끝나면서 테슬라 주가가 약 1.9% 하락했습니다. 투자자들은 테슬라의 중국 FSD 승인, 로보택시 및 옵티머스 로봇 출시 일정을 주시하며 중국 판매에 미칠 잠재적 영향을 분석하고 있습니다.",
+          "source": "TradingView",
+          "date": "2026-05-15",
+          "category": "Regulatory|Product|Market"
+        },
+        {
+          "id": 1778991062194,
+          "title": "테슬라, 옵티머스 로봇 생산 라인 설치 및 사이버캡, 세미 2026년 출시 예정",
+          "summary": "테슬라는 휴머노이드 로봇인 옵티머스의 1세대 생산 라인을 설치 중이며, 사이버캡과 테슬라 세미는 2026년 출시 예정이라고 밝혔습니다. 특히 옵티머스 생산 라인은 프리몬트 공장의 모델 S 및 모델 X 라인을 대체할 예정이며, 텍사스 기가팩토리에는 장기적으로 연간 1천만 대 생산을 목표로 하는 2세대 라인이 설계되고 있습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product|Technology"
+        },
+        {
+          "id": 1778991062195,
+          "title": "테슬라 주가, 8주 최고치 기록 후 하락",
+          "summary": "테슬라 주가는 409.80달러로 3월 이후 최고치를 기록하며 8주 최고치를 기록했습니다. 지난 4주 동안 테슬라는 15.02% 상승했으며, 지난 12개월 동안 44.35% 상승했습니다. 그러나 트럼프의 중국 방문 이후 무역 합의 불발로 주가가 하락했습니다.",
+          "source": "Trading Economics",
+          "date": "2026-05-07",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1778991062186": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "트럼프 대통령의 중국 방문에서 무역 합의가 불발되면서 테슬라의 중국 FSD 시장 진출 기대감이 약화되어 주가가 하락했습니다.",
+          "key_factors": [
+            "미중 무역 합의 불발",
+            "테슬라 중국 FSD 시장 진출 지연 우려"
+          ]
+        },
+        "1778991062187": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "스페이스X의 잠재적 IPO 기대감과 xAI와의 합병 소식이 테슬라 주가에 긍정적인 영향을 미쳤으나, 이는 간접적인 영향이며 아직 확정된 IPO는 아닙니다.",
+          "key_factors": [
+            "스페이스X IPO 기대감",
+            "xAI 합병 및 투자 전환"
+          ]
+        },
+        "1778991062188": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 백악관 사임은 테슬라 투자자들에게 약간의 안도감을 주었지만, 판매 부진과 같은 근본적인 운영 문제 해결에는 직접적인 영향을 미 미치지 않아 주가에 중립적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "머스크의 백악관 사임",
+            "테슬라 판매 부진",
+            "스페이스X 로켓 발사 부진"
+          ]
+        },
+        "1778991062189": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 예상치를 10% 이상 상회하여 자동차 사업의 회복 가능성을 시사했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV 수요 회복"
+          ]
+        },
+        "1778991062190": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 로보택시의 오스틴 무인 운행 시작과 FSD 누적 100억 마일 달성은 자율주행 기술의 중요한 진전을 보여주며 투자자들에게 긍정적인 신호입니다.",
+          "key_factors": [
+            "로보택시 무인 운행 시작",
+            "FSD 누적 100억 마일 달성"
+          ]
+        },
+        "1778991062191": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R10"
+          ],
+          "reasoning": "테슬라가 캐나다에서 새로운 모델 3 라인업을 출시하고 가격을 인하하여 시장 접근성을 높이고 판매량 증가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "캐나다 모델 3 라인업 출시",
+            "모델 3 퍼포먼스 17% 가격 인하"
+          ]
+        },
+        "1778991062192": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R15"
+          ],
+          "reasoning": "테슬라가 메가팩 공장에서 주당 200개 생산 목표를 달성하며 에너지 저장 사업 확장에 중요한 진전을 보였습니다.",
+          "key_factors": [
+            "메가팩 생산량 증가",
+            "에너지 저장 사업 확장"
+          ]
+        },
+        "1778991062193": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R25"
+          ],
+          "reasoning": "투자자들은 중국 FSD 승인, 로보택시 및 옵티머스 로봇 출시 일정에 주목하며 이는 잠재적으로 테슬라의 중국 판매에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "중국 FSD 승인 기대",
+            "로보택시 출시 일정",
+            "옵티머스 로봇 출시 일정"
+          ]
+        },
+        "1778991062194": {
+          "impact_score": 4,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R13",
+            "R25",
+            "R26"
+          ],
+          "reasoning": "테슬라가 옵티머스 로봇의 1세대 생산 라인을 설치 중이며 2026년 사이버캡과 세미 출시를 예고하여 미래 성장 동력에 대한 기대감을 높이고, 프리몬트 공장 라인 전환은 로봇 생산의 구체적인 계획을 보여줍니다.",
+          "key_factors": [
+            "옵티머스 로봇 생산 라인 설치",
+            "사이버캡 및 세미 2026년 출시",
+            "프리몬트 공장 라인 전환"
+          ]
+        },
+        "1778991062195": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가는 8주 최고치를 기록했으나, 트럼프의 중국 방문 이후 무역 합의 불발로 인해 하락했습니다.",
+          "key_factors": [
+            "무역 합의 불발",
+            "주가 하락"
+          ]
+        }
+      },
+      "avgScore": 1.4,
+      "buyIndex": 67,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R25",
+        "R24",
+        "R12",
+        "R10"
+      ],
+      "bullish": 7,
+      "bearish": 2,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-15",
+            "content": "일론 머스크는 SpaceX의 리더십을 구조적으로 보호하고, 잠재적인 1조 달러 규모의 보상 패키지를 화성에 자립 가능한 식민지를 건설하려는 장기 목표와 연계할 계획을 확인했습니다. 그는 SpaceX가 단기적인 재정적 압력보다는 다행성 생명체 구현과 의식 확장에 집중해야 한다고 강조했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-12",
+            "content": "테슬라의 Model S 및 Model X Signature Edition 인도 행사가 2026년 5월 20일 수요일로 재조정되었습니다.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-12",
+            "content": "일론 머스크의 중국 방문은 테슬라의 FSD 소프트웨어 승인에 중점을 두고 있습니다. 중국은 차량 판매와 첨단 운전자 보조 기술 테스트를 위한 중요한 시장입니다. FSD 승인은 세계 최대 자동차 시장에서 테슬라의 가장 진보된 ADAS를 출시할 것입니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-12",
+            "content": "로보택시 서비스는 2026년 4월 댈러스와 휴스턴에서 무인 운행을 시작했으며, 2026년 상반기 피닉스, 마이애미, 올랜도, 탬파, 라스베이거스로 확장될 예정입니다. 그러나 긴 대기 시간과 잦은 취소 보고가 나타나고 있습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-12",
+            "content": "파나소닉 배터리 생산 지연에 대한 우려가 다시 제기되면서 2026년 Cybercab, Tesla Semi, Megapack 3의 생산량 증대에 위협이 되고 있습니다.",
+            "sentiment": "bearish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-13",
+            "content": "일론 머스크는 도널드 트럼프 대통령의 중국 방문에 동행했으며, 이는 트럼프 대통령이 머스크를 전략적 자산으로 보고 있음을 시사합니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 6,
+        "reasoning": "일론 머스크의 최근 게시물은 SpaceX의 장기적인 목표에 대한 낙관적인 전망과 Tesla의 FSD 중국 승인에 대한 긍정적인 기대를 보여주지만, 로보택시 서비스의 운영 문제와 배터리 생산 지연에 대한 우려도 함께 나타나 전반적으로 중립적인 분위기를 형성합니다."
+      },
+      "googleTrends": {
+        "current_score": 40,
+        "week_avg": 45,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "TSLA",
+          "Tesla news"
+        ],
+        "reasoning": "Google Trends 데이터에 직접 접근할 수 없으므로, 검색 결과에서 얻은 정보를 바탕으로 추정했습니다. Tesla 주가는 지난 7일 동안 하락세를 보였으며, 관련 뉴스 및 SEC 보고서가 있었지만 검색 관심도의 큰 급등은 없었습니다."
+      },
+      "youtubeInterest": {
+        "score": -1,
+        "velocity": 0.47,
+        "velocity_label": "소폭 감소 (×0.5)",
+        "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 320,529회 / 이전 4~7일 688,472회 | 총 1,009,001회 (44개 영상)",
+        "video_count": 44,
+        "total_views": 1009001,
+        "hot_views": 320529,
+        "baseline_views": 688472,
+        "top_videos": [
+          {
+            "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
+            "channel": "Beyond Ordinary ",
+            "publishedAt": "2026-05-11T04:45:10Z",
+            "viewCount": 105685
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 86244
+          },
+          {
+            "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-11T13:30:38Z",
+            "viewCount": 57368
+          },
+          {
+            "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+            "channel": "scoremia",
+            "publishedAt": "2026-05-15T08:39:33Z",
+            "viewCount": 50250
+          },
+          {
+            "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
+            "channel": "HyperChange",
+            "publishedAt": "2026-05-15T17:01:10Z",
+            "viewCount": 45515
+          }
+        ],
+        "collected_at": "2026-05-17T04:10:49Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Regulatory|Musk|Market": 1,
+        "Musk|Market|Product": 1,
+        "Musk|Regulatory|Market": 1,
+        "Earnings|Market": 1,
+        "Product|Technology|Musk": 1,
+        "Product|Market": 1,
+        "Energy|Product": 1,
+        "Regulatory|Product|Market": 1,
+        "Product|Technology": 1,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.35,
+        "qqqChg": -0.17,
+        "vixClose": 18.43000030517578,
+        "wtiChg": -1.02,
+        "cnyChg": 0,
+        "prevTslaChg": 0.02,
+        "rsi": 52.7,
+        "macd": {
+          "macd": 0.5761032278220455,
+          "signal": -1.9543014391818316,
+          "hist": 2.530404667003877,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 460.63,
+          "middle": 403.63,
+          "lower": 346.64,
+          "pos": 0.663
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 64,
+        "optimusBoost": 8,
+        "r24Discount": -5,
+        "macdTrend": 2,
+        "googleTrends": -1,
+        "youtubeInterest": -1
+      },
+      "latestTslaPrice": 422.24,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/18(월)",
+          "change_pct": 1.2,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 427.31
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/19(화)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 426.04
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/20(수)",
+          "change_pct": -0.5,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 420.13
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/21(목)",
+          "change_pct": 1.1,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 426.88
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/22(금)",
+          "change_pct": 0.7,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 425.2
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1778991092808
+    },
+    {
       "id": "auto-1778957069843",
       "date": "2026-05-17",
       "displayDate": "2026.05.17",
@@ -27875,5 +28305,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-17 03:43 KST"
+  "lastUpdated": "2026-05-17 13:10 KST"
 }
