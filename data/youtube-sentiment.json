@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.39,
-  "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 288,478회 / 이전 4~7일 736,910회 | 총 1,025,388회 (44개 영상)",
-  "video_count": 44,
-  "total_views": 1025388,
-  "hot_views": 288478,
-  "baseline_views": 736910,
+  "velocity": 0.26,
+  "velocity_label": "급감 (×0.3)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 265,785회 / 이전 4~7일 1,041,177회 | 총 1,306,962회 (45개 영상)",
+  "video_count": 45,
+  "total_views": 1306962,
+  "hot_views": 265785,
+  "baseline_views": 1041177,
   "top_videos": [
+    {
+      "title": "Nobody Sees What Amazon Just Did to Tesla",
+      "channel": "Farzad",
+      "publishedAt": "2026-05-11T12:00:06Z",
+      "viewCount": 203648
+    },
     {
       "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
       "channel": "Beyond Ordinary ",
       "publishedAt": "2026-05-11T04:45:10Z",
-      "viewCount": 108074
+      "viewCount": 109521
     },
     {
       "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 87692
+      "viewCount": 88853
     },
     {
       "title": "Is Tesla About to Skyrocket? 5 Real Answers",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-11T13:30:38Z",
-      "viewCount": 57422
+      "viewCount": 57511
     },
     {
       "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
       "channel": "scoremia",
       "publishedAt": "2026-05-15T08:39:33Z",
-      "viewCount": 52003
-    },
-    {
-      "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
-      "channel": "HyperChange",
-      "publishedAt": "2026-05-15T17:01:10Z",
-      "viewCount": 48184
+      "viewCount": 53727
     }
   ],
-  "collected_at": "2026-05-17T08:22:33Z"
+  "collected_at": "2026-05-17T13:24:28Z"
 }
