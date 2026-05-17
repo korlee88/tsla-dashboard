@@ -16,11 +16,13 @@ TICKER_CONFIG = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encod
 TICKER        = TICKER_CONFIG["ticker"]
 
 REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
-VOICE         = "ko-KR-SunHiNeural"    # 젊은 한국 여성 (밝고 에너지 넘치는 톤)
-RATE          = "+35%"                  # 여성 목소리 특성상 남성보다 소폭 낮게
-PITCH         = "+8Hz"                  # 약간 밝게 올림 → 활기찬 느낌
+VOICE         = "ko-KR-SunHiNeural"    # 한국 여성 TTS
+RATE          = "+15%"                  # 명확한 발음을 위해 속도 낮춤
+PITCH         = "+0Hz"                  # 피치 변경 없음 (자연스러운 목소리)
 FPS           = 24
 W, H          = 1080, 1920
+PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
+PHOTO_H       = 500                     # 사진 영역 높이 (prep.py의 PHOTO_H와 동일)
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
@@ -243,7 +245,11 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     import numpy as np
     from PIL import Image
     img = Image.fromarray(base_arr).copy()
-    img = fx_ken_burns(img, t, dur, scene_idx - 1)
+
+    # Ken Burns: 전체 프레임이 아닌 사진 스트립(y=500~1000)에만 적용
+    photo = img.crop((0, PHOTO_Y, W, PHOTO_Y + PHOTO_H))
+    photo = fx_ken_burns(photo, t, dur, scene_idx - 1)
+    img.paste(photo, (0, PHOTO_Y))
 
     img = fx_speed_lines(img, t, accent)
     img = fx_scanline(img, t)
@@ -256,7 +262,14 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     img = fx_fade_in(img, t, 0.28)
     img = fx_fade_out(img, t, dur, 0.22)
 
-    return np.array(img)
+    # 90% 축소 — 핸드폰 화면 여백 확보
+    cw = int(W * 0.90)
+    ch = int(H * 0.90)
+    scaled = img.resize((cw, ch), Image.LANCZOS)
+    canvas = Image.new("RGB", (W, H), (0, 0, 0))
+    canvas.paste(scaled, ((W - cw) // 2, (H - ch) // 2))
+
+    return np.array(canvas)
 
 # ── 씬 처리 ───────────────────────────────────────────────────────────────────
 
@@ -271,7 +284,8 @@ async def process_scene(scene, report_dir):
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
-    tts_text   = clean_for_tts(lines) or title
+    tts_lines  = lines[:2]                              # 상위 2줄만 나레이션 (1분 이내)
+    tts_text   = clean_for_tts(tts_lines) or title
     audio_path = report_dir / f"scene_{idx:02d}.mp3"
     print(f"   🎙 씬 {idx} [{title[:20]}] 나레이션 생성...")
     await gen_audio(tts_text, audio_path)
