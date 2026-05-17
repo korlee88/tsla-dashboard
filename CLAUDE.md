@@ -1,9 +1,16 @@
 # TSLA Dashboard — Claude Code 작업 기록
 
+## 작업 원칙 (중요)
+
+**Claude가 직접 할 수 있는 작업은 모두 자율적으로 진행한다.**
+- PR 생성 → 머지까지 직접 수행
+- 커밋 & 푸시 직접 수행
+- 수동 개입이 반드시 필요한 경우(브라우저 로그인, 시크릿 입력 등)에만 사용자에게 알린다
+
 ## 프로젝트 개요
 
 GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
-매주 월요일 KST 09:00 GitHub Actions가 자동으로 영상 자료를 생성한다.
+매일 KST 09:00 GitHub Actions가 자동으로 영상 자료를 생성한다.
 
 - **저장소**: `korlee88/tsla-dashboard`
 - **기본 브랜치**: `master` (보호됨)
@@ -56,7 +63,7 @@ git clone https://github.com/korlee88/nvda-dashboard
 ```
 tsla-dashboard/
 ├── .github/workflows/
-│   ├── weekly-video.yml       # 월요일 자동 실행 + workflow_dispatch
+│   ├── weekly-video.yml       # 매일 자동 실행 + workflow_dispatch
 │   ├── auto-analysis.yml      # 하루 4회 자동 분석
 │   ├── backtest-run.yml       # 백테스트 (매일 자동 + 수동)
 │   └── calendar-update.yml    # 매주 일정 갱신
@@ -280,7 +287,7 @@ sudo apt-get install -y fonts-nanum
 **파일**: `.github/workflows/weekly-video.yml`
 
 **트리거**:
-- 자동: 매주 월요일 KST 09:00 (UTC 00:00, `cron: '0 0 * * 1'`)
+- 자동: 매일 KST 09:00 (UTC 00:00, `cron: '0 0 * * *'`)
 - 수동: GitHub Actions 탭 → `workflow_dispatch`
 
 **주요 단계**:
@@ -323,6 +330,19 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 - 감탄사 활용: "와!", "대박!", "여러분!"
 - 밝고 에너지 넘치는 톤
 - 핵심 수치는 반드시 포함
+
+---
+
+## 앱 버전 히스토리
+
+| 버전 | 날짜 | 주요 변경 |
+|------|------|---------|
+| **v2.1.0** | 2026-05-17 | 영상 매일 자동 생성 · 대시보드 실행/다운로드 버튼 · 설정 버전 카드 |
+| v2.0.0 | 2026-05-10 | 멀티 종목 Phase 1 · Ken Burns · 로봇 마스코트 · 백테스트 연도 분리 |
+| v1.5.0 | 2026-04-20 | YouTube Shorts 세로 포맷 · GWS 통합 (YouTube/Sheets/Gmail) |
+| v1.0.0 | 2026-03-01 | 초기 릴리즈 · AI 자동 분석 · 백테스트 · 캘린더 |
+
+> 버전 업데이트 시 `index.html`의 `APP_VERSION` 상수와 이 표를 함께 수정할 것.
 
 ---
 
