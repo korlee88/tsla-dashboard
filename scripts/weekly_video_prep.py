@@ -8,7 +8,7 @@
 종목 설정: config/ticker.json
 """
 
-import os, json, sys, urllib.request, urllib.parse
+import os, json, sys, re, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -788,6 +788,26 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
               stroke_width=1, stroke_fill=STROKE)
 
 
+_EMOJI_RE = re.compile(
+    "["
+    "\U0001F600-\U0001F64F"  # 감정/얼굴
+    "\U0001F300-\U0001F5FF"  # 기호/사물
+    "\U0001F680-\U0001F6FF"  # 교통/지도
+    "\U0001F1E0-\U0001F1FF"  # 국기
+    "\U00002700-\U000027BF"  # 기타
+    "\U0001F900-\U0001F9FF"  # 보충 기호
+    "\U00002600-\U000026FF"  # 잡기호
+    "‍"                  # ZWJ
+    "️"                  # 변형 선택자
+    "]+",
+    flags=re.UNICODE,
+)
+
+def strip_emoji(text: str) -> str:
+    """PIL에서 렌더링 불가한 이모지를 제거한다."""
+    return _EMOJI_RE.sub("", text).strip()
+
+
 def draw_bell_icon(draw, cx, cy, size, color):
     """PIL 도형으로 그린 벨 아이콘 (🔔 이모지 대체)."""
     s = size
@@ -937,7 +957,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             draw.line([(0, yy), (W, yy)], fill=(r, g, b))
 
         # 상단 충격 라벨
-        draw.text((W // 2, 90), "🚨 TODAY TSLA",
+        draw.text((W // 2, 90), "TODAY TSLA",
                   font=f_brand, fill=accent, anchor="mt",
                   stroke_width=2, stroke_fill=STROKE)
 
@@ -971,7 +991,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
         # 대본 줄 1 (헤드라인)
         if len(news_lines) >= 1:
-            hl_wrapped = wrap_text(draw, news_lines[0], f_lg, W - PAD * 2 - 50)
+            hl_wrapped = wrap_text(draw, strip_emoji(news_lines[0]), f_lg, W - PAD * 2 - 50)
             ky = IMPACT_Y + 50
             for wl in hl_wrapped[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_lg)
@@ -986,7 +1006,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
         # 대본 줄 2 (충격 사건)
         if len(news_lines) >= 2:
-            ev_wrapped = wrap_text(draw, news_lines[1], f_md, W - PAD * 2 - 50)
+            ev_wrapped = wrap_text(draw, strip_emoji(news_lines[1]), f_md, W - PAD * 2 - 50)
             ky = IMPACT_Y + 220
             for wl in ev_wrapped[:3]:
                 bb = draw.textbbox((0, 0), wl, font=f_md)
@@ -1250,7 +1270,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
             content_x    = PAD + LAB_W + 22
             content_maxw = COL_W - PAD - LAB_W - 44
-            wrapped = wrap_text(draw, content_text, f_ct, content_maxw)
+            wrapped = wrap_text(draw, strip_emoji(content_text), f_ct, content_maxw)
             bb_h = draw.textbbox((0, 0), "가", font=f_ct)
             lh = (bb_h[3] - bb_h[1]) + 16
             total_h = len(wrapped[:4]) * lh

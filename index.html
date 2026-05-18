@@ -3702,7 +3702,7 @@ function VideoScriptPage({ onBack }) {
   }, []);
 
   const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
-  const SCENE_ACCENTS = ['#a78bfa', '#22c55e', '#ef4444', '#f59e0b'];
+  const SCENE_ACCENTS = ['#06b6d4', '#a78bfa', '#22c55e', '#ef4444', '#f59e0b', '#ec4899'];
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4 text-gray-500">
@@ -3726,7 +3726,8 @@ function VideoScriptPage({ onBack }) {
   );
 
   const sc = selected;
-  const biColor = bCol(sc.avg_buy_index ?? 50);
+  const sum = sc.summary ?? sc;   // script.json은 summary 하위에 필드 포함
+  const biColor = bCol(sum.avg_buy_index ?? 50);
 
   return (
     <div className="max-w-3xl mx-auto px-3 py-4 md:px-4 md:py-6">
@@ -3770,21 +3771,21 @@ function VideoScriptPage({ onBack }) {
             <h2 className="text-base font-black text-white leading-snug">{sc.title}</h2>
           </div>
           <div className="text-center shrink-0">
-            <p className="text-3xl font-black tabular-nums" style={{ color: biColor }}>{sc.avg_buy_index}</p>
-            <p className="text-xs font-bold" style={{ color: biColor }}>{sc.overall_signal}</p>
+            <p className="text-3xl font-black tabular-nums" style={{ color: biColor }}>{sum.avg_buy_index}</p>
+            <p className="text-xs font-bold" style={{ color: biColor }}>{sum.overall_signal}</p>
           </div>
         </div>
         {/* 매수지수 바 */}
         <div className="rounded-full overflow-hidden mb-3" style={{ background: '#252830', height: 6 }}>
-          <div className="h-full rounded-full" style={{ width: `${sc.avg_buy_index}%`, background: biColor, transition: 'width 1s ease' }} />
+          <div className="h-full rounded-full" style={{ width: `${sum.avg_buy_index}%`, background: biColor, transition: 'width 1s ease' }} />
         </div>
         {/* 핵심 지표 그리드 */}
         <div className="grid grid-cols-4 gap-2">
           {[
-            ['현재가', `$${sc.latest_price}`],
-            ['매수지수', `${sc.avg_buy_index}pt`],
-            ['신호', sc.overall_signal],
-            ['생성', sc.generated_by?.replace('Claude ','') || 'AI'],
+            ['현재가', sum.latest_price != null ? `$${sum.latest_price}` : '─'],
+            ['매수지수', sum.avg_buy_index != null ? `${sum.avg_buy_index}pt` : '─'],
+            ['신호', sum.overall_signal ?? '─'],
+            ['생성', (sum.generated_by ?? sc.generated_by)?.replace('Claude ','') || 'AI'],
           ].map(([k, v]) => (
             <div key={k} className="rounded-lg p-2 text-center" style={{ background: '#0d1117', border: '1px solid #2A2D35' }}>
               <p className="text-xs font-bold text-gray-200 truncate">{v}</p>
@@ -3969,7 +3970,7 @@ function VideoScriptPage({ onBack }) {
               ['볼린저밴드', sc.meta.technical.bb_position],
               ['VIX', sc.meta.technical.vix],
               ['전일 TSLA', `${sc.meta.technical.prev_tsla_chg >= 0 ? '+' : ''}${sc.meta.technical.prev_tsla_chg}%`],
-              ['현재가', `$${sc.latest_price}`],
+              ['현재가', sum.latest_price != null ? `$${sum.latest_price}` : '─'],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-3 py-2 rounded-lg" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
                 <span className="text-xs text-gray-500">{k}</span>
