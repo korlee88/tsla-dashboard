@@ -200,7 +200,7 @@ def fetch_google_trends(keywords, days=7):
         return None
 
 
-def load_next_events(days=14, max_n=2):
+def load_next_events(days=14, max_n=3):
     """calendar.json에서 향후 N일 내 high/medium importance 이벤트 추출."""
     if not CALENDAR_JSON.exists():
         return []
@@ -1038,77 +1038,109 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         # 전체 배경: 검정 → 마젠타 그라데이션
         for yy in range(H):
             t = yy / H
-            r = int(20 + (60 - 20) * t)
-            g = int(0 + (20 - 0) * t)
-            b = int(40 + (90 - 40) * t)
-            draw.line([(0, yy), (W, yy)], fill=(r, g, b))
+            draw.line([(0, yy), (W, yy)], fill=(
+                int(15 + 50 * t), int(0 + 15 * t), int(28 + 68 * t)
+            ))
 
-        # 상단: "다음주 예고"
-        draw.text((W // 2, 100), "다음주 예고",
+        # ── 헤더 ──────────────────────────────────────────────────────
+        draw.text((W // 2, 80), "다음주 예고",
                   font=f_huge_sub, fill=WHITE, anchor="mt",
                   stroke_width=3, stroke_fill=STROKE)
-        draw.line([(W // 2 - 200, 180), (W // 2 + 200, 180)],
+        draw.line([(W // 2 - 200, 162), (W // 2 + 200, 162)],
                   fill=accent, width=4)
 
-        # 다음주 이벤트 카드
-        next_events = summary.get("next_events", [])
-        EV_Y = 260
-        EV_H = 400
-        draw.rounded_rectangle([PAD, EV_Y, W - PAD, EV_Y + EV_H],
-                               radius=20, fill=(25, 15, 35), outline=accent, width=3)
+        # ── 일정 카드 리스트 (최대 3개) ────────────────────────────────
+        next_events = summary.get("next_events", []) or []
+        CARD_H = 168
+        CARD_GAP = 16
+        EV_START = 195
 
         if next_events:
-            ev = next_events[0]
-            date_s = ev.get("date", "")
-            title_s = ev.get("title", "")[:40]
-            imp = ev.get("importance", "medium")
-            imp_label = {"high": "⚡ HIGH", "medium": "📌 MED", "low": "🔹 LOW"}.get(imp, "📌")
-            imp_col = {"high": RED, "medium": AMBER, "low": GRAY}.get(imp, GRAY)
+            for i, ev in enumerate(next_events[:3]):
+                cy = EV_START + i * (CARD_H + CARD_GAP)
+                imp = ev.get("importance", "medium")
+                imp_col = RED if imp == "high" else AMBER if imp == "medium" else GRAY
+                date_s = ev.get("date", "")
+                title_s = strip_emoji(ev.get("title", "")[:40])
 
-            draw.text((W // 2, EV_Y + 60), imp_label,
-                      font=f_lg, fill=imp_col, anchor="mm",
-                      stroke_width=2, stroke_fill=STROKE)
-            draw.text((W // 2, EV_Y + 130), date_s,
-                      font=f_huge_sub, fill=KEY, anchor="mm",
-                      stroke_width=2, stroke_fill=STROKE)
-            # 이벤트 제목 (래핑)
-            title_wrapped = wrap_text(draw, title_s, f_md, W - PAD * 2 - 60)
-            ky = EV_Y + 220
-            for wl in title_wrapped[:3]:
-                bb = draw.textbbox((0, 0), wl, font=f_md)
-                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
-                          font=f_md, fill=WHITE, anchor="lt",
-                          stroke_width=1, stroke_fill=STROKE)
-                ky += 50
+                # 카드 배경
+                draw.rounded_rectangle([PAD, cy, W - PAD, cy + CARD_H],
+                                       radius=16, fill=(20, 12, 34),
+                                       outline=imp_col, width=2)
+                # 왼쪽 강조 바
+                draw.rounded_rectangle([PAD, cy, PAD + 8, cy + CARD_H],
+                                       radius=8, fill=imp_col)
+                # 중요도 배지
+                imp_txt = "HIGH" if imp == "high" else "MED" if imp == "medium" else "LOW"
+                bw = 80
+                draw.rounded_rectangle([PAD + 20, cy + 14, PAD + 20 + bw, cy + 50],
+                                       radius=10, fill=imp_col)
+                draw.text((PAD + 20 + bw // 2, cy + 32), imp_txt,
+                          font=f_sm, fill=WHITE, anchor="mm")
+                # 날짜
+                draw.text((W - PAD - 16, cy + 32), date_s,
+                          font=f_sm, fill=KEY, anchor="rm")
+                # 이벤트 제목
+                tw = wrap_text(draw, title_s, f_md, W - PAD * 2 - 36)
+                ty = cy + 62
+                for wl in tw[:2]:
+                    draw.text((PAD + 20, ty), wl,
+                              font=f_md, fill=WHITE, anchor="lt",
+                              stroke_width=1, stroke_fill=STROKE)
+                    ty += 48
         else:
-            # 대본 줄1 폴백
-            line1 = news_lines[0] if news_lines else "다음주도 주목!"
-            wrapped = wrap_text(draw, line1, f_lg, W - PAD * 2 - 60)
-            ky = EV_Y + 100
-            for wl in wrapped[:4]:
+            # 폴백: 대본 텍스트 한 장
+            draw.rounded_rectangle([PAD, EV_START, W - PAD, EV_START + CARD_H],
+                                   radius=16, fill=(20, 12, 34), outline=accent, width=2)
+            line1 = strip_emoji(news_lines[0] if news_lines else "다음주도 TSLA 주목!")
+            wrapped = wrap_text(draw, line1, f_lg, W - PAD * 2 - 40)
+            ky = EV_START + (CARD_H - 60 * len(wrapped[:2])) // 2
+            for wl in wrapped[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_lg)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
                           font=f_lg, fill=WHITE, anchor="lt",
                           stroke_width=2, stroke_fill=STROKE)
-                ky += 60
+                ky += 65
 
-        # 큰 CTA 박스: 구독 + 알림
-        CTA_Y = 720
-        CTA_H = 320
-        # 빨강 그라데이션 박스
-        for yy in range(CTA_Y, CTA_Y + CTA_H):
-            t = (yy - CTA_Y) / CTA_H
-            r = int(220 + (180 - 220) * t)
-            g = int(40 + (20 - 40) * t)
-            b = int(40 + (60 - 40) * t)
-            draw.line([(PAD, yy), (W - PAD, yy)], fill=(r, g, b))
-        draw.rounded_rectangle([PAD, CTA_Y, W - PAD, CTA_Y + CTA_H],
-                               radius=24, outline=WHITE, width=4)
+        # ── CTA: 구독 / 알림 투버튼 ────────────────────────────────────
+        n_ev_shown = max(1, min(len(next_events), 3))
+        CTA_TOP = EV_START + n_ev_shown * (CARD_H + CARD_GAP) + 40
 
-        draw_bell_icon(draw, W // 2, CTA_Y + 160, 80, WHITE)
-        draw.text((W // 2, CTA_Y + 230), "구독 + 알림 설정",
+        # 태그라인
+        draw.text((W // 2, CTA_TOP), "매주 TSLA 주간 분석 · 무료 알림",
+                  font=f_sm, fill=(170, 145, 200), anchor="mt")
+
+        BTN_Y = CTA_TOP + 70
+        BTN_H  = 200
+        BTN_W  = (W - PAD * 2 - 24) // 2
+
+        # [구독] 버튼 — YouTube 레드 그라데이션
+        for yy in range(BTN_Y, BTN_Y + BTN_H):
+            t = (yy - BTN_Y) / BTN_H
+            draw.line([(PAD, yy), (PAD + BTN_W, yy)],
+                      fill=(int(210 - 25 * t), int(18 + 18 * t), int(18 + 28 * t)))
+        draw.rounded_rectangle([PAD, BTN_Y, PAD + BTN_W, BTN_Y + BTN_H],
+                               radius=22, outline=WHITE, width=4)
+        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H // 2 - 16), "구독",
                   font=f_huge_sub, fill=WHITE, anchor="mm",
                   stroke_width=3, stroke_fill=STROKE)
+        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H - 32), "YouTube",
+                  font=f_sm, fill=(255, 205, 205), anchor="mm")
+
+        # [알림 ON] 버튼 — 다크 + 마젠타 테두리
+        bx = PAD + BTN_W + 24
+        for yy in range(BTN_Y, BTN_Y + BTN_H):
+            t = (yy - BTN_Y) / BTN_H
+            draw.line([(bx, yy), (bx + BTN_W, yy)],
+                      fill=(int(28 + 12 * t), int(12 + 10 * t), int(48 + 22 * t)))
+        draw.rounded_rectangle([bx, BTN_Y, bx + BTN_W, BTN_Y + BTN_H],
+                               radius=22, outline=accent, width=4)
+        draw_bell_icon(draw, bx + BTN_W // 2, BTN_Y + BTN_H // 2 - 30, 32, accent)
+        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H // 2 + 30), "알림 ON",
+                  font=f_huge_sub, fill=accent, anchor="mm",
+                  stroke_width=3, stroke_fill=STROKE)
+        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H - 32), "알림 설정",
+                  font=f_sm, fill=(210, 170, 230), anchor="mm")
 
         # 하단 매수지수 범례
         draw = ImageDraw.Draw(img)
