@@ -1,6 +1,411 @@
 {
   "sessions": [
     {
+      "id": "auto-1779078220787",
+      "date": "2026-05-18",
+      "displayDate": "2026.05.18",
+      "kstTime": "13:22",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1779078177910,
+          "title": "테슬라, 모델 Y 가격 인상 및 SpaceX 투자 논의",
+          "summary": "테슬라가 미국에서 모델 Y의 가격을 1,000달러 인상했습니다. 한편, BlackRock은 SpaceX에 대한 수십억 달러 투자에 대해 논의 중이며, 이는 Tesla 주식에도 영향을 미칠 수 있습니다.",
+          "source": "Reuters",
+          "date": "2026-05-18",
+          "category": "Product|Market"
+        },
+        {
+          "id": 1779078177911,
+          "title": "SpaceX, 5대 1 주식 분할 승인 및 6월 IPO 목표",
+          "summary": "SpaceX 주주들이 5대 1 주식 분할을 승인했으며, 회사는 6월 12일 나스닥 상장을 목표로 하고 있습니다. 이는 약 1조 7,500억 달러의 가치로 750억 달러를 조달하는 사상 최대 규모의 IPO가 될 수 있습니다.",
+          "source": "Bloomberg",
+          "date": "2026-05-16",
+          "category": "Market|Musk"
+        },
+        {
+          "id": 1779078177912,
+          "title": "테슬라 로보택시 서비스, 초기 사용자 경험 실망",
+          "summary": "테슬라의 로보택시 서비스가 댈러스와 휴스턴으로 확장되었지만, 초기 사용자들은 긴 대기 시간, 일관성 없는 차량 가용성, 심지어 운행 취소 등으로 실망감을 표현하고 있습니다. 이는 서비스가 아직 상업적 플랫폼보다는 테스트 프로그램에 가깝다는 것을 시사합니다.",
+          "source": "Zacks",
+          "date": "2026-05-15",
+          "category": "Product"
+        },
+        {
+          "id": 1779078177913,
+          "title": "테슬라, 베를린 배터리 셀 생산에 2억 5천만 달러 추가 투자",
+          "summary": "테슬라가 독일 베를린 공장의 배터리 셀 생산에 약 2억 5천만 달러를 추가 투자하여 연간 생산 목표를 8GWh에서 18GWh로 늘릴 계획입니다. 이는 1,500명 이상의 고용 증가로 이어질 것으로 예상됩니다.",
+          "source": "Reuters",
+          "date": "2026-05-12",
+          "category": "Production|Energy"
+        },
+        {
+          "id": 1779078177914,
+          "title": "일론 머스크, OpenAI 소송 합의 시도 및 동기 논란",
+          "summary": "일론 머스크가 OpenAI 소송 재판 이틀 전 그렉 브록먼 OpenAI 사장에게 합의를 제안한 것으로 알려졌습니다. OpenAI 변호인단은 이를 머스크의 소송 동기를 입증하는 증거로 제출했습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-05-04",
+          "category": "Legal|Musk"
+        },
+        {
+          "id": 1779078177915,
+          "title": "테슬라, 중국 시장 판매량 개선 조짐",
+          "summary": "테슬라의 중국산 모델 3 및 모델 Y 차량 인도량이 4월에 79,478대를 기록하며 전년 대비 36% 증가했습니다. 이는 작년의 부진 이후 중국 시장에서 판매 모멘텀이 개선되고 있음을 시사합니다.",
+          "source": "MarketWatch",
+          "date": "2026-05-07",
+          "category": "Market|Competition"
+        },
+        {
+          "id": 1779078177916,
+          "title": "테슬라 모델 Y, NHTSA 첨단 운전자 보조 시스템 테스트 통과",
+          "summary": "2026년형 테슬라 모델 Y가 미국 도로교통안전국(NHTSA)의 새로운 첨단 운전자 보조 시스템(ADAS) 테스트를 통과한 최초의 차량이 되었습니다. 이 테스트는 보행자 자동 비상 제동, 차선 유지 보조, 사각지대 경고 및 개입 등 4가지 새로운 안전 평가를 포함합니다.",
+          "source": "NHTSA",
+          "date": "2026-05-07",
+          "category": "Regulatory|Product"
+        },
+        {
+          "id": 1779078177917,
+          "title": "유럽 규제 당국, 테슬라 FSD 기술에 대한 회의론 제기",
+          "summary": "유럽 규제 당국은 테슬라의 '완전 자율 주행(FSD)' 시스템에 대해 회의적인 시각을 보이고 있으며, 과속 및 빙판길 주행과 같은 안전 문제에 대한 우려를 제기했습니다. 네덜란드 도로 규제 당국은 FSD를 승인했지만, 다른 유럽 국가들은 여전히 우려를 표하고 있습니다.",
+          "source": "Reuters",
+          "date": "2026-05-05",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1779078177918,
+          "title": "일론 머스크, OpenAI 소송에서 '바보'였다고 증언",
+          "summary": "일론 머스크는 OpenAI에 비영리 벤처로 자금을 지원한 것에 대해 자신이 '바보'였다고 연방 법원에서 증언했습니다. 그는 OpenAI가 비영리 프로젝트로 시작했지만, 나중에 영리 법인으로 전환되어 특정 개인을 부유하게 만들었다고 주장하며 1,800억 달러 이상의 소송을 제기했습니다.",
+          "source": "Seeking Alpha",
+          "date": "2026-04-29",
+          "category": "Legal|Musk"
+        },
+        {
+          "id": 1779078177919,
+          "title": "테슬라, AI 야망 지원 위해 250억 달러 추가 지출 계획",
+          "summary": "테슬라가 일론 머스크의 AI 야망을 지원하기 위해 올해 250억 달러를 추가 지출할 계획입니다. 이 투자는 로보택시 및 휴머노이드 로봇과 같은 장기적인 기회를 지원하기 위한 것이지만, 그 성과는 여전히 불확실합니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "AI|Market"
+        }
+      ],
+      "analyses": {
+        "1779078177910": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 모델 Y 가격 인상은 수익성에 긍정적인 영향을 미칠 수 있으며, SpaceX에 대한 잠재적 투자는 테슬라의 가치에 간접적으로 긍정적인 영향을 줄 수 있습니다.",
+          "key_factors": [
+            "모델 Y 가격 인상",
+            "SpaceX 투자 논의"
+          ]
+        },
+        "1779078177911": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "SpaceX의 대규모 IPO는 투자자들의 자금이 Tesla에서 SpaceX로 이동할 수 있다는 우려를 불러일으켜 Tesla 주가에 부정적인 영향을 미 미칠 수 있습니다.",
+          "key_factors": [
+            "SpaceX IPO",
+            "자금 유출 우려"
+          ]
+        },
+        "1779078177912": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 로보택시 서비스가 댈러스와 휴스턴으로 확장되었음에도 불구하고, 초기 사용자들의 긴 대기 시간과 운행 취소 등 부정적인 경험은 서비스의 상업적 준비 부족을 시사하며 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "로보택시 서비스 확장",
+            "초기 사용자 실망",
+            "긴 대기 시간 및 운행 취소"
+          ]
+        },
+        "1779078177913": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 베를린 배터리 셀 생산에 대한 추가 투자는 생산 능력 확대를 통해 장기적인 성장 잠재력을 높일 수 있습니다.",
+          "key_factors": [
+            "배터리 생산 능력 확대",
+            "고용 증가"
+          ]
+        },
+        "1779078177914": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 OpenAI 소송 합의 시도는 그의 다른 벤처와 관련된 법적 분쟁이 테슬라에 대한 투자자 신뢰에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "일론 머스크의 법적 분쟁",
+            "OpenAI 소송"
+          ]
+        },
+        "1779078177915": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R20"
+          ],
+          "reasoning": "테슬라의 4월 중국 시장 인도량이 전년 대비 36% 증가하며 판매 모멘텀 개선 조짐을 보였습니다.",
+          "key_factors": [
+            "중국 판매량 증가",
+            "모델 3 및 모델 Y 인도량"
+          ]
+        },
+        "1779078177916": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 모델 Y가 NHTSA의 새로운 첨단 운전자 보조 시스템 테스트를 통과하여 제품 안전성과 기술 우수성을 입증했습니다.",
+          "key_factors": [
+            "NHTSA ADAS 테스트 통과",
+            "제품 안전성 강화"
+          ]
+        },
+        "1779078177917": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "유럽 규제 당국이 테슬라의 FSD 기술에 대해 안전 우려를 제기하며 회의적인 시각을 보이고 있어 유럽 시장에서의 FSD 확장 및 채택에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "유럽 규제 당국의 FSD 회의론",
+            "안전 문제 우려 제기"
+          ]
+        },
+        "1779078177918": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크의 OpenAI 소송 관련 증언은 그의 다른 벤처와 관련된 법적 분쟁이 테슬라에 대한 투자자 신뢰에 부정적인 영향을 미칠 수 있음을 시사합니다.",
+          "key_factors": [
+            "Musk's legal disputes",
+            "OpenAI lawsuit"
+          ]
+        },
+        "1779078177919": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R25"
+          ],
+          "reasoning": "테슬라가 AI 및 로보틱스 야망을 위해 250억 달러를 추가 지출할 계획이라는 소식은 장기적인 성장 잠재력을 시사하지만, 그 성과는 아직 불확실합니다.",
+          "key_factors": [
+            "AI 투자",
+            "로보택시",
+            "휴머노이드 로봇"
+          ]
+        }
+      },
+      "avgScore": 0.2,
+      "buyIndex": 59,
+      "direction": "bullish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R20",
+        "R25"
+      ],
+      "bullish": 5,
+      "bearish": 5,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-16",
+            "content": "Elon Musk는 TSMC에 최대 1,190억 달러를 투자하여 칩 생산 시설을 건설할 계획을 언급하며, Tesla, SpaceX, xAI 등 자신의 다양한 사업에 필요한 컴퓨팅 규모를 충족시키기 위해 칩 회사로 확장할 의지를 보였습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-15",
+            "content": "Elon Musk는 Model S 및 Model X 생산 종료를 기념하는 공식 행사를 가질 것이라고 언급하며, 해당 생산 공간을 Optimus 공장으로 전환하여 자율주행 미래로의 전환을 가속화할 것이라고 밝혔습니다.",
+            "sentiment": "bullish",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-12",
+            "content": "Elon Musk의 중국 방문은 Tesla의 FSD 소프트웨어 승인에 대한 기대를 높였지만, Robotaxi 서비스의 운영상 문제와 Panasonic 배터리 생산 지연에 대한 우려가 제기되었습니다.",
+            "sentiment": "neutral",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 1,
+        "post_count": 3,
+        "reasoning": "Elon Musk는 칩 생산 및 Optimus 로봇 생산에 대한 낙관적인 비전을 제시했지만, Robotaxi 서비스의 현재 문제점과 FSD 승인 지연 가능성으로 인해 전반적인 분위기는 중립적입니다."
+      },
+      "googleTrends": {
+        "current_score": 33,
+        "week_avg": 33,
+        "trend": "stable",
+        "spike": false,
+        "top_queries": [
+          "Tesla Model 3",
+          "Tesla Model Y",
+          "Cybertruck"
+        ],
+        "reasoning": "지난 7일간 'Tesla' 키워드에 대한 검색 관심도는 안정적이었으며, 최고 인기 검색어는 Tesla Model 3, Tesla Model Y, Cybertruck입니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.28,
+        "velocity_label": "급감 (×0.3)",
+        "reason": "조회수 속도 급감 (×0.3) | 최근 3일 288,512회 / 이전 4~7일 1,016,791회 | 총 1,305,303회 (44개 영상)",
+        "video_count": 44,
+        "total_views": 1305303,
+        "hot_views": 288512,
+        "baseline_views": 1016791,
+        "top_videos": [
+          {
+            "title": "Nobody Sees What Amazon Just Did to Tesla",
+            "channel": "Farzad",
+            "publishedAt": "2026-05-11T12:00:06Z",
+            "viewCount": 206502
+          },
+          {
+            "title": "Elon Musk: There Will Be More Robots Than People #elonmusk #tesla #spacex #optimus #grok #neuralink",
+            "channel": "Beyond Ordinary ",
+            "publishedAt": "2026-05-11T04:45:10Z",
+            "viewCount": 116109
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 90932
+          },
+          {
+            "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
+            "channel": "HyperChange",
+            "publishedAt": "2026-05-15T17:01:10Z",
+            "viewCount": 65246
+          },
+          {
+            "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+            "channel": "scoremia",
+            "publishedAt": "2026-05-15T08:39:33Z",
+            "viewCount": 60894
+          }
+        ],
+        "collected_at": "2026-05-18T04:22:35Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Product|Market": 1,
+        "Market|Musk": 1,
+        "Product": 1,
+        "Production|Energy": 1,
+        "Legal|Musk": 2,
+        "Market|Competition": 1,
+        "Regulatory|Product": 1,
+        "Regulatory": 1,
+        "AI|Market": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.35,
+        "qqqChg": -0.17,
+        "vixClose": 18.43000030517578,
+        "wtiChg": 1.32,
+        "cnyChg": 0.07,
+        "prevTslaChg": 0.02,
+        "rsi": 52.7,
+        "macd": {
+          "macd": 0.5761032278220455,
+          "signal": -1.9543014391818316,
+          "hist": 2.530404667003877,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 460.63,
+          "middle": 403.63,
+          "lower": 346.64,
+          "pos": 0.663
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 52,
+        "optimusBoost": 8,
+        "r24Discount": -2,
+        "macdTrend": 2,
+        "muskXSentiment": 1,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 422.24,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/19(화)",
+          "change_pct": -0.7,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 419.28
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/20(수)",
+          "change_pct": 0.3,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 423.51
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/21(목)",
+          "change_pct": -0.9,
+          "signal": "매도",
+          "basePrice": 422.24,
+          "predictedPrice": 418.44
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/22(금)",
+          "change_pct": 0.5,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 424.35
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/25(월)",
+          "change_pct": -0.6,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 419.71
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1779078220787
+    },
+    {
       "id": "auto-1779043721149",
       "date": "2026-05-18",
       "displayDate": "2026.05.18",
@@ -29569,5 +29974,5 @@
       "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-18 03:47 KST"
+  "lastUpdated": "2026-05-18 13:22 KST"
 }
