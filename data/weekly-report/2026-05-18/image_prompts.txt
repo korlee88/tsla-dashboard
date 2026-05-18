@@ -1,0 +1,20 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-18
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 충격인트로
+A dramatic cinematic explosion of cyan electric lightning bolts striking through a pitch-black void, with a sleek futuristic Tesla electric vehicle silhouette emerging from the shockwave, glowing cyan energy particles bursting outward, intense contrast between deep black background and vibrant electric cyan highlights, shattered glass fragments floating in mid-air, dynamic motion blur, hyper-realistic 3D render, dramatic rim lighting, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬1 주간브리핑
+A futuristic purple-hued cityscape at twilight with a majestic Tesla Cybertruck and Model S parked on a glowing neon road, holographic stock chart projections floating in the violet sky, deep purple and magenta atmospheric haze, sleek metallic reflections, cyberpunk aesthetic with lavender mist, glowing EV charging stations in background, cinematic depth of field, ultra-detailed sci-fi mood, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬2 호재뉴스
+A vibrant emerald green futuristic factory interior showcasing humanoid Optimus robots on an advanced assembly line, glowing green production conveyor belts, sparkling upward green arrows symbolizing growth, bright optimistic lighting with lime and mint highlights, sleek robotic arms working on Cybercab prototypes, lush green data streams flowing through the air, energetic and uplifting atmosphere, hyper-detailed industrial sci-fi render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬3 리스크뉴스
+A tense crimson red warning scene with a Tesla Cybertruck under harsh emergency red spotlights inside a dark recall inspection bay, glowing red alert symbols and downward arrows floating ominously, smoke and sparks flying from damaged camera modules, deep shadows mixed with blood-red highlights, dramatic suspenseful atmosphere, broken glass reflections, cinematic thriller mood, ultra-realistic detail, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬4 시장반응
+A bustling orange-tinted futuristic financial district skyline at sunset, towering skyscrapers reflecting amber and tangerine light, holographic candlestick charts and trading graphs hovering between buildings, Tesla vehicles driving on glowing orange highways below, warm golden hour atmosphere with dynamic energy, crowds of silhouetted investors looking upward, cinematic urban finance mood, hyper-detailed render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬5 다음주예고
+A dreamy magenta and pink cosmic future scene with a sleek Tesla Cybercab floating among glittering stars and sparkling nebula clouds, vibrant hot pink and fuchsia light rays beaming across a deep space backdrop, twinkling diamond-like stardust particles, futuristic Optimus robot silhouette gazing toward a glowing horizon, magical anticipation atmosphere, ultra-cinematic sci-fi fantasy render, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
