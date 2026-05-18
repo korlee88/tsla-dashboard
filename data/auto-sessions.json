@@ -1,6 +1,399 @@
 {
   "sessions": [
     {
+      "id": "auto-1779098834440",
+      "date": "2026-05-18",
+      "displayDate": "2026.05.18",
+      "kstTime": "19:06",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1779098780925,
+          "title": "테슬라, 벨기에 플랑드르 지역에서 완전 자율 주행 소프트웨어 테스트 승인 획득",
+          "summary": "로이터 통신에 따르면 테슬라가 벨기에 플랑드르 지역에서 완전 자율 주행(FSD) 소프트웨어 테스트를 시작할 수 있는 승인을 받았습니다. 이는 테슬라가 유럽 내에서 FSD 기술을 확장하는 데 중요한 진전입니다. 5월 13일 이 소식에 테슬라 주가는 소폭 상승했습니다.",
+          "source": "Reuters",
+          "date": "2026-05-13",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1779098780926,
+          "title": "테슬라, 독일 공장에 2억 5천만 달러 투자 예정",
+          "summary": "테슬라가 독일 공장에 2억 5천만 달러를 투자할 예정이라고 글로벌 뉴스 셀렉트가 보도했습니다. 이는 테슬라의 유럽 생산 능력 확대를 위한 노력의 일환으로 보입니다.",
+          "source": "Global News Select",
+          "date": "2026-05-12",
+          "category": "Investment"
+        },
+        {
+          "id": 1779098780927,
+          "title": "테슬라, 20만 대 이상 차량 리콜: 후방 카메라 이미지 지연 문제",
+          "summary": "테슬라가 후방 카메라 이미지 지연 문제로 미국에서 20만 대 이상의 차량을 리콜할 예정입니다. 이는 안전 문제와 관련된 리콜로, 테슬라의 품질 관리에 대한 우려를 불러일으킬 수 있습니다.",
+          "source": "Associated Press",
+          "date": "2026-05-11",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1779098780928,
+          "title": "일론 머스크의 중국 방문, 주요 합의 없이 종료",
+          "summary": "일론 머스크가 도널드 트럼프 대통령과 함께 중국을 국빈 방문했지만, 주요한 새로운 합의는 도출되지 않았습니다. 이는 테슬라의 중국 사업 확장에 대한 기대감에 부정적인 영향을 미칠 수 있습니다.",
+          "source": "Stocktwits",
+          "date": "2026-05-15",
+          "category": "Musk"
+        },
+        {
+          "id": 1779098780929,
+          "title": "테슬라 차이나, 모델 Y 가격 인상 루머 부인",
+          "summary": "테슬라 차이나가 모델 Y 가격 인상 루머를 강력히 부인했습니다. 최근 모델 Y 롱레인지 및 퍼포먼스 모델의 가격이 인상될 것이라는 소문이 돌았으나, 테슬라 측은 이를 공식적으로 부인하며 고객들에게 공식 웹사이트를 통해 현재 가격을 확인할 것을 당부했습니다.",
+          "source": "Stocktwits",
+          "date": "2026-05-15",
+          "category": "Product"
+        },
+        {
+          "id": 1779098780930,
+          "title": "테슬라 주가, 기술주 전반의 매도세와 중국 사업 우려로 4% 하락",
+          "summary": "테슬라 주가가 금요일 기술주 전반의 매도세와 중국 사업에 대한 우려로 4% 하락했습니다. 이는 한 달여 만에 최악의 일일 하락폭을 기록할 것으로 예상됩니다.",
+          "source": "Stocktwits",
+          "date": "2026-05-15",
+          "category": "Market"
+        },
+        {
+          "id": 1779098780931,
+          "title": "테슬라 로보택시, 텔레오퍼레이터 관련 두 건의 충돌 사고 발생",
+          "summary": "테슬라 로보택시가 텔레오퍼레이터와 관련된 두 건의 충돌 사고를 공개했습니다. 이는 테슬라의 자율주행 기술 안전성에 대한 우려를 증폭시킬 수 있습니다.",
+          "source": "TechCrunch",
+          "date": "2026-05-17",
+          "category": "Product"
+        },
+        {
+          "id": 1779098780932,
+          "title": "월스트리트, 테슬라 주가에 대한 시각 변화: 약속에서 성과로",
+          "summary": "월스트리트의 테슬라 주가에 대한 시각이 '약속'에서 '성과'로 바뀌면서 올해 들어 테슬라 주가가 6% 하락했습니다. 이는 투자자들이 테슬라의 실제 실적에 더 집중하고 있음을 시사합니다.",
+          "source": "Benzinga",
+          "date": "2026-05-17",
+          "category": "Market"
+        },
+        {
+          "id": 1779098780933,
+          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 조짐",
+          "summary": "테슬라가 1분기 수익 예상치를 상회하며 전기차 수요가 전 세계적으로 회복되고 있다고 밝혔습니다. 조정 주당 순이익은 41센트로, 애널리스트 예상치인 34센트를 넘어섰습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Earnings"
+        },
+        {
+          "id": 1779098780934,
+          "title": "테슬라, 사이버캡 및 테슬라 세미 2026년 생산 일정 유지",
+          "summary": "테슬라가 사이버캡과 테슬라 세미의 생산 일정을 2026년으로 유지하고 있다고 밝혔습니다. 또한, 휴머노이드 로봇 옵티머스의 첫 번째 생산 라인이 설치 중이라고 덧붙였습니다.",
+          "source": "Bloomberg",
+          "date": "2026-04-23",
+          "category": "Product"
+        }
+      ],
+      "analyses": {
+        "1779098780925": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 벨기에 플랑드르 지역에서 FSD 소프트웨어 테스트 승인을 획득하여 유럽 내 FSD 기술 확장에 중요한 진전을 보였습니다.",
+          "key_factors": [
+            "FSD 테스트 승인",
+            "유럽 시장 확장"
+          ]
+        },
+        "1779098780926": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 독일 공장 2억 5천만 달러 투자는 유럽 생산 능력 확대를 위한 긍정적인 신호입니다.",
+          "key_factors": [
+            "독일 공장 투자",
+            "생산 능력 확대"
+          ]
+        },
+        "1779098780927": {
+          "impact_score": -3,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R04"
+          ],
+          "reasoning": "테슬라가 후방 카메라 이미지 지연 문제로 20만 대 이상의 차량을 리콜하여 안전 문제와 품질 관리에 대한 우려를 야기할 수 있습니다.",
+          "key_factors": [
+            "리콜",
+            "후방 카메라",
+            "안전 문제"
+          ]
+        },
+        "1779098780928": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "일론 머스크의 중국 방문이 주요 합의 없이 종료되어 테슬라의 중국 사업 확장에 대한 기대감에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "중국 방문",
+            "합의 부재"
+          ]
+        },
+        "1779098780929": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라 차이나가 모델 Y 가격 인상 루머를 부인하여 시장의 불확실성을 해소했지만, 실제 가격 변동이 없어 주가에 중립적인 영향을 미 미칩니다.",
+          "key_factors": [
+            "가격 인상 루머 부인",
+            "공식 웹사이트 확인 권고"
+          ]
+        },
+        "1779098780930": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R23"
+          ],
+          "reasoning": "기술주 전반의 매도세와 중국 사업에 대한 우려로 테슬라 주가가 하락했으며, 이는 시장 전반의 약세와 중국 시장의 불확실성을 반영합니다.",
+          "key_factors": [
+            "기술주 매도세",
+            "중국 사업 우려"
+          ]
+        },
+        "1779098780931": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라 로보택시의 텔레오퍼레이터 관련 충돌 사고는 자율주행 기술의 안전성에 대한 우려를 증폭시켜 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "로보택시 충돌 사고",
+            "자율주행 안전성 우려"
+          ]
+        },
+        "1779098780932": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "월스트리트의 테슬라 주가에 대한 시각이 약속에서 실제 성과로 변화하면서 투자자들이 실적에 더 집중하고 있으며, 이는 주가 하락으로 이어지고 있습니다.",
+          "key_factors": [
+            "투자자 심리 변화",
+            "실제 실적에 대한 집중"
+          ]
+        },
+        "1779098780933": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R12"
+          ],
+          "reasoning": "테슬라가 1분기 조정 주당 순이익이 애널리스트 예상치를 10% 이상 상회하여 긍정적인 실적을 발표했습니다.",
+          "key_factors": [
+            "EPS beat",
+            "EV 수요 회복"
+          ]
+        },
+        "1779098780934": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13",
+            "R25"
+          ],
+          "reasoning": "테슬라가 사이버캡과 세미의 2026년 생산 일정을 유지하고 옵티머스 로봇의 첫 생산 라인 설치를 진행 중이라고 밝혀 신제품 및 로봇 사업에 대한 긍정적인 전망을 제시합니다.",
+          "key_factors": [
+            "사이버캡 및 테슬라 세미 생산 일정 유지",
+            "옵티머스 로봇 생산 라인 설치"
+          ]
+        }
+      },
+      "avgScore": 0.1,
+      "buyIndex": 63,
+      "direction": "bullish",
+      "topRules": [
+        "R13",
+        "R04",
+        "R23",
+        "R12",
+        "R25"
+      ],
+      "bullish": 4,
+      "bearish": 5,
+      "neutral": 1,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-16",
+            "content": "Tesla just raised Model Y prices for the first time in two years, with the largest increase being $1,000. The move signals shifting dynamics in the competitive electric vehicle market as the company continues to work on balancing demand, profitability, and accessibility. The new pricing affects premium trims while leaving entry-level options unchanged.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          },
+          {
+            "date": "2026-05-17",
+            "content": "Elon Musk's latest China visit may improve sentiment around Tesla, especially if investors believe it increases the chances of FSD approval, smoother regulation, and supply-chain stability. But for now, investors should treat it as a potential supportive factor rather than a confirmed bullish catalyst. The key will be whether the visit leads to real regulatory progress, especially around FSD in China.",
+            "sentiment": "neutral",
+            "engagement": "medium"
+          }
+        ],
+        "overall_sentiment": "neutral",
+        "sentiment_score": 0,
+        "post_count": 2,
+        "reasoning": "지난 7일간 Elon Musk의 Tesla 관련 공개 커뮤니케이션은 Model Y 가격 인상과 중국 FSD 승인 가능성에 대한 언급으로, 긍정적이지도 부정적이지도 않은 중립적인 입장을 보였습니다."
+      },
+      "googleTrends": {
+        "current_score": 75,
+        "week_avg": 70,
+        "trend": "rising",
+        "spike": true,
+        "top_queries": [
+          "Tesla stock",
+          "Tesla Model Y",
+          "Elon Musk"
+        ],
+        "reasoning": "지난 7일 동안 'Tesla' 키워드에 대한 검색 관심도가 증가했으며, Model Y 가격 인상과 관련된 뉴스로 인해 검색량 급증이 있었습니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.24,
+        "velocity_label": "급감 (×0.2)",
+        "reason": "조회수 속도 급감 (×0.2) | 최근 3일 245,545회 / 이전 4~7일 1,013,116회 | 총 1,258,661회 (42개 영상)",
+        "video_count": 42,
+        "total_views": 1258661,
+        "hot_views": 245545,
+        "baseline_views": 1013116,
+        "top_videos": [
+          {
+            "title": "Nobody Sees What Amazon Just Did to Tesla",
+            "channel": "Farzad",
+            "publishedAt": "2026-05-11T12:00:06Z",
+            "viewCount": 206986
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 92986
+          },
+          {
+            "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
+            "channel": "HyperChange",
+            "publishedAt": "2026-05-15T17:01:10Z",
+            "viewCount": 68407
+          },
+          {
+            "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+            "channel": "scoremia",
+            "publishedAt": "2026-05-15T08:39:33Z",
+            "viewCount": 63243
+          },
+          {
+            "title": "Is Tesla About to Skyrocket? 5 Real Answers",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-05-11T13:30:38Z",
+            "viewCount": 57960
+          }
+        ],
+        "collected_at": "2026-05-18T10:06:07Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Regulatory": 2,
+        "Investment": 1,
+        "Musk": 1,
+        "Product": 3,
+        "Market": 2,
+        "Earnings": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.35,
+        "qqqChg": -0.17,
+        "vixClose": 18.979999542236328,
+        "wtiChg": 0.49,
+        "cnyChg": -0.14,
+        "prevTslaChg": 0.02,
+        "rsi": 52.7,
+        "macd": {
+          "macd": 0.5761032278220455,
+          "signal": -1.9543014391818316,
+          "hist": 2.530404667003877,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 460.63,
+          "middle": 403.63,
+          "lower": 346.64,
+          "pos": 0.663
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 51,
+        "optimusBoost": 8,
+        "macdTrend": 2,
+        "googleTrends": 4,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 422.24,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/19(화)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 426.04
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/20(수)",
+          "change_pct": -0.2,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 421.4
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/21(목)",
+          "change_pct": 1.1,
+          "signal": "매수",
+          "basePrice": 422.24,
+          "predictedPrice": 426.88
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/22(금)",
+          "change_pct": -0.7,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 419.28
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/25(월)",
+          "change_pct": 0.5,
+          "signal": "관망",
+          "basePrice": 422.24,
+          "predictedPrice": 424.35
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1779098834440
+    },
+    {
       "id": "auto-1779078220787",
       "date": "2026-05-18",
       "displayDate": "2026.05.18",
@@ -29844,135 +30237,7 @@
       "bearish": 4,
       "neutral": 0,
       "timestamp": 1777055633302
-    },
-    {
-      "id": "auto-1777037314809",
-      "date": "2026-04-24",
-      "displayDate": "2026.04.24",
-      "kstTime": "22:27",
-      "source": "auto",
-      "newsCount": 5,
-      "analyzedCount": 5,
-      "news": [
-        {
-          "id": 1777037303526,
-          "title": "테슬라, 2026년 자본 지출 250억 달러로 증액 및 AI, 로봇에 집중",
-          "summary": "테슬라가 올해 자본 지출 계획을 250억 달러로 늘렸으며, 이는 자율주행 택시, 트럭, 로봇 및 AI 야망을 위한 대규모 신규 칩 공장 건설에 대한 상당한 투자를 의미합니다. 일론 머스크는 이러한 투자가 미래 수익 증대에 정당화될 것이라고 밝혔습니다.",
-          "source": "Financial Times",
-          "date": "2026-04-22",
-          "category": "AI|Robotics|Market"
-        },
-        {
-          "id": 1777037303527,
-          "title": "테슬라, 구형 하드웨어의 완전 자율주행 기능 한계 인정 및 보상 방안 제시",
-          "summary": "일론 머스크 테슬라 CEO는 수많은 테슬라 고객들이 수천 달러를 지불한 자율주행 기능에 필요한 하드웨어가 차량에 부족하다는 점을 인정했습니다. 그는 2019년 초부터 2023년 초까지 생산된 차량에 설치된 하드웨어 3(Hardware 3)가 인간 감독 없이 주행하는 데 필요한 성능을 갖추지 못했다고 언급하며, 회사에 상당한 비용이 들 수 있는 보상 방안을 제시했습니다.",
-          "source": "Bloomberg Law News",
-          "date": "2026-04-23",
-          "category": "Product|Legal"
-        },
-        {
-          "id": 1777037303528,
-          "title": "테슬라, 독일 기가팩토리에서 1,000명 추가 고용 및 Model Y 생산량 20% 증대 계획",
-          "summary": "로이터 통신에 따르면 테슬라는 Model Y 수요 증가에 힘입어 3분기부터 생산량을 약 20% 늘리기 위해 6월 말까지 독일 기가팩토리에서 1,000명의 인력을 추가 고용할 계획입니다. 베를린 근처 그륀하이데에서의 채용은 5월에 시작될 예정입니다.",
-          "source": "Reuters",
-          "date": "2026-04-23",
-          "category": "Production|Delivery"
-        },
-        {
-          "id": 1777037303529,
-          "title": "테슬라, 사이버캡 생산 시작 발표",
-          "summary": "일론 머스크 테슬라 CEO는 페달과 스티어링 휠이 없는 자율주행 로보택시 비전의 핵심인 사이버캡(Cybercab) 생산을 시작했다고 밝혔습니다. 이 차량은 테슬라의 완전 자율주행 소프트웨어로 작동하며, 무인 호출 서비스에 사용되고 택시 운영업체 및 일반 대중에게 판매될 예정입니다.",
-          "source": "Morningstar",
-          "date": "2026-04-24",
-          "category": "Product|AI"
-        },
-        {
-          "id": 1777037303530,
-          "title": "테슬라, 1분기 실적 발표: 예상치 상회하는 주당 순이익 기록했으나 매출은 예상치 하회",
-          "summary": "테슬라는 1분기 조정 주당 순이익이 0.41달러로 월스트리트 예상치인 0.36달러를 상회했지만, 매출은 223억 9천만 달러로 예상치인 226억 달러에 미치지 못했습니다. 회사는 14억 4천만 달러의 긍정적인 잉여 현금 흐름을 보고했으나, AI 인프라, 로봇 공학, 칩 개발 및 제조에 대한 지출 증가로 인해 2026년 남은 기간 동안 잉여 현금 흐름이 마이너스를 기록할 것으로 예상했습니다.",
-          "source": "Stocktwits",
-          "date": "2026-04-23",
-          "category": "Earnings|Market"
-        }
-      ],
-      "analyses": {
-        "1777037303526": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [],
-          "reasoning": "테슬라의 자본 지출 증액은 AI, 로봇, 자율주행 택시 등 미래 성장 동력에 대한 강력한 투자를 나타내며, 이는 장기적인 수익 증대 가능성을 시사합니다.",
-          "key_factors": [
-            "자본 지출 증액",
-            "AI 및 로봇 투자",
-            "미래 수익 증대 기대"
-          ]
-        },
-        "1777037303527": {
-          "impact_score": -4,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "테슬라가 구형 하드웨어의 완전 자율주행 기능 한계를 인정하고 보상 방안을 제시한 것은 상당한 비용 부담과 FSD 기술에 대한 신뢰도 하락으로 이어질 수 있습니다.",
-          "key_factors": [
-            "FSD 기능에 대한 신뢰도 하락",
-            "보상 방안으로 인한 회사 비용 증가",
-            "기술적 한계 인정"
-          ]
-        },
-        "1777037303528": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "테슬라의 독일 기가팩토리 생산량 증대 및 인력 추가 고용 계획은 Model Y 수요 증가에 대한 긍정적인 신호로, 향후 매출 및 시장 점유율 확대에 기여할 것으로 예상됩니다.",
-          "key_factors": [
-            "Model Y 생산량 20% 증대",
-            "독일 기가팩토리 1,000명 추가 고용",
-            "수요 증가"
-          ]
-        },
-        "1777037303529": {
-          "impact_score": 4,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "테슬라의 사이버캡 생산 시작 발표는 완전 자율주행 로보택시 비전의 핵심적인 진전으로, 새로운 제품 출시 및 FSD 마일스톤 달성을 의미하여 주가에 긍정적인 영향을 미칠 것입니다.",
-          "key_factors": [
-            "사이버캡 생산 시작",
-            "완전 자율주행 로보택시 비전",
-            "FSD 소프트웨어 활용"
-          ]
-        },
-        "1777037303530": {
-          "impact_score": -2,
-          "direction": "bearish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R02"
-          ],
-          "reasoning": "테슬라가 1분기 주당 순이익은 예상치를 상회했지만, 매출이 예상치를 하회하고 AI 및 로봇 공학 투자로 인해 향후 잉여 현금 흐름이 마이너스를 기록할 것으로 예상되어 부정적인 영향을 미칠 수 있습니다.",
-          "key_factors": [
-            "매출 예상치 하회",
-            "잉여 현금 흐름 마이너스 예상",
-            "주당 순이익 예상치 상회"
-          ]
-        }
-      },
-      "avgScore": 0.8,
-      "buyIndex": 58,
-      "direction": "bullish",
-      "topRules": [
-        "R13",
-        "R02"
-      ],
-      "bullish": 3,
-      "bearish": 2,
-      "neutral": 0,
-      "timestamp": 1777037314809
     }
   ],
-  "lastUpdated": "2026-05-18 13:22 KST"
+  "lastUpdated": "2026-05-18 19:06 KST"
 }
