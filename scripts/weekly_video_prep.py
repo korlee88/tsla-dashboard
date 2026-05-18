@@ -807,7 +807,7 @@ def draw_bell_icon(draw, cx, cy, size, color):
              0, 180, fill=color, width=max(s // 6, 5))
     # 손잡이 (상단 작은 아치)
     draw.arc([cx - s // 8, cy - s - s // 8, cx + s // 8, cy - s + s // 8],
-             180, 0, outline=color, width=max(s // 10, 4))
+             180, 0, fill=color, width=max(s // 10, 4))
     # 추 (하단 작은 원)
     cr = s // 8
     draw.ellipse([cx - cr, cy + s // 2, cx + cr, cy + s // 2 + cr * 2], fill=color)
