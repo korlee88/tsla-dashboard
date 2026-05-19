@@ -1,0 +1,20 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-19
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 충격인트로
+A dramatic cinematic explosion of electric energy around a sleek futuristic Tesla vehicle silhouette, intense cyan and deep black contrast, powerful lightning bolts striking down, shattered glass particles flying, crashing stock chart arrows pointing downward, dynamic motion blur, hyper-realistic shock atmosphere, dark stormy background with neon cyan glow, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬1 주간브리핑
+A futuristic Tesla factory interior bathed in mystical purple and violet neon lighting, sleek electric vehicles lined up on production floor, glowing holographic data streams floating in air, advanced robotic arms assembling cars, deep purple ambient atmosphere with subtle blue accents, cinematic depth of field, sci-fi aesthetic, premium technological vibe, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬2 호재뉴스
+A vibrant bright green energetic scene featuring a humanoid Optimus robot standing tall next to a futuristic Cybercab, upward soaring green arrows symbolizing growth, glowing emerald particles floating in air, lush neon green light beams radiating outward, optimistic celebration atmosphere, financial success aura, dynamic cinematic composition, vertical orientation, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬3 리스크뉴스
+A tense dramatic scene with deep crimson red warning lights flashing over a damaged Tesla vehicle with recall caution tape, downward crashing red arrows, broken rear camera glass, dark smoky atmosphere with glowing red embers, ominous shadows, intense danger alarm vibe, cinematic high contrast lighting, crisis emergency aesthetic, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬4 시장반응
+A sweeping orange-hued futuristic financial cityscape at sunset with towering skyscrapers, holographic stock charts floating between buildings, glowing amber Tesla vehicles racing through neon-lit streets, warm orange and gold light reflections, bustling market energy atmosphere, cinematic aerial perspective, dramatic golden hour lighting, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution
+
+## 씬5 다음주예고
+A dreamy magenta and pink futuristic cosmic scene featuring a sleek Cybercab launching forward through a starry galaxy, sparkling pink stardust trails, glowing magenta nebula clouds, twinkling stars scattered across deep space, soft pink neon light flares, magical anticipation atmosphere, hopeful future vision aesthetic, cinematic vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution

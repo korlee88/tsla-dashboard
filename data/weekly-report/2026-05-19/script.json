@@ -1,0 +1,218 @@
+{
+  "generated_at": "2026-05-19",
+  "summary": {
+    "week_start": "2026-05-12",
+    "week_end": "2026-05-19",
+    "session_count": 31,
+    "buy_indices": [
+      72,
+      61,
+      58,
+      70,
+      63,
+      59,
+      70,
+      62,
+      64,
+      67,
+      62,
+      55,
+      78,
+      57,
+      71,
+      56,
+      54,
+      54,
+      66,
+      49,
+      66,
+      66,
+      56,
+      77,
+      53,
+      48,
+      54,
+      66,
+      78,
+      90,
+      70
+    ],
+    "avg_buy_index": 64,
+    "latest_buy_index": 72,
+    "price_start": 447.28,
+    "price_end": 409.99,
+    "latest_price": 409.99,
+    "today_price": 409.99,
+    "today_change_pct": -2.9,
+    "biggest_impact": {
+      "title": "테슬라, 옵티머스 로봇 생산 라인 설치 및 사이버캡, 세미 2026년 출시 예정",
+      "score": 4,
+      "reason": "테슬라가 옵티머스 로봇의 1세대 생산 라인을 설치 중이며 2026년 사이버캡과 세미 출시를 예고하여 미래 성장 동력에 대한 기대감을 높이고, 프리몬트 공장 라인 전환은 로봇 생산의 구체적인 계획을 보여줍니다.",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 옵티머스 로봇 생산 라인 설치 및 사이버캡, 세미 2026년 출시 예정",
+        "score": 4,
+        "reason": "테슬라가 옵티머스 로봇의 1세대 생산 라인을 설치 중이며 2026년 사이버캡과 세미 출시를 예고하여 미래 성장 동력에 대한 기대감을 높이고, 프리몬트 공장 라인 전환은 로봇 생산의 구체적인 계획을 보여줍니다."
+      },
+      {
+        "title": "테슬라, 기록적인 실적 발표, '다음 성장 단계'에 집중",
+        "score": 4,
+        "reason": "테슬라가 월스트리트 예상을 뛰어넘는 기록적인 분기 실적과 139,300대의 차량 인도를 달성하며 5분기 연속 흑자를 기록하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다."
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 AI, 로봇 투자 확대 계획 발표",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS 예상치를 상회했으며, AI 및 로봇에 대한 대규모 투자 계획을 발표하여 미래 성장 동력에 대한 기대감을 높였습니다."
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려를 증폭시키며 주가에 부정적인 영향을 미쳤습니다."
+      },
+      {
+        "title": "테슬라, 후방 카메라 이미지 문제로 21만 8천대 이상 리콜",
+        "score": -3,
+        "reason": "테슬라가 후방 카메라 이미지 문제로 21만 8천대 이상의 차량을 리콜하여 충돌 위험을 야기할 수 있어 부정적인 영향을 미칠 것입니다."
+      },
+      {
+        "title": "테슬라, 20만 대 이상 차량 리콜: 후방 카메라 이미지 지연 문제",
+        "score": -3,
+        "reason": "테슬라가 후방 카메라 이미지 지연 문제로 20만 대 이상의 차량을 리콜하여 안전 문제와 품질 관리에 대한 우려를 야기할 수 있습니다."
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "5/20(수)",
+        "change_pct": 1.2,
+        "signal": "매수",
+        "basePrice": 409.99,
+        "predictedPrice": 414.91
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "5/21(목)",
+        "change_pct": 0.7,
+        "signal": "관망",
+        "basePrice": 409.99,
+        "predictedPrice": 412.86
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "5/22(금)",
+        "change_pct": -0.5,
+        "signal": "관망",
+        "basePrice": 409.99,
+        "predictedPrice": 407.94
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-19",
+        409.99
+      ],
+      [
+        "2026-05-18",
+        422.24
+      ],
+      [
+        "2026-05-17",
+        422.24
+      ],
+      [
+        "2026-05-16",
+        422.24
+      ],
+      [
+        "2026-05-15",
+        427.41
+      ]
+    ],
+    "trends": null,
+    "next_events": []
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "충격속보",
+      "lines": [
+        "충격! 오늘 TSLA -2.9%! ⚡",
+        "헐! 옵티머스 생산라인 깔린다!"
+      ],
+      "body": "충격! 오늘 TSLA -2.9%! ⚡\n헐! 옵티머스 생산라인 깔린다!"
+    },
+    {
+      "index": 1,
+      "title": "주간브리핑",
+      "lines": [
+        "와! 이게 실화? 주가 $409!",
+        "역대급 -2.9% 폭락, 초비상!"
+      ],
+      "body": "와! 이게 실화? 주가 $409!\n역대급 -2.9% 폭락, 초비상!"
+    },
+    {
+      "index": 2,
+      "title": "호재폭발",
+      "lines": [
+        "미래기술: 옵티머스 생산라인 가동 충격! | 로이터 5/18 +4",
+        "실적쇼크: 5분기 연속 흑자 대박! | WSJ 5/17 +4"
+      ],
+      "body": "미래기술: 옵티머스 생산라인 가동 충격! | 로이터 5/18 +4\n실적쇼크: 5분기 연속 흑자 대박! | WSJ 5/17 +4"
+    },
+    {
+      "index": 3,
+      "title": "위기경보",
+      "lines": [
+        "수요둔화: 1분기 인도량 예측 불가 폭락! | CNBC 5/16 -4",
+        "대량리콜: 21만대 카메라 결함 헉! | 블룸버그 5/15 -3"
+      ],
+      "body": "수요둔화: 1분기 인도량 예측 불가 폭락! | CNBC 5/16 -4\n대량리콜: 21만대 카메라 결함 헉! | 블룸버그 5/15 -3"
+    },
+    {
+      "index": 4,
+      "title": "시장반응",
+      "lines": [
+        "[분위기] 와! 투심 롤러코스터 진짜 충격!",
+        "[전망] 단기 변동성 확대, 신중 접근 필요"
+      ],
+      "body": "[분위기] 와! 투심 롤러코스터 진짜 충격!\n[전망] 단기 변동성 확대, 신중 접근 필요"
+    },
+    {
+      "index": 5,
+      "title": "예고편",
+      "lines": [
+        "다음주 사이버캡 공개 임박! 놓치면 큰일!",
+        "🔔 구독+알림으로 1초도 늦지 마세요!",
+        "",
+        "IMAGE_PROMPT_0: A dramatic cinematic explosion of electric energy around a sleek futuristic Tesla vehicle silhouette, intense cyan and deep black contrast, powerful lightning bolts striking down, shattered glass particles flying, crashing stock chart arrows pointing downward, dynamic motion blur, hyper-realistic shock atmosphere, dark stormy background with neon cyan glow, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_1: A futuristic Tesla factory interior bathed in mystical purple and violet neon lighting, sleek electric vehicles lined up on production floor, glowing holographic data streams floating in air, advanced robotic arms assembling cars, deep purple ambient atmosphere with subtle blue accents, cinematic depth of field, sci-fi aesthetic, premium technological vibe, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_2: A vibrant bright green energetic scene featuring a humanoid Optimus robot standing tall next to a futuristic Cybercab, upward soaring green arrows symbolizing growth, glowing emerald particles floating in air, lush neon green light beams radiating outward, optimistic celebration atmosphere, financial success aura, dynamic cinematic composition, vertical orientation, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_3: A tense dramatic scene with deep crimson red warning lights flashing over a damaged Tesla vehicle with recall caution tape, downward crashing red arrows, broken rear camera glass, dark smoky atmosphere with glowing red embers, ominous shadows, intense danger alarm vibe, cinematic high contrast lighting, crisis emergency aesthetic, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_4: A sweeping orange-hued futuristic financial cityscape at sunset with towering skyscrapers, holographic stock charts floating between buildings, glowing amber Tesla vehicles racing through neon-lit streets, warm orange and gold light reflections, bustling market energy atmosphere, cinematic aerial perspective, dramatic golden hour lighting, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_5: A dreamy magenta and pink futuristic cosmic scene featuring a sleek Cybercab launching forward through a starry galaxy, sparkling pink stardust trails, glowing magenta nebula clouds, twinkling stars scattered across deep space, soft pink neon light flares, magical anticipation atmosphere, hopeful future vision aesthetic, cinematic vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution"
+      ],
+      "body": "다음주 사이버캡 공개 임박! 놓치면 큰일!\n🔔 구독+알림으로 1초도 늦지 마세요!\n\nIMAGE_PROMPT_0: A dramatic cinematic explosion of electric energy around a sleek futuristic Tesla vehicle silhouette, intense cyan and deep black contrast, powerful lightning bolts striking down, shattered glass particles flying, crashing stock chart arrows pointing downward, dynamic motion blur, hyper-realistic shock atmosphere, dark stormy background with neon cyan glow, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_1: A futuristic Tesla factory interior bathed in mystical purple and violet neon lighting, sleek electric vehicles lined up on production floor, glowing holographic data streams floating in air, advanced robotic arms assembling cars, deep purple ambient atmosphere with subtle blue accents, cinematic depth of field, sci-fi aesthetic, premium technological vibe, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_2: A vibrant bright green energetic scene featuring a humanoid Optimus robot standing tall next to a futuristic Cybercab, upward soaring green arrows symbolizing growth, glowing emerald particles floating in air, lush neon green light beams radiating outward, optimistic celebration atmosphere, financial success aura, dynamic cinematic composition, vertical orientation, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_3: A tense dramatic scene with deep crimson red warning lights flashing over a damaged Tesla vehicle with recall caution tape, downward crashing red arrows, broken rear camera glass, dark smoky atmosphere with glowing red embers, ominous shadows, intense danger alarm vibe, cinematic high contrast lighting, crisis emergency aesthetic, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_4: A sweeping orange-hued futuristic financial cityscape at sunset with towering skyscrapers, holographic stock charts floating between buildings, glowing amber Tesla vehicles racing through neon-lit streets, warm orange and gold light reflections, bustling market energy atmosphere, cinematic aerial perspective, dramatic golden hour lighting, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution\n\nIMAGE_PROMPT_5: A dreamy magenta and pink futuristic cosmic scene featuring a sleek Cybercab launching forward through a starry galaxy, sparkling pink stardust trails, glowing magenta nebula clouds, twinkling stars scattered across deep space, soft pink neon light flares, magical anticipation atmosphere, hopeful future vision aesthetic, cinematic vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution"
+    }
+  ],
+  "image_prompts": {
+    "0": "A dramatic cinematic explosion of electric energy around a sleek futuristic Tesla vehicle silhouette, intense cyan and deep black contrast, powerful lightning bolts striking down, shattered glass particles flying, crashing stock chart arrows pointing downward, dynamic motion blur, hyper-realistic shock atmosphere, dark stormy background with neon cyan glow, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "1": "A futuristic Tesla factory interior bathed in mystical purple and violet neon lighting, sleek electric vehicles lined up on production floor, glowing holographic data streams floating in air, advanced robotic arms assembling cars, deep purple ambient atmosphere with subtle blue accents, cinematic depth of field, sci-fi aesthetic, premium technological vibe, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "2": "A vibrant bright green energetic scene featuring a humanoid Optimus robot standing tall next to a futuristic Cybercab, upward soaring green arrows symbolizing growth, glowing emerald particles floating in air, lush neon green light beams radiating outward, optimistic celebration atmosphere, financial success aura, dynamic cinematic composition, vertical orientation, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "3": "A tense dramatic scene with deep crimson red warning lights flashing over a damaged Tesla vehicle with recall caution tape, downward crashing red arrows, broken rear camera glass, dark smoky atmosphere with glowing red embers, ominous shadows, intense danger alarm vibe, cinematic high contrast lighting, crisis emergency aesthetic, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "4": "A sweeping orange-hued futuristic financial cityscape at sunset with towering skyscrapers, holographic stock charts floating between buildings, glowing amber Tesla vehicles racing through neon-lit streets, warm orange and gold light reflections, bustling market energy atmosphere, cinematic aerial perspective, dramatic golden hour lighting, vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution",
+    "5": "A dreamy magenta and pink futuristic cosmic scene featuring a sleek Cybercab launching forward through a starry galaxy, sparkling pink stardust trails, glowing magenta nebula clouds, twinkling stars scattered across deep space, soft pink neon light flares, magical anticipation atmosphere, hopeful future vision aesthetic, cinematic vertical composition, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution"
+  }
+}
