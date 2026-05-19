@@ -1,6 +1,402 @@
 {
   "sessions": [
     {
+      "id": "auto-1779219069255",
+      "date": "2026-05-20",
+      "displayDate": "2026.05.20",
+      "kstTime": "04:30",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1779219037456,
+          "title": "일론 머스크, OpenAI 소송에서 패소: 배심원단, 소송 제기 시기 늦었다고 판단",
+          "summary": "일론 머스크가 OpenAI와 샘 알트만 CEO를 상대로 제기한 소송에서 배심원단이 머스크의 주장을 기각했다. 배심원단은 머스크가 소송을 제기하기까지 너무 오래 기다렸다고 판단하여, OpenAI가 비영리 사명을 저버렸다는 핵심 주장에 대해서는 심리하지 않았다.",
+          "source": "Bloomberg",
+          "date": "2026-05-18",
+          "category": "Legal"
+        },
+        {
+          "id": 1779219037457,
+          "title": "테슬라, 일부 모델 Y 가격 인상: 수익성 개선 및 수요 강세 시사",
+          "summary": "테슬라가 최근 일부 모델 Y 트림의 가격을 500달러에서 1,000달러 인상했다. 이는 테슬라가 고급 모델 Y에 대한 강한 수요를 보고 있거나 수익 마진을 개선하려는 시도로 해석될 수 있다.",
+          "source": "Barron's",
+          "date": "2026-05-17",
+          "category": "Market"
+        },
+        {
+          "id": 1779219037458,
+          "title": "테슬라, 올해 말까지 미국 전역에 무인 로보택시 서비스 확대 전망",
+          "summary": "일론 머스크 테슬라 CEO는 올해 말까지 미국 전역에서 테슬라의 자율주행 로보택시가 '광범위하게' 운행될 것이라고 밝혔다. 현재 텍사스주 댈러스, 휴스턴, 오스틴 등 3개 도시에서 제한적으로 무인 로보택시를 운영 중이다.",
+          "source": "Reuters",
+          "date": "2026-05-18",
+          "category": "Product"
+        },
+        {
+          "id": 1779219037459,
+          "title": "테슬라 AI 책임자였던 안드레이 카르파티, Anthropic 합류",
+          "summary": "OpenAI 공동 창립자이자 테슬라의 전 AI 및 오토파일럿 비전 담당 이사였던 안드레이 카르파티가 Anthropic에 합류했다. 그는 Anthropic의 사전 훈련 팀에서 Claude를 활용하여 사전 훈련 연구를 가속화하는 데 중점을 둔 팀을 구축할 예정이다.",
+          "source": "TechCrunch",
+          "date": "2026-05-19",
+          "category": "AI"
+        },
+        {
+          "id": 1779219037460,
+          "title": "일론 머스크, xAI 직원들에게 세금 정보 대가로 420달러 지급 약속 불이행",
+          "summary": "일론 머스크가 xAI 직원들에게 Grok 훈련 데이터로 개인 세금 신고서를 제공하면 420달러를 지급하겠다고 약속했지만, 아직 지급되지 않았다고 블룸버그가 보도했다. 이는 Grok의 세금 관련 기능 개선을 위한 시도였다.",
+          "source": "Bloomberg",
+          "date": "2026-05-18",
+          "category": "Musk"
+        },
+        {
+          "id": 1779219037461,
+          "title": "테슬라, 중국 시장 점유율 하락 및 경쟁 심화 직면",
+          "summary": "테슬라의 중국 신에너지차 시장 점유율이 작년 말 약 8%에서 약 3%로 하락했다. BYD와 같은 중국 현지 경쟁업체들이 더 저렴하고 스타일리시하며 고급 인포테인먼트 시스템을 갖춘 모델을 출시하면서 테슬라의 판매 모멘텀이 약화되고 있다.",
+          "source": "Forbes",
+          "date": "2026-05-18",
+          "category": "Competition"
+        },
+        {
+          "id": 1779219037462,
+          "title": "테슬라, 2026년 모델 S 및 모델 X 생산 중단 및 로봇에 집중",
+          "summary": "테슬라는 2026년에 모델 S와 모델 X 생산을 중단하고, 프리몬트 공장 공간을 옵티머스 휴머노이드 로봇 생산을 포함한 새로운 이니셔티브에 활용할 계획이다. 이는 테슬라가 로봇 및 자율 기술로 사업 초점을 전환하고 있음을 시사한다.",
+          "source": "Fox Business",
+          "date": "2026-01-28",
+          "category": "Product"
+        },
+        {
+          "id": 1779219037463,
+          "title": "테슬라, 루이지애나 직접 판매 금지법에 대한 항소심 승소",
+          "summary": "테슬라가 자동차 제조업체의 소비자 직접 판매를 금지하는 루이지애나 주법에 대한 연방 법원 소송에서 항소심에서 승소했다. 항소 법원은 테슬라가 주 자동차 판매를 관장하는 루이지애나 자동차 위원회가 테슬라에 편향되어 있다는 주장을 제기할 수 있다고 판결했다.",
+          "source": "Associated Press",
+          "date": "2026-05-19",
+          "category": "Legal"
+        },
+        {
+          "id": 1779219037464,
+          "title": "테슬라, 에너지 사업 확장: 중국에 파워월 출시 및 기록적인 배터리 출하량",
+          "summary": "테슬라는 중국에 가정용 배터리 팩인 파워월을 시작으로 '테슬라 에너지' 사업부를 출범한다고 발표했다. 또한, 테슬라의 에너지 저장 사업부는 2022년 3분기에 기록적인 수의 배터리를 출하하며 모든 부문에서 성장을 보였다.",
+          "source": "Electrek",
+          "date": "2024-09-15",
+          "category": "Energy"
+        },
+        {
+          "id": 1779219037465,
+          "title": "테슬라, 소형 저가형 전기차 개발 중",
+          "summary": "로이터 통신에 따르면 테슬라가 새로운 소형 저가형 전기차를 개발 중이라는 소식에 테슬라 주가가 개장 전 0.4% 상승했다.",
+          "source": "Reuters",
+          "date": "2026-04-09",
+          "category": "Product"
+        }
+      ],
+      "analyses": {
+        "1779219037456": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 OpenAI를 상대로 제기한 소송에서 패소하여 그의 다른 벤처와 관련된 법적 문제가 TSLA에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 소송 패소",
+            "OpenAI와의 법적 분쟁"
+          ]
+        },
+        "1779219037457": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 일부 모델 Y 가격 인상은 수익성 개선과 해당 모델에 대한 강한 수요를 시사하며 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "모델 Y 가격 인상",
+            "수익성 개선",
+            "수요 강세"
+          ]
+        },
+        "1779219037458": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라 CEO의 연말까지 미국 전역 로보택시 서비스 확대 발언은 자율주행 기술의 중요한 진전을 시사하며 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "로보택시 서비스 확대",
+            "자율주행 기술 발전"
+          ]
+        },
+        "1779219037459": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 전 AI 책임자가 경쟁사 Anthropic에 합류하여 테슬라의 AI 및 자율주행 기술 개발에 대한 우려를 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "핵심 인재 유출",
+            "경쟁사 역량 강화"
+          ]
+        },
+        "1779219037460": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "일론 머스크가 xAI 직원들에게 약속한 420달러 지급을 불이행했다는 보도는 머스크의 다른 벤처에서 발생한 부정적인 소식이 테슬라에 대한 투자자 신뢰에 간접적으로 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "일론 머스크의 약속 불이행",
+            "xAI 관련 논란"
+          ]
+        },
+        "1779219037461": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 중국 시장 점유율이 크게 하락하고 현지 경쟁이 심화되면서 판매 모멘텀이 약화되고 있습니다.",
+          "key_factors": [
+            "중국 시장 점유율 하락",
+            "현지 경쟁 심화",
+            "BYD의 저가 및 고급 모델 출시"
+          ]
+        },
+        "1779219037462": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R25",
+            "R26"
+          ],
+          "reasoning": "테슬라가 2026년 모델 S 및 X 생산을 중단하고 프리몬트 공장을 옵티머스 로봇 생산에 활용할 계획이라는 소식은 로봇 사업 전환에 대한 강력한 의지를 보여주며 긍정적입니다.",
+          "key_factors": [
+            "옵티머스 휴머노이드 로봇 생산 집중",
+            "모델 S/X 생산 중단",
+            "사업 초점 전환"
+          ]
+        },
+        "1779219037463": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 루이지애나주에서 직접 판매 금지법에 대한 항소심에서 승소하여 해당 주에서 직접 판매 모델을 유지할 수 있는 가능성을 열었으며, 이는 잠재적인 시장 확장에 긍정적입니다.",
+          "key_factors": [
+            "직접 판매 모델 유지 가능성",
+            "루이지애나 시장 접근성 개선"
+          ]
+        },
+        "1779219037464": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R15",
+            "R16"
+          ],
+          "reasoning": "테슬라가 중국에 파워월을 출시하며 에너지 사업을 확장하고 기록적인 배터리 출하량을 기록하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "중국 파워월 출시",
+            "기록적인 배터리 출하량"
+          ]
+        },
+        "1779219037465": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "테슬라가 새로운 소형 저가형 전기차를 개발 중이라는 소식은 잠재적인 시장 확장과 판매량 증가 기대로 인해 주가에 긍정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "저가형 전기차",
+            "시장 확장"
+          ]
+        }
+      },
+      "avgScore": 0.7,
+      "buyIndex": 64,
+      "direction": "bullish",
+      "topRules": [
+        "R24",
+        "R13",
+        "R25",
+        "R26",
+        "R15"
+      ],
+      "bullish": 6,
+      "bearish": 4,
+      "neutral": 0,
+      "muskXSentiment": {
+        "posts": [
+          {
+            "date": "2026-05-18",
+            "content": "Elon Musk는 5~10년 내에 미국 내 주행 거리의 약 90%가 자율주행차의 AI에 의해 커버될 것이며, 개인 운전은 드문 활동이 될 것이라고 예측했습니다. 그는 텍사스 3개 도시에서 이미 무인 자율주행차가 운행 중이며 이러한 추세가 전국적으로 확산될 것이라고 언급했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          },
+          {
+            "date": "2026-05-19",
+            "content": "Tesla는 Model Y 가격을 2024년 이후 처음으로 인상했으며, 이는 가격 결정력 개선과 수요 유지 시 마진을 뒷받침할 수 있음을 시사합니다. Elon Musk는 무인 자율주행 및 로보택시 서비스가 올해 말 더 확산될 수 있다고 언급하며 소프트웨어 및 AI와 관련된 장기적인 강세론을 강화했습니다.",
+            "sentiment": "bullish",
+            "engagement": "high"
+          }
+        ],
+        "overall_sentiment": "bullish",
+        "sentiment_score": 2,
+        "post_count": 2,
+        "reasoning": "Elon Musk는 자율주행 기술의 광범위한 채택과 로보택시 서비스의 확산에 대해 낙관적인 전망을 내놓았으며, 이는 Tesla의 미래 성장 동력에 대한 긍정적인 기대를 반영합니다."
+      },
+      "googleTrends": {
+        "current_score": null,
+        "week_avg": null,
+        "trend": "stable",
+        "spike": false,
+        "top_queries": [],
+        "reasoning": "Google Trends 데이터는 실시간으로 제공되지만, 특정 시점의 정확한 점수와 주간 평균, 그리고 검색량 추이(상승/하락/안정) 및 급등 여부를 직접적으로 검색 결과에서 얻을 수 없습니다. Google Trends API를 사용해야 정확한 수치를 얻을 수 있습니다. 현재 검색 결과로는 Tesla의 주가 변동 및 관련 뉴스 기사만 확인됩니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.26,
+        "velocity_label": "급감 (×0.3)",
+        "reason": "조회수 속도 급감 (×0.3) | 최근 3일 258,685회 / 이전 4~7일 984,952회 | 총 1,243,637회 (43개 영상)",
+        "video_count": 43,
+        "total_views": 1243637,
+        "hot_views": 258685,
+        "baseline_views": 984952,
+        "top_videos": [
+          {
+            "title": "Jab Drift Ko Apna Partner Samajh Baitha Onslaught!  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-16T04:00:12Z",
+            "viewCount": 146466
+          },
+          {
+            "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
+            "channel": "Mosh Brutal",
+            "publishedAt": "2026-05-13T03:35:39Z",
+            "viewCount": 102702
+          },
+          {
+            "title": "Конец эпохи Tesla. Автомобили уступают место роботам 🤖🔚",
+            "channel": "ИКRA | пространство привилегий",
+            "publishedAt": "2026-05-14T17:20:38Z",
+            "viewCount": 90015
+          },
+          {
+            "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+            "channel": "scoremia",
+            "publishedAt": "2026-05-15T08:39:33Z",
+            "viewCount": 77802
+          },
+          {
+            "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
+            "channel": "HyperChange",
+            "publishedAt": "2026-05-15T17:01:10Z",
+            "viewCount": 73616
+          }
+        ],
+        "collected_at": "2026-05-19T19:30:24Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Legal": 2,
+        "Market": 1,
+        "Product": 3,
+        "AI": 1,
+        "Musk": 1,
+        "Competition": 1,
+        "Energy": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.04,
+        "qqqChg": 0.41,
+        "vixClose": 17.850000381469727,
+        "wtiChg": 1.73,
+        "cnyChg": 0.22,
+        "prevTslaChg": -2.21,
+        "rsi": 48.3,
+        "macd": {
+          "macd": -0.08536025953850412,
+          "signal": -1.7375142516552893,
+          "hist": 1.6521539921167852,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 454.05,
+          "middle": 400.98,
+          "lower": 347.9,
+          "pos": 0.529
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 57,
+        "optimusBoost": 8,
+        "r24Discount": -4,
+        "macdTrend": 2,
+        "muskXSentiment": 3,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 404.09,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/20(수)",
+          "change_pct": 0.9,
+          "signal": "매수",
+          "basePrice": 404.09,
+          "predictedPrice": 407.73
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/21(목)",
+          "change_pct": -0.7,
+          "signal": "관망",
+          "basePrice": 404.09,
+          "predictedPrice": 401.26
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/22(금)",
+          "change_pct": 1.1,
+          "signal": "매수",
+          "basePrice": 404.09,
+          "predictedPrice": 408.53
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "5/25(월)",
+          "change_pct": -0.5,
+          "signal": "관망",
+          "basePrice": 404.09,
+          "predictedPrice": 402.07
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "5/25(월)",
+          "change_pct": 0.8,
+          "signal": "관망",
+          "basePrice": 404.09,
+          "predictedPrice": 407.32
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1779219069255
+    },
+    {
       "id": "auto-1779204560531",
       "date": "2026-05-20",
       "displayDate": "2026.05.20",
@@ -30923,242 +31319,7 @@
       "bearish": 3,
       "neutral": 1,
       "timestamp": 1777189346920
-    },
-    {
-      "id": "auto-1777175302660",
-      "date": "2026-04-26",
-      "displayDate": "2026.04.26",
-      "kstTime": "12:47",
-      "source": "auto",
-      "newsCount": 10,
-      "analyzedCount": 10,
-      "news": [
-        {
-          "id": 1777175280712,
-          "title": "일론 머스크, 미래 테슬라 차량은 로드스터만 수동 운전 가능할 것이라고 언급",
-          "summary": "일론 머스크 테슬라 CEO는 미래의 모든 테슬라 차량이 완전 자율주행이 될 것이며, 로드스터만이 유일하게 수동으로 운전할 수 있는 모델이 될 것이라고 밝혔다. 그는 또한 테슬라의 사이버캡 자율주행 차량이 생산에 들어갔다고 언급했다.",
-          "source": "CarsGuide",
-          "date": "2026-04-24",
-          "category": "Musk|Product"
-        },
-        {
-          "id": 1777175280713,
-          "title": "테슬라, 완전 자율주행을 위해 수백만 대의 차량 하드웨어 업그레이드 필요 인정",
-          "summary": "일론 머스크는 테슬라의 1분기 실적 발표에서 2019년부터 2023년 사이에 판매된 수백만 대의 테슬라 차량에 탑재된 하드웨어 3(HW3)가 완전 자율주행(FSD) 기능을 완전히 지원하기에는 역부족이라고 인정했다. 이 차량들은 FSD를 사용하려면 하드웨어 4(HW4)로 업그레이드해야 한다.",
-          "source": "PCMag",
-          "date": "2026-04-23",
-          "category": "Product|Technology"
-        },
-        {
-          "id": 1777175280714,
-          "title": "테슬라, 2026년 자본 지출 가이던스 상향 조정 및 로보택시 기대치 하향",
-          "summary": "테슬라는 2026년 연간 자본 지출 가이던스를 50억 달러 증액하여 총 250억 달러로 상향 조정했다. 이는 6개의 신규 공장 건설과 로보택시 및 옵티머스 휴머노이드 로봇 인프라 지원을 위한 AI 투자 증가에 따른 것이다. 또한, 로보택시 배포에 대한 기대치는 낮아졌다.",
-          "source": "The Motley Fool",
-          "date": "2026-04-23",
-          "category": "Earnings|Capital Expenditure|Robotaxi"
-        },
-        {
-          "id": 1777175280715,
-          "title": "일론 머스크, HW3 차량 업그레이드를 위한 '마이크로팩토리' 건설 제안",
-          "summary": "일론 머스크는 수백만 대의 HW3 장착 테슬라 차량을 HW4로 업그레이드하기 위해 주요 대도시에 '마이크로팩토리'를 건설할 계획이라고 밝혔다. 이는 서비스 센터에서 진행하는 것보다 효율적이며, 모든 HW3 차량을 로보택시 차량군에 편입시키고 무인 FSD를 가능하게 할 것이라고 덧붙였다.",
-          "source": "TheStreet",
-          "date": "2026-04-25",
-          "category": "Product|Technology|Musk"
-        },
-        {
-          "id": 1777175280716,
-          "title": "테슬라, 1분기 실적 예상치 상회에도 불구하고 주가 하락",
-          "summary": "테슬라는 1분기 조정 주당순이익(EPS) 0.41달러와 매출 223억 9천만 달러를 기록하며 시장 예상치를 상회했다. 그러나 완전 자율주행 하드웨어의 한계 인정과 자본 지출 계획 상향 조정으로 인해 주가는 하락세를 보였다.",
-          "source": "Stocktwits",
-          "date": "2026-04-23",
-          "category": "Earnings|Market"
-        },
-        {
-          "id": 1777175280717,
-          "title": "테슬라, 인텔의 14A 공정 기술을 테라팹 프로젝트에 활용할 계획",
-          "summary": "일론 머스크는 테슬라의 테라팹(Terafab) 프로젝트에 인텔의 14A 공정 기술을 사용할 계획이라고 언급했다. 이 소식은 인텔 주가 상승에 영향을 미쳤다.",
-          "source": "Seeking Alpha",
-          "date": "2026-04-23",
-          "category": "Technology|Partnership"
-        },
-        {
-          "id": 1777175280718,
-          "title": "테슬라 로드스터, 2026년 5월경 공개 예상",
-          "summary": "일론 머스크는 차세대 테슬라 로드스터가 2026년 5월경에 공개될 수 있다고 시사했다. 그는 로드스터의 데뷔가 역대 가장 흥미로운 제품 공개 중 하나가 될 것이라고 강조했다.",
-          "source": "Car and Driver",
-          "date": "2026-04-23",
-          "category": "Product"
-        },
-        {
-          "id": 1777175280719,
-          "title": "테슬라, 로보택시 출시 지연 및 FSD 소프트웨어 개선 필요성 언급",
-          "summary": "일론 머스크는 테슬라의 무인 FSD 기술이 아직 대규모 배포 준비가 되지 않았으며, 소프트웨어의 주요 아키텍처 개선이 필요하다고 밝혔다. 이는 로보택시 출시가 예상보다 느리게 진행될 수 있음을 시사한다.",
-          "source": "Investopedia",
-          "date": "2026-04-23",
-          "category": "Robotaxi|Technology"
-        },
-        {
-          "id": 1777175280720,
-          "title": "테슬라, AI 및 로봇공학 투자 확대로 인한 마이너스 잉여현금흐름 예상",
-          "summary": "테슬라는 1분기에 14억 4천만 달러의 잉여현금흐름을 보고했지만, AI 인프라, 로봇공학, 칩 개발 및 제조에 대한 투자를 늘리면서 2026년 남은 기간 동안 마이너스 잉여현금흐름을 예상하고 있다.",
-          "source": "Stocktwits",
-          "date": "2026-04-23",
-          "category": "Earnings|Macro"
-        },
-        {
-          "id": 1777175280721,
-          "title": "테슬라, 완전 자율주행 관련 집단 소송 직면",
-          "summary": "일론 머스크가 HW3의 완전 자율주행 불가능을 인정한 가운데, 테슬라 소유주들은 머스크가 FSD 시스템의 기능에 대해 수년간 오도했다고 주장하며 여러 건의 집단 소송을 제기했다.",
-          "source": "Electrek",
-          "date": "2026-04-25",
-          "category": "Legal|Musk"
-        }
-      ],
-      "analyses": {
-        "1777175280712": {
-          "impact_score": 2,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "일론 머스크의 발언은 테슬라의 완전 자율주행 기술에 대한 강한 자신감을 보여주며, 사이버캡 생산 개시 언급은 미래 제품 로드맵에 대한 긍정적인 신호로 해석될 수 있습니다.",
-          "key_factors": [
-            "완전 자율주행 기술 강조",
-            "사이버캡 생산 개시 언급",
-            "로드스터의 독점적 수동 운전 가능성"
-          ]
-        },
-        "1777175280713": {
-          "impact_score": -3,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "테슬라가 수백만 대의 기존 차량에 대해 완전 자율주행(FSD) 기능을 위해 하드웨어 업그레이드가 필요하다고 인정한 것은 상당한 비용과 고객 불만을 야기할 수 있습니다.",
-          "key_factors": [
-            "하드웨어 업그레이드 비용",
-            "고객 불만",
-            "FSD 기능 지연"
-          ]
-        },
-        "1777175280714": {
-          "impact_score": 1,
-          "direction": "neutral",
-          "confidence": "medium",
-          "triggered_rules": [],
-          "reasoning": "테슬라의 2026년 자본 지출 가이던스 상향 조정은 신규 공장 및 AI 투자 증가를 의미하지만, 로보택시 배포 기대치 하향은 단기적인 불확실성을 더하여 전반적인 영향은 중립적입니다.",
-          "key_factors": [
-            "자본 지출 가이던스 상향 조정",
-            "로보택시 배포 기대치 하향",
-            "신규 공장 건설 및 AI 투자"
-          ]
-        },
-        "1777175280715": {
-          "impact_score": 4,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R13",
-            "R19"
-          ],
-          "reasoning": "일론 머스크의 HW3 차량 HW4 업그레이드를 위한 마이크로팩토리 건설 제안은 로보택시 차량군 확장 및 FSD 기술 발전을 가속화하여 테슬라의 장기적인 성장 잠재력을 높일 것입니다.",
-          "key_factors": [
-            "HW4 업그레이드",
-            "로보택시 확장",
-            "FSD 발전"
-          ]
-        },
-        "1777175280716": {
-          "impact_score": -3,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "테슬라가 1분기 EPS와 매출 예상치를 상회했음에도 불구하고, 완전 자율주행 하드웨어의 한계를 인정하고 자본 지출 계획을 상향 조정한 점이 투자자들에게 부정적으로 작용하여 주가가 하락했습니다.",
-          "key_factors": [
-            "FSD 하드웨어 한계 인정",
-            "자본 지출 계획 상향 조정",
-            "예상치 상회 실적"
-          ]
-        },
-        "1777175280717": {
-          "impact_score": 2,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "테슬라가 인텔의 첨단 공정 기술을 테라팹 프로젝트에 활용하는 것은 장기적인 기술 발전과 생산 효율성 향상에 긍정적인 영향을 미칠 수 있습니다.",
-          "key_factors": [
-            "Terafab project",
-            "Intel 14A process technology",
-            "Technology partnership"
-          ]
-        },
-        "1777175280718": {
-          "impact_score": 2,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "일론 머스크가 2026년 5월 차세대 로드스터 공개를 시사하며 역대 가장 흥미로운 제품 공개가 될 것이라고 강조하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
-          "key_factors": [
-            "신제품 공개",
-            "일론 머스크 발언"
-          ]
-        },
-        "1777175280719": {
-          "impact_score": -3,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "일론 머스크가 로보택시 출시 지연과 FSD 소프트웨어의 주요 아키텍처 개선 필요성을 언급하여 투자자들의 기대에 부정적인 영향을 미칠 수 있습니다.",
-          "key_factors": [
-            "로보택시 출시 지연",
-            "FSD 소프트웨어 개선 필요성"
-          ]
-        },
-        "1777175280720": {
-          "impact_score": -3,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "테슬라가 AI 및 로봇공학 투자 확대로 인해 2026년 남은 기간 동안 마이너스 잉여현금흐름을 예상하는 것은 단기적인 재무 건전성에 대한 우려를 불러일으킬 수 있습니다.",
-          "key_factors": [
-            "마이너스 잉여현금흐름 예상",
-            "AI 및 로봇공학 투자 확대"
-          ]
-        },
-        "1777175280721": {
-          "impact_score": -3,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R05",
-            "R24"
-          ],
-          "reasoning": "일론 머스크의 FSD 시스템 기능 오도 주장에 대한 집단 소송은 테슬라의 평판과 재정에 부정적인 영향을 미칠 수 있습니다.",
-          "key_factors": [
-            "집단 소송",
-            "FSD 시스템",
-            "일론 머스크의 발언"
-          ]
-        }
-      },
-      "avgScore": -0.4,
-      "buyIndex": 46,
-      "direction": "bearish",
-      "topRules": [
-        "R13",
-        "R19",
-        "R05",
-        "R24"
-      ],
-      "bullish": 4,
-      "bearish": 5,
-      "neutral": 1,
-      "timestamp": 1777175302660
     }
   ],
-  "lastUpdated": "2026-05-20 00:28 KST"
+  "lastUpdated": "2026-05-20 04:30 KST"
 }
