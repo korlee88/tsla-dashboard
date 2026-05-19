@@ -17,7 +17,7 @@ TICKER        = TICKER_CONFIG["ticker"]
 
 REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
 VOICE         = "ko-KR-SunHiNeural"    # 한국 여성 TTS
-RATE          = "+15%"                  # 명확한 발음을 위해 속도 낮춤
+RATE          = "+30%"                  # 1.3배속 (빠르고 에너지 넘치는 쇼츠 스타일)
 PITCH         = "+0Hz"                  # 피치 변경 없음 (자연스러운 목소리)
 FPS           = 24
 W, H          = 1080, 1920
@@ -333,7 +333,9 @@ async def process_scene(scene, report_dir):
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
-    tts_lines  = lines[:2]                              # 상위 2줄만 나레이션 (1분 이내)
+    # 씬 0(인트로)·5(클로징)는 2줄, 본편(1~4)은 4줄까지 나레이션
+    max_lines  = 2 if idx in (0, 5) else 4
+    tts_lines  = lines[:max_lines]
     tts_text   = clean_for_tts(tts_lines) or title
     audio_path = report_dir / f"scene_{idx:02d}.mp3"
     print(f"   🎙 씬 {idx} [{title[:20]}] 나레이션 생성...")

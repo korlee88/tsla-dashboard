@@ -236,7 +236,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 긴급성: "지금 당장", "놓치면 큰일", "오늘만", "단 1주", "마지막 기회"
 • 호기심 유발: "여러분 모르셨죠?", "이거 보면 깜짝", "진짜 충격이에요"
 • 절대 평이한 설명조 금지 — 모든 줄에 감정 텐션 + 호기심 트리거 필수
-• 각 씬 **정확히 2줄**, 한 줄 30자 이내
+• 씬 0·5: 정확히 2줄 / 씬 1~4: 정확히 4줄, 한 줄 25자 이내
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - 참고지수: 평균 {avg_bi}점 / 최신 {latest_bi}점
@@ -251,31 +251,39 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 주요 악재:
 {r_txt}
 
-=== 씬 구성 (총 6씬, 각 정확히 2줄) ===
+=== 씬 구성 (총 6씬) ===
 
-【씬 0 — 충격 인트로】 시청자 시선 강탈, 0.5초도 못 떼게
-- 줄1: "충격! 오늘 TSLA {today_change_pct_short}!" (15자 이내, 이모지 1개)
+【씬 0 — 충격 인트로】 시청자 시선 강탈, 0.5초도 못 떼게 (2줄)
+- 줄1: "충격! 오늘 TSLA {today_change_pct_short}!" (15자 이내, 이모지 없이)
 - 줄2: 이번주 최대 영향 사건 자극적 한 문장 (25자 이내, 감탄사+호기심)
 
-【씬 1 — 주간 브리핑】
-- 줄1: 감탄사로 시작하는 핵심 헤드라인 (20자 이내)
-- 줄2: 핵심 수치·영향 한 문장 (30자 이내, 구체적 숫자 포함)
+【씬 1 — 주간 브리핑】 (4줄, 한 줄 25자 이내)
+- 줄1: 감탄사 + 이번주 핵심 헤드라인 (20자 이내, 가장 충격적 사실)
+- 줄2: 주가·참고지수 수치 포함 한 문장 (예: "현재 $XXX, 참고지수 XX점!")
+- 줄3: 이번주 가장 큰 호재 핵심 (25자 이내, 구체 수치 포함)
+- 줄4: 이번주 가장 큰 악재 핵심 (25자 이내, 긴장감 유발)
 
-【씬 2 — 호재 뉴스 TOP 2】 자극적 카테고리명
-- 줄1: "카테고리: 충격 내용 1문장 | 언론사·날짜·호재"
-- 줄2: "카테고리: 충격 내용 1문장 | 언론사·날짜·호재"
+【씬 2 — 호재 뉴스 TOP 2】 자극적 카테고리명 (4줄, 뉴스당 2줄)
+- 줄1: "카테고리: 호재1 핵심 한 줄 (20자 이내)"
+- 줄2: "   ↳ 구체 수치·영향·출처 보충 (25자 이내)"
+- 줄3: "카테고리: 호재2 핵심 한 줄 (20자 이내)"
+- 줄4: "   ↳ 구체 수치·영향·출처 보충 (25자 이내)"
 
-【씬 3 — 리스크 뉴스 TOP 2】 긴장감 폭발
-- 줄1: "카테고리: 위기 내용 1문장 | 언론사·날짜·악재"
-- 줄2: "카테고리: 위기 내용 1문장 | 언론사·날짜·악재"
+【씬 3 — 리스크 뉴스 TOP 2】 긴장감 폭발 (4줄, 뉴스당 2줄)
+- 줄1: "카테고리: 악재1 핵심 한 줄 (20자 이내)"
+- 줄2: "   ↳ 구체 위험·영향·출처 보충 (25자 이내)"
+- 줄3: "카테고리: 악재2 핵심 한 줄 (20자 이내)"
+- 줄4: "   ↳ 구체 위험·영향·출처 보충 (25자 이내)"
 
-【씬 4 — 시장 반응】
+【씬 4 — 시장 반응】 (4줄, 한 줄 25자 이내)
 - 줄1: "[분위기] 이번 주 투자심리 자극적 한 문장 (감탄사 필수)"
-- 줄2: "[전망] 긍정/중립/신중 관점 한 문장 (투자 권유 금지)"
+- 줄2: "[거래량] 이번 주 특이 거래·옵션 동향 한 줄 (수치 포함)"
+- 줄3: "[애널리스트] 주요 목표주가·의견 변화 한 줄"
+- 줄4: "[전망] 긍정/중립/신중 관점 한 문장 (투자 권유 금지)"
 
-【씬 5 — 다음주 예고 + CTA】
+【씬 5 — 다음주 예고 + CTA】 (2줄)
 - 줄1: "다음주 [이벤트] 임박! 절대 놓치지 마!" (calendar 이벤트 활용)
-- 줄2: "🔔 구독+알림으로 1초도 늦지 마세요!"
+- 줄2: "구독+알림으로 1초도 늦지 마세요!"
 
 === 출력 형식 (반드시 준수) ===
 SCENE_0_TITLE: [6자 이내, "충격속보" 같은 강한 단어]
@@ -285,22 +293,30 @@ SCENE_0:
 
 SCENE_1_TITLE: [6자 이내]
 SCENE_1:
-[줄1]
-[줄2]
+[줄1 — 핵심 헤드라인]
+[줄2 — 주가·참고지수 수치]
+[줄3 — 최대 호재 핵심]
+[줄4 — 최대 악재 핵심]
 
 SCENE_2_TITLE: [6자 이내]
 SCENE_2:
-카테고리: 내용 | 출처·날짜·호재
-카테고리: 내용 | 출처·날짜·호재
+카테고리: 호재1 핵심
+   ↳ 호재1 수치·출처 보충
+카테고리: 호재2 핵심
+   ↳ 호재2 수치·출처 보충
 
 SCENE_3_TITLE: [6자 이내]
 SCENE_3:
-카테고리: 내용 | 출처·날짜·악재
-카테고리: 내용 | 출처·날짜·악재
+카테고리: 악재1 핵심
+   ↳ 악재1 위험·출처 보충
+카테고리: 악재2 핵심
+   ↳ 악재2 위험·출처 보충
 
 SCENE_4_TITLE: [6자 이내]
 SCENE_4:
 [분위기] 내용
+[거래량] 내용
+[애널리스트] 내용
 [전망] 내용
 
 SCENE_5_TITLE: [6자 이내, "예고편" 같은 단어]
@@ -1197,22 +1213,52 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     if idx == 1:
         FC_W = COL_W - PAD
 
-        # 핵심 인사이트 카드 (두 번째 줄 표시)
-        INSIGHT_H = 220
+        # 핵심 인사이트 카드 (두 번째 줄: 주가·참고지수)
+        INSIGHT_H = 150
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + INSIGHT_H],
                                radius=14, fill=(20, 24, 34), outline=accent, width=2)
         if len(news_lines) >= 2:
-            insight_wrapped = wrap_text(draw, news_lines[1], f_md, FC_W - 44)
-            total_h = len(insight_wrapped[:4]) * 44
+            insight_wrapped = wrap_text(draw, strip_emoji(news_lines[1]), f_md, FC_W - 44)
+            total_h = len(insight_wrapped[:2]) * 44
             ky = CONTENT_Y + (INSIGHT_H - total_h) // 2
-            for wl in insight_wrapped[:4]:
+            for wl in insight_wrapped[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_md)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
                           font=f_md, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
                 ky += 44
 
+        # 호재·악재 요약 스트립 (3번째/4번째 줄)
+        BULL_Y = CONTENT_Y + INSIGHT_H + 16
+        BULL_H = 130
+        HALF_W = (FC_W - 12) // 2
+        bull_text = strip_emoji(news_lines[2]) if len(news_lines) >= 3 else ""
+        bear_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
+
+        if bull_text:
+            draw.rounded_rectangle([PAD, BULL_Y, PAD + HALF_W, BULL_Y + BULL_H],
+                                   radius=12, fill=(16, 32, 20), outline=GREEN, width=2)
+            draw.text((PAD + 12, BULL_Y + 14), "▲ 호재", font=f_sm, fill=GREEN)
+            bw = wrap_text(draw, bull_text, f_xs, HALF_W - 24)
+            by = BULL_Y + 44
+            for wl in bw[:2]:
+                draw.text((PAD + 12, by), wl, font=f_xs, fill=WHITE,
+                          stroke_width=1, stroke_fill=STROKE)
+                by += 32
+
+        if bear_text:
+            bx = PAD + HALF_W + 12
+            draw.rounded_rectangle([bx, BULL_Y, bx + HALF_W, BULL_Y + BULL_H],
+                                   radius=12, fill=(32, 14, 14), outline=RED, width=2)
+            draw.text((bx + 12, BULL_Y + 14), "▼ 악재", font=f_sm, fill=RED)
+            rw = wrap_text(draw, bear_text, f_xs, HALF_W - 24)
+            ry = BULL_Y + 44
+            for wl in rw[:2]:
+                draw.text((bx + 12, ry), wl, font=f_xs, fill=WHITE,
+                          stroke_width=1, stroke_fill=STROKE)
+                ry += 32
+
         # 가격 스트립
-        STRIP_Y = CONTENT_Y + INSIGHT_H + 24
+        STRIP_Y = BULL_Y + BULL_H + 20
         BOX_Y   = STRIP_Y + 36
         BOX_H   = SAFE_BOTTOM - BOX_Y - 10
         draw.text((PAD, STRIP_Y + 18), "주간 주가 흐름 ($)",
@@ -1260,8 +1306,23 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         CARD_W = COL_W - PAD   # 1000
         card_positions = [CONTENT_Y, CONTENT_Y + CARD_H + GAP]
 
-        for i, line in enumerate(news_lines[:2]):
-            chapter, content, source = parse_news_line(line)
+        # 4줄 형식: 줄0=뉴스1헤드, 줄1=↳뉴스1상세, 줄2=뉴스2헤드, 줄3=↳뉴스2상세
+        # 카드당 주요줄 + 상세줄 페어로 묶음
+        card_pairs = []
+        if len(news_lines) >= 4:
+            card_pairs = [(news_lines[0], news_lines[1]), (news_lines[2], news_lines[3])]
+        elif len(news_lines) >= 3:
+            card_pairs = [(news_lines[0], news_lines[1]), (news_lines[2], "")]
+        elif len(news_lines) >= 2:
+            card_pairs = [(news_lines[0], ""), (news_lines[1], "")]
+        elif len(news_lines) >= 1:
+            card_pairs = [(news_lines[0], "")]
+
+        for i, (headline, detail) in enumerate(card_pairs[:2]):
+            chapter, content, src_from_parse = parse_news_line(headline)
+            # ↳ 상세줄이 있으면 source 영역에 표시
+            detail_clean = detail.lstrip("↳ ").strip()
+            source = detail_clean if detail_clean else src_from_parse
             cy = card_positions[i]
             draw_news_card_portrait(
                 draw, img,
@@ -1273,44 +1334,48 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             )
             draw = ImageDraw.Draw(img)
 
-    # ── 씬 4: 시장 반응 — 2개 항목 ──────────────────────────────────────────
+    # ── 씬 4: 시장 반응 — 최대 4개 항목 ──────────────────────────────────────
     else:
-        n_items = 2
-        GAP    = 30
-        ITEM_H = (SAFE_BOTTOM - CONTENT_Y - GAP) // n_items
+        n_items = min(len(news_lines), 4) if news_lines else 2
+        n_items = max(n_items, 1)
+        GAP    = 18
+        ITEM_H = (SAFE_BOTTOM - CONTENT_Y - GAP * (n_items - 1)) // n_items
         item_positions = [CONTENT_Y + i * (ITEM_H + GAP) for i in range(n_items)]
+        default_labels = ["분위기", "거래량", "애널리스트", "전망"]
 
         for i, line in enumerate(news_lines[:n_items]):
             iy = item_positions[i]
             draw.rounded_rectangle([PAD, iy, PAD + COL_W - PAD, iy + ITEM_H],
                                    radius=10, fill=(16, 19, 27), outline=accent, width=2)
-            LAB_W = 160
+            LAB_W = 148
             draw.rounded_rectangle([PAD, iy, PAD + LAB_W, iy + ITEM_H],
                                    radius=10, fill=accent)
             draw.rectangle([PAD + LAB_W - 10, iy, PAD + LAB_W, iy + ITEM_H], fill=accent)
 
             # 라벨: [분위기] 등 bracket content 추출, 없으면 기본값
-            label_txt = ["분위기", "전망"][i] if i < 2 else ""
+            label_txt = default_labels[i] if i < len(default_labels) else ""
             if line.startswith("[") and "]" in line:
                 label_txt = line[1:line.index("]")]
+            label_font = f_sm if len(label_txt) > 4 else f_ch
             draw.text((PAD + LAB_W // 2, iy + ITEM_H // 2),
-                      label_txt, font=f_ch, fill=(10, 12, 20), anchor="mm")
+                      label_txt, font=label_font, fill=(10, 12, 20), anchor="mm")
 
             content_text = line
             if line.startswith("[") and "]" in line:
                 content_text = line[line.index("]") + 1:].strip()
 
-            content_x    = PAD + LAB_W + 22
-            content_maxw = COL_W - PAD - LAB_W - 44
-            wrapped = wrap_text(draw, strip_emoji(content_text), f_ct, content_maxw)
-            bb_h = draw.textbbox((0, 0), "가", font=f_ct)
-            lh = (bb_h[3] - bb_h[1]) + 16
-            total_h = len(wrapped[:4]) * lh
+            content_font = f_nm if n_items >= 4 else f_ct
+            content_x    = PAD + LAB_W + 18
+            content_maxw = COL_W - PAD - LAB_W - 36
+            wrapped = wrap_text(draw, strip_emoji(content_text), content_font, content_maxw)
+            bb_h = draw.textbbox((0, 0), "가", font=content_font)
+            lh = (bb_h[3] - bb_h[1]) + 12
+            total_h = len(wrapped[:3]) * lh
             start_y = iy + (ITEM_H - total_h) // 2
-            for wl in wrapped[:4]:
-                if start_y + lh > iy + ITEM_H - 10:
+            for wl in wrapped[:3]:
+                if start_y + lh > iy + ITEM_H - 8:
                     break
-                draw.text((content_x, start_y), wl, font=f_ct, fill=WHITE,
+                draw.text((content_x, start_y), wl, font=content_font, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
                 start_y += lh
 
