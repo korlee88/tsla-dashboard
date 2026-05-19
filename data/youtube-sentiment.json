@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.24,
-  "velocity_label": "급감 (×0.2)",
-  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 223,386회 / 이전 4~7일 931,844회 | 총 1,155,230회 (42개 영상)",
-  "video_count": 42,
-  "total_views": 1155230,
-  "hot_views": 223386,
-  "baseline_views": 931844,
+  "velocity": 0.27,
+  "velocity_label": "급감 (×0.3)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 263,595회 / 이전 4~7일 963,595회 | 총 1,227,190회 (43개 영상)",
+  "video_count": 43,
+  "total_views": 1227190,
+  "hot_views": 263595,
+  "baseline_views": 963595,
   "top_videos": [
     {
       "title": "Jab Drift Ko Apna Partner Samajh Baitha Onslaught!  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-16T04:00:12Z",
-      "viewCount": 141306
+      "viewCount": 143488
     },
     {
       "title": "Transformers 7 Mein Unicorn Ne Human Form Kyu Nahi Liya  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-13T03:35:39Z",
-      "viewCount": 98054
-    },
-    {
-      "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
-      "channel": "HyperChange",
-      "publishedAt": "2026-05-15T17:01:10Z",
-      "viewCount": 72136
-    },
-    {
-      "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
-      "channel": "scoremia",
-      "publishedAt": "2026-05-15T08:39:33Z",
-      "viewCount": 71065
+      "viewCount": 98715
     },
     {
       "title": "Конец эпохи Tesla. Автомобили уступают место роботам 🤖🔚",
       "channel": "ИКRA | пространство привилегий",
       "publishedAt": "2026-05-14T17:20:38Z",
-      "viewCount": 68774
+      "viewCount": 75635
+    },
+    {
+      "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
+      "channel": "scoremia",
+      "publishedAt": "2026-05-15T08:39:33Z",
+      "viewCount": 73378
+    },
+    {
+      "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
+      "channel": "HyperChange",
+      "publishedAt": "2026-05-15T17:01:10Z",
+      "viewCount": 72600
     }
   ],
-  "collected_at": "2026-05-19T04:18:29Z"
+  "collected_at": "2026-05-19T09:45:50Z"
 }
