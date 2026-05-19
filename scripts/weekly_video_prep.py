@@ -1360,7 +1360,8 @@ def build_images(scenes, summary, out_dir):
 # ── 메인 ──────────────────────────────────────────────────────────────────
 
 def main():
-    today   = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    KST = timezone(timedelta(hours=9))
+    today   = datetime.now(KST).strftime("%Y-%m-%d")   # KST 기준 날짜
     out_dir = OUTPUT_BASE / today
     out_dir.mkdir(parents=True, exist_ok=True)
 
