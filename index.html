@@ -3681,11 +3681,11 @@ function VideoScriptPage({ onBack }) {
   const [copiedIdx, setCopiedIdx]     = useState(null);
 
   useEffect(() => {
-    // data/weekly-report/ 하위 최신 script.json 로드
+    // data/weekly-report/ 하위 최신 script.json 로드 (KST 기준 날짜)
     const tryDates = [];
-    const today = new Date();
+    const kstNow = new Date(Date.now() + 9 * 3600 * 1000); // UTC+9
     for (let i = 0; i < 14; i++) {
-      const d = new Date(today); d.setDate(d.getDate() - i);
+      const d = new Date(kstNow); d.setUTCDate(d.getUTCDate() - i);
       tryDates.push(d.toISOString().split('T')[0]);
     }
     const attempts = tryDates.map(date =>
