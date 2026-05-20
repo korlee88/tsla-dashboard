@@ -1,0 +1,43 @@
+name: 영상 프레임 템플릿 생성
+
+# 1회용 — 수동 실행 전용. 자동 스케줄 없음.
+# 새 프레임 디자인이 필요할 때만 실행하세요.
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-frame:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 의존성 설치
+        run: pip install --quiet google-genai Pillow
+
+      - name: Nano Banana로 프레임 이미지 생성
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/generate_frame.py
+
+      - name: 프레임 커밋 & 푸시
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "TSLA Auto Bot"
+          git add data/frame-template.png
+          if git diff --staged --quiet; then
+            echo "변경 사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "auto: 영상 프레임 템플릿 갱신 ($(TZ='Asia/Seoul' date +'%Y-%m-%d KST'))"
+            git pull --rebase origin master
+            git push
+          fi

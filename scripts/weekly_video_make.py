@@ -298,8 +298,12 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     robot_dy = int(math.sin(t * 3.5) * 4)
     img = draw_robot_pil(img, W - 130, 40 + robot_dy, mood, accent)
 
-    img = fx_fade_in(img, t, 0.28)
-    img = fx_fade_out(img, t, dur, 0.22)
+    # 씬 전환은 concatenate_videoclips의 CrossFadeIn에서 처리 (검정 깜빡임 방지)
+    # 단, 영상 시작/종료에만 부드러운 페이드 적용
+    if scene_idx == 0:
+        img = fx_fade_in(img, t, 0.30)
+    if scene_idx == 4:
+        img = fx_fade_out(img, t, dur, 0.40)
 
     # 90% 축소 — 핸드폰 화면 여백 확보
     cw = int(W * 0.90)
@@ -352,6 +356,7 @@ async def process_scene(scene, report_dir):
 
 async def build_video_async(report_dir):
     from moviepy import concatenate_videoclips
+    from moviepy.video.fx import CrossFadeIn
 
     script = json.loads((report_dir / "script.json").read_text(encoding="utf-8"))
     scenes = script.get("scenes", [])
@@ -365,8 +370,16 @@ async def build_video_async(report_dir):
         clip = await process_scene(scene, report_dir)
         clips.append(clip)
 
-    print("\n🎬 최종 영상 합성 중...")
-    final = concatenate_videoclips(clips, method="compose") if len(clips) > 1 else clips[0]
+    print("\n🎬 최종 영상 합성 중 (씬 전환: 0.6초 크로스페이드)...")
+    OVERLAP = 0.6
+    if len(clips) > 1:
+        # 첫 클립은 그대로, 이후 클립은 CrossFadeIn으로 이전 씬과 오버랩
+        faded = [clips[0]]
+        for c in clips[1:]:
+            faded.append(c.with_effects([CrossFadeIn(OVERLAP)]))
+        final = concatenate_videoclips(faded, method="compose", padding=-OVERLAP)
+    else:
+        final = clips[0]
     final = final.with_fps(FPS)
 
     out_path = report_dir / "video.mp4"

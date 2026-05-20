@@ -1107,6 +1107,39 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
               stroke_width=1, stroke_fill=STROKE)
 
 
+_FRAME_TEMPLATE_PATH = Path("data/frame-template.png")
+_frame_overlay_cache = None
+_frame_overlay_loaded = False
+
+def _load_frame_overlay():
+    """프레임 템플릿 이미지를 1회 로드 후 캐싱 (없으면 None)."""
+    global _frame_overlay_cache, _frame_overlay_loaded
+    if _frame_overlay_loaded:
+        return _frame_overlay_cache
+    _frame_overlay_loaded = True
+    if not _FRAME_TEMPLATE_PATH.exists():
+        return None
+    try:
+        from PIL import Image as PILImage
+        ov = PILImage.open(_FRAME_TEMPLATE_PATH).convert("RGBA")
+        if ov.size != (W, H):
+            ov = ov.resize((W, H), PILImage.LANCZOS)
+        _frame_overlay_cache = ov
+    except Exception as e:
+        print(f"   ⚠ frame-template.png 로드 실패: {e}", file=sys.stderr)
+    return _frame_overlay_cache
+
+
+def _apply_frame_overlay(img):
+    """씬 이미지 위에 통일 브랜드 프레임 오버레이 합성 (있을 때만)."""
+    ov = _load_frame_overlay()
+    if ov is None:
+        return img
+    from PIL import Image as PILImage
+    base = img.convert("RGBA")
+    return PILImage.alpha_composite(base, ov).convert("RGB")
+
+
 def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None = None):
     from PIL import ImageFont, ImageDraw
     idx    = scene["index"]
@@ -1248,7 +1281,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                       font=f_lg, fill=KEY, anchor="mm",
                       stroke_width=2, stroke_fill=STROKE)
 
-        return img
+        return _apply_frame_overlay(img)
 
     # ╔══════════════════════════════════════════════════════════════════╗
     # ║ 씬 4 — 다음주 예고 + 구독 CTA (custom layout)                     ║
@@ -1366,7 +1399,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         draw.text((bx + BTN_W // 2, BTN_Y + BTN_H - 26), "알림 설정",
                   font=f_sm, fill=(210, 170, 230), anchor="mm")
 
-        return img
+        return _apply_frame_overlay(img)
 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 1:
@@ -1554,7 +1587,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                           stroke_width=1, stroke_fill=STROKE)
                 start_y += lh
 
-    return img
+    return _apply_frame_overlay(img)
 
 
 def build_images(scenes, summary, out_dir, img_prompts=None):
