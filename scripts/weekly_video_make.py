@@ -282,15 +282,7 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     is_intro   = (scene_idx == 0)
     is_closing = (scene_idx == 4)
 
-    # Ken Burns
-    # - 인트로/클로징은 커스텀 레이아웃이라 사진 스트립이 없음 → 전체 프레임에 부드러운 줌
-    # - 본편(idx 1~4)은 사진 스트립(y=500~1000)에만 적용
-    if is_intro or is_closing:
-        img = fx_ken_burns(img, t, dur, scene_idx)
-    else:
-        photo = img.crop((0, PHOTO_Y, W, PHOTO_Y + PHOTO_H))
-        photo = fx_ken_burns(photo, t, dur, scene_idx)
-        img.paste(photo, (0, PHOTO_Y))
+    # Ken Burns 효과 제거 — 정적 이미지 유지
 
     # 인트로 충격 효과: 흰색 플래시 + 강화된 속도선
     if is_intro:

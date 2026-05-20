@@ -174,6 +174,41 @@ def summarize(sessions):
     }
 
 
+def search_movement_reason(summary):
+    """Gemini + Google Search grounding으로 이번주 주가 변동 원인 검색."""
+    if not GEMINI_API_KEY:
+        return None
+    try:
+        from google import genai
+        from google.genai import types
+        tcp  = summary.get("today_change_pct")
+        sign = "+" if tcp and tcp >= 0 else ""
+        direction = "상승" if tcp and tcp >= 0 else "하락"
+        week_start = summary.get("week_start", "")
+        week_end   = summary.get("week_end", "")
+        price      = summary.get("latest_price", "")
+        q = (
+            f"테슬라 TSLA 주가 {week_start}~{week_end} 기간 {direction} 주요 원인 분석. "
+            f"현재 주가 ${price}, 변동률 {sign}{tcp}%. "
+            f"검색 결과를 바탕으로 핵심 원인 2~3가지를 각 15자 이내 한국어로 작성. "
+            f"형식: '원인1 / 원인2 / 원인3'"
+        )
+        client   = genai.Client(api_key=GEMINI_API_KEY)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=q,
+            config=types.GenerateContentConfig(
+                tools=[types.Tool(google_search=types.GoogleSearch())]
+            ),
+        )
+        text = response.text.strip()
+        print(f"   🔍 주가 변동 원인: {text[:80]}")
+        return text
+    except Exception as e:
+        print(f"   ⚠ 주가 변동 원인 검색 실패: {e}", file=sys.stderr)
+        return None
+
+
 def fetch_google_trends(keywords, days=7):
     """지난 7일 vs 직전 7일 검색량 비교 → 증감비율 + 최고 키워드."""
     if not keywords:
@@ -245,12 +280,12 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 긴급성: "지금 당장", "놓치면 큰일", "오늘만", "단 1주", "마지막 기회"
 • 호기심 유발: "여러분 모르셨죠?", "이거 보면 깜짝", "진짜 충격이에요"
 • 절대 평이한 설명조 금지 — 모든 줄에 감정 텐션 + 호기심 트리거 필수
-• 씬 0·4: 정확히 2줄 / 씬 1~3: 정확히 4줄, 한 줄 25자 이내
+• 씬 0·4: 정확히 3줄 / 씬 1~3: 정확히 4줄, 한 줄 25자 이내
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
-- 참고지수: 평균 {avg_bi}점 / 최신 {latest_bi}점
 - {ticker} 주가: ${price}
 - 오늘 변동률: {today_change_pct_str}
+- 주가 변동 원인: {movement_reason_str}
 - 이번주 최대 영향: {biggest_impact_str}
 - 검색량 트렌드: {trends_str}
 - 다음주 예정 이벤트: {next_events_str}
@@ -262,13 +297,14 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 
 === 씬 구성 (총 5씬) ===
 
-【씬 0 — 충격 인트로】 시청자 시선 강탈, 0.5초도 못 떼게 (2줄)
+【씬 0 — 충격 인트로】 시청자 시선 강탈, 0.5초도 못 떼게 (3줄)
 - 줄1: "충격! 오늘 TSLA {today_change_pct_short}!" (15자 이내, 이모지 없이)
 - 줄2: 이번주 최대 영향 사건 자극적 한 문장 (25자 이내, 감탄사+호기심)
+- 줄3: "지금 바로 원인 공개!" 식의 훅 (15자 이내)
 
 【씬 1 — 주간 브리핑】 (4줄, 한 줄 25자 이내)
 - 줄1: 감탄사 + 이번주 핵심 헤드라인 (20자 이내, 가장 충격적 사실)
-- 줄2: 주가·참고지수 수치 포함 한 문장 (예: "현재 $XXX, 참고지수 XX점!")
+- 줄2: 주가 변동 원인을 한 문장으로! movement_reason_str 활용 (25자 이내, 핵심 이유 강렬하게)
 - 줄3: 이번주 가장 큰 호재 핵심 (25자 이내, 구체 수치 포함)
 - 줄4: 이번주 주목할 체크포인트 한 줄 (25자 이내)
 
@@ -284,9 +320,10 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄3: "[애널리스트] 주요 목표주가·의견 변화 한 줄"
 - 줄4: "[전망] 긍정/중립/신중 관점 한 문장 (투자 권유 금지)"
 
-【씬 4 — 다음주 예고 + CTA】 (2줄)
-- 줄1: "다음주 [이벤트] 임박! 절대 놓치지 마!" (calendar 이벤트 활용)
-- 줄2: "구독+알림으로 1초도 늦지 마세요!"
+【씬 4 — 다음주 예상 + 예고 + CTA】 (3줄)
+- 줄1: 다음주 방향 예상 한 줄 (상승/하락 기대감, 20자 이내, "~전망" 형식, 투자 권유 금지)
+- 줄2: "다음주 [이벤트] 임박! 절대 놓치지 마!" (calendar 이벤트 활용)
+- 줄3: "구독+알림으로 1초도 늦지 마세요!"
 
 === 출력 형식 (반드시 준수) ===
 SCENE_0_TITLE: [6자 이내, "충격속보" 같은 강한 단어]
@@ -378,19 +415,21 @@ def _build_prompt(summary):
     else:
         next_events_str = "예정 이벤트 없음 (실적 발표·신제품 발표 등 일반 모니터링)"
 
+    movement_reason = summary.get("movement_reason")
+    movement_reason_str = movement_reason if movement_reason else "데이터 수집 중"
+
     return SCRIPT_PROMPT_TEMPLATE.format(
         ticker=TICKER,
         company_ko=COMPANY_KO,
         industry_ko=INDUSTRY_KO,
         week_start=summary["week_start"],
         week_end=summary["week_end"],
-        avg_bi=summary["avg_buy_index"],
-        latest_bi=summary["latest_buy_index"],
         price=summary["latest_price"],
         b_txt=b_txt, r_txt=r_txt,
         daily_prices_txt=daily_prices_txt,
         today_change_pct_str=today_change_pct_str,
         today_change_pct_short=today_change_pct_short,
+        movement_reason_str=movement_reason_str,
         biggest_impact_str=biggest_impact_str,
         trends_str=trends_str,
         next_events_str=next_events_str,
@@ -603,7 +642,7 @@ def fetch_nano_banana_image(prompt: str, out_path: Path) -> bool:
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         response_modalities=["IMAGE"],
-                        image_config=types.ImageConfig(aspect_ratio="9:16"),
+                        image_config=types.ImageConfig(aspect_ratio="16:9"),
                     ),
                 )
                 for part in response.parts:
@@ -1068,25 +1107,25 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         except Exception:
             return ImageFont.load_default()
 
-    # ── 폰트 ──
+    # ── 폰트 (1080px 세로 포맷 기준 충분히 큰 사이즈) ──
     f_xl    = fnt(font_bold, 72)
-    f_lg    = fnt(font_bold, 40)
-    f_md    = fnt(font_bold, 32)
-    f_nm    = fnt(font_reg,  30)
-    f_sm    = fnt(font_reg,  22)
-    f_xs    = fnt(font_reg,  18)
-    f_src   = fnt(font_reg,  20)
-    f_ch    = fnt(font_bold, 34)
-    f_ct    = fnt(font_reg,  34)
-    f_ct_xl = fnt(font_reg,  44)
-    f_ct_sm = fnt(font_reg,  28)
+    f_lg    = fnt(font_bold, 54)   # 40→54
+    f_md    = fnt(font_bold, 48)   # 32→48
+    f_nm    = fnt(font_reg,  44)   # 30→44
+    f_sm    = fnt(font_reg,  36)   # 22→36
+    f_xs    = fnt(font_reg,  30)   # 18→30
+    f_src   = fnt(font_reg,  30)   # 20→30
+    f_ch    = fnt(font_bold, 48)   # 34→48
+    f_ct    = fnt(font_reg,  50)   # 34→50
+    f_ct_xl = fnt(font_reg,  62)   # 44→62
+    f_ct_sm = fnt(font_reg,  42)   # 28→42
     # MBC 스타일 헤더 폰트
-    f_brand = fnt(font_bold, 32)
+    f_brand = fnt(font_bold, 44)   # 32→44
     f_head_main = fnt(font_bold, 80)
     f_head_sub  = fnt(font_bold, 64)
     # 인트로 전용: 대형 % 숫자
     f_huge      = fnt(font_bold, 200)
-    f_huge_sub  = fnt(font_bold, 56)
+    f_huge_sub  = fnt(font_bold, 68)   # 56→68
 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
@@ -1195,85 +1234,94 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         draw.line([(W // 2 - 200, 162), (W // 2 + 200, 162)],
                   fill=accent, width=4)
 
-        # ── 일정 카드 리스트 (최대 3개) ────────────────────────────────
+        # ── 다음주 예측 카드 ───────────────────────────────────────────
+        PRED_Y = 195
+        PRED_H = 160
+        pred_text = strip_emoji(news_lines[0]) if news_lines else "다음주 TSLA 주목!"
+        draw.rounded_rectangle([PAD, PRED_Y, W - PAD, PRED_Y + PRED_H],
+                               radius=16, fill=(28, 10, 48), outline=accent, width=3)
+        draw.text((PAD + 20, PRED_Y + 16), "다음주 예상",
+                  font=f_sm, fill=accent, anchor="lt")
+        pw = wrap_text(draw, pred_text, f_nm, W - PAD * 2 - 40)
+        py = PRED_Y + 62
+        for wl in pw[:2]:
+            bb = draw.textbbox((0, 0), wl, font=f_nm)
+            draw.text(((W - (bb[2] - bb[0])) // 2, py), wl,
+                      font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE,
+                      anchor="lt")
+            py += 56
+
+        # ── 일정 카드 리스트 (최대 2개) ────────────────────────────────
         next_events = summary.get("next_events", []) or []
-        CARD_H = 168
-        CARD_GAP = 16
-        EV_START = 195
+        CARD_H = 160
+        CARD_GAP = 14
+        EV_START = PRED_Y + PRED_H + 24
 
         if next_events:
-            for i, ev in enumerate(next_events[:3]):
+            for i, ev in enumerate(next_events[:2]):   # 예측 카드 공간 확보로 최대 2개
                 cy = EV_START + i * (CARD_H + CARD_GAP)
                 imp = ev.get("importance", "medium")
                 imp_col = RED if imp == "high" else AMBER if imp == "medium" else GRAY
                 date_s = ev.get("date", "")
                 title_s = strip_emoji(ev.get("title", "")[:40])
 
-                # 카드 배경
                 draw.rounded_rectangle([PAD, cy, W - PAD, cy + CARD_H],
                                        radius=16, fill=(20, 12, 34),
                                        outline=imp_col, width=2)
-                # 왼쪽 강조 바
                 draw.rounded_rectangle([PAD, cy, PAD + 8, cy + CARD_H],
                                        radius=8, fill=imp_col)
-                # 중요도 배지
                 imp_txt = "HIGH" if imp == "high" else "MED" if imp == "medium" else "LOW"
-                bw = 80
-                draw.rounded_rectangle([PAD + 20, cy + 14, PAD + 20 + bw, cy + 50],
+                bw = 88
+                draw.rounded_rectangle([PAD + 20, cy + 14, PAD + 20 + bw, cy + 56],
                                        radius=10, fill=imp_col)
-                draw.text((PAD + 20 + bw // 2, cy + 32), imp_txt,
+                draw.text((PAD + 20 + bw // 2, cy + 35), imp_txt,
                           font=f_sm, fill=WHITE, anchor="mm")
-                # 날짜
-                draw.text((W - PAD - 16, cy + 32), date_s,
+                draw.text((W - PAD - 16, cy + 35), date_s,
                           font=f_sm, fill=KEY, anchor="rm")
-                # 이벤트 제목
                 tw = wrap_text(draw, title_s, f_md, W - PAD * 2 - 36)
-                ty = cy + 62
+                ty = cy + 70
                 for wl in tw[:2]:
                     draw.text((PAD + 20, ty), wl,
                               font=f_md, fill=WHITE, anchor="lt",
                               stroke_width=1, stroke_fill=STROKE)
-                    ty += 48
+                    ty += 56
         else:
-            # 폴백: 대본 텍스트 한 장
+            # 폴백: 대본 2번째 줄 (이벤트 예고 텍스트)
+            line1 = strip_emoji(news_lines[1] if len(news_lines) > 1 else "다음주도 TSLA 주목!")
             draw.rounded_rectangle([PAD, EV_START, W - PAD, EV_START + CARD_H],
                                    radius=16, fill=(20, 12, 34), outline=accent, width=2)
-            line1 = strip_emoji(news_lines[0] if news_lines else "다음주도 TSLA 주목!")
             wrapped = wrap_text(draw, line1, f_lg, W - PAD * 2 - 40)
-            ky = EV_START + (CARD_H - 60 * len(wrapped[:2])) // 2
+            ky = EV_START + (CARD_H - 68 * len(wrapped[:2])) // 2
             for wl in wrapped[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_lg)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
                           font=f_lg, fill=WHITE, anchor="lt",
                           stroke_width=2, stroke_fill=STROKE)
-                ky += 65
+                ky += 68
 
         # ── CTA: 구독 / 알림 투버튼 ────────────────────────────────────
-        n_ev_shown = max(1, min(len(next_events), 3))
-        CTA_TOP = EV_START + n_ev_shown * (CARD_H + CARD_GAP) + 40
+        n_ev_shown = max(1, min(len(next_events), 2))
+        CTA_TOP = EV_START + n_ev_shown * (CARD_H + CARD_GAP) + 30
 
-        # 태그라인
         draw.text((W // 2, CTA_TOP), "매주 TSLA 주간 분석 · 무료 알림",
                   font=f_sm, fill=(170, 145, 200), anchor="mt")
 
-        BTN_Y = CTA_TOP + 70
-        BTN_H  = 200
+        BTN_Y = CTA_TOP + 62
+        BTN_H  = 180
         BTN_W  = (W - PAD * 2 - 24) // 2
 
-        # [구독] 버튼 — YouTube 레드 그라데이션
         for yy in range(BTN_Y, BTN_Y + BTN_H):
             t = (yy - BTN_Y) / BTN_H
             draw.line([(PAD, yy), (PAD + BTN_W, yy)],
                       fill=(int(210 - 25 * t), int(18 + 18 * t), int(18 + 28 * t)))
         draw.rounded_rectangle([PAD, BTN_Y, PAD + BTN_W, BTN_Y + BTN_H],
                                radius=22, outline=WHITE, width=4)
-        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H // 2 - 16), "구독",
+        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H // 2 - 14), "구독",
                   font=f_huge_sub, fill=WHITE, anchor="mm",
                   stroke_width=3, stroke_fill=STROKE)
-        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H - 32), "YouTube",
+        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H - 26), "YouTube",
                   font=f_sm, fill=(255, 205, 205), anchor="mm")
 
-        # [알림 ON] 버튼 — 다크 + 마젠타 테두리
         bx = PAD + BTN_W + 24
         for yy in range(BTN_Y, BTN_Y + BTN_H):
             t = (yy - BTN_Y) / BTN_H
@@ -1281,34 +1329,28 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                       fill=(int(28 + 12 * t), int(12 + 10 * t), int(48 + 22 * t)))
         draw.rounded_rectangle([bx, BTN_Y, bx + BTN_W, BTN_Y + BTN_H],
                                radius=22, outline=accent, width=4)
-        draw_bell_icon(draw, bx + BTN_W // 2, BTN_Y + BTN_H // 2 - 30, 32, accent)
-        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H // 2 + 30), "알림 ON",
+        draw_bell_icon(draw, bx + BTN_W // 2, BTN_Y + BTN_H // 2 - 28, 32, accent)
+        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H // 2 + 28), "알림 ON",
                   font=f_huge_sub, fill=accent, anchor="mm",
                   stroke_width=3, stroke_fill=STROKE)
-        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H - 32), "알림 설정",
+        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H - 26), "알림 설정",
                   font=f_sm, fill=(210, 170, 230), anchor="mm")
 
-        # 하단 매수지수 범례
-        draw = ImageDraw.Draw(img)
-        avg_bi = summary.get("avg_buy_index") if summary else None
-        draw_bi_legend(draw, avg_bi, f_sm, f_md)
         return img
 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 1:
         # 메인: 대본 첫 줄 그대로 (감탄사 포함). 큰따옴표 추가.
         first = (news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
-        # 큰따옴표 적용
         if not (first.startswith('"') or first.startswith("'")):
             first = f'"{first}"'
         head_main = first
-        # 부제: 매수지수 + 주가
-        bi = summary.get("avg_buy_index") or 50
+        # 부제: 주가만 표시 (점수 제거)
         price = summary.get("latest_price")
         try:
-            head_sub = f"참고지수 {bi}점 · ${float(price):,.0f}" if price else f"참고지수 {bi}점"
+            head_sub = f"${float(price):,.0f}" if price else "주간 브리핑"
         except Exception:
-            head_sub = f"참고지수 {bi}점"
+            head_sub = "주간 브리핑"
     elif idx == 2:
         head_main = '"이번 주 빅 호재"'
         top_bull = (summary.get("top_bullish") or [{}])[0]
@@ -1316,9 +1358,8 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         cat = top_bull.get("category", "") or ch
         head_sub = cat if cat else "심층 분석"
     elif idx == 3:
-        bi = summary.get("avg_buy_index") or 50
         head_main = '"이번 주 시장 반응"'
-        head_sub = f"참고지수 {bi}점"
+        head_sub = "시장 분석"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
     draw_mbc_header(draw, BRAND_LABEL, head_main, head_sub, accent,
@@ -1335,49 +1376,51 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     if idx == 1:
         FC_W = COL_W - PAD
 
-        # 핵심 인사이트 카드 (두 번째 줄: 주가·참고지수)
-        INSIGHT_H = 150
-        draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + INSIGHT_H],
-                               radius=14, fill=(20, 24, 34), outline=accent, width=2)
-        if len(news_lines) >= 2:
-            insight_wrapped = wrap_text(draw, strip_emoji(news_lines[1]), f_md, FC_W - 44)
-            total_h = len(insight_wrapped[:2]) * 44
-            ky = CONTENT_Y + (INSIGHT_H - total_h) // 2
-            for wl in insight_wrapped[:2]:
-                bb = draw.textbbox((0, 0), wl, font=f_md)
+        # ─ 변동 원인 카드 (두 번째 줄: movement_reason 기반 AI 생성 텍스트)
+        REASON_H = 190
+        draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
+                               radius=14, fill=(14, 20, 36), outline=accent, width=3)
+        draw.text((PAD + 20, CONTENT_Y + 16), "이번주 변동 원인",
+                  font=f_sm, fill=accent, anchor="lt")
+        reason_line = strip_emoji(news_lines[1]) if len(news_lines) >= 2 else ""
+        if reason_line:
+            rw = wrap_text(draw, reason_line, f_nm, FC_W - 40)
+            ky = CONTENT_Y + 62
+            for wl in rw[:2]:
+                bb = draw.textbbox((0, 0), wl, font=f_nm)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
-                          font=f_md, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
-                ky += 44
+                          font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
+                ky += 56
 
-        # 호재·악재 요약 스트립 (3번째/4번째 줄)
-        BULL_Y = CONTENT_Y + INSIGHT_H + 16
-        BULL_H = 130
+        # ─ 호재·악재 요약 스트립 (3번째/4번째 줄)
+        BULL_Y = CONTENT_Y + REASON_H + 16
+        BULL_H = 160
         HALF_W = (FC_W - 12) // 2
         bull_text = strip_emoji(news_lines[2]) if len(news_lines) >= 3 else ""
         bear_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
 
         if bull_text:
             draw.rounded_rectangle([PAD, BULL_Y, PAD + HALF_W, BULL_Y + BULL_H],
-                                   radius=12, fill=(16, 32, 20), outline=GREEN, width=2)
-            draw.text((PAD + 12, BULL_Y + 14), "▲ 호재", font=f_sm, fill=GREEN)
-            bw = wrap_text(draw, bull_text, f_xs, HALF_W - 24)
-            by = BULL_Y + 44
+                                   radius=12, fill=(14, 30, 18), outline=GREEN, width=2)
+            draw.text((PAD + 14, BULL_Y + 16), "▲ 호재", font=f_sm, fill=GREEN)
+            bw = wrap_text(draw, bull_text, f_xs, HALF_W - 28)
+            by = BULL_Y + 60
             for wl in bw[:2]:
-                draw.text((PAD + 12, by), wl, font=f_xs, fill=WHITE,
+                draw.text((PAD + 14, by), wl, font=f_xs, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                by += 32
+                by += 42
 
         if bear_text:
             bx = PAD + HALF_W + 12
             draw.rounded_rectangle([bx, BULL_Y, bx + HALF_W, BULL_Y + BULL_H],
-                                   radius=12, fill=(32, 14, 14), outline=RED, width=2)
-            draw.text((bx + 12, BULL_Y + 14), "▼ 악재", font=f_sm, fill=RED)
-            rw = wrap_text(draw, bear_text, f_xs, HALF_W - 24)
-            ry = BULL_Y + 44
+                                   radius=12, fill=(30, 12, 12), outline=RED, width=2)
+            draw.text((bx + 14, BULL_Y + 16), "▼ 악재", font=f_sm, fill=RED)
+            rw = wrap_text(draw, bear_text, f_xs, HALF_W - 28)
+            ry = BULL_Y + 60
             for wl in rw[:2]:
-                draw.text((bx + 12, ry), wl, font=f_xs, fill=WHITE,
+                draw.text((bx + 14, ry), wl, font=f_xs, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                ry += 32
+                ry += 42
 
         # 가격 스트립
         STRIP_Y = BULL_Y + BULL_H + 20
@@ -1575,6 +1618,10 @@ def main():
     summary["next_events"] = load_next_events()
     if summary["next_events"]:
         print(f"   다음주 이벤트 {len(summary['next_events'])}건 발견")
+
+    # ── 주가 변동 원인 (Google Search grounding) ──
+    print("🔍 주가 변동 원인 검색 중...")
+    summary["movement_reason"] = search_movement_reason(summary)
 
     # ── 대본 ──
     img_prompts = {}  # Nano Banana 이미지 생성에 사용 (대본 생성 시 채워짐)
