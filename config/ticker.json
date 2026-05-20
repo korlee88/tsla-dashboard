@@ -12,7 +12,6 @@
     ["Tesla, Inc.", "Tesla logo"],
     ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],
     ["Tesla Cybertruck"],
-    ["Elon Musk"],
     ["Gigafactory Nevada"],
     ["Tesla, Inc.", "Tesla Model Y"]
   ],
@@ -21,7 +20,6 @@
     null,
     null,
     "bg_scene_02.jpg",
-    "bg_scene_03.jpg",
     "bg_scene_04.jpg",
     null
   ],

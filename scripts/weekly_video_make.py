@@ -28,12 +28,11 @@ MIN_SCENE_SEC = 5.0
 ACCENT_COLORS = [
     (6,   182, 212),  # scene 0 cyan    - 충격 인트로
     (167, 139, 250),  # scene 1 purple  - 브리핑
-    (34,  197,  94),  # scene 2 green   - 호재 뉴스
-    (239,  68,  68),  # scene 3 red     - 리스크 뉴스
-    (245, 158,  11),  # scene 4 amber   - 시장 동향
-    (236,  72, 153),  # scene 5 magenta - 클로징 (다음주 예고)
+    (34,  197,  94),  # scene 2 green   - 호재 심층
+    (245, 158,  11),  # scene 3 amber   - 시장 동향
+    (236,  72, 153),  # scene 4 magenta - 클로징 (다음주 예고)
 ]
-SCENE_MOODS = ["shocked", "excited", "happy", "worried", "focused", "celebrating"]
+SCENE_MOODS = ["shocked", "excited", "happy", "focused", "celebrating"]
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -245,15 +244,14 @@ def fx_ken_burns(img, t: float, dur: float, scene_idx: int):
     from PIL import Image
     progress = t / max(dur, 0.001)
 
-    # 6씬 줌/패닝 패턴 — 1.00~1.10 범위
+    # 5씬 줌/패닝 패턴 — 1.00~1.10 범위
     CONFIGS = [
         # (zoom_start, zoom_end, pan_x_start, pan_x_end, pan_y_start, pan_y_end)
         (1.00, 1.10,  0.00,  0.00,  0.00,  0.00),  # scene 0 인트로: 강한 줌인 (충격)
         (1.00, 1.07,  0.00,  0.03,  0.00,  0.02),  # scene 1: 줌인 + 우하
         (1.07, 1.00,  0.03,  0.00,  0.02,  0.00),  # scene 2: 줌아웃 + 좌상
         (1.00, 1.07,  0.00, -0.03,  0.00,  0.02),  # scene 3: 줌인 + 좌하
-        (1.07, 1.00, -0.03,  0.00,  0.02,  0.00),  # scene 4: 줌아웃 + 우상
-        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 5 클로징: 부드러운 줌인
+        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 4 클로징: 부드러운 줌인
     ]
     zoom_s, zoom_e, px_s, px_e, py_s, py_e = CONFIGS[scene_idx % len(CONFIGS)]
 
@@ -282,7 +280,7 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     img = Image.fromarray(base_arr).copy()
 
     is_intro   = (scene_idx == 0)
-    is_closing = (scene_idx == 5)
+    is_closing = (scene_idx == 4)
 
     # Ken Burns
     # - 인트로/클로징은 커스텀 레이아웃이라 사진 스트립이 없음 → 전체 프레임에 부드러운 줌
@@ -333,8 +331,8 @@ async def process_scene(scene, report_dir):
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
-    # 씬 0(인트로)·5(클로징)는 2줄, 본편(1~4)은 4줄까지 나레이션
-    max_lines  = 2 if idx in (0, 5) else 4
+    # 씬 0(인트로)·4(클로징)는 2줄, 본편(1~3)은 4줄까지 나레이션
+    max_lines  = 2 if idx in (0, 4) else 4
     tts_lines  = lines[:max_lines]
     tts_text   = clean_for_tts(tts_lines) or title
     audio_path = report_dir / f"scene_{idx:02d}.mp3"
