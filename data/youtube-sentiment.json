@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.38,
+  "velocity": 0.36,
   "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 349,327회 / 이전 4~7일 908,045회 | 총 1,257,372회 (44개 영상)",
+  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 334,262회 / 이전 4~7일 919,145회 | 총 1,253,407회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1257372,
-  "hot_views": 349327,
-  "baseline_views": 908045,
+  "total_views": 1253407,
+  "hot_views": 334262,
+  "baseline_views": 919145,
   "top_videos": [
     {
       "title": "Jab Drift Ko Apna Partner Samajh Baitha Onslaught!  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-16T04:00:12Z",
-      "viewCount": 150875
+      "viewCount": 153898
     },
     {
       "title": "Конец эпохи Tesla. Автомобили уступают место роботам 🤖🔚",
       "channel": "ИКRA | пространство привилегий",
       "publishedAt": "2026-05-14T17:20:38Z",
-      "viewCount": 106518
+      "viewCount": 110512
     },
     {
       "title": "Why did Optimus Prime stop transforming into a truck? #tlk #thelastknight #transformers",
       "channel": "scoremia",
       "publishedAt": "2026-05-15T08:39:33Z",
-      "viewCount": 81499
+      "viewCount": 82608
     },
     {
       "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
       "channel": "HyperChange",
       "publishedAt": "2026-05-15T17:01:10Z",
-      "viewCount": 74612
+      "viewCount": 74902
     },
     {
       "title": "Did you noticed this in transformers?",
       "channel": "We Coocked",
       "publishedAt": "2026-05-17T19:17:49Z",
-      "viewCount": 58481
+      "viewCount": 59820
     }
   ],
-  "collected_at": "2026-05-20T09:35:59Z"
+  "collected_at": "2026-05-20T15:24:52Z"
 }
