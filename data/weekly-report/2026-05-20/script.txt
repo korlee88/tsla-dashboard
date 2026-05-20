@@ -1,0 +1,40 @@
+SCENE_0_TITLE: 충격속보
+SCENE_0:
+충격! 오늘 TSLA -1.43%!
+헐! 옵티머스 생산라인 깔린다!
+
+SCENE_1_TITLE: 주간브리핑
+SCENE_1:
+대박! 사이버캡 2026 출시!
+현재 $404.11, 참고지수 51점!
+옵티머스 1세대 라인 설치 충격!
+21만 8천대 리콜 초비상 발생!
+
+SCENE_2_TITLE: 역대급
+SCENE_2:
+카테고리: 옵티머스 라인 가동 충격!
+   ↳ 1세대 생산라인 설치 진행 중!
+   ↳ 호재 +4점, 주가 $404 사수!
+   ↳ 사이버캡·세미 2026 출시 임박!
+
+SCENE_3_TITLE: 시장반응
+SCENE_3:
+[분위기] 헉! 기대와 공포 공존 중!
+[거래량] 주가 $422→$404 급락 충격!
+[애널리스트] AI·로봇 투자 의견 상향!
+[전망] 단기 변동성, 신중 관점 우세!
+
+SCENE_4_TITLE: 예고편
+SCENE_4:
+다음주 실적·신제품 모니터링 필수!
+구독+알림으로 1초도 늦지 마세요!
+
+IMAGE_PROMPT_0: A dramatic cinematic explosion of cyan lightning bolts striking a sleek black futuristic Tesla vehicle silhouette, shattered glass shards flying in slow motion, intense contrast between deep black background and electric cyan glow, sparks and energy waves radiating outward, high voltage atmosphere, dynamic camera angle from below, dark stormy sky with electric blue particles, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution, hyper-detailed photorealistic style.
+
+IMAGE_PROMPT_1: A futuristic purple-tinted Tesla showroom with sleek electric vehicles glowing under violet neon lights, holographic data charts floating in the air showing abstract stock movement, a humanoid Optimus robot standing in the background, deep purple and magenta ambient lighting, reflective polished floors, cyberpunk atmosphere, misty fog rolling through the scene, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution, hyper-detailed cinematic composition.
+
+IMAGE_PROMPT_2: A vibrant green energy explosion bursting upward from a futuristic Tesla factory floor, glowing emerald light beams shooting toward the sky, Optimus humanoid robots assembling Cybercab vehicles on illuminated production lines, rising green growth particles and arrows symbolizing surge, bright lime and forest green color palette, optimistic energetic atmosphere, dynamic perspective, sparkling light reflections, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution, hyper-detailed photorealistic rendering.
+
+IMAGE_PROMPT_3: A bustling futuristic financial cityscape bathed in warm orange sunset light, towering skyscrapers with glowing windows, Tesla vehicles driving through neon-lit streets, abstract holographic candlestick charts floating between buildings, traders silhouettes visible in glass towers, amber and burnt orange tones dominating the scene, dramatic golden hour atmosphere, lens flares and light particles, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution, hyper-detailed cinematic style.
+
+IMAGE_PROMPT_4: A dreamy magenta and pink cosmic skyline with a futuristic Tesla Cybercab flying through sparkling stars, glittering pink particles and twinkling lights filling the air, soft cotton candy clouds in hot pink and magenta hues, a glowing horizon with promising future vibes, ethereal sparkles and lens flares, romantic mystical atmosphere, dynamic upward perspective, no text, no letters, no watermark, no logo, 9:16 vertical aspect ratio, ultra-high resolution, hyper-detailed fantasy artwork.
