@@ -583,6 +583,41 @@ def fetch_wiki_image_with_fallback(articles, out_path: Path) -> bool:
     return False
 
 
+_NANO_BANANA_MODELS = [
+    "gemini-2.5-flash-image",          # Nano Banana  (500/일 무료)
+    "gemini-3.1-flash-image-preview",  # Nano Banana 2 (100/일 무료, 폴백)
+]
+
+def fetch_nano_banana_image(prompt: str, out_path: Path) -> bool:
+    """Nano Banana API로 씬 배경 이미지 생성 (9:16 세로). 실패 시 False 반환."""
+    if not GEMINI_API_KEY or not prompt:
+        return False
+    try:
+        from google import genai
+        from google.genai import types
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        for model_id in _NANO_BANANA_MODELS:
+            try:
+                response = client.models.generate_content(
+                    model=model_id,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_modalities=["IMAGE"],
+                        image_config=types.ImageConfig(aspect_ratio="9:16"),
+                    ),
+                )
+                for part in response.parts:
+                    if part.inline_data:
+                        out_path.write_bytes(part.inline_data.data)
+                        return True
+            except Exception as e:
+                print(f"      ⚠ {model_id} 실패: {e}", file=sys.stderr)
+                continue
+    except Exception as e:
+        print(f"      ⚠ Nano Banana 초기화 실패: {e}", file=sys.stderr)
+    return False
+
+
 def make_canvas(accent):
     """다크 배경 캔버스 생성 (1080×1920 세로 포맷)."""
     from PIL import Image, ImageDraw
@@ -1457,7 +1492,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     return img
 
 
-def build_images(scenes, summary, out_dir):
+def build_images(scenes, summary, out_dir, img_prompts=None):
     try:
         from PIL import ImageFont
     except ImportError:
@@ -1469,26 +1504,39 @@ def build_images(scenes, summary, out_dir):
         print("   ⚠ 한글 폰트 없음 — 이미지 건너뜀", file=sys.stderr)
         return
 
-    # 배경 이미지 준비 (고정 파일 우선, 없으면 Wikipedia 다운로드)
+    if img_prompts is None:
+        img_prompts = {}
+
+    # 씬 0(인트로)·4(클로징)는 그라데이션 코드 생성이라 배경 불필요
+    BG_SCENES = {1, 2, 3}
+
     print("   🖼 배경 이미지 준비 중...")
     bg_paths = {}
     for scene in scenes:
-        idx        = scene["index"]
-        static_bg  = SCENE_STATIC_BG[idx] if idx < len(SCENE_STATIC_BG) else None
-        articles   = SCENE_WIKI_ARTICLES[idx] if idx < len(SCENE_WIKI_ARTICLES) else ["Tesla, Inc."]
-        bg_path    = out_dir / f"bg_{idx:02d}.jpg"
+        idx      = scene["index"]
+        bg_path  = out_dir / f"bg_{idx:02d}.jpg"
+        articles = SCENE_WIKI_ARTICLES[idx] if idx < len(SCENE_WIKI_ARTICLES) else ["Tesla, Inc."]
 
-        if static_bg and static_bg.exists():
-            import shutil as _shutil
-            _shutil.copy2(static_bg, bg_path)
-            bg_paths[idx] = bg_path
-            print(f"      씬{idx} [고정 이미지] ✅")
-        else:
-            ok = fetch_wiki_image_with_fallback(articles, bg_path)
-            bg_paths[idx] = bg_path if ok else None
-            status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
-            label  = (articles[0] if isinstance(articles, list) else articles)[:20]
-            print(f"      씬{idx} [Wikipedia: {label}] {status}")
+        if idx not in BG_SCENES:
+            bg_paths[idx] = None
+            continue
+
+        # 1순위: Nano Banana AI 이미지 (GEMINI_API_KEY 필요)
+        prompt = img_prompts.get(idx, "")
+        if prompt:
+            ok = fetch_nano_banana_image(prompt, bg_path)
+            if ok:
+                bg_paths[idx] = bg_path
+                print(f"      씬{idx} [Nano Banana AI] ✅")
+                continue
+            print(f"      씬{idx} Nano Banana 실패 → Wikipedia 폴백", file=sys.stderr)
+
+        # 2순위: Wikipedia
+        ok = fetch_wiki_image_with_fallback(articles, bg_path)
+        bg_paths[idx] = bg_path if ok else None
+        status = "✅" if ok else "⚠ 실패(기본 배경 사용)"
+        label  = (articles[0] if isinstance(articles, list) else articles)[:20]
+        print(f"      씬{idx} [Wikipedia: {label}] {status}")
 
     for scene in scenes:
         idx  = scene["index"]
@@ -1529,6 +1577,7 @@ def main():
         print(f"   다음주 이벤트 {len(summary['next_events'])}건 발견")
 
     # ── 대본 ──
+    img_prompts = {}  # Nano Banana 이미지 생성에 사용 (대본 생성 시 채워짐)
     if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
         print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
         scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 5)]
@@ -1582,7 +1631,7 @@ def main():
 
     # ── 이미지 ──
     print("🖼 카드 이미지 생성 중...")
-    build_images(scenes, summary, out_dir)
+    build_images(scenes, summary, out_dir, img_prompts)
 
     # ── 메타 ──
     with open(out_dir / "meta.json", "w", encoding="utf-8") as f:
