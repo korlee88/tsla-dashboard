@@ -3679,6 +3679,17 @@ function VideoScriptPage({ onBack }) {
   const [openImage, setOpenImage]     = useState(null);
   const [promptsOpen, setPromptsOpen] = useState(false);
   const [copiedIdx, setCopiedIdx]     = useState(null);
+  const [wfRun, setWfRun]             = useState(undefined); // undefined=loading, null=없음, obj=있음
+
+  // GitHub Actions 최신 weekly-video 실행 상태 조회
+  useEffect(() => {
+    fetch('https://api.github.com/repos/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml/runs?per_page=3', {
+      headers: { Accept: 'application/vnd.github+json' }
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => setWfRun(data?.workflow_runs?.[0] || null))
+      .catch(() => setWfRun(null));
+  }, []);
 
   useEffect(() => {
     // data/weekly-report/ 하위 최신 script.json 로드 (KST 기준 날짜)
@@ -3727,7 +3738,32 @@ function VideoScriptPage({ onBack }) {
 
   const sc = selected;
   const sum = sc.summary ?? sc;   // script.json은 summary 하위에 필드 포함
-  const biColor = bCol(sum.avg_buy_index ?? 50);
+  const biVal = sum.avg_buy_index ?? 50;
+  const biColor = bCol(biVal);
+  // 폴백 파생값
+  const cardTitle = sc.title || (sc.scenes?.find(s => s.index === 1)?.lines?.[0] || '').replace(/['"「」]/g,'').slice(0,50) || `${sc._date} 주간 각본`;
+  const cardSubtitle = sc.subtitle || `${sum.week_start || sc._date} ~ ${sum.week_end || sc._date}`;
+  const overallSignal = sum.overall_signal || (biVal >= 65 ? '긍정' : biVal >= 45 ? '중립' : '신중');
+
+  // 워크플로우 실행 상태 배지 계산
+  const kstToday = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0];
+  const scriptIsToday = sc._date === kstToday;
+  let wfBadge = null;
+  if (wfRun) {
+    const runDate = (wfRun.updated_at || wfRun.created_at || '').slice(0,10);
+    const isToday = runDate === kstToday;
+    const wfStatus = wfRun.status;
+    const wfConclusion = wfRun.conclusion;
+    if (wfStatus === 'in_progress' || wfStatus === 'queued') {
+      wfBadge = { text: '영상 생성 중...', color: '#f59e0b', icon: '🔄' };
+    } else if (isToday && wfConclusion === 'success') {
+      wfBadge = { text: '오늘 자동 생성 완료', color: '#22c55e', icon: '✅' };
+    } else if (isToday && wfConclusion === 'failure') {
+      wfBadge = { text: '오늘 실행 실패', color: '#ef4444', icon: '⚠' };
+    } else if (wfConclusion === 'success') {
+      wfBadge = { text: `${runDate} 생성 완료`, color: '#6b7280', icon: '✅' };
+    }
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-3 py-4 md:px-4 md:py-6">
@@ -3747,6 +3783,17 @@ function VideoScriptPage({ onBack }) {
           </select>
         )}
       </div>
+      {/* 자동 생성 상태 배지 */}
+      {wfBadge && (
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg mb-3 text-xs font-semibold"
+          style={{ background: wfBadge.color + '18', border: `1px solid ${wfBadge.color}40`, color: wfBadge.color }}>
+          <span>{wfBadge.icon}</span>
+          <span>{wfBadge.text}</span>
+          <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+            target="_blank" rel="noopener noreferrer"
+            className="ml-auto underline opacity-70">Actions 확인</a>
+        </div>
+      )}
       {/* 액션 버튼 바 */}
       <div className="flex gap-2 mb-4">
         <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
@@ -3767,25 +3814,25 @@ function VideoScriptPage({ onBack }) {
       <div className="rounded-xl p-4 mb-4 border" style={{ background: 'linear-gradient(135deg,#1a1040 0%,#0d1520 100%)', borderColor: '#a78bfa40' }}>
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-purple-400 font-semibold mb-1">{sc._date} · {sc.subtitle || ''}</p>
-            <h2 className="text-base font-black text-white leading-snug">{sc.title}</h2>
+            <p className="text-xs text-purple-400 font-semibold mb-1">{sc._date} · {cardSubtitle}</p>
+            <h2 className="text-base font-black text-white leading-snug">{cardTitle}</h2>
           </div>
           <div className="text-center shrink-0">
-            <p className="text-3xl font-black tabular-nums" style={{ color: biColor }}>{sum.avg_buy_index}</p>
-            <p className="text-xs font-bold" style={{ color: biColor }}>{sum.overall_signal}</p>
+            <p className="text-3xl font-black tabular-nums" style={{ color: biColor }}>{biVal}</p>
+            <p className="text-xs font-bold" style={{ color: biColor }}>{overallSignal}</p>
           </div>
         </div>
         {/* 매수지수 바 */}
         <div className="rounded-full overflow-hidden mb-3" style={{ background: '#252830', height: 6 }}>
-          <div className="h-full rounded-full" style={{ width: `${sum.avg_buy_index}%`, background: biColor, transition: 'width 1s ease' }} />
+          <div className="h-full rounded-full" style={{ width: `${biVal}%`, background: biColor, transition: 'width 1s ease' }} />
         </div>
         {/* 핵심 지표 그리드 */}
         <div className="grid grid-cols-4 gap-2">
           {[
-            ['현재가', sum.latest_price != null ? `$${sum.latest_price}` : '─'],
-            ['매수지수', sum.avg_buy_index != null ? `${sum.avg_buy_index}pt` : '─'],
-            ['신호', sum.overall_signal ?? '─'],
-            ['생성', (sum.generated_by ?? sc.generated_by)?.replace('Claude ','') || 'AI'],
+            ['현재가', sum.latest_price != null ? `$${Number(sum.latest_price).toFixed(2)}` : '─'],
+            ['매수지수', `${biVal}pt`],
+            ['신호', overallSignal],
+            ['생성', (sc.generated_by ?? sum.generated_by)?.replace('Claude ','') || 'AI'],
           ].map(([k, v]) => (
             <div key={k} className="rounded-lg p-2 text-center" style={{ background: '#0d1117', border: '1px solid #2A2D35' }}>
               <p className="text-xs font-bold text-gray-200 truncate">{v}</p>
@@ -3838,8 +3885,10 @@ function VideoScriptPage({ onBack }) {
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-white">{scene.title}</p>
-                  {scene.duration_hint && (
-                    <p className="text-xs text-gray-600">⏱ {scene.duration_hint}</p>
+                  {(scene.lines?.[0] || scene.duration_hint) && (
+                    <p className="text-xs text-gray-500 truncate mt-0.5">
+                      {scene.duration_hint ? `⏱ ${scene.duration_hint}` : scene.lines[0].replace(/[⚡🚀⚠🔔★]/g,'').trim().slice(0,45)}
+                    </p>
                   )}
                 </div>
                 <span className="text-gray-600 text-xs">{isOpen ? '▲' : '▼'}</span>
