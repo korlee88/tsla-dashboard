@@ -8,6 +8,11 @@ on:
     - cron: '15 20 * * *'   # KST 05:15 (1차)
     - cron: '15 22 * * *'   # KST 07:15 (2차 재시도)
   workflow_dispatch:
+    inputs:
+      force:
+        description: '오늘 이미 생성됐어도 강제 재생성'
+        type: boolean
+        default: false
 
 jobs:
   build-video-assets:
@@ -25,7 +30,10 @@ jobs:
           TODAY_KST=$(TZ='Asia/Seoul' date +'%Y-%m-%d')
           echo "TODAY_KST=${TODAY_KST}" >> $GITHUB_ENV
           echo "TODAY=${TODAY_KST}" >> $GITHUB_ENV
-          if [ -f "data/weekly-report/${TODAY_KST}/script.json" ]; then
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "🔄 강제 재생성 모드 (force=true) — 기존 데이터 덮어쓰기"
+          elif [ -f "data/weekly-report/${TODAY_KST}/script.json" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
             echo "✅ 오늘(${TODAY_KST}) 각본 이미 생성됨 — 재실행 건너뜀"
           else
