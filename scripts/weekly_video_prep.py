@@ -143,12 +143,15 @@ def summarize(sessions):
     elif bear_top:
         biggest_impact = {**bear_top, "direction_ko": "악재", "emoji": "⚠"}
 
+    avg_bi = round(sum(buy_indices) / len(buy_indices)) if buy_indices else None
+    overall_signal = ("긍정" if avg_bi >= 65 else "중립" if avg_bi >= 45 else "신중") if avg_bi is not None else None
+
     return {
         "week_start":      sessions[-1].get("date", ""),
         "week_end":        sessions[0].get("date", ""),
         "session_count":   len(sessions),
         "buy_indices":     buy_indices,
-        "avg_buy_index":   round(sum(buy_indices) / len(buy_indices)) if buy_indices else None,
+        "avg_buy_index":   avg_bi,
         "latest_buy_index": buy_indices[0] if buy_indices else None,
         "price_start":     prices[-1] if prices else None,
         "price_end":       prices[0]  if prices else None,
@@ -160,6 +163,7 @@ def summarize(sessions):
         "top_bearish":     bearish[:3],
         "forecasts":       latest.get("dailyForecasts", [])[:3],
         "daily_prices":    daily_prices,
+        "overall_signal":  overall_signal,
         "trends":          None,        # fetch_google_trends()로 채움
         "next_events":     [],          # load_next_events()로 채움
     }
@@ -420,16 +424,22 @@ def generate_script_gemini(prompt):
     return response.text
 
 
+_last_model = "AI"
+
 def generate_script(summary):
+    global _last_model
     prompt = _build_prompt(summary)
     if ANTHROPIC_API_KEY:
         try:
             print("   🤖 Claude Opus 4로 대본 생성 중...")
-            return generate_script_opus(prompt)
+            result = generate_script_opus(prompt)
+            _last_model = "Claude Opus 4"
+            return result
         except Exception as e:
             print(f"   ⚠ Opus 실패 ({e}) — Gemini로 전환", file=sys.stderr)
     if GEMINI_API_KEY:
         print("   🤖 Gemini Flash로 대본 생성 중...")
+        _last_model = "Gemini Flash"
         return generate_script_gemini(prompt)
     raise RuntimeError("ANTHROPIC_API_KEY 또는 GEMINI_API_KEY 필요")
 
@@ -1463,12 +1473,30 @@ def main():
         scenes = parse_script(raw)
         img_prompts = parse_image_prompts(raw)
 
+        # 대시보드용 title/subtitle — 씬1 첫 줄에서 추출
+        script_title = ""
+        script_subtitle = f"{summary['week_start']} ~ {summary['week_end']}"
+        scene1 = next((s for s in scenes if s["index"] == 1), None)
+        if scene1 and scene1.get("lines"):
+            first_line = scene1["lines"][0] if scene1["lines"] else ""
+            script_title = strip_emoji(first_line).strip('"').strip("'").strip()
+        if summary.get("biggest_impact"):
+            bi_title = summary["biggest_impact"].get("title", "")
+            if bi_title:
+                script_subtitle += f" · {bi_title[:30]}"
+
         with open(out_dir / "script.txt", "w", encoding="utf-8") as f:
             f.write(raw)
         with open(out_dir / "script.json", "w", encoding="utf-8") as f:
-            json.dump({"generated_at": today, "summary": summary, "scenes": scenes,
-                       "image_prompts": img_prompts},
-                      f, ensure_ascii=False, indent=2)
+            json.dump({
+                "generated_at": today,
+                "generated_by": _last_model,
+                "title": script_title,
+                "subtitle": script_subtitle,
+                "summary": summary,
+                "scenes": scenes,
+                "image_prompts": img_prompts,
+            }, f, ensure_ascii=False, indent=2)
 
         # ── 이미지 프롬프트 별도 저장 (Imagen 복붙용) ──
         if img_prompts:
