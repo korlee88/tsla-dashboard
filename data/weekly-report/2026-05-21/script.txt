@@ -1,0 +1,47 @@
+SCENE_0_TITLE: 충격속보
+SCENE_0:
+충격! 오늘 TSLA +3.28%!
+헐! 로보택시 폭탄 발표 터졌다!
+지금 바로 원인 공개!
+
+SCENE_1_TITLE: 주간브리핑
+SCENE_1:
+대박! TSLA 417달러 돌파!
+AI·로보택시 기대가 폭발했어요!
+1분기 EPS 0.41달러, 예상 14% 상회!
+FSD 구독자 128만명, 51% 폭증!
+헉! 1분기 인도량은 예상 하회 충격!
+다음주 FSD EU 승인 확대 주목!
+
+SCENE_2_TITLE: 역대급호재
+SCENE_2:
+카테고리: 로보택시 연내 전국 확대 선언!
+   ↳ 배경: 머스크 5/18 연말 무인 FSD 확대 발언!
+   ↳ 데이터: 1분기 서비스·FSD 매출 37.5억$, +42%!
+   ↳ 임팩트: 단 하루만에 주가 +3.28% 폭등!
+   ↳ 비교: 자동차 마진 16.2%→21.1% 대폭 확대!
+   ↳ 향후 EU 형식승인 여름 전역 확대 예정!
+
+SCENE_3_TITLE: 시장반응
+SCENE_3:
+[분위기] 와! 매수심리 초강세 폭발 중!
+[거래량] 콜옵션 급증, 420달러 베팅 쏠림!
+[애널] JR리서치 매수 상향, AI 가치 주목!
+[전망] 단기 변동성 유의, 장기 성장 견조!
+
+SCENE_4_TITLE: 미래비전
+SCENE_4:
+FSD·옵티머스·사이버캡 시대 임박!
+다음주 420달러 재돌파 기대감!
+흔들리지 마세요, 미래는 테슬라!
+구독+알림으로 1초도 늦지 마세요!
+
+IMAGE_PROMPT_0: A 9:16 vertical ultra-high resolution cinematic composition showing a dramatic explosive Tesla stock chart skyrocketing upward with electric lightning bolts striking through a dark cyan and pitch black background, shattered glass fragments flying, intense neon cyan glow reflecting on a sleek futuristic Tesla silhouette, dynamic motion blur, shockwave ripples, volumetric smoke, deep contrast shadows, hyper realistic detail, breaking news urgency atmosphere, no text, no letters, no watermark, no logo, vertical full screen aspect ratio nine sixteen
+
+IMAGE_PROMPT_1: A 16:9 landscape ultra-high resolution futuristic visualization of a sleek purple Tesla Model S cruising through a neon lit cyberpunk highway at night, holographic data streams floating above showing rising graphs, deep violet and magenta gradient sky, glowing city skyline in distance, reflective wet asphalt, particle light trails, atmospheric haze, cinematic depth of field, premium technology aesthetic, mysterious purple ambient lighting, no text, no letters, no watermark, no logo, horizontal strip aspect ratio sixteen nine
+
+IMAGE_PROMPT_2: A 16:9 landscape ultra-high resolution vibrant green energetic scene of an exploding upward green growth arrow bursting through a Tesla robotaxi silhouette, lush emerald light particles scattering, glowing dollar symbols floating, rising candlestick charts in vivid lime and forest green, sunburst rays piercing through, dynamic motion lines, prosperity atmosphere, fresh optimistic lighting, hyper detailed reflective surfaces, cinematic quality, celebratory bullish mood, no text, no letters, no watermark, no logo, horizontal strip aspect ratio sixteen nine
+
+IMAGE_PROMPT_3: A 16:9 landscape ultra-high resolution dramatic cityscape view of Wall Street and Times Square bathed in glowing orange amber sunset light, towering skyscrapers with reflective glass, trading floor screens visible, busy investor crowds silhouetted, swirling stock ticker holograms in the sky, warm golden hour atmosphere, deep orange and bronze tones, lens flare, cinematic financial district mood, bustling market energy, no text, no letters, no watermark, no logo, horizontal strip aspect ratio sixteen nine
+
+IMAGE_PROMPT_4: A 9:16 vertical ultra-high resolution inspirational futuristic vision showcasing a sleek autonomous Tesla FSD vehicle driving toward a rising golden sun, an Optimus humanoid robot standing heroically beside Megapack energy units, a glowing Gigafactory skyline in background, magenta pink and gold gradient sky filled with sparkling stars and lens flares, hopeful uplifting atmosphere, soft volumetric light beams, dreamy bokeh particles, cinematic epic composition, no text, no letters, no watermark, no logo, vertical full screen aspect ratio nine sixteen

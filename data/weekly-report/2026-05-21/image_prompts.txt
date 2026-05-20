@@ -1,0 +1,17 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-21
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 충격인트로
+A 9:16 vertical ultra-high resolution cinematic composition showing a dramatic explosive Tesla stock chart skyrocketing upward with electric lightning bolts striking through a dark cyan and pitch black background, shattered glass fragments flying, intense neon cyan glow reflecting on a sleek futuristic Tesla silhouette, dynamic motion blur, shockwave ripples, volumetric smoke, deep contrast shadows, hyper realistic detail, breaking news urgency atmosphere, no text, no letters, no watermark, no logo, vertical full screen aspect ratio nine sixteen
+
+## 씬1 주간브리핑
+A 16:9 landscape ultra-high resolution futuristic visualization of a sleek purple Tesla Model S cruising through a neon lit cyberpunk highway at night, holographic data streams floating above showing rising graphs, deep violet and magenta gradient sky, glowing city skyline in distance, reflective wet asphalt, particle light trails, atmospheric haze, cinematic depth of field, premium technology aesthetic, mysterious purple ambient lighting, no text, no letters, no watermark, no logo, horizontal strip aspect ratio sixteen nine
+
+## 씬2 호재심층
+A 16:9 landscape ultra-high resolution vibrant green energetic scene of an exploding upward green growth arrow bursting through a Tesla robotaxi silhouette, lush emerald light particles scattering, glowing dollar symbols floating, rising candlestick charts in vivid lime and forest green, sunburst rays piercing through, dynamic motion lines, prosperity atmosphere, fresh optimistic lighting, hyper detailed reflective surfaces, cinematic quality, celebratory bullish mood, no text, no letters, no watermark, no logo, horizontal strip aspect ratio sixteen nine
+
+## 씬3 시장반응
+A 16:9 landscape ultra-high resolution dramatic cityscape view of Wall Street and Times Square bathed in glowing orange amber sunset light, towering skyscrapers with reflective glass, trading floor screens visible, busy investor crowds silhouetted, swirling stock ticker holograms in the sky, warm golden hour atmosphere, deep orange and bronze tones, lens flare, cinematic financial district mood, bustling market energy, no text, no letters, no watermark, no logo, horizontal strip aspect ratio sixteen nine
+
+## 씬4 다음주예고
+A 9:16 vertical ultra-high resolution inspirational futuristic vision showcasing a sleek autonomous Tesla FSD vehicle driving toward a rising golden sun, an Optimus humanoid robot standing heroically beside Megapack energy units, a glowing Gigafactory skyline in background, magenta pink and gold gradient sky filled with sparkling stars and lens flares, hopeful uplifting atmosphere, soft volumetric light beams, dreamy bokeh particles, cinematic epic composition, no text, no letters, no watermark, no logo, vertical full screen aspect ratio nine sixteen
