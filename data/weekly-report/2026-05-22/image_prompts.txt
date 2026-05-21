@@ -1,0 +1,17 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-22
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 충격인트로
+A 9:16 vertical ultra-high resolution cinematic composition showing a dramatic dark stage with a glowing cyan Tesla stock chart violently spiking upward, intense black background with deep cyan electric lightning bolts crackling across, explosive shockwave particles, a futuristic electric vehicle silhouette emerging from shadows, dramatic volumetric lighting, high contrast cyan and black palette, sense of breaking news urgency and shock, no text, no letters, no watermark, no logo, ultra-high resolution.
+
+## 씬1 주간브리핑
+A 16:9 landscape ultra-high resolution futuristic scene of a sleek Tesla electric vehicle gliding through a neon-lit purple cyberpunk cityscape, holographic stock data streams floating in violet mist, glowing gigafactory silhouettes in distance, deep purple and indigo gradient sky with subtle magenta accents, reflective wet streets, cinematic depth of field, mysterious and high-tech mood evoking innovation and weekly market briefing, no text, no letters, no watermark, no logo, ultra-high resolution.
+
+## 씬2 호재심층
+A 16:9 landscape ultra-high resolution vibrant scene showing an explosive green upward arrow bursting through clouds, a Cybercab and Optimus humanoid robot standing triumphantly on a glowing platform, radiant emerald light beams shooting skyward, lush green growth particles and rising bar charts in background, bright energetic atmosphere of breakthrough success, fresh lime and forest green palette with golden highlights, dynamic motion blur, no text, no letters, no watermark, no logo, ultra-high resolution.
+
+## 씬3 시장반응
+A 16:9 landscape ultra-high resolution cinematic urban financial district at golden hour, glowing orange skyscrapers with floating holographic candlestick charts, busy traders silhouetted against amber sunset reflections, Tesla vehicle passing through illuminated streets, warm orange and burnt sienna palette with copper highlights, lens flares and atmospheric haze, evoking intense market activity and investor sentiment buzz, dynamic perspective, no text, no letters, no watermark, no logo, ultra-high resolution.
+
+## 씬4 다음주예고
+A 9:16 vertical ultra-high resolution inspirational future vision showing a Tesla FSD autonomous car driving toward a radiant sunrise, Optimus robots standing in formation, Megapack energy storage glowing softly, a vast gigafactory silhouette on horizon, sparkling stars and shimmering particles filling magenta and pink sky with golden sunrise rays, hopeful uplifting atmosphere, dreamy bokeh lights, sense of long-term vision and human progress, no text, no letters, no watermark, no logo, ultra-high resolution.

@@ -1,0 +1,247 @@
+{
+  "generated_at": "2026-05-22",
+  "generated_by": "Claude Opus 4",
+  "title": "대박! TSLA $419.76 안착!",
+  "subtitle": "2026-05-14 ~ 2026-05-22 · 테슬라, 로보택시 및 옵티머스 제품 출시 계획",
+  "summary": {
+    "week_start": "2026-05-14",
+    "week_end": "2026-05-22",
+    "session_count": 33,
+    "buy_indices": [
+      64,
+      63,
+      58,
+      74,
+      58,
+      63,
+      51,
+      63,
+      64,
+      67,
+      72,
+      61,
+      58,
+      70,
+      63,
+      59,
+      70,
+      62,
+      64,
+      67,
+      62,
+      55,
+      78,
+      57,
+      71,
+      56,
+      54,
+      54,
+      66,
+      49,
+      66,
+      66,
+      56
+    ],
+    "avg_buy_index": 62,
+    "latest_buy_index": 64,
+    "price_start": 445.04,
+    "price_end": 419.76,
+    "latest_price": 419.76,
+    "today_price": 419.76,
+    "today_change_pct": 0.6,
+    "biggest_impact": {
+      "title": "테슬라, 로보택시 및 옵티머스 제품 출시 계획",
+      "score": 4,
+      "reason": "테슬라가 2026년 사이버캡, 세미, 메가캡 생산 시작과 옵티머스 1세대 생산 라인 설치를 계획하며 주요 신제품 출시 및 로봇 상용화에 대한 구체적인 일정을 제시하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+      "source": "Investing.com",
+      "date": "2026-04-23",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 로보택시 및 옵티머스 제품 출시 계획",
+        "score": 4,
+        "reason": "테슬라가 2026년 사이버캡, 세미, 메가캡 생산 시작과 옵티머스 1세대 생산 라인 설치를 계획하며 주요 신제품 출시 및 로봇 상용화에 대한 구체적인 일정을 제시하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시 출시 계획 발표",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS 예상치를 10% 이상 상회했으며, 로보택시 및 옵티머스 출시 계획과 대규모 투자를 발표하여 강력한 긍정적 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings|Product"
+      },
+      {
+        "title": "테슬라, 옵티머스 로봇 생산 라인 설치 및 사이버캡, 세미 2026년 출시 예정",
+        "score": 4,
+        "reason": "테슬라가 옵티머스 로봇의 1세대 생산 라인을 설치 중이며 2026년 사이버캡과 세미 출시를 예고하여 미래 성장 동력에 대한 기대감을 높이고, 프리몬트 공장 라인 전환은 로봇 생산의 구체적인 계획을 보여줍니다.",
+        "source": "Bloomberg",
+        "date": "2026-04-23",
+        "category": "Product|Technology"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 크게 하회하여 전기차 수요에 대한 우려를 증폭시키며 주가 급락을 야기했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 하회로 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 크게 하회하여 전기차 수요 둔화와 경쟁 심화에 대한 우려를 증폭시키며 주가에 부정적인 영향을 미쳤습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 시장 예상치를 크게 하회하여 주가에 부정적인 영향을 미쳤습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery|Market"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "5/22(금)",
+        "change_pct": 1.2,
+        "signal": "매수",
+        "basePrice": 419.76,
+        "predictedPrice": 424.8
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "5/25(월)",
+        "change_pct": 0.9,
+        "signal": "매수",
+        "basePrice": 419.76,
+        "predictedPrice": 423.54
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "5/26(화)",
+        "change_pct": 0.5,
+        "signal": "관망",
+        "basePrice": 419.76,
+        "predictedPrice": 421.86
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-22",
+        419.76
+      ],
+      [
+        "2026-05-21",
+        417.26
+      ],
+      [
+        "2026-05-20",
+        404.11
+      ],
+      [
+        "2026-05-19",
+        409.99
+      ],
+      [
+        "2026-05-18",
+        422.24
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "테슬라(TSLA) 주가는 2026년 5월 14일부터 5월 22일 기간 중 여러 요인으로 변동했지만, 후반부 상승에 기여한 핵심 원인은 다음과 같습니다.\n\n*   FSD 중국 출시\n*   세미 트럭 양산\n*   스페이스X 거래"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "충격속보",
+      "lines": [
+        "충격! TSLA +0.6% 급등!",
+        "헐! 로보택시·옵티머스 출시 임박!",
+        "지금 바로 원인 공개!"
+      ],
+      "body": "충격! TSLA +0.6% 급등!\n헐! 로보택시·옵티머스 출시 임박!\n지금 바로 원인 공개!"
+    },
+    {
+      "index": 1,
+      "title": "주간브리핑",
+      "lines": [
+        "대박! TSLA $419.76 안착!",
+        "FSD 중국·세미트럭 양산 폭발!",
+        "주간 최저 $404서 +3.8% 반등!",
+        "사이버캡·옵티머스 2026년 출격!",
+        "헉! 1분기 인도량 예상치 하회!",
+        "다음주 신제품 발표 모니터링!"
+      ],
+      "body": "대박! TSLA $419.76 안착!\nFSD 중국·세미트럭 양산 폭발!\n주간 최저 $404서 +3.8% 반등!\n사이버캡·옵티머스 2026년 출격!\n헉! 1분기 인도량 예상치 하회!\n다음주 신제품 발표 모니터링!"
+    },
+    {
+      "index": 2,
+      "title": "역대급",
+      "lines": [
+        "카테고리: 옵티머스·로보택시 폭탄!",
+        "↳ 배경: 2026년 사이버캡·세미 양산 시작",
+        "↳ 데이터: 1분기 EPS 예상치 +10% 상회!",
+        "↳ 임팩트: 호재 +4점, 주가 $419 회복!",
+        "↳ 비교: 경쟁사 0대 vs 옵티머스 1세대!",
+        "↳ 향후: 로봇 상용화 원년 가능성!"
+      ],
+      "body": "카테고리: 옵티머스·로보택시 폭탄!\n   ↳ 배경: 2026년 사이버캡·세미 양산 시작\n   ↳ 데이터: 1분기 EPS 예상치 +10% 상회!\n   ↳ 임팩트: 호재 +4점, 주가 $419 회복!\n   ↳ 비교: 경쟁사 0대 vs 옵티머스 1세대!\n   ↳ 향후: 로봇 상용화 원년 가능성!"
+    },
+    {
+      "index": 3,
+      "title": "시장반응",
+      "lines": [
+        "[분위기] 와! 투심 완전 반전, $404 저점 찍고 일주일새 +3.8% 폭등 분위기 폭발!",
+        "[거래량] 헐! 옵션 콜 매수세 폭주, 기관 순매수 유입에 거래량 평소 대비 급증세!",
+        "[애널] 충격! 주요 IB들 목표주가 상향 행렬, 로보택시 모멘텀 반영 의견 잇따라!",
+        "[전망] 다음주 신제품 발표·FSD 중국 진척도가 $420 돌파 핵심 키포인트로 부상!"
+      ],
+      "body": "[분위기] 와! 투심 완전 반전, $404 저점 찍고 일주일새 +3.8% 폭등 분위기 폭발!\n[거래량] 헐! 옵션 콜 매수세 폭주, 기관 순매수 유입에 거래량 평소 대비 급증세!\n[애널] 충격! 주요 IB들 목표주가 상향 행렬, 로보택시 모멘텀 반영 의견 잇따라!\n[전망] 다음주 신제품 발표·FSD 중국 진척도가 $420 돌파 핵심 키포인트로 부상!"
+    },
+    {
+      "index": 4,
+      "title": "미래비전",
+      "lines": [
+        "FSD·옵티머스·메가팩 폭발!",
+        "다음주 $420 돌파 기대감!",
+        "장기 투자자에겐 진짜 기회!",
+        "구독+알림으로 1초도 늦지 마세요!",
+        "",
+        "IMAGE_PROMPT_0: A 9:16 vertical ultra-high resolution cinematic composition showing a dramatic dark stage with a glowing cyan Tesla stock chart violently spiking upward, intense black background with deep cyan electric lightning bolts crackling across, explosive shockwave particles, a futuristic electric vehicle silhouette emerging from shadows, dramatic volumetric lighting, high contrast cyan and black palette, sense of breaking news urgency and shock, no text, no letters, no watermark, no logo, ultra-high resolution.",
+        "",
+        "IMAGE_PROMPT_1: A 16:9 landscape ultra-high resolution futuristic scene of a sleek Tesla electric vehicle gliding through a neon-lit purple cyberpunk cityscape, holographic stock data streams floating in violet mist, glowing gigafactory silhouettes in distance, deep purple and indigo gradient sky with subtle magenta accents, reflective wet streets, cinematic depth of field, mysterious and high-tech mood evoking innovation and weekly market briefing, no text, no letters, no watermark, no logo, ultra-high resolution.",
+        "",
+        "IMAGE_PROMPT_2: A 16:9 landscape ultra-high resolution vibrant scene showing an explosive green upward arrow bursting through clouds, a Cybercab and Optimus humanoid robot standing triumphantly on a glowing platform, radiant emerald light beams shooting skyward, lush green growth particles and rising bar charts in background, bright energetic atmosphere of breakthrough success, fresh lime and forest green palette with golden highlights, dynamic motion blur, no text, no letters, no watermark, no logo, ultra-high resolution.",
+        "",
+        "IMAGE_PROMPT_3: A 16:9 landscape ultra-high resolution cinematic urban financial district at golden hour, glowing orange skyscrapers with floating holographic candlestick charts, busy traders silhouetted against amber sunset reflections, Tesla vehicle passing through illuminated streets, warm orange and burnt sienna palette with copper highlights, lens flares and atmospheric haze, evoking intense market activity and investor sentiment buzz, dynamic perspective, no text, no letters, no watermark, no logo, ultra-high resolution.",
+        "",
+        "IMAGE_PROMPT_4: A 9:16 vertical ultra-high resolution inspirational future vision showing a Tesla FSD autonomous car driving toward a radiant sunrise, Optimus robots standing in formation, Megapack energy storage glowing softly, a vast gigafactory silhouette on horizon, sparkling stars and shimmering particles filling magenta and pink sky with golden sunrise rays, hopeful uplifting atmosphere, dreamy bokeh lights, sense of long-term vision and human progress, no text, no letters, no watermark, no logo, ultra-high resolution."
+      ],
+      "body": "FSD·옵티머스·메가팩 폭발!\n다음주 $420 돌파 기대감!\n장기 투자자에겐 진짜 기회!\n구독+알림으로 1초도 늦지 마세요!\n\nIMAGE_PROMPT_0: A 9:16 vertical ultra-high resolution cinematic composition showing a dramatic dark stage with a glowing cyan Tesla stock chart violently spiking upward, intense black background with deep cyan electric lightning bolts crackling across, explosive shockwave particles, a futuristic electric vehicle silhouette emerging from shadows, dramatic volumetric lighting, high contrast cyan and black palette, sense of breaking news urgency and shock, no text, no letters, no watermark, no logo, ultra-high resolution.\n\nIMAGE_PROMPT_1: A 16:9 landscape ultra-high resolution futuristic scene of a sleek Tesla electric vehicle gliding through a neon-lit purple cyberpunk cityscape, holographic stock data streams floating in violet mist, glowing gigafactory silhouettes in distance, deep purple and indigo gradient sky with subtle magenta accents, reflective wet streets, cinematic depth of field, mysterious and high-tech mood evoking innovation and weekly market briefing, no text, no letters, no watermark, no logo, ultra-high resolution.\n\nIMAGE_PROMPT_2: A 16:9 landscape ultra-high resolution vibrant scene showing an explosive green upward arrow bursting through clouds, a Cybercab and Optimus humanoid robot standing triumphantly on a glowing platform, radiant emerald light beams shooting skyward, lush green growth particles and rising bar charts in background, bright energetic atmosphere of breakthrough success, fresh lime and forest green palette with golden highlights, dynamic motion blur, no text, no letters, no watermark, no logo, ultra-high resolution.\n\nIMAGE_PROMPT_3: A 16:9 landscape ultra-high resolution cinematic urban financial district at golden hour, glowing orange skyscrapers with floating holographic candlestick charts, busy traders silhouetted against amber sunset reflections, Tesla vehicle passing through illuminated streets, warm orange and burnt sienna palette with copper highlights, lens flares and atmospheric haze, evoking intense market activity and investor sentiment buzz, dynamic perspective, no text, no letters, no watermark, no logo, ultra-high resolution.\n\nIMAGE_PROMPT_4: A 9:16 vertical ultra-high resolution inspirational future vision showing a Tesla FSD autonomous car driving toward a radiant sunrise, Optimus robots standing in formation, Megapack energy storage glowing softly, a vast gigafactory silhouette on horizon, sparkling stars and shimmering particles filling magenta and pink sky with golden sunrise rays, hopeful uplifting atmosphere, dreamy bokeh lights, sense of long-term vision and human progress, no text, no letters, no watermark, no logo, ultra-high resolution."
+    }
+  ],
+  "image_prompts": {
+    "0": "A 9:16 vertical ultra-high resolution cinematic composition showing a dramatic dark stage with a glowing cyan Tesla stock chart violently spiking upward, intense black background with deep cyan electric lightning bolts crackling across, explosive shockwave particles, a futuristic electric vehicle silhouette emerging from shadows, dramatic volumetric lighting, high contrast cyan and black palette, sense of breaking news urgency and shock, no text, no letters, no watermark, no logo, ultra-high resolution.",
+    "1": "A 16:9 landscape ultra-high resolution futuristic scene of a sleek Tesla electric vehicle gliding through a neon-lit purple cyberpunk cityscape, holographic stock data streams floating in violet mist, glowing gigafactory silhouettes in distance, deep purple and indigo gradient sky with subtle magenta accents, reflective wet streets, cinematic depth of field, mysterious and high-tech mood evoking innovation and weekly market briefing, no text, no letters, no watermark, no logo, ultra-high resolution.",
+    "2": "A 16:9 landscape ultra-high resolution vibrant scene showing an explosive green upward arrow bursting through clouds, a Cybercab and Optimus humanoid robot standing triumphantly on a glowing platform, radiant emerald light beams shooting skyward, lush green growth particles and rising bar charts in background, bright energetic atmosphere of breakthrough success, fresh lime and forest green palette with golden highlights, dynamic motion blur, no text, no letters, no watermark, no logo, ultra-high resolution.",
+    "3": "A 16:9 landscape ultra-high resolution cinematic urban financial district at golden hour, glowing orange skyscrapers with floating holographic candlestick charts, busy traders silhouetted against amber sunset reflections, Tesla vehicle passing through illuminated streets, warm orange and burnt sienna palette with copper highlights, lens flares and atmospheric haze, evoking intense market activity and investor sentiment buzz, dynamic perspective, no text, no letters, no watermark, no logo, ultra-high resolution.",
+    "4": "A 9:16 vertical ultra-high resolution inspirational future vision showing a Tesla FSD autonomous car driving toward a radiant sunrise, Optimus robots standing in formation, Megapack energy storage glowing softly, a vast gigafactory silhouette on horizon, sparkling stars and shimmering particles filling magenta and pink sky with golden sunrise rays, hopeful uplifting atmosphere, dreamy bokeh lights, sense of long-term vision and human progress, no text, no letters, no watermark, no logo, ultra-high resolution."
+  }
+}
