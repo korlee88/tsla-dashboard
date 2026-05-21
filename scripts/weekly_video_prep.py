@@ -318,11 +318,11 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치 의무)"
 - 줄6: "   ↳ 향후 전망 (30자 이내, 투자 권유 금지)"
 
-【씬 3 — 시장 반응】 (4줄, 한 줄 30자 이내)
-- 줄1: "[분위기] 이번 주 투자심리 자극적 한 문장 (감탄사 필수)"
-- 줄2: "[거래량] 이번 주 특이 거래·옵션 동향 한 줄 (수치 포함)"
-- 줄3: "[애널] 주요 목표주가·의견 변화 한 줄 (애널리스트 동향)"
-- 줄4: "[전망] 긍정/중립/신중 관점 한 문장 (투자 권유 금지)"
+【씬 3 — 시장 반응】 (4줄, 한 줄 45~55자, 두 줄 분량의 풍부한 내용)
+- 줄1: "[분위기] 이번 주 투자심리·분위기 풍부한 한 문장 (감탄사 필수, 45자 이상)"
+- 줄2: "[거래량] 이번 주 특이 거래량·옵션·기관 동향 + 수치 포함 풍부한 한 문장 (45자 이상)"
+- 줄3: "[애널] 목표주가·의견 변화 + 기관명·수치 포함 풍부한 한 문장 (45자 이상)"
+- 줄4: "[전망] 긍정/중립/신중 관점 + 근거·다음주 키포인트 풍부한 한 문장 (투자 권유 금지, 45자 이상)"
 
 【씬 4 — 미래 비전 + 예고 + CTA】 (4줄, 시청자에게 믿음·용기를 주는 멘트)
 - 줄1: 테슬라 미래 비전 한 줄 (FSD·로봇·에너지 등, 25자 이내, 장기 성장 강조)
@@ -1071,25 +1071,21 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
 
     all_lines = [headline] + [d for d in details if d.strip()]
 
-    char_count = max((len(l) for l in all_lines if l.strip()), default=0)
-    if fnt_content_xl and char_count < 60:
-        body_font = fnt_content_xl
-    elif fnt_content_sm and char_count >= 120:
-        body_font = fnt_content_sm
-    else:
-        body_font = fnt_content
+    # 헤드라인은 항상 xl(62px), 본문은 항상 content(50px) — 일관된 크기 계층
+    headline_font = fnt_content_xl if fnt_content_xl else fnt_bold
+    body_font     = fnt_content
 
     bb = draw.textbbox((0, 0), "가", font=body_font)
     char_h = bb[3] - bb[1]
     line_h = char_h + 14
 
     cy = content_y
-    for i, ln in enumerate(all_lines[:6]):   # 4→6줄 지원 (헤드라인+5details)
+    for i, ln in enumerate(all_lines[:6]):   # 헤드라인+5details
         if not ln.strip() or cy + char_h > y + h - FOOTER_H - 8:
             continue
-        use_font = fnt_bold if i == 0 else body_font
-        use_col  = WHITE    if i == 0 else LGRAY
-        sw       = 2        if i == 0 else 1
+        use_font = headline_font if i == 0 else body_font
+        use_col  = WHITE         if i == 0 else LGRAY
+        sw       = 2             if i == 0 else 1
         wrapped  = wrap_text(draw, strip_emoji(ln), use_font, content_max_w)
         for wl in wrapped[:2]:
             if cy + char_h > y + h - FOOTER_H - 8:
@@ -1363,41 +1359,25 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             # 폴백 자리 비움 (다음 단계 좌표 보존)
             SLIM_H = 0
 
-        # ── CTA: 구독 / 알림 투버튼 ────────────────────────────────────
-        CTA_TOP = SLIM_Y + SLIM_H + 24
+        # ── CTA: 텍스트 멘트 (버튼 없이 자연스럽게) ─────────────────────
+        CTA_TOP = SLIM_Y + SLIM_H + 40
 
-        draw.text((W // 2, CTA_TOP), "매주 TSLA 주간 분석 · 무료 알림",
-                  font=f_sm, fill=(170, 145, 200), anchor="mt")
+        draw.line([(W // 2 - 160, CTA_TOP), (W // 2 + 160, CTA_TOP)],
+                  fill=accent, width=2)
 
-        BTN_Y = CTA_TOP + 62
-        BTN_H  = 180
-        BTN_W  = (W - PAD * 2 - 24) // 2
-
-        for yy in range(BTN_Y, BTN_Y + BTN_H):
-            t = (yy - BTN_Y) / BTN_H
-            draw.line([(PAD, yy), (PAD + BTN_W, yy)],
-                      fill=(int(210 - 25 * t), int(18 + 18 * t), int(18 + 28 * t)))
-        draw.rounded_rectangle([PAD, BTN_Y, PAD + BTN_W, BTN_Y + BTN_H],
-                               radius=22, outline=WHITE, width=4)
-        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H // 2 - 14), "구독",
-                  font=f_huge_sub, fill=WHITE, anchor="mm",
+        draw.text((W // 2, CTA_TOP + 28), "놓치지 마세요!",
+                  font=f_huge_sub, fill=accent, anchor="mt",
                   stroke_width=3, stroke_fill=STROKE)
-        draw.text((PAD + BTN_W // 2, BTN_Y + BTN_H - 26), "YouTube",
-                  font=f_sm, fill=(255, 205, 205), anchor="mm")
 
-        bx = PAD + BTN_W + 24
-        for yy in range(BTN_Y, BTN_Y + BTN_H):
-            t = (yy - BTN_Y) / BTN_H
-            draw.line([(bx, yy), (bx + BTN_W, yy)],
-                      fill=(int(28 + 12 * t), int(12 + 10 * t), int(48 + 22 * t)))
-        draw.rounded_rectangle([bx, BTN_Y, bx + BTN_W, BTN_Y + BTN_H],
-                               radius=22, outline=accent, width=4)
-        draw_bell_icon(draw, bx + BTN_W // 2, BTN_Y + BTN_H // 2 - 28, 32, accent)
-        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H // 2 + 28), "알림 ON",
-                  font=f_huge_sub, fill=accent, anchor="mm",
-                  stroke_width=3, stroke_fill=STROKE)
-        draw.text((bx + BTN_W // 2, BTN_Y + BTN_H - 26), "알림 설정",
-                  font=f_sm, fill=(210, 170, 230), anchor="mm")
+        draw.text((W // 2, CTA_TOP + 114), "지금 구독하고 알림까지 설정해 두세요",
+                  font=f_nm, fill=WHITE, anchor="mt",
+                  stroke_width=1, stroke_fill=STROKE)
+
+        draw.text((W // 2, CTA_TOP + 172), "매주 무료 TSLA 주간 분석",
+                  font=f_sm, fill=(200, 175, 225), anchor="mt")
+
+        draw.text((W // 2, CTA_TOP + 230), "댓글로 응원해 주세요 :)",
+                  font=f_sm, fill=(190, 165, 210), anchor="mt")
 
         return _apply_frame_overlay(img)
 
@@ -1438,12 +1418,13 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     CONTENT_Y = START_Y + 40   # 사진 하단과 본문 사이 40px 여백
     if idx == 1:
         FC_W = COL_W - PAD
+        CARD_GAP = 14
 
-        # ─ 변동 원인 카드 (대본 줄 2·3: 핵심 + 보강 수치, 2줄 표시)
-        REASON_H = 230
+        # ─ 변동 원인 카드 (대본 줄 2·3, 2줄 표시) — f_nm 통일
+        REASON_H = 200
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
                                radius=14, fill=(14, 20, 36), outline=accent, width=3)
-        draw.text((PAD + 20, CONTENT_Y + 16), "이번주 변동 원인",
+        draw.text((PAD + 20, CONTENT_Y + 14), "이번주 변동 원인",
                   font=f_sm, fill=accent, anchor="lt")
         reason_lines_raw = []
         if len(news_lines) >= 2: reason_lines_raw.append(strip_emoji(news_lines[1]))
@@ -1451,59 +1432,57 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         reason_combined = " · ".join([r for r in reason_lines_raw if r])
         if reason_combined:
             rw = wrap_text(draw, reason_combined, f_nm, FC_W - 40)
-            ky = CONTENT_Y + 70
-            for wl in rw[:3]:   # 최대 3줄 표시
+            ky = CONTENT_Y + 64
+            for wl in rw[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_nm)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
                           font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
                 ky += 52
 
-        # ─ 호재·악재 요약 스트립 (대본 줄 4·5)
-        BULL_Y = CONTENT_Y + REASON_H + 16
-        BULL_H = 160
-        HALF_W = (FC_W - 12) // 2
+        # ─ 호재 카드 (대본 줄 4, 전폭) — f_nm 통일
+        BULL_Y = CONTENT_Y + REASON_H + CARD_GAP
+        BULL_H = 118
         bull_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
-        bear_text = strip_emoji(news_lines[4]) if len(news_lines) >= 5 else ""
-
+        draw.rounded_rectangle([PAD, BULL_Y, PAD + FC_W, BULL_Y + BULL_H],
+                               radius=12, fill=(14, 30, 18), outline=GREEN, width=2)
+        draw.text((PAD + 16, BULL_Y + 14), "▲ 호재", font=f_sm, fill=GREEN)
         if bull_text:
-            draw.rounded_rectangle([PAD, BULL_Y, PAD + HALF_W, BULL_Y + BULL_H],
-                                   radius=12, fill=(14, 30, 18), outline=GREEN, width=2)
-            draw.text((PAD + 14, BULL_Y + 16), "▲ 호재", font=f_sm, fill=GREEN)
-            bw = wrap_text(draw, bull_text, f_xs, HALF_W - 28)
-            by = BULL_Y + 60
-            for wl in bw[:2]:
-                draw.text((PAD + 14, by), wl, font=f_xs, fill=WHITE,
+            bw = wrap_text(draw, bull_text, f_nm, FC_W - 40)
+            by = BULL_Y + 58
+            for wl in bw[:1]:
+                draw.text((PAD + 20, by), wl, font=f_nm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                by += 42
 
+        # ─ 악재 카드 (대본 줄 5, 전폭) — f_nm 통일
+        BEAR_Y = BULL_Y + BULL_H + CARD_GAP
+        BEAR_H = 118
+        bear_text = strip_emoji(news_lines[4]) if len(news_lines) >= 5 else ""
+        draw.rounded_rectangle([PAD, BEAR_Y, PAD + FC_W, BEAR_Y + BEAR_H],
+                               radius=12, fill=(30, 12, 12), outline=RED, width=2)
+        draw.text((PAD + 16, BEAR_Y + 14), "▼ 악재", font=f_sm, fill=RED)
         if bear_text:
-            bx = PAD + HALF_W + 12
-            draw.rounded_rectangle([bx, BULL_Y, bx + HALF_W, BULL_Y + BULL_H],
-                                   radius=12, fill=(30, 12, 12), outline=RED, width=2)
-            draw.text((bx + 14, BULL_Y + 16), "▼ 악재", font=f_sm, fill=RED)
-            rw = wrap_text(draw, bear_text, f_xs, HALF_W - 28)
-            ry = BULL_Y + 60
-            for wl in rw[:2]:
-                draw.text((bx + 14, ry), wl, font=f_xs, fill=WHITE,
+            rw2 = wrap_text(draw, bear_text, f_nm, FC_W - 40)
+            ry = BEAR_Y + 58
+            for wl in rw2[:1]:
+                draw.text((PAD + 20, ry), wl, font=f_nm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                ry += 42
 
-        # ─ 체크포인트 카드 (대본 줄 6: 다음 체크포인트)
-        CHECK_Y = BULL_Y + BULL_H + 16
+        # ─ 체크포인트 카드 (대본 줄 6) — f_nm 통일, "▶" 기호 사용
+        CHECK_Y = BEAR_Y + BEAR_H + CARD_GAP
         CHECK_H = SAFE_BOTTOM - CHECK_Y
         check_text = strip_emoji(news_lines[5]) if len(news_lines) >= 6 else ""
         if check_text:
             draw.rounded_rectangle([PAD, CHECK_Y, PAD + FC_W, CHECK_Y + CHECK_H],
                                    radius=14, fill=(30, 24, 8), outline=KEY, width=3)
-            draw.text((PAD + 20, CHECK_Y + 16), "✓ 체크포인트",
+            draw.text((PAD + 20, CHECK_Y + 14), "▶ 체크포인트",
                       font=f_sm, fill=KEY, anchor="lt")
             cw = wrap_text(draw, check_text, f_nm, FC_W - 40)
-            cy = CHECK_Y + 70
+            cy = CHECK_Y + 64
             for wl in cw[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_nm)
                 draw.text(((W - (bb[2] - bb[0])) // 2, cy), wl,
                           font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
-                cy += 56
+                cy += 52
         else:
             # 폴백: 현재가 박스
             price = summary.get("latest_price")
@@ -1572,7 +1551,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             if line.startswith("[") and "]" in line:
                 content_text = line[line.index("]") + 1:].strip()
 
-            content_font = f_nm if n_items >= 4 else f_ct
+            content_font = f_sm if n_items >= 4 else f_nm
             content_x    = PAD + LAB_W + 18
             content_maxw = COL_W - PAD - LAB_W - 36
             wrapped = wrap_text(draw, strip_emoji(content_text), content_font, content_maxw)
