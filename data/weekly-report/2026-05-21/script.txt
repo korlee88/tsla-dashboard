@@ -1,47 +1,47 @@
 SCENE_0_TITLE: 충격속보
 SCENE_0:
-충격! 오늘 TSLA +3.28%!
-헐! 로보택시 출시 폭탄 선언!
+충격! TSLA +3.28% 폭등!
+헐! 로보택시 출시 발표 터졌다!
 지금 바로 원인 공개!
 
 SCENE_1_TITLE: 주간브리핑
 SCENE_1:
-와! TSLA 주가 $417 돌파 실화!
-애널 의견 상향+AI 기대 폭발!
-1분기 EPS 예상치 10% 상회 충격!
-로보택시·옵티머스 출시 확정 대박!
-헉! 인도량 예상치 대폭 하회 비상!
-다음주 실적 모니터링 필수!
+대박! TSLA $417 돌파 사상최대!
+중국 판매·자율주행·신공장 3박자!
+하루만에 +3.28%, $13 폭등 충격!
+1분기 EPS 예상치 10% 상회 역대급!
+헉! 21만대 리콜 초비상 발생!
+다음주 로보택시 일정 주목!
 
-SCENE_2_TITLE: 역대급호재
+SCENE_2_TITLE: 역대급
 SCENE_2:
-카테고리: 로보택시 출시 폭탄 선언!
-   ↳ 배경: 4/23 1분기 실적+로봇 동시 공개!
-   ↳ 데이터: EPS 10%↑·옵티머스 1세대 라인 가동!
-   ↳ 임팩트: 주가 하루만에 +3.28% 폭등!
-   ↳ 비교: 5분기 연속 흑자·역대급 기록!
-   ↳ 향후 전망: 2026년 사이버캡·세미 출시 예고!
+카테고리: 로보택시·옵티머스 동시 폭격!
+   ↳ 배경: 4월 23일 1분기 실적 깜짝 발표!
+   ↳ 데이터: EPS 예상치 10% 이상 상회 충격!
+   ↳ 임팩트: 주가 $417까지 +3.28% 폭등!
+   ↳ 비교: 5월 20일 $404 대비 $13 급등!
+   ↳ 향후 전망: 사이버캡·세미 2026년 출시 임박!
 
 SCENE_3_TITLE: 시장반응
 SCENE_3:
-[분위기] 와! 투심 완전 불타올랐어요!
-[거래량] 주간 +3.28% 급반등 거래 폭증!
-[애널] 주요 IB 목표주가 줄줄이 상향!
-[전망] 단기 변동성 유의, 장기 성장 주목!
+[분위기] 와! 이번주 투자심리 완전 후끈, 로보택시 기대감에 개미·기관 모두 폭풍 매수세 유입!
+[거래량] 헐! 콜옵션 거래량 폭발, $420 행사가 집중 매수, 기관 순매수 역대급 규모 포착!
+[애널] 대박! 주요 IB들 목표주가 줄상향, 모건스탠리·웨드부시 $450 이상 제시 충격!
+[전망] 단기 변동성 주의하되, 로보택시·옵티머스 모멘텀 강력, 다음주 $420 돌파 여부 핵심!
 
 SCENE_4_TITLE: 미래비전
 SCENE_4:
-FSD·옵티머스·에너지 미래 지배!
-다음주 상승 모멘텀 이어질까?
-흔들리지 마세요, 기회는 옵니다!
+FSD·옵티머스·메가팩 미래 독점!
+다음주 $420 돌파 기대감 폭발!
+흔들리지 마세요, 장기 기회!
 구독+알림으로 1초도 늦지 마세요!
 
-IMAGE_PROMPT_0: A 9:16 vertical ultra-high resolution cinematic shot of a futuristic Tesla electric vehicle silhouette breaking through a shattering stock chart with explosive lightning bolts and dramatic sparks flying across the frame, intense cyan and deep black contrast lighting, glowing neon blue energy waves radiating outward, dark stormy atmosphere with volumetric fog, sharp dynamic camera angle, holographic candlestick graphs surging upward in the background, hyper-realistic detail, dramatic shadows, no text, no letters, no watermark, no logo.
+IMAGE_PROMPT_0: 9:16 vertical full screen composition, ultra-high resolution cinematic shock intro scene, intense cyan and deep black contrast lighting, dramatic lightning bolts striking across a giant glowing stock chart with explosive upward candle bars, sparks and energy particles bursting outward, futuristic Tesla electric car silhouette emerging from dark smoke, electric blue glowing edges, dynamic motion blur, hyper-detailed digital art, dramatic atmosphere of breaking news urgency, no text, no letters, no watermark, no logo
 
-IMAGE_PROMPT_1: A 16:9 landscape ultra-high resolution futuristic scene of a sleek Tesla Model S gliding through a neon-lit cyber city skyline with glowing purple and violet light trails, holographic financial data streams floating in the air, deep purple gradient sky with electric magenta highlights, reflective wet streets mirroring city lights, cinematic depth of field, mysterious and high-tech ambiance, particles of light drifting through the atmosphere, no text, no letters, no watermark, no logo.
+IMAGE_PROMPT_1: 16:9 landscape horizontal composition, ultra-high resolution futuristic Tesla briefing scene bathed in deep purple and violet neon glow, sleek Tesla Model S and Cybertruck silhouettes parked under holographic data streams, floating financial charts and glowing percentage indicators in the background, misty atmosphere with purple light rays, cinematic depth of field, hyper-detailed sci-fi aesthetic, mysterious yet powerful mood, advanced technology vibe, no text, no letters, no watermark, no logo
 
-IMAGE_PROMPT_2: A 16:9 landscape ultra-high resolution vibrant scene of a Tesla robotaxi and Optimus humanoid robot standing together on a futuristic factory floor with bright emerald green and lime light beams shooting upward, glowing upward arrows and exploding growth graphs in the background, lush green energy particles bursting outward, optimistic radiant lighting, dynamic motion blur conveying acceleration and breakthrough, crystal clear reflections, ultra-detailed mechanical textures, no text, no letters, no watermark, no logo.
+IMAGE_PROMPT_2: 16:9 landscape horizontal composition, ultra-high resolution vibrant bullish growth scene in bright emerald and lime green tones, explosive upward stock chart arrows bursting through clouds, Tesla Optimus humanoid robot standing confidently next to a futuristic Robotaxi prototype, green energy particles swirling, sunrise rays breaking through, golden green light reflections, dynamic celebration atmosphere, hyper-detailed cinematic rendering, sense of triumph and innovation, no text, no letters, no watermark, no logo
 
-IMAGE_PROMPT_3: A 16:9 landscape ultra-high resolution cinematic view of a bustling futuristic financial district at sunset with towering glass skyscrapers bathed in warm orange and amber light, holographic stock tickers and trading charts floating between buildings, crowds of silhouetted traders gazing upward, glowing golden sun rays piercing through clouds, reflective surfaces shimmering with citrus tones, dynamic atmosphere of market excitement, volumetric haze, hyper-detailed urban architecture, no text, no letters, no watermark, no logo.
+IMAGE_PROMPT_3: 16:9 landscape horizontal composition, ultra-high resolution dramatic city skyline at golden hour drenched in warm orange and amber tones, Wall Street financial district with glowing skyscrapers, holographic trading screens floating in air showing candlestick patterns, Tesla vehicles driving on illuminated highways, sunset reflections on glass towers, bustling market atmosphere, cinematic wide angle, hyper-detailed urban finance scene, energetic mood, no text, no letters, no watermark, no logo
 
-IMAGE_PROMPT_4: A 9:16 vertical ultra-high resolution inspirational scene featuring a Tesla FSD autonomous car driving toward a glowing horizon, an Optimus robot standing tall, Megapack energy units glowing, and a massive Gigafactory silhouette in the distance, all bathed in magenta, pink, and golden sunrise light, sparkling stars and shimmering particles filling the sky, rising sun casting hopeful rays, dreamy cinematic atmosphere of future vision, ultra-detailed textures, no text, no letters, no watermark, no logo.
+IMAGE_PROMPT_4: 9:16 vertical full screen composition, ultra-high resolution inspiring future vision scene in magenta pink and golden hues, Tesla FSD autonomous car gliding on a glowing highway, Optimus robot raising hand toward sky, Megapack energy storage units shining, massive Gigafactory silhouette on horizon, rising sun with radiant golden rays, sparkling stars and shimmering particles, hopeful uplifting atmosphere, cinematic dreamlike quality, hyper-detailed futuristic art, no text, no letters, no watermark, no logo
