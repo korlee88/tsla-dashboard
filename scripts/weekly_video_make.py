@@ -17,8 +17,8 @@ TICKER        = TICKER_CONFIG["ticker"]
 
 REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
 VOICE         = "ko-KR-SunHiNeural"    # 한국 여성 TTS
-RATE          = "+30%"                  # 1.3배속 (빠르고 에너지 넘치는 쇼츠 스타일)
-PITCH         = "+0Hz"                  # 피치 변경 없음 (자연스러운 목소리)
+RATE          = "+20%"                  # +30%→+20% (나긋하고 편안한 톤)
+PITCH         = "+3Hz"                  # 약간 따뜻하게
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
@@ -65,6 +65,76 @@ def clean_for_tts(lines):
             line = line.replace(k, v)
         result.append(line)
     return ' '.join(result)
+
+
+def _clean_line(line: str) -> str:
+    """단일 줄 TTS 정제 — 카테고리 태그·특수기호 제거."""
+    table = {
+        '【': '', '】': '', '①': '첫째,', '②': '둘째,', '③': '셋째,',
+        '④': '넷째,', '⑤': '다섯째,', '$': '달러 ', '%': '퍼센트,',
+        '+': '플러스 ', '─': '', '▲': '상승 ', '▼': '하락 ',
+        '▶': '', '🟢': '', '🔴': '', '📊': '', '📈': '',
+        '✓': '', '⚡': '', '"': '', '"': '', '"': '',
+    }
+    line = line.strip()
+    if not line:
+        return ""
+    if '|' in line:
+        line = line.split('|')[0].strip()
+    # [분위기], [거래량] 같은 카테고리 태그 제거
+    if line.startswith('[') and ']' in line:
+        line = line[line.index(']') + 1:].strip()
+    for k, v in table.items():
+        line = line.replace(k, v)
+    return line.strip()
+
+
+def build_scene_tts_text(idx: int, lines: list) -> str:
+    """씬별 대본 + 자연스러운 브리지 문장으로 나레이션 구성.
+
+    현재 화면에 다 담지 못한 줄까지 포함하고,
+    씬 흐름에 맞는 짧은 연결 멘트를 섞어 나긋한 스토리텔링 완성.
+    """
+    cleaned = [c for c in (_clean_line(l) for l in lines) if c]
+    if not cleaned:
+        return ""
+
+    if idx == 0:
+        # 충격 인트로 — 3줄 + 시청 유도 한 마디
+        text = " ".join(cleaned[:3])
+        text += " 지금 바로 자세히 알아봐요!"
+
+    elif idx == 1:
+        # 주간 브리핑 — 헤드라인·원인(1~3) + 브리지 + 호재·악재·체크(4~6)
+        main  = " ".join(cleaned[:3])
+        extra = " ".join(cleaned[3:])
+        text  = main
+        if extra:
+            text += " 그리고 한 가지 더 말씀드리면요, " + extra
+
+    elif idx == 2:
+        # 호재 심층 — 헤드라인 강조 + 브리지 + 세부 내용 전체
+        headline = cleaned[0]
+        details  = " ".join(cleaned[1:])
+        text     = headline
+        if details:
+            text += " 자세히 살펴보면요, " + details
+        text += " 정말 의미 있는 소식이죠?"
+
+    elif idx == 3:
+        # 시장 반응 — 4줄 전체 + 마무리 한 줄
+        text  = " ".join(cleaned[:4])
+        text += " 이런 흐름, 꼭 기억해 두세요."
+
+    elif idx == 4:
+        # 클로징 — 전체 대본 + 따뜻한 인사
+        text  = " ".join(cleaned[:4])
+        text += " 다음 주에도 테슬라 이야기, 함께해요!"
+
+    else:
+        text = " ".join(cleaned)
+
+    return text
 
 # ── TTS ───────────────────────────────────────────────────────────────────────
 
@@ -327,10 +397,8 @@ async def process_scene(scene, report_dir):
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
-    # 씬 0(인트로)·4(클로징)는 2줄, 본편(1~3)은 4줄까지 나레이션
-    max_lines  = 2 if idx in (0, 4) else 4
-    tts_lines  = lines[:max_lines]
-    tts_text   = clean_for_tts(tts_lines) or title
+    # 전체 줄 + 씬별 브리지 문장으로 풍부한 나레이션 구성
+    tts_text = build_scene_tts_text(idx, lines) or title
     audio_path = report_dir / f"scene_{idx:02d}.mp3"
     print(f"   🎙 씬 {idx} [{title[:20]}] 나레이션 생성...")
     await gen_audio(tts_text, audio_path)
