@@ -27,10 +27,10 @@ OUTPUT_BASE       = ROOT_DIR / "data" / "weekly-report"
 LOOKBACK_DAYS     = 7
 
 # ── 팔레트 ────────────────────────────────────────────────────────────────
-BG      = (14, 17, 23)
+BG      = (24, 32, 54)         # 14,17,23 → 밝은 미드나이트 네이비
 WHITE   = (255, 255, 255)
-GRAY    = (107, 114, 128)
-LGRAY   = (156, 163, 175)
+GRAY    = (120, 128, 148)
+LGRAY   = (185, 192, 210)      # 더 밝은 회색
 GREEN   = (34, 197, 94)
 RED     = (239, 68, 68)
 AMBER   = (245, 158, 11)
@@ -43,16 +43,24 @@ PAD     = 40
 COL_W   = W - PAD
 SAFE_BOTTOM = 1680
 KEY     = (255, 215, 0)
-STROKE  = (0, 0, 0)
+STROKE  = (8, 12, 30)          # 0,0,0 → 부드러운 다크 네이비 (과한 검정 윤곽 완화)
 
 HEADER_H    = 500
 PHOTO_Y     = HEADER_H
 PHOTO_H     = 500
 BODY_Y      = PHOTO_Y + PHOTO_H
 START_Y     = BODY_Y
-NAVY        = (15, 32, 70)
-NAVY_DEEP   = (10, 22, 50)
-CYAN_LIGHT  = (135, 220, 255)
+NAVY        = (30, 60, 115)    # 15,32,70 → 밝은 네이비 블루
+NAVY_DEEP   = (22, 45, 92)     # 10,22,50 → 밝은 딥 네이비
+CYAN_LIGHT  = (160, 235, 255)  # 더 밝게
+
+# ── 카드 배경색 (씬별 톤) ──────────────────────────────────────────────────
+CARD_BG     = (36, 46, 78)     # 중립 카드 (was ~14-20 range)
+CARD_GREEN  = (22, 58, 36)     # 초록 카드
+CARD_RED    = (58, 24, 24)     # 빨강 카드
+CARD_AMBER  = (58, 46, 16)     # 앰버 카드
+CARD_PURPLE = (42, 20, 78)     # 보라 카드
+BADGE_BG    = (20, 26, 48)     # 배지·푸터 배경
 
 SCENE_ACCENTS = [CYAN, PURPLE, GREEN, AMBER, (236, 72, 153)]  # 인트로/브리핑/호재/시황/클로징
 
@@ -678,7 +686,7 @@ def make_canvas(accent):
     img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
     draw.rectangle([0, 0, W, 6], fill=accent)
-    draw.rectangle([0, H - 100, W, H], fill=(8, 10, 16))
+    draw.rectangle([0, H - 100, W, H], fill=(24, 32, 54))
     return img, draw
 
 
@@ -691,7 +699,7 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
     draw.rounded_rectangle([x - 3, y - 3, x + w + 3, y + h + 3],
                            radius=8, outline=accent, width=2)
     if not bg_path or not bg_path.exists():
-        draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=(20, 24, 32))
+        draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=CARD_BG)
         return
     try:
         photo = PILImage.open(bg_path).convert("RGB")
@@ -711,8 +719,8 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
             bg = bg.crop([0, top, pw, top + new_h])
         bg = bg.resize((w, h), PILImage.LANCZOS)
         bg = bg.filter(ImageFilter.GaussianBlur(radius=24))
-        # 배경에 어두운 오버레이
-        bg_ov = PILImage.new("RGBA", (w, h), (8, 10, 16, 170))
+        # 블러 배경 오버레이 — 밝게 (170→90)
+        bg_ov = PILImage.new("RGBA", (w, h), (8, 10, 16, 90))
         bg = PILImage.alpha_composite(bg.convert("RGBA"), bg_ov).convert("RGB")
 
         # ── 전경 레이어: contain-fit (프레임 안에 사진 전체 표시) ──
@@ -723,8 +731,8 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
             fg_h = h
             fg_w = int(h * img_ratio)
         fg = photo.resize((fg_w, fg_h), PILImage.LANCZOS)
-        # 전경에 약한 어두운 오버레이 (텍스트 가독성용)
-        fg_ov = PILImage.new("RGBA", (fg_w, fg_h), (8, 10, 16, 80))
+        # 전경 오버레이 최소화 — 사진 밝게 표시 (80→20)
+        fg_ov = PILImage.new("RGBA", (fg_w, fg_h), (8, 10, 16, 20))
         fg = PILImage.alpha_composite(fg.convert("RGBA"), fg_ov).convert("RGB")
 
         # ── 합성: 배경 위에 전경을 중앙 정렬 ──
@@ -737,7 +745,7 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
         d2.rounded_rectangle([x - 3, y - 3, x + w + 3, y + h + 3],
                              radius=8, outline=accent, width=2)
     except Exception:
-        draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=(20, 24, 32))
+        draw.rounded_rectangle([x, y, x + w, y + h], radius=6, fill=CARD_BG)
 
 
 def draw_mbc_header(draw, brand: str, title_main: str, title_sub: str, accent,
@@ -795,7 +803,7 @@ def draw_mbc_header(draw, brand: str, title_main: str, title_sub: str, accent,
 def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
     col = GREEN if bi >= 65 else AMBER if bi >= 45 else RED
     # 배경 반원 (회색)
-    draw.arc([cx - r, cy - r, cx + r, cy + r], start=180, end=360, fill=(40, 44, 54), width=22)
+    draw.arc([cx - r, cy - r, cx + r, cy + r], start=180, end=360, fill=(62, 68, 88), width=22)
     # 값 반원 (컬러)
     end_a = 180 + int(bi / 100 * 180)
     draw.arc([cx - r, cy - r, cx + r, cy + r], start=180, end=end_a, fill=col, width=22)
@@ -830,7 +838,7 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
 
     # 카드 배경
     draw.rounded_rectangle([x, y, x + w, y + h], radius=14,
-                            fill=(16, 19, 27), outline=accent, width=2)
+                            fill=CARD_BG, outline=accent, width=2)
 
     # 헤더 배경
     draw.rounded_rectangle([x, y, x + w, y + HEADER_H], radius=14, fill=accent)
@@ -838,7 +846,7 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
 
     # 챕터 이름 (헤더 왼쪽)
     draw.text((x + 22, y + HEADER_H // 2), chapter[:5],
-              font=fnt_bold, fill=(10, 12, 20), anchor="lm")
+              font=fnt_bold, fill=BADGE_BG, anchor="lm")
 
     # 등급 배지 (헤더 오른쪽)
     if badge_text:
@@ -847,7 +855,7 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
         badge_x = x + w - badge_w - 16
         badge_y = y + (HEADER_H - badge_h) // 2
         draw.rounded_rectangle([badge_x, badge_y, badge_x + badge_w, badge_y + badge_h],
-                               radius=10, fill=(10, 12, 20))
+                               radius=10, fill=BADGE_BG)
         draw.text((badge_x + badge_w // 2, badge_y + badge_h // 2),
                   badge_text, font=fnt_bold, fill=badge_col, anchor="mm")
 
@@ -886,7 +894,7 @@ def draw_news_card_portrait(draw, img, x, y, w, h, chapter, content, source, acc
 
     # 하단 출처 바
     footer_y = y + h - FOOTER_H
-    draw.rounded_rectangle([x, footer_y - 6, x + w, y + h], radius=14, fill=(10, 12, 18))
+    draw.rounded_rectangle([x, footer_y - 6, x + w, y + h], radius=14, fill=BADGE_BG)
 
     # 출처 텍스트 — KEY 노랑으로 강조
     src_display = source
@@ -951,7 +959,7 @@ def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
 
     # 배경 패널
     draw.rounded_rectangle([LX, LY, LX + LW, LY + LH],
-                           radius=14, fill=(14, 18, 28), outline=(40, 45, 60), width=1)
+                           radius=14, fill=CARD_BG, outline=(55, 65, 95), width=1)
 
     # 현재 매수지수 (왼쪽 강조)
     bi_col = GREEN if avg_bi >= 65 else AMBER if avg_bi >= 45 else RED
@@ -968,7 +976,7 @@ def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
 
     # 구분선
     SEP_X = LX + 140
-    draw.line([(SEP_X, LY + 16), (SEP_X, LY + LH - 16)], fill=(40, 45, 60), width=1)
+    draw.line([(SEP_X, LY + 16), (SEP_X, LY + LH - 16)], fill=(65, 75, 105), width=1)
 
     # 오른쪽: 3단계 범례
     ITEMS = [
@@ -997,7 +1005,7 @@ def draw_bi_legend(draw, avg_bi, fnt_label, fnt_val):
 
 
 def draw_stat_box(draw, x, y, w, h, label, value, col, fnt_val, fnt_lbl):
-    draw.rectangle([x, y, x + w, y + h], fill=(18, 21, 30), outline=(40, 44, 54), width=1)
+    draw.rectangle([x, y, x + w, y + h], fill=CARD_BG, outline=(55, 65, 95), width=1)
     draw.text((x + w // 2, y + 18), label, font=fnt_lbl, fill=GRAY, anchor="mt")
     draw.text((x + w // 2, y + h - 22), value, font=fnt_val, fill=col, anchor="mb")
 
@@ -1035,7 +1043,7 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
 
     # 카드 배경
     draw.rounded_rectangle([x, y, x + w, y + h], radius=14,
-                            fill=(16, 19, 27), outline=accent, width=2)
+                            fill=CARD_BG, outline=accent, width=2)
 
     # 헤더 배경 (GREEN 강조)
     draw.rounded_rectangle([x, y, x + w, y + HEADER_H], radius=14, fill=accent)
@@ -1044,15 +1052,15 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
     # 헤더 왼쪽: score 강조
     score_text = f"{score:+d}pt"
     draw.text((x + 22, y + HEADER_H // 2), score_text,
-              font=fnt_bold, fill=(10, 12, 20), anchor="lm",
-              stroke_width=2, stroke_fill=(0, 80, 0))
+              font=fnt_bold, fill=BADGE_BG, anchor="lm",
+              stroke_width=2, stroke_fill=(0, 60, 0))
 
     # 헤더 오른쪽: "BEST" 배지
     badge_w, badge_h = 110, 52
     bx = x + w - badge_w - 16
     by = y + (HEADER_H - badge_h) // 2
     draw.rounded_rectangle([bx, by, bx + badge_w, by + badge_h],
-                           radius=10, fill=(10, 12, 20))
+                           radius=10, fill=BADGE_BG)
     draw.text((bx + badge_w // 2, by + badge_h // 2),
               "BEST", font=fnt_bold, fill=KEY, anchor="mm",
               stroke_width=1, stroke_fill=STROKE)
@@ -1096,7 +1104,7 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
 
     # 하단 출처 바 (source · date)
     footer_y = y + h - FOOTER_H
-    draw.rounded_rectangle([x, footer_y - 6, x + w, y + h], radius=14, fill=(10, 12, 18))
+    draw.rounded_rectangle([x, footer_y - 6, x + w, y + h], radius=14, fill=BADGE_BG)
     footer_text = " · ".join(filter(None, [source, date])) or "출처 미상"
     draw.text((x + 18, footer_y + FOOTER_H // 2), footer_text[:50],
               font=fnt_source, fill=KEY, anchor="lm",
@@ -1189,9 +1197,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 bg = bg.resize((nw, nh), PILImage.LANCZOS)
                 ox, oy = (nw - W) // 2, (nh - H) // 2
                 img.paste(bg.crop((ox, oy, ox + W, oy + H)), (0, 0))
-                # 다크 오버레이 (시안 톤, 텍스트 가독성)
-                overlay = PILImage.new("RGB", (W, H), (5, 12, 32))
-                img = PILImage.blend(img, overlay, 0.55)
+                # 다크 오버레이 (시안 톤, 텍스트 가독성) — 0.55→0.38로 밝게
+                overlay = PILImage.new("RGB", (W, H), (8, 18, 45))
+                img = PILImage.blend(img, overlay, 0.38)
                 draw = ImageDraw.Draw(img)
             except Exception:
                 pass
@@ -1199,9 +1207,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             # 폴백: 기존 검정→시안 그라데이션
             for yy in range(H):
                 t = yy / H
-                r = int(0 + (6 - 0) * t)
-                g = int(0 + (60 - 0) * t)
-                b = int(20 + (90 - 20) * t)
+                r = int(10 + (20 - 10) * t)
+                g = int(20 + (80 - 20) * t)
+                b = int(48 + (120 - 48) * t)
                 draw.line([(0, yy), (W, yy)], fill=(r, g, b))
 
         # 상단 충격 라벨
@@ -1235,7 +1243,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         IMPACT_Y = 700
         IMPACT_H = 380
         draw.rounded_rectangle([PAD, IMPACT_Y, W - PAD, IMPACT_Y + IMPACT_H],
-                               radius=20, fill=(15, 25, 45), outline=accent, width=3)
+                               radius=20, fill=(30, 46, 82), outline=accent, width=3)
 
         # 대본 줄 1 (헤드라인)
         if len(news_lines) >= 1:
@@ -1294,9 +1302,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 bg = bg.resize((nw, nh), PILImage.LANCZOS)
                 ox, oy = (nw - W) // 2, (nh - H) // 2
                 img.paste(bg.crop((ox, oy, ox + W, oy + H)), (0, 0))
-                # 마젠타 톤 다크 오버레이 (텍스트 가독성)
-                overlay = PILImage.new("RGB", (W, H), (28, 8, 48))
-                img = PILImage.blend(img, overlay, 0.6)
+                # 마젠타 톤 오버레이 — 0.6→0.42로 밝게
+                overlay = PILImage.new("RGB", (W, H), (38, 12, 65))
+                img = PILImage.blend(img, overlay, 0.42)
                 draw = ImageDraw.Draw(img)
             except Exception:
                 pass
@@ -1305,7 +1313,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             for yy in range(H):
                 t = yy / H
                 draw.line([(0, yy), (W, yy)], fill=(
-                    int(15 + 50 * t), int(0 + 15 * t), int(28 + 68 * t)
+                    int(35 + 60 * t), int(10 + 28 * t), int(58 + 90 * t)
                 ))
 
         # ── 헤더: 테슬라의 미래 비전 ──────────────────────────────────
@@ -1318,9 +1326,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         # ── 3개 메시지 카드 (비전·예상·믿음) ─────────────────────────
         # news_lines: [0]=미래비전, [1]=다음주예상, [2]=믿음/용기, [3]=CTA
         MSG_CARDS = [
-            ("미래 비전",   strip_emoji(news_lines[0]) if len(news_lines) > 0 else "테슬라의 미래는 밝습니다",  KEY,    (28, 18, 8)),
-            ("다음주 예상", strip_emoji(news_lines[1]) if len(news_lines) > 1 else "다음주도 주목하세요",       accent, (28, 10, 48)),
-            ("믿음 한 줄", strip_emoji(news_lines[2]) if len(news_lines) > 2 else "흔들리지 마세요, 장기 비전!", GREEN,  (12, 32, 22)),
+            ("미래 비전",   strip_emoji(news_lines[0]) if len(news_lines) > 0 else "테슬라의 미래는 밝습니다",  KEY,    CARD_AMBER),
+            ("다음주 예상", strip_emoji(news_lines[1]) if len(news_lines) > 1 else "다음주도 주목하세요",       accent, CARD_PURPLE),
+            ("믿음 한 줄", strip_emoji(news_lines[2]) if len(news_lines) > 2 else "흔들리지 마세요, 장기 비전!", GREEN,  CARD_GREEN),
         ]
         MSG_Y = 195
         MSG_H = 175
@@ -1349,7 +1357,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             title_s = strip_emoji(ev.get("title", "")[:30])
             SLIM_H = 80
             draw.rounded_rectangle([PAD, SLIM_Y, W - PAD, SLIM_Y + SLIM_H],
-                                   radius=14, fill=(18, 10, 30), outline=AMBER, width=2)
+                                   radius=14, fill=(38, 22, 62), outline=AMBER, width=2)
             draw.text((PAD + 20, SLIM_Y + SLIM_H // 2), f"📅 {date_s}",
                       font=f_sm, fill=AMBER, anchor="lm")
             draw.text((W - PAD - 20, SLIM_Y + SLIM_H // 2), title_s,
@@ -1423,7 +1431,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         # ─ 변동 원인 카드 (대본 줄 2·3, 2줄 표시) — f_nm 통일
         REASON_H = 200
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
-                               radius=14, fill=(14, 20, 36), outline=accent, width=3)
+                               radius=14, fill=CARD_BG, outline=accent, width=3)
         draw.text((PAD + 20, CONTENT_Y + 14), "이번주 변동 원인",
                   font=f_sm, fill=accent, anchor="lt")
         reason_lines_raw = []
@@ -1444,7 +1452,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         BULL_H = 118
         bull_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
         draw.rounded_rectangle([PAD, BULL_Y, PAD + FC_W, BULL_Y + BULL_H],
-                               radius=12, fill=(14, 30, 18), outline=GREEN, width=2)
+                               radius=12, fill=CARD_GREEN, outline=GREEN, width=2)
         draw.text((PAD + 16, BULL_Y + 14), "▲ 호재", font=f_sm, fill=GREEN)
         if bull_text:
             bw = wrap_text(draw, bull_text, f_nm, FC_W - 40)
@@ -1458,7 +1466,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         BEAR_H = 118
         bear_text = strip_emoji(news_lines[4]) if len(news_lines) >= 5 else ""
         draw.rounded_rectangle([PAD, BEAR_Y, PAD + FC_W, BEAR_Y + BEAR_H],
-                               radius=12, fill=(30, 12, 12), outline=RED, width=2)
+                               radius=12, fill=CARD_RED, outline=RED, width=2)
         draw.text((PAD + 16, BEAR_Y + 14), "▼ 악재", font=f_sm, fill=RED)
         if bear_text:
             rw2 = wrap_text(draw, bear_text, f_nm, FC_W - 40)
@@ -1473,7 +1481,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         check_text = strip_emoji(news_lines[5]) if len(news_lines) >= 6 else ""
         if check_text:
             draw.rounded_rectangle([PAD, CHECK_Y, PAD + FC_W, CHECK_Y + CHECK_H],
-                                   radius=14, fill=(30, 24, 8), outline=KEY, width=3)
+                                   radius=14, fill=CARD_AMBER, outline=KEY, width=3)
             draw.text((PAD + 20, CHECK_Y + 14), "▶ 체크포인트",
                       font=f_sm, fill=KEY, anchor="lt")
             cw = wrap_text(draw, check_text, f_nm, FC_W - 40)
@@ -1488,7 +1496,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             price = summary.get("latest_price")
             price_str = f"${float(price):,.2f}" if price else "N/A"
             draw.rounded_rectangle([PAD, CHECK_Y, PAD + FC_W, CHECK_Y + CHECK_H],
-                                   radius=14, fill=(18, 21, 30), outline=accent, width=2)
+                                   radius=14, fill=CARD_BG, outline=accent, width=2)
             draw.text((PAD + FC_W // 2, CHECK_Y + 30), "현재가",
                       font=f_sm, fill=LGRAY, anchor="mm")
             draw.text((PAD + FC_W // 2, CHECK_Y + CHECK_H // 2 + 20), price_str,
@@ -1531,7 +1539,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             iy = item_positions[i]
             LAB_W = 220   # 148→220, 모든 라벨 동일 크기 표시 가능
             draw.rounded_rectangle([PAD, iy, PAD + COL_W - PAD, iy + ITEM_H],
-                                   radius=10, fill=(16, 19, 27), outline=accent, width=2)
+                                   radius=10, fill=CARD_BG, outline=accent, width=2)
             draw.rounded_rectangle([PAD, iy, PAD + LAB_W, iy + ITEM_H],
                                    radius=10, fill=accent)
             draw.rectangle([PAD + LAB_W - 10, iy, PAD + LAB_W, iy + ITEM_H], fill=accent)
@@ -1545,7 +1553,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                     label_txt = extracted
             # 모든 라벨 동일하게 f_md (48px bold) — 통일된 사이즈
             draw.text((PAD + LAB_W // 2, iy + ITEM_H // 2),
-                      label_txt, font=f_md, fill=(10, 12, 20), anchor="mm")
+                      label_txt, font=f_md, fill=BADGE_BG, anchor="mm")
 
             content_text = line
             if line.startswith("[") and "]" in line:
