@@ -115,8 +115,19 @@ def summarize(sessions):
                 bearish.append({"title": title, "score": score, "reason": reason,
                                 "source": source, "date": date, "category": category})
 
-    bullish.sort(key=lambda x: -x["score"])
-    bearish.sort(key=lambda x:  x["score"])
+    # 최신 뉴스가 같은 점수라면 우선 노출 (recency 가중치)
+    def _bull_sort_key(n):
+        score = n.get("score", 0)
+        try:
+            from datetime import datetime as _dt2
+            days_ago = (_dt2.now() - _dt2.strptime(n.get("date", "")[:10], "%Y-%m-%d")).days
+            recency  = max(0.0, (14 - days_ago) / 28.0)  # 2주 이내 최대 +0.5
+        except Exception:
+            recency = 0.0
+        return score + recency
+
+    bullish.sort(key=_bull_sort_key, reverse=True)
+    bearish.sort(key=lambda x: x["score"])
 
     # 최근 5일 (date, price) 쌍 수집
     seen_dates = {}
@@ -1034,8 +1045,9 @@ def draw_up_arrow(draw, cx, y_top, y_bot, color, width=10):
 
 def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
                             source, date, accent, fnt_bold, fnt_content,
-                            fnt_source, fnt_content_xl=None, fnt_content_sm=None):
-    """호재 심층 히어로 카드 — BEST 배지 + ↑ 화살표 + score 강조 + 4줄 스토리텔링."""
+                            fnt_source, fnt_content_xl=None, fnt_content_sm=None,
+                            category=""):
+    """호재 심층 히어로 카드 — BEST 배지 + ↑ 화살표 + 카테고리 라벨 + 스토리텔링."""
     from PIL import ImageDraw
 
     HEADER_H = 90
@@ -1049,9 +1061,9 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
     draw.rounded_rectangle([x, y, x + w, y + HEADER_H], radius=14, fill=accent)
     draw.rectangle([x, y + HEADER_H - 14, x + w, y + HEADER_H], fill=accent)
 
-    # 헤더 왼쪽: score 강조
-    score_text = f"{score:+d}pt"
-    draw.text((x + 22, y + HEADER_H // 2), score_text,
+    # 헤더 왼쪽: 카테고리 또는 소스 라벨 ("+4pt" 대신 — 시청자에게 의미 있는 정보)
+    header_label = (category or source or "이번주 HOT")[:14]
+    draw.text((x + 22, y + HEADER_H // 2), header_label,
               font=fnt_bold, fill=BADGE_BG, anchor="lm",
               stroke_width=2, stroke_fill=(0, 60, 0))
 
@@ -1239,16 +1251,16 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             except (ValueError, TypeError):
                 pass
 
-        # 충격 멘트 카드 (대본 줄 1, 2 표시)
-        IMPACT_Y = 700
-        IMPACT_H = 380
+        # 충격 멘트 카드 — 스크립트 헤드라인 + 이번주 최고 호재 뉴스 상세
+        IMPACT_Y = 680
+        IMPACT_H = 420
         draw.rounded_rectangle([PAD, IMPACT_Y, W - PAD, IMPACT_Y + IMPACT_H],
                                radius=20, fill=(30, 46, 82), outline=accent, width=3)
 
-        # 대본 줄 1 (헤드라인)
+        # 헤드라인 (대본 줄 1 — 짧고 강렬한 문장)
+        ky = IMPACT_Y + 36
         if len(news_lines) >= 1:
             hl_wrapped = wrap_text(draw, strip_emoji(news_lines[0]), f_lg, W - PAD * 2 - 50)
-            ky = IMPACT_Y + 50
             for wl in hl_wrapped[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_lg)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
@@ -1257,19 +1269,37 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                 ky += 56
 
         # 구분선
-        draw.line([(PAD + 60, IMPACT_Y + 180), (W - PAD - 60, IMPACT_Y + 180)],
-                  fill=accent, width=2)
+        draw.line([(PAD + 60, ky + 8), (W - PAD - 60, ky + 8)], fill=accent, width=2)
 
-        # 대본 줄 2 (충격 사건)
-        if len(news_lines) >= 2:
-            ev_wrapped = wrap_text(draw, strip_emoji(news_lines[1]), f_md, W - PAD * 2 - 50)
-            ky = IMPACT_Y + 220
-            for wl in ev_wrapped[:3]:
-                bb = draw.textbbox((0, 0), wl, font=f_md)
-                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
-                          font=f_md, fill=WHITE, anchor="lt",
+        # 이번주 최고 호재 뉴스 (biggest_impact 또는 top_bullish[0])
+        bi = summary.get("biggest_impact") or (summary.get("top_bullish") or [{}])[0]
+        if bi:
+            bi_title  = strip_emoji(bi.get("title", ""))
+            bi_reason = strip_emoji(bi.get("reason", ""))
+            bi_dir    = bi.get("direction_ko", "호재")
+            # 방향 라벨
+            dir_col = GREEN if bi_dir == "호재" else RED
+            draw.text((PAD + 22, ky + 26), f"이번주 {bi_dir}",
+                      font=f_sm, fill=dir_col, anchor="lt")
+            # 뉴스 제목
+            title_wr = wrap_text(draw, bi_title, f_nm, W - PAD * 2 - 44)
+            ny = ky + 68
+            for wl in title_wr[:2]:
+                bb = draw.textbbox((0, 0), wl, font=f_nm)
+                draw.text(((W - (bb[2] - bb[0])) // 2, ny), wl,
+                          font=f_nm, fill=WHITE, anchor="lt",
                           stroke_width=1, stroke_fill=STROKE)
-                ky += 44
+                ny += 52
+            # 이유/맥락 (있을 때)
+            if bi_reason:
+                reason_wr = wrap_text(draw, bi_reason, f_sm, W - PAD * 2 - 44)
+                ry = ny + 8
+                for wl in reason_wr[:2]:
+                    bb = draw.textbbox((0, 0), wl, font=f_sm)
+                    draw.text(((W - (bb[2] - bb[0])) // 2, ry), wl,
+                              font=f_sm, fill=LGRAY, anchor="lt",
+                              stroke_width=1, stroke_fill=STROKE)
+                    ry += 44
 
         # 검색량 트렌드 칩 (있을 때만)
         trends = summary.get("trends")
@@ -1367,25 +1397,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             # 폴백 자리 비움 (다음 단계 좌표 보존)
             SLIM_H = 0
 
-        # ── CTA: 텍스트 멘트 (버튼 없이 자연스럽게) ─────────────────────
-        CTA_TOP = SLIM_Y + SLIM_H + 40
-
-        draw.line([(W // 2 - 160, CTA_TOP), (W // 2 + 160, CTA_TOP)],
-                  fill=accent, width=2)
-
-        draw.text((W // 2, CTA_TOP + 28), "놓치지 마세요!",
-                  font=f_huge_sub, fill=accent, anchor="mt",
-                  stroke_width=3, stroke_fill=STROKE)
-
-        draw.text((W // 2, CTA_TOP + 114), "지금 구독하고 알림까지 설정해 두세요",
-                  font=f_nm, fill=WHITE, anchor="mt",
-                  stroke_width=1, stroke_fill=STROKE)
-
-        draw.text((W // 2, CTA_TOP + 172), "매주 무료 TSLA 주간 분석",
-                  font=f_sm, fill=(200, 175, 225), anchor="mt")
-
-        draw.text((W // 2, CTA_TOP + 230), "댓글로 응원해 주세요 :)",
-                  font=f_sm, fill=(190, 165, 210), anchor="mt")
+        # CTA 텍스트 없음 (나레이션으로 대체)
 
         return _apply_frame_overlay(img)
 
@@ -1428,18 +1440,21 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         FC_W = COL_W - PAD
         CARD_GAP = 14
 
-        # ─ 변동 원인 카드 (대본 줄 2·3, 2줄 표시) — f_nm 통일
+        # ─ 변동 원인 카드 — movement_reason(Google Search) 우선, 없으면 script lines
         REASON_H = 200
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
                                radius=14, fill=CARD_BG, outline=accent, width=3)
         draw.text((PAD + 20, CONTENT_Y + 14), "이번주 변동 원인",
                   font=f_sm, fill=accent, anchor="lt")
-        reason_lines_raw = []
-        if len(news_lines) >= 2: reason_lines_raw.append(strip_emoji(news_lines[1]))
-        if len(news_lines) >= 3: reason_lines_raw.append(strip_emoji(news_lines[2]))
-        reason_combined = " · ".join([r for r in reason_lines_raw if r])
-        if reason_combined:
-            rw = wrap_text(draw, reason_combined, f_nm, FC_W - 40)
+        # Google 검색 결과(movement_reason) 우선 — 더 상세하고 최신 내용
+        movement_reason = strip_emoji(summary.get("movement_reason") or "")
+        if not movement_reason:
+            raw_parts = []
+            if len(news_lines) >= 2: raw_parts.append(strip_emoji(news_lines[1]))
+            if len(news_lines) >= 3: raw_parts.append(strip_emoji(news_lines[2]))
+            movement_reason = " · ".join([r for r in raw_parts if r])
+        if movement_reason:
+            rw = wrap_text(draw, movement_reason, f_nm, FC_W - 40)
             ky = CONTENT_Y + 64
             for wl in rw[:2]:
                 bb = draw.textbbox((0, 0), wl, font=f_nm)
@@ -1507,22 +1522,37 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     elif idx == 2:
         CARD_W = COL_W - PAD
         CARD_H = SAFE_BOTTOM - CONTENT_Y
-        headline = news_lines[0] if news_lines else f"{COMPANY_KO} 주요 호재"
-        details  = [l.lstrip("↳ ").strip() for l in news_lines[1:6]]   # 3→5 details
-        top_bull = (summary.get("top_bullish") or [{}])[0]
-        bull_score  = top_bull.get("score", 5)
+        top_bull    = (summary.get("top_bullish") or [{}])[0]
         bull_source = top_bull.get("source", "")
         bull_date   = top_bull.get("date", "")
+        bull_cat    = top_bull.get("category", "")
+        bull_reason = strip_emoji(top_bull.get("reason", ""))
+
+        headline = news_lines[0] if news_lines else f"{COMPANY_KO} 주요 호재"
         _, headline_content, _ = parse_news_line(headline)
+
+        # 스크립트 detail 줄들
+        script_details = [l.lstrip("↳ ").strip() for l in news_lines[1:6] if l.strip()]
+        # reason(세션 원문)으로 보강 — 스크립트가 빈약하면 reason을 줄 단위로 분할해 추가
+        script_text = " ".join(script_details)
+        if bull_reason and len(script_text) < 80:
+            import re as _re
+            reason_parts = [p.strip() for p in _re.split(r'[.!?。·]', bull_reason) if len(p.strip()) > 8][:3]
+            details = script_details + reason_parts
+        else:
+            details = script_details
+
         draw_bullish_hero_card(
             draw, img,
             x=PAD, y=CONTENT_Y, w=CARD_W, h=CARD_H,
-            headline=headline_content or headline,
+            headline=headline_content or top_bull.get("title", headline),
             details=details,
-            score=bull_score, source=bull_source, date=bull_date,
+            score=top_bull.get("score", 5),
+            source=bull_source, date=bull_date,
             accent=accent,
             fnt_bold=f_ch, fnt_content=f_ct, fnt_source=f_src,
             fnt_content_xl=f_ct_xl, fnt_content_sm=f_ct_sm,
+            category=bull_cat,
         )
         draw = ImageDraw.Draw(img)
 
