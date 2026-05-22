@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.22,
+  "velocity": 0.23,
   "velocity_label": "급감 (×0.2)",
-  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 216,217회 / 이전 4~7일 993,221회 | 총 1,209,438회 (43개 영상)",
+  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 222,159회 / 이전 4~7일 952,576회 | 총 1,174,735회 (43개 영상)",
   "video_count": 43,
-  "total_views": 1209438,
-  "hot_views": 216217,
-  "baseline_views": 993221,
+  "total_views": 1174735,
+  "hot_views": 222159,
+  "baseline_views": 952576,
   "top_videos": [
     {
       "title": "Jab Drift Ko Apna Partner Samajh Baitha Onslaught!  #shorts #optimusprime #transformers",
       "channel": "Mosh Brutal",
       "publishedAt": "2026-05-16T04:00:12Z",
-      "viewCount": 172535
+      "viewCount": 175954
     },
     {
       "title": "Tesla Unleashes 8 BILLION-Mile &quot;AI Beast&quot;: Why Musk is Now Untouchable!",
       "channel": "Tech Revolution",
       "publishedAt": "2026-05-16T15:01:34Z",
-      "viewCount": 133037
+      "viewCount": 133440
     },
     {
       "title": "Tesla Is Hiding Crazy Optimus Progress 🦾🤫",
       "channel": "HyperChange",
       "publishedAt": "2026-05-15T17:01:10Z",
-      "viewCount": 76385
+      "viewCount": 76480
     },
     {
       "title": "Did you noticed this in transformers?",
       "channel": "We Coocked",
       "publishedAt": "2026-05-17T19:17:49Z",
-      "viewCount": 66678
+      "viewCount": 67550
     },
     {
       "title": "Optimus Prime transformation that might break #transformers #shorts",
       "channel": "MechaZeeShorts",
       "publishedAt": "2026-05-20T11:00:46Z",
-      "viewCount": 53006
+      "viewCount": 55677
     }
   ],
-  "collected_at": "2026-05-22T09:26:51Z"
+  "collected_at": "2026-05-22T14:42:58Z"
 }
