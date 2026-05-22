@@ -1,0 +1,17 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-23
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 충격인트로
+A 9:16 vertical full screen cinematic shock scene showing a dramatic Tesla stock chart crashing then spiking with intense lightning bolts striking through dark stormy clouds, explosive sparks and shattered glass fragments flying across the frame, glowing cyan blue and deep black high contrast color palette, futuristic holographic numbers floating mid-air, intense dramatic lighting, ultra-high resolution, hyper-detailed, no text, no letters, no watermark, no logo
+
+## 씬1 주간브리핑
+A 16:9 landscape horizontal strip cinematic view of a futuristic Tesla Model Y and Cybertruck parked inside a sleek gigafactory with glowing purple and violet neon lights, holographic data streams and financial charts floating in the air, deep purple to magenta gradient atmosphere, mysterious foggy ambiance, ultra-high resolution, hyper-detailed cinematic composition, no text, no letters, no watermark, no logo
+
+## 씬2 호재심층
+A 16:9 landscape horizontal strip vibrant scene of Tesla Optimus humanoid robots assembling on a bright green glowing production line beside Cybercab and Semi trucks, upward rising green arrows and explosive growth charts in the background, lush emerald and lime green color palette radiating energy and optimism, sparkling particles of light bursting upward, ultra-high resolution, hyper-detailed, no text, no letters, no watermark, no logo
+
+## 씬3 시장반응
+A 16:9 landscape horizontal strip dramatic cityscape view of Wall Street financial district at sunset with glowing orange and amber skyscrapers, holographic stock tickers and trading screens floating above streets, bustling crowd of traders and investors silhouettes, warm orange to deep red gradient sky, cinematic depth of field, ultra-high resolution, hyper-detailed atmospheric composition, no text, no letters, no watermark, no logo
+
+## 씬4 다음주예고
+A 9:16 vertical full screen inspiring futuristic vision featuring Tesla FSD autonomous vehicles driving on glowing highways, Optimus humanoid robots standing tall, Megapack energy storage units, and a massive gigafactory silhouette under a rising golden sun with sparkling stars, vibrant magenta pink and gold color palette radiating hope and ambition, lens flares and shimmering light particles, ultra-high resolution, hyper-detailed cinematic composition, no text, no letters, no watermark, no logo

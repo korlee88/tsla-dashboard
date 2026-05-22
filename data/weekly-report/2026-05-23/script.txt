@@ -1,0 +1,47 @@
+SCENE_0_TITLE: 충격속보
+SCENE_0:
+충격! 오늘 TSLA -0.11%!
+헐! 로보택시 출시 초읽기!
+지금 바로 원인 공개!
+
+SCENE_1_TITLE: 주간브리핑
+SCENE_1:
+와! 이번주 TSLA $427 사수!
+모델Y 가격 인상에 마진 초비상!
+주가 5/20 $404→23일 $427 반등!
+사이버캡·옵티머스 2026년 생산!
+1분기 인도량 5% 하회 충격!
+다음주 FSD 규제 발표 주목!
+
+SCENE_2_TITLE: 역대급호재
+SCENE_2:
+카테고리: 옵티머스+로보택시 폭탄!
+   ↳ 배경: 2026년 사이버캡·세미 생산 개시
+   ↳ 데이터: 1Q EPS 예상치 10% 상회!
+   ↳ 임팩트: 주가 3일만에 +5.7% 반등
+   ↳ 비교: 경쟁사 GM·포드 로봇 0대
+   ↳ 향후 전망: 로봇 상용화 원년 진입
+
+SCENE_3_TITLE: 시장반응
+SCENE_3:
+[분위기] 헐! 머스크 소송 패소 충격에도 저가매수세 폭발하며 투심 급반전 중!
+[거래량] 대박! 5/21 거래량 평소 1.5배 폭증, 콜옵션 비중 65% 역대급 쏠림!
+[애널] 와! 모건스탠리 목표가 $430 유지, 웨드부시는 $500 상향 충격 발표!
+[전망] 단기 변동성 크지만 사이버캡·옵티머스 생산 임박으로 중장기 모멘텀 견조!
+
+SCENE_4_TITLE: 미래비전
+SCENE_4:
+FSD·옵티머스가 미래 바꾼다!
+다음주 반등 모멘텀 기대!
+흔들리지 마세요, 기회입니다!
+구독+알림으로 1초도 늦지 마세요!
+
+IMAGE_PROMPT_0: A 9:16 vertical full screen cinematic shock scene showing a dramatic Tesla stock chart crashing then spiking with intense lightning bolts striking through dark stormy clouds, explosive sparks and shattered glass fragments flying across the frame, glowing cyan blue and deep black high contrast color palette, futuristic holographic numbers floating mid-air, intense dramatic lighting, ultra-high resolution, hyper-detailed, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: A 16:9 landscape horizontal strip cinematic view of a futuristic Tesla Model Y and Cybertruck parked inside a sleek gigafactory with glowing purple and violet neon lights, holographic data streams and financial charts floating in the air, deep purple to magenta gradient atmosphere, mysterious foggy ambiance, ultra-high resolution, hyper-detailed cinematic composition, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: A 16:9 landscape horizontal strip vibrant scene of Tesla Optimus humanoid robots assembling on a bright green glowing production line beside Cybercab and Semi trucks, upward rising green arrows and explosive growth charts in the background, lush emerald and lime green color palette radiating energy and optimism, sparkling particles of light bursting upward, ultra-high resolution, hyper-detailed, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_3: A 16:9 landscape horizontal strip dramatic cityscape view of Wall Street financial district at sunset with glowing orange and amber skyscrapers, holographic stock tickers and trading screens floating above streets, bustling crowd of traders and investors silhouettes, warm orange to deep red gradient sky, cinematic depth of field, ultra-high resolution, hyper-detailed atmospheric composition, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_4: A 9:16 vertical full screen inspiring futuristic vision featuring Tesla FSD autonomous vehicles driving on glowing highways, Optimus humanoid robots standing tall, Megapack energy storage units, and a massive gigafactory silhouette under a rising golden sun with sparkling stars, vibrant magenta pink and gold color palette radiating hope and ambition, lens flares and shimmering light particles, ultra-high resolution, hyper-detailed cinematic composition, no text, no letters, no watermark, no logo
