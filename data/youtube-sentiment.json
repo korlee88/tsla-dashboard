@@ -1,43 +1,43 @@
 {
-  "score": -1,
-  "velocity": 0.55,
-  "velocity_label": "소폭 감소 (×0.6)",
-  "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 355,262회 / 이전 4~7일 644,982회 | 총 1,000,244회 (42개 영상)",
-  "video_count": 42,
-  "total_views": 1000244,
-  "hot_views": 355262,
-  "baseline_views": 644982,
+  "score": -2,
+  "velocity": 0.39,
+  "velocity_label": "급감 (×0.4)",
+  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 299,801회 / 이전 4~7일 765,301회 | 총 1,065,102회 (43개 영상)",
+  "video_count": 43,
+  "total_views": 1065102,
+  "hot_views": 299801,
+  "baseline_views": 765301,
   "top_videos": [
     {
       "title": "Tesla Unleashes 8 BILLION-Mile &quot;AI Beast&quot;: Why Musk is Now Untouchable!",
       "channel": "Tech Revolution",
       "publishedAt": "2026-05-16T15:01:34Z",
-      "viewCount": 134211
-    },
-    {
-      "title": "How investors can trade AI after Nvidia&#39;s earnings report",
-      "channel": "CNBC Television",
-      "publishedAt": "2026-05-21T18:33:33Z",
-      "viewCount": 77548
-    },
-    {
-      "title": "Did you noticed this in transformers?",
-      "channel": "We Coocked",
-      "publishedAt": "2026-05-17T19:17:49Z",
-      "viewCount": 70580
+      "viewCount": 134391
     },
     {
       "title": "Elon Just Revealed Why Optimus Will Crush China’s Humanoids #elonmusk #optimus #tesla #future #ai",
       "channel": "Growth Engine TV",
       "publishedAt": "2026-05-17T08:52:15Z",
-      "viewCount": 66139
+      "viewCount": 88853
+    },
+    {
+      "title": "Boston Dynamics ATLAS Reveals 5 New SUPERHUMAN Upgrades (AI UNLOCK)",
+      "channel": "AI News",
+      "publishedAt": "2026-05-19T08:48:30Z",
+      "viewCount": 81614
+    },
+    {
+      "title": "How investors can trade AI after Nvidia&#39;s earnings report",
+      "channel": "CNBC Television",
+      "publishedAt": "2026-05-21T18:33:33Z",
+      "viewCount": 80049
     },
     {
       "title": "Optimus Prime transformation that might break #transformers #shorts",
       "channel": "MechaZeeShorts",
       "publishedAt": "2026-05-20T11:00:46Z",
-      "viewCount": 64486
+      "viewCount": 69466
     }
   ],
-  "collected_at": "2026-05-23T04:00:38Z"
+  "collected_at": "2026-05-23T13:39:22Z"
 }
