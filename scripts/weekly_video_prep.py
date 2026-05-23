@@ -62,7 +62,7 @@ CARD_AMBER  = (58, 46, 16)     # 앰버 카드
 CARD_PURPLE = (42, 20, 78)     # 보라 카드
 BADGE_BG    = (20, 26, 48)     # 배지·푸터 배경
 
-SCENE_ACCENTS = [CYAN, PURPLE, GREEN, AMBER, (236, 72, 153)]  # 인트로/브리핑/호재/시황/클로징
+SCENE_ACCENTS = [CYAN, PURPLE, GREEN, (236, 72, 153)]  # 인트로/브리핑/호재/클로징 (시장반응 제거)
 
 SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
 GOOGLE_TRENDS_KEYWORDS = TICKER_CONFIG.get("google_trends_keywords", [])
@@ -290,16 +290,16 @@ def load_next_events(days=14, max_n=3):
 
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
-SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 바이럴 나레이션 대본을 작성해줘.
-**자극적 이벤트형 톤**으로 시청자가 첫 3초에 멈춰서 보게 만들어야 한다.
+SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 나레이션 대본을 작성해줘.
+**차분한 분석체 톤**으로, 뉴스 앵커가 정제된 시장 분석을 전달하는 분위기로 작성한다.
 
 === 톤 가이드 (반드시 준수) ===
-• 강한 감탄사 필수: "충격!", "와!", "헐!", "대박!", "이게 실화!", "헉!"
-• 강조 표현: "역대급", "사상 최대", "예측 불가", "충격적", "초비상", "역대 1위"
-• 긴급성: "지금 당장", "놓치면 큰일", "오늘만", "단 1주", "마지막 기회"
-• 호기심 유발: "여러분 모르셨죠?", "이거 보면 깜짝", "진짜 충격이에요"
-• 절대 평이한 설명조 금지 — 모든 줄에 감정 텐션 + 호기심 트리거 필수
-• 씬 0: 3줄 / 씬 1·2: 6줄 (한 줄 30자 이내, 핵심만) / 씬 3: 4줄 / 씬 4: 4줄
+• 감탄사·자극적 추임새 금지 (충격!·와!·헐!·대박!·헉! 등 절대 사용 금지)
+• 분석체 어미 필수: "~다", "~한 것으로 보인다", "~로 분석된다", "~할 전망이다", "~한 것으로 나타났다"
+• 객관적 어조: "예상된다", "관측된다", "기대된다", "풀이된다", "주목된다"
+• 단정적 권유 금지 (매수·매도·관망 직접 언급 금지)
+• 수치·근거 중심: 모든 핵심 줄에 %·$·대수 등 구체 수치 포함
+• 씬 0: 3줄 / 씬 1: 4줄 / 씬 2: 6줄 / 씬 3: 4줄 (한 줄 30자 이내 권장)
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - {ticker} 주가: ${price}
@@ -314,58 +314,48 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 주요 악재:
 {r_txt}
 
-=== 씬 구성 (총 5씬) ===
+=== 씬 구성 (총 4씬) ===
 
-【씬 0 — 충격 인트로】 시청자 시선 강탈, 0.5초도 못 떼게 (3줄)
-- 줄1: "충격! 오늘 TSLA {today_change_pct_short}!" (15자 이내, 이모지 없이)
-- 줄2: 이번주 최대 영향 사건 자극적 한 문장 (25자 이내, 감탄사+호기심)
-- 줄3: "지금 바로 원인 공개!" 식의 훅 (15자 이내)
+【씬 0 — 인트로】 차분한 도입 (3줄)
+- 줄1: "오늘 {ticker} 주가, {today_change_pct_short}로 마감했다." (20자 내외)
+- 줄2: 이번주 최대 영향 사건 분석체 한 문장 (30자 이내)
+- 줄3: "이번 주 흐름, 차분히 정리해본다." 식 도입 한 줄 (20자 이내)
 
-【씬 1 — 주간 브리핑】 (6줄, 한 줄 30자 이내, 핵심만 추려 정보 밀도 높게)
-- 줄1: 감탄사 + 이번주 핵심 헤드라인 (25자 이내, 가장 충격적 사실)
-- 줄2: 주가 변동 원인 핵심 (movement_reason_str 활용, 30자 이내)
-- 줄3: 변동 원인 보강 설명 (30자 이내, 구체 수치 포함)
-- 줄4: 이번주 가장 큰 호재 핵심 (30자 이내, 구체 수치)
-- 줄5: 이번주 가장 큰 악재·리스크 (30자 이내, 구체 수치)
-- 줄6: 다음 체크포인트 한 줄 (30자 이내)
+【씬 1 — 주간 브리핑】 (4줄, 한 줄 30자 이내, 핵심 정보만 응축)
+- 줄1: 이번주 헤드라인 분석 한 줄 (변동률·주가 포함, 30자 이내)
+- 줄2: 주가 변동 원인 핵심 한 줄 (movement_reason_str 활용, 30자 이내, 수치 포함)
+- 줄3: 가장 큰 호재 핵심 한 줄 (30자 이내, 수치 포함)
+- 줄4: 가장 큰 악재·리스크 한 줄 (30자 이내, 수치 포함)
 
-【씬 2 — 호재 심층 분석 (BEST 1건)】 (6줄, 한 줄 30자 이내, 모든 줄에 구체 수치 필수)
-- 줄1: "카테고리: 호재 핵심 (25자 이내, 가장 강렬한 표현)"
-- 줄2: "   ↳ 배경: 사건 배경·맥락 (30자 이내, 구체 수치)"
+【씬 2 — 호재 심층 분석 (BEST 1건)】 (6줄, 한 줄 30자 이내, 모든 줄에 수치 필수)
+- 줄1: "카테고리: 호재 핵심 (25자 이내)"
+- 줄2: "   ↳ 배경: 사건 배경·맥락 (30자 이내, 수치)"
 - 줄3: "   ↳ 데이터: 수치·실적 (30자 이내, %·$·대수 의무)"
-- 줄4: "   ↳ 임팩트: 주가·시장 반응 (30자 이내, 수치 의무)"
-- 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치 의무)"
-- 줄6: "   ↳ 향후 전망 (30자 이내, 투자 권유 금지)"
+- 줄4: "   ↳ 임팩트: 주가·시장 반응 (30자 이내, 수치)"
+- 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치)"
+- 줄6: "   ↳ 향후 전망 (30자 이내, 단정적 권유 금지)"
 
-【씬 3 — 시장 반응】 (4줄, 한 줄 45~55자, 두 줄 분량의 풍부한 내용)
-- 줄1: "[분위기] 이번 주 투자심리·분위기 풍부한 한 문장 (감탄사 필수, 45자 이상)"
-- 줄2: "[거래량] 이번 주 특이 거래량·옵션·기관 동향 + 수치 포함 풍부한 한 문장 (45자 이상)"
-- 줄3: "[애널] 목표주가·의견 변화 + 기관명·수치 포함 풍부한 한 문장 (45자 이상)"
-- 줄4: "[전망] 긍정/중립/신중 관점 + 근거·다음주 키포인트 풍부한 한 문장 (투자 권유 금지, 45자 이상)"
-
-【씬 4 — 미래 비전 + 예고 + CTA】 (4줄, 시청자에게 믿음·용기를 주는 멘트)
-- 줄1: 테슬라 미래 비전 한 줄 (FSD·로봇·에너지 등, 25자 이내, 장기 성장 강조)
-- 줄2: 다음주 방향 예상 한 줄 (상승/하락 기대감, 25자 이내, 투자 권유 금지)
-- 줄3: 시청자에게 믿음·용기 주는 메시지 (25자 이내, "흔들리지 마세요", "장기 투자자에겐 기회" 같은 톤)
-- 줄4: "구독+알림으로 1초도 늦지 마세요!"
+【씬 3 — 미래 비전 + 다음주 예고】 (4줄, 분석체 마무리)
+- 줄1: 테슬라 중장기 비전 한 줄 (FSD·로봇·에너지, 25자 이내)
+- 줄2: 다음주 핵심 관전 포인트 한 줄 (이벤트·실적, 25자 이내)
+- 줄3: 이번 주 분석 마무리 한 줄 (객관적 정리, 25자 이내)
+- 줄4: "다음 주에도 이어진다." 식 정중한 마무리 (20자 이내)
 
 === 출력 형식 (반드시 준수) ===
-SCENE_0_TITLE: [6자 이내, "충격속보" 같은 강한 단어]
+SCENE_0_TITLE: [6자 이내, 차분한 단어 예: "주간동향" "이번주"]
 SCENE_0:
-[줄1 — 충격 헤드라인]
+[줄1 — 변동률 마감]
 [줄2 — 최대 영향 사건]
-[줄3 — 시청 유도 훅]
+[줄3 — 분석 도입]
 
 SCENE_1_TITLE: [6자 이내]
 SCENE_1:
-[줄1 — 핵심 헤드라인]
+[줄1 — 헤드라인 분석]
 [줄2 — 변동 원인 핵심]
-[줄3 — 변동 원인 보강·수치]
-[줄4 — 최대 호재 핵심]
-[줄5 — 최대 악재·리스크]
-[줄6 — 다음 체크포인트]
+[줄3 — 최대 호재 핵심]
+[줄4 — 최대 악재 핵심]
 
-SCENE_2_TITLE: [6자 이내, "역대급" "충격급" 같은 강한 단어]
+SCENE_2_TITLE: [6자 이내]
 SCENE_2:
 카테고리: 호재 핵심 한 줄
    ↳ 배경: 사건 배경·맥락 수치
@@ -374,30 +364,22 @@ SCENE_2:
    ↳ 비교: 경쟁사·과거 대비
    ↳ 향후 전망 한 문장
 
-SCENE_3_TITLE: [6자 이내]
+SCENE_3_TITLE: [6자 이내, "전망" "비전" 같은 단어]
 SCENE_3:
-[분위기] 내용
-[거래량] 내용
-[애널] 내용
-[전망] 내용
+[줄1 — 중장기 비전]
+[줄2 — 다음주 관전 포인트]
+[줄3 — 분석 마무리]
+[줄4 — 정중한 마무리]
 
-SCENE_4_TITLE: [6자 이내, "미래" "비전" 같은 단어]
-SCENE_4:
-[줄1 — 테슬라 미래 비전 (FSD·로봇·에너지)]
-[줄2 — 다음주 방향 예상]
-[줄3 — 시청자 믿음·용기 메시지]
-[줄4 — 구독 CTA]
-
-=== 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 5개) ===
+=== 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 4개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "ultra-high resolution".
 {company_ko}·{industry_ko} 관련 시각 요소 포함. 씬별 색감 지정.
-※ 씬 0·4는 9:16 vertical (full screen), 씬 1·2·3은 16:9 landscape (horizontal strip) — 프롬프트에 비율 명시.
+※ 씬 0·3은 9:16 vertical (full screen), 씬 1·2는 16:9 landscape (horizontal strip) — 프롬프트에 비율 명시.
 
-IMAGE_PROMPT_0: [씬0 — 9:16 vertical · 충격 인트로, 시안+검정 강한 대비, 번개·폭발·차트 급변동 등 임팩트 요소, 다크하고 강렬한 분위기]
+IMAGE_PROMPT_0: [씬0 — 9:16 vertical · 차분한 뉴스룸·시장 모니터, 시안 톤, 정제된 분석 분위기]
 IMAGE_PROMPT_1: [씬1 — 16:9 landscape · {company_ko} 관련 보라빛 미래적 분위기]
-IMAGE_PROMPT_2: [씬2 — 16:9 landscape · 호재 심층, 밝고 활기찬 초록빛, 성장·상승·폭발 시각화]
-IMAGE_PROMPT_3: [씬3 — 16:9 landscape · 시장 반응 시각화, 도시·금융 주황빛]
-IMAGE_PROMPT_4: [씬4 — 9:16 vertical · 테슬라 미래 비전: FSD 자율주행 자동차·옵티머스 로봇·메가팩 에너지·기가팩토리, 마젠타·핑크·골드빛 영감을 주는 분위기, 떠오르는 태양·별·반짝임으로 희망과 미래 강조]"""
+IMAGE_PROMPT_2: [씬2 — 16:9 landscape · 호재 심층, 밝고 활기찬 초록빛, 성장·상승 시각화]
+IMAGE_PROMPT_3: [씬3 — 9:16 vertical · 테슬라 미래 비전: FSD·옵티머스·메가팩·기가팩토리, 마젠타·핑크·골드빛 영감적 분위기, 떠오르는 태양·별·반짝임]"""
 
 
 def _build_prompt(summary):
@@ -511,7 +493,7 @@ def generate_script(summary):
 
 def parse_script(raw):
     scenes = []
-    SCENE_RANGE = range(0, 5)   # 씬 0(인트로) ~ 씬 4(클로징)
+    SCENE_RANGE = range(0, 4)   # 씬 0(인트로) ~ 씬 3(클로징) · 시장반응 씬 제거
     for i in SCENE_RANGE:
         tk = f"SCENE_{i}_TITLE:"
         bk = f"SCENE_{i}:"
@@ -533,7 +515,7 @@ def parse_script(raw):
 def parse_image_prompts(raw):
     """대본에서 씬별 Imagen 프롬프트 추출 → {0: "...", 1: "...", ...}"""
     prompts = {}
-    for i in range(0, 5):
+    for i in range(0, 4):
         key = f"IMAGE_PROMPT_{i}:"
         if key in raw:
             s = raw.index(key) + len(key)
@@ -1318,9 +1300,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         return _apply_frame_overlay(img)
 
     # ╔══════════════════════════════════════════════════════════════════╗
-    # ║ 씬 4 — 다음주 예고 + 구독 CTA (custom layout)                     ║
+    # ║ 씬 3 — 미래 비전 + 다음주 예고 (custom layout, 구 idx 4)         ║
     # ╚══════════════════════════════════════════════════════════════════╝
-    if idx == 4:
+    if idx == 3:
         # ① AI 배경 이미지를 풀스크린으로 깔기 (미래 비전 이미지)
         if bg_path and bg_path.exists():
             try:
@@ -1420,9 +1402,6 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         ch, _, _ = parse_news_line(news_lines[0]) if news_lines else ("", "", "")
         cat = top_bull.get("category", "") or ch
         head_sub = cat if cat else "심층 분석"
-    elif idx == 3:
-        head_main = '"이번 주 시장 반응"'
-        head_sub = "시장 분석"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
     draw_mbc_header(draw, BRAND_LABEL, head_main, head_sub, accent,
@@ -1434,89 +1413,60 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     # 푸터 텍스트는 자막+UI에 가려지므로 제거
 
-    # ── 씬 1: 주간 브리핑 — 본문 영역 (6줄 대본) ───────────────────────────
+    # ── 씬 1: 주간 브리핑 — 본문 영역 (4줄 대본 → 3카드 레이아웃) ──────────
     CONTENT_Y = START_Y + 40   # 사진 하단과 본문 사이 40px 여백
     if idx == 1:
         FC_W = COL_W - PAD
-        CARD_GAP = 14
+        CARD_GAP = 16
+        TOTAL_H  = SAFE_BOTTOM - CONTENT_Y   # 약 640px
+        # 3카드 균등 분할: 변동원인(큰 카드) + 호재 + 악재
+        REASON_H = 240
+        SIDE_H   = (TOTAL_H - REASON_H - CARD_GAP * 2)
 
-        # ─ 변동 원인 카드 — movement_reason(Google Search) 우선, 없으면 script lines
-        REASON_H = 200
+        # ─ 변동 원인 카드 — movement_reason(Google Search) 우선, 없으면 script line 2
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
                                radius=14, fill=CARD_BG, outline=accent, width=3)
         draw.text((PAD + 20, CONTENT_Y + 14), "이번주 변동 원인",
                   font=f_sm, fill=accent, anchor="lt")
-        # Google 검색 결과(movement_reason) 우선 — 더 상세하고 최신 내용
         movement_reason = strip_emoji(summary.get("movement_reason") or "")
-        if not movement_reason:
-            raw_parts = []
-            if len(news_lines) >= 2: raw_parts.append(strip_emoji(news_lines[1]))
-            if len(news_lines) >= 3: raw_parts.append(strip_emoji(news_lines[2]))
-            movement_reason = " · ".join([r for r in raw_parts if r])
+        if not movement_reason and len(news_lines) >= 2:
+            movement_reason = strip_emoji(news_lines[1])
         if movement_reason:
             rw = wrap_text(draw, movement_reason, f_nm, FC_W - 40)
-            ky = CONTENT_Y + 64
-            for wl in rw[:2]:
+            ky = CONTENT_Y + 72
+            for wl in rw[:3]:
                 bb = draw.textbbox((0, 0), wl, font=f_nm)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
                           font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
                 ky += 52
 
-        # ─ 호재 카드 (대본 줄 4, 전폭) — f_nm 통일
+        # ─ 호재 카드 (대본 줄 3, 전폭)
         BULL_Y = CONTENT_Y + REASON_H + CARD_GAP
-        BULL_H = 118
-        bull_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
-        draw.rounded_rectangle([PAD, BULL_Y, PAD + FC_W, BULL_Y + BULL_H],
+        bull_text = strip_emoji(news_lines[2]) if len(news_lines) >= 3 else ""
+        draw.rounded_rectangle([PAD, BULL_Y, PAD + FC_W, BULL_Y + SIDE_H],
                                radius=12, fill=CARD_GREEN, outline=GREEN, width=2)
         draw.text((PAD + 16, BULL_Y + 14), "▲ 호재", font=f_sm, fill=GREEN)
         if bull_text:
             bw = wrap_text(draw, bull_text, f_nm, FC_W - 40)
-            by = BULL_Y + 58
-            for wl in bw[:1]:
+            by = BULL_Y + 62
+            for wl in bw[:2]:
                 draw.text((PAD + 20, by), wl, font=f_nm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
+                by += 52
 
-        # ─ 악재 카드 (대본 줄 5, 전폭) — f_nm 통일
-        BEAR_Y = BULL_Y + BULL_H + CARD_GAP
-        BEAR_H = 118
-        bear_text = strip_emoji(news_lines[4]) if len(news_lines) >= 5 else ""
-        draw.rounded_rectangle([PAD, BEAR_Y, PAD + FC_W, BEAR_Y + BEAR_H],
+        # ─ 악재 카드 (대본 줄 4, 전폭)
+        BEAR_Y = BULL_Y + SIDE_H + CARD_GAP
+        bear_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
+        draw.rounded_rectangle([PAD, BEAR_Y, PAD + FC_W, BEAR_Y + SIDE_H],
                                radius=12, fill=CARD_RED, outline=RED, width=2)
         draw.text((PAD + 16, BEAR_Y + 14), "▼ 악재", font=f_sm, fill=RED)
         if bear_text:
             rw2 = wrap_text(draw, bear_text, f_nm, FC_W - 40)
-            ry = BEAR_Y + 58
-            for wl in rw2[:1]:
+            ry = BEAR_Y + 62
+            for wl in rw2[:2]:
                 draw.text((PAD + 20, ry), wl, font=f_nm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-
-        # ─ 체크포인트 카드 (대본 줄 6) — f_nm 통일, "▶" 기호 사용
-        CHECK_Y = BEAR_Y + BEAR_H + CARD_GAP
-        CHECK_H = SAFE_BOTTOM - CHECK_Y
-        check_text = strip_emoji(news_lines[5]) if len(news_lines) >= 6 else ""
-        if check_text:
-            draw.rounded_rectangle([PAD, CHECK_Y, PAD + FC_W, CHECK_Y + CHECK_H],
-                                   radius=14, fill=CARD_AMBER, outline=KEY, width=3)
-            draw.text((PAD + 20, CHECK_Y + 14), "▶ 체크포인트",
-                      font=f_sm, fill=KEY, anchor="lt")
-            cw = wrap_text(draw, check_text, f_nm, FC_W - 40)
-            cy = CHECK_Y + 64
-            for wl in cw[:2]:
-                bb = draw.textbbox((0, 0), wl, font=f_nm)
-                draw.text(((W - (bb[2] - bb[0])) // 2, cy), wl,
-                          font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
-                cy += 52
-        else:
-            # 폴백: 현재가 박스
-            price = summary.get("latest_price")
-            price_str = f"${float(price):,.2f}" if price else "N/A"
-            draw.rounded_rectangle([PAD, CHECK_Y, PAD + FC_W, CHECK_Y + CHECK_H],
-                                   radius=14, fill=CARD_BG, outline=accent, width=2)
-            draw.text((PAD + FC_W // 2, CHECK_Y + 30), "현재가",
-                      font=f_sm, fill=LGRAY, anchor="mm")
-            draw.text((PAD + FC_W // 2, CHECK_Y + CHECK_H // 2 + 20), price_str,
-                      font=f_lg, fill=KEY, anchor="mm",
-                      stroke_width=2, stroke_fill=STROKE)
+                ry += 52
 
     # ── 씬 2: 호재 심층 — 풀사이즈 히어로 카드 1장 ─────────────────────────
     elif idx == 2:
@@ -1556,54 +1506,6 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         )
         draw = ImageDraw.Draw(img)
 
-    # ── 씬 3: 시장 반응 — 최대 4개 항목 ─────────────────────────────────────
-    elif idx == 3:
-        n_items = min(len(news_lines), 4) if news_lines else 2
-        n_items = max(n_items, 1)
-        GAP    = 18
-        ITEM_H = (SAFE_BOTTOM - CONTENT_Y - GAP * (n_items - 1)) // n_items
-        item_positions = [CONTENT_Y + i * (ITEM_H + GAP) for i in range(n_items)]
-        default_labels = ["분위기", "거래량", "애널", "전망"]   # 모두 ≤4자로 통일
-
-        for i, line in enumerate(news_lines[:n_items]):
-            iy = item_positions[i]
-            LAB_W = 220   # 148→220, 모든 라벨 동일 크기 표시 가능
-            draw.rounded_rectangle([PAD, iy, PAD + COL_W - PAD, iy + ITEM_H],
-                                   radius=10, fill=CARD_BG, outline=accent, width=2)
-            draw.rounded_rectangle([PAD, iy, PAD + LAB_W, iy + ITEM_H],
-                                   radius=10, fill=accent)
-            draw.rectangle([PAD + LAB_W - 10, iy, PAD + LAB_W, iy + ITEM_H], fill=accent)
-
-            # 라벨: [분위기] 등 bracket content 추출, 없으면 기본값
-            label_txt = default_labels[i] if i < len(default_labels) else ""
-            if line.startswith("[") and "]" in line:
-                extracted = line[1:line.index("]")]
-                # "애널리스트" 등 5자 이상이면 기본 라벨(짧은 버전) 유지
-                if len(extracted) <= 4:
-                    label_txt = extracted
-            # 모든 라벨 동일하게 f_md (48px bold) — 통일된 사이즈
-            draw.text((PAD + LAB_W // 2, iy + ITEM_H // 2),
-                      label_txt, font=f_md, fill=BADGE_BG, anchor="mm")
-
-            content_text = line
-            if line.startswith("[") and "]" in line:
-                content_text = line[line.index("]") + 1:].strip()
-
-            content_font = f_sm if n_items >= 4 else f_nm
-            content_x    = PAD + LAB_W + 18
-            content_maxw = COL_W - PAD - LAB_W - 36
-            wrapped = wrap_text(draw, strip_emoji(content_text), content_font, content_maxw)
-            bb_h = draw.textbbox((0, 0), "가", font=content_font)
-            lh = (bb_h[3] - bb_h[1]) + 12
-            total_h = len(wrapped[:3]) * lh
-            start_y = iy + (ITEM_H - total_h) // 2
-            for wl in wrapped[:3]:
-                if start_y + lh > iy + ITEM_H - 8:
-                    break
-                draw.text((content_x, start_y), wl, font=content_font, fill=WHITE,
-                          stroke_width=1, stroke_fill=STROKE)
-                start_y += lh
-
     return _apply_frame_overlay(img)
 
 
@@ -1623,9 +1525,9 @@ def build_images(scenes, summary, out_dir, img_prompts=None):
         img_prompts = {}
 
     # 모든 씬에 AI 배경 이미지 생성 (인트로·클로징 포함)
-    BG_SCENES = {0, 1, 2, 3, 4}
-    # 씬별 aspect ratio — 0·4는 풀스크린(9:16), 1·2·3은 가로 strip(16:9)
-    BG_ASPECTS = {0: "9:16", 1: "16:9", 2: "16:9", 3: "16:9", 4: "9:16"}
+    BG_SCENES = {0, 1, 2, 3}
+    # 씬별 aspect ratio — 0·3은 풀스크린(9:16), 1·2는 가로 strip(16:9)
+    BG_ASPECTS = {0: "9:16", 1: "16:9", 2: "16:9", 3: "9:16"}
 
     print("   🖼 배경 이미지 준비 중...")
     bg_paths = {}
@@ -1702,7 +1604,7 @@ def main():
     img_prompts = {}  # Nano Banana 이미지 생성에 사용 (대본 생성 시 채워짐)
     if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
         print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
-        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 5)]
+        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 4)]
     else:
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
@@ -1738,10 +1640,9 @@ def main():
         if img_prompts:
             lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
-            scene_names = {0: "씬0 충격인트로", 1: "씬1 주간브리핑",
-                           2: "씬2 호재심층", 3: "씬3 시장반응",
-                           4: "씬4 다음주예고"}
-            for i in range(0, 5):
+            scene_names = {0: "씬0 인트로", 1: "씬1 주간브리핑",
+                           2: "씬2 호재심층", 3: "씬3 미래비전"}
+            for i in range(0, 4):
                 if i in img_prompts:
                     lines.append(f"## {scene_names[i]}")
                     lines.append(img_prompts[i])

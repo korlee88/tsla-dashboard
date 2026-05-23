@@ -16,9 +16,9 @@ TICKER_CONFIG = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encod
 TICKER        = TICKER_CONFIG["ticker"]
 
 REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
-VOICE         = "ko-KR-SunHiNeural"    # 한국 여성 TTS
-RATE          = "+20%"                  # +30%→+20% (나긋하고 편안한 톤)
-PITCH         = "+3Hz"                  # 약간 따뜻하게
+VOICE         = "ko-KR-JiMinNeural"    # 차분한 여성 — 뉴스앵커 톤
+RATE          = "+10%"                  # 분석체에 맞춘 안정적 속도
+PITCH         = "-2Hz"                  # 약간 낮춰 신뢰감 있는 톤
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
@@ -26,13 +26,12 @@ PHOTO_H       = 500                     # 사진 영역 높이 (prep.py의 PHOTO
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
-    (6,   182, 212),  # scene 0 cyan    - 충격 인트로
-    (167, 139, 250),  # scene 1 purple  - 브리핑
+    (6,   182, 212),  # scene 0 cyan    - 인트로
+    (167, 139, 250),  # scene 1 purple  - 주간 브리핑
     (34,  197,  94),  # scene 2 green   - 호재 심층
-    (245, 158,  11),  # scene 3 amber   - 시장 동향
-    (236,  72, 153),  # scene 4 magenta - 클로징 (다음주 예고)
+    (236,  72, 153),  # scene 3 magenta - 클로징 (미래 비전)
 ]
-SCENE_MOODS = ["shocked", "excited", "happy", "focused", "celebrating"]
+SCENE_MOODS = ["focused", "focused", "happy", "celebrating"]   # 차분 분석 톤에 맞춘 마스코트
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -90,46 +89,42 @@ def _clean_line(line: str) -> str:
 
 
 def build_scene_tts_text(idx: int, lines: list) -> str:
-    """씬별 대본 + 자연스러운 브리지 문장으로 나레이션 구성.
+    """씬별 대본 + 차분한 분석체 브리지 문장으로 나레이션 구성.
 
-    현재 화면에 다 담지 못한 줄까지 포함하고,
-    씬 흐름에 맞는 짧은 연결 멘트를 섞어 나긋한 스토리텔링 완성.
+    뉴스 앵커 톤 — 감탄 없이 객관적·정제된 분석 흐름으로 전달한다.
     """
     cleaned = [c for c in (_clean_line(l) for l in lines) if c]
     if not cleaned:
         return ""
 
     if idx == 0:
-        # 충격 인트로 — 3줄 + 시청 유도 한 마디
+        # 인트로 — 3줄을 차분히 그대로
         text = " ".join(cleaned[:3])
-        text += " 지금 바로 자세히 알아봐요!"
 
     elif idx == 1:
-        # 주간 브리핑 — 헤드라인·원인(1~3) + 브리지 + 호재·악재·체크(4~6)
-        main  = " ".join(cleaned[:3])
-        extra = " ".join(cleaned[3:])
-        text  = main
-        if extra:
-            text += " 그리고 한 가지 더 말씀드리면요, " + extra
+        # 주간 브리핑 — 4줄(헤드라인·원인·호재·악재) + 객관적 연결
+        head    = cleaned[0] if cleaned else ""
+        reason  = cleaned[1] if len(cleaned) > 1 else ""
+        bull    = cleaned[2] if len(cleaned) > 2 else ""
+        bear    = cleaned[3] if len(cleaned) > 3 else ""
+        parts = []
+        if head:   parts.append(head)
+        if reason: parts.append("변동 원인을 살펴보면, " + reason)
+        if bull:   parts.append("주요 호재로는 " + bull)
+        if bear:   parts.append("리스크 측면에서는 " + bear)
+        text = " ".join(parts)
 
     elif idx == 2:
-        # 호재 심층 — 헤드라인 강조 + 브리지 + 세부 내용 전체
+        # 호재 심층 — 헤드라인 + 분석체 브리지 + 세부 내용 전체
         headline = cleaned[0]
         details  = " ".join(cleaned[1:])
         text     = headline
         if details:
-            text += " 자세히 살펴보면요, " + details
-        text += " 정말 의미 있는 소식이죠?"
+            text += " 구체적으로 살펴보면 다음과 같이 분석된다. " + details
 
     elif idx == 3:
-        # 시장 반응 — 4줄 전체 + 마무리 한 줄
-        text  = " ".join(cleaned[:4])
-        text += " 이런 흐름, 꼭 기억해 두세요."
-
-    elif idx == 4:
-        # 클로징 — 전체 대본 + 따뜻한 인사
-        text  = " ".join(cleaned[:4])
-        text += " 다음 주에도 테슬라 이야기, 함께해요!"
+        # 클로징 — 미래 비전 + 정중한 마무리
+        text = " ".join(cleaned[:4])
 
     else:
         text = " ".join(cleaned)
@@ -314,14 +309,13 @@ def fx_ken_burns(img, t: float, dur: float, scene_idx: int):
     from PIL import Image
     progress = t / max(dur, 0.001)
 
-    # 5씬 줌/패닝 패턴 — 1.00~1.10 범위
+    # 4씬 줌/패닝 패턴 — 1.00~1.07 범위 (차분 톤에 맞춰 완만하게)
     CONFIGS = [
         # (zoom_start, zoom_end, pan_x_start, pan_x_end, pan_y_start, pan_y_end)
-        (1.00, 1.10,  0.00,  0.00,  0.00,  0.00),  # scene 0 인트로: 강한 줌인 (충격)
-        (1.00, 1.07,  0.00,  0.03,  0.00,  0.02),  # scene 1: 줌인 + 우하
-        (1.07, 1.00,  0.03,  0.00,  0.02,  0.00),  # scene 2: 줌아웃 + 좌상
-        (1.00, 1.07,  0.00, -0.03,  0.00,  0.02),  # scene 3: 줌인 + 좌하
-        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 4 클로징: 부드러운 줌인
+        (1.00, 1.06,  0.00,  0.00,  0.00,  0.00),  # scene 0 인트로: 부드러운 줌인
+        (1.00, 1.05,  0.00,  0.02,  0.00,  0.01),  # scene 1: 약한 줌인 + 우하
+        (1.05, 1.00,  0.02,  0.00,  0.01,  0.00),  # scene 2: 줌아웃 + 좌상
+        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 3 클로징: 정적 줌인
     ]
     zoom_s, zoom_e, px_s, px_e, py_s, py_e = CONFIGS[scene_idx % len(CONFIGS)]
 
@@ -350,29 +344,22 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     img = Image.fromarray(base_arr).copy()
 
     is_intro   = (scene_idx == 0)
-    is_closing = (scene_idx == 4)
+    is_closing = (scene_idx == 3)
 
     # Ken Burns 효과 제거 — 정적 이미지 유지
 
-    # 인트로 충격 효과: 흰색 플래시 + 강화된 속도선
-    if is_intro:
-        img = fx_white_flash(img, t, dur=0.15)
-        img = fx_speed_lines(img, t, accent, intense=True)
-    else:
-        img = fx_speed_lines(img, t, accent)
-
+    # 차분한 분석체 톤 — 자극적 효과 제거 (속도선·플래시 약화)
     img = fx_scanline(img, t)
     img = fx_pulse_glow(img, t, accent)
 
     mood     = SCENE_MOODS[scene_idx]
-    robot_dy = int(math.sin(t * 3.5) * 4)
+    robot_dy = int(math.sin(t * 3.5) * 3)
     img = draw_robot_pil(img, W - 130, 40 + robot_dy, mood, accent)
 
-    # 씬 전환은 concatenate_videoclips의 CrossFadeIn에서 처리 (검정 깜빡임 방지)
-    # 단, 영상 시작/종료에만 부드러운 페이드 적용
-    if scene_idx == 0:
+    # 영상 시작/종료에만 부드러운 페이드 (그 외 씬 전환은 CrossFadeIn 처리)
+    if is_intro:
         img = fx_fade_in(img, t, 0.30)
-    if scene_idx == 4:
+    if is_closing:
         img = fx_fade_out(img, t, dur, 0.40)
 
     # 90% 축소 — 핸드폰 화면 여백 확보
