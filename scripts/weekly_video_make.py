@@ -16,9 +16,9 @@ TICKER_CONFIG = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encod
 TICKER        = TICKER_CONFIG["ticker"]
 
 REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
-VOICE         = "ko-KR-JiMinNeural"    # 차분한 여성 — 뉴스앵커 톤
+VOICE         = "ko-KR-SunHiNeural"    # 차분한 여성 — 뉴스앵커 톤 (edge-tts 지원 검증 음성)
 RATE          = "+10%"                  # 분석체에 맞춘 안정적 속도
-PITCH         = "-2Hz"                  # 약간 낮춰 신뢰감 있는 톤
+PITCH         = "-4Hz"                  # 약간 낮춰 신뢰감 있는 톤
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
