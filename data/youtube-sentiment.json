@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.45,
-  "velocity_label": "소폭 감소 (×0.4)",
-  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 333,626회 / 이전 4~7일 748,723회 | 총 1,082,349회 (42개 영상)",
-  "video_count": 42,
-  "total_views": 1082349,
-  "hot_views": 333626,
-  "baseline_views": 748723,
+  "velocity": 0.49,
+  "velocity_label": "소폭 감소 (×0.5)",
+  "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 360,271회 / 이전 4~7일 732,579회 | 총 1,092,850회 (43개 영상)",
+  "video_count": 43,
+  "total_views": 1092850,
+  "hot_views": 360271,
+  "baseline_views": 732579,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 95416
-    },
-    {
-      "title": "Boston Dynamics ATLAS Reveals 5 New SUPERHUMAN Upgrades (AI UNLOCK)",
-      "channel": "AI News",
-      "publishedAt": "2026-05-19T08:48:30Z",
-      "viewCount": 95414
+      "viewCount": 112241
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 87744
+      "viewCount": 97096
+    },
+    {
+      "title": "Boston Dynamics ATLAS Reveals 5 New SUPERHUMAN Upgrades (AI UNLOCK)",
+      "channel": "AI News",
+      "publishedAt": "2026-05-19T08:48:30Z",
+      "viewCount": 96688
     },
     {
       "title": "Optimus Prime transformation that might break #transformers #shorts",
       "channel": "MechaZeeShorts",
       "publishedAt": "2026-05-20T11:00:46Z",
-      "viewCount": 79933
+      "viewCount": 81518
     },
     {
-      "title": "What Ron Baron Just Said About the Tesla SpaceX Merger",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-19T13:30:00Z",
-      "viewCount": 58478
+      "title": "The Saddest Optimus Prime Transformation Ever 😭",
+      "channel": "Speedy Toys",
+      "publishedAt": "2026-05-18T23:30:17Z",
+      "viewCount": 60260
     }
   ],
-  "collected_at": "2026-05-24T13:39:17Z"
+  "collected_at": "2026-05-24T18:55:51Z"
 }
