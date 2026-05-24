@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.5,
-  "velocity_label": "소폭 감소 (×0.5)",
-  "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 293,515회 / 이전 4~7일 587,360회 | 총 880,875회 (43개 영상)",
+  "velocity": 0.42,
+  "velocity_label": "소폭 감소 (×0.4)",
+  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 284,044회 / 이전 4~7일 678,705회 | 총 962,749회 (43개 영상)",
   "video_count": 43,
-  "total_views": 880875,
-  "hot_views": 293515,
-  "baseline_views": 587360,
+  "total_views": 962749,
+  "hot_views": 284044,
+  "baseline_views": 678705,
   "top_videos": [
     {
       "title": "Elon Just Revealed Why Optimus Will Crush China’s Humanoids #elonmusk #optimus #tesla #future #ai",
       "channel": "Growth Engine TV",
       "publishedAt": "2026-05-17T08:52:15Z",
-      "viewCount": 102628
+      "viewCount": 139724
     },
     {
-      "title": "How investors can trade AI after Nvidia&#39;s earnings report",
-      "channel": "CNBC Television",
-      "publishedAt": "2026-05-21T18:33:33Z",
-      "viewCount": 82301
+      "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
+      "channel": "엔지니어TV",
+      "publishedAt": "2026-05-23T10:21:41Z",
+      "viewCount": 79656
     },
     {
       "title": "Optimus Prime transformation that might break #transformers #shorts",
       "channel": "MechaZeeShorts",
       "publishedAt": "2026-05-20T11:00:46Z",
-      "viewCount": 72016
+      "viewCount": 76055
+    },
+    {
+      "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
+      "channel": "Izabela Anholett",
+      "publishedAt": "2026-05-23T13:00:00Z",
+      "viewCount": 74731
     },
     {
       "title": "Tesla Accidentally Revealed Its Real Robotaxi Plan",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-20T18:51:44Z",
-      "viewCount": 52632
-    },
-    {
-      "title": "If Tesla And SpaceX Merge, Know This First",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-18T13:30:53Z",
-      "viewCount": 46611
+      "viewCount": 53337
     }
   ],
-  "collected_at": "2026-05-23T18:49:52Z"
+  "collected_at": "2026-05-24T04:20:46Z"
 }
