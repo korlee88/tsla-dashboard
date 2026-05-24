@@ -1,43 +1,43 @@
 {
-  "score": -2,
-  "velocity": 0.35,
-  "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 281,199회 / 이전 4~7일 793,525회 | 총 1,074,724회 (42개 영상)",
+  "score": -1,
+  "velocity": 0.45,
+  "velocity_label": "소폭 감소 (×0.4)",
+  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 333,626회 / 이전 4~7일 748,723회 | 총 1,082,349회 (42개 영상)",
   "video_count": 42,
-  "total_views": 1074724,
-  "hot_views": 281199,
-  "baseline_views": 793525,
+  "total_views": 1082349,
+  "hot_views": 333626,
+  "baseline_views": 748723,
   "top_videos": [
     {
-      "title": "Elon Just Revealed Why Optimus Will Crush China’s Humanoids #elonmusk #optimus #tesla #future #ai",
-      "channel": "Growth Engine TV",
-      "publishedAt": "2026-05-17T08:52:15Z",
-      "viewCount": 151637
+      "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
+      "channel": "Izabela Anholett",
+      "publishedAt": "2026-05-23T13:00:00Z",
+      "viewCount": 95416
+    },
+    {
+      "title": "Boston Dynamics ATLAS Reveals 5 New SUPERHUMAN Upgrades (AI UNLOCK)",
+      "channel": "AI News",
+      "publishedAt": "2026-05-19T08:48:30Z",
+      "viewCount": 95414
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 82762
-    },
-    {
-      "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
-      "channel": "Izabela Anholett",
-      "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 82683
+      "viewCount": 87744
     },
     {
       "title": "Optimus Prime transformation that might break #transformers #shorts",
       "channel": "MechaZeeShorts",
       "publishedAt": "2026-05-20T11:00:46Z",
-      "viewCount": 78117
+      "viewCount": 79933
     },
     {
-      "title": "Tesla Accidentally Revealed Its Real Robotaxi Plan",
+      "title": "What Ron Baron Just Said About the Tesla SpaceX Merger",
       "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-20T18:51:44Z",
-      "viewCount": 53623
+      "publishedAt": "2026-05-19T13:30:00Z",
+      "viewCount": 58478
     }
   ],
-  "collected_at": "2026-05-24T08:30:18Z"
+  "collected_at": "2026-05-24T13:39:17Z"
 }
