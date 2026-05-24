@@ -1,0 +1,230 @@
+{
+  "generated_at": "2026-05-25",
+  "generated_by": "Claude Opus 4",
+  "title": "주간 종가 $426.01, 변동률 +0.0%다.",
+  "subtitle": "2026-05-17 ~ 2026-05-25 · 테슬라, 사이버캡 및 옵티머스 상용화 진전",
+  "summary": {
+    "week_start": "2026-05-17",
+    "week_end": "2026-05-25",
+    "session_count": 32,
+    "buy_indices": [
+      70,
+      57,
+      60,
+      57,
+      55,
+      51,
+      61,
+      50,
+      54,
+      52,
+      68,
+      64,
+      63,
+      58,
+      74,
+      58,
+      63,
+      51,
+      63,
+      64,
+      67,
+      72,
+      61,
+      58,
+      70,
+      63,
+      59,
+      70,
+      62,
+      64,
+      67,
+      62
+    ],
+    "avg_buy_index": 62,
+    "latest_buy_index": 70,
+    "price_start": 422.24,
+    "price_end": 426.01,
+    "latest_price": 426.01,
+    "today_price": 426.01,
+    "today_change_pct": 0.0,
+    "biggest_impact": {
+      "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+      "score": 4,
+      "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+      "source": "Seeking Alpha",
+      "date": "2026-05-07",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+        "score": 4,
+        "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-05-07",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 로보택시 및 옵티머스 제품 출시 계획",
+        "score": 4,
+        "reason": "테슬라가 2026년 사이버캡, 세미, 메가캡 생산 시작과 옵티머스 1세대 생산 라인 설치를 계획하며 주요 신제품 출시 및 로봇 상용화에 대한 구체적인 일정을 제시하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시 출시 계획 발표",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS 예상치를 10% 이상 상회했으며, 로보택시 및 옵티머스 출시 계획과 대규모 투자를 발표하여 강력한 긍정적 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings|Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려와 경쟁 심화가 주가 하락을 야기했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery|Competition|Market"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 하회 및 로보택시 서비스 문제",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 시장 예상치를 5% 이상 하회했으며, 로보택시 서비스의 문제점도 보고되어 부정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Barchart.com",
+        "date": "2026-05-21",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 5% 이상 크게 하회하여 주가에 부정적인 영향을 미쳤습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "5/25(월)",
+        "change_pct": 1.2,
+        "signal": "매수",
+        "basePrice": 426.01,
+        "predictedPrice": 431.12
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "5/26(화)",
+        "change_pct": 1.5,
+        "signal": "매수",
+        "basePrice": 426.01,
+        "predictedPrice": 432.4
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "5/27(수)",
+        "change_pct": 0.9,
+        "signal": "매수",
+        "basePrice": 426.01,
+        "predictedPrice": 429.84
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-25",
+        426.01
+      ],
+      [
+        "2026-05-24",
+        426.01
+      ],
+      [
+        "2026-05-23",
+        426.01
+      ],
+      [
+        "2026-05-22",
+        427.57
+      ],
+      [
+        "2026-05-21",
+        417.26
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "2026년 5월 17일부터 25일 기간 동안 테슬라(TSLA) 주가 하락의 주요 원인은 다음과 같습니다.\n\n스페이스X IPO 우려 / 자율주행 규제 강화 / 밸류에이션 부담"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "주간동향",
+      "lines": [
+        "오늘 TSLA, $426.01 보합 마감했다.",
+        "사이버캡·옵티머스 진전이 주목된다.",
+        "이번 주 흐름, 차분히 정리해본다."
+      ],
+      "body": "오늘 TSLA, $426.01 보합 마감했다.\n사이버캡·옵티머스 진전이 주목된다.\n이번 주 흐름, 차분히 정리해본다."
+    },
+    {
+      "index": 1,
+      "title": "주간브리핑",
+      "lines": [
+        "주간 종가 $426.01, 변동률 +0.0%다.",
+        "IPO·규제·밸류 부담 3중 압력 분석된다.",
+        "사이버캡 생산 개시, +4점 호재로 평가된다.",
+        "1분기 인도량 5% 하회, -4점 악재다."
+      ],
+      "body": "주간 종가 $426.01, 변동률 +0.0%다.\nIPO·규제·밸류 부담 3중 압력 분석된다.\n사이버캡 생산 개시, +4점 호재로 평가된다.\n1분기 인도량 5% 하회, -4점 악재다."
+    },
+    {
+      "index": 2,
+      "title": "호재분석",
+      "lines": [
+        "카테고리: 사이버캡·옵티머스 상용화 진전",
+        "↳ 배경: 2분기 옵티머스 공장 준비 착수다.",
+        "↳ 데이터: 호재 점수 +4점으로 집계됐다.",
+        "↳ 임팩트: 주가 $426선 방어에 기여한 것으로 보인다.",
+        "↳ 비교: 5월 21일 $417.26 대비 2.1% 회복했다.",
+        "↳ 신제품 라인업 확장이 기대된다."
+      ],
+      "body": "카테고리: 사이버캡·옵티머스 상용화 진전\n   ↳ 배경: 2분기 옵티머스 공장 준비 착수다.\n   ↳ 데이터: 호재 점수 +4점으로 집계됐다.\n   ↳ 임팩트: 주가 $426선 방어에 기여한 것으로 보인다.\n   ↳ 비교: 5월 21일 $417.26 대비 2.1% 회복했다.\n   ↳ 신제품 라인업 확장이 기대된다."
+    },
+    {
+      "index": 3,
+      "title": "전망",
+      "lines": [
+        "FSD·옵티머스·로보택시 축이 부각된다.",
+        "다음주 별도 이벤트 없어 모니터링 국면이다.",
+        "주간 보합, 재료 균형 상태로 분석된다.",
+        "다음 주 분석에서 다시 이어진다.",
+        "",
+        "IMAGE_PROMPT_0: A serene and minimalist modern newsroom studio shown in 9:16 vertical full screen aspect ratio, featuring multiple translucent market monitors displaying abstract candlestick charts and flowing data streams, ambient cyan and deep teal lighting casting soft reflections on polished surfaces, a refined analytical atmosphere with subtle holographic financial graphs floating in midair, calm professional mood, cinematic depth of field, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo.",
+        "",
+        "IMAGE_PROMPT_1: A futuristic Tesla electric vehicle silhouette gliding through a sleek tunnel of glowing violet and deep purple light trails in 16:9 landscape horizontal strip aspect ratio, abstract neon data lines flowing alongside the chassis, reflective metallic surfaces shimmering with indigo highlights, a mysterious yet sophisticated futuristic mood blending technology and elegance, cinematic wide angle composition, ultra-high resolution, photorealistic detail, no text, no letters, no watermark, no logo.",
+        "",
+        "IMAGE_PROMPT_2: A vibrant Tesla Cybercab and Optimus humanoid robot standing together inside a brightly illuminated gigafactory production line in 16:9 landscape horizontal strip aspect ratio, lush emerald green and bright lime accents glowing across the assembly machinery, upward rising light beams symbolizing growth and momentum, dynamic energetic atmosphere with floating particles of light, optimistic and uplifting mood, ultra-high resolution, cinematic photorealism, no text, no letters, no watermark, no logo.",
+        "",
+        "IMAGE_PROMPT_3: An inspirational futuristic vision scene in 9:16 vertical full screen aspect ratio showing Tesla Optimus robots, Megapack energy units, and a vast gigafactory skyline under a rising sun, illuminated by magenta, pink, and golden light hues with sparkling stars and shimmering particles in the sky, FSD vehicles cruising on a glowing highway below, hopeful and visionary atmosphere, cinematic composition, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo"
+      ],
+      "body": "FSD·옵티머스·로보택시 축이 부각된다.\n다음주 별도 이벤트 없어 모니터링 국면이다.\n주간 보합, 재료 균형 상태로 분석된다.\n다음 주 분석에서 다시 이어진다.\n\nIMAGE_PROMPT_0: A serene and minimalist modern newsroom studio shown in 9:16 vertical full screen aspect ratio, featuring multiple translucent market monitors displaying abstract candlestick charts and flowing data streams, ambient cyan and deep teal lighting casting soft reflections on polished surfaces, a refined analytical atmosphere with subtle holographic financial graphs floating in midair, calm professional mood, cinematic depth of field, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo.\n\nIMAGE_PROMPT_1: A futuristic Tesla electric vehicle silhouette gliding through a sleek tunnel of glowing violet and deep purple light trails in 16:9 landscape horizontal strip aspect ratio, abstract neon data lines flowing alongside the chassis, reflective metallic surfaces shimmering with indigo highlights, a mysterious yet sophisticated futuristic mood blending technology and elegance, cinematic wide angle composition, ultra-high resolution, photorealistic detail, no text, no letters, no watermark, no logo.\n\nIMAGE_PROMPT_2: A vibrant Tesla Cybercab and Optimus humanoid robot standing together inside a brightly illuminated gigafactory production line in 16:9 landscape horizontal strip aspect ratio, lush emerald green and bright lime accents glowing across the assembly machinery, upward rising light beams symbolizing growth and momentum, dynamic energetic atmosphere with floating particles of light, optimistic and uplifting mood, ultra-high resolution, cinematic photorealism, no text, no letters, no watermark, no logo.\n\nIMAGE_PROMPT_3: An inspirational futuristic vision scene in 9:16 vertical full screen aspect ratio showing Tesla Optimus robots, Megapack energy units, and a vast gigafactory skyline under a rising sun, illuminated by magenta, pink, and golden light hues with sparkling stars and shimmering particles in the sky, FSD vehicles cruising on a glowing highway below, hopeful and visionary atmosphere, cinematic composition, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo"
+    }
+  ],
+  "image_prompts": {
+    "0": "A serene and minimalist modern newsroom studio shown in 9:16 vertical full screen aspect ratio, featuring multiple translucent market monitors displaying abstract candlestick charts and flowing data streams, ambient cyan and deep teal lighting casting soft reflections on polished surfaces, a refined analytical atmosphere with subtle holographic financial graphs floating in midair, calm professional mood, cinematic depth of field, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo.",
+    "1": "A futuristic Tesla electric vehicle silhouette gliding through a sleek tunnel of glowing violet and deep purple light trails in 16:9 landscape horizontal strip aspect ratio, abstract neon data lines flowing alongside the chassis, reflective metallic surfaces shimmering with indigo highlights, a mysterious yet sophisticated futuristic mood blending technology and elegance, cinematic wide angle composition, ultra-high resolution, photorealistic detail, no text, no letters, no watermark, no logo.",
+    "2": "A vibrant Tesla Cybercab and Optimus humanoid robot standing together inside a brightly illuminated gigafactory production line in 16:9 landscape horizontal strip aspect ratio, lush emerald green and bright lime accents glowing across the assembly machinery, upward rising light beams symbolizing growth and momentum, dynamic energetic atmosphere with floating particles of light, optimistic and uplifting mood, ultra-high resolution, cinematic photorealism, no text, no letters, no watermark, no logo.",
+    "3": "An inspirational futuristic vision scene in 9:16 vertical full screen aspect ratio showing Tesla Optimus robots, Megapack energy units, and a vast gigafactory skyline under a rising sun, illuminated by magenta, pink, and golden light hues with sparkling stars and shimmering particles in the sky, FSD vehicles cruising on a glowing highway below, hopeful and visionary atmosphere, cinematic composition, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo."
+  }
+}

@@ -1,0 +1,14 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-25
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 인트로
+A serene and minimalist modern newsroom studio shown in 9:16 vertical full screen aspect ratio, featuring multiple translucent market monitors displaying abstract candlestick charts and flowing data streams, ambient cyan and deep teal lighting casting soft reflections on polished surfaces, a refined analytical atmosphere with subtle holographic financial graphs floating in midair, calm professional mood, cinematic depth of field, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo.
+
+## 씬1 주간브리핑
+A futuristic Tesla electric vehicle silhouette gliding through a sleek tunnel of glowing violet and deep purple light trails in 16:9 landscape horizontal strip aspect ratio, abstract neon data lines flowing alongside the chassis, reflective metallic surfaces shimmering with indigo highlights, a mysterious yet sophisticated futuristic mood blending technology and elegance, cinematic wide angle composition, ultra-high resolution, photorealistic detail, no text, no letters, no watermark, no logo.
+
+## 씬2 호재심층
+A vibrant Tesla Cybercab and Optimus humanoid robot standing together inside a brightly illuminated gigafactory production line in 16:9 landscape horizontal strip aspect ratio, lush emerald green and bright lime accents glowing across the assembly machinery, upward rising light beams symbolizing growth and momentum, dynamic energetic atmosphere with floating particles of light, optimistic and uplifting mood, ultra-high resolution, cinematic photorealism, no text, no letters, no watermark, no logo.
+
+## 씬3 미래비전
+An inspirational futuristic vision scene in 9:16 vertical full screen aspect ratio showing Tesla Optimus robots, Megapack energy units, and a vast gigafactory skyline under a rising sun, illuminated by magenta, pink, and golden light hues with sparkling stars and shimmering particles in the sky, FSD vehicles cruising on a glowing highway below, hopeful and visionary atmosphere, cinematic composition, ultra-high resolution, photorealistic rendering, no text, no letters, no watermark, no logo.
