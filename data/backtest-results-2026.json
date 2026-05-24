@@ -2004,13 +2004,125 @@
       "match": false,
       "strongSignal": true,
       "error": null
+    },
+    {
+      "weekStart": "2026-05-18",
+      "weekEnd": "2026-05-24",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 2026년 말까지 미국 전역에 로보택시 확대 전망",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, 중국 시장에 FSD(Full Self-Driving) 서비스 출시",
+          "source": "CNN Business",
+          "category": "Product"
+        },
+        {
+          "title": "스페이스X IPO, 테슬라 주가에 잠재적 영향 우려",
+          "source": "Barron's",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 프리몬트 공장을 휴머노이드 로봇 생산 라인으로 전환 계획",
+          "source": "GuruFocus",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, AI 및 로봇 공학에 대한 대규모 투자 계획 발표",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라와 스페이스X, 테라팹(Terafab) 칩 제조 시설 등 협력 강화",
+          "source": "Barron's",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 세미 트럭, 캘리포니아의 보조금에 크게 의존",
+          "source": "Forbes",
+          "category": "Regulatory"
+        },
+        {
+          "title": "일론 머스크, OpenAI 소송에서 패소",
+          "source": "Bloomberg",
+          "category": "Legal"
+        },
+        {
+          "title": "테슬라, 중국 EV 시장 10위권 밖으로 밀려나며 새로운 금융 계획 발표",
+          "source": "Benzinga",
+          "category": "Competition"
+        },
+        {
+          "title": "테슬라, 2025년 첫 연간 매출 감소 후 2026년 중요한 전환점 맞아",
+          "source": "TheStreet",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.6,
+        "buyIndex": 54,
+        "direction": "bullish",
+        "bullish": 5,
+        "bearish": 5,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R24",
+          "R16"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 56,
+          "r24Discount": -1,
+          "macdTrend": 2,
+          "wtiDown": -3
+        },
+        "macroCtx": {
+          "spyChg": 0.79,
+          "qqqChg": 0.84,
+          "vixClose": 16.700000762939453,
+          "wtiChg": -8.87,
+          "cnyChg": -0.1,
+          "prevTslaChg": 0.02,
+          "rsi": 52.7,
+          "macd": {
+            "macd": 0.8762948564621524,
+            "signal": -1.8949626944850513,
+            "hist": 2.7712575509472037,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 461.09,
+            "middle": 403.82,
+            "lower": 346.56,
+            "pos": 0.694
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 1.61,
+        "actual": "bullish",
+        "open": 419.27,
+        "close": 426.01
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-05-18 04:18 KST",
+  "generatedAt": "2026-05-25 04:25 KST",
   "stats": {
-    "totalWeeks": 19,
-    "analyzedWeeks": 19,
-    "accuracy": 37,
+    "totalWeeks": 20,
+    "analyzedWeeks": 20,
+    "accuracy": 40,
     "strongAccuracy": 29,
     "avgScore": 0.9
   }
