@@ -62,7 +62,7 @@ CARD_AMBER  = (58, 46, 16)     # 앰버 카드
 CARD_PURPLE = (42, 20, 78)     # 보라 카드
 BADGE_BG    = (20, 26, 48)     # 배지·푸터 배경
 
-SCENE_ACCENTS = [CYAN, PURPLE, GREEN, (236, 72, 153)]  # 인트로/브리핑/호재/클로징 (시장반응 제거)
+SCENE_ACCENTS = [PURPLE, GREEN, (236, 72, 153)]  # 브리핑/호재/미래비전 (인트로·시장반응 제거)
 
 SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
 GOOGLE_TRENDS_KEYWORDS = TICKER_CONFIG.get("google_trends_keywords", [])
@@ -153,6 +153,16 @@ def summarize(sessions):
         except (ValueError, TypeError):
             pass
 
+    # ── 주간 브리핑용: 1주 전 대비 변동률 ──
+    week_change_pct = None
+    try:
+        p_start = float(prices[-1]) if prices else None
+        p_end   = float(prices[0]) if prices else None
+        if p_start and p_end and p_start > 0:
+            week_change_pct = round((p_end - p_start) / p_start * 100, 2)
+    except (ValueError, TypeError):
+        pass
+
     # ── 인트로용: 이번주 가장 큰 영향 사건 ──
     biggest_impact = None
     bull_top = bullish[0] if bullish else None
@@ -182,6 +192,7 @@ def summarize(sessions):
         "latest_price":    latest.get("latestTslaPrice"),
         "today_price":     latest.get("latestTslaPrice"),
         "today_change_pct": today_change_pct,
+        "week_change_pct": week_change_pct,
         "biggest_impact":  biggest_impact,
         "top_bullish":     bullish[:3],
         "top_bearish":     bearish[:3],
@@ -298,36 +309,31 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 분석체 어미 필수: "~다", "~한 것으로 보인다", "~로 분석된다", "~할 전망이다", "~한 것으로 나타났다"
 • 객관적 어조: "예상된다", "관측된다", "기대된다", "풀이된다", "주목된다"
 • 단정적 권유 금지 (매수·매도·관망 직접 언급 금지)
+• **내부 점수(+N점·-N점) 절대 표기 금지** — 시청자용 지표가 아니다. "호재"/"리스크"로만 표현하고, 점수 대신 구체적 수치·배경·맥락으로 왜 호재/리스크인지 설명한다.
 • 수치·근거 중심: 모든 핵심 줄에 %·$·대수 등 구체 수치 포함
-• 씬 0: 3줄 / 씬 1: 4줄 / 씬 2: 6줄 / 씬 3: 4줄 (한 줄 30자 이내 권장)
+• 씬 0: 4줄 / 씬 1: 6줄 / 씬 2: 4줄 (한 줄 30자 이내 권장)
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
-- {ticker} 주가: ${price}
-- 오늘 변동률: {today_change_pct_str}
+- {ticker} 현재 주가: ${price}
+- 1주 전 대비 변동률: {week_change_pct_str}
 - 주가 변동 원인: {movement_reason_str}
-- 이번주 최대 영향: {biggest_impact_str}
 - 검색량 트렌드: {trends_str}
 - 다음주 예정 이벤트: {next_events_str}
 {daily_prices_txt}
-- 주요 호재:
+- 주요 호재 (점수 표기 금지, 내용만 활용):
 {b_txt}
-- 주요 악재:
+- 주요 리스크 (점수 표기 금지, 내용만 활용):
 {r_txt}
 
-=== 씬 구성 (총 4씬) ===
+=== 씬 구성 (총 3씬) ===
 
-【씬 0 — 인트로】 차분한 도입 (3줄)
-- 줄1: "오늘 {ticker} 주가, {today_change_pct_short}로 마감했다." (20자 내외)
-- 줄2: 이번주 최대 영향 사건 분석체 한 문장 (30자 이내)
-- 줄3: "이번 주 흐름, 차분히 정리해본다." 식 도입 한 줄 (20자 이내)
+【씬 0 — 주간 브리핑】 (4줄, 한 줄 30자 이내, 핵심 정보만 응축)
+- 줄1: 1주 전 대비 변동률·현재 주가로 이번주 흐름 요약 (30자 이내, 수치 필수)
+- 줄2: 주가 변동 원인 핵심 한 줄 (movement_reason 활용, 30자 이내, 수치 포함)
+- 줄3: 이번주 가장 큰 호재 핵심 한 줄 (30자 이내, 수치 포함, 점수 금지)
+- 줄4: 이번주 가장 큰 리스크 한 줄 (30자 이내, 수치 포함, 점수 금지)
 
-【씬 1 — 주간 브리핑】 (4줄, 한 줄 30자 이내, 핵심 정보만 응축)
-- 줄1: 이번주 헤드라인 분석 한 줄 (변동률·주가 포함, 30자 이내)
-- 줄2: 주가 변동 원인 핵심 한 줄 (movement_reason_str 활용, 30자 이내, 수치 포함)
-- 줄3: 가장 큰 호재 핵심 한 줄 (30자 이내, 수치 포함)
-- 줄4: 가장 큰 악재·리스크 한 줄 (30자 이내, 수치 포함)
-
-【씬 2 — 호재 심층 분석 (BEST 1건)】 (6줄, 한 줄 30자 이내, 모든 줄에 수치 필수)
+【씬 1 — 호재 심층 분석 (BEST 1건)】 (6줄, 한 줄 30자 이내, 모든 줄에 수치 필수)
 - 줄1: "카테고리: 호재 핵심 (25자 이내)"
 - 줄2: "   ↳ 배경: 사건 배경·맥락 (30자 이내, 수치)"
 - 줄3: "   ↳ 데이터: 수치·실적 (30자 이내, %·$·대수 의무)"
@@ -335,7 +341,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치)"
 - 줄6: "   ↳ 향후 전망 (30자 이내, 단정적 권유 금지)"
 
-【씬 3 — 미래 비전 + 다음주 예고】 (4줄, 분석체 마무리)
+【씬 2 — 미래 비전 + 다음주 예고】 (4줄, 분석체 마무리)
 - 줄1: 테슬라 중장기 비전 한 줄 (FSD·로봇·에너지, 25자 이내)
 - 줄2: 다음주 핵심 관전 포인트 한 줄 (이벤트·실적, 25자 이내)
 - 줄3: 이번 주 분석 마무리 한 줄 (객관적 정리, 25자 이내)
@@ -344,19 +350,13 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 === 출력 형식 (반드시 준수) ===
 SCENE_0_TITLE: [6자 이내, 차분한 단어 예: "주간동향" "이번주"]
 SCENE_0:
-[줄1 — 변동률 마감]
-[줄2 — 최대 영향 사건]
-[줄3 — 분석 도입]
+[줄1 — 변동률·주가 요약]
+[줄2 — 변동 원인 핵심]
+[줄3 — 최대 호재 핵심]
+[줄4 — 최대 리스크 핵심]
 
 SCENE_1_TITLE: [6자 이내]
 SCENE_1:
-[줄1 — 헤드라인 분석]
-[줄2 — 변동 원인 핵심]
-[줄3 — 최대 호재 핵심]
-[줄4 — 최대 악재 핵심]
-
-SCENE_2_TITLE: [6자 이내]
-SCENE_2:
 카테고리: 호재 핵심 한 줄
    ↳ 배경: 사건 배경·맥락 수치
    ↳ 데이터: 수치·실적 의무
@@ -364,30 +364,30 @@ SCENE_2:
    ↳ 비교: 경쟁사·과거 대비
    ↳ 향후 전망 한 문장
 
-SCENE_3_TITLE: [6자 이내, "전망" "비전" 같은 단어]
-SCENE_3:
+SCENE_2_TITLE: [6자 이내, "전망" "비전" 같은 단어]
+SCENE_2:
 [줄1 — 중장기 비전]
 [줄2 — 다음주 관전 포인트]
 [줄3 — 분석 마무리]
 [줄4 — 정중한 마무리]
 
-=== 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 4개) ===
+=== 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 3개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "ultra-high resolution".
 {company_ko}·{industry_ko} 관련 시각 요소 포함. 씬별 색감 지정.
-※ 씬 0·3은 9:16 vertical (full screen), 씬 1·2는 16:9 landscape (horizontal strip) — 프롬프트에 비율 명시.
+※ 씬 0·1은 16:9 landscape (horizontal strip), 씬 2는 9:16 vertical (full screen) — 프롬프트에 비율 명시.
 
-IMAGE_PROMPT_0: [씬0 — 9:16 vertical · 차분한 뉴스룸·시장 모니터, 시안 톤, 정제된 분석 분위기]
-IMAGE_PROMPT_1: [씬1 — 16:9 landscape · {company_ko} 관련 보라빛 미래적 분위기]
-IMAGE_PROMPT_2: [씬2 — 16:9 landscape · 호재 심층, 밝고 활기찬 초록빛, 성장·상승 시각화]
-IMAGE_PROMPT_3: [씬3 — 9:16 vertical · 테슬라 미래 비전: FSD·옵티머스·메가팩·기가팩토리, 마젠타·핑크·골드빛 영감적 분위기, 떠오르는 태양·별·반짝임]"""
+IMAGE_PROMPT_0: [씬0 — 16:9 landscape · {company_ko} 관련 보라빛 미래적·정제된 분석 분위기]
+IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 호재 심층, 밝고 활기찬 초록빛, 성장·상승 시각화]
+IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 테슬라 미래 비전: FSD·옵티머스·메가팩·기가팩토리, 마젠타·핑크·골드빛 영감적 분위기, 떠오르는 태양·별·반짝임]"""
 
 
 def _build_prompt(summary):
+    # 내부 점수([+N])는 시청자용이 아니므로 프롬프트 데이터에서도 노출하지 않는다 (AI 에코 방지).
     b_txt = "\n".join(
-        f"  [{n['score']:+d}] {n['title']} ({n.get('source','')}·{n.get('date','')}·{n.get('category','')}): {n['reason'][:70]}"
+        f"  - {n['title']} ({n.get('source','')}·{n.get('date','')}·{n.get('category','')}): {n['reason'][:70]}"
         for n in summary["top_bullish"]
     ) or "  없음"
-    r_txt = "\n".join(f"  [{n['score']:+d}] {n['title']}: {n['reason'][:70]}" for n in summary["top_bearish"]) or "  없음"
+    r_txt = "\n".join(f"  - {n['title']}: {n['reason'][:70]}" for n in summary["top_bearish"]) or "  없음"
 
     daily_prices = summary.get("daily_prices", [])
     if daily_prices:
@@ -396,22 +396,13 @@ def _build_prompt(summary):
     else:
         daily_prices_txt = ""
 
-    # 인트로용 변동률 문자열
-    tcp = summary.get("today_change_pct")
-    if tcp is not None:
-        sign = "+" if tcp >= 0 else ""
-        today_change_pct_str = f"{sign}{tcp}% (전일 대비)"
-        today_change_pct_short = f"{sign}{tcp}%"
+    # 주간 브리핑용 변동률 문자열 (1주 전 대비)
+    wcp = summary.get("week_change_pct")
+    if wcp is not None:
+        sign = "+" if wcp >= 0 else ""
+        week_change_pct_str = f"{sign}{wcp}% (1주 전 대비)"
     else:
-        today_change_pct_str = "변동 데이터 없음"
-        today_change_pct_short = "주목!"
-
-    # 인트로용 최대 영향 사건
-    bi = summary.get("biggest_impact")
-    if bi:
-        biggest_impact_str = f"[{bi['direction_ko']} {bi['score']:+d}점] {bi['title']}: {bi.get('reason', '')[:80]}"
-    else:
-        biggest_impact_str = "큰 사건 없음"
+        week_change_pct_str = "변동 데이터 없음"
 
     # Google Trends
     trends = summary.get("trends")
@@ -441,10 +432,8 @@ def _build_prompt(summary):
         price=summary["latest_price"],
         b_txt=b_txt, r_txt=r_txt,
         daily_prices_txt=daily_prices_txt,
-        today_change_pct_str=today_change_pct_str,
-        today_change_pct_short=today_change_pct_short,
+        week_change_pct_str=week_change_pct_str,
         movement_reason_str=movement_reason_str,
-        biggest_impact_str=biggest_impact_str,
         trends_str=trends_str,
         next_events_str=next_events_str,
     )
@@ -493,7 +482,7 @@ def generate_script(summary):
 
 def parse_script(raw):
     scenes = []
-    SCENE_RANGE = range(0, 4)   # 씬 0(인트로) ~ 씬 3(클로징) · 시장반응 씬 제거
+    SCENE_RANGE = range(0, 3)   # 씬 0(주간브리핑)~씬 2(미래비전) · 인트로·시장반응 씬 제거
     for i in SCENE_RANGE:
         tk = f"SCENE_{i}_TITLE:"
         bk = f"SCENE_{i}:"
@@ -505,7 +494,9 @@ def parse_script(raw):
             title = raw[s:e].strip() if e != -1 else raw[s:].strip()
         if bk in raw:
             s   = raw.index(bk) + len(bk)
-            nxt = raw.find(f"SCENE_{i+1}_TITLE:", s) if i < 4 else len(raw)
+            nxt = raw.find(f"SCENE_{i+1}_TITLE:", s)
+            if nxt == -1:
+                nxt = len(raw)
             body = raw[s:nxt].strip()
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})
@@ -515,7 +506,7 @@ def parse_script(raw):
 def parse_image_prompts(raw):
     """대본에서 씬별 Imagen 프롬프트 추출 → {0: "...", 1: "...", ...}"""
     prompts = {}
-    for i in range(0, 4):
+    for i in range(0, 3):
         key = f"IMAGE_PROMPT_{i}:"
         if key in raw:
             s = raw.index(key) + len(key)
@@ -545,6 +536,24 @@ def find_font():
     ]
     reg  = next((p for p in reg_candidates  if os.path.exists(p)), None)
     bold = next((p for p in bold_candidates if os.path.exists(p)), reg)
+    return reg, bold
+
+
+def find_soft_font():
+    """둥근·친근한 폰트(나눔스퀘어라운드) 탐색 — 호재 심층 씬 등 부드러운 톤용.
+
+    설치 안 됐으면 (None, None) 반환 → 호출부에서 기본 폰트로 폴백.
+    """
+    round_reg = [
+        "/usr/share/fonts/truetype/nanum/NanumSquareRoundR.ttf",
+        "/usr/share/fonts/truetype/nanum/NanumSquareR.ttf",
+    ]
+    round_bold = [
+        "/usr/share/fonts/truetype/nanum/NanumSquareRoundB.ttf",
+        "/usr/share/fonts/truetype/nanum/NanumSquareB.ttf",
+    ]
+    reg  = next((p for p in round_reg  if os.path.exists(p)), None)
+    bold = next((p for p in round_bold if os.path.exists(p)), reg)
     return reg, bold
 
 
@@ -1173,136 +1182,25 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     f_huge      = fnt(font_bold, 200)
     f_huge_sub  = fnt(font_bold, 68)   # 56→68
 
+    # ── 부드러운 라운드 폰트 (호재 심층 씬용 — 딱딱함 완화) ──
+    soft_reg, soft_bold = find_soft_font()
+    soft_reg  = soft_reg  or font_reg
+    soft_bold = soft_bold or font_bold
+    sf_ch        = fnt(soft_bold, 48)
+    sf_ct        = fnt(soft_reg,  50)
+    sf_ct_xl     = fnt(soft_reg,  62)
+    sf_ct_sm     = fnt(soft_reg,  42)
+    sf_src       = fnt(soft_reg,  30)
+    sf_brand     = fnt(soft_bold, 44)
+    sf_head_main = fnt(soft_bold, 80)
+    sf_head_sub  = fnt(soft_bold, 64)
+
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
     # ╔══════════════════════════════════════════════════════════════════╗
-    # ║ 씬 0 — 충격 인트로 (custom layout)                                ║
+    # ║ 씬 2 — 미래 비전 + 다음주 예고 (custom layout)                    ║
     # ╚══════════════════════════════════════════════════════════════════╝
-    if idx == 0:  # ── 씬 0: 충격 인트로 (idx 불변)
-        # ① AI 배경 이미지를 풀스크린으로 깔기 (있을 때만)
-        if bg_path and bg_path.exists():
-            try:
-                from PIL import Image as PILImage
-                bg = PILImage.open(bg_path).convert("RGB")
-                bw, bh = bg.size
-                # cover-fit (가운데 크롭)
-                ratio = max(W / bw, H / bh)
-                nw, nh = int(bw * ratio), int(bh * ratio)
-                bg = bg.resize((nw, nh), PILImage.LANCZOS)
-                ox, oy = (nw - W) // 2, (nh - H) // 2
-                img.paste(bg.crop((ox, oy, ox + W, oy + H)), (0, 0))
-                # 다크 오버레이 (시안 톤, 텍스트 가독성) — 0.55→0.38로 밝게
-                overlay = PILImage.new("RGB", (W, H), (8, 18, 45))
-                img = PILImage.blend(img, overlay, 0.38)
-                draw = ImageDraw.Draw(img)
-            except Exception:
-                pass
-        else:
-            # 폴백: 기존 검정→시안 그라데이션
-            for yy in range(H):
-                t = yy / H
-                r = int(10 + (20 - 10) * t)
-                g = int(20 + (80 - 20) * t)
-                b = int(48 + (120 - 48) * t)
-                draw.line([(0, yy), (W, yy)], fill=(r, g, b))
-
-        # 상단 충격 라벨
-        draw.text((W // 2, 90), "TODAY TSLA",
-                  font=f_brand, fill=accent, anchor="mt",
-                  stroke_width=2, stroke_fill=STROKE)
-
-        # 거대한 % 숫자
-        tcp = summary.get("today_change_pct")
-        if tcp is not None:
-            pct_str = f"{'+' if tcp >= 0 else ''}{tcp}%"
-            pct_color = GREEN if tcp >= 0 else RED
-        else:
-            pct_str = "TSLA"
-            pct_color = accent
-        draw.text((W // 2, 350), pct_str,
-                  font=f_huge, fill=pct_color, anchor="mm",
-                  stroke_width=6, stroke_fill=STROKE)
-
-        # 오늘 주가
-        price = summary.get("today_price") or summary.get("latest_price")
-        if price:
-            try:
-                draw.text((W // 2, 540), f"${float(price):,.2f}",
-                          font=f_huge_sub, fill=KEY, anchor="mm",
-                          stroke_width=2, stroke_fill=STROKE)
-            except (ValueError, TypeError):
-                pass
-
-        # 충격 멘트 카드 — 스크립트 헤드라인 + 이번주 최고 호재 뉴스 상세
-        IMPACT_Y = 680
-        IMPACT_H = 420
-        draw.rounded_rectangle([PAD, IMPACT_Y, W - PAD, IMPACT_Y + IMPACT_H],
-                               radius=20, fill=(30, 46, 82), outline=accent, width=3)
-
-        # 헤드라인 (대본 줄 1 — 짧고 강렬한 문장)
-        ky = IMPACT_Y + 36
-        if len(news_lines) >= 1:
-            hl_wrapped = wrap_text(draw, strip_emoji(news_lines[0]), f_lg, W - PAD * 2 - 50)
-            for wl in hl_wrapped[:2]:
-                bb = draw.textbbox((0, 0), wl, font=f_lg)
-                draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
-                          font=f_lg, fill=accent, anchor="lt",
-                          stroke_width=2, stroke_fill=STROKE)
-                ky += 56
-
-        # 구분선
-        draw.line([(PAD + 60, ky + 8), (W - PAD - 60, ky + 8)], fill=accent, width=2)
-
-        # 이번주 최고 호재 뉴스 (biggest_impact 또는 top_bullish[0])
-        bi = summary.get("biggest_impact") or (summary.get("top_bullish") or [{}])[0]
-        if bi:
-            bi_title  = strip_emoji(bi.get("title", ""))
-            bi_reason = strip_emoji(bi.get("reason", ""))
-            bi_dir    = bi.get("direction_ko", "호재")
-            # 방향 라벨
-            dir_col = GREEN if bi_dir == "호재" else RED
-            draw.text((PAD + 22, ky + 26), f"이번주 {bi_dir}",
-                      font=f_sm, fill=dir_col, anchor="lt")
-            # 뉴스 제목
-            title_wr = wrap_text(draw, bi_title, f_nm, W - PAD * 2 - 44)
-            ny = ky + 68
-            for wl in title_wr[:2]:
-                bb = draw.textbbox((0, 0), wl, font=f_nm)
-                draw.text(((W - (bb[2] - bb[0])) // 2, ny), wl,
-                          font=f_nm, fill=WHITE, anchor="lt",
-                          stroke_width=1, stroke_fill=STROKE)
-                ny += 52
-            # 이유/맥락 (있을 때)
-            if bi_reason:
-                reason_wr = wrap_text(draw, bi_reason, f_sm, W - PAD * 2 - 44)
-                ry = ny + 8
-                for wl in reason_wr[:2]:
-                    bb = draw.textbbox((0, 0), wl, font=f_sm)
-                    draw.text(((W - (bb[2] - bb[0])) // 2, ry), wl,
-                              font=f_sm, fill=LGRAY, anchor="lt",
-                              stroke_width=1, stroke_fill=STROKE)
-                    ry += 44
-
-        # 검색량 트렌드 칩 (있을 때만)
-        trends = summary.get("trends")
-        if trends and trends.get("ratio") and trends["ratio"] >= 1.3:
-            chip_y = IMPACT_Y + IMPACT_H + 40
-            chip_text = f"🔥 검색량 {trends['ratio']}배 폭발!"
-            cb = draw.textbbox((0, 0), chip_text, font=f_lg)
-            cw = cb[2] - cb[0]
-            chip_x = (W - cw) // 2 - 30
-            draw.rounded_rectangle([chip_x, chip_y, chip_x + cw + 60, chip_y + 80],
-                                   radius=40, fill=(80, 20, 20), outline=RED, width=3)
-            draw.text((W // 2, chip_y + 40), chip_text,
-                      font=f_lg, fill=KEY, anchor="mm",
-                      stroke_width=2, stroke_fill=STROKE)
-
-        return _apply_frame_overlay(img)
-
-    # ╔══════════════════════════════════════════════════════════════════╗
-    # ║ 씬 3 — 미래 비전 + 다음주 예고 (custom layout, 구 idx 4)         ║
-    # ╚══════════════════════════════════════════════════════════════════╝
-    if idx == 3:
+    if idx == 2:
         # ① AI 배경 이미지를 풀스크린으로 깔기 (미래 비전 이미지)
         if bg_path and bg_path.exists():
             try:
@@ -1370,7 +1268,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             SLIM_H = 80
             draw.rounded_rectangle([PAD, SLIM_Y, W - PAD, SLIM_Y + SLIM_H],
                                    radius=14, fill=(38, 22, 62), outline=AMBER, width=2)
-            draw.text((PAD + 20, SLIM_Y + SLIM_H // 2), f"📅 {date_s}",
+            draw.text((PAD + 20, SLIM_Y + SLIM_H // 2), f"▶ {date_s}",
                       font=f_sm, fill=AMBER, anchor="lm")
             draw.text((W - PAD - 20, SLIM_Y + SLIM_H // 2), title_s,
                       font=f_sm, fill=WHITE, anchor="rm",
@@ -1384,19 +1282,27 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         return _apply_frame_overlay(img)
 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
-    if idx == 1:
-        # 메인: 대본 첫 줄 그대로 (감탄사 포함). 큰따옴표 추가.
+    if idx == 0:
+        # 메인: 대본 첫 줄 그대로. 큰따옴표 추가.
         first = (news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
         if not (first.startswith('"') or first.startswith("'")):
             first = f'"{first}"'
         head_main = first
-        # 부제: 주가만 표시 (점수 제거)
+        # 부제: 현재 주가 + 1주 전 대비 변동률(▲/▼) — 점수 대신 직관적 수치
         price = summary.get("latest_price")
+        wc    = summary.get("week_change_pct")
         try:
-            head_sub = f"${float(price):,.0f}" if price else "주간 브리핑"
+            price_s = f"${float(price):,.0f}" if price else ""
         except Exception:
-            head_sub = "주간 브리핑"
-    elif idx == 2:
+            price_s = ""
+        if wc is not None:
+            arrow = "▲" if wc >= 0 else "▼"
+            sign  = "+" if wc >= 0 else ""
+            chg_s = f"주간 {arrow} {sign}{wc}%"
+            head_sub = f"{price_s} · {chg_s}" if price_s else chg_s
+        else:
+            head_sub = price_s or "주간 브리핑"
+    elif idx == 1:
         head_main = '"이번 주 빅 호재"'
         top_bull = (summary.get("top_bullish") or [{}])[0]
         ch, _, _ = parse_news_line(news_lines[0]) if news_lines else ("", "", "")
@@ -1404,8 +1310,13 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         head_sub = cat if cat else "심층 분석"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
+    # 호재 심층 씬(idx 1)은 부드러운 라운드 폰트로 딱딱함 완화
+    if idx == 1:
+        hdr_brand, hdr_main, hdr_sub = sf_brand, sf_head_main, sf_head_sub
+    else:
+        hdr_brand, hdr_main, hdr_sub = f_brand, f_head_main, f_head_sub
     draw_mbc_header(draw, BRAND_LABEL, head_main, head_sub, accent,
-                    f_brand, f_head_main, f_head_sub)
+                    hdr_brand, hdr_main, hdr_sub)
 
     # ── 사진 배너 (Y=500~1000, 500px) ────────────────────────────────────
     draw_photo_card(img, draw, accent, bg_path, x=0, y=PHOTO_Y, w=W, h=PHOTO_H)
@@ -1413,9 +1324,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     # 푸터 텍스트는 자막+UI에 가려지므로 제거
 
-    # ── 씬 1: 주간 브리핑 — 본문 영역 (4줄 대본 → 3카드 레이아웃) ──────────
+    # ── 씬 0: 주간 브리핑 — 본문 영역 (4줄 대본 → 3카드 레이아웃) ──────────
     CONTENT_Y = START_Y + 40   # 사진 하단과 본문 사이 40px 여백
-    if idx == 1:
+    if idx == 0:
         FC_W = COL_W - PAD
         CARD_GAP = 16
         TOTAL_H  = SAFE_BOTTOM - CONTENT_Y   # 약 640px
@@ -1468,8 +1379,8 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                           stroke_width=1, stroke_fill=STROKE)
                 ry += 52
 
-    # ── 씬 2: 호재 심층 — 풀사이즈 히어로 카드 1장 ─────────────────────────
-    elif idx == 2:
+    # ── 씬 1: 호재 심층 — 풀사이즈 히어로 카드 1장 ─────────────────────────
+    elif idx == 1:
         CARD_W = COL_W - PAD
         CARD_H = SAFE_BOTTOM - CONTENT_Y
         top_bull    = (summary.get("top_bullish") or [{}])[0]
@@ -1500,8 +1411,8 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             score=top_bull.get("score", 5),
             source=bull_source, date=bull_date,
             accent=accent,
-            fnt_bold=f_ch, fnt_content=f_ct, fnt_source=f_src,
-            fnt_content_xl=f_ct_xl, fnt_content_sm=f_ct_sm,
+            fnt_bold=sf_ch, fnt_content=sf_ct, fnt_source=sf_src,
+            fnt_content_xl=sf_ct_xl, fnt_content_sm=sf_ct_sm,
             category=bull_cat,
         )
         draw = ImageDraw.Draw(img)
@@ -1524,10 +1435,10 @@ def build_images(scenes, summary, out_dir, img_prompts=None):
     if img_prompts is None:
         img_prompts = {}
 
-    # 모든 씬에 AI 배경 이미지 생성 (인트로·클로징 포함)
-    BG_SCENES = {0, 1, 2, 3}
-    # 씬별 aspect ratio — 0·3은 풀스크린(9:16), 1·2는 가로 strip(16:9)
-    BG_ASPECTS = {0: "9:16", 1: "16:9", 2: "16:9", 3: "9:16"}
+    # 모든 씬에 AI 배경 이미지 생성
+    BG_SCENES = {0, 1, 2}
+    # 씬별 aspect ratio — 0·1은 가로 strip(16:9), 2(미래비전)는 풀스크린(9:16)
+    BG_ASPECTS = {0: "16:9", 1: "16:9", 2: "9:16"}
 
     print("   🖼 배경 이미지 준비 중...")
     bg_paths = {}
@@ -1604,17 +1515,17 @@ def main():
     img_prompts = {}  # Nano Banana 이미지 생성에 사용 (대본 생성 시 채워짐)
     if not ANTHROPIC_API_KEY and not GEMINI_API_KEY:
         print("⚠ API 키 없음 — 대본 생성 건너뜀", file=sys.stderr)
-        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 4)]
+        scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 3)]
     else:
         print("✍ 대본 생성 중...")
         raw    = generate_script(summary)
         scenes = parse_script(raw)
         img_prompts = parse_image_prompts(raw)
 
-        # 대시보드용 title/subtitle — 씬1 첫 줄에서 추출
+        # 대시보드용 title/subtitle — 씬0(주간브리핑) 첫 줄에서 추출
         script_title = ""
         script_subtitle = f"{summary['week_start']} ~ {summary['week_end']}"
-        scene1 = next((s for s in scenes if s["index"] == 1), None)
+        scene1 = next((s for s in scenes if s["index"] == 0), None)
         if scene1 and scene1.get("lines"):
             first_line = scene1["lines"][0] if scene1["lines"] else ""
             script_title = strip_emoji(first_line).strip('"').strip("'").strip()
@@ -1640,9 +1551,8 @@ def main():
         if img_prompts:
             lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
-            scene_names = {0: "씬0 인트로", 1: "씬1 주간브리핑",
-                           2: "씬2 호재심층", 3: "씬3 미래비전"}
-            for i in range(0, 4):
+            scene_names = {0: "씬0 주간브리핑", 1: "씬1 호재심층", 2: "씬2 미래비전"}
+            for i in range(0, 3):
                 if i in img_prompts:
                     lines.append(f"## {scene_names[i]}")
                     lines.append(img_prompts[i])

@@ -26,12 +26,11 @@ PHOTO_H       = 500                     # 사진 영역 높이 (prep.py의 PHOTO
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
-    (6,   182, 212),  # scene 0 cyan    - 인트로
-    (167, 139, 250),  # scene 1 purple  - 주간 브리핑
-    (34,  197,  94),  # scene 2 green   - 호재 심층
-    (236,  72, 153),  # scene 3 magenta - 클로징 (미래 비전)
+    (167, 139, 250),  # scene 0 purple  - 주간 브리핑
+    (34,  197,  94),  # scene 1 green   - 호재 심층
+    (236,  72, 153),  # scene 2 magenta - 미래 비전 (클로징)
 ]
-SCENE_MOODS = ["focused", "focused", "happy", "celebrating"]   # 차분 분석 톤에 맞춘 마스코트
+SCENE_MOODS = ["focused", "happy", "celebrating"]   # 차분 분석 톤에 맞춘 마스코트
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -72,7 +71,7 @@ def _clean_line(line: str) -> str:
         '【': '', '】': '', '①': '첫째,', '②': '둘째,', '③': '셋째,',
         '④': '넷째,', '⑤': '다섯째,', '$': '달러 ', '%': '퍼센트,',
         '+': '플러스 ', '─': '', '▲': '상승 ', '▼': '하락 ',
-        '▶': '', '🟢': '', '🔴': '', '📊': '', '📈': '',
+        '▶': '', '↳': '', '↑': '상승 ', '🟢': '', '🔴': '', '📊': '', '📈': '',
         '✓': '', '⚡': '', '"': '', '"': '', '"': '',
     }
     line = line.strip()
@@ -98,11 +97,7 @@ def build_scene_tts_text(idx: int, lines: list) -> str:
         return ""
 
     if idx == 0:
-        # 인트로 — 3줄을 차분히 그대로
-        text = " ".join(cleaned[:3])
-
-    elif idx == 1:
-        # 주간 브리핑 — 4줄(헤드라인·원인·호재·악재) + 객관적 연결
+        # 주간 브리핑 — 4줄(헤드라인·원인·호재·리스크) + 객관적 연결
         head    = cleaned[0] if cleaned else ""
         reason  = cleaned[1] if len(cleaned) > 1 else ""
         bull    = cleaned[2] if len(cleaned) > 2 else ""
@@ -114,7 +109,7 @@ def build_scene_tts_text(idx: int, lines: list) -> str:
         if bear:   parts.append("리스크 측면에서는 " + bear)
         text = " ".join(parts)
 
-    elif idx == 2:
+    elif idx == 1:
         # 호재 심층 — 헤드라인 + 분석체 브리지 + 세부 내용 전체
         headline = cleaned[0]
         details  = " ".join(cleaned[1:])
@@ -122,8 +117,8 @@ def build_scene_tts_text(idx: int, lines: list) -> str:
         if details:
             text += " 구체적으로 살펴보면 다음과 같이 분석된다. " + details
 
-    elif idx == 3:
-        # 클로징 — 미래 비전 + 정중한 마무리
+    elif idx == 2:
+        # 클로징(미래 비전) — 4줄 + 정중한 마무리
         text = " ".join(cleaned[:4])
 
     else:
@@ -309,13 +304,12 @@ def fx_ken_burns(img, t: float, dur: float, scene_idx: int):
     from PIL import Image
     progress = t / max(dur, 0.001)
 
-    # 4씬 줌/패닝 패턴 — 1.00~1.07 범위 (차분 톤에 맞춰 완만하게)
+    # 3씬 줌/패닝 패턴 — 1.00~1.06 범위 (차분 톤에 맞춰 완만하게)
     CONFIGS = [
         # (zoom_start, zoom_end, pan_x_start, pan_x_end, pan_y_start, pan_y_end)
-        (1.00, 1.06,  0.00,  0.00,  0.00,  0.00),  # scene 0 인트로: 부드러운 줌인
-        (1.00, 1.05,  0.00,  0.02,  0.00,  0.01),  # scene 1: 약한 줌인 + 우하
-        (1.05, 1.00,  0.02,  0.00,  0.01,  0.00),  # scene 2: 줌아웃 + 좌상
-        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 3 클로징: 정적 줌인
+        (1.00, 1.05,  0.00,  0.02,  0.00,  0.01),  # scene 0 브리핑: 약한 줌인 + 우하
+        (1.05, 1.00,  0.02,  0.00,  0.01,  0.00),  # scene 1 호재: 줌아웃 + 좌상
+        (1.00, 1.05,  0.00,  0.00,  0.00,  0.00),  # scene 2 미래비전: 정적 줌인
     ]
     zoom_s, zoom_e, px_s, px_e, py_s, py_e = CONFIGS[scene_idx % len(CONFIGS)]
 
@@ -343,8 +337,8 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     from PIL import Image
     img = Image.fromarray(base_arr).copy()
 
-    is_intro   = (scene_idx == 0)
-    is_closing = (scene_idx == 3)
+    is_intro   = (scene_idx == 0)   # 주간 브리핑(첫 씬) — 부드러운 페이드인
+    is_closing = (scene_idx == 2)   # 미래 비전(마지막 씬) — 페이드아웃
 
     # Ken Burns 효과 제거 — 정적 이미지 유지
 
@@ -380,7 +374,7 @@ async def process_scene(scene, report_dir):
 
     idx      = scene["index"]
     lines    = [l for l in scene.get("lines", []) if l.strip()]
-    accent   = ACCENT_COLORS[idx]   # 0-based: 0=인트로, 1~4=본편, 5=클로징
+    accent   = ACCENT_COLORS[idx]   # 0-based: 0=주간브리핑, 1=호재심층, 2=미래비전
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 

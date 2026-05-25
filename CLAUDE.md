@@ -169,7 +169,7 @@ STEP 5: gws_publish.py ← 신규 (YouTube · Sheets · Gmail)
 
 ### STEP 1: `weekly_video_prep.py`
 
-**역할**: 대본 + 씬 이미지 5장 생성
+**역할**: 대본 + 씬 이미지 3장 생성
 
 **대본 생성 우선순위**:
 1. Claude Opus 4 (`claude-opus-4-7`) — `ANTHROPIC_API_KEY` 필요
@@ -183,16 +183,17 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
 ```
 
-**씬 구성 (4씬 — YouTube Shorts 세로 포맷)**:
-| 씬 | 주제 | 배경 | 색상 | 로봇 무드 |
-|----|------|------|------|--------|
-| 1 | 주간 브리핑 | Wikipedia(Tesla Model 3 등) — 매주 동적 다운로드 | Purple | excited |
-| 2 | 호재 뉴스 | `bg_scene_02.jpg` (Cybertruck 고정) | Green | happy |
-| 3 | 리스크 뉴스 | `bg_scene_03.jpg` (Elon Musk 고정) | Red | worried |
-| 4 | 시장 동향 | `bg_scene_04.jpg` (Gigafactory 고정) | Amber | focused |
+**씬 구성 (3씬 — YouTube Shorts 세로 포맷, idx 0-based)**:
+| idx | 주제 | 배경 비율 | 색상 | 로봇 무드 |
+|-----|------|----------|------|--------|
+| 0 | 주간 브리핑 (1주 변동률·원인·호재·리스크) | 16:9 strip | Purple | focused |
+| 1 | 호재 심층 1건 (BEST, 라운드 폰트) | 16:9 strip | Green | happy |
+| 2 | 미래 비전 + 다음주 예고 (클로징) | 9:16 full | Magenta | celebrating |
 
-> 씬 1은 매주 Wikipedia에서 새 사진 다운로드, 세로형 이미지(로고)는 자동 skip + fallback 후보 시도.
-> 씬 2~4는 `data/scene-backgrounds/`의 고정 jpg를 사용해 품질·일관성 확보.
+> 인트로(충격속보)·리스크·시장반응 씬은 제거됨. 미국장 휴장일에도 무리 없도록 호재 위주 3씬으로 단순화.
+> 배경은 Nano Banana AI 이미지가 1순위, 실패 시 Wikipedia 폴백.
+> 점수(+N점)는 내부 지표이므로 대본·화면에 노출하지 않는다("호재"/"리스크"로만 표현).
+> 호재 심층 씬(idx 1)은 `NanumSquareRound`(둥근 폰트)로 부드러운 톤 — CI는 `fonts-nanum-extra` 필요.
 
 **레이아웃 (MBC 뉴스 쇼츠 스타일, 1080×1920)**:
 - 헤더 (y=0~500): 네이비 그라데이션 + 브랜드 라벨 + 두 줄 헤드라인
@@ -337,7 +338,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.2.0** | 2026-05-17 19:00 KST | 충격 인트로(씬0) + 다음주 예고(씬5) + 자극적 멘트 + Google Trends |
+| **v2.3.0** | 2026-05-25 KST | 인트로 씬 제거 → 3씬(브리핑·호재·미래) · 주간 변동률 표시 · 점수 라벨 제거 · 호재 씬 라운드 폰트(NanumSquareRound) |
+| v2.2.0 | 2026-05-17 19:00 KST | 충격 인트로(씬0) + 다음주 예고(씬5) + 자극적 멘트 + Google Trends |
 | v2.1.1 | 2026-05-17 18:00 KST | 영상 5가지 수정 · Ken Burns 사진 영역만 · TTS 톤 · 2줄 대본 · 90% 스케일 |
 | v2.1.0 | 2026-05-17 15:00 KST | 영상 매일 자동 생성 · 대시보드 실행/다운로드 버튼 · 설정 버전 카드 |
 | v2.0.0 | 2026-05-10 | 멀티 종목 Phase 1 · Ken Burns · 로봇 마스코트 · 백테스트 연도 분리 |
