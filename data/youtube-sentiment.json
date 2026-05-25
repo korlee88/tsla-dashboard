@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.46,
-  "velocity_label": "소폭 감소 (×0.5)",
-  "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 463,170회 / 이전 4~7일 1,005,139회 | 총 1,468,309회 (44개 영상)",
+  "velocity": 0.56,
+  "velocity_label": "소폭 감소 (×0.6)",
+  "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 531,688회 / 이전 4~7일 942,133회 | 총 1,473,821회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1468309,
-  "hot_views": 463170,
-  "baseline_views": 1005139,
+  "total_views": 1473821,
+  "hot_views": 531688,
+  "baseline_views": 942133,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 197427
+      "viewCount": 226753
     },
     {
       "title": "How did Optimus upgrade himself?",
       "channel": "⋈ovie Xplainer Yt",
       "publishedAt": "2026-05-20T07:09:02Z",
-      "viewCount": 161970
+      "viewCount": 165486
     },
     {
       "title": "경제사냥꾼 구독자 전용, 종목 분석 : 테슬라(TSLA)",
       "channel": "경제사냥꾼",
       "publishedAt": "2026-05-20T14:33:58Z",
-      "viewCount": 123000
+      "viewCount": 123595
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 111787
+      "viewCount": 116411
     },
     {
       "title": "Boston Dynamics ATLAS Reveals 5 New SUPERHUMAN Upgrades (AI UNLOCK)",
       "channel": "AI News",
       "publishedAt": "2026-05-19T08:48:30Z",
-      "viewCount": 101749
+      "viewCount": 102764
     }
   ],
-  "collected_at": "2026-05-25T14:56:37Z"
+  "collected_at": "2026-05-25T19:11:06Z"
 }
