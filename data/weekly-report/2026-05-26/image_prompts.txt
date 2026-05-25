@@ -1,0 +1,11 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-26
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 주간브리핑
+A cinematic ultra-high resolution 16:9 landscape horizontal strip composition showing a sleek Tesla Model S silhouette gliding across a futuristic highway at twilight, surrounded by soft violet and deep purple ambient lighting, holographic data streams floating subtly in the air, refined analytical atmosphere, minimalist financial dashboard reflections, calm and composed mood like a professional newsroom backdrop, depth of field with bokeh particles, no text, no letters, no watermark, no logo, ultra-high resolution, photorealistic rendering, 16:9 aspect ratio.
+
+## 씬1 호재심층
+A vibrant ultra-high resolution 16:9 landscape horizontal strip composition depicting a bright Tesla Cybercab and Optimus humanoid robot standing inside a luminous modern gigafactory, glowing emerald and fresh green ambient lighting symbolizing growth, upward arrows of light particles rising through the scene, energetic and optimistic atmosphere, advanced robotic assembly lines softly blurred in background, dynamic lens flares, sense of momentum and innovation, no text, no letters, no watermark, no logo, ultra-high resolution, cinematic photorealism, 16:9 aspect ratio.
+
+## 씬2 미래비전
+A breathtaking ultra-high resolution 9:16 vertical full screen composition envisioning Tesla's future ecosystem, featuring Optimus robots, FSD-driven Cybercab fleet, Megapack energy storage walls, and towering gigafactory silhouettes under a magenta, pink, and golden sunrise sky, sparkling stars and shimmering light particles drifting upward, inspirational and visionary atmosphere, soft glowing horizon with rising sun rays, dreamlike futuristic cityscape backdrop, no text, no letters, no watermark, no logo, ultra-high resolution, 9:16 vertical aspect ratio.

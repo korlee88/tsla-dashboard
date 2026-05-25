@@ -1,0 +1,218 @@
+{
+  "generated_at": "2026-05-26",
+  "generated_by": "Claude Opus 4",
+  "title": "TSLA 주간 +0.89%, $426.01 마감.",
+  "subtitle": "2026-05-18 ~ 2026-05-26 · 테슬라, 사이버캡 및 옵티머스 상용화 진전",
+  "summary": {
+    "week_start": "2026-05-18",
+    "week_end": "2026-05-26",
+    "session_count": 32,
+    "buy_indices": [
+      72,
+      68,
+      61,
+      67,
+      70,
+      57,
+      60,
+      57,
+      55,
+      51,
+      61,
+      50,
+      54,
+      52,
+      68,
+      64,
+      63,
+      58,
+      74,
+      58,
+      63,
+      51,
+      63,
+      64,
+      67,
+      72,
+      61,
+      58,
+      70,
+      63,
+      59,
+      70
+    ],
+    "avg_buy_index": 62,
+    "latest_buy_index": 72,
+    "price_start": 422.24,
+    "price_end": 426.01,
+    "latest_price": 426.01,
+    "today_price": 426.01,
+    "today_change_pct": 0.0,
+    "week_change_pct": 0.89,
+    "biggest_impact": {
+      "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+      "score": 4,
+      "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+      "source": "Seeking Alpha",
+      "date": "2026-05-07",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+        "score": 4,
+        "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-05-07",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 로보택시 및 옵티머스 제품 출시 계획",
+        "score": 4,
+        "reason": "테슬라가 2026년 사이버캡, 세미, 메가캡 생산 시작과 옵티머스 1세대 생산 라인 설치를 계획하며 주요 신제품 출시 및 로봇 상용화에 대한 구체적인 일정을 제시하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시 출시 계획 발표",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS 예상치를 10% 이상 상회했으며, 로보택시 및 옵티머스 출시 계획과 대규모 투자를 발표하여 강력한 긍정적 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings|Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려와 경쟁 심화가 주가 하락을 야기했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery|Competition|Market"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 하회 및 로보택시 서비스 문제",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 시장 예상치를 5% 이상 하회했으며, 로보택시 서비스의 문제점도 보고되어 부정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Barchart.com",
+        "date": "2026-05-21",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 5% 이상 크게 하회하여 주가에 부정적인 영향을 미쳤습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "5/26(화)",
+        "change_pct": 1.5,
+        "signal": "매수",
+        "basePrice": 426.01,
+        "predictedPrice": 432.4
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "5/27(수)",
+        "change_pct": 1.2,
+        "signal": "매수",
+        "basePrice": 426.01,
+        "predictedPrice": 431.12
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "5/28(목)",
+        "change_pct": 0.7,
+        "signal": "관망",
+        "basePrice": 426.01,
+        "predictedPrice": 428.99
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-26",
+        426.01
+      ],
+      [
+        "2026-05-25",
+        426.01
+      ],
+      [
+        "2026-05-24",
+        426.01
+      ],
+      [
+        "2026-05-23",
+        426.01
+      ],
+      [
+        "2026-05-22",
+        427.57
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "테슬라(TSLA) 주가는 2026년 5월 18일부터 26일 기간 동안 스페이스X 기업공개(IPO) 관련 우려, 모델Y 가격 인상, 그리고 경쟁 심화 등의 요인으로 하락 압력을 받았습니다.\n\n하락 주요 원인:\n스페이스X IPO / 모델Y 가격 인상 / 경쟁 심화 우려"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "주간동향",
+      "lines": [
+        "TSLA 주간 +0.89%, $426.01 마감.",
+        "스페이스X IPO·모델Y 인상 부담.",
+        "사이버캡·옵티머스 2분기 양산 임박.",
+        "1분기 인도량 예상치 5% 하회."
+      ],
+      "body": "TSLA 주간 +0.89%, $426.01 마감.\n스페이스X IPO·모델Y 인상 부담.\n사이버캡·옵티머스 2분기 양산 임박.\n1분기 인도량 예상치 5% 하회."
+    },
+    {
+      "index": 1,
+      "title": "호재분석",
+      "lines": [
+        "카테고리: 사이버캡·옵티머스 양산 진입",
+        "↳ 배경: 2026년 2분기 옵티머스 공장 가동 예정.",
+        "↳ 데이터: 1분기 EPS 시장 예상 10% 이상 상회.",
+        "↳ 임팩트: 주간 +0.89%, $426선 방어된 것으로 보인다.",
+        "↳ 비교: 경쟁사 대비 로봇 상용화 1년 이상 앞선다.",
+        "↳ 향후 세미·메가캡 라인업 확장이 주목된다."
+      ],
+      "body": "카테고리: 사이버캡·옵티머스 양산 진입\n   ↳ 배경: 2026년 2분기 옵티머스 공장 가동 예정.\n   ↳ 데이터: 1분기 EPS 시장 예상 10% 이상 상회.\n   ↳ 임팩트: 주간 +0.89%, $426선 방어된 것으로 보인다.\n   ↳ 비교: 경쟁사 대비 로봇 상용화 1년 이상 앞선다.\n   ↳ 향후 세미·메가캡 라인업 확장이 주목된다."
+    },
+    {
+      "index": 2,
+      "title": "비전",
+      "lines": [
+        "FSD·옵티머스·에너지 3축 성장 구도다.",
+        "다음주 인도량 지표 점검이 관건이다.",
+        "$426선 횡보, 방향성 탐색 국면이다.",
+        "다음 주에도 분석은 이어진다.",
+        "",
+        "IMAGE_PROMPT_0: A cinematic ultra-high resolution 16:9 landscape horizontal strip composition showing a sleek Tesla Model S silhouette gliding across a futuristic highway at twilight, surrounded by soft violet and deep purple ambient lighting, holographic data streams floating subtly in the air, refined analytical atmosphere, minimalist financial dashboard reflections, calm and composed mood like a professional newsroom backdrop, depth of field with bokeh particles, no text, no letters, no watermark, no logo, ultra-high resolution, photorealistic rendering, 16:9 aspect ratio.",
+        "",
+        "IMAGE_PROMPT_1: A vibrant ultra-high resolution 16:9 landscape horizontal strip composition depicting a bright Tesla Cybercab and Optimus humanoid robot standing inside a luminous modern gigafactory, glowing emerald and fresh green ambient lighting symbolizing growth, upward arrows of light particles rising through the scene, energetic and optimistic atmosphere, advanced robotic assembly lines softly blurred in background, dynamic lens flares, sense of momentum and innovation, no text, no letters, no watermark, no logo, ultra-high resolution, cinematic photorealism, 16:9 aspect ratio.",
+        "",
+        "IMAGE_PROMPT_2: A breathtaking ultra-high resolution 9:16 vertical full screen composition envisioning Tesla's future ecosystem, featuring Optimus robots, FSD-driven Cybercab fleet, Megapack energy storage walls, and towering gigafactory silhouettes under a magenta, pink, and golden sunrise sky, sparkling stars and shimmering light particles drifting upward, inspirational and visionary atmosphere, soft glowing horizon with rising sun rays, dreamlike futuristic cityscape backdrop, no text, no letters, no watermark, no logo, ultra-high resolution, 9:16 vertical aspect ratio."
+      ],
+      "body": "FSD·옵티머스·에너지 3축 성장 구도다.\n다음주 인도량 지표 점검이 관건이다.\n$426선 횡보, 방향성 탐색 국면이다.\n다음 주에도 분석은 이어진다.\n\nIMAGE_PROMPT_0: A cinematic ultra-high resolution 16:9 landscape horizontal strip composition showing a sleek Tesla Model S silhouette gliding across a futuristic highway at twilight, surrounded by soft violet and deep purple ambient lighting, holographic data streams floating subtly in the air, refined analytical atmosphere, minimalist financial dashboard reflections, calm and composed mood like a professional newsroom backdrop, depth of field with bokeh particles, no text, no letters, no watermark, no logo, ultra-high resolution, photorealistic rendering, 16:9 aspect ratio.\n\nIMAGE_PROMPT_1: A vibrant ultra-high resolution 16:9 landscape horizontal strip composition depicting a bright Tesla Cybercab and Optimus humanoid robot standing inside a luminous modern gigafactory, glowing emerald and fresh green ambient lighting symbolizing growth, upward arrows of light particles rising through the scene, energetic and optimistic atmosphere, advanced robotic assembly lines softly blurred in background, dynamic lens flares, sense of momentum and innovation, no text, no letters, no watermark, no logo, ultra-high resolution, cinematic photorealism, 16:9 aspect ratio.\n\nIMAGE_PROMPT_2: A breathtaking ultra-high resolution 9:16 vertical full screen composition envisioning Tesla's future ecosystem, featuring Optimus robots, FSD-driven Cybercab fleet, Megapack energy storage walls, and towering gigafactory silhouettes under a magenta, pink, and golden sunrise sky, sparkling stars and shimmering light particles drifting upward, inspirational and visionary atmosphere, soft glowing horizon with rising sun rays, dreamlike futuristic cityscape backdrop, no text, no letters, no watermark, no logo, ultra-high resolution, 9:16 vertical aspect ratio."
+    }
+  ],
+  "image_prompts": {
+    "0": "A cinematic ultra-high resolution 16:9 landscape horizontal strip composition showing a sleek Tesla Model S silhouette gliding across a futuristic highway at twilight, surrounded by soft violet and deep purple ambient lighting, holographic data streams floating subtly in the air, refined analytical atmosphere, minimalist financial dashboard reflections, calm and composed mood like a professional newsroom backdrop, depth of field with bokeh particles, no text, no letters, no watermark, no logo, ultra-high resolution, photorealistic rendering, 16:9 aspect ratio.",
+    "1": "A vibrant ultra-high resolution 16:9 landscape horizontal strip composition depicting a bright Tesla Cybercab and Optimus humanoid robot standing inside a luminous modern gigafactory, glowing emerald and fresh green ambient lighting symbolizing growth, upward arrows of light particles rising through the scene, energetic and optimistic atmosphere, advanced robotic assembly lines softly blurred in background, dynamic lens flares, sense of momentum and innovation, no text, no letters, no watermark, no logo, ultra-high resolution, cinematic photorealism, 16:9 aspect ratio.",
+    "2": "A breathtaking ultra-high resolution 9:16 vertical full screen composition envisioning Tesla's future ecosystem, featuring Optimus robots, FSD-driven Cybercab fleet, Megapack energy storage walls, and towering gigafactory silhouettes under a magenta, pink, and golden sunrise sky, sparkling stars and shimmering light particles drifting upward, inspirational and visionary atmosphere, soft glowing horizon with rising sun rays, dreamlike futuristic cityscape backdrop, no text, no letters, no watermark, no logo, ultra-high resolution, 9:16 vertical aspect ratio."
+  }
+}

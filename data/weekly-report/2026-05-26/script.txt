@@ -1,0 +1,28 @@
+SCENE_0_TITLE: 주간동향
+SCENE_0:
+TSLA 주간 +0.89%, $426.01 마감.
+스페이스X IPO·모델Y 인상 부담.
+사이버캡·옵티머스 2분기 양산 임박.
+1분기 인도량 예상치 5% 하회.
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+카테고리: 사이버캡·옵티머스 양산 진입
+   ↳ 배경: 2026년 2분기 옵티머스 공장 가동 예정.
+   ↳ 데이터: 1분기 EPS 시장 예상 10% 이상 상회.
+   ↳ 임팩트: 주간 +0.89%, $426선 방어된 것으로 보인다.
+   ↳ 비교: 경쟁사 대비 로봇 상용화 1년 이상 앞선다.
+   ↳ 향후 세미·메가캡 라인업 확장이 주목된다.
+
+SCENE_2_TITLE: 비전
+SCENE_2:
+FSD·옵티머스·에너지 3축 성장 구도다.
+다음주 인도량 지표 점검이 관건이다.
+$426선 횡보, 방향성 탐색 국면이다.
+다음 주에도 분석은 이어진다.
+
+IMAGE_PROMPT_0: A cinematic ultra-high resolution 16:9 landscape horizontal strip composition showing a sleek Tesla Model S silhouette gliding across a futuristic highway at twilight, surrounded by soft violet and deep purple ambient lighting, holographic data streams floating subtly in the air, refined analytical atmosphere, minimalist financial dashboard reflections, calm and composed mood like a professional newsroom backdrop, depth of field with bokeh particles, no text, no letters, no watermark, no logo, ultra-high resolution, photorealistic rendering, 16:9 aspect ratio.
+
+IMAGE_PROMPT_1: A vibrant ultra-high resolution 16:9 landscape horizontal strip composition depicting a bright Tesla Cybercab and Optimus humanoid robot standing inside a luminous modern gigafactory, glowing emerald and fresh green ambient lighting symbolizing growth, upward arrows of light particles rising through the scene, energetic and optimistic atmosphere, advanced robotic assembly lines softly blurred in background, dynamic lens flares, sense of momentum and innovation, no text, no letters, no watermark, no logo, ultra-high resolution, cinematic photorealism, 16:9 aspect ratio.
+
+IMAGE_PROMPT_2: A breathtaking ultra-high resolution 9:16 vertical full screen composition envisioning Tesla's future ecosystem, featuring Optimus robots, FSD-driven Cybercab fleet, Megapack energy storage walls, and towering gigafactory silhouettes under a magenta, pink, and golden sunrise sky, sparkling stars and shimmering light particles drifting upward, inspirational and visionary atmosphere, soft glowing horizon with rising sun rays, dreamlike futuristic cityscape backdrop, no text, no letters, no watermark, no logo, ultra-high resolution, 9:16 vertical aspect ratio.
