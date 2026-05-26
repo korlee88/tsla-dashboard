@@ -6,7 +6,7 @@
 
 const fs   = require('fs');
 const path = require('path');
-const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./lib/scoring');
+const { loadMacroData, buildMacroContext, calculateEnhancedScore, fetchOptionsIV, fetchShortInterest } = require('./lib/scoring');
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -432,7 +432,20 @@ async function main() {
     const cnyStr = macroCtx.cnyChg >= 0 ? '+' : '';
     const macdStr = macroCtx.macd?.crossover ? `MACD ${macroCtx.macd.crossover}` : `MACD ${macroCtx.macd?.trend || '-'}`;
     const bbStr   = macroCtx.bb ? `BB:${Math.round(macroCtx.bb.pos*100)}%` : '';
-    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}${latestTslaPrice ? ` TSLA:$${latestTslaPrice}` : ''}`);
+    const bydStr  = macroCtx.bydRelStrength !== null && macroCtx.bydRelStrength !== undefined
+      ? ` BYD-RS:${macroCtx.bydRelStrength >= 0 ? '+' : ''}${macroCtx.bydRelStrength}%` : '';
+    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}${bydStr}${latestTslaPrice ? ` TSLA:$${latestTslaPrice}` : ''}`);
+
+    // ── 라이브 전용 스냅샷: 옵션 IV + 공매도 비율 (과거 데이터 없어 백테스트 미적용) ──
+    const [atmIV, shortPercent] = await Promise.all([
+      fetchOptionsIV('TSLA'),
+      fetchShortInterest('TSLA'),
+    ]);
+    if (atmIV !== null)        macroCtx.atmIV = atmIV;
+    if (shortPercent !== null) macroCtx.shortPercent = shortPercent;
+    const ivStr = atmIV !== null ? ` IV:${Math.round(atmIV*100)}%` : '';
+    const siStr = shortPercent !== null ? ` Short:${Math.round(shortPercent*1000)/10}%` : '';
+    if (ivStr || siStr) console.log(`   ✅ 라이브 스냅샷${ivStr}${siStr}`);
   } catch (e) {
     console.warn('   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용:', e.message);
   }

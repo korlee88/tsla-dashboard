@@ -17,6 +17,9 @@
  *   [11] CNY/USD 환율 — NEW
  *   [12] 분기 인도량 발표주 신호 증폭 (×1.25) — NEW
  *   [13] 뉴스 카테고리 가중치 (Financial > Tech > Market) — NEW
+ *   [15] BYD 상대강도 (중국 EV 경쟁) — 백테스트 적용 (Yahoo 주봉)
+ *   [16] 옵션 ATM IV 감쇠 — 라이브 전용 (과거 IV 없음 → 백테스트 skip)
+ *   [17] 공매도 비율 숏스퀴즈 증폭 — 라이브 전용 (백테스트 skip)
  */
 
 // ─── Yahoo Finance 주봉 로더 ────────────────────────────────────────────────
@@ -57,7 +60,60 @@ async function loadMacroData() {
     fetchYahooWeekly('CL=F'),   // WTI 원유 (EV 수요 연관)
     fetchYahooWeekly('CNY=X'),  // CNY/USD 환율 (중국 매출 영향)
   ]);
-  return { spy, qqq, vix, tsla, wti, cny };
+  // BYD(중국 EV 최대 경쟁사)는 선택적 — 실패해도 기존 파이프라인 유지
+  let byd = [];
+  try {
+    byd = await fetchYahooWeekly('BYDDY');   // BYD ADR (US OTC)
+  } catch {
+    try { byd = await fetchYahooWeekly('BYDDF'); } catch {}  // 폴백: 보통주
+  }
+  return { spy, qqq, vix, tsla, wti, cny, byd };
+}
+
+// ─── 라이브 전용 스냅샷 (과거 데이터 없음 → 백테스트 미적용) ──────────────────
+
+/**
+ * 현재 ATM 옵션 내재변동성(IV) 조회. Yahoo는 현재 스냅샷만 제공(과거 IV 없음).
+ * → 라이브 분석에서만 사용, 백테스트에서는 호출하지 않음.
+ * @returns {number|null} ATM IV (예: 0.62 = 62%) 또는 null
+ */
+async function fetchOptionsIV(symbol = 'TSLA') {
+  try {
+    const r = await fetch(
+      `https://query1.finance.yahoo.com/v7/finance/options/${symbol}`,
+      { headers: { 'user-agent': 'Mozilla/5.0' } });
+    if (!r.ok) return null;
+    const j = await r.json();
+    const res = j?.optionChain?.result?.[0];
+    const spot = res?.quote?.regularMarketPrice;
+    const calls = res?.options?.[0]?.calls || [];
+    if (!spot || !calls.length) return null;
+    // 현재가에 가장 가까운 행사가(ATM)의 IV 추출
+    let atm = null, minDiff = Infinity;
+    for (const c of calls) {
+      const diff = Math.abs((c.strike || 0) - spot);
+      if (diff < minDiff && c.impliedVolatility > 0) { minDiff = diff; atm = c.impliedVolatility; }
+    }
+    return atm ? Math.round(atm * 1000) / 1000 : null;
+  } catch { return null; }
+}
+
+/**
+ * 현재 공매도 비율(short % of float) 조회. Yahoo는 현재 스냅샷만 제공.
+ * → 라이브 분석에서만 사용, 백테스트 미적용.
+ * @returns {number|null} short % of float (예: 0.032 = 3.2%) 또는 null
+ */
+async function fetchShortInterest(symbol = 'TSLA') {
+  try {
+    const r = await fetch(
+      `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?modules=defaultKeyStatistics`,
+      { headers: { 'user-agent': 'Mozilla/5.0' } });
+    if (!r.ok) return null;
+    const j = await r.json();
+    const stats = j?.quoteSummary?.result?.[0]?.defaultKeyStatistics;
+    const sp = stats?.shortPercentOfFloat?.raw;
+    return (typeof sp === 'number') ? Math.round(sp * 10000) / 10000 : null;
+  } catch { return null; }
 }
 
 // ─── 기술적 지표 계산 ────────────────────────────────────────────────────────
@@ -176,13 +232,14 @@ function pctChange(bar) {
  * 주어진 주에 대한 전체 매크로 컨텍스트 계산
  */
 function buildMacroContext(macroData, weekStart) {
-  const { spy, qqq, vix, tsla, wti = [], cny = [] } = macroData;
+  const { spy, qqq, vix, tsla, wti = [], cny = [], byd = [] } = macroData;
 
   const spyBar = findClosestBar(spy,  weekStart);
   const qqqBar = findClosestBar(qqq,  weekStart);
   const vixBar = findClosestBar(vix,  weekStart);
   const wtiBar = findClosestBar(wti,  weekStart);
   const cnyBar = findClosestBar(cny,  weekStart);
+  const bydBar = findClosestBar(byd,  weekStart);
 
   // TSLA 인덱스
   const tslaTs = new Date(weekStart + 'T00:00:00Z').getTime();
@@ -192,6 +249,13 @@ function buildMacroContext(macroData, weekStart) {
     if (d < minD) { minD = d; tIdx = i; }
   }
   if (minD > 8 * 86400000) tIdx = -1;
+
+  // BYD 상대강도: TSLA 주간 등락 − BYD 주간 등락 (양수 = TSLA 경쟁우위)
+  const tslaChg = tIdx >= 0 ? pctChange(tsla[tIdx]) : null;
+  const bydChg  = bydBar ? pctChange(bydBar) : null;
+  const bydRelStrength = (tslaChg !== null && bydChg !== null)
+    ? Math.round((tslaChg - bydChg) * 100) / 100
+    : null;
 
   // MACD / 볼린저밴드 (충분한 데이터 있을 때만)
   let macd = null, bb = null;
@@ -210,6 +274,8 @@ function buildMacroContext(macroData, weekStart) {
     vixClose:    vixBar  ? vixBar.close        : null,
     wtiChg:      wtiBar  ? pctChange(wtiBar)  : 0,
     cnyChg:      cnyBar  ? pctChange(cnyBar)  : 0,
+    bydChg,                  // BYD 주간 등락 (%)
+    bydRelStrength,          // TSLA−BYD 상대강도 (양수=TSLA 우위)
     prevTslaChg: tIdx > 0 ? pctChange(tsla[tIdx - 1]) : 0,
     rsi:         tIdx > 14 ? calcRSI(tsla, tIdx - 1) : null,
     macd,   // { macd, signal, hist, crossover, trend }
@@ -413,6 +479,31 @@ function calculateEnhancedScore(input) {
       else if (macroCtx.cnyChg < -0.8){ bi = Math.min(100, bi + 2); layers.cnyStrong = +2; }
     }
 
+    // ── [15] BYD 상대강도 (중국 EV 경쟁) — 백테스트 적용 ─────────────────────
+    // TSLA가 BYD 대비 크게 약세 = 경쟁 열위 신호, 크게 강세 = 경쟁 우위
+    if (macroCtx.bydRelStrength !== null && macroCtx.bydRelStrength !== undefined) {
+      if      (macroCtx.bydRelStrength <= -5) { bi = Math.max(0,   bi - 3); layers.bydUnderperform = -3; }
+      else if (macroCtx.bydRelStrength >=  5) { bi = Math.min(100, bi + 2); layers.bydOutperform   = +2; }
+    }
+
+    // ── [16] 옵션 IV (라이브 전용 — 백테스트엔 atmIV 없음 → 자동 skip) ───────
+    // 극단적 고변동성 = 불확실성 프리미엄 → 신호 강도 감쇠 (VIX와 유사, TSLA 고유)
+    if (macroCtx.atmIV !== null && macroCtx.atmIV !== undefined) {
+      if (macroCtx.atmIV > 0.80) {
+        const before = bi;
+        bi = Math.round(50 + (bi - 50) * 0.85);   // 신호 강도 15% 감쇠
+        layers.highIV = bi - before;
+      }
+    }
+
+    // ── [17] 공매도 비율 (라이브 전용 — 백테스트엔 shortPercent 없음 → skip) ─
+    // 공매도 과다 + 강세 신호 = 숏스퀴즈 가능성 → 강세 증폭
+    if (macroCtx.shortPercent !== null && macroCtx.shortPercent !== undefined) {
+      if (macroCtx.shortPercent > 0.04 && (bi - 50) > 5) {
+        bi = Math.min(100, bi + 3); layers.shortSqueeze = +3;
+      }
+    }
+
     // ── [12] 분기 인도량 / 실적 발표주 신호 증폭 (v4.0: Earnings ×1.5) ───────
     if (macroCtx.isDeliveryWeek || macroCtx.isEarningsWeek) {
       const before  = bi;
@@ -447,6 +538,8 @@ function calculateEnhancedScore(input) {
 module.exports = {
   fetchYahooWeekly,
   loadMacroData,
+  fetchOptionsIV,
+  fetchShortInterest,
   buildMacroContext,
   calculateEnhancedScore,
   getSignalState,
