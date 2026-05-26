@@ -341,11 +341,11 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치)"
 - 줄6: "   ↳ 향후 전망 (30자 이내, 단정적 권유 금지)"
 
-【씬 2 — 미래 비전 + 다음주 예고】 (4줄, 분석체 마무리)
-- 줄1: 테슬라 중장기 비전 한 줄 (FSD·로봇·에너지, 25자 이내)
-- 줄2: 다음주 핵심 관전 포인트 한 줄 (이벤트·실적, 25자 이내)
-- 줄3: 이번 주 분석 마무리 한 줄 (객관적 정리, 25자 이내)
-- 줄4: "다음 주에도 이어진다." 식 정중한 마무리 (20자 이내)
+【씬 2 — 미래 비전 + 다음주 예고】 (4줄, 분석체 마무리, 모든 줄 수치·근거 포함)
+- 줄1: 테슬라 중장기 비전 1건 — FSD 규제승인·옵티머스 생산대수·에너지 저장 용량 중 가장 주목할 수치 (25자 이내, 수치 필수)
+- 줄2: 스페이스X 시너지(Starlink 자율주행) 또는 경쟁사 동향 1건 — BYD 주간 판매/리비안·루시드 생산 차질 등 (25자 이내, 수치 포함)
+- 줄3: 다음주 핵심 관전 포인트 — 실적 발표·규제 결정·신제품 이벤트 (25자 이내)
+- 줄4: 분석 마무리 한 문장 — 정중하고 객관적 어조 (20자 이내)
 
 === 출력 형식 (반드시 준수) ===
 SCENE_0_TITLE: [6자 이내, 차분한 단어 예: "주간동향" "이번주"]
@@ -376,8 +376,8 @@ SCENE_2:
 {company_ko}·{industry_ko} 관련 시각 요소 포함. 씬별 색감 지정.
 ※ 씬 0·1은 16:9 landscape (horizontal strip), 씬 2는 9:16 vertical (full screen) — 프롬프트에 비율 명시.
 
-IMAGE_PROMPT_0: [씬0 — 16:9 landscape · {company_ko} 관련 보라빛 미래적·정제된 분석 분위기]
-IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 호재 심층, 밝고 활기찬 초록빛, 성장·상승 시각화]
+IMAGE_PROMPT_0: [씬0 — 16:9 landscape · 서울 한강 야경 배경 테슬라 자율주행 전기차, 남산타워·63빌딩·롯데타워 도심 스카이라인, K-tech 첨단 도시 보라빛 미래적 분석 분위기, Korean futuristic city Seoul skyline Tesla purple violet tech analytics, glowing city lights bokeh, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 한강 반포 다리 초록빛 성장 상승 이미지, 서울 테슬라 전기차 충전·고속 주행, K-tech 친환경 인프라 밝고 활기찬 분위기, Korean city Seoul Tesla green growth bullish energy vibrant, sunlit modern bridge electric vehicle charging, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
 IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 한국 미래 도시: 한강 야경·서울 스카이라인·광화문 광장 배경의 자율주행 테슬라 차량·옵티머스 로봇, 첨단 K-tech 도시 풍경, 마젠타·골드빛 영감적 미래 무드, 황금빛 태양·별빛·반짝임, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
 
 
@@ -752,54 +752,58 @@ def draw_photo_card(img, draw, accent, bg_path: Path | None, x, y, w, h):
 
 def draw_mbc_header(draw, brand: str, title_main: str, title_sub: str, accent,
                      fnt_brand, fnt_main, fnt_sub):
-    """MBC NEWS 쇼츠 스타일 상단 헤더 — 네이비 박스 + 두줄 헤드라인.
-
-    brand: 좌측 상단 채널 라벨 (예: 'TSLA WEEKLY')
-    title_main: 메인 헤드라인 (흰색, 큰따옴표 권장)
-    title_sub:  부제 (시안 강조)
-    """
-    # 네이비 그라데이션 배경
+    """리뉴얼 헤더 — 대각선 텍스처 + accent pill 배지 + 상하 accent 바."""
+    # ── 배경 그라데이션 ──
     for yy in range(HEADER_H):
         t = yy / HEADER_H
-        r = int(NAVY[0] * (1 - t * 0.3) + NAVY_DEEP[0] * (t * 0.3))
-        g = int(NAVY[1] * (1 - t * 0.3) + NAVY_DEEP[1] * (t * 0.3))
-        b = int(NAVY[2] * (1 - t * 0.3) + NAVY_DEEP[2] * (t * 0.3))
+        r = int(NAVY[0] * (1 - t * 0.35) + NAVY_DEEP[0] * (t * 0.35))
+        g = int(NAVY[1] * (1 - t * 0.35) + NAVY_DEEP[1] * (t * 0.35))
+        b = int(NAVY[2] * (1 - t * 0.35) + NAVY_DEEP[2] * (t * 0.35))
         draw.line([(0, yy), (W, yy)], fill=(r, g, b))
 
-    # 좌측 accent 스트라이프
-    draw.rectangle([0, 0, 10, HEADER_H], fill=accent)
+    # ── 대각선 스트라이프 텍스처 ──
+    sc = (max(0, NAVY_DEEP[0] - 6), max(0, NAVY_DEEP[1] - 6), min(255, NAVY_DEEP[2] + 8))
+    for xx in range(-HEADER_H, W + HEADER_H, 58):
+        draw.line([(xx, 0), (xx + HEADER_H, HEADER_H)], fill=sc, width=22)
 
-    # 브랜드 배지 (중앙 상단)
+    # ── 상단 accent 바 ──
+    draw.rectangle([0, 0, W, 10], fill=accent)
+
+    # ── 브랜드 배지 — 채워진 pill (accent 배경 + 다크 텍스트) ──
     brand_y = 70
-    bw = max(220, len(brand) * 22)
+    bb_b = draw.textbbox((0, 0), brand, font=fnt_brand)
+    bw = (bb_b[2] - bb_b[0]) + 64
     bx0 = (W - bw) // 2
-    draw.rounded_rectangle([bx0, brand_y - 26, bx0 + bw, brand_y + 26],
-                           radius=6, fill=(255, 255, 255, 0), outline=WHITE, width=0)
-    draw.text((W // 2, brand_y), brand, font=fnt_brand, fill=WHITE, anchor="mm",
-              stroke_width=1, stroke_fill=STROKE)
-    # 브랜드 아래 짧은 가로선
-    draw.line([(W // 2 - 60, brand_y + 32), (W // 2 + 60, brand_y + 32)],
-              fill=WHITE, width=2)
+    draw.rounded_rectangle([bx0, brand_y - 30, bx0 + bw, brand_y + 30],
+                           radius=30, fill=accent)
+    draw.text((W // 2, brand_y), brand, font=fnt_brand, fill=BG, anchor="mm")
 
-    # 메인 헤드라인 (흰색)
-    main_y = 220
+    # 배지 아래 accent 하이라이트 라인
+    draw.line([(bx0 + 24, brand_y + 38), (bx0 + bw - 24, brand_y + 38)],
+              fill=accent, width=3)
+
+    # ── 메인 헤드라인 ──
+    main_y = 148
     main_lines = wrap_text(draw, title_main, fnt_main, W - 80)
-    for i, wl in enumerate(main_lines[:2]):
+    for wl in main_lines[:2]:
         bb = draw.textbbox((0, 0), wl, font=fnt_main)
         tw = bb[2] - bb[0]
         draw.text(((W - tw) // 2, main_y), wl, font=fnt_main, fill=WHITE,
                   stroke_width=3, stroke_fill=STROKE)
         main_y += (bb[3] - bb[1]) + 14
 
-    # 부제 (시안)
+    # ── 서브 타이틀 (accent 색상) ──
     if title_sub:
-        sub_y = main_y + 8
+        sub_y = main_y + 10
         sub_lines = wrap_text(draw, title_sub, fnt_sub, W - 80)
         for wl in sub_lines[:1]:
             bb = draw.textbbox((0, 0), wl, font=fnt_sub)
             tw = bb[2] - bb[0]
-            draw.text(((W - tw) // 2, sub_y), wl, font=fnt_sub, fill=CYAN_LIGHT,
-                      stroke_width=3, stroke_fill=STROKE)
+            draw.text(((W - tw) // 2, sub_y), wl, font=fnt_sub, fill=accent,
+                      stroke_width=2, stroke_fill=STROKE)
+
+    # ── 하단 accent 바 ──
+    draw.rectangle([0, HEADER_H - 10, W, HEADER_H], fill=accent)
 
 
 def draw_buy_index_gauge(draw, cx, cy, r, bi, fnt_big, fnt_small):
@@ -1236,9 +1240,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         # ── 3개 메시지 카드 (비전·예상·믿음) ─────────────────────────
         # news_lines: [0]=미래비전, [1]=다음주예상, [2]=믿음/용기, [3]=CTA
         MSG_CARDS = [
-            ("미래 비전",   strip_emoji(news_lines[0]) if len(news_lines) > 0 else "테슬라의 미래는 밝습니다",  KEY,    CARD_AMBER),
-            ("다음주 예상", strip_emoji(news_lines[1]) if len(news_lines) > 1 else "다음주도 주목하세요",       accent, CARD_PURPLE),
-            ("믿음 한 줄", strip_emoji(news_lines[2]) if len(news_lines) > 2 else "흔들리지 마세요, 장기 비전!", GREEN,  CARD_GREEN),
+            ("중장기 비전",  strip_emoji(news_lines[0]) if len(news_lines) > 0 else "FSD·옵티머스·에너지, 테슬라 미래 주목",  KEY,    CARD_AMBER),
+            ("경쟁사 동향",  strip_emoji(news_lines[1]) if len(news_lines) > 1 else "SpaceX 시너지·BYD 동향 모니터링 중",    accent, CARD_PURPLE),
+            ("다음주 포인트", strip_emoji(news_lines[2]) if len(news_lines) > 2 else "다음 주 핵심 이벤트를 주목하세요",      GREEN,  CARD_GREEN),
         ]
         MSG_Y = 195
         MSG_H = 175
@@ -1330,22 +1334,36 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         FC_W = COL_W - PAD
         CARD_GAP = 16
         TOTAL_H  = SAFE_BOTTOM - CONTENT_Y   # 약 640px
-        # 3카드 균등 분할: 변동원인(큰 카드) + 호재 + 악재 (각 2등분)
-        REASON_H = 240
-        SIDE_H   = (TOTAL_H - REASON_H - CARD_GAP * 3) // 2  # 2장을 화면 내에 수용
+
+        # ─ 변동 원인 사전 측정 → 동적 REASON_H ──────────────────────────────
+        movement_reason = strip_emoji(summary.get("movement_reason") or "")
+        if not movement_reason and len(news_lines) >= 2:
+            movement_reason = strip_emoji(news_lines[1])
+
+        # 너무 긴 경우 "/" 또는 "·"로 구분된 핵심 구절 3개로 요약
+        if movement_reason and len(movement_reason) > 80:
+            parts = [p.strip() for p in re.split(r'[/·/]', movement_reason) if p.strip()]
+            if len(parts) > 3:
+                movement_reason = " / ".join(parts[:3])
+
+        rw_reason = wrap_text(draw, movement_reason, f_sm, FC_W - 40) if movement_reason else []
+        reason_line_count = min(len(rw_reason), 5)  # 최대 5줄
+        REASON_H = 66 + reason_line_count * 44 + 20  # 헤더 + 콘텐츠 + 패딩
+        REASON_H = max(200, min(340, REASON_H))       # [200, 340] 범위 클램프
+
+        SIDE_H = (TOTAL_H - REASON_H - CARD_GAP * 3) // 2
+        SIDE_H = max(140, SIDE_H)  # 최소 가독성 확보
 
         # ─ 변동 원인 카드 — movement_reason(Google Search) 우선, 없으면 script line 2
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
                                radius=14, fill=CARD_BG, outline=accent, width=3)
         draw.text((PAD + 20, CONTENT_Y + 14), "이번주 변동 원인",
                   font=f_sm, fill=accent, anchor="lt")
-        movement_reason = strip_emoji(summary.get("movement_reason") or "")
-        if not movement_reason and len(news_lines) >= 2:
-            movement_reason = strip_emoji(news_lines[1])
         if movement_reason:
-            rw = wrap_text(draw, movement_reason, f_sm, FC_W - 40)
             ky = CONTENT_Y + 66
-            for wl in rw[:4]:
+            for wl in rw_reason[:5]:
+                if ky + 38 > CONTENT_Y + REASON_H - 8:
+                    break
                 bb = draw.textbbox((0, 0), wl, font=f_sm)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
                           font=f_sm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
