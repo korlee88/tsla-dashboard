@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.23,
+  "velocity": 0.18,
   "velocity_label": "급감 (×0.2)",
-  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 313,712회 / 이전 4~7일 1,338,727회 | 총 1,652,439회 (43개 영상)",
+  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 256,321회 / 이전 4~7일 1,435,444회 | 총 1,691,765회 (43개 영상)",
   "video_count": 43,
-  "total_views": 1652439,
-  "hot_views": 313712,
-  "baseline_views": 1338727,
+  "total_views": 1691765,
+  "hot_views": 256321,
+  "baseline_views": 1435444,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 365819
+      "viewCount": 398180
     },
     {
       "title": "How did Optimus upgrade himself?",
       "channel": "⋈ovie Xplainer Yt",
       "publishedAt": "2026-05-20T07:09:02Z",
-      "viewCount": 174713
+      "viewCount": 178380
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 125658
+      "viewCount": 127844
     },
     {
       "title": "경제사냥꾼 구독자 전용, 종목 분석 : 테슬라(TSLA)",
       "channel": "경제사냥꾼",
       "publishedAt": "2026-05-20T14:33:58Z",
-      "viewCount": 125462
+      "viewCount": 126680
     },
     {
       "title": "&quot;No, that&#39;s optimus prime!&quot; - Optimus Prime Edit | NATI NATI (Slowed)",
       "channel": "Wirtz Editz",
       "publishedAt": "2026-05-24T13:50:25Z",
-      "viewCount": 111695
+      "viewCount": 116669
     }
   ],
-  "collected_at": "2026-05-26T15:36:14Z"
+  "collected_at": "2026-05-26T19:50:18Z"
 }

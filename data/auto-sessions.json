@@ -1,6 +1,320 @@
 {
   "sessions": [
     {
+      "id": "auto-1779825073048",
+      "date": "2026-05-27",
+      "displayDate": "2026.05.27",
+      "kstTime": "04:50",
+      "source": "auto",
+      "newsCount": 7,
+      "analyzedCount": 7,
+      "news": [
+        {
+          "id": 1779825027483,
+          "title": "투자자들의 스페이스X 집중으로 테슬라 주가 상승",
+          "summary": "테슬라 주가는 화요일 장 초반 상승세를 보였으며, 투자자들은 여전히 일론 머스크의 또 다른 회사인 스페이스X에 주목하고 있습니다. 스페이스X의 기업공개(IPO)가 임박했으며, 2조 달러의 가치를 가질 수 있다는 전망이 나오고 있습니다. 이는 테슬라 투자자들이 스페이스X 주식을 매수하기 위해 테슬라 주식을 매도할 수 있다는 우려를 낳고 있습니다.",
+          "source": "Barron's",
+          "date": "2026-05-26",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1779825027484,
+          "title": "일론 머스크, 연말까지 '광범위한' 자율주행 테슬라 약속",
+          "summary": "일론 머스크는 텔아비브 정상회담에서 연말까지 미국 전역에 '광범위한' 자율주행 테슬라를 선보일 것이라고 약속했습니다. 하지만 현재 테슬라의 로보택시 차량 수가 적고, 야심찬 일정으로 인해 회의적인 시각도 존재합니다. 테슬라 주가는 이제 반복되는 자율주행 약속이 아닌 실제 로보택시 배포 여부에 따라 움직일 것으로 보입니다.",
+          "source": "TheStreet",
+          "date": "2026-05-20",
+          "category": "Product|Musk"
+        },
+        {
+          "id": 1779825027485,
+          "title": "테슬라, 단순한 자동차 제조업체 이상으로 변모 중",
+          "summary": "모건 스탠리에 따르면 일론 머스크의 테슬라는 단순한 전기차 제조업체를 넘어 소프트웨어/커넥티드 차량 서비스 제공업체로 변모하고 있습니다. 이는 테슬라 주가가 계속 상승할 수 있는 이유이며, 회사의 핵심 강점인 동급 최고의 소프트웨어와 부대 서비스를 통해 장기적인 가치 창출이 가능하다고 분석했습니다.",
+          "source": "Fox Business",
+          "date": "2020-11-18",
+          "category": "Product|Market"
+        },
+        {
+          "id": 1779825027486,
+          "title": "테슬라와 스페이스X, 다른 회사들이 따라올 수 없는 강점 보유",
+          "summary": "일론 머스크의 스페이스X와 테슬라는 다른 어떤 회사도 따라올 수 없는 성과를 달성하는 것으로 보입니다. 일론 머스크는 최고의 제품을 만드는 데 집중하고 미래의 병목 현상을 예측하는 전략을 따르며, 이는 강력한 선순환을 만들어내기 때문에 경쟁사들이 따라잡기 어렵습니다.",
+          "source": "YouTube",
+          "date": "2026-05-26",
+          "category": "Musk|Competition"
+        },
+        {
+          "id": 1779825027487,
+          "title": "일론 머스크, 테슬라의 높은 주가에 의아함 표현",
+          "summary": "일론 머스크는 테슬라의 주식 시장 가치에 대해 의아함을 표현했습니다. 그는 테슬라 주가가 1,000달러를 돌파하며 올해 145% 상승한 것에 대해 'Lol'이라고 트윗하며 주식 시장의 비합리성을 나타내는 인터넷 밈인 'stonks'를 언급했습니다.",
+          "source": "Fox Business",
+          "date": "2020-06-11",
+          "category": "Musk|Market"
+        },
+        {
+          "id": 1779825027488,
+          "title": "트럼프의 머스크 옹호 및 백악관 EV 도입 후 테슬라 반등",
+          "summary": "테슬라 주가는 전기차 수요 부진과 일론 머스크의 트럼프 행정부 내 역할에 대한 논란으로 15% 하락한 다음 날 반등했습니다. 도널드 트럼프 전 대통령이 소셜 미디어에 머스크를 옹호하는 글을 올리고 백악관에 테슬라 차량을 가져오면서 주가 회복에 영향을 미쳤습니다.",
+          "source": "Fox Business",
+          "date": "2025-03-11",
+          "category": "Musk|Regulatory"
+        },
+        {
+          "id": 1779825027489,
+          "title": "테슬라 주가, 2026년 5월 25일 기준 3.08% 상승",
+          "summary": "테슬라 주가는 2026년 5월 25일 기준으로 3.08% 상승했습니다. 테슬라는 전기차 및 에너지 생성 및 저장 시스템의 설계, 개발, 제조 및 판매에 주력하고 있습니다.",
+          "source": "Fox Business",
+          "date": "2026-05-25",
+          "category": "Market"
+        }
+      ],
+      "analyses": {
+        "1779825027483": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R24"
+          ],
+          "reasoning": "투자자들이 스페이스X IPO에 집중하며 테슬라 주식을 매도할 수 있다는 우려가 제기되어 테슬라 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "스페이스X IPO",
+            "투자자 자금 이동 우려"
+          ]
+        },
+        "1779825027484": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크의 연말까지 광범위한 자율주행 테슬라 약속은 잠재적인 기술 진전을 시사하지만, 과거의 반복된 약속과 현재 로보택시 차량 부족으로 인해 시장의 회의적인 시각이 존재하여 영향은 제한적입니다.",
+          "key_factors": [
+            "자율주행 약속",
+            "로보택시 배포",
+            "과거 약속 반복"
+          ]
+        },
+        "1779825027485": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [],
+          "reasoning": "모건 스탠리의 분석은 테슬라가 단순한 자동차 제조업체를 넘어 소프트웨어 및 커넥티드 차량 서비스 제공업체로 변모하고 있다는 긍정적인 전망을 제시하지만, 이는 애널리스트의 의견이며 구체적인 신규 데이터나 이벤트가 포함되어 있지 않습니다.",
+          "key_factors": [
+            "애널리스트 긍정적 전망",
+            "소프트웨어 및 서비스 역량 강조"
+          ]
+        },
+        "1779825027486": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R19"
+          ],
+          "reasoning": "일론 머스크의 리더십과 전략에 대한 긍정적인 평가는 테슬라의 장기적인 경쟁 우위에 대한 낙관론을 불러일으킬 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 리더십",
+            "경쟁 우위"
+          ]
+        },
+        "1779825027487": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R08"
+          ],
+          "reasoning": "일론 머스크가 테슬라의 높은 주가에 대해 의아함을 표현하며 'stonks' 밈을 언급한 것은 시장에 부정적인 신호로 해석될 수 있습니다.",
+          "key_factors": [
+            "일론 머스크 트윗",
+            "주가 고평가 시사"
+          ]
+        },
+        "1779825027488": {
+          "impact_score": 1,
+          "direction": "bullish",
+          "confidence": "low",
+          "triggered_rules": [
+            "R19"
+          ],
+          "reasoning": "트럼프 전 대통령의 머스크 옹호 발언과 백악관의 테슬라 차량 도입 소식은 투자 심리에 긍정적인 영향을 미쳐 주가 반등에 기여했습니다.",
+          "key_factors": [
+            "트럼프의 머스크 옹호",
+            "백악관 테슬라 차량 도입"
+          ]
+        },
+        "1779825027489": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "이 뉴스는 특정 날짜의 주가 변동을 보고하며, 이는 이미 시장에 반영된 정보이므로 추가적인 주가 영향은 없습니다.",
+          "key_factors": []
+        }
+      },
+      "avgScore": 0.1,
+      "buyIndex": 51,
+      "direction": "bullish",
+      "topRules": [
+        "R19",
+        "R24",
+        "R13",
+        "R08"
+      ],
+      "bullish": 4,
+      "bearish": 2,
+      "neutral": 1,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 70,
+        "week_avg": 65,
+        "trend": "rising",
+        "spike": false,
+        "top_queries": [
+          "Tesla stock",
+          "Elon Musk",
+          "Tesla Cybertruck"
+        ],
+        "reasoning": "Google Trends API에 직접 접근할 수 없어, 제공된 검색 결과와 일반적인 트렌드 분석 방법을 기반으로 추정했습니다. Tesla 관련 뉴스 기사 및 주식 동향을 참고하여 검색 관심도가 증가하고 있다고 판단했습니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.18,
+        "velocity_label": "급감 (×0.2)",
+        "reason": "조회수 속도 급감 (×0.2) | 최근 3일 256,321회 / 이전 4~7일 1,435,444회 | 총 1,691,765회 (43개 영상)",
+        "video_count": 43,
+        "total_views": 1691765,
+        "hot_views": 256321,
+        "baseline_views": 1435444,
+        "top_videos": [
+          {
+            "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
+            "channel": "Izabela Anholett",
+            "publishedAt": "2026-05-23T13:00:00Z",
+            "viewCount": 398180
+          },
+          {
+            "title": "How did Optimus upgrade himself?",
+            "channel": "⋈ovie Xplainer Yt",
+            "publishedAt": "2026-05-20T07:09:02Z",
+            "viewCount": 178380
+          },
+          {
+            "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
+            "channel": "엔지니어TV",
+            "publishedAt": "2026-05-23T10:21:41Z",
+            "viewCount": 127844
+          },
+          {
+            "title": "경제사냥꾼 구독자 전용, 종목 분석 : 테슬라(TSLA)",
+            "channel": "경제사냥꾼",
+            "publishedAt": "2026-05-20T14:33:58Z",
+            "viewCount": 126680
+          },
+          {
+            "title": "&quot;No, that&#39;s optimus prime!&quot; - Optimus Prime Edit | NATI NATI (Slowed)",
+            "channel": "Wirtz Editz",
+            "publishedAt": "2026-05-24T13:50:25Z",
+            "viewCount": 116669
+          }
+        ],
+        "collected_at": "2026-05-26T19:50:18Z"
+      },
+      "newsCategories": {
+        "total": 7,
+        "Musk|Market": 2,
+        "Product|Musk": 1,
+        "Product|Market": 1,
+        "Musk|Competition": 1,
+        "Musk|Regulatory": 1,
+        "Market": 1
+      },
+      "macroCtx": {
+        "spyChg": 0.07,
+        "qqqChg": 0.61,
+        "vixClose": 16.979999542236328,
+        "wtiChg": -0.1,
+        "cnyChg": 0.03,
+        "bydChg": -0.34,
+        "bydRelStrength": 1.03,
+        "prevTslaChg": 1.61,
+        "rsi": 52.1,
+        "macd": {
+          "macd": 3.206294716506079,
+          "signal": -0.8742553037953174,
+          "hist": 4.080550020301397,
+          "crossover": null,
+          "trend": "bullish"
+        },
+        "bb": {
+          "upper": 458.98,
+          "middle": 403.22,
+          "lower": 347.47,
+          "pos": 0.767
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false
+      },
+      "scoringLayers": {
+        "base": 51,
+        "macdTrend": 2,
+        "bbHigh": -2,
+        "googleTrends": 2,
+        "youtubeInterest": -2
+      },
+      "latestTslaPrice": 432.98,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "5/27(수)",
+          "change_pct": -0.9,
+          "signal": "매도",
+          "basePrice": 432.98,
+          "predictedPrice": 429.08
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "5/28(목)",
+          "change_pct": -0.4,
+          "signal": "관망",
+          "basePrice": 432.98,
+          "predictedPrice": 431.25
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "5/29(금)",
+          "change_pct": 0.2,
+          "signal": "관망",
+          "basePrice": 432.98,
+          "predictedPrice": 433.85
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "6/1(월)",
+          "change_pct": 0.1,
+          "signal": "관망",
+          "basePrice": 432.98,
+          "predictedPrice": 433.41
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "6/1(월)",
+          "change_pct": -0.1,
+          "signal": "관망",
+          "basePrice": 432.98,
+          "predictedPrice": 432.55
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1779825073048
+    },
+    {
       "id": "auto-1779809821148",
       "date": "2026-05-27",
       "displayDate": "2026.05.27",
@@ -34075,281 +34389,7 @@
       },
       "modelVersion": "3.0",
       "timestamp": 1777833576895
-    },
-    {
-      "id": "auto-1777814175362",
-      "date": "2026-05-03",
-      "displayDate": "2026.05.03",
-      "kstTime": "22:15",
-      "source": "auto",
-      "newsCount": 10,
-      "analyzedCount": 10,
-      "news": [
-        {
-          "id": 1777814144832,
-          "title": "일론 머스크, 테슬라와 스페이스X가 첨단 칩 제조 시설을 건설할 것이라고 밝혀",
-          "summary": "일론 머스크는 테슬라와 스페이스X가 연간 1테라와트의 컴퓨팅 용량을 생산하는 것을 목표로 하는 첨단 칩 제조 시설인 '테라팹'을 오스틴에 건설할 것이라고 밝혔습니다. 이는 심각한 AI 칩 부족 문제를 해결하기 위한 것입니다.",
-          "source": "Fox Business",
-          "date": "2026-05-03",
-          "category": "Musk"
-        },
-        {
-          "id": 1777814144833,
-          "title": "일론 머스크, 테슬라 사이버캡 가격 3만 달러 미만으로 확정",
-          "summary": "테슬라 CEO 일론 머스크는 완전 자율주행 로보택시인 사이버캡을 2027년 이전에 3만 달러 미만에 판매할 것이라고 확인했습니다. 사이버캡의 생산이 공식적으로 시작되었습니다.",
-          "source": "Fox Business",
-          "date": "2026-05-03",
-          "category": "Product"
-        },
-        {
-          "id": 1777814144834,
-          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇에 집중",
-          "summary": "테슬라는 모델 S와 모델 X 차량 생산을 중단하고 2026년에 옵티머스 로봇의 대량 생산에 집중할 것이라고 일론 머스크가 발표했습니다. 이는 전기차에서 자율 기술로의 전환을 의미합니다.",
-          "source": "Fox Business",
-          "date": "2026-05-03",
-          "category": "Product"
-        },
-        {
-          "id": 1777814144835,
-          "title": "일론 머스크의 순자산 급증, 테슬라 주가 상승으로 경쟁자 두 배 이상",
-          "summary": "테슬라 주가 급등으로 일론 머스크의 순자산이 6,810억 달러를 기록하며 구글 공동 창업자 래리 페이지의 2,490억 달러의 두 배 이상이 되었습니다. 이는 억만장자 간의 격차를 더욱 벌렸습니다.",
-          "source": "Fox Business",
-          "date": "2026-05-03",
-          "category": "Musk"
-        },
-        {
-          "id": 1777814144836,
-          "title": "일론 머스크, 테슬라 휴머노이드 로봇 내년 말까지 판매 가능성 언급",
-          "summary": "일론 머스크는 테슬라의 휴머노이드 로봇인 옵티머스가 2027년 말까지 일반에 판매될 수 있을 것이라고 말했습니다. 그는 로봇이 신뢰할 수 있고 안전하며 다양한 기능을 수행할 수 있어야 한다고 언급했습니다.",
-          "source": "Fox Business",
-          "date": "2026-05-03",
-          "category": "Product"
-        },
-        {
-          "id": 1777814144837,
-          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
-          "summary": "테슬라는 1분기 조정 주당 순이익이 41센트로 월스트리트 예상치인 34센트를 상회하며 올해를 시작했습니다. 회사는 전 세계적으로 전기차 수요가 회복되고 있다고 밝혀, 오랫동안 어려움을 겪었던 자동차 사업의 회복 가능성을 시사했습니다.",
-          "source": "Bloomberg",
-          "date": "2026-04-23",
-          "category": "Earnings"
-        },
-        {
-          "id": 1777814144838,
-          "title": "테슬라, 1분기 매출 및 잉여 현금 흐름 예상치 상회",
-          "summary": "테슬라의 1분기 매출은 223억 9천만 달러로 예상치인 221억 9천만 달러를 약간 상회했습니다. 또한, 잉여 현금 흐름은 14억 4천만 달러로, 예상치인 마이너스 18억 6천만 달러를 크게 웃돌았습니다.",
-          "source": "Bloomberg",
-          "date": "2026-04-23",
-          "category": "Earnings"
-        },
-        {
-          "id": 1777814144839,
-          "title": "테슬라, 사이버캡, 테슬라 세미, 메가팩 생산 2026년 시작 예정",
-          "summary": "테슬라는 사이버캡, 테슬라 세미, 메가팩 생산이 2026년에 시작될 것이라고 밝혔습니다. 또한, 휴머노이드 로봇 옵티머스의 1세대 생산 라인이 설치 중이며, 사이버캡과 테슬라 세미는 2026년 일정대로 진행되고 있습니다.",
-          "source": "Bloomberg",
-          "date": "2026-04-23",
-          "category": "Product"
-        },
-        {
-          "id": 1777814144840,
-          "title": "테슬라, 미국 자동차 사업의 순풍 지속 및 네덜란드에서 완전 자율 주행 승인",
-          "summary": "테슬라는 미국 자동차 사업에서 순풍이 지속되고 있으며, 4월에 네덜란드에서 완전 자율 주행(FSD) 승인을 받았다고 밝혔습니다.",
-          "source": "Bloomberg",
-          "date": "2026-04-23",
-          "category": "Regulatory"
-        },
-        {
-          "id": 1777814144841,
-          "title": "테슬라, 달라스와 휴스턴에서 무인 로보택시 운행 시작",
-          "summary": "테슬라는 달라스와 휴스턴에서 무인 로보택시 운행을 시작했습니다. 이는 회사의 자율주행 기술 발전을 보여주는 중요한 단계입니다.",
-          "source": "Bloomberg",
-          "date": "2026-04-23",
-          "category": "Product"
-        }
-      ],
-      "analyses": {
-        "1777814144832": {
-          "impact_score": 2,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "테슬라와 스페이스X가 AI 칩 부족 문제를 해결하기 위해 첨단 칩 제조 시설인 '테라팹'을 건설한다는 소식은 장기적인 기술 자립과 혁신 잠재력을 보여주며 긍정적입니다.",
-          "key_factors": [
-            "AI 칩 자체 생산",
-            "기술 자립",
-            "장기적 성장 잠재력"
-          ]
-        },
-        "1777814144833": {
-          "impact_score": 4,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "일론 머스크가 사이버캡의 3만 달러 미만 가격과 2027년 이전 출시를 확정하며 신제품에 대한 긍정적인 기대감을 높였습니다.",
-          "key_factors": [
-            "사이버캡 가격 확정",
-            "출시 시기",
-            "생산 시작"
-          ]
-        },
-        "1777814144834": {
-          "impact_score": -3,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "테슬라가 모델 S와 모델 X의 생산을 중단하고 로봇 생산에 집중하는 것은 단기적으로 주요 전기차 모델의 판매 감소로 이어질 수 있어 부정적입니다.",
-          "key_factors": [
-            "모델 S 및 모델 X 생산 중단",
-            "옵티머스 로봇 대량 생산 집중",
-            "전기차에서 자율 기술로의 전환"
-          ]
-        },
-        "1777814144835": {
-          "impact_score": 1,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [],
-          "reasoning": "테슬라 주가 상승으로 일론 머스크의 순자산이 급증했다는 소식은 긍정적인 투자 심리를 반영하지만, 직접적인 주가 상승 요인이라기보다는 결과에 가깝습니다.",
-          "key_factors": [
-            "일론 머스크 순자산 급증",
-            "테슬라 주가 상승"
-          ]
-        },
-        "1777814144836": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "일론 머스크의 휴머노이드 로봇 옵티머스 판매 가능성 언급은 테슬라의 신제품 마일스톤에 대한 긍정적인 신호입니다.",
-          "key_factors": [
-            "휴머노이드 로봇",
-            "옵티머스",
-            "신제품 출시"
-          ]
-        },
-        "1777814144837": {
-          "impact_score": 4,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R12"
-          ],
-          "reasoning": "테슬라가 1분기 조정 주당 순이익이 월스트리트 예상치를 상회하며 전기차 수요 회복을 시사하여 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
-          "key_factors": [
-            "EPS beat",
-            "EV demand recovery"
-          ]
-        },
-        "1777814144838": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R12"
-          ],
-          "reasoning": "테슬라의 1분기 매출과 잉여 현금 흐름이 시장 예상치를 상회하여 긍정적인 실적을 보여주었습니다.",
-          "key_factors": [
-            "매출 예상치 상회",
-            "잉여 현금 흐름 예상치 크게 상회"
-          ]
-        },
-        "1777814144839": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "테슬라가 사이버캡, 세미, 메가팩 생산을 2026년에 시작하고 옵티머스 1세대 생산 라인을 설치 중이라고 밝히면서 신제품 및 생산 확대에 대한 긍정적인 전망을 제시합니다.",
-          "key_factors": [
-            "사이버캡 생산 시작",
-            "테슬라 세미 생산 시작",
-            "메가팩 생산 시작",
-            "옵티머스 1세대 생산 라인 설치"
-          ]
-        },
-        "1777814144840": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "테슬라의 미국 자동차 사업 순풍 지속과 네덜란드에서의 FSD 승인은 긍정적인 규제 진전과 핵심 기술의 확장을 의미합니다.",
-          "key_factors": [
-            "FSD 승인",
-            "미국 사업 순풍"
-          ]
-        },
-        "1777814144841": {
-          "impact_score": 4,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "테슬라가 달라스와 휴스턴에서 무인 로보택시 운행을 시작한 것은 자율주행 기술의 중요한 진전을 나타내며, 이는 새로운 제품/FSD 이정표로 주가에 긍정적인 영향을 미칠 것입니다.",
-          "key_factors": [
-            "무인 로보택시 운행 시작",
-            "자율주행 기술 발전"
-          ]
-        }
-      },
-      "avgScore": 2.4,
-      "buyIndex": 76,
-      "direction": "bullish",
-      "topRules": [
-        "R13",
-        "R12"
-      ],
-      "bullish": 9,
-      "bearish": 1,
-      "neutral": 0,
-      "muskXSentiment": null,
-      "newsCategories": {
-        "total": 10,
-        "Musk": 2,
-        "Product": 5,
-        "Earnings": 2,
-        "Regulatory": 1
-      },
-      "macroCtx": {
-        "spyChg": -0.08,
-        "qqqChg": 0.75,
-        "vixClose": 16.989999771118164,
-        "wtiChg": -3.04,
-        "cnyChg": 0,
-        "prevTslaChg": 5.03,
-        "rsi": 35.7,
-        "macd": {
-          "macd": -6.895854721404817,
-          "signal": -3.4838539665432293,
-          "hist": -3.4120007548615874,
-          "crossover": null,
-          "trend": "bearish"
-        },
-        "bb": {
-          "upper": 470.56,
-          "middle": 405.2,
-          "lower": 339.83,
-          "pos": 0.39
-        },
-        "isDeliveryWeek": false,
-        "isEarningsWeek": false
-      },
-      "scoringLayers": {
-        "base": 74,
-        "strongAmp": 4,
-        "macdTrend": -2
-      },
-      "modelVersion": "3.0",
-      "timestamp": 1777814175362
     }
   ],
-  "lastUpdated": "2026-05-27 00:36 KST"
+  "lastUpdated": "2026-05-27 04:50 KST"
 }
