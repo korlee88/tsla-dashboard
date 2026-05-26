@@ -1,0 +1,11 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-05-27
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 주간브리핑
+A cinematic ultra-high resolution 16:9 landscape horizontal strip showcasing a sleek matte-finished Tesla sedan parked on a polished reflective surface inside a futuristic analytical studio, surrounded by translucent holographic stock charts and floating data panels, ambient deep purple and violet lighting tones with cool blue accents, soft volumetric fog, refined and calm market analysis atmosphere, professional broadcast aesthetic, subtle reflections, no text, no letters, no watermark, no logo, ultra-high resolution
+
+## 씬1 호재심층
+A vibrant ultra-high resolution 16:9 landscape horizontal strip depicting a Tesla vehicle driving through a luminous green digital highway in China, surrounded by glowing autonomous driving sensor visualizations, ascending green growth arrows and bright emerald data streams flowing upward, fresh spring-like atmosphere symbolizing expansion and breakthrough, soft sunrise light blending with neon green tech accents, dynamic forward motion, optimistic momentum, no text, no letters, no watermark, no logo, ultra-high resolution
+
+## 씬2 미래비전
+A breathtaking ultra-high resolution 9:16 vertical full screen image of a futuristic Seoul cityscape at night, Han River reflecting glowing skyline, Gwanghwamun plaza in the foreground, an autonomous Tesla vehicle gliding silently while an Optimus robot stands gracefully nearby, advanced K-tech metropolitan vista, inspirational magenta and gold lighting, golden sun rays, starlight and shimmering particles, hopeful visionary mood, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo

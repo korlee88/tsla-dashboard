@@ -1,0 +1,219 @@
+{
+  "generated_at": "2026-05-27",
+  "generated_by": "Claude Opus 4",
+  "title": "TSLA 주간 +5.44%, $432.98 마감.",
+  "subtitle": "2026-05-19 ~ 2026-05-27 · 테슬라, 사이버캡 및 옵티머스 상용화 진전",
+  "summary": {
+    "week_start": "2026-05-19",
+    "week_end": "2026-05-27",
+    "session_count": 33,
+    "buy_indices": [
+      51,
+      53,
+      51,
+      51,
+      72,
+      68,
+      61,
+      67,
+      70,
+      57,
+      60,
+      57,
+      55,
+      51,
+      61,
+      50,
+      54,
+      52,
+      68,
+      64,
+      63,
+      58,
+      74,
+      58,
+      63,
+      51,
+      63,
+      64,
+      67,
+      72,
+      61,
+      58,
+      70
+    ],
+    "avg_buy_index": 60,
+    "latest_buy_index": 51,
+    "price_start": 410.65,
+    "price_end": 432.98,
+    "latest_price": 432.98,
+    "today_price": 432.98,
+    "today_change_pct": 1.64,
+    "week_change_pct": 5.44,
+    "biggest_impact": {
+      "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+      "score": 4,
+      "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+      "source": "Seeking Alpha",
+      "date": "2026-05-07",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+        "score": 4,
+        "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-05-07",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 로보택시 및 옵티머스 제품 출시 계획",
+        "score": 4,
+        "reason": "테슬라가 2026년 사이버캡, 세미, 메가캡 생산 시작과 옵티머스 1세대 생산 라인 설치를 계획하며 주요 신제품 출시 및 로봇 상용화에 대한 구체적인 일정을 제시하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시 출시 계획 발표",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS 예상치를 10% 이상 상회했으며, 로보택시 및 옵티머스 출시 계획과 대규모 투자를 발표하여 강력한 긍정적 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings|Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 5% 이상 크게 하회하여 전기차 수요 둔화와 경쟁 심화에 대한 우려를 증폭시켰습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려와 경쟁 심화가 주가 하락을 야기했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery|Competition|Market"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 하회 및 로보택시 서비스 문제",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 시장 예상치를 5% 이상 하회했으며, 로보택시 서비스의 문제점도 보고되어 부정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Barchart.com",
+        "date": "2026-05-21",
+        "category": "Delivery"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "5/27(수)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 432.98,
+        "predictedPrice": 429.08
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "5/28(목)",
+        "change_pct": -0.4,
+        "signal": "관망",
+        "basePrice": 432.98,
+        "predictedPrice": 431.25
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "5/29(금)",
+        "change_pct": 0.2,
+        "signal": "관망",
+        "basePrice": 432.98,
+        "predictedPrice": 433.85
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-27",
+        432.98
+      ],
+      [
+        "2026-05-26",
+        426.01
+      ],
+      [
+        "2026-05-25",
+        426.01
+      ],
+      [
+        "2026-05-24",
+        426.01
+      ],
+      [
+        "2026-05-23",
+        426.01
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "테슬라(TSLA) 주가는 2026년 5월 19일부터 5월 27일 기간 동안 다음과 같은 핵심 원인들로 인해 상승했습니다.\n\nFSD/자율주행 확장 / AI/로봇 사업 기대 / 스페이스X IPO 기대\n\n*   **FSD/자율주행 기술 글로벌 확장**: 테슬라의 완전자율주행(FSD) 구독 서비스가 독일과 스웨덴에 출시되었고, 특히 5월 24일에는 FSD 기술이 마침내 중국 시장에 상륙하며 주가 상승에 긍정적인 영향을 미쳤습니다. 5월 20일에는 FSD 개선을 포함한 대규모 소프트웨어 업데이트(2026.14 버전)도 배포되었습니다.\n*   **AI 및 로봇 사업 기대감 증폭**: 사이버캡(Cybercab) 생산 확정 등 테슬라의 첨단 AI 및 로보틱스 사업에 대한 기대감이 투자 심리를 고조시켰습니다. 이는 전통적인 차량 판매를 넘어선 장기적인 성장 전망을 강화하는 요인으로 작용했습니다.\n*   **스페이스X IPO에 대한 기대**: 일론 머스크가 이끄는 스페이스X의 기업공개(IPO) 가능성 역시 투자자들의 테슬라에 대한 투자 심리를 끌어올리는 데 기여했습니다."
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "주간동향",
+      "lines": [
+        "TSLA 주간 +5.44%, $432.98 마감.",
+        "FSD 중국 진출이 상승 견인했다.",
+        "사이버캡 2분기 생산 준비 돌입했다.",
+        "1분기 인도량 예상치 5% 하회했다."
+      ],
+      "body": "TSLA 주간 +5.44%, $432.98 마감.\nFSD 중국 진출이 상승 견인했다.\n사이버캡 2분기 생산 준비 돌입했다.\n1분기 인도량 예상치 5% 하회했다."
+    },
+    {
+      "index": 1,
+      "title": "FSD확장",
+      "lines": [
+        "카테고리: FSD 중국 진출 본격화",
+        "↳ 배경: 5월 24일 중국 FSD 정식 상륙했다.",
+        "↳ 데이터: 2026.14 업데이트 5월 20일 배포됐다.",
+        "↳ 임팩트: 주간 주가 +5.44% 반등 흐름이다.",
+        "↳ 비교: 독일·스웨덴 이은 3번째 시장 확장이다.",
+        "↳ 향후 전망: FSD 구독 매출 확대가 관측된다."
+      ],
+      "body": "카테고리: FSD 중국 진출 본격화\n   ↳ 배경: 5월 24일 중국 FSD 정식 상륙했다.\n   ↳ 데이터: 2026.14 업데이트 5월 20일 배포됐다.\n   ↳ 임팩트: 주간 주가 +5.44% 반등 흐름이다.\n   ↳ 비교: 독일·스웨덴 이은 3번째 시장 확장이다.\n   ↳ 향후 전망: FSD 구독 매출 확대가 관측된다."
+    },
+    {
+      "index": 2,
+      "title": "비전",
+      "lines": [
+        "사이버캡·옵티머스 상용화 가속된다.",
+        "다음주 인도량 지표가 주목된다.",
+        "호재·리스크 혼재 국면으로 분석된다.",
+        "다음 주에도 이어진다.",
+        "",
+        "IMAGE_PROMPT_0: A cinematic ultra-high resolution 16:9 landscape horizontal strip showcasing a sleek matte-finished Tesla sedan parked on a polished reflective surface inside a futuristic analytical studio, surrounded by translucent holographic stock charts and floating data panels, ambient deep purple and violet lighting tones with cool blue accents, soft volumetric fog, refined and calm market analysis atmosphere, professional broadcast aesthetic, subtle reflections, no text, no letters, no watermark, no logo, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_1: A vibrant ultra-high resolution 16:9 landscape horizontal strip depicting a Tesla vehicle driving through a luminous green digital highway in China, surrounded by glowing autonomous driving sensor visualizations, ascending green growth arrows and bright emerald data streams flowing upward, fresh spring-like atmosphere symbolizing expansion and breakthrough, soft sunrise light blending with neon green tech accents, dynamic forward motion, optimistic momentum, no text, no letters, no watermark, no logo, ultra-high resolution",
+        "",
+        "IMAGE_PROMPT_2: A breathtaking ultra-high resolution 9:16 vertical full screen image of a futuristic Seoul cityscape at night, Han River reflecting glowing skyline, Gwanghwamun plaza in the foreground, an autonomous Tesla vehicle gliding silently while an Optimus robot stands gracefully nearby, advanced K-tech metropolitan vista, inspirational magenta and gold lighting, golden sun rays, starlight and shimmering particles, hopeful visionary mood, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+      ],
+      "body": "사이버캡·옵티머스 상용화 가속된다.\n다음주 인도량 지표가 주목된다.\n호재·리스크 혼재 국면으로 분석된다.\n다음 주에도 이어진다.\n\nIMAGE_PROMPT_0: A cinematic ultra-high resolution 16:9 landscape horizontal strip showcasing a sleek matte-finished Tesla sedan parked on a polished reflective surface inside a futuristic analytical studio, surrounded by translucent holographic stock charts and floating data panels, ambient deep purple and violet lighting tones with cool blue accents, soft volumetric fog, refined and calm market analysis atmosphere, professional broadcast aesthetic, subtle reflections, no text, no letters, no watermark, no logo, ultra-high resolution\n\nIMAGE_PROMPT_1: A vibrant ultra-high resolution 16:9 landscape horizontal strip depicting a Tesla vehicle driving through a luminous green digital highway in China, surrounded by glowing autonomous driving sensor visualizations, ascending green growth arrows and bright emerald data streams flowing upward, fresh spring-like atmosphere symbolizing expansion and breakthrough, soft sunrise light blending with neon green tech accents, dynamic forward motion, optimistic momentum, no text, no letters, no watermark, no logo, ultra-high resolution\n\nIMAGE_PROMPT_2: A breathtaking ultra-high resolution 9:16 vertical full screen image of a futuristic Seoul cityscape at night, Han River reflecting glowing skyline, Gwanghwamun plaza in the foreground, an autonomous Tesla vehicle gliding silently while an Optimus robot stands gracefully nearby, advanced K-tech metropolitan vista, inspirational magenta and gold lighting, golden sun rays, starlight and shimmering particles, hopeful visionary mood, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+    }
+  ],
+  "image_prompts": {
+    "0": "A cinematic ultra-high resolution 16:9 landscape horizontal strip showcasing a sleek matte-finished Tesla sedan parked on a polished reflective surface inside a futuristic analytical studio, surrounded by translucent holographic stock charts and floating data panels, ambient deep purple and violet lighting tones with cool blue accents, soft volumetric fog, refined and calm market analysis atmosphere, professional broadcast aesthetic, subtle reflections, no text, no letters, no watermark, no logo, ultra-high resolution",
+    "1": "A vibrant ultra-high resolution 16:9 landscape horizontal strip depicting a Tesla vehicle driving through a luminous green digital highway in China, surrounded by glowing autonomous driving sensor visualizations, ascending green growth arrows and bright emerald data streams flowing upward, fresh spring-like atmosphere symbolizing expansion and breakthrough, soft sunrise light blending with neon green tech accents, dynamic forward motion, optimistic momentum, no text, no letters, no watermark, no logo, ultra-high resolution",
+    "2": "A breathtaking ultra-high resolution 9:16 vertical full screen image of a futuristic Seoul cityscape at night, Han River reflecting glowing skyline, Gwanghwamun plaza in the foreground, an autonomous Tesla vehicle gliding silently while an Optimus robot stands gracefully nearby, advanced K-tech metropolitan vista, inspirational magenta and gold lighting, golden sun rays, starlight and shimmering particles, hopeful visionary mood, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}

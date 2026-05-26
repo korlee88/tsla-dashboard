@@ -1,0 +1,28 @@
+SCENE_0_TITLE: 주간동향
+SCENE_0:
+TSLA 주간 +5.44%, $432.98 마감.
+FSD 중국 진출이 상승 견인했다.
+사이버캡 2분기 생산 준비 돌입했다.
+1분기 인도량 예상치 5% 하회했다.
+
+SCENE_1_TITLE: FSD확장
+SCENE_1:
+카테고리: FSD 중국 진출 본격화
+   ↳ 배경: 5월 24일 중국 FSD 정식 상륙했다.
+   ↳ 데이터: 2026.14 업데이트 5월 20일 배포됐다.
+   ↳ 임팩트: 주간 주가 +5.44% 반등 흐름이다.
+   ↳ 비교: 독일·스웨덴 이은 3번째 시장 확장이다.
+   ↳ 향후 전망: FSD 구독 매출 확대가 관측된다.
+
+SCENE_2_TITLE: 비전
+SCENE_2:
+사이버캡·옵티머스 상용화 가속된다.
+다음주 인도량 지표가 주목된다.
+호재·리스크 혼재 국면으로 분석된다.
+다음 주에도 이어진다.
+
+IMAGE_PROMPT_0: A cinematic ultra-high resolution 16:9 landscape horizontal strip showcasing a sleek matte-finished Tesla sedan parked on a polished reflective surface inside a futuristic analytical studio, surrounded by translucent holographic stock charts and floating data panels, ambient deep purple and violet lighting tones with cool blue accents, soft volumetric fog, refined and calm market analysis atmosphere, professional broadcast aesthetic, subtle reflections, no text, no letters, no watermark, no logo, ultra-high resolution
+
+IMAGE_PROMPT_1: A vibrant ultra-high resolution 16:9 landscape horizontal strip depicting a Tesla vehicle driving through a luminous green digital highway in China, surrounded by glowing autonomous driving sensor visualizations, ascending green growth arrows and bright emerald data streams flowing upward, fresh spring-like atmosphere symbolizing expansion and breakthrough, soft sunrise light blending with neon green tech accents, dynamic forward motion, optimistic momentum, no text, no letters, no watermark, no logo, ultra-high resolution
+
+IMAGE_PROMPT_2: A breathtaking ultra-high resolution 9:16 vertical full screen image of a futuristic Seoul cityscape at night, Han River reflecting glowing skyline, Gwanghwamun plaza in the foreground, an autonomous Tesla vehicle gliding silently while an Optimus robot stands gracefully nearby, advanced K-tech metropolitan vista, inspirational magenta and gold lighting, golden sun rays, starlight and shimmering particles, hopeful visionary mood, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
