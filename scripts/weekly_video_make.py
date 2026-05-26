@@ -32,6 +32,13 @@ ACCENT_COLORS = [
 ]
 SCENE_MOODS = ["focused", "happy", "celebrating"]   # 차분 분석 톤에 맞춘 마스코트
 
+# ── BGM 설정 (YouTube Audio Library · CC0) ────────────────────────────────────
+# Kevin MacLeod "Bright Wish" — 무료·저작권 무료 (Attribution 3.0)
+# YouTube Audio Library에서 제공되는 배경 음악
+BGM_TRACK_ID = "jS5fsa_H2Lo"
+BGM_VOLUME   = 0.10           # 나레이션 아래 배경음 (10%)
+BGM_CACHE    = ROOT_DIR / "data" / "bgm.mp3"
+
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
 def find_latest_report():
@@ -43,6 +50,33 @@ def find_latest_report():
         reverse=True,
     )
     return dirs[0] if dirs else None
+
+
+def download_bgm() -> "Path | None":
+    """YouTube Audio Library BGM 다운로드 (캐시 사용). 실패 시 None 반환."""
+    if BGM_CACHE.exists():
+        print("   🎵 BGM 캐시 사용")
+        return BGM_CACHE
+    BGM_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        import subprocess
+        print(f"   🎵 BGM 다운로드 중 (YouTube Audio Library: {BGM_TRACK_ID})...")
+        result = subprocess.run(
+            [
+                "yt-dlp", "-x", "--audio-format", "mp3", "--audio-quality", "5",
+                "--no-playlist", "-o", str(BGM_CACHE),
+                f"https://www.youtube.com/watch?v={BGM_TRACK_ID}",
+            ],
+            capture_output=True, text=True, timeout=120,
+        )
+        if result.returncode == 0 and BGM_CACHE.exists():
+            print(f"   ✅ BGM 다운로드 완료")
+            return BGM_CACHE
+        print(f"   ⚠ BGM 다운로드 실패 (yt-dlp exit {result.returncode}) — 음악 없이 진행",
+              file=sys.stderr)
+    except Exception as e:
+        print(f"   ⚠ BGM 예외: {e} — 음악 없이 진행", file=sys.stderr)
+    return None
 
 
 def clean_for_tts(lines):
@@ -430,6 +464,24 @@ async def build_video_async(report_dir):
     else:
         final = clips[0]
     final = final.with_fps(FPS)
+
+    # ── BGM 믹싱 ────────────────────────────────────────────────────────────
+    bgm_path = download_bgm()
+    if bgm_path:
+        try:
+            from moviepy import AudioFileClip as _AFC, CompositeAudioClip, concatenate_audioclips
+            from moviepy.audio.fx import MultiplyVolume
+            bgm = _AFC(str(bgm_path)).with_effects([MultiplyVolume(BGM_VOLUME)])
+            # 영상 길이만큼 루프
+            n_loops = math.ceil(final.duration / max(bgm.duration, 0.1))
+            bgm_looped = concatenate_audioclips([bgm] * n_loops).with_duration(final.duration)
+            if final.audio:
+                mixed = CompositeAudioClip([final.audio, bgm_looped])
+                final = final.with_audio(mixed)
+            bgm.close()
+            print(f"   🎵 BGM 믹싱 완료 (볼륨 {int(BGM_VOLUME*100)}%)")
+        except Exception as e:
+            print(f"   ⚠ BGM 믹싱 실패: {e} — 음악 없이 진행", file=sys.stderr)
 
     out_path = report_dir / "video.mp4"
     final.write_videofile(

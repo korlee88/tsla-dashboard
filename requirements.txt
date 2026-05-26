@@ -9,3 +9,4 @@ edge-tts
 moviepy
 numpy
 pytrends
+yt-dlp

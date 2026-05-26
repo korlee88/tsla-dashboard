@@ -378,7 +378,7 @@ SCENE_2:
 
 IMAGE_PROMPT_0: [씬0 — 16:9 landscape · {company_ko} 관련 보라빛 미래적·정제된 분석 분위기]
 IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 호재 심층, 밝고 활기찬 초록빛, 성장·상승 시각화]
-IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 테슬라 미래 비전: FSD·옵티머스·메가팩·기가팩토리, 마젠타·핑크·골드빛 영감적 분위기, 떠오르는 태양·별·반짝임]"""
+IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 한국 미래 도시: 한강 야경·서울 스카이라인·광화문 광장 배경의 자율주행 테슬라 차량·옵티머스 로봇, 첨단 K-tech 도시 풍경, 마젠타·골드빛 영감적 미래 무드, 황금빛 태양·별빛·반짝임, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
 
 
 def _build_prompt(summary):
@@ -1088,7 +1088,7 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
 
     bb = draw.textbbox((0, 0), "가", font=body_font)
     char_h = bb[3] - bb[1]
-    line_h = char_h + 14
+    line_h = char_h + 26  # 충분한 줄 간격으로 가독성 확보
 
     cy = content_y
     for i, ln in enumerate(all_lines[:6]):   # 헤드라인+5details
@@ -1330,9 +1330,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         FC_W = COL_W - PAD
         CARD_GAP = 16
         TOTAL_H  = SAFE_BOTTOM - CONTENT_Y   # 약 640px
-        # 3카드 균등 분할: 변동원인(큰 카드) + 호재 + 악재
+        # 3카드 균등 분할: 변동원인(큰 카드) + 호재 + 악재 (각 2등분)
         REASON_H = 240
-        SIDE_H   = (TOTAL_H - REASON_H - CARD_GAP * 2)
+        SIDE_H   = (TOTAL_H - REASON_H - CARD_GAP * 3) // 2  # 2장을 화면 내에 수용
 
         # ─ 변동 원인 카드 — movement_reason(Google Search) 우선, 없으면 script line 2
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
@@ -1343,41 +1343,57 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         if not movement_reason and len(news_lines) >= 2:
             movement_reason = strip_emoji(news_lines[1])
         if movement_reason:
-            rw = wrap_text(draw, movement_reason, f_nm, FC_W - 40)
-            ky = CONTENT_Y + 72
-            for wl in rw[:3]:
-                bb = draw.textbbox((0, 0), wl, font=f_nm)
+            rw = wrap_text(draw, movement_reason, f_sm, FC_W - 40)
+            ky = CONTENT_Y + 66
+            for wl in rw[:4]:
+                bb = draw.textbbox((0, 0), wl, font=f_sm)
                 draw.text(((W - (bb[2] - bb[0])) // 2, ky), wl,
-                          font=f_nm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
-                ky += 52
+                          font=f_sm, fill=WHITE, stroke_width=1, stroke_fill=STROKE)
+                ky += 44
 
-        # ─ 호재 카드 (대본 줄 3, 전폭)
+        # ─ 호재 카드 — 대본 + top_bullish 원문으로 내용 강화
         BULL_Y = CONTENT_Y + REASON_H + CARD_GAP
-        bull_text = strip_emoji(news_lines[2]) if len(news_lines) >= 3 else ""
+        top_bull_data   = (summary.get("top_bullish") or [{}])[0]
+        bull_headline   = strip_emoji(news_lines[2]) if len(news_lines) >= 3 else strip_emoji(top_bull_data.get("title", ""))
+        bull_detail     = strip_emoji(top_bull_data.get("reason", ""))[:100]
         draw.rounded_rectangle([PAD, BULL_Y, PAD + FC_W, BULL_Y + SIDE_H],
                                radius=12, fill=CARD_GREEN, outline=GREEN, width=2)
-        draw.text((PAD + 16, BULL_Y + 14), "▲ 호재", font=f_sm, fill=GREEN)
-        if bull_text:
-            bw = wrap_text(draw, bull_text, f_nm, FC_W - 40)
-            by = BULL_Y + 62
-            for wl in bw[:2]:
-                draw.text((PAD + 20, by), wl, font=f_nm, fill=WHITE,
+        draw.text((PAD + 16, BULL_Y + 12), "▲ 호재", font=f_sm, fill=GREEN)
+        cy_bull = BULL_Y + 56
+        if bull_headline:
+            for wl in wrap_text(draw, bull_headline, f_sm, FC_W - 40)[:2]:
+                draw.text((PAD + 20, cy_bull), wl, font=f_sm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                by += 52
+                cy_bull += 42
+        if bull_detail and cy_bull + 38 < BULL_Y + SIDE_H - 8:
+            for wl in wrap_text(draw, bull_detail, f_xs, FC_W - 40)[:2]:
+                if cy_bull + 34 >= BULL_Y + SIDE_H - 8:
+                    break
+                draw.text((PAD + 20, cy_bull), wl, font=f_xs, fill=LGRAY,
+                          stroke_width=1, stroke_fill=STROKE)
+                cy_bull += 36
 
-        # ─ 악재 카드 (대본 줄 4, 전폭)
+        # ─ 악재 카드 — 대본 + top_bearish 원문으로 내용 강화
         BEAR_Y = BULL_Y + SIDE_H + CARD_GAP
-        bear_text = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else ""
+        top_bear_data   = (summary.get("top_bearish") or [{}])[0]
+        bear_headline   = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else strip_emoji(top_bear_data.get("title", ""))
+        bear_detail     = strip_emoji(top_bear_data.get("reason", ""))[:100]
         draw.rounded_rectangle([PAD, BEAR_Y, PAD + FC_W, BEAR_Y + SIDE_H],
                                radius=12, fill=CARD_RED, outline=RED, width=2)
-        draw.text((PAD + 16, BEAR_Y + 14), "▼ 악재", font=f_sm, fill=RED)
-        if bear_text:
-            rw2 = wrap_text(draw, bear_text, f_nm, FC_W - 40)
-            ry = BEAR_Y + 62
-            for wl in rw2[:2]:
-                draw.text((PAD + 20, ry), wl, font=f_nm, fill=WHITE,
+        draw.text((PAD + 16, BEAR_Y + 12), "▼ 악재", font=f_sm, fill=RED)
+        cy_bear = BEAR_Y + 56
+        if bear_headline:
+            for wl in wrap_text(draw, bear_headline, f_sm, FC_W - 40)[:2]:
+                draw.text((PAD + 20, cy_bear), wl, font=f_sm, fill=WHITE,
                           stroke_width=1, stroke_fill=STROKE)
-                ry += 52
+                cy_bear += 42
+        if bear_detail and cy_bear + 38 < BEAR_Y + SIDE_H - 8:
+            for wl in wrap_text(draw, bear_detail, f_xs, FC_W - 40)[:2]:
+                if cy_bear + 34 >= BEAR_Y + SIDE_H - 8:
+                    break
+                draw.text((PAD + 20, cy_bear), wl, font=f_xs, fill=LGRAY,
+                          stroke_width=1, stroke_fill=STROKE)
+                cy_bear += 36
 
     # ── 씬 1: 호재 심층 — 풀사이즈 히어로 카드 1장 ─────────────────────────
     elif idx == 1:
