@@ -2791,49 +2791,21 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData, 
 // ─── 컴포넌트: SignalPage ─────────────────────────────────────────────────
 
 function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
-  weeklyData, weeklyLoading, currentPrice }) {
+  currentPrice, autoSessions, ytData }) {
 
-  const db = getNewsDB();
-  // 자동수집 세션도 포함 (TrendPage와 동일한 데이터)
-  const [autoSessions, setAutoSessions] = useState([]);
-  useEffect(() => {
-    fetchAutoSessions().then(arr => {
-      setAutoSessions(arr);
-      // auto-sessions의 dailyForecasts로 예측 정확도 레코드 자동 복원
-      seedAccuracyFromAutoSessions(arr);
-    }).catch(() => {});
-  }, []);
-  const mergedSessions = mergeWithAutoSessions(db.sessions || [], autoSessions);
+  const mergedSessions = React.useMemo(() => {
+    const db = getNewsDB();
+    return mergeWithAutoSessions(db.sessions || [], autoSessions);
+  }, [autoSessions]);
   // 날짜별 중복 제거: 같은 날짜는 buyIndex가 가장 높은 1건만
-  const dedupedByDate = Object.values(
+  const dedupedByDate = React.useMemo(() => Object.values(
     mergedSessions.reduce((acc, s) => {
       const k = s.date || '?';
       if (!acc[k] || (s.buyIndex ?? -1) > (acc[k].buyIndex ?? -1)) acc[k] = s;
       return acc;
     }, {})
-  ).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-  const valid = dedupedByDate.filter(s => s.buyIndex != null || s.avgScore != null);
-
-  const [dailyData, setDailyData] = useState(() => {
-    const c = loadDailyCache();
-    if (!c || !isPriceCacheValid(c)) return null;
-    return deserializeDailyCache(c);
-  });
-  const [priceLoading, setPriceLoading] = useState(() => {
-    const c = loadDailyCache();
-    return !(c && isPriceCacheValid(c) && deserializeDailyCache(c)?.length);
-  });
-  useEffect(() => {
-    const c = loadDailyCache();
-    if (isPriceCacheValid(c)) {
-      const cached = deserializeDailyCache(c);
-      if (cached?.length) { setDailyData(cached); setPriceLoading(false); return; }
-    }
-    fetchTSLADailyData()
-      .then(d => { setDailyData(d); saveDailyCache(d); })
-      .catch(() => {})
-      .finally(() => setPriceLoading(false));
-  }, []);
+  ).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)), [mergedSessions]);
+  const valid = React.useMemo(() => dedupedByDate.filter(s => s.buyIndex != null || s.avgScore != null), [dedupedByDate]);
 
   const bCol = v => v >= 65 ? '#22c55e' : v >= 45 ? '#f59e0b' : '#ef4444';
 
@@ -2854,15 +2826,6 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
     ? Math.round(recent.reduce((s, x) => s + (x.avgScore ?? 0), 0) / recent.length * 10) / 10
     : null;
 
-  // YouTube 관심도 데이터 (지표 종합해석용)
-  const [ytSignal, setYtSignal] = useState(null);
-  useEffect(() => {
-    fetch('data/youtube-sentiment.json?_=' + Date.now())
-      .then(r => r.ok ? r.json() : null)
-      .then(d => { if (d?.video_count > 0) setYtSignal(d); })
-      .catch(() => {});
-  }, []);
-
   // 추세 방향 (종합 해석 카드 + 하락세 뉴스 섹션에서 공용)
   const r3avg = valid.slice(0,3).length ? Math.round(valid.slice(0,3).reduce((s,x) => s+(x.buyIndex??50),0)/valid.slice(0,3).length) : null;
   const p3avg = valid.slice(3,6).length ? Math.round(valid.slice(3,6).reduce((s,x) => s+(x.buyIndex??50),0)/valid.slice(3,6).length) : null;
@@ -2872,20 +2835,6 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
   const daily7 = forecast?.daily_forecasts || [];
   // daily_forecasts에는 buy_index가 없음 → 신호/change_pct로 역산
   const signalToBi = { '적극매수': 88, '매수': 72, '관망': 50, '매도': 30, '적극매도': 12 };
-  const prediction7 = daily7.map((d, i) => {
-    // 1순위: 명시적 buy_index / 2순위: 신호 매핑 / 3순위: change_pct 역산
-    const rawBi = d.buy_index ?? signalToBi[d.signal]
-                  ?? (d.change_pct != null
-                      ? Math.min(100, Math.max(0, Math.round(50 + d.change_pct * 7)))
-                      : null);
-    return {
-      value:     rawBi ?? 50,
-      day:       i + 1,
-      dateLabel: d.date || `+${i + 1}일`,
-      confLabel: d.confidence || '',
-      signal:    d.signal || '',
-    };
-  });
 
   // ── 종합 합성 점수 (매수지수 60% : AI 전망 40%) ──────────────────────────
   // 매수지수 = 모든 보조신호(YouTube·머스크X·구글트렌드 포함) 현재 감성 종합 스냅샷.
@@ -3075,16 +3024,16 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
               </div>
             </div>
             {/* YouTube 관심도 행 */}
-            {ytSignal && (
+            {ytData && ytData.video_count > 0 && (
               <div className="rounded-lg p-3 flex items-center gap-3 mt-2" style={{ background: '#1C1F26', border: '1px solid rgba(239,68,68,0.15)' }}>
                 <span style={{ fontSize: 22 }}>📺</span>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-bold text-gray-300">YouTube 관심도</p>
-                  <p className="text-xs text-gray-600 truncate">{ytSignal.velocity_label || ''} · {ytSignal.video_count}개 영상 · {ytSignal.total_views >= 1_000_000 ? (ytSignal.total_views/1_000_000).toFixed(1)+'M' : (ytSignal.total_views/1000).toFixed(0)+'K'}뷰</p>
+                  <p className="text-xs text-gray-600 truncate">{ytData.velocity_label || ''} · {ytData.video_count}개 영상 · {ytData.total_views >= 1_000_000 ? (ytData.total_views/1_000_000).toFixed(1)+'M' : (ytData.total_views/1000).toFixed(0)+'K'}뷰</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-xl font-black tabular-nums" style={{ color: ytSignal.score > 0 ? '#22c55e' : ytSignal.score < 0 ? '#ef4444' : '#9ca3af' }}>
-                    {ytSignal.score >= 0 ? '+' : ''}{ytSignal.score}
+                  <p className="text-xl font-black tabular-nums" style={{ color: ytData.score > 0 ? '#22c55e' : ytData.score < 0 ? '#ef4444' : '#9ca3af' }}>
+                    {ytData.score >= 0 ? '+' : ''}{ytData.score}
                   </p>
                   <p className="text-xs text-gray-600">±3pt 반영</p>
                 </div>
@@ -3143,49 +3092,6 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
         ))}
       </div>
 
-      {/* ── 매수지수 추세 + 주가 차트 ─────────────────────────── */}
-      <Section title="매수지수 추세 & 7일 예측" icon="📈" accent="#a78bfa"
-        extra={
-          <div className="flex items-center gap-1.5 flex-nowrap" style={{ fontSize: 10 }}>
-            {[['#22c55e','매수'],['#f59e0b','관망'],['#ef4444','매도']].map(([c,l])=>(
-              <span key={l} className="flex items-center gap-0.5 whitespace-nowrap">
-                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: c }} />
-                <span className="text-gray-600">{l}</span>
-              </span>
-            ))}
-            <span className="flex items-center gap-0.5 whitespace-nowrap">
-              <span className="w-3 h-px inline-block shrink-0" style={{ borderTop:'1px dashed #a78bfa' }} />
-              <span className="text-gray-600">예측</span>
-            </span>
-            {(weeklyData || dailyData) && (
-              <span className="flex items-center gap-0.5 whitespace-nowrap">
-                <span className="w-3 h-0.5 inline-block shrink-0" style={{ background: '#06b6d4' }} />
-                <span className="text-gray-600">주가</span>
-              </span>
-            )}
-          </div>
-        }>
-        {/* 주가 로딩 배너 — 섹션 최상단 */}
-        {(priceLoading || weeklyLoading) && (
-          <div className="mx-3 mb-2 mt-1 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs"
-            style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.25)' }}>
-            <span className="w-3 h-3 border-2 border-cyan-400 border-t-transparent rounded-full spinning shrink-0" />
-            <span className="text-cyan-400 font-semibold">TSLA 실제 주가 업데이트 중…</span>
-            <span className="text-gray-600 ml-auto" style={{fontSize:9}}>Yahoo Finance</span>
-          </div>
-        )}
-        <p className="text-xs text-gray-700 px-3 pb-1">매수지수(0~100) · 65↑ 매수 / 45~64 관망 / 45↓ 매도 · 점선=7일 AI예측 · 실선=TSLA 실제주가</p>
-        <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart
-            sessions={[...valid].reverse()}
-            prediction7={prediction7}
-            weeklyData={weeklyData}
-            dailyData={dailyData}
-            priceLoading={priceLoading || weeklyLoading}
-          />
-        </div>
-      </Section>
-
       {/* ── 하락세 핵심 뉴스 ───────────────────────────────────── */}
       {trendDir === 'falling' && (() => {
         // 최근 2개 세션에서 bearish 뉴스 추출 → impact_score 오름차순(가장 부정적 먼저)
@@ -3238,109 +3144,6 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
         );
       })()}
 
-      {/* ── 7일 일별 예측 ─────────────────────────────────────── */}
-      {daily7.length > 0 && (
-        <Section title="7일 일별 예측" icon="📅" accent="#06b6d4">
-          {/* 모바일: 가로 스크롤 / PC: 7열 그리드 */}
-          <div className="md:hidden overflow-x-auto pb-1" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <div className="flex gap-2 px-1" style={{ width: 'max-content' }}>
-
-            {daily7.map((d, i) => {
-              const pct = typeof d.change_pct === 'number' ? d.change_pct : 0;
-              const col = pct > 0.5 ? '#22c55e' : pct < -0.5 ? '#ef4444' : '#9ca3af';
-              const sig = SIGNAL_CFG[d.signal] || { color: '#9ca3af', emoji: '─' };
-              const isFirst = i === 0;
-              const card = (
-                <div key={i} className="rounded-lg p-2 text-center border"
-                  style={{ background: isFirst ? sig.color + '12' : '#14171e',
-                           borderColor: isFirst ? sig.color + '50' : '#2A2D35',
-                           minWidth: 72 }}>
-                  <p className="font-bold" style={{ color: isFirst ? sig.color : '#6b7280', fontSize: 11 }}>
-                    {d.label || (i === 0 ? '내일' : `D+${i + 1}`)}
-                  </p>
-                  <p className="text-gray-600" style={{ fontSize: 9 }}>{d.date || ''}</p>
-                  <p className="font-black tabular-nums" style={{ color: col, fontSize: 14 }}>
-                    {pct >= 0 ? '+' : ''}{pct.toFixed(1)}%
-                  </p>
-                  <p className="font-semibold mt-0.5" style={{ color: sig.color, fontSize: 10 }}>
-                    {sig.emoji} {d.signal}
-                  </p>
-                </div>
-              );
-              return card;
-            })}
-            </div>
-          </div>
-          {/* PC: 7열 그리드 */}
-          <div className="hidden md:grid grid-cols-7 gap-1.5">
-            {daily7.map((d, i) => {
-              const pct = typeof d.change_pct === 'number' ? d.change_pct : 0;
-              const col = pct > 0.5 ? '#22c55e' : pct < -0.5 ? '#ef4444' : '#9ca3af';
-              const sig = SIGNAL_CFG[d.signal] || { color: '#9ca3af', emoji: '─' };
-              const isFirst = i === 0;
-              return (
-                <div key={i} className="rounded-lg p-2 text-center border"
-                  style={{ background: isFirst ? sig.color + '12' : '#14171e',
-                           borderColor: isFirst ? sig.color + '50' : '#2A2D35' }}>
-                  <p className="text-xs font-bold" style={{ color: isFirst ? sig.color : '#6b7280' }}>
-                    {d.label || (i === 0 ? '내일' : `D+${i + 1}`)}
-                  </p>
-                  <p className="text-gray-600" style={{ fontSize: 9 }}>{d.date || ''}</p>
-                  <p className="text-base font-black tabular-nums" style={{ color: col }}>
-                    {pct >= 0 ? '+' : ''}{pct.toFixed(1)}%
-                  </p>
-                  <p className="text-xs font-semibold mt-0.5" style={{ color: sig.color }}>
-                    {sig.emoji} {d.signal}
-                  </p>
-                  {d.reasoning && (
-                    <p className="text-gray-700 leading-snug mt-1" style={{ fontSize: 8 }}>
-                      {d.reasoning}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </Section>
-      )}
-
-      {/* ── 최근 세션 히스토리 ─────────────────────────────────── */}
-      {valid.length > 0 && (
-        <Section title="최근 수집 히스토리" icon="🕐" defaultOpen={false}>
-          <div className="space-y-1.5">
-            {valid.slice(0, 10).map((s, i) => {
-              const bi   = s.buyIndex;
-              const biC  = bi != null ? bCol(bi) : '#6b7280';
-              const sc   = SIGNAL_CFG[s.overallSignal];
-              return (
-                <div key={s.id || i}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2"
-                  style={{ background: '#14171e' }}>
-                  <div className="shrink-0 w-24">
-                    <p className="text-xs text-gray-400">{s.date}</p>
-                    <p className="text-gray-600" style={{fontSize:9}}>{s.kstTime ? s.kstTime + ' KST' : s.source === 'auto' ? '🤖 자동' : '🔍 수동'}</p>
-                  </div>
-                  <span className="text-sm font-black w-8 text-center tabular-nums" style={{ color: biC }}>
-                    {bi ?? '─'}
-                  </span>
-                  <span className="text-xs w-16" style={{ color: sc?.color ?? '#6b7280' }}>
-                    {sc?.emoji} {s.overallSignal || '─'}
-                  </span>
-                  <span className="text-xs text-gray-600">
-                    avg {s.avgScore >= 0 ? '+' : ''}{s.avgScore?.toFixed(1) ?? '─'}
-                  </span>
-                  <div className="flex gap-1 ml-auto flex-wrap">
-                    {(s.topRules || []).slice(0, 3).map(r => (
-                      <span key={r} className="px-1.5 py-0.5 rounded text-gray-500"
-                        style={{ background: '#1C1F26', fontSize: 9 }}>{r}</span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </Section>
-      )}
 
     </div>
   );
@@ -3353,21 +3156,13 @@ function SettingsPage({ onBack,
   driveClientId, driveClientIdInput, setDriveClientIdInput, saveDriveClientId,
   connectDrive, driveSyncing, driveConnected, driveLastSync, driveError,
   pullFromDrive, pushToDrive, getDriveToken,
+  ytData: propYtData, ytLoading: propYtLoading,
 }) {
   const [usage, setUsage]           = useState(() => getApiUsage());
   const [driveFileSize, setDriveFileSize] = useState(null);
   const [driveChecking, setDriveChecking] = useState(false);
-  const [ytData, setYtData]         = useState(null);
-  const [ytLoading, setYtLoading]   = useState(true);
-
-  // YouTube 수집 현황 로드
-  useEffect(() => {
-    fetch('data/youtube-sentiment.json?_=' + Date.now())
-      .then(r => r.ok ? r.json() : null)
-      .then(d => setYtData(d))
-      .catch(() => setYtData(null))
-      .finally(() => setYtLoading(false));
-  }, []);
+  const ytData    = propYtData ?? null;
+  const ytLoading = propYtLoading ?? false;
 
   // Drive 연결 시 파일 크기 자동 조회
   useEffect(() => {
@@ -4878,14 +4673,16 @@ function Section({ title, icon, badge, accent, defaultOpen = false, extra, child
 function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, driveConnected, driveLastSync, driveError,
   forecast, forecastLoading, forecastError, onRetryForecast,
   weeklyData, weeklyLoading, weeklyError, currentPrice, priceLastFetch, priceFromCache, priceReady,
-  newsItems, newsResults, calendarEvents }) {
+  newsItems, newsResults, calendarEvents,
+  autoSessions, autoSessionsLoading, dailyData, dailyLoading, ytData }) {
   const [db, setDB] = useState(() => getNewsDB());
   const [expanded, setExpanded] = useState(null);
-  const [autoSessions, setAutoSessions] = useState([]);
-  const [autoLoading, setAutoLoading] = useState(true);
-  const [autoLastSync, setAutoLastSync] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [checkedIds, setCheckedIds] = useState(new Set());
+
+  const autoLoading = autoSessionsLoading;
+  const autoLastSync = autoSessions[0]?.kstTime ? `${autoSessions[0].date} ${autoSessions[0].kstTime} KST` : null;
+  const ytLoading = false;
 
   const refresh = () => setDB(getNewsDB());
 
@@ -4906,54 +4703,12 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
     refresh();
   };
 
-  // 자동 세션 불러오기
-  useEffect(() => {
-    setAutoLoading(true);
-    fetchAutoSessions().then(arr => {
-      setAutoSessions(arr);
-      setAutoLastSync(arr[0]?.kstTime ? `${arr[0].date} ${arr[0].kstTime} KST` : null);
-      setAutoLoading(false);
-    });
-  }, []);
-
-  // YouTube 관심도 데이터
-  const [ytData, setYtData] = useState(null);
-  const [ytLoading, setYtLoading] = useState(true);
-  useEffect(() => {
-    fetch('data/youtube-sentiment.json?_=' + Date.now())
-      .then(r => r.ok ? r.json() : null)
-      .then(d => { setYtData(d); setYtLoading(false); })
-      .catch(() => setYtLoading(false));
-  }, []);
-
-  // 차트용 일봉 데이터 (주봉보다 정밀한 가격) — KST 7시 기준 하루 1회 캐시
-  const [chartDailyData, setChartDailyData] = useState(() => {
-    const c = loadDailyCache();
-    if (!c || !isPriceCacheValid(c)) return null;
-    return deserializeDailyCache(c);
-  });
-  const [chartPriceLoading, setChartPriceLoading] = useState(() => {
-    const c = loadDailyCache();
-    return !(c && isPriceCacheValid(c) && deserializeDailyCache(c)?.length);
-  });
-  useEffect(() => {
-    const c = loadDailyCache();
-    if (isPriceCacheValid(c)) {
-      const cached = deserializeDailyCache(c);
-      if (cached?.length) { setChartDailyData(cached); setChartPriceLoading(false); return; }
-    }
-    fetchTSLADailyData()
-      .then(d => { setChartDailyData(d); saveDailyCache(d); })
-      .catch(() => {})
-      .finally(() => setChartPriceLoading(false));
-  }, []);
-
   // Drive에서 불러온 후 로컬 갱신
   const handlePull = async () => { await onPullFromDrive?.(); refresh(); };
 
   const localSessions = db.sessions || [];
-  const sessions = mergeWithAutoSessions(localSessions, autoSessions);
-  const valid = sessions.filter(s => s.buyIndex != null || s.avgScore != null);
+  const sessions = React.useMemo(() => mergeWithAutoSessions(localSessions, autoSessions), [db, autoSessions]);
+  const valid = React.useMemo(() => sessions.filter(s => s.buyIndex != null || s.avgScore != null), [sessions]);
   const latest = valid[0]?.buyIndex ?? null;
   const avg = valid.length ? Math.round(valid.reduce((s, x) => s + (x.buyIndex ?? 50), 0) / valid.length) : null;
   const trend = valid.length >= 2 ? ((valid[0]?.buyIndex ?? 50) > (valid[1]?.buyIndex ?? 50) ? '↑ 상승' : '↓ 하락') : '─';
@@ -5338,7 +5093,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           </div>
         </div>
         <div className="rounded-lg p-2" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
-          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} dailyData={chartDailyData} priceLoading={chartPriceLoading} />
+          <TrendChart sessions={[...valid].reverse()} prediction={prediction} prediction7={prediction7} weeklyData={weeklyData} dailyData={dailyData} priceLoading={dailyLoading} />
         </div>
       </div>
       </Section>{/* /Section 2 */}
@@ -6616,7 +6371,7 @@ function App() {
               forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
               onRetryForecast={runForecast}
               currentPrice={currentPrice}
-              autoSessions={autoSessions} dailyData={dailyData} dailyLoading={dailyLoading} ytData={ytData} />
+              autoSessions={autoSessions} ytData={ytData} />
           </div>
         )}
         {page === 'trend' && (
@@ -6715,7 +6470,7 @@ function App() {
         forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
         onRetryForecast={runForecast}
         currentPrice={currentPrice}
-        autoSessions={autoSessions} dailyData={dailyData} dailyLoading={dailyLoading} ytData={ytData} />
+        autoSessions={autoSessions} ytData={ytData} />
     </div>
   );
 
@@ -6767,7 +6522,8 @@ function App() {
         connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
         driveLastSync={driveLastSync} driveError={driveError}
         pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive}
-        getDriveToken={() => driveTokenRef.current} />
+        getDriveToken={() => driveTokenRef.current}
+        ytData={ytData} />
     </div>
   );
 
