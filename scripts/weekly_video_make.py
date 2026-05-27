@@ -16,9 +16,9 @@ TICKER_CONFIG = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(encod
 TICKER        = TICKER_CONFIG["ticker"]
 
 REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
-VOICE         = "ko-KR-SunHiNeural"    # 차분한 여성 — 뉴스앵커 톤 (edge-tts 지원 검증 음성)
-RATE          = "+10%"                  # 분석체에 맞춘 안정적 속도
-PITCH         = "-4Hz"                  # 약간 낮춰 신뢰감 있는 톤
+VOICE         = "ko-KR-SunHiNeural"    # 밝은 여성 — 친근 튜닝 (edge-tts 지원 검증 음성)
+RATE          = "+8%"                   # 대화하듯 자연스러운 속도
+PITCH         = "+6Hz"                  # 살짝 올려 밝고 친근한 톤
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
@@ -83,7 +83,7 @@ def clean_for_tts(lines):
     table = {
         '【': '', '】': '', '①': '첫째,', '②': '둘째,', '③': '셋째,',
         '④': '넷째,', '⑤': '다섯째,', '$': '달러 ', '%': '퍼센트,',
-        '+': '플러스 ', '─': '', '▲': '', '▼': '',
+        '+': '플러스 ', '─': '', '▲': '', '▼': '', '*': '',
         '🟢': '', '🔴': '', '📊': '', '📈': '', '✓': '', '⚡': '',
     }
     result = []
@@ -105,7 +105,7 @@ def _clean_line(line: str) -> str:
         '【': '', '】': '', '①': '첫째,', '②': '둘째,', '③': '셋째,',
         '④': '넷째,', '⑤': '다섯째,', '$': '달러 ', '%': '퍼센트,',
         '+': '플러스 ', '─': '', '▲': '상승 ', '▼': '하락 ',
-        '▶': '', '↳': '', '↑': '상승 ', '🟢': '', '🔴': '', '📊': '', '📈': '',
+        '▶': '', '↳': '', '↑': '상승 ', '*': '', '🟢': '', '🔴': '', '📊': '', '📈': '',
         '✓': '', '⚡': '', '"': '', '"': '', '"': '',
     }
     line = line.strip()
@@ -122,37 +122,37 @@ def _clean_line(line: str) -> str:
 
 
 def build_scene_tts_text(idx: int, lines: list) -> str:
-    """씬별 대본 + 차분한 분석체 브리지 문장으로 나레이션 구성.
+    """씬별 대본 + 친근한 구어체 브리지 문장으로 나레이션 구성.
 
-    뉴스 앵커 톤 — 감탄 없이 객관적·정제된 분석 흐름으로 전달한다.
+    옆에서 다정하게 이야기해 주는 톤 — 따뜻하고 자연스러운 말투로 전달한다.
     """
     cleaned = [c for c in (_clean_line(l) for l in lines) if c]
     if not cleaned:
         return ""
 
     if idx == 0:
-        # 주간 브리핑 — 4줄(헤드라인·원인·호재·리스크) + 객관적 연결
+        # 주간 브리핑 — 4줄(헤드라인·원인·호재·리스크) + 친근한 연결
         head    = cleaned[0] if cleaned else ""
         reason  = cleaned[1] if len(cleaned) > 1 else ""
         bull    = cleaned[2] if len(cleaned) > 2 else ""
         bear    = cleaned[3] if len(cleaned) > 3 else ""
         parts = []
         if head:   parts.append(head)
-        if reason: parts.append("변동 원인을 살펴보면, " + reason)
-        if bull:   parts.append("주요 호재로는 " + bull)
-        if bear:   parts.append("리스크 측면에서는 " + bear)
+        if reason: parts.append("왜 이렇게 움직였는지 같이 볼까요? " + reason)
+        if bull:   parts.append("좋은 소식도 있어요. " + bull)
+        if bear:   parts.append("다만 이런 점은 살짝 걱정되는 부분이죠. " + bear)
         text = " ".join(parts)
 
     elif idx == 1:
-        # 호재 심층 — 헤드라인 + 분석체 브리지 + 세부 내용 전체
+        # 호재 심층 — 헤드라인 + 친근한 브리지 + 세부 내용 전체
         headline = cleaned[0]
         details  = " ".join(cleaned[1:])
         text     = headline
         if details:
-            text += " 구체적으로 살펴보면 다음과 같이 분석된다. " + details
+            text += " 조금 더 자세히 들여다볼게요. " + details
 
     elif idx == 2:
-        # 클로징(미래 비전) — 4줄 + 정중한 마무리
+        # 클로징(미래 비전) — 4줄 + 따뜻한 마무리
         text = " ".join(cleaned[:4])
 
     else:

@@ -302,16 +302,22 @@ def load_next_events(days=14, max_n=3):
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
 SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 나레이션 대본을 작성해줘.
-**차분한 분석체 톤**으로, 뉴스 앵커가 정제된 시장 분석을 전달하는 분위기로 작성한다.
+**친근한 사람이 옆에서 다정하게 이야기해 주는 톤**으로, 구독자에게 말 걸듯 따뜻하고 자연스러운 구어체로 작성한다.
 
 === 톤 가이드 (반드시 준수) ===
-• 감탄사·자극적 추임새 금지 (충격!·와!·헐!·대박!·헉! 등 절대 사용 금지)
-• 분석체 어미 필수: "~다", "~한 것으로 보인다", "~로 분석된다", "~할 전망이다", "~한 것으로 나타났다"
-• 객관적 어조: "예상된다", "관측된다", "기대된다", "풀이된다", "주목된다"
+• 친근한 구어체 어미 사용: "~예요", "~네요", "~더라고요", "~거든요", "~답니다", "~죠", "~봐요", "~해요"
+• 다정하게 말 걸기: "여러분", "같이 볼까요?", "~한 점이 눈에 띄네요", "흥미롭죠?" 처럼 대화하듯 자연스럽게
+• 딱딱한 분석체 어미 금지: "~로 분석된다", "~로 관측된다", "~할 전망이다", "~로 풀이된다" 같은 보고서 말투는 쓰지 않는다 — 사람이 말하듯 풀어 쓴다
+• 과한 클릭베이트 추임새는 지양(충격!·헐!·대박!·소름! 금지)하되, 부드럽고 자연스러운 반응은 환영("좋은 소식이에요", "조금 아쉬운 부분이죠", "눈여겨볼 만해요")
 • 단정적 권유 금지 (매수·매도·관망 직접 언급 금지)
-• **내부 점수(+N점·-N점) 절대 표기 금지** — 시청자용 지표가 아니다. "호재"/"리스크"로만 표현하고, 점수 대신 구체적 수치·배경·맥락으로 왜 호재/리스크인지 설명한다.
-• 수치·근거 중심: 모든 핵심 줄에 %·$·대수 등 구체 수치 포함
+• **내부 점수(+N점·-N점) 절대 표기 금지** — 시청자용 지표가 아니다. "좋은 소식"·"호재" / "걱정되는 부분"·"리스크"처럼 풀어 말하고, 점수 대신 구체적 수치·배경·맥락으로 왜 그런지 설명한다.
+• 수치·근거는 그대로 살린다: 모든 핵심 줄에 %·$·대수 등 구체 수치를 자연스럽게 녹여 넣는다
 • 씬 0: 4줄 / 씬 1: 6줄 / 씬 2: 4줄 (한 줄 30자 이내 권장)
+
+=== 핵심 강조 표시 (반드시 준수) ===
+• 각 줄에서 가장 중요한 핵심 글귀(수치·키워드) 1개를 *별표*로 감싼다. 예시: 이번 주 테슬라가 *12% 급등*했어요
+• 한 줄에 강조는 최대 1~2개만. 문장 전체를 감싸지 말고 핵심 수치/단어만 감싼다
+• 별표로 감싼 부분은 화면에서 강조색(골드)으로 표시되니, 정말 눈에 띄어야 할 수치·키워드에만 사용한다
 
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - {ticker} 현재 주가: ${price}
@@ -345,31 +351,32 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄1: 테슬라 중장기 비전 1건 — FSD 규제승인·옵티머스 생산대수·에너지 저장 용량 중 가장 주목할 수치 (25자 이내, 수치 필수)
 - 줄2: 스페이스X 시너지(Starlink 자율주행) 또는 경쟁사 동향 1건 — BYD 주간 판매/리비안·루시드 생산 차질 등 (25자 이내, 수치 포함)
 - 줄3: 다음주 핵심 관전 포인트 — 실적 발표·규제 결정·신제품 이벤트 (25자 이내)
-- 줄4: 분석 마무리 한 문장 — 정중하고 객관적 어조 (20자 이내)
+- 줄4: 따뜻한 마무리 인사 한 문장 — 구독자에게 다정하게 말 걸듯 (20자 이내)
 
 === 출력 형식 (반드시 준수) ===
-SCENE_0_TITLE: [6자 이내, 차분한 단어 예: "주간동향" "이번주"]
+※ 핵심 수치·키워드는 *별표*로 감싸 강조한다 (각 줄 최대 1~2개).
+SCENE_0_TITLE: [6자 이내, 친근한 단어 예: "이번주" "한주요약"]
 SCENE_0:
-[줄1 — 변동률·주가 요약]
-[줄2 — 변동 원인 핵심]
-[줄3 — 최대 호재 핵심]
-[줄4 — 최대 리스크 핵심]
+[줄1 — 변동률·주가 요약, 핵심 수치 *별표* 강조]
+[줄2 — 변동 원인 핵심, 핵심 *별표* 강조]
+[줄3 — 최대 호재 핵심, 핵심 *별표* 강조]
+[줄4 — 최대 리스크 핵심, 핵심 *별표* 강조]
 
 SCENE_1_TITLE: [6자 이내]
 SCENE_1:
-카테고리: 호재 핵심 한 줄
-   ↳ 배경: 사건 배경·맥락 수치
-   ↳ 데이터: 수치·실적 의무
-   ↳ 임팩트: 주가·시장 반응 수치
-   ↳ 비교: 경쟁사·과거 대비
+카테고리: 호재 핵심 한 줄 (핵심 *별표* 강조)
+   ↳ 배경: 사건 배경·맥락 수치 (*별표* 강조)
+   ↳ 데이터: 수치·실적 의무 (*별표* 강조)
+   ↳ 임팩트: 주가·시장 반응 수치 (*별표* 강조)
+   ↳ 비교: 경쟁사·과거 대비 (*별표* 강조)
    ↳ 향후 전망 한 문장
 
 SCENE_2_TITLE: [6자 이내, "전망" "비전" 같은 단어]
 SCENE_2:
-[줄1 — 중장기 비전]
-[줄2 — 다음주 관전 포인트]
-[줄3 — 분석 마무리]
-[줄4 — 정중한 마무리]
+[줄1 — 중장기 비전, 핵심 *별표* 강조]
+[줄2 — 다음주 관전 포인트, 핵심 *별표* 강조]
+[줄3 — 다음주 핵심 이벤트]
+[줄4 — 따뜻한 마무리 인사]
 
 === 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 3개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "ultra-high resolution".
@@ -931,6 +938,110 @@ def strip_emoji(text: str) -> str:
     return _EMOJI_RE.sub("", text).strip()
 
 
+# ── 강조 마커(*...*) 색상 렌더링 ──────────────────────────────────────────────
+# 대본에서 핵심 글귀를 *별표*로 감싸면 화면에서 강조색(기본 골드)으로 표시한다.
+_HL_RE    = re.compile(r"\*(.+?)\*")
+# 토큰화: 영문/숫자/통화 묶음은 한 덩어리, 공백은 그대로, 그 외(한글 등)는 글자 단위
+_TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9$%.,+\-]*|\s+|[^\sA-Za-z0-9]")
+
+
+def strip_markup(text: str) -> str:
+    """강조 마커(*)를 제거한 순수 텍스트 — 마커를 해석하지 않는 렌더용."""
+    return (text or "").replace("*", "")
+
+
+def split_runs(text: str):
+    """'*...*' 마커 기준으로 (조각, 강조여부) 런 리스트 반환. 마커는 제거된다."""
+    runs, pos = [], 0
+    text = text or ""
+    for m in _HL_RE.finditer(text):
+        if m.start() > pos:
+            runs.append((text[pos:m.start()], False))
+        runs.append((m.group(1), True))
+        pos = m.end()
+    if pos < len(text):
+        runs.append((text[pos:], False))
+    return [(seg.replace("*", ""), hl) for seg, hl in runs if seg.replace("*", "")]
+
+
+def wrap_runs(draw, runs, font, max_w):
+    """런 리스트를 max_w에 맞춰 여러 시각 줄로 래핑. 각 줄은 (조각, 강조여부) 런 리스트."""
+    toks = []
+    for seg, hl in runs:
+        for t in _TOKEN_RE.findall(seg):
+            toks.append((t, hl))
+
+    def line_w(items):
+        s = "".join(t for t, _ in items)
+        return draw.textlength(s, font=font) if s else 0
+
+    lines, cur = [], []
+    for t, hl in toks:
+        if t == "\n":
+            lines.append(cur); cur = []; continue
+        if not cur and t.isspace():
+            continue
+        if not cur or line_w(cur + [(t, hl)]) <= max_w:
+            cur.append((t, hl))
+        else:
+            lines.append(cur)
+            cur = [] if t.isspace() else [(t, hl)]
+    if cur:
+        lines.append(cur)
+
+    out = []
+    for line in lines:
+        while line and line[0][0].isspace():
+            line = line[1:]
+        while line and line[-1][0].isspace():
+            line = line[:-1]
+        merged = []
+        for t, hl in line:
+            if merged and merged[-1][1] == hl:
+                merged[-1] = (merged[-1][0] + t, hl)
+            else:
+                merged.append((t, hl))
+        if merged:
+            out.append(merged)
+    return out
+
+
+def draw_rich_line(draw, x, y, line_runs, font, base_fill, hl_fill,
+                   stroke_width=1, stroke_fill=STROKE, center_w=None):
+    """한 시각 줄(런 리스트)을 그린다. center_w 지정 시 그 폭 안에서 가운데 정렬."""
+    total = sum(draw.textlength(seg, font=font) for seg, _ in line_runs)
+    cx = x + max(0, (center_w - total)) / 2 if center_w is not None else x
+    for seg, hl in line_runs:
+        draw.text((cx, y), seg, font=font,
+                  fill=(hl_fill if hl else base_fill),
+                  stroke_width=stroke_width, stroke_fill=stroke_fill)
+        cx += draw.textlength(seg, font=font)
+    return total
+
+
+def draw_rich_text(draw, text, x, y, font, base_fill, max_w, *, hl_fill=KEY,
+                   max_lines=None, center=False, center_x=None, center_w=None,
+                   stroke_width=1, stroke_fill=STROKE, line_h=None, line_gap=8):
+    """마커 포함 텍스트를 래핑 + 색상 강조하여 그린다. 다음 y를 반환.
+
+    center=True면 center_w(기본 max_w) 안에서 center_x(기본 x) 기준 가운데 정렬.
+    """
+    runs    = split_runs(strip_emoji(text))
+    wrapped = wrap_runs(draw, runs, font, max_w)
+    if max_lines:
+        wrapped = wrapped[:max_lines]
+    bb   = draw.textbbox((0, 0), "가", font=font)
+    step = line_h if line_h else (bb[3] - bb[1]) + line_gap
+    cw   = (center_w if center_w is not None else max_w) if center else None
+    cx   = center_x if center_x is not None else x
+    for line_runs in wrapped:
+        draw_rich_line(draw, cx, y, line_runs, font, base_fill, hl_fill,
+                       stroke_width=stroke_width, stroke_fill=stroke_fill,
+                       center_w=cw)
+        y += step
+    return y
+
+
 def draw_bell_icon(draw, cx, cy, size, color):
     """PIL 도형으로 그린 벨 아이콘 (🔔 이모지 대체)."""
     s = size
@@ -1101,12 +1212,12 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
         use_font = headline_font if i == 0 else body_font
         use_col  = WHITE         if i == 0 else LGRAY
         sw       = 2             if i == 0 else 1
-        wrapped  = wrap_text(draw, strip_emoji(ln), use_font, content_max_w)
-        for wl in wrapped[:2]:
+        wrapped  = wrap_runs(draw, split_runs(strip_emoji(ln)), use_font, content_max_w)
+        for line_runs in wrapped[:2]:
             if cy + char_h > y + h - FOOTER_H - 8:
                 break
-            draw.text((content_x, cy), wl, font=use_font, fill=use_col,
-                      stroke_width=sw, stroke_fill=STROKE)
+            draw_rich_line(draw, content_x, cy, line_runs, use_font, use_col, KEY,
+                           stroke_width=sw, stroke_fill=STROKE)
             cy += line_h
 
     # 하단 출처 바 (source · date)
@@ -1253,13 +1364,11 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                                    radius=18, fill=bgcol, outline=col, width=3)
             draw.text((PAD + 22, cy + 14), label,
                       font=f_sm, fill=col, anchor="lt")
-            tw = wrap_text(draw, text, f_nm, W - PAD * 2 - 44)
+            tw = wrap_runs(draw, split_runs(text), f_nm, W - PAD * 2 - 44)
             ty = cy + 70
-            for wl in tw[:2]:
-                bb = draw.textbbox((0, 0), wl, font=f_nm)
-                draw.text(((W - (bb[2] - bb[0])) // 2, ty), wl,
-                          font=f_nm, fill=WHITE, anchor="lt",
-                          stroke_width=2, stroke_fill=STROKE)
+            for line_runs in tw[:2]:
+                draw_rich_line(draw, 0, ty, line_runs, f_nm, WHITE, KEY,
+                               stroke_width=2, stroke_fill=STROKE, center_w=W)
                 ty += 56
 
         # ── 다음주 이벤트 한 줄 (있을 때만, 슬림 띠) ─────────────────
@@ -1288,7 +1397,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 0:
         # 메인: 대본 첫 줄 그대로. 큰따옴표 추가.
-        first = (news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
+        first = strip_markup(news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
         if not (first.startswith('"') or first.startswith("'")):
             first = f'"{first}"'
         head_main = first
@@ -1311,7 +1420,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         top_bull = (summary.get("top_bullish") or [{}])[0]
         ch, _, _ = parse_news_line(news_lines[0]) if news_lines else ("", "", "")
         cat = top_bull.get("category", "") or ch
-        head_sub = cat if cat else "심층 분석"
+        head_sub = strip_markup(cat) if cat else "심층 분석"
 
     # ── 상단 헤더 (Y=0~500) — 네이비 박스 + 브랜드 + 두줄 헤드라인 ──────
     # 호재 심층 씬(idx 1)은 부드러운 라운드 폰트로 딱딱함 완화
@@ -1336,9 +1445,9 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         TOTAL_H  = SAFE_BOTTOM - CONTENT_Y   # 약 640px
 
         # ─ 변동 원인 사전 측정 → 동적 REASON_H ──────────────────────────────
-        movement_reason = strip_emoji(summary.get("movement_reason") or "")
+        movement_reason = strip_markup(strip_emoji(summary.get("movement_reason") or ""))
         if not movement_reason and len(news_lines) >= 2:
-            movement_reason = strip_emoji(news_lines[1])
+            movement_reason = strip_markup(strip_emoji(news_lines[1]))
 
         # 너무 긴 경우 "/" 또는 "·"로 구분된 핵심 구절 3개로 요약
         if movement_reason and len(movement_reason) > 80:
@@ -1373,15 +1482,15 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         BULL_Y = CONTENT_Y + REASON_H + CARD_GAP
         top_bull_data   = (summary.get("top_bullish") or [{}])[0]
         bull_headline   = strip_emoji(news_lines[2]) if len(news_lines) >= 3 else strip_emoji(top_bull_data.get("title", ""))
-        bull_detail     = strip_emoji(top_bull_data.get("reason", ""))[:100]
+        bull_detail     = strip_markup(strip_emoji(top_bull_data.get("reason", "")))[:100]
         draw.rounded_rectangle([PAD, BULL_Y, PAD + FC_W, BULL_Y + SIDE_H],
                                radius=12, fill=CARD_GREEN, outline=GREEN, width=2)
         draw.text((PAD + 16, BULL_Y + 12), "▲ 호재", font=f_sm, fill=GREEN)
         cy_bull = BULL_Y + 56
         if bull_headline:
-            for wl in wrap_text(draw, bull_headline, f_sm, FC_W - 40)[:2]:
-                draw.text((PAD + 20, cy_bull), wl, font=f_sm, fill=WHITE,
-                          stroke_width=1, stroke_fill=STROKE)
+            for line_runs in wrap_runs(draw, split_runs(bull_headline), f_sm, FC_W - 40)[:2]:
+                draw_rich_line(draw, PAD + 20, cy_bull, line_runs, f_sm, WHITE, KEY,
+                               stroke_width=1, stroke_fill=STROKE)
                 cy_bull += 42
         if bull_detail and cy_bull + 38 < BULL_Y + SIDE_H - 8:
             for wl in wrap_text(draw, bull_detail, f_xs, FC_W - 40)[:2]:
@@ -1395,15 +1504,15 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         BEAR_Y = BULL_Y + SIDE_H + CARD_GAP
         top_bear_data   = (summary.get("top_bearish") or [{}])[0]
         bear_headline   = strip_emoji(news_lines[3]) if len(news_lines) >= 4 else strip_emoji(top_bear_data.get("title", ""))
-        bear_detail     = strip_emoji(top_bear_data.get("reason", ""))[:100]
+        bear_detail     = strip_markup(strip_emoji(top_bear_data.get("reason", "")))[:100]
         draw.rounded_rectangle([PAD, BEAR_Y, PAD + FC_W, BEAR_Y + SIDE_H],
                                radius=12, fill=CARD_RED, outline=RED, width=2)
         draw.text((PAD + 16, BEAR_Y + 12), "▼ 악재", font=f_sm, fill=RED)
         cy_bear = BEAR_Y + 56
         if bear_headline:
-            for wl in wrap_text(draw, bear_headline, f_sm, FC_W - 40)[:2]:
-                draw.text((PAD + 20, cy_bear), wl, font=f_sm, fill=WHITE,
-                          stroke_width=1, stroke_fill=STROKE)
+            for line_runs in wrap_runs(draw, split_runs(bear_headline), f_sm, FC_W - 40)[:2]:
+                draw_rich_line(draw, PAD + 20, cy_bear, line_runs, f_sm, WHITE, KEY,
+                               stroke_width=1, stroke_fill=STROKE)
                 cy_bear += 42
         if bear_detail and cy_bear + 38 < BEAR_Y + SIDE_H - 8:
             for wl in wrap_text(draw, bear_detail, f_xs, FC_W - 40)[:2]:
