@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.3,
-  "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 387,081회 / 이전 4~7일 1,298,761회 | 총 1,685,842회 (44개 영상)",
+  "velocity": 0.23,
+  "velocity_label": "급감 (×0.2)",
+  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 266,243회 / 이전 4~7일 1,183,159회 | 총 1,449,402회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1685842,
-  "hot_views": 387081,
-  "baseline_views": 1298761,
+  "total_views": 1449402,
+  "hot_views": 266243,
+  "baseline_views": 1183159,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 458971
+      "viewCount": 474983
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 131414
-    },
-    {
-      "title": "경제사냥꾼 구독자 전용, 종목 분석 : 테슬라(TSLA)",
-      "channel": "경제사냥꾼",
-      "publishedAt": "2026-05-20T14:33:58Z",
-      "viewCount": 127522
+      "viewCount": 134487
     },
     {
       "title": "&quot;No, that&#39;s optimus prime!&quot; - Optimus Prime Edit | NATI NATI (Slowed)",
       "channel": "Wirtz Editz",
       "publishedAt": "2026-05-24T13:50:25Z",
-      "viewCount": 121493
+      "viewCount": 123258
     },
     {
-      "title": "Optimus Prime transformation that might break #transformers #shorts",
-      "channel": "MechaZeeShorts",
-      "publishedAt": "2026-05-20T11:00:46Z",
-      "viewCount": 92957
+      "title": "El robot de tesla! 🥶🫣😭",
+      "channel": "Jose David GO",
+      "publishedAt": "2026-05-23T18:36:15Z",
+      "viewCount": 76033
+    },
+    {
+      "title": "Tesla Accidentally Revealed Its Real Robotaxi Plan",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-05-20T18:51:44Z",
+      "viewCount": 56555
     }
   ],
-  "collected_at": "2026-05-27T09:52:25Z"
+  "collected_at": "2026-05-27T15:49:17Z"
 }
