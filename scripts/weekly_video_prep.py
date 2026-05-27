@@ -347,11 +347,13 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치)"
 - 줄6: "   ↳ 향후 전망 (30자 이내, 단정적 권유 금지)"
 
-【씬 2 — 미래 비전 + 다음주 예고】 (4줄, 분석체 마무리, 모든 줄 수치·근거 포함)
-- 줄1: 테슬라 중장기 비전 1건 — FSD 규제승인·옵티머스 생산대수·에너지 저장 용량 중 가장 주목할 수치 (25자 이내, 수치 필수)
-- 줄2: 스페이스X 시너지(Starlink 자율주행) 또는 경쟁사 동향 1건 — BYD 주간 판매/리비안·루시드 생산 차질 등 (25자 이내, 수치 포함)
-- 줄3: 다음주 핵심 관전 포인트 — 실적 발표·규제 결정·신제품 이벤트 (25자 이내)
-- 줄4: 따뜻한 마무리 인사 한 문장 — 구독자에게 다정하게 말 걸듯 (20자 이내)
+【씬 2 — 미래 비전 + 다음주 예고】 (6줄, 구어체, 수치·계획·예상결과 의무)
+- 줄1: 테슬라 중장기 비전 핵심 1건 — 어떤 계획인지 구체적 수치·목표 포함 (25자 이내, 수치 필수)
+- 줄2: → 줄1의 예상 결과·임팩트 — 실현되면 어떤 효과·수치가 기대되는지 (25자 이내, 수치 포함)
+- 줄3: 다음주 핵심 관전 포인트 1건 — 실적 발표·규제 결정·신제품 이벤트 중 가장 중요한 것 (25자 이내)
+- 줄4: → 줄3의 기대 결과·예상 수치 — 긍정 시나리오로 어떤 결과가 예상되는지 (25자 이내)
+- 줄5: 추가 주목 이벤트 또는 경쟁사 동향 1건 — BYD·리비안·루시드·SpaceX 시너지 등 (25자 이내)
+- 줄6: 따뜻한 마무리 인사 한 문장 — 구독자에게 다정하게 말 걸듯 (20자 이내)
 
 === 출력 형식 (반드시 준수) ===
 ※ 핵심 수치·키워드는 *별표*로 감싸 강조한다 (각 줄 최대 1~2개).
@@ -373,10 +375,12 @@ SCENE_1:
 
 SCENE_2_TITLE: [6자 이내, "전망" "비전" 같은 단어]
 SCENE_2:
-[줄1 — 중장기 비전, 핵심 *별표* 강조]
-[줄2 — 다음주 관전 포인트, 핵심 *별표* 강조]
-[줄3 — 다음주 핵심 이벤트]
-[줄4 — 따뜻한 마무리 인사]
+[줄1 — 중장기 비전 핵심 계획, 수치 *별표* 강조]
+[줄2 — → 예상 결과·임팩트, 수치 *별표* 강조]
+[줄3 — 다음주 핵심 관전 포인트, 핵심 *별표* 강조]
+[줄4 — → 기대 결과·예상 수치, *별표* 강조]
+[줄5 — 추가 이벤트 또는 경쟁사 동향]
+[줄6 — 따뜻한 마무리 인사]
 
 === 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 3개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "ultra-high resolution".
@@ -1349,31 +1353,52 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                   fill=accent, width=4)
 
         # ── 3개 메시지 카드 (비전·예상·믿음) ─────────────────────────
-        # news_lines: [0]=미래비전, [1]=다음주예상, [2]=믿음/용기, [3]=CTA
+        # news_lines: [0]=비전계획, [1]=→예상결과, [2]=다음주포인트, [3]=→기대결과, [4]=추가이벤트, [5]=마무리
+        def _nl(i, fallback):
+            return strip_emoji(news_lines[i]) if len(news_lines) > i else fallback
+
+        # 카드별 (label, lines[], col, bgcol, max_body_lines)
         MSG_CARDS = [
-            ("중장기 비전",  strip_emoji(news_lines[0]) if len(news_lines) > 0 else "FSD·옵티머스·에너지, 테슬라 미래 주목",  KEY,    CARD_AMBER),
-            ("경쟁사 동향",  strip_emoji(news_lines[1]) if len(news_lines) > 1 else "SpaceX 시너지·BYD 동향 모니터링 중",    accent, CARD_PURPLE),
-            ("다음주 포인트", strip_emoji(news_lines[2]) if len(news_lines) > 2 else "다음 주 핵심 이벤트를 주목하세요",      GREEN,  CARD_GREEN),
+            ("미래 계획",    [_nl(0, "FSD·옵티머스·에너지, 테슬라 미래 주목"),
+                              _nl(1, "")],
+             KEY,    CARD_AMBER,  2),
+            ("다음주 포인트", [_nl(2, "다음 주 핵심 이벤트를 주목하세요"),
+                               _nl(3, ""),
+                               _nl(4, "")],
+             accent, CARD_PURPLE, 3),
+            ("마무리",        [_nl(5, "다음주도 같이 봐요!")],
+             GREEN,  CARD_GREEN,  1),
         ]
+        LINE_H = 52      # 줄간 px
+        LABEL_H = 56     # 라벨 영역 높이 (상단 여백 포함)
+        BODY_PAD = 18    # 본문 하단 여백
         MSG_Y = 195
-        MSG_H = 175
-        MSG_GAP = 16
-        for i, (label, text, col, bgcol) in enumerate(MSG_CARDS):
-            cy = MSG_Y + i * (MSG_H + MSG_GAP)
-            draw.rounded_rectangle([PAD, cy, W - PAD, cy + MSG_H],
+        MSG_GAP = 14
+        cy = MSG_Y
+        last_cy_bottom = MSG_Y
+        for label, body_lines, col, bgcol, max_lines in MSG_CARDS:
+            # 실제 출력할 줄(빈 줄 제거, max_lines 제한)
+            visible = [l for l in body_lines if l.strip()][:max_lines]
+            if not visible:
+                visible = [body_lines[0]] if body_lines else [""]
+            card_h = LABEL_H + len(visible) * LINE_H + BODY_PAD
+            draw.rounded_rectangle([PAD, cy, W - PAD, cy + card_h],
                                    radius=18, fill=bgcol, outline=col, width=3)
             draw.text((PAD + 22, cy + 14), label,
                       font=f_sm, fill=col, anchor="lt")
-            tw = wrap_runs(draw, split_runs(text), f_nm, W - PAD * 2 - 44)
-            ty = cy + 70
-            for line_runs in tw[:2]:
-                draw_rich_line(draw, 0, ty, line_runs, f_nm, WHITE, KEY,
-                               stroke_width=2, stroke_fill=STROKE, center_w=W)
-                ty += 56
+            ty = cy + LABEL_H
+            for txt in visible:
+                tw = wrap_runs(draw, split_runs(txt), f_nm, W - PAD * 2 - 44)
+                for line_runs in tw[:1]:  # 1 wrapped line per content line
+                    draw_rich_line(draw, 0, ty, line_runs, f_nm, WHITE, KEY,
+                                   stroke_width=2, stroke_fill=STROKE, center_w=W)
+                ty += LINE_H
+            last_cy_bottom = cy + card_h
+            cy = last_cy_bottom + MSG_GAP
 
         # ── 다음주 이벤트 한 줄 (있을 때만, 슬림 띠) ─────────────────
         next_events = summary.get("next_events", []) or []
-        SLIM_Y = MSG_Y + 3 * (MSG_H + MSG_GAP) + 10
+        SLIM_Y = last_cy_bottom + MSG_GAP + 6
         if next_events:
             ev = next_events[0]
             date_s = ev.get("date", "")
