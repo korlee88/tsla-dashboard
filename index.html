@@ -6253,14 +6253,29 @@ function App() {
     const c = loadPriceCache();
     return isPriceCacheValid(c) && !!c?.price; // 캐시 유효하면 즉시 준비
   });
+  const [dailyData, setDailyData] = useState(() => {
+    const c = loadDailyCache();
+    if (!c || !isPriceCacheValid(c)) return null;
+    return deserializeDailyCache(c);
+  });
+  const [dailyLoading, setDailyLoading] = useState(() => {
+    const c = loadDailyCache();
+    return !(c && isPriceCacheValid(c) && deserializeDailyCache(c)?.length);
+  });
+  const [ytData, setYtData] = useState(null);
   const [calendarEvents, setCalendarEvents] = useState([]);
-  const [autoSessionsForTrend, setAutoSessionsForTrend] = useState([]);
+  const [autoSessions, setAutoSessions] = useState([]);
+  const [autoSessionsLoading, setAutoSessionsLoading] = useState(true);
   const sessionIdRef    = useRef(null);
   const sessionSavedRef = useRef(false);
 
   // 자동 세션 로드 — runForecast의 추세 계산에 사용
   useEffect(() => {
-    fetchAutoSessions().then(arr => setAutoSessionsForTrend(arr)).catch(() => {});
+    fetchAutoSessions().then(arr => {
+      setAutoSessions(arr);
+      setAutoSessionsLoading(false);
+      try { seedAccuracyFromAutoSessions(arr); } catch {}
+    }).catch(() => { setAutoSessionsLoading(false); });
   }, []);
 
   // 캘린더 이벤트 로드 (예측 모델에 활용)
@@ -6298,7 +6313,7 @@ function App() {
     try {
       const items = currentNews.filter(n => results[n.id]).map(n => ({ title: n.title, result: results[n.id] }));
       // 최근 buyIndex 추세 — 로컬 세션 + 자동 세션 병합 후 최신 8개
-      const merged = mergeWithAutoSessions(getNewsDB().sessions || [], autoSessionsForTrend);
+      const merged = mergeWithAutoSessions(getNewsDB().sessions || [], autoSessions);
       const recentBuyIndexes = merged
         .filter(s => typeof s.buyIndex === 'number')
         .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
@@ -6464,6 +6479,27 @@ function App() {
       });
   }, [apiKey, weeklyLoading, weeklyError]);
 
+  // ─── 일봉 데이터 fetch (차트용) ───────────────────────────────────────────
+  useEffect(() => {
+    const c = loadDailyCache();
+    if (isPriceCacheValid(c)) {
+      const cached = deserializeDailyCache(c);
+      if (cached?.length) { setDailyData(cached); setDailyLoading(false); return; }
+    }
+    fetchTSLADailyData()
+      .then(d => { setDailyData(d); saveDailyCache(d); })
+      .catch(() => {})
+      .finally(() => setDailyLoading(false));
+  }, []);
+
+  // ─── YouTube 관심도 데이터 ─────────────────────────────────────────────────
+  useEffect(() => {
+    fetch('data/youtube-sentiment.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d) setYtData(d); })
+      .catch(() => {});
+  }, []);
+
   const saveKey = () => {
     const k = keyInput.trim();
     if (k.length < 20) { alert('올바른 Gemini API 키를 입력하세요 (Google AI Studio에서 발급)'); return; }
@@ -6579,8 +6615,8 @@ function App() {
             <SignalPage
               forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
               onRetryForecast={runForecast}
-              weeklyData={weeklyData} weeklyLoading={weeklyLoading}
-              currentPrice={currentPrice} />
+              currentPrice={currentPrice}
+              autoSessions={autoSessions} dailyData={dailyData} dailyLoading={dailyLoading} ytData={ytData} />
           </div>
         )}
         {page === 'trend' && (
@@ -6593,7 +6629,9 @@ function App() {
               onRetryForecast={runForecast}
               weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
               currentPrice={currentPrice} priceLastFetch={priceLastFetch} priceFromCache={priceFromCache} priceReady={priceReady}
-              newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
+              newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents}
+              autoSessions={autoSessions} autoSessionsLoading={autoSessionsLoading}
+              dailyData={dailyData} dailyLoading={dailyLoading} ytData={ytData} />
           </div>
         )}
         {page === 'settings' && (
@@ -6605,7 +6643,8 @@ function App() {
               connectDrive={connectDrive} driveSyncing={driveSyncing} driveConnected={!!driveTokenRef.current}
               driveLastSync={driveLastSync} driveError={driveError}
               pullFromDrive={() => pullFromDrive()} pushToDrive={pushToDrive}
-              getDriveToken={() => driveTokenRef.current} />
+              getDriveToken={() => driveTokenRef.current}
+              ytData={ytData} />
           </div>
         )}
         {page === 'calendar' && (
@@ -6675,8 +6714,8 @@ function App() {
       <SignalPage
         forecast={forecast} forecastLoading={forecastLoading} forecastError={forecastError}
         onRetryForecast={runForecast}
-        weeklyData={weeklyData} weeklyLoading={weeklyLoading}
-        currentPrice={currentPrice} />
+        currentPrice={currentPrice}
+        autoSessions={autoSessions} dailyData={dailyData} dailyLoading={dailyLoading} ytData={ytData} />
     </div>
   );
 
@@ -6712,7 +6751,9 @@ function App() {
         onRetryForecast={runForecast}
         weeklyData={weeklyData} weeklyLoading={weeklyLoading} weeklyError={weeklyError}
         currentPrice={currentPrice} priceLastFetch={priceLastFetch} priceFromCache={priceFromCache} priceReady={priceReady}
-        newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents} />
+        newsItems={currentNews} newsResults={results} calendarEvents={calendarEvents}
+        autoSessions={autoSessions} autoSessionsLoading={autoSessionsLoading}
+        dailyData={dailyData} dailyLoading={dailyLoading} ytData={ytData} />
     </div>
   );
 
