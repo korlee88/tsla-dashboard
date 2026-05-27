@@ -5041,8 +5041,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         )}
       </div>
 
-      {/* ── Section 1: 지수 현황 ─────────────────────────────────────────── */}
-      <Section title="지수 현황" icon="📊" badge={latest != null ? `매수지수 ${latest}` : null} accent={latest != null ? bCol(latest) : null}>
+      {/* ── Section 1: 오늘의 분석 요약 ─────────────────────────────────────── */}
+      <Section title="오늘의 분석 요약" icon="📊" badge={latest != null ? `매수지수 ${latest}` : null} accent={latest != null ? bCol(latest) : null}>
 
       {/* Stats — 통합 프레임 */}
       <div className="rounded-xl mb-4 md:mb-5" style={{ background: '#1C1F26', border: '1px solid #2A2D35' }}>
@@ -5322,8 +5322,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       </div>
       </Section>{/* /Section 1 */}
 
-      {/* ── Section 2: 매수지수 추세 ──────────────────────────────────────── */}
-      <Section title="매수지수 추세" icon="📈" accent="#a78bfa">
+      {/* ── Section 2: 매수지수 추이 차트 ──────────────────────────────────── */}
+      <Section title="매수지수 추이 차트" icon="📈" accent="#a78bfa">
       {/* Trend Chart */}
       <div className="rounded-xl p-4 border mb-5" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="flex items-center justify-between mb-3">
@@ -5419,8 +5419,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
         )}
       </Section>
 
-      {/* ── Section 3: 수집 타임라인 ──────────────────────────────────────── */}
-      <Section title="수집 타임라인" icon="📋"
+      {/* ── Section 3: 뉴스 수집 이력 ─────────────────────────────────────── */}
+      <Section title="뉴스 수집 이력" icon="📋"
         badge={sessions.length > 0 ? `${sessions.length}건` : null}
        
         extra={
@@ -5570,8 +5570,8 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       </div>
       </Section>{/* /Section 3 */}
 
-      {/* ── Section 4: 투자 전망 분석 ─────────────────────────────────────── */}
-      <Section title="투자 전망 분석" icon="🔮"
+      {/* ── Section 4: AI 투자 전망 (미래 예측) ───────────────────────────── */}
+      <Section title="AI 투자 전망" icon="🔮"
         badge={forecast?.overall_signal || null}
         accent="#a78bfa">
       {/* 투자 전망 분석 패널 */}
@@ -5593,14 +5593,14 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       />
       </Section>{/* /Section 4 */}
 
-      {/* ── Section 5: 예측 정확도 ─────────────────────────────────────────── */}
-      <Section title="예측 정확도 추적" icon="🎯" accent="#f59e0b">
+      {/* ── Section 5: 과거 예측 적중률 ───────────────────────────────────── */}
+      <Section title="과거 예측 적중률" icon="🎯" accent="#f59e0b">
       {/* 일별 종가 예측 정확도 카드 */}
       <PredAccuracyCard dailyData={weeklyData} autoSessions={autoSessions} />
       </Section>{/* /Section 5 */}
 
-      {/* ── Section 6: 등급표 (기본 닫힘) ─────────────────────────────────── */}
-      <Section title="매수지수 등급표" icon="📊" defaultOpen={false}>
+      {/* ── Section 6: 등급 기준표 (기본 닫힘) ────────────────────────────── */}
+      <Section title="매수지수 등급 기준표" icon="📊" defaultOpen={false}>
       <div className="rounded-xl border p-4" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {GRADES.map(g => (
