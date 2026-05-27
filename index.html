@@ -668,9 +668,10 @@ async function getDriveAppDataSize(token) {
 
 // ─── 앱 버전 ──────────────────────────────────────────────────────────────────
 const APP_VERSION = {
-  version: '2.3.0',
-  date: '2026-05-25 KST',
+  version: '2.4.0',
+  date: '2026-05-27 KST',
   changelog: [
+    { v: '2.4.0', date: '2026-05-27 KST', label: '종합 매매 신호 가중 합성(매수지수 60% + AI전망 40%) · 합성 산식 표시 · 지표 종합 해석 안내 정정' },
     { v: '2.3.0', date: '2026-05-25 KST', label: '인트로 씬 제거 → 3씬(브리핑·호재·미래) · 주간 변동률 표시 · 점수 라벨 제거 · 호재 씬 라운드 폰트' },
     { v: '2.2.0', date: '2026-05-17 19:00 KST', label: '충격 인트로(씬0) + 다음주 예고(씬5) + 자극적 멘트 + Google Trends' },
     { v: '2.1.1', date: '2026-05-17 18:00 KST', label: '영상 5가지 수정 · Ken Burns 사진 영역만 · TTS 톤 · 2줄 대본 · 90% 스케일' },
@@ -2886,6 +2887,39 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
     };
   });
 
+  // ── 종합 합성 점수 (매수지수 60% : AI 전망 40%) ──────────────────────────
+  // 매수지수 = 모든 보조신호(YouTube·머스크X·구글트렌드 포함) 현재 감성 종합 스냅샷.
+  // AI 전망 = 미래 방향 예측. 두 축을 가중 평균해 단일 "종합 매매 신호"를 도출한다.
+  const SIGNAL_STATE_BI = {
+    strong_bull: 90, cautionary_bull: 70, bull: 67,
+    neutral: 50, bear: 33, cautionary_bear: 30, strong_bear: 10,
+  };
+  // AI 전망의 0~100 환산값: 단기(1W) buy_index 우선 → signal_state → overall_signal
+  const forecastBi =
+    (forecast?.forecasts?.[0]?.buy_index != null) ? forecast.forecasts[0].buy_index
+    : (signalState && SIGNAL_STATE_BI[signalState] != null) ? SIGNAL_STATE_BI[signalState]
+    : (forecast?.overall_signal && signalToBi[forecast.overall_signal] != null) ? signalToBi[forecast.overall_signal]
+    : null;
+
+  const compositeScore =
+    (buyIndex != null && forecastBi != null) ? Math.round(buyIndex * 0.6 + forecastBi * 0.4)
+    : (buyIndex != null) ? buyIndex
+    : (forecastBi != null) ? forecastBi
+    : null;
+
+  // 점수 → signal_state 라벨 (buy_index 스케일: 81+ 적극, 61+ 매수, 41+ 관망, 21+ 매도, else 적극매도)
+  let compositeState =
+    compositeScore == null ? 'neutral'
+    : compositeScore >= 81 ? 'strong_bull'
+    : compositeScore >= 61 ? 'bull'
+    : compositeScore >= 41 ? 'neutral'
+    : compositeScore >= 21 ? 'bear'
+    : 'strong_bear';
+  // AI 전망의 주의(과매수·과매도) 플래그 보존 — 같은 방향이면 cautionary로 표기
+  if (signalState === 'cautionary_bull' && ['strong_bull', 'bull'].includes(compositeState)) compositeState = 'cautionary_bull';
+  if (signalState === 'cautionary_bear' && ['strong_bear', 'bear'].includes(compositeState)) compositeState = 'cautionary_bear';
+  const compositeCfg = SIGNAL_STATE_CFG[compositeState] || SIGNAL_STATE_CFG['neutral'];
+
   const priceStr = currentPrice
     ? `$${typeof currentPrice === 'number' ? currentPrice.toFixed(2) : currentPrice}`
     : null;
@@ -2908,15 +2942,25 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-4">
 
-      {/* ── Hero: 종합 신호 ─────────────────────────────────────── */}
-      <div className="rounded-2xl p-5 border" style={{ background: '#1C1F26', borderColor: ssCfg.color + '50' }}>
+      {/* ── Hero: 종합 신호 (매수지수 60% + AI전망 40% 가중 합성) ─────────── */}
+      <div className="rounded-2xl p-5 border" style={{ background: '#1C1F26', borderColor: compositeCfg.color + '50' }}>
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
-            <span style={{ fontSize: 42, lineHeight: 1 }}>{ssCfg.emoji}</span>
+            <span style={{ fontSize: 42, lineHeight: 1 }}>{compositeCfg.emoji}</span>
             <div>
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-0.5">종합 매매 신호</p>
-              <p className="text-4xl font-black" style={{ color: ssCfg.color }}>{ssCfg.label}</p>
-              <p className="text-xs text-gray-500 mt-1">{ssCfg.desc}</p>
+              <div className="flex items-baseline gap-2">
+                <p className="text-4xl font-black" style={{ color: compositeCfg.color }}>{compositeCfg.label}</p>
+                {compositeScore != null && (
+                  <span className="text-2xl font-black tabular-nums" style={{ color: compositeCfg.color }}>{compositeScore}</span>
+                )}
+              </div>
+              <p className="text-xs text-gray-500 mt-1">{compositeCfg.desc}</p>
+              {compositeScore != null && buyIndex != null && forecastBi != null && (
+                <p className="text-xs text-gray-600 mt-1">
+                  매수지수 <span style={{ color: bCol(buyIndex) }}>{buyIndex}</span>×60% + AI전망 <span style={{ color: bCol(forecastBi) }}>{forecastBi}</span>×40%
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col items-end gap-2">
@@ -3053,7 +3097,7 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
               </p>
               {tip && <p className="text-xs text-gray-600 mt-1">{tip}</p>}
               <p className="text-xs text-gray-700 mt-1.5 border-t pt-1.5" style={{ borderColor: msgColor + '20' }}>
-                매수지수 = 과거 뉴스 기반 현재 감성 스냅샷 &nbsp;·&nbsp; 투자 전망 = 미래 방향 AI 예측 — 두 지표가 다를 때는 <span className="text-gray-500">투자 전망을 우선</span> 참고하세요.
+                매수지수 = 보조신호(YouTube·머스크X·트렌드) 포함 현재 감성 스냅샷 &nbsp;·&nbsp; 투자 전망 = 미래 방향 AI 예측 — 상단 <span className="text-gray-500">종합 매매 신호</span>는 두 지표를 <span className="text-gray-500">매수지수 60% : 전망 40%</span>로 합성한 값입니다.
               </p>
             </div>
           </div>
