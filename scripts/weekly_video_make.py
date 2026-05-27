@@ -152,8 +152,21 @@ def build_scene_tts_text(idx: int, lines: list) -> str:
             text += " 조금 더 자세히 들여다볼게요. " + details
 
     elif idx == 2:
-        # 클로징(미래 비전) — 4줄 + 따뜻한 마무리
-        text = " ".join(cleaned[:4])
+        # 클로징(미래 비전) — 6줄: 비전계획·예상결과·다음주포인트·기대결과·추가이벤트·마무리
+        vision  = cleaned[0] if len(cleaned) > 0 else ""
+        v_result = cleaned[1] if len(cleaned) > 1 else ""
+        next_pt  = cleaned[2] if len(cleaned) > 2 else ""
+        n_result = cleaned[3] if len(cleaned) > 3 else ""
+        extra    = cleaned[4] if len(cleaned) > 4 else ""
+        closing  = cleaned[5] if len(cleaned) > 5 else ""
+        parts = []
+        if vision:   parts.append(vision)
+        if v_result: parts.append("실현되면요, " + v_result)
+        if next_pt:  parts.append("다음 주엔 " + next_pt + " 을 주목해 봐요.")
+        if n_result: parts.append(n_result)
+        if extra:    parts.append("그리고 " + extra)
+        if closing:  parts.append(closing)
+        text = " ".join(parts)
 
     else:
         text = " ".join(cleaned)

@@ -188,7 +188,7 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 |-----|------|----------|------|--------|
 | 0 | 주간 브리핑 (1주 변동률·원인·호재·리스크) | 16:9 strip | Purple | focused |
 | 1 | 호재 심층 1건 (BEST, 라운드 폰트) | 16:9 strip | Green | happy |
-| 2 | 미래 비전 + 다음주 예고 (클로징) | 9:16 full | Magenta | celebrating |
+| 2 | 미래 비전 + 다음주 예고 (클로징, 6줄: 비전계획·예상결과·다음주포인트·기대결과·추가이벤트·마무리) | 9:16 full | Magenta | celebrating |
 
 > 인트로(충격속보)·리스크·시장반응 씬은 제거됨. 미국장 휴장일에도 무리 없도록 호재 위주 3씬으로 단순화.
 > 배경은 Nano Banana AI 이미지가 1순위, 실패 시 Wikipedia 폴백.
