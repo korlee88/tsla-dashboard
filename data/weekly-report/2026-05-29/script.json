@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-05-29",
+  "generated_by": "Claude Opus 4",
+  "title": "테슬라가 *+7.4%* 올라 *$442.1*예요",
+  "subtitle": "2026-05-21 ~ 2026-05-29 · 테슬라와 스페이스X, 1,190억 달러 규모의 칩 생산",
+  "summary": {
+    "week_start": "2026-05-21",
+    "week_end": "2026-05-29",
+    "session_count": 33,
+    "buy_indices": [
+      54,
+      55,
+      44,
+      58,
+      69,
+      57,
+      81,
+      66,
+      51,
+      53,
+      51,
+      51,
+      72,
+      68,
+      61,
+      67,
+      70,
+      57,
+      60,
+      57,
+      55,
+      51,
+      61,
+      50,
+      54,
+      52,
+      68,
+      64,
+      63,
+      58,
+      74,
+      58,
+      63
+    ],
+    "avg_buy_index": 60,
+    "latest_buy_index": 54,
+    "price_start": 411.65,
+    "price_end": 442.1,
+    "latest_price": 442.1,
+    "today_price": 442.1,
+    "today_change_pct": 0.4,
+    "week_change_pct": 7.4,
+    "biggest_impact": {
+      "title": "테슬라와 스페이스X, 1,190억 달러 규모의 칩 생산 메가팩토리 '테라팹' 건설 발표",
+      "score": 4,
+      "reason": "테슬라와 스페이스X의 1,190억 달러 규모 칩 생산 메가팩토리 '테라팹' 건설 발표는 자율주행 및 휴머노이드 로봇 생산의 핵심 병목 현상을 해결하여 미래 성장을 가속화할 것으로 예상됩니다.",
+      "source": "basenor",
+      "date": "2026-05-26",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라와 스페이스X, 1,190억 달러 규모의 칩 생산 메가팩토리 '테라팹' 건설 발표",
+        "score": 4,
+        "reason": "테슬라와 스페이스X의 1,190억 달러 규모 칩 생산 메가팩토리 '테라팹' 건설 발표는 자율주행 및 휴머노이드 로봇 생산의 핵심 병목 현상을 해결하여 미래 성장을 가속화할 것으로 예상됩니다.",
+        "source": "basenor",
+        "date": "2026-05-26",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시, 옵티머스 제품 출시 계획",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS와 매출 예상치를 상회했으며, 로보택시 및 옵티머스 제품 출시 계획과 대규모 투자 계획을 발표하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings|Product"
+      },
+      {
+        "title": "테슬라, 사이버캡 및 옵티머스 상용화 진전",
+        "score": 4,
+        "reason": "테슬라가 사이버캡 생산을 시작하고 옵티머스 로봇 공장 준비를 2분기에 시작한다고 밝히면서 신제품 상용화 및 로봇 생산 확대에 대한 강력한 진전을 보여주어 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-05-07",
+        "category": "Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라 주가, 대규모 인도량 부족으로 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 크게 밑돌아 전기차 수요에 대한 우려를 불러일으키며 주가가 급락했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 5% 이상 크게 하회하여 전기차 수요 둔화와 경쟁 심화에 대한 우려를 증폭시켰습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려와 경쟁 심화가 주가 하락을 야기했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery|Competition|Market"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "5/29(금)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 442.1,
+        "predictedPrice": 438.12
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/1(월)",
+        "change_pct": -0.2,
+        "signal": "관망",
+        "basePrice": 442.1,
+        "predictedPrice": 441.22
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/2(화)",
+        "change_pct": 0.1,
+        "signal": "관망",
+        "basePrice": 442.1,
+        "predictedPrice": 442.54
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-29",
+        442.1
+      ],
+      [
+        "2026-05-28",
+        440.36
+      ],
+      [
+        "2026-05-27",
+        433.59
+      ],
+      [
+        "2026-05-26",
+        426.01
+      ],
+      [
+        "2026-05-25",
+        426.01
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "테슬라(TSLA) 주가 2026년 5월 21일~29일 기간 상승의 주요 원인은 다음과 같습니다.\n\n유럽 판매량 반등 / 스페이스X 합병 기대 / 자율주행 기술 발전"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "이번주",
+      "lines": [
+        "테슬라가 *+7.4%* 올라 *$442.1*예요",
+        "유럽 판매 반등에 *테라팹* 기대감이죠",
+        "*1,190억 달러* 칩 메가팩토리 발표요",
+        "1분기 인도량 *5% 하회* 우려도 있어요"
+      ],
+      "body": "테슬라가 *+7.4%* 올라 *$442.1*예요\n유럽 판매 반등에 *테라팹* 기대감이죠\n*1,190억 달러* 칩 메가팩토리 발표요\n1분기 인도량 *5% 하회* 우려도 있어요"
+    },
+    {
+      "index": 1,
+      "title": "테라팹",
+      "lines": [
+        "카테고리: *테라팹* 메가팩토리 건설 발표",
+        "↳ 배경: 스페이스X와 손잡은 *5/26* 발표",
+        "↳ 데이터: 투자 규모 *1,190억 달러* 규모",
+        "↳ 임팩트: 주가 한 주 *+7.4%* 상승 견인",
+        "↳ 비교: 기존 기가팩 대비 *최대 규모*죠",
+        "↳ 자율주행·옵티머스 칩 자급 기대돼요"
+      ],
+      "body": "카테고리: *테라팹* 메가팩토리 건설 발표\n   ↳ 배경: 스페이스X와 손잡은 *5/26* 발표\n   ↳ 데이터: 투자 규모 *1,190억 달러* 규모\n   ↳ 임팩트: 주가 한 주 *+7.4%* 상승 견인\n   ↳ 비교: 기존 기가팩 대비 *최대 규모*죠\n   ↳ 자율주행·옵티머스 칩 자급 기대돼요"
+    },
+    {
+      "index": 2,
+      "title": "비전",
+      "lines": [
+        "*사이버캡* 생산 *2분기* 본격 시동이에요",
+        "옵티머스 공장도 *2026년* 가동 목표죠",
+        "다음주는 *유럽 판매* 지표가 핵심이에요",
+        "반등 흐름 이어지면 *$450* 돌파 기대요",
+        "*스페이스X 시너지*도 같이 봐야 해요",
+        "여러분, 한 주도 화이팅이에요 💜",
+        "",
+        "IMAGE_PROMPT_0: A cinematic 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte Tower, with a sleek Tesla autonomous electric vehicle gliding through neon-lit streets, Korean K-tech futuristic city atmosphere bathed in deep purple and violet analytical mood, glowing city lights bokeh, holographic data streams floating in the air, reflective wet asphalt, ambient mist, ultra-high resolution, 16:9 landscape horizontal strip composition, no text, no letters, no watermark, no logo",
+        "",
+        "IMAGE_PROMPT_1: A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in bright sunlit green growth energy, lush riverside trees, a Tesla electric vehicle fast-charging at a modern Korean station, bullish upward momentum atmosphere, K-tech eco-friendly infrastructure with solar panels and clean energy towers, sparkling Han River reflections, fresh emerald and lime green tones, optimistic vibrant mood, ultra-high resolution, 16:9 landscape horizontal strip composition, no text, no letters, no watermark, no logo",
+        "",
+        "IMAGE_PROMPT_2: A breathtaking 9:16 vertical full-screen view of a Korean futuristic megacity blending Han River night skyline, Seoul cityscape, and Gwanghwamun Plaza, featuring autonomous Tesla vehicles and Optimus humanoid robots walking among citizens, advanced K-tech urban landscape with floating drones and holographic billboards, magenta and gold inspirational futuristic mood, golden sunlight rays, starlight sparkles, glittering particles, dreamy aspirational atmosphere, ultra-high resolution, 9:16 vertical composition, no text, no letters, no watermark, no logo"
+      ],
+      "body": "*사이버캡* 생산 *2분기* 본격 시동이에요\n옵티머스 공장도 *2026년* 가동 목표죠\n다음주는 *유럽 판매* 지표가 핵심이에요\n반등 흐름 이어지면 *$450* 돌파 기대요\n*스페이스X 시너지*도 같이 봐야 해요\n여러분, 한 주도 화이팅이에요 💜\n\nIMAGE_PROMPT_0: A cinematic 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte Tower, with a sleek Tesla autonomous electric vehicle gliding through neon-lit streets, Korean K-tech futuristic city atmosphere bathed in deep purple and violet analytical mood, glowing city lights bokeh, holographic data streams floating in the air, reflective wet asphalt, ambient mist, ultra-high resolution, 16:9 landscape horizontal strip composition, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_1: A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in bright sunlit green growth energy, lush riverside trees, a Tesla electric vehicle fast-charging at a modern Korean station, bullish upward momentum atmosphere, K-tech eco-friendly infrastructure with solar panels and clean energy towers, sparkling Han River reflections, fresh emerald and lime green tones, optimistic vibrant mood, ultra-high resolution, 16:9 landscape horizontal strip composition, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_2: A breathtaking 9:16 vertical full-screen view of a Korean futuristic megacity blending Han River night skyline, Seoul cityscape, and Gwanghwamun Plaza, featuring autonomous Tesla vehicles and Optimus humanoid robots walking among citizens, advanced K-tech urban landscape with floating drones and holographic billboards, magenta and gold inspirational futuristic mood, golden sunlight rays, starlight sparkles, glittering particles, dreamy aspirational atmosphere, ultra-high resolution, 9:16 vertical composition, no text, no letters, no watermark, no logo"
+    }
+  ],
+  "image_prompts": {
+    "0": "A cinematic 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte Tower, with a sleek Tesla autonomous electric vehicle gliding through neon-lit streets, Korean K-tech futuristic city atmosphere bathed in deep purple and violet analytical mood, glowing city lights bokeh, holographic data streams floating in the air, reflective wet asphalt, ambient mist, ultra-high resolution, 16:9 landscape horizontal strip composition, no text, no letters, no watermark, no logo",
+    "1": "A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in bright sunlit green growth energy, lush riverside trees, a Tesla electric vehicle fast-charging at a modern Korean station, bullish upward momentum atmosphere, K-tech eco-friendly infrastructure with solar panels and clean energy towers, sparkling Han River reflections, fresh emerald and lime green tones, optimistic vibrant mood, ultra-high resolution, 16:9 landscape horizontal strip composition, no text, no letters, no watermark, no logo",
+    "2": "A breathtaking 9:16 vertical full-screen view of a Korean futuristic megacity blending Han River night skyline, Seoul cityscape, and Gwanghwamun Plaza, featuring autonomous Tesla vehicles and Optimus humanoid robots walking among citizens, advanced K-tech urban landscape with floating drones and holographic billboards, magenta and gold inspirational futuristic mood, golden sunlight rays, starlight sparkles, glittering particles, dreamy aspirational atmosphere, ultra-high resolution, 9:16 vertical composition, no text, no letters, no watermark, no logo"
+  }
+}
