@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.2,
-  "velocity_label": "급감 (×0.2)",
-  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 263,310회 / 이전 4~7일 1,301,666회 | 총 1,564,976회 (43개 영상)",
-  "video_count": 43,
-  "total_views": 1564976,
-  "hot_views": 263310,
-  "baseline_views": 1301666,
+  "velocity": 0.26,
+  "velocity_label": "급감 (×0.3)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 370,753회 / 이전 4~7일 1,408,248회 | 총 1,779,001회 (44개 영상)",
+  "video_count": 44,
+  "total_views": 1779001,
+  "hot_views": 370753,
+  "baseline_views": 1408248,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 514785
+      "viewCount": 524305
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 142492
+      "viewCount": 145661
     },
     {
       "title": "Nvidia earnings shows &#39;unrelenting demand&#39;, says Fundstrat&#39;s Tom Lee",
       "channel": "CNBC Television",
       "publishedAt": "2026-05-22T12:07:18Z",
-      "viewCount": 134089
+      "viewCount": 134925
     },
     {
       "title": "&quot;No, that&#39;s optimus prime!&quot; - Optimus Prime Edit | NATI NATI (Slowed)",
       "channel": "Wirtz Editz",
       "publishedAt": "2026-05-24T13:50:25Z",
-      "viewCount": 127383
+      "viewCount": 129534
     },
     {
-      "title": "El robot de tesla! 🥶🫣😭",
-      "channel": "Jose David GO",
-      "publishedAt": "2026-05-23T18:36:15Z",
-      "viewCount": 80102
+      "title": "How investors can trade AI after Nvidia&#39;s earnings report",
+      "channel": "CNBC Television",
+      "publishedAt": "2026-05-21T18:33:33Z",
+      "viewCount": 96645
     }
   ],
-  "collected_at": "2026-05-28T04:21:00Z"
+  "collected_at": "2026-05-28T10:03:51Z"
 }
