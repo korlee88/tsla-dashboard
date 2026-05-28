@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.26,
+  "velocity": 0.33,
   "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 370,753회 / 이전 4~7일 1,408,248회 | 총 1,779,001회 (44개 영상)",
-  "video_count": 44,
-  "total_views": 1779001,
-  "hot_views": 370753,
-  "baseline_views": 1408248,
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 485,885회 / 이전 4~7일 1,488,819회 | 총 1,974,704회 (45개 영상)",
+  "video_count": 45,
+  "total_views": 1974704,
+  "hot_views": 485885,
+  "baseline_views": 1488819,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 524305
+      "viewCount": 541868
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 145661
+      "viewCount": 149930
     },
     {
       "title": "Nvidia earnings shows &#39;unrelenting demand&#39;, says Fundstrat&#39;s Tom Lee",
       "channel": "CNBC Television",
       "publishedAt": "2026-05-22T12:07:18Z",
-      "viewCount": 134925
+      "viewCount": 135336
     },
     {
       "title": "&quot;No, that&#39;s optimus prime!&quot; - Optimus Prime Edit | NATI NATI (Slowed)",
       "channel": "Wirtz Editz",
       "publishedAt": "2026-05-24T13:50:25Z",
-      "viewCount": 129534
+      "viewCount": 131941
     },
     {
-      "title": "How investors can trade AI after Nvidia&#39;s earnings report",
-      "channel": "CNBC Television",
-      "publishedAt": "2026-05-21T18:33:33Z",
-      "viewCount": 96645
+      "title": "Elon Just Told TSLA Holders What&#39;s Coming",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-05-27T18:30:14Z",
+      "viewCount": 103305
     }
   ],
-  "collected_at": "2026-05-28T10:03:51Z"
+  "collected_at": "2026-05-28T16:01:42Z"
 }
