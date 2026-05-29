@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.38,
+  "velocity": 0.4,
   "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 540,197회 / 이전 4~7일 1,432,364회 | 총 1,972,561회 (45개 영상)",
+  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 529,927회 / 이전 4~7일 1,341,118회 | 총 1,871,045회 (45개 영상)",
   "video_count": 45,
-  "total_views": 1972561,
-  "hot_views": 540197,
-  "baseline_views": 1432364,
+  "total_views": 1871045,
+  "hot_views": 529927,
+  "baseline_views": 1341118,
   "top_videos": [
     {
       "title": "A China Humilhou o Elon Musk (Robô no AliExpress) 🛑",
       "channel": "Izabela Anholett",
       "publishedAt": "2026-05-23T13:00:00Z",
-      "viewCount": 563738
+      "viewCount": 567886
     },
     {
       "title": "로봇 걸음만 봐도 기술력 보인다 테슬라 옵티머스 현대차 아틀라스",
       "channel": "엔지니어TV",
       "publishedAt": "2026-05-23T10:21:41Z",
-      "viewCount": 158796
-    },
-    {
-      "title": "Nvidia earnings shows &#39;unrelenting demand&#39;, says Fundstrat&#39;s Tom Lee",
-      "channel": "CNBC Television",
-      "publishedAt": "2026-05-22T12:07:18Z",
-      "viewCount": 137418
+      "viewCount": 160621
     },
     {
       "title": "&quot;No, that&#39;s optimus prime!&quot; - Optimus Prime Edit | NATI NATI (Slowed)",
       "channel": "Wirtz Editz",
       "publishedAt": "2026-05-24T13:50:25Z",
-      "viewCount": 137074
+      "viewCount": 138228
     },
     {
       "title": "Elon Just Told TSLA Holders What&#39;s Coming",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-05-27T18:30:14Z",
-      "viewCount": 121802
+      "viewCount": 124494
+    },
+    {
+      "title": "Humanoid robots replacing factory and home jobs.",
+      "channel": "Matty | AI Models & Monetization",
+      "publishedAt": "2026-05-25T21:48:45Z",
+      "viewCount": 91360
     }
   ],
-  "collected_at": "2026-05-29T09:55:48Z"
+  "collected_at": "2026-05-29T15:38:48Z"
 }
