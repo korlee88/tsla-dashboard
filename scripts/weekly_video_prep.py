@@ -196,7 +196,7 @@ def summarize(sessions):
         "biggest_impact":  biggest_impact,
         "top_bullish":     bullish[:3],
         "top_bearish":     bearish[:3],
-        "forecasts":       latest.get("dailyForecasts", [])[:3],
+        "forecasts":       latest.get("dailyForecasts", [])[:5],
         "daily_prices":    daily_prices,
         "overall_signal":  overall_signal,
         "trends":          None,        # fetch_google_trends()로 채움
@@ -299,6 +299,51 @@ def load_next_events(days=14, max_n=3):
         print(f"   ⚠ calendar.json 로드 실패: {e}", file=sys.stderr)
         return []
 
+
+def build_next_week_outlook(forecasts):
+    """dailyForecasts(일별 가격 예측)를 '다음주 전망' 한 단락으로 요약.
+
+    YouTube 정책상 매수/매도 같은 신호 단어(signal 필드)는 제외하고
+    가격·변동률 추세만 참고용으로 정리한다.
+    """
+    if not forecasts:
+        return "예측 데이터 없음 — 다음주 일정·이벤트 중심으로 전망"
+
+    def _pct(f):
+        try:
+            return float(f.get("change_pct"))
+        except (TypeError, ValueError):
+            return 0.0
+
+    up   = sum(1 for f in forecasts if _pct(f) > 0)
+    down = sum(1 for f in forecasts if _pct(f) < 0)
+
+    cum = end = None
+    try:
+        base = float(forecasts[0].get("basePrice"))
+        end  = float(forecasts[-1].get("predictedPrice"))
+        if base > 0:
+            cum = round((end - base) / base * 100, 1)
+    except (TypeError, ValueError, AttributeError):
+        pass
+
+    # change_pct는 '현재가 대비' 예측치(일별 증감 아님). 주말 도달 예측가로 누적 표현.
+    parts = []
+    if cum is not None:
+        sign = "+" if cum >= 0 else ""
+        parts.append(f"다음 주말 예상 변동률 {sign}{cum}% (현재가 대비)")
+    if end:
+        parts.append(f"예상 도달가 약 ${end:,.0f}")
+    parts.append(f"현재가보다 높게 예측된 날 {up}일 / 낮은 날 {down}일")
+
+    daily = " → ".join(
+        f"{f.get('label') or f.get('date','')} ${float(f.get('predictedPrice')):,.0f}"
+        for f in forecasts if f.get("predictedPrice")
+    )
+    if daily:
+        return "; ".join(parts) + f"\n  일별 예측가: {daily}"
+    return "; ".join(parts)
+
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
 SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 나레이션 대본을 작성해줘.
@@ -312,7 +357,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 단정적 권유 금지 (매수·매도·관망 직접 언급 금지)
 • **내부 점수(+N점·-N점) 절대 표기 금지** — 시청자용 지표가 아니다. "좋은 소식"·"호재" / "걱정되는 부분"·"리스크"처럼 풀어 말하고, 점수 대신 구체적 수치·배경·맥락으로 왜 그런지 설명한다.
 • 수치·근거는 그대로 살린다: 모든 핵심 줄에 %·$·대수 등 구체 수치를 자연스럽게 녹여 넣는다
-• 씬 0: 4줄 / 씬 1: 6줄 / 씬 2: 4줄 (한 줄 30자 이내 권장)
+• 씬 0: 4줄 / 씬 1: 6줄 / 씬 2: 6줄 (한 줄 30자 이내 권장)
 
 === 핵심 강조 표시 (반드시 준수) ===
 • 각 줄에서 가장 중요한 핵심 글귀(수치·키워드) 1개를 *별표*로 감싼다. 예시: 이번 주 테슬라가 *12% 급등*했어요
@@ -325,6 +370,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 주가 변동 원인: {movement_reason_str}
 - 검색량 트렌드: {trends_str}
 - 다음주 예정 이벤트: {next_events_str}
+- 다음주 가격 예측(AI 모델, 참고용·매매신호 아님): {next_week_str}
 {daily_prices_txt}
 - 주요 호재 (점수 표기 금지, 내용만 활용):
 {b_txt}
@@ -347,13 +393,14 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치)"
 - 줄6: "   ↳ 향후 전망 (30자 이내, 단정적 권유 금지)"
 
-【씬 2 — 미래 비전 + 다음주 예고】 (6줄, 구어체, 수치·계획·예상결과 의무)
-- 줄1: 테슬라 중장기 비전 핵심 1건 — 어떤 계획인지 구체적 수치·목표 포함 (25자 이내, 수치 필수)
-- 줄2: → 줄1의 예상 결과·임팩트 — 실현되면 어떤 효과·수치가 기대되는지 (25자 이내, 수치 포함)
-- 줄3: 다음주 핵심 관전 포인트 1건 — 실적 발표·규제 결정·신제품 이벤트 중 가장 중요한 것 (25자 이내)
-- 줄4: → 줄3의 기대 결과·예상 수치 — 긍정 시나리오로 어떤 결과가 예상되는지 (25자 이내)
-- 줄5: 추가 주목 이벤트 또는 경쟁사 동향 1건 — BYD·리비안·루시드·SpaceX 시너지 등 (25자 이내)
-- 줄6: 따뜻한 마무리 인사 한 문장 — 구독자에게 다정하게 말 걸듯 (20자 이내)
+【씬 2 — 다음주 전망 (클로징)】 (6줄, 구어체, 다음주 예측 중심·수치 의무)
+※ 이 씬은 한 주를 마무리하며 "다음주에 무슨 일이 있고, 어떻게 움직일지" 예측하는 마지막 씬이다.
+- 줄1: 다음주 핵심 일정·이벤트 1건 — next_events 활용 (실적·규제 결정·신제품 등, 25자 이내)
+- 줄2: → 그 이벤트로 예상되는 시나리오·관전 포인트 (25자 이내, 가능하면 수치)
+- 줄3: 다음주 가격 흐름 예측 요약 — 누적 예측 변동률·예상 도달가 활용 (25자 이내, 수치 필수, 단정 금지·"~예상돼요"·"~흐름이 점쳐져요" 톤)
+- 줄4: → 상승/하락 예측 일수 등 흐름 부연 — "며칠은 오르고 며칠은…" 식 (25자 이내, 수치)
+- 줄5: 신중하게 봐야 할 변수 1건 — 예측을 흔들 수 있는 리스크 (25자 이내)
+- 줄6: 따뜻한 마무리 인사 한 문장 — "다음 주에 또 만나요" 식 (20자 이내)
 
 === 출력 형식 (반드시 준수) ===
 ※ 핵심 수치·키워드는 *별표*로 감싸 강조한다 (각 줄 최대 1~2개).
@@ -373,13 +420,13 @@ SCENE_1:
    ↳ 비교: 경쟁사·과거 대비 (*별표* 강조)
    ↳ 향후 전망 한 문장
 
-SCENE_2_TITLE: [6자 이내, "전망" "비전" 같은 단어]
+SCENE_2_TITLE: [6자 이내, "다음주" "전망" 같은 단어]
 SCENE_2:
-[줄1 — 중장기 비전 핵심 계획, 수치 *별표* 강조]
-[줄2 — → 예상 결과·임팩트, 수치 *별표* 강조]
-[줄3 — 다음주 핵심 관전 포인트, 핵심 *별표* 강조]
-[줄4 — → 기대 결과·예상 수치, *별표* 강조]
-[줄5 — 추가 이벤트 또는 경쟁사 동향]
+[줄1 — 다음주 핵심 일정·이벤트, 핵심 *별표* 강조]
+[줄2 — → 예상 시나리오·관전 포인트, *별표* 강조]
+[줄3 — 다음주 가격 흐름 예측 요약, 누적 변동률·도달가 *별표* 강조]
+[줄4 — → 상승/하락 예측 흐름 부연, 수치 *별표* 강조]
+[줄5 — 신중히 볼 변수 1건]
 [줄6 — 따뜻한 마무리 인사]
 
 === 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 3개) ===
@@ -434,6 +481,9 @@ def _build_prompt(summary):
     movement_reason = summary.get("movement_reason")
     movement_reason_str = movement_reason if movement_reason else "데이터 수집 중"
 
+    # 다음주 가격 예측 요약 (dailyForecasts 기반, 매매신호 단어 제외)
+    next_week_str = build_next_week_outlook(summary.get("forecasts", []))
+
     return SCRIPT_PROMPT_TEMPLATE.format(
         ticker=TICKER,
         company_ko=COMPANY_KO,
@@ -447,6 +497,7 @@ def _build_prompt(summary):
         movement_reason_str=movement_reason_str,
         trends_str=trends_str,
         next_events_str=next_events_str,
+        next_week_str=next_week_str,
     )
 
 
@@ -1317,7 +1368,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
     # ╔══════════════════════════════════════════════════════════════════╗
-    # ║ 씬 2 — 미래 비전 + 다음주 예고 (custom layout)                    ║
+    # ║ 씬 2 — 다음주 전망 (클로징, custom layout)                        ║
     # ╚══════════════════════════════════════════════════════════════════╝
     if idx == 2:
         # ① AI 배경 이미지를 풀스크린으로 깔기 (미래 비전 이미지)
@@ -1345,28 +1396,28 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                     int(35 + 60 * t), int(10 + 28 * t), int(58 + 90 * t)
                 ))
 
-        # ── 헤더: 테슬라의 미래 비전 ──────────────────────────────────
-        draw.text((W // 2, 80), "테슬라의 미래",
+        # ── 헤더: 다음주 전망 ─────────────────────────────────────────
+        draw.text((W // 2, 80), "다음주 전망",
                   font=f_huge_sub, fill=WHITE, anchor="mt",
                   stroke_width=3, stroke_fill=STROKE)
         draw.line([(W // 2 - 200, 162), (W // 2 + 200, 162)],
                   fill=accent, width=4)
 
-        # ── 3개 메시지 카드 (비전·예상·믿음) ─────────────────────────
-        # news_lines: [0]=비전계획, [1]=→예상결과, [2]=다음주포인트, [3]=→기대결과, [4]=추가이벤트, [5]=마무리
+        # ── 3개 메시지 카드 (다음주 일정·가격 전망·마무리) ───────────
+        # news_lines: [0]=일정, [1]=→시나리오, [2]=가격예측, [3]=→흐름, [4]=변수, [5]=마무리
         def _nl(i, fallback):
             return strip_emoji(news_lines[i]) if len(news_lines) > i else fallback
 
         # 카드별 (label, lines[], col, bgcol, max_body_lines)
         MSG_CARDS = [
-            ("미래 계획",    [_nl(0, "FSD·옵티머스·에너지, 테슬라 미래 주목"),
+            ("다음주 일정",  [_nl(0, "다음 주 핵심 이벤트를 주목하세요"),
                               _nl(1, "")],
              KEY,    CARD_AMBER,  2),
-            ("다음주 포인트", [_nl(2, "다음 주 핵심 이벤트를 주목하세요"),
-                               _nl(3, ""),
-                               _nl(4, "")],
+            ("가격 전망",    [_nl(2, "변동성 흐름을 지켜봐요"),
+                              _nl(3, ""),
+                              _nl(4, "")],
              accent, CARD_PURPLE, 3),
-            ("마무리",        [_nl(5, "다음주도 같이 봐요!")],
+            ("마무리",        [_nl(5, "다음주에 또 만나요!")],
              GREEN,  CARD_GREEN,  1),
         ]
         LINE_H = 52      # 줄간 px
@@ -1719,7 +1770,7 @@ def main():
         if img_prompts:
             lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
-            scene_names = {0: "씬0 주간브리핑", 1: "씬1 호재심층", 2: "씬2 미래비전"}
+            scene_names = {0: "씬0 주간브리핑", 1: "씬1 호재심층", 2: "씬2 다음주전망"}
             for i in range(0, 3):
                 if i in img_prompts:
                     lines.append(f"## {scene_names[i]}")

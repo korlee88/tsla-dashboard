@@ -10,7 +10,7 @@
 ## 프로젝트 개요
 
 GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
-매일 KST 09:00 GitHub Actions가 자동으로 영상 자료를 생성한다.
+주 1회 금요일 KST 새벽 GitHub Actions가 자동으로 영상 자료를 생성한다 (한 주 마무리 + 다음주 전망).
 
 - **저장소**: `korlee88/tsla-dashboard`
 - **기본 브랜치**: `master` (보호됨)
@@ -63,7 +63,7 @@ git clone https://github.com/korlee88/nvda-dashboard
 ```
 tsla-dashboard/
 ├── .github/workflows/
-│   ├── weekly-video.yml       # 매일 자동 실행 + workflow_dispatch
+│   ├── weekly-video.yml       # 주 1회 금요일 자동 실행 + workflow_dispatch
 │   ├── auto-analysis.yml      # 하루 4회 자동 분석
 │   ├── backtest-run.yml       # 백테스트 (매일 자동 + 수동)
 │   └── calendar-update.yml    # 매주 일정 갱신
@@ -188,7 +188,7 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 |-----|------|----------|------|--------|
 | 0 | 주간 브리핑 (1주 변동률·원인·호재·리스크) | 16:9 strip | Purple | focused |
 | 1 | 호재 심층 1건 (BEST, 라운드 폰트) | 16:9 strip | Green | happy |
-| 2 | 미래 비전 + 다음주 예고 (클로징, 6줄: 비전계획·예상결과·다음주포인트·기대결과·추가이벤트·마무리) | 9:16 full | Magenta | celebrating |
+| 2 | 다음주 전망 (클로징, 6줄: 일정·시나리오·가격예측·흐름·변수·마무리, `dailyForecasts` 예측 활용) | 9:16 full | Magenta | celebrating |
 
 > 인트로(충격속보)·리스크·시장반응 씬은 제거됨. 미국장 휴장일에도 무리 없도록 호재 위주 3씬으로 단순화.
 > 배경은 Nano Banana AI 이미지가 1순위, 실패 시 Wikipedia 폴백.
@@ -289,8 +289,9 @@ sudo apt-get install -y fonts-nanum
 **파일**: `.github/workflows/weekly-video.yml`
 
 **트리거**:
-- 자동: 매일 KST 09:00 (UTC 00:00, `cron: '0 0 * * *'`)
+- 자동: 주 1회 금요일 KST 05:15 (1차) / 07:15 (2차 재시도). UTC 기준 목요일이므로 cron `15 20 * * 4`, `15 22 * * 4`
 - 수동: GitHub Actions 탭 → `workflow_dispatch`
+- 같은 날 이미 생성됐으면 2차 트리거는 자동 skip
 
 **주요 단계**:
 1. Python 3.11 + pip 캐시 설정
@@ -342,7 +343,9 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.3.0** | 2026-05-25 KST | 인트로 씬 제거 → 3씬(브리핑·호재·미래) · 주간 변동률 표시 · 점수 라벨 제거 · 호재 씬 라운드 폰트(NanumSquareRound) |
+| **v2.5.0** | 2026-05-29 KST | 영상 생성 주 1회 금요일로 변경(매일→주간) · 씬2 "다음주 전망"으로 개편 · `dailyForecasts` 가격 예측 활용(누적 변동률·예상 도달가·일별 예측가) · Phase 1 종료 |
+| v2.4.0 | 2026-05-27 KST | 종합 매매 신호 가중 합성(매수지수 60% + AI전망 40%) · 합성 산식 표시 |
+| v2.3.0 | 2026-05-25 KST | 인트로 씬 제거 → 3씬(브리핑·호재·미래) · 주간 변동률 표시 · 점수 라벨 제거 · 호재 씬 라운드 폰트(NanumSquareRound) |
 | v2.2.0 | 2026-05-17 19:00 KST | 충격 인트로(씬0) + 다음주 예고(씬5) + 자극적 멘트 + Google Trends |
 | v2.1.1 | 2026-05-17 18:00 KST | 영상 5가지 수정 · Ken Burns 사진 영역만 · TTS 톤 · 2줄 대본 · 90% 스케일 |
 | v2.1.0 | 2026-05-17 15:00 KST | 영상 매일 자동 생성 · 대시보드 실행/다운로드 버튼 · 설정 버전 카드 |
