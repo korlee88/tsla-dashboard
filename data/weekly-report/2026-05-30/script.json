@@ -1,0 +1,234 @@
+{
+  "generated_at": "2026-05-30",
+  "generated_by": "Claude Opus 4",
+  "title": "테슬라 주가 *+2.03%* 올라 $435예요",
+  "subtitle": "2026-05-23 ~ 2026-05-30 · 테슬라와 스페이스X, 1,190억 달러 규모의 칩 생산",
+  "summary": {
+    "week_start": "2026-05-23",
+    "week_end": "2026-05-30",
+    "session_count": 28,
+    "buy_indices": [
+      65,
+      58,
+      56,
+      60,
+      54,
+      55,
+      44,
+      58,
+      69,
+      57,
+      81,
+      66,
+      51,
+      53,
+      51,
+      51,
+      72,
+      68,
+      61,
+      67,
+      70,
+      57,
+      60,
+      57,
+      55,
+      51,
+      61,
+      50
+    ],
+    "avg_buy_index": 59,
+    "latest_buy_index": 65,
+    "price_start": 427.11,
+    "price_end": 435.79,
+    "latest_price": 435.79,
+    "today_price": 435.79,
+    "today_change_pct": -1.43,
+    "week_change_pct": 2.03,
+    "biggest_impact": {
+      "title": "테슬라와 스페이스X, 1,190억 달러 규모의 칩 생산 메가팩토리 '테라팹' 건설 발표",
+      "score": 4,
+      "reason": "테슬라와 스페이스X의 1,190억 달러 규모 칩 생산 메가팩토리 '테라팹' 건설 발표는 자율주행 및 휴머노이드 로봇 생산의 핵심 병목 현상을 해결하여 미래 성장을 가속화할 것으로 예상됩니다.",
+      "source": "basenor",
+      "date": "2026-05-26",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라와 스페이스X, 1,190억 달러 규모의 칩 생산 메가팩토리 '테라팹' 건설 발표",
+        "score": 4,
+        "reason": "테슬라와 스페이스X의 1,190억 달러 규모 칩 생산 메가팩토리 '테라팹' 건설 발표는 자율주행 및 휴머노이드 로봇 생산의 핵심 병목 현상을 해결하여 미래 성장을 가속화할 것으로 예상됩니다.",
+        "source": "basenor",
+        "date": "2026-05-26",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 2026년 1분기 실적 발표: EPS 및 매출 예상치 상회",
+        "score": 4,
+        "reason": "테슬라가 2026년 1분기 주당순이익(EPS)과 매출 모두 시장 예상치를 상회하며 강력한 실적을 발표했고, 자동차 및 에너지 저장 마진이 개선되어 긍정적인 영향을 미칠 것입니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시, 옵티머스 제품 출시 계획",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS와 매출 예상치를 상회했으며, 로보택시 및 옵티머스 제품 출시 계획과 대규모 투자 계획을 발표하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings|Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라 주가, 대규모 인도량 부족으로 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 크게 밑돌아 전기차 수요에 대한 우려를 불러일으키며 주가가 급락했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 인도량이 예상치를 5% 이상 크게 하회하여 전기차 수요 둔화와 경쟁 심화에 대한 우려를 증폭시켰습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
+        "score": -4,
+        "reason": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려와 경쟁 심화가 주가 하락을 야기했습니다.",
+        "source": "Fox Business",
+        "date": "2024-04-02",
+        "category": "Delivery|Competition|Market"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "6/2(월)",
+        "change_pct": 1.8,
+        "signal": "매수",
+        "basePrice": 435.79,
+        "predictedPrice": 443.63
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/3(화)",
+        "change_pct": 1.5,
+        "signal": "매수",
+        "basePrice": 435.79,
+        "predictedPrice": 442.33
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/4(수)",
+        "change_pct": 0.9,
+        "signal": "매수",
+        "basePrice": 435.79,
+        "predictedPrice": 439.71
+      },
+      {
+        "day": 4,
+        "label": "D+4",
+        "date": "6/5(목)",
+        "change_pct": 0.5,
+        "signal": "관망",
+        "basePrice": 435.79,
+        "predictedPrice": 437.97
+      },
+      {
+        "day": 5,
+        "label": "D+5",
+        "date": "6/6(금)",
+        "change_pct": 0.2,
+        "signal": "관망",
+        "basePrice": 435.79,
+        "predictedPrice": 436.66
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-05-30",
+        435.79
+      ],
+      [
+        "2026-05-29",
+        442.1
+      ],
+      [
+        "2026-05-28",
+        440.36
+      ],
+      [
+        "2026-05-27",
+        433.59
+      ],
+      [
+        "2026-05-26",
+        426.01
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": null
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "이번주",
+      "lines": [
+        "테슬라 주가 *+2.03%* 올라 $435예요",
+        "한 주간 *$426→$442* 흐름이 좋았죠",
+        "*1,190억 달러* 테라팹 발표가 컸어요",
+        "1분기 인도량 *5% 하회* 부담은 남아요"
+      ],
+      "body": "테슬라 주가 *+2.03%* 올라 $435예요\n한 주간 *$426→$442* 흐름이 좋았죠\n*1,190억 달러* 테라팹 발표가 컸어요\n1분기 인도량 *5% 하회* 부담은 남아요"
+    },
+    {
+      "index": 1,
+      "title": "호재분석",
+      "lines": [
+        "카테고리: *테라팹* 메가팩토리 발표",
+        "↳ 배경: 스페이스X와 공동 *1,190억 달러* 투자",
+        "↳ 데이터: 자율주행·옵티머스용 *칩 자체생산*",
+        "↳ 임팩트: 발표 후 주가 *$426→$442* 반등",
+        "↳ 비교: 엔비디아 의존 *0%대*로 축소 목표",
+        "↳ AI·로봇 수직계열화의 핵심 발판이 돼요"
+      ],
+      "body": "카테고리: *테라팹* 메가팩토리 발표\n   ↳ 배경: 스페이스X와 공동 *1,190억 달러* 투자\n   ↳ 데이터: 자율주행·옵티머스용 *칩 자체생산*\n   ↳ 임팩트: 발표 후 주가 *$426→$442* 반등\n   ↳ 비교: 엔비디아 의존 *0%대*로 축소 목표\n   ↳ AI·로봇 수직계열화의 핵심 발판이 돼요"
+    },
+    {
+      "index": 2,
+      "title": "다음주",
+      "lines": [
+        "다음주는 *특별 이벤트 없는* 모니터링 주간",
+        "→ 테라팹 후속 *코멘트* 체크해봐요",
+        "다음 주말 *+0.2%·$437* 흐름이 점쳐져요",
+        "→ *5일 상승·0일 하락* 예측이에요",
+        "인도량 둔화·경쟁 심화는 신중히 봐요",
+        "다음 주에 또 만나요!",
+        "",
+        "IMAGE_PROMPT_0: A breathtaking 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte World Tower glowing under a deep purple violet sky, with a sleek Tesla autonomous electric vehicle cruising along an illuminated futuristic highway, holographic data streams and analytics charts subtly floating above the cityscape, K-tech advanced metropolis atmosphere with glowing city lights bokeh, cinematic depth, reflective river surface, neon purple and violet tech ambiance, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+        "",
+        "IMAGE_PROMPT_1: A vibrant 16:9 landscape shot of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek futuristic station beside the Han River, lush green parks and eco-friendly Korean urban infrastructure surrounding the scene, bright optimistic atmosphere with rays of golden green light, K-tech sustainable city vibe, glowing EV charging cables, dynamic motion blur of high-speed driving, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+        "",
+        "IMAGE_PROMPT_2: A stunning 9:16 vertical composition showcasing a futuristic Korean cityscape with Han River night view, Seoul skyline, and Gwanghwamun Square in the background, featuring an autonomous Tesla vehicle alongside an Optimus humanoid robot walking gracefully, advanced K-tech urban landscape blending tradition and innovation, inspirational future mood with magenta and gold lighting, golden sunlight breaking through clouds, sparkling stars and shimmering particles, cinematic atmosphere of hope and progress, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+      ],
+      "body": "다음주는 *특별 이벤트 없는* 모니터링 주간\n→ 테라팹 후속 *코멘트* 체크해봐요\n다음 주말 *+0.2%·$437* 흐름이 점쳐져요\n→ *5일 상승·0일 하락* 예측이에요\n인도량 둔화·경쟁 심화는 신중히 봐요\n다음 주에 또 만나요!\n\nIMAGE_PROMPT_0: A breathtaking 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte World Tower glowing under a deep purple violet sky, with a sleek Tesla autonomous electric vehicle cruising along an illuminated futuristic highway, holographic data streams and analytics charts subtly floating above the cityscape, K-tech advanced metropolis atmosphere with glowing city lights bokeh, cinematic depth, reflective river surface, neon purple and violet tech ambiance, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_1: A vibrant 16:9 landscape shot of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek futuristic station beside the Han River, lush green parks and eco-friendly Korean urban infrastructure surrounding the scene, bright optimistic atmosphere with rays of golden green light, K-tech sustainable city vibe, glowing EV charging cables, dynamic motion blur of high-speed driving, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo\n\nIMAGE_PROMPT_2: A stunning 9:16 vertical composition showcasing a futuristic Korean cityscape with Han River night view, Seoul skyline, and Gwanghwamun Square in the background, featuring an autonomous Tesla vehicle alongside an Optimus humanoid robot walking gracefully, advanced K-tech urban landscape blending tradition and innovation, inspirational future mood with magenta and gold lighting, golden sunlight breaking through clouds, sparkling stars and shimmering particles, cinematic atmosphere of hope and progress, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+    }
+  ],
+  "image_prompts": {
+    "0": "A breathtaking 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte World Tower glowing under a deep purple violet sky, with a sleek Tesla autonomous electric vehicle cruising along an illuminated futuristic highway, holographic data streams and analytics charts subtly floating above the cityscape, K-tech advanced metropolis atmosphere with glowing city lights bokeh, cinematic depth, reflective river surface, neon purple and violet tech ambiance, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "A vibrant 16:9 landscape shot of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek futuristic station beside the Han River, lush green parks and eco-friendly Korean urban infrastructure surrounding the scene, bright optimistic atmosphere with rays of golden green light, K-tech sustainable city vibe, glowing EV charging cables, dynamic motion blur of high-speed driving, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "A stunning 9:16 vertical composition showcasing a futuristic Korean cityscape with Han River night view, Seoul skyline, and Gwanghwamun Square in the background, featuring an autonomous Tesla vehicle alongside an Optimus humanoid robot walking gracefully, advanced K-tech urban landscape blending tradition and innovation, inspirational future mood with magenta and gold lighting, golden sunlight breaking through clouds, sparkling stars and shimmering particles, cinematic atmosphere of hope and progress, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}
