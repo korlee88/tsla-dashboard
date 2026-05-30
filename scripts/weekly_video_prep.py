@@ -545,6 +545,8 @@ def generate_script(summary):
 def parse_script(raw):
     scenes = []
     SCENE_RANGE = range(0, 3)   # 씬 0(주간브리핑)~씬 2(미래비전) · 인트로·시장반응 씬 제거
+    # 본문이 넘어가면 안 되는 경계 마커 (특히 마지막 씬이 이미지 프롬프트/섹션을 흡수하는 것 방지)
+    BOUNDARY_MARKERS = ("IMAGE_PROMPT_", "=== 배경", "===")
     for i in SCENE_RANGE:
         tk = f"SCENE_{i}_TITLE:"
         bk = f"SCENE_{i}:"
@@ -556,9 +558,14 @@ def parse_script(raw):
             title = raw[s:e].strip() if e != -1 else raw[s:].strip()
         if bk in raw:
             s   = raw.index(bk) + len(bk)
+            # 다음 씬 타이틀 또는 이미지 프롬프트/섹션 마커 중 가장 먼저 등장하는 곳에서 끊는다
             nxt = raw.find(f"SCENE_{i+1}_TITLE:", s)
             if nxt == -1:
                 nxt = len(raw)
+            for marker in BOUNDARY_MARKERS:
+                m = raw.find(marker, s)
+                if m != -1:
+                    nxt = min(nxt, m)
             body = raw[s:nxt].strip()
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})

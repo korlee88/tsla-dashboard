@@ -111,6 +111,10 @@ def _clean_line(line: str) -> str:
     line = line.strip()
     if not line:
         return ""
+    # 이미지 프롬프트/섹션 마커가 대본에 섞여 들어온 경우 방어적으로 제거 (영어 프롬프트 낭독 방지)
+    if (line.startswith("IMAGE_PROMPT_") or line.startswith("===")
+            or "no text" in line.lower() or "ultra-high resolution" in line.lower()):
+        return ""
     if '|' in line:
         line = line.split('|')[0].strip()
     # [분위기], [거래량] 같은 카테고리 태그 제거
