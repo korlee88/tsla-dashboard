@@ -2116,13 +2116,128 @@
       "match": true,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-05-25",
+      "weekEnd": "2026-05-31",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라와 스페이스X 합병 논의 중",
+          "source": "Electrek",
+          "category": "Musk|Market"
+        },
+        {
+          "title": "테슬라, 스페이스X IPO 앞두고 관계 심화",
+          "source": "Barron's",
+          "category": "Market|Product"
+        },
+        {
+          "title": "일론 머스크, 2026년 말까지 완전 자율주행 테슬라 '광범위하게' 보급 전망",
+          "source": "TheStreet",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 공학 투자 확대를 위해 250억 달러 이상 지출 계획",
+          "source": "Forbes",
+          "category": "Product|Market"
+        },
+        {
+          "title": "아메리칸 항공, 2027년부터 스타링크 위성 광대역 서비스 통합 예정",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, Grok V9 파운데이션 모델 훈련 완료 및 공개 임박",
+          "source": "YouTube (Herbert Ong)",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇 생산에 집중",
+          "source": "BNN Bloomberg",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2026년 중반 2만 5천 달러 모델 2 양산 시작",
+          "source": "Electrek",
+          "category": "Product"
+        },
+        {
+          "title": "스페이스X, 사상 최대 규모 IPO 목표로 S-1 서류 제출",
+          "source": "Electrek",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 2026년 1분기 실적 예상치 상회",
+          "source": "Forbes",
+          "category": "Earnings"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 1.1,
+        "buyIndex": 55,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R13",
+          "R24",
+          "R12"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 61,
+          "r24Discount": -3,
+          "macdTrend": 2,
+          "bbHigh": -2,
+          "wtiDown": -3
+        },
+        "macroCtx": {
+          "spyChg": 0.86,
+          "qqqChg": 1.7,
+          "vixClose": 15.319999694824219,
+          "wtiChg": -6.95,
+          "cnyChg": -0.22,
+          "bydChg": -2.28,
+          "bydRelStrength": 3.57,
+          "prevTslaChg": 1.61,
+          "rsi": 52.1,
+          "macd": {
+            "macd": 3.4304540659095437,
+            "signal": -0.8294234339146245,
+            "hist": 4.259877499824168,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 459.43,
+            "middle": 403.36,
+            "lower": 347.29,
+            "pos": 0.789
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 1.29,
+        "actual": "neutral",
+        "open": 430.26,
+        "close": 435.79
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-05-25 04:25 KST",
+  "generatedAt": "2026-06-01 04:26 KST",
   "stats": {
-    "totalWeeks": 20,
-    "analyzedWeeks": 20,
-    "accuracy": 40,
+    "totalWeeks": 21,
+    "analyzedWeeks": 21,
+    "accuracy": 38,
     "strongAccuracy": 29,
     "avgScore": 0.9
   }
