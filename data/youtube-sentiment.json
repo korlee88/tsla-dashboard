@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.41,
-  "velocity_label": "소폭 감소 (×0.4)",
-  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 666,389회 / 이전 4~7일 1,612,642회 | 총 2,279,031회 (43개 영상)",
-  "video_count": 43,
-  "total_views": 2279031,
-  "hot_views": 666389,
-  "baseline_views": 1612642,
+  "velocity": 0.48,
+  "velocity_label": "소폭 감소 (×0.5)",
+  "reason": "조회수 속도 소폭 감소 (×0.5) | 최근 3일 789,630회 / 이전 4~7일 1,631,994회 | 총 2,421,624회 (41개 영상)",
+  "video_count": 41,
+  "total_views": 2421624,
+  "hot_views": 789630,
+  "baseline_views": 1631994,
   "top_videos": [
     {
       "title": "껍데기만 화려한 로봇 기업들 뼈 때린 일론 머스크 &quot;옵티머스 빼고 제대로 된 로봇은 단 하나도 없습니다&quot;",
       "channel": "머스크의 모든 것",
       "publishedAt": "2026-05-29T13:40:55Z",
-      "viewCount": 356311
-    },
-    {
-      "title": "Elon Musk says Optimus could become the biggest product in human history… #elonmusk #ai #podcast",
-      "channel": "Macetarie",
-      "publishedAt": "2026-05-28T22:30:05Z",
-      "viewCount": 221468
+      "viewCount": 359464
     },
     {
       "title": "特斯拉只發布了一條機器人跑步視頻，卻讓科技圈集體失聲？ 一條視頻告訴你特斯拉機器人牛在哪#特斯拉",
       "channel": "TTTop汽車部",
       "publishedAt": "2026-06-01T04:02:51Z",
-      "viewCount": 184514
+      "viewCount": 266951
+    },
+    {
+      "title": "Elon Musk says Optimus could become the biggest product in human history… #elonmusk #ai #podcast",
+      "channel": "Macetarie",
+      "publishedAt": "2026-05-28T22:30:05Z",
+      "viewCount": 229812
+    },
+    {
+      "title": "손가락 모터 다 빼!&quot; 삼성 엔지니어들이 선택한 사람 힘줄(텐던)의 소름 돋는 비밀",
+      "channel": "머스크의 모든 것",
+      "publishedAt": "2026-06-01T08:22:31Z",
+      "viewCount": 158523
     },
     {
       "title": "옵티머스 양산 확정! 한국 기업이 움직인다 수혜주 3개",
       "channel": "펭브레인",
       "publishedAt": "2026-05-27T08:59:18Z",
-      "viewCount": 139667
-    },
-    {
-      "title": "Elon Just Told TSLA Holders What&#39;s Coming",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-27T18:30:14Z",
-      "viewCount": 135971
+      "viewCount": 141688
     }
   ],
-  "collected_at": "2026-06-01T17:44:07Z"
+  "collected_at": "2026-06-01T21:18:16Z"
 }
