@@ -1,43 +1,43 @@
 {
   "score": -1,
-  "velocity": 0.63,
-  "velocity_label": "소폭 감소 (×0.6)",
-  "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 777,434회 / 이전 4~7일 1,227,981회 | 총 2,005,415회 (42개 영상)",
-  "video_count": 42,
-  "total_views": 2005415,
-  "hot_views": 777434,
-  "baseline_views": 1227981,
+  "velocity": 0.41,
+  "velocity_label": "소폭 감소 (×0.4)",
+  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 666,389회 / 이전 4~7일 1,612,642회 | 총 2,279,031회 (43개 영상)",
+  "video_count": 43,
+  "total_views": 2279031,
+  "hot_views": 666389,
+  "baseline_views": 1612642,
   "top_videos": [
     {
       "title": "껍데기만 화려한 로봇 기업들 뼈 때린 일론 머스크 &quot;옵티머스 빼고 제대로 된 로봇은 단 하나도 없습니다&quot;",
       "channel": "머스크의 모든 것",
       "publishedAt": "2026-05-29T13:40:55Z",
-      "viewCount": 345048
+      "viewCount": 356311
     },
     {
       "title": "Elon Musk says Optimus could become the biggest product in human history… #elonmusk #ai #podcast",
       "channel": "Macetarie",
       "publishedAt": "2026-05-28T22:30:05Z",
-      "viewCount": 206203
+      "viewCount": 221468
     },
     {
-      "title": "Elon Just Told TSLA Holders What&#39;s Coming",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-05-27T18:30:14Z",
-      "viewCount": 135632
+      "title": "特斯拉只發布了一條機器人跑步視頻，卻讓科技圈集體失聲？ 一條視頻告訴你特斯拉機器人牛在哪#特斯拉",
+      "channel": "TTTop汽車部",
+      "publishedAt": "2026-06-01T04:02:51Z",
+      "viewCount": 184514
     },
     {
       "title": "옵티머스 양산 확정! 한국 기업이 움직인다 수혜주 3개",
       "channel": "펭브레인",
       "publishedAt": "2026-05-27T08:59:18Z",
-      "viewCount": 128473
+      "viewCount": 139667
     },
     {
-      "title": "24시간 교대 근무도 거뜬…로봇 현장 투입 ‘초읽기’ / KBS  2026.05.28.",
-      "channel": "KBS News",
-      "publishedAt": "2026-05-28T10:33:31Z",
-      "viewCount": 106783
+      "title": "Elon Just Told TSLA Holders What&#39;s Coming",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-05-27T18:30:14Z",
+      "viewCount": 135971
     }
   ],
-  "collected_at": "2026-06-01T11:36:44Z"
+  "collected_at": "2026-06-01T17:44:07Z"
 }
