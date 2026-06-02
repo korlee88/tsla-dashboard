@@ -3,15 +3,18 @@
  * 뉴스 수집/AI 분석을 재실행하지 않고, 저장된 avgScore·bullish·bearish·topRules·macroCtx를 재활용.
  *
  * 사용법:
- *   node scripts/rescore-backtest.js [2025|2026|all]
+ *   node scripts/rescore-backtest.js [2025|2026|all] [--write]
+ *   --write : 재채점 결과를 JSON 파일에 저장 (대시보드에 반영)
  */
 
 const fs   = require('fs');
 const path = require('path');
 const { calculateEnhancedScore } = require('./lib/scoring');
 
-const arg   = process.argv[2] || 'all';
-const years = arg === 'all' ? [2025, 2026] : [parseInt(arg, 10)];
+const args  = process.argv.slice(2);
+const write = args.includes('--write');
+const yearArg = args.find(a => a !== '--write') || 'all';
+const years = yearArg === 'all' ? [2025, 2026] : [parseInt(yearArg, 10)];
 
 function rescoreYear(year) {
   const file = path.join(__dirname, '..', 'data', `backtest-results-${year}.json`);
@@ -43,18 +46,28 @@ function rescoreYear(year) {
     if (!w.analysis || !w.movement) continue;
 
     const { avgScore, bullish = 0, bearish = 0, topRules = [], macroCtx = null } = w.analysis;
-    const actual  = w.movement.actual;
-    const oldDir  = w.analysis.direction;
-    const oldBi   = w.analysis.buyIndex;
+    const actual   = w.movement.actual;
+    const oldDir   = w.analysis.direction;
+    const oldBi    = w.analysis.buyIndex;
     const oldMatch = (oldDir === actual);
 
-    const enh    = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
-    const newDir = enh.direction;
-    const newBi  = enh.buyIndex;
+    const enh     = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
+    const newDir  = enh.direction;
+    const newBi   = enh.buyIndex;
     const newMatch = (newDir === actual);
 
     if (newMatch) matched++;
     total++;
+
+    // --write: 파일에 새 채점 결과 반영
+    if (write) {
+      w.analysis.buyIndex      = newBi;
+      w.analysis.direction     = newDir;
+      w.analysis.scoringLayers = enh.layers;
+      w.analysis.modelVersion  = '5.0';
+      w.match        = newMatch;
+      w.strongSignal = Math.abs(newBi - 50) > 20;
+    }
 
     const line = `  ${w.weekStart}  bi:${String(oldBi).padStart(3)}→${String(newBi).padStart(3)}  ` +
                  `dir:${oldDir.padEnd(7)}→${newDir.padEnd(7)}  actual:${actual.padEnd(7)}(${w.movement.pctChange}%)`;
@@ -68,8 +81,22 @@ function rescoreYear(year) {
   const oldAcc = db.stats?.accuracy ?? '?';
   const delta  = acc - (typeof oldAcc === 'number' ? oldAcc : parseInt(oldAcc));
 
+  // --write: stats 갱신 후 파일 저장
+  if (write) {
+    const analyzed   = weeks.filter(r => r.analysis && r.movement);
+    const strongR    = analyzed.filter(r => r.strongSignal);
+    const strongAcc  = strongR.length ? Math.round(strongR.filter(r => r.match).length / strongR.length * 100) : 0;
+    const avgScoreV  = analyzed.length
+      ? Math.round(analyzed.reduce((s, r) => s + (r.analysis.avgScore || 0), 0) / analyzed.length * 10) / 10 : 0;
+    db.weeks  = weeks;
+    db.stats  = { ...db.stats, accuracy: acc, strongAccuracy: strongAcc, avgScore: avgScoreV, modelVersion: '5.0' };
+    db.lastRescored = new Date(Date.now() + 9 * 3600000).toISOString().replace('T', ' ').slice(0, 16) + ' KST';
+    fs.writeFileSync(file, JSON.stringify(db, null, 2), 'utf-8');
+    console.log(`\n  💾 저장 완료: ${path.basename(file)}`);
+  }
+
   console.log(`\n${'━'.repeat(72)}`);
-  console.log(`📊 ${year}년  정확도: ${oldAcc}% → ${acc}%  (${delta >= 0 ? '+' : ''}${delta}pt)  [${matched}/${total}]`);
+  console.log(`📊 ${year}년  정확도: ${oldAcc}% → ${acc}%  (${delta >= 0 ? '+' : ''}${delta}pt)  [${matched}/${total}]${write ? '  ✍ 파일 저장됨' : ''}`);
 
   if (fixes.length) {
     console.log(`\n  ✅ 새로 맞힌 예측 +${fixes.length}건:`);
