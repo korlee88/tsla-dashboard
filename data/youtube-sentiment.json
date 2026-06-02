@@ -1,43 +1,43 @@
 {
   "score": 0,
-  "velocity": 0.83,
-  "velocity_label": "보합 (×0.8)",
-  "reason": "조회수 속도 보합 (×0.8) | 최근 3일 1,197,577회 / 이전 4~7일 1,439,047회 | 총 2,636,624회 (43개 영상)",
-  "video_count": 43,
-  "total_views": 2636624,
-  "hot_views": 1197577,
-  "baseline_views": 1439047,
+  "velocity": 1.19,
+  "velocity_label": "보합 (×1.2)",
+  "reason": "조회수 속도 보합 (×1.2) | 최근 3일 1,493,057회 / 이전 4~7일 1,255,169회 | 총 2,748,226회 (44개 영상)",
+  "video_count": 44,
+  "total_views": 2748226,
+  "hot_views": 1493057,
+  "baseline_views": 1255169,
   "top_videos": [
     {
       "title": "特斯拉只發布了一條機器人跑步視頻，卻讓科技圈集體失聲？ 一條視頻告訴你特斯拉機器人牛在哪#特斯拉",
       "channel": "TTTop汽車部",
       "publishedAt": "2026-06-01T04:02:51Z",
-      "viewCount": 395909
-    },
-    {
-      "title": "껍데기만 화려한 로봇 기업들 뼈 때린 일론 머스크 &quot;옵티머스 빼고 제대로 된 로봇은 단 하나도 없습니다&quot;",
-      "channel": "머스크의 모든 것",
-      "publishedAt": "2026-05-29T13:40:55Z",
-      "viewCount": 366306
+      "viewCount": 518996
     },
     {
       "title": "손가락 모터 다 빼!&quot; 삼성 엔지니어들이 선택한 사람 힘줄(텐던)의 소름 돋는 비밀",
       "channel": "머스크의 모든 것",
       "publishedAt": "2026-06-01T08:22:31Z",
-      "viewCount": 337272
+      "viewCount": 422662
+    },
+    {
+      "title": "껍데기만 화려한 로봇 기업들 뼈 때린 일론 머스크 &quot;옵티머스 빼고 제대로 된 로봇은 단 하나도 없습니다&quot;",
+      "channel": "머스크의 모든 것",
+      "publishedAt": "2026-05-29T13:40:55Z",
+      "viewCount": 370961
     },
     {
       "title": "Elon Musk says Optimus could become the biggest product in human history… #elonmusk #ai #podcast",
       "channel": "Macetarie",
       "publishedAt": "2026-05-28T22:30:05Z",
-      "viewCount": 249628
+      "viewCount": 260023
     },
     {
       "title": "옵티머스 양산 확정! 한국 기업이 움직인다 수혜주 3개",
       "channel": "펭브레인",
       "publishedAt": "2026-05-27T08:59:18Z",
-      "viewCount": 145893
+      "viewCount": 149250
     }
   ],
-  "collected_at": "2026-06-02T04:52:00Z"
+  "collected_at": "2026-06-02T10:25:14Z"
 }
