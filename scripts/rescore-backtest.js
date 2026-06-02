@@ -18,7 +18,21 @@ function rescoreYear(year) {
   if (!fs.existsSync(file)) { console.log(`⏭  ${year}: 파일 없음`); return null; }
 
   const db    = JSON.parse(fs.readFileSync(file, 'utf-8'));
-  const weeks = db.weeks || [];
+  const weeks = (db.weeks || []).slice().sort((a, b) => a.weekStart.localeCompare(b.weekStart));
+
+  // 저장된 macroCtx에 없는 3주 추세(tslaTrend3w)를 주가 시퀀스로 재계산해 주입.
+  // 진입 직전 3주(open[i-3] → close[i-1]) 기준, 현재 주는 제외 (lookahead 없음).
+  const analyzed = weeks.filter(w => w.analysis && w.movement);
+  for (let i = 0; i < analyzed.length; i++) {
+    const mc = analyzed[i].analysis.macroCtx;
+    if (mc && (mc.tslaTrend3w === undefined || mc.tslaTrend3w === null) && i >= 3) {
+      const baseOpen  = analyzed[i - 3].movement.open;
+      const lastClose = analyzed[i - 1].movement.close;
+      if (baseOpen > 0) {
+        mc.tslaTrend3w = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
+      }
+    }
+  }
 
   let matched = 0, total = 0;
   const fixes   = [];

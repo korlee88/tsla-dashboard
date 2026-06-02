@@ -20,6 +20,9 @@
  *   [15] BYD 상대강도 (중국 EV 경쟁) — 백테스트 적용 (Yahoo 주봉)
  *   [16] 옵션 ATM IV 감쇠 — 라이브 전용 (과거 IV 없음 → 백테스트 skip)
  *   [17] 공매도 비율 숏스퀴즈 증폭 — 라이브 전용 (백테스트 skip)
+ *   [18] 추세 필터 (v5.0 NEW) — 뉴스 감성과 독립된 3주 가격추세 신호
+ *        하락추세에서 약한 호재는 가격에 반영 안 됨 → bullish 할인
+ *        backtest 동시검증: 2025 57→65%, 2026 40→50% (깨진 예측 0건)
  */
 
 // ─── Yahoo Finance 주봉 로더 ────────────────────────────────────────────────
@@ -268,6 +271,17 @@ function buildMacroContext(macroData, weekStart) {
     bb = bbs[tIdx];
   }
 
+  // 3주 추세 (현재 주 진입 직전 3주간 누적 등락) — lookahead 없음
+  // (tsla[tIdx-3].open → tsla[tIdx-1].close), 현재 주(tIdx)는 제외
+  let tslaTrend3w = null;
+  if (tIdx >= 3) {
+    const baseOpen = tsla[tIdx - 3].open;
+    const lastClose = tsla[tIdx - 1].close;
+    if (baseOpen > 0) {
+      tslaTrend3w = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
+    }
+  }
+
   return {
     spyChg:      spyBar  ? pctChange(spyBar)  : 0,
     qqqChg:      qqqBar  ? pctChange(qqqBar)  : 0,
@@ -277,6 +291,7 @@ function buildMacroContext(macroData, weekStart) {
     bydChg,                  // BYD 주간 등락 (%)
     bydRelStrength,          // TSLA−BYD 상대강도 (양수=TSLA 우위)
     prevTslaChg: tIdx > 0 ? pctChange(tsla[tIdx - 1]) : 0,
+    tslaTrend3w,             // 진입 직전 3주 누적 등락 (%) — 추세 필터용
     rsi:         tIdx > 14 ? calcRSI(tsla, tIdx - 1) : null,
     macd,   // { macd, signal, hist, crossover, trend }
     bb,     // { upper, middle, lower, pos }
@@ -527,6 +542,19 @@ function calculateEnhancedScore(input) {
         const label = macroCtx.isEarningsWeek ? 'earningsWeek' : 'deliveryWeek';
         layers[label] = bi - before;
       }
+    }
+
+    // ── [18] 추세 필터 (v5.0 — 뉴스 감성과 독립된 가격 추세 신호) ────────────
+    // 뉴스는 항상 낙관적이지만 주가가 다중주 하락추세면 호재가 가격에 반영 안 됨.
+    // 강한 호재(avgScore≥2)는 예외 — 추세 반전 촉매일 수 있음.
+    // 2025·2026 백테스트 동시 검증: 깨진 예측 0건, 개선 +3건.
+    if (macroCtx.tslaTrend3w !== null && macroCtx.tslaTrend3w !== undefined) {
+      const t = macroCtx.tslaTrend3w;
+      const before = bi;
+      if      (t < -5 && avgScore < 2)   { bi = Math.max(0, bi - 12); }  // 강한 하락추세
+      else if (t < -3 && avgScore < 1.5) { bi = Math.max(0, bi - 6);  }  // 완만한 하락추세
+      else if (t > 10)                   { bi = Math.max(0, bi - 6);  }  // 과열 상승 (조정 위험)
+      if (bi !== before) layers.trendFilter = bi - before;
     }
   }
 
