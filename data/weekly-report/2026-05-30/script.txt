@@ -1,0 +1,30 @@
+SCENE_0_TITLE: 이번주
+SCENE_0:
+테슬라 주가 *+2.03%* 올라 $435예요
+한 주간 *$426→$442* 흐름이 좋았죠
+*1,190억 달러* 테라팹 발표가 컸어요
+1분기 인도량 *5% 하회* 부담은 남아요
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+카테고리: *테라팹* 메가팩토리 발표
+   ↳ 배경: 스페이스X와 공동 *1,190억 달러* 투자
+   ↳ 데이터: 자율주행·옵티머스용 *칩 자체생산*
+   ↳ 임팩트: 발표 후 주가 *$426→$442* 반등
+   ↳ 비교: 엔비디아 의존 *0%대*로 축소 목표
+   ↳ AI·로봇 수직계열화의 핵심 발판이 돼요
+
+SCENE_2_TITLE: 다음주
+SCENE_2:
+다음주는 *특별 이벤트 없는* 모니터링 주간
+→ 테라팹 후속 *코멘트* 체크해봐요
+다음 주말 *+0.2%·$437* 흐름이 점쳐져요
+→ *5일 상승·0일 하락* 예측이에요
+인도량 둔화·경쟁 심화는 신중히 봐요
+다음 주에 또 만나요!
+
+IMAGE_PROMPT_0: A breathtaking 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte World Tower glowing under a deep purple violet sky, with a sleek Tesla autonomous electric vehicle cruising along an illuminated futuristic highway, holographic data streams and analytics charts subtly floating above the cityscape, K-tech advanced metropolis atmosphere with glowing city lights bokeh, cinematic depth, reflective river surface, neon purple and violet tech ambiance, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: A vibrant 16:9 landscape shot of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek futuristic station beside the Han River, lush green parks and eco-friendly Korean urban infrastructure surrounding the scene, bright optimistic atmosphere with rays of golden green light, K-tech sustainable city vibe, glowing EV charging cables, dynamic motion blur of high-speed driving, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: A stunning 9:16 vertical composition showcasing a futuristic Korean cityscape with Han River night view, Seoul skyline, and Gwanghwamun Square in the background, featuring an autonomous Tesla vehicle alongside an Optimus humanoid robot walking gracefully, advanced K-tech urban landscape blending tradition and innovation, inspirational future mood with magenta and gold lighting, golden sunlight breaking through clouds, sparkling stars and shimmering particles, cinematic atmosphere of hope and progress, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo

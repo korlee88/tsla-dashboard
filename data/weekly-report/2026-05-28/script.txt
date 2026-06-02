@@ -1,0 +1,28 @@
+SCENE_0_TITLE: 이번주
+SCENE_0:
+테슬라가 *+10.63%* 올라 $439.63이에요
+*스페이스X 합병설*에 시장이 들썩였죠
+*1,190억 달러* 테라팹 발표가 핵심이에요
+1분기 인도량 *5% 하회*는 아쉬운 부분이죠
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+카테고리: *테라팹 메가팩토리* 건설 발표
+   ↳ 배경: 테슬라·스페이스X *공동 투자* 프로젝트예요
+   ↳ 데이터: 무려 *1,190억 달러* 규모 칩 공장이죠
+   ↳ 임팩트: 한 주 만에 *+10.63%* 급등했어요
+   ↳ 비교: 사이버캡·옵티머스 *2분기* 양산도 임박
+   ↳ 자율주행 칩 *자급 체계* 구축이 기대돼요
+
+SCENE_2_TITLE: 전망
+SCENE_2:
+옵티머스 *2분기 공장* 가동이 눈에 띄네요
+사이버캡 *생산 개시*도 같이 봐야죠
+다음주는 *인도량 지표* 체크가 중요해요
+이번주도 함께해줘서 고마워요
+
+IMAGE_PROMPT_0: A cinematic 16:9 landscape view of Seoul's Han River night skyline with Namsan Tower, 63 Building, and Lotte Tower glowing in the distance, a sleek Tesla autonomous electric vehicle cruising on a futuristic elevated highway, purple and violet neon reflections shimmering on the water, K-tech futuristic city atmosphere with analytical holographic data overlays in the sky, bokeh city lights, deep twilight purple violet tech analytics mood, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in fresh green sunlight symbolizing growth and bullish momentum, multiple Tesla electric vehicles charging at a sleek modern station and driving smoothly across the bridge, lush green riverside parks, blue sky with soft clouds, K-tech eco-friendly infrastructure radiating optimism and vibrant energy, sunlit modern architecture, green growth bullish atmosphere, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: A breathtaking 9:16 vertical futuristic Korean cityscape featuring the Han River at golden hour with Seoul's skyline and Gwanghwamun Square in the background, autonomous Tesla vehicles gliding along smart roads while Optimus humanoid robots walk gracefully among citizens, advanced K-tech urban scenery, magenta and gold inspirational future mood, golden sun rays, sparkling stars, glowing particles, hopeful visionary atmosphere, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
