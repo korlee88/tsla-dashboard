@@ -1,96 +1,127 @@
 /**
- * 기존 backtest-results.json 재채점 — 다층 강화 모델 v2.0
- * 매크로 컨텍스트(SPY/QQQ/VIX/RSI) 추가 후 buyIndex/direction/match 재계산
+ * 백테스트 재채점 스크립트 v5.0 — API 호출 없이 기존 분석에 새 scoring 적용
+ * 뉴스 수집/AI 분석을 재실행하지 않고, 저장된 avgScore·bullish·bearish·topRules·macroCtx를 재활용.
+ *
+ * 사용법:
+ *   node scripts/rescore-backtest.js [2025|2026|all] [--write]
+ *   --write : 재채점 결과를 JSON 파일에 저장 (대시보드에 반영)
  */
 
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
-const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./lib/scoring');
+const { calculateEnhancedScore } = require('./lib/scoring');
 
-const DATA_FILE = path.join(__dirname, '..', 'data', 'backtest-results.json');
+const args  = process.argv.slice(2);
+const write = args.includes('--write');
+const yearArg = args.find(a => a !== '--write') || 'all';
+const years = yearArg === 'all' ? [2025, 2026] : [parseInt(yearArg, 10)];
 
-(async () => {
-  console.log('🔄 백테스트 데이터 재채점 시작 (모델 v3.0)\n');
+function rescoreYear(year) {
+  const file = path.join(__dirname, '..', 'data', `backtest-results-${year}.json`);
+  if (!fs.existsSync(file)) { console.log(`⏭  ${year}: 파일 없음`); return null; }
 
-  const db = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-  console.log(`📂 ${db.weeks.length}주 데이터 로드`);
+  const db    = JSON.parse(fs.readFileSync(file, 'utf-8'));
+  const weeks = (db.weeks || []).slice().sort((a, b) => a.weekStart.localeCompare(b.weekStart));
 
-  console.log('\n📊 매크로 데이터 로드 중...');
-  const macroData = await loadMacroData();
-  console.log(`   ✅ SPY:${macroData.spy.length}, QQQ:${macroData.qqq.length}, VIX:${macroData.vix.length}, TSLA:${macroData.tsla.length}`);
+  // 저장된 macroCtx에 없는 3주 추세(tslaTrend3w)를 주가 시퀀스로 재계산해 주입.
+  // 진입 직전 3주(open[i-3] → close[i-1]) 기준, 현재 주는 제외 (lookahead 없음).
+  const analyzed = weeks.filter(w => w.analysis && w.movement);
+  for (let i = 0; i < analyzed.length; i++) {
+    const mc = analyzed[i].analysis.macroCtx;
+    if (mc && (mc.tslaTrend3w === undefined || mc.tslaTrend3w === null) && i >= 3) {
+      const baseOpen  = analyzed[i - 3].movement.open;
+      const lastClose = analyzed[i - 1].movement.close;
+      if (baseOpen > 0) {
+        mc.tslaTrend3w = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
+      }
+    }
+  }
 
-  console.log('\n🔬 재채점 진행 중...\n');
+  let matched = 0, total = 0;
+  const fixes   = [];
+  const breaks  = [];
+  const remains = [];
 
-  const rescored = db.weeks.map(week => {
-    if (!week.analysis || !week.movement) return week;
+  for (const w of weeks) {
+    if (!w.analysis || !w.movement) continue;
 
-    const macroCtx = buildMacroContext(macroData, week.weekStart);
-    const enhanced = calculateEnhancedScore({
-      avgScore: week.analysis.avgScore || 0,
-      topRules: week.analysis.topRules || [],
-      bullish:  week.analysis.bullish  || 0,
-      bearish:  week.analysis.bearish  || 0,
-      macroCtx,
-    });
+    const { avgScore, bullish = 0, bearish = 0, topRules = [], macroCtx = null } = w.analysis;
+    const actual   = w.movement.actual;
+    const oldDir   = w.analysis.direction;
+    const oldBi    = w.analysis.buyIndex;
+    const oldMatch = (oldDir === actual);
 
-    const newAnalysis = {
-      ...week.analysis,
-      buyIndex:  enhanced.buyIndex,
-      direction: enhanced.direction,
-      scoringLayers: enhanced.layers,
-      macroCtx,
-      modelVersion: '3.0',
-    };
-    const newMatch = enhanced.direction === week.movement.actual;
-    const strong   = Math.abs(enhanced.buyIndex - 50) > 20;
+    const enh     = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
+    const newDir  = enh.direction;
+    const newBi   = enh.buyIndex;
+    const newMatch = (newDir === actual);
 
-    return { ...week, analysis: newAnalysis, match: newMatch, strongSignal: strong };
+    if (newMatch) matched++;
+    total++;
+
+    // --write: 파일에 새 채점 결과 반영
+    if (write) {
+      w.analysis.buyIndex      = newBi;
+      w.analysis.direction     = newDir;
+      w.analysis.scoringLayers = enh.layers;
+      w.analysis.modelVersion  = '5.0';
+      w.match        = newMatch;
+      w.strongSignal = Math.abs(newBi - 50) > 20;
+    }
+
+    const line = `  ${w.weekStart}  bi:${String(oldBi).padStart(3)}→${String(newBi).padStart(3)}  ` +
+                 `dir:${oldDir.padEnd(7)}→${newDir.padEnd(7)}  actual:${actual.padEnd(7)}(${w.movement.pctChange}%)`;
+
+    if (!oldMatch && newMatch)  fixes.push(line);
+    else if (oldMatch && !newMatch) breaks.push(line);
+    else if (!newMatch)          remains.push(line);
+  }
+
+  const acc    = total > 0 ? Math.round(matched / total * 100) : 0;
+  const oldAcc = db.stats?.accuracy ?? '?';
+  const delta  = acc - (typeof oldAcc === 'number' ? oldAcc : parseInt(oldAcc));
+
+  // --write: stats 갱신 후 파일 저장
+  if (write) {
+    const analyzed   = weeks.filter(r => r.analysis && r.movement);
+    const strongR    = analyzed.filter(r => r.strongSignal);
+    const strongAcc  = strongR.length ? Math.round(strongR.filter(r => r.match).length / strongR.length * 100) : 0;
+    const avgScoreV  = analyzed.length
+      ? Math.round(analyzed.reduce((s, r) => s + (r.analysis.avgScore || 0), 0) / analyzed.length * 10) / 10 : 0;
+    db.weeks  = weeks;
+    db.stats  = { ...db.stats, accuracy: acc, strongAccuracy: strongAcc, avgScore: avgScoreV, modelVersion: '5.0' };
+    db.lastRescored = new Date(Date.now() + 9 * 3600000).toISOString().replace('T', ' ').slice(0, 16) + ' KST';
+    fs.writeFileSync(file, JSON.stringify(db, null, 2), 'utf-8');
+    console.log(`\n  💾 저장 완료: ${path.basename(file)}`);
+  }
+
+  console.log(`\n${'━'.repeat(72)}`);
+  console.log(`📊 ${year}년  정확도: ${oldAcc}% → ${acc}%  (${delta >= 0 ? '+' : ''}${delta}pt)  [${matched}/${total}]${write ? '  ✍ 파일 저장됨' : ''}`);
+
+  if (fixes.length) {
+    console.log(`\n  ✅ 새로 맞힌 예측 +${fixes.length}건:`);
+    fixes.forEach(l => console.log(l));
+  }
+  if (breaks.length) {
+    console.log(`\n  ⚠  깨진 예측 -${breaks.length}건:`);
+    breaks.forEach(l => console.log(l));
+  }
+  if (remains.length) {
+    console.log(`\n  ❌ 여전히 틀린 예측 ${remains.length}건:`);
+    remains.forEach(l => console.log(l));
+  }
+
+  return { year, oldAcc, newAcc: acc, delta, fixes: fixes.length, breaks: breaks.length };
+}
+
+const results = years.map(rescoreYear).filter(Boolean);
+
+if (results.length > 1) {
+  const totalOldCorrect = results.reduce((s, r) => s + Math.round((r.oldAcc / 100) * (r.fixes + r.breaks + /* approx */ 0)), 0);
+  console.log(`\n${'━'.repeat(72)}`);
+  console.log('📈 종합 요약:');
+  results.forEach(r => {
+    const sign = r.delta >= 0 ? '+' : '';
+    console.log(`   ${r.year}: ${r.oldAcc}% → ${r.newAcc}%  (${sign}${r.delta}pt)  개선 +${r.fixes} / 손실 -${r.breaks}`);
   });
-
-  // 통계 재계산
-  const analyzed = rescored.filter(r => r.analysis && r.movement);
-  const matched  = analyzed.filter(r => r.match).length;
-  const accuracy = Math.round(matched / analyzed.length * 100);
-  const strong   = analyzed.filter(r => r.strongSignal);
-  const strongMatched = strong.filter(r => r.match).length;
-  const strongAcc = strong.length ? Math.round(strongMatched / strong.length * 100) : 0;
-
-  // 추가 평가 지표 — ±2% 이상 움직인 주만 (의미 있는 움직임)
-  const significant = analyzed.filter(r => Math.abs(r.movement.pctChange) >= 2);
-  const sigMatched  = significant.filter(r => r.match).length;
-  const sigAcc      = significant.length ? Math.round(sigMatched / significant.length * 100) : 0;
-
-  // ±1.5% 이상 (실제 neutral 제외)
-  const nonNeutral  = analyzed.filter(r => Math.abs(r.movement.pctChange) >= 1.5);
-  const nnMatched   = nonNeutral.filter(r => r.match).length;
-  const nnAcc       = nonNeutral.length ? Math.round(nnMatched / nonNeutral.length * 100) : 0;
-
-  const avgScore = Math.round(analyzed.reduce((s, r) => s + (r.analysis.avgScore || 0), 0) / analyzed.length * 10) / 10;
-
-  db.weeks = rescored;
-  db.stats = {
-    totalWeeks:        rescored.length,
-    analyzedWeeks:     analyzed.length,
-    accuracy,
-    strongAccuracy:    strongAcc,
-    significantAccuracy:    sigAcc,        // ±2% 이상 움직인 주
-    significantWeeks:       significant.length,
-    nonNeutralAccuracy:     nnAcc,         // ±1.5% 이상
-    nonNeutralWeeks:        nonNeutral.length,
-    avgScore,
-    modelVersion: '3.0',
-  };
-  db.lastRescored = new Date(Date.now() + 9 * 3600000).toISOString().replace('T', ' ').slice(0, 16) + ' KST';
-
-  fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2), 'utf-8');
-
-  console.log('━'.repeat(56));
-  console.log('         🎯 다층 강화 모델 v3.0 재채점 완료');
-  console.log('━'.repeat(56));
-  console.log(`전체 ${analyzed.length}주 정확도:           ${accuracy}% (${matched}/${analyzed.length})`);
-  console.log(`강한신호(|bi-50|>20) 정확도:    ${strongAcc}% (${strongMatched}/${strong.length})`);
-  console.log(`±2% 이상 움직인 주 정확도:      ${sigAcc}% (${sigMatched}/${significant.length}) 🎯`);
-  console.log(`±1.5% 이상 움직인 주 정확도:    ${nnAcc}% (${nnMatched}/${nonNeutral.length})`);
-  console.log('━'.repeat(56));
-  console.log(`💾 저장: ${DATA_FILE}`);
-})().catch(e => { console.error('❌ 오류:', e); process.exit(1); });
+}

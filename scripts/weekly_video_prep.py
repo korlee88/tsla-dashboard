@@ -303,8 +303,9 @@ def load_next_events(days=14, max_n=3):
 def build_next_week_outlook(forecasts):
     """dailyForecasts(일별 가격 예측)를 '다음주 전망' 한 단락으로 요약.
 
-    YouTube 정책상 매수/매도 같은 신호 단어(signal 필드)는 제외하고
+    YouTube 정책상 매수/매도 같은 신호 단어는 제외하고
     가격·변동률 추세만 참고용으로 정리한다.
+    change_pct는 '현재가 대비' 누적 예측치(일별 증감 아님).
     """
     if not forecasts:
         return "예측 데이터 없음 — 다음주 일정·이벤트 중심으로 전망"
@@ -327,7 +328,6 @@ def build_next_week_outlook(forecasts):
     except (TypeError, ValueError, AttributeError):
         pass
 
-    # change_pct는 '현재가 대비' 예측치(일별 증감 아님). 주말 도달 예측가로 누적 표현.
     parts = []
     if cum is not None:
         sign = "+" if cum >= 0 else ""
@@ -357,7 +357,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 단정적 권유 금지 (매수·매도·관망 직접 언급 금지)
 • **내부 점수(+N점·-N점) 절대 표기 금지** — 시청자용 지표가 아니다. "좋은 소식"·"호재" / "걱정되는 부분"·"리스크"처럼 풀어 말하고, 점수 대신 구체적 수치·배경·맥락으로 왜 그런지 설명한다.
 • 수치·근거는 그대로 살린다: 모든 핵심 줄에 %·$·대수 등 구체 수치를 자연스럽게 녹여 넣는다
-• 씬 0: 4줄 / 씬 1: 6줄 / 씬 2: 6줄 (한 줄 30자 이내 권장)
+• 씬 0: 4줄 / 씬 1: 6줄 / 씬 2: 4줄 (한 줄 30자 이내 권장)
 
 === 핵심 강조 표시 (반드시 준수) ===
 • 각 줄에서 가장 중요한 핵심 글귀(수치·키워드) 1개를 *별표*로 감싼다. 예시: 이번 주 테슬라가 *12% 급등*했어요
@@ -400,7 +400,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄3: 다음주 가격 흐름 예측 요약 — 누적 예측 변동률·예상 도달가 활용 (25자 이내, 수치 필수, 단정 금지·"~예상돼요"·"~흐름이 점쳐져요" 톤)
 - 줄4: → 상승/하락 예측 일수 등 흐름 부연 — "며칠은 오르고 며칠은…" 식 (25자 이내, 수치)
 - 줄5: 신중하게 봐야 할 변수 1건 — 예측을 흔들 수 있는 리스크 (25자 이내)
-- 줄6: 따뜻한 마무리 인사 한 문장 — "다음 주에 또 만나요" 식 (20자 이내)
+- 줄6: 따뜻한 마무리 인사 한 문장 — 날짜·요일에 무관하게 언제든 자연스럽게 쓸 수 있는 표현 ("다음에 또 만나요", "또 봐요!", "함께해 주셔서 감사해요" 등, "다음 주" 표현 금지, 20자 이내)
 
 === 출력 형식 (반드시 준수) ===
 ※ 핵심 수치·키워드는 *별표*로 감싸 강조한다 (각 줄 최대 1~2개).
@@ -545,6 +545,8 @@ def generate_script(summary):
 def parse_script(raw):
     scenes = []
     SCENE_RANGE = range(0, 3)   # 씬 0(주간브리핑)~씬 2(미래비전) · 인트로·시장반응 씬 제거
+    # 본문이 넘어가면 안 되는 경계 마커 (특히 마지막 씬이 이미지 프롬프트/섹션을 흡수하는 것 방지)
+    BOUNDARY_MARKERS = ("IMAGE_PROMPT_", "=== 배경", "===")
     for i in SCENE_RANGE:
         tk = f"SCENE_{i}_TITLE:"
         bk = f"SCENE_{i}:"
@@ -556,9 +558,14 @@ def parse_script(raw):
             title = raw[s:e].strip() if e != -1 else raw[s:].strip()
         if bk in raw:
             s   = raw.index(bk) + len(bk)
+            # 다음 씬 타이틀 또는 이미지 프롬프트/섹션 마커 중 가장 먼저 등장하는 곳에서 끊는다
             nxt = raw.find(f"SCENE_{i+1}_TITLE:", s)
             if nxt == -1:
                 nxt = len(raw)
+            for marker in BOUNDARY_MARKERS:
+                m = raw.find(marker, s)
+                if m != -1:
+                    nxt = min(nxt, m)
             body = raw[s:nxt].strip()
         lines = [l.strip() for l in body.split("\n")]
         scenes.append({"index": i, "title": title, "lines": lines, "body": body})
@@ -1368,7 +1375,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
     # ╔══════════════════════════════════════════════════════════════════╗
-    # ║ 씬 2 — 다음주 전망 (클로징, custom layout)                        ║
+    # ║ 씬 2 — 다음주 전망 (클로징, custom layout)                         ║
     # ╚══════════════════════════════════════════════════════════════════╝
     if idx == 2:
         # ① AI 배경 이미지를 풀스크린으로 깔기 (미래 비전 이미지)
@@ -1403,8 +1410,8 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         draw.line([(W // 2 - 200, 162), (W // 2 + 200, 162)],
                   fill=accent, width=4)
 
-        # ── 3개 메시지 카드 (다음주 일정·가격 전망·마무리) ───────────
-        # news_lines: [0]=일정, [1]=→시나리오, [2]=가격예측, [3]=→흐름, [4]=변수, [5]=마무리
+        # ── 3개 메시지 카드 (비전·예상·믿음) ─────────────────────────
+        # news_lines: [0]=비전계획, [1]=→예상결과, [2]=다음주포인트, [3]=→기대결과, [4]=추가이벤트, [5]=마무리
         def _nl(i, fallback):
             return strip_emoji(news_lines[i]) if len(news_lines) > i else fallback
 
@@ -1417,7 +1424,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                               _nl(3, ""),
                               _nl(4, "")],
              accent, CARD_PURPLE, 3),
-            ("마무리",        [_nl(5, "다음주에 또 만나요!")],
+            ("마무리",        [_nl(5, "다음에 또 만나요!")],
              GREEN,  CARD_GREEN,  1),
         ]
         LINE_H = 52      # 줄간 px
