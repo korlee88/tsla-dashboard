@@ -52,7 +52,9 @@ R11=delivery beat(>5%), R12=EPS beat(>10%), R13=new product/FSD milestone,
 R14=EV incentive expansion, R15=large energy storage deal, R16=new market entry(India/SEA),
 R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buyback/positive statement,
 R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
-R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE)
+R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE),
+R25=optimus/robot production milestone or commercial expansion,
+R26=vehicle production cut or factory retooling (without R25 offset)
 
 Score guidelines:
 ±5: Extreme event (confirmed bankruptcy risk, historic milestone)
@@ -64,8 +66,8 @@ IMPORTANT score caps (backtesting showed these rules cause noise when over-weigh
 - R08 (Musk SNS/DOGE controversy): MAX impact_score = ±2. Short-term sentiment noise, reverts quickly.
 - R24 (Musk other ventures spillover): MAX impact_score = ±2 when appearing alone without R08.
 - R23 (recession fear): MAX impact_score = -1. Macro, not Tesla-specific.
-- Use "neutral" direction ONLY when evidence is truly balanced AND confidence is "low".
-  Prefer "bearish" over "neutral" when avgScore is slightly negative.
+- Use "neutral" direction when confidence is "low" OR when news has mixed/minor impact (score 0 or ±1).
+  Use "bullish"/"bearish" for clear directional events with score ±2 or higher.
 
 CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
 

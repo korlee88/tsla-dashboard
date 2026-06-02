@@ -1,22 +1,22 @@
 /**
- * TSLA 다층 강화 채점 모델 v3.0 (백테스트 검증 기반)
+ * TSLA 다층 강화 채점 모델 v5.0 (편향보정·증폭재조정·중립밴드)
  *
  * 레이어 구조:
  *   [Base] 원본 매수지수 (avgScore → buyIndex)
  *   [14] R25 Optimus/로봇 생산·상업화 부스트 (+8pt, R07 동반 시 +5 추가)
  *   [1]  R24 단독 발동 노이즈 할인 (+9pt)
- *   [2]  강한신호 증폭 (±20 이탈 시 ×1.15)
- *   [3]  매크로 오버레이 (SPY+QQQ 평균 × Tesla beta 2.5)
- *   [4]  전주 TSLA momentum (mean reversion)
+ *   [2]  강한신호 증폭 (±20 이탈 시 ×1.08 — v5.0: 1.15→1.08 과열억제)
+ *   [3]  매크로 오버레이 (SPY+QQQ 평균 × beta 2.0 — v5.0: 2.5→2.0 편향보정)
+ *   [4]  전주 TSLA momentum (mean reversion — v5.0: >7% 단계 추가)
  *   [5]  VIX regime (>30 공포장 → 신호 강도 ×0.8)
  *   [6]  RSI 14주 (과매도/과매수 보정)
- *   [7]  neutral 제거 → avgScore tie-break
- *   [8]  MACD (12/26/9) 크로스오버 & 방향 — NEW
- *   [9]  볼린저밴드 위치 (20주) — NEW
- *   [10] WTI 원유 주간 등락 — NEW
- *   [11] CNY/USD 환율 — NEW
- *   [12] 분기 인도량 발표주 신호 증폭 (×1.25) — NEW
- *   [13] 뉴스 카테고리 가중치 (Financial > Tech > Market) — NEW
+ *   [7]  중립밴드 도입 — v5.0: bi 43-57 약신호는 neutral 출력 허용
+ *   [8]  MACD (12/26/9) 크로스오버 & 방향 (+1pt — v5.0: 2→1 지속트렌드 편향 감소)
+ *   [9]  볼린저밴드 위치 (20주 — v5.0: 과매수 페널티 강화)
+ *   [10] WTI 원유 주간 등락
+ *   [11] CNY/USD 환율
+ *   [12] 분기 인도량/실적 발표주 신호 증폭 (v5.0: 1.35→1.15 과신억제)
+ *   [13] 뉴스 카테고리 가중치 (Financial > Tech > Market)
  *   [15] BYD 상대강도 (중국 EV 경쟁) — 백테스트 적용 (Yahoo 주봉)
  *   [16] 옵션 ATM IV 감쇠 — 라이브 전용 (과거 IV 없음 → 백테스트 skip)
  *   [17] 공매도 비율 숏스퀴즈 증폭 — 라이브 전용 (백테스트 skip)
@@ -388,11 +388,11 @@ function calculateEnhancedScore(input) {
     layers.r24Discount = bi - before;
   }
 
-  // ── [2] 강한신호 증폭 ─────────────────────────────────────────────────────
+  // ── [2] 강한신호 증폭 (v5.0: ×1.15→×1.08 — 강세장 과신 억제) ─────────────
   const dist0 = bi - 50;
   if (Math.abs(dist0) >= 20) {
     const before = bi;
-    bi = Math.max(0, Math.min(100, Math.round(50 + dist0 * 1.15)));
+    bi = Math.max(0, Math.min(100, Math.round(50 + dist0 * 1.08)));
     layers.strongAmp = bi - before;
   }
 
@@ -418,17 +418,22 @@ function calculateEnhancedScore(input) {
 
   // ── 매크로 컨텍스트 레이어 ────────────────────────────────────────────────
   if (macroCtx) {
-    // ── [3] SPY+QQQ 매크로 오버레이 ────────────────────────────────────────
+    // ── [3] SPY+QQQ 매크로 오버레이 (v5.0: beta 2.5→2.0 — 강세장 편향 보정) ──
     const macroAvg = ((macroCtx.spyChg || 0) + (macroCtx.qqqChg || 0)) / 2;
     if (Math.abs(macroAvg) >= 1.5) {
       const before = bi;
-      bi = Math.max(0, Math.min(100, bi + Math.round(macroAvg * 2.5)));
+      bi = Math.max(0, Math.min(100, bi + Math.round(macroAvg * 2.0)));
       layers.macroOverlay = bi - before;
     }
 
-    // ── [4] 전주 TSLA momentum (mean reversion) ─────────────────────────────
-    if (macroCtx.prevTslaChg < -10) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
-    else if (macroCtx.prevTslaChg > 12) { bi = Math.max(0, bi - 6); layers.meanReversion = -6; }
+    // ── [4] 전주 TSLA momentum (mean reversion — v5.0: >7% 단계 추가) ────────
+    // 하락 반등: 고VIX 공황장(VIX>25)에서는 반등 신호 억제 — 매크로 공포 지속 가능
+    const highVix = macroCtx.vixClose && macroCtx.vixClose > 25;
+    if      (macroCtx.prevTslaChg < -10 && !highVix) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
+    else if (macroCtx.prevTslaChg < -10 &&  highVix) { bi = Math.min(100, bi + 4);  layers.meanReversion = +4;  }
+    else if (macroCtx.prevTslaChg < -5  && !highVix) { bi = Math.min(100, bi + 5);  layers.meanReversion = +5;  }
+    else if (macroCtx.prevTslaChg > 12)               { bi = Math.max(0,   bi - 8);  layers.meanReversion = -8;  }
+    else if (macroCtx.prevTslaChg > 7)                { bi = Math.max(0,   bi - 5);  layers.meanReversion = -5;  }
 
     // ── [5] VIX Adaptive Weighting (v4.0 강화) ─────────────────────────────
     // VIX>30: 기술지표 비중 -20%, 매크로 오버레이 비중 +40%
@@ -447,22 +452,22 @@ function calculateEnhancedScore(input) {
       else if (macroCtx.rsi > 75) { bi = Math.max(0,   bi - 4); layers.rsiOverbought = -4; }
     }
 
-    // ── [8] MACD 크로스오버 & 방향 ─────────────────────────────────────────
+    // ── [8] MACD 크로스오버 & 방향 (v5.0: 지속트렌드 +2→+1 — 편향 감소) ────
     if (macroCtx.macd) {
       const { crossover, trend } = macroCtx.macd;
       if      (crossover === 'bullish') { bi = Math.min(100, bi + 6); layers.macdCross = +6; }
       else if (crossover === 'bearish') { bi = Math.max(0,   bi - 6); layers.macdCross = -6; }
-      else if (trend === 'bullish')     { bi = Math.min(100, bi + 2); layers.macdTrend = +2; }
-      else if (trend === 'bearish')     { bi = Math.max(0,   bi - 2); layers.macdTrend = -2; }
+      else if (trend === 'bullish')     { bi = Math.min(100, bi + 1); layers.macdTrend = +1; }
+      else if (trend === 'bearish')     { bi = Math.max(0,   bi - 1); layers.macdTrend = -1; }
     }
 
-    // ── [9] 볼린저밴드 위치 ─────────────────────────────────────────────────
+    // ── [9] 볼린저밴드 위치 (v5.0: 과매수 페널티 강화) ─────────────────────
     if (macroCtx.bb) {
       const { pos } = macroCtx.bb;
       if      (pos < 0.15) { bi = Math.min(100, bi + 6); layers.bbOversold   = +6; }  // 하단 밴드 근접 = 과매도
       else if (pos < 0.30) { bi = Math.min(100, bi + 2); layers.bbLow        = +2; }
-      else if (pos > 0.85) { bi = Math.max(0,   bi - 4); layers.bbOverbought = -4; }  // 상단 밴드 근접 = 과매수
-      else if (pos > 0.70) { bi = Math.max(0,   bi - 2); layers.bbHigh       = -2; }
+      else if (pos > 0.85) { bi = Math.max(0,   bi - 6); layers.bbOverbought = -6; }  // 과매수 강화
+      else if (pos > 0.70) { bi = Math.max(0,   bi - 3); layers.bbHigh       = -3; }
     }
 
     // ── [10] WTI 원유 주간 등락 ──────────────────────────────────────────────
@@ -504,13 +509,19 @@ function calculateEnhancedScore(input) {
       }
     }
 
-    // ── [12] 분기 인도량 / 실적 발표주 신호 증폭 (v4.0: Earnings ×1.5) ───────
+    // ── [12] 분기 인도량 / 실적 발표주 신호 증폭 (v5.0: 1.35→1.15 과신억제) ──
     if (macroCtx.isDeliveryWeek || macroCtx.isEarningsWeek) {
       const before  = bi;
       const distNow = bi - 50;
       if (Math.abs(distNow) >= 5) {
-        // v4.0: Earnings Week는 뉴스 Base Score 1.5배 → 신호 증폭 ×1.35
-        const mult  = macroCtx.isEarningsWeek ? 1.35 : 1.25;
+        // v5.0: MACD 방향 일치 여부로 확신도 분기
+        const macdConfirms = !macroCtx.macd || (
+          distNow > 0 ? macroCtx.macd.trend === 'bullish'
+                      : macroCtx.macd.trend === 'bearish'
+        );
+        const mult = macroCtx.isEarningsWeek
+          ? (macdConfirms ? 1.15 : 1.08)   // was 1.35
+          : (macdConfirms ? 1.12 : 1.08);  // was 1.25
         bi = Math.round(50 + distNow * mult);
         bi = Math.max(0, Math.min(100, bi));
         const label = macroCtx.isEarningsWeek ? 'earningsWeek' : 'deliveryWeek';
@@ -521,13 +532,24 @@ function calculateEnhancedScore(input) {
 
   bi = Math.max(0, Math.min(100, Math.round(bi)));
 
-  // ── [7] 방향 결정 — neutral 제거, avgScore tie-break ─────────────────────
+  // ── [7] 방향 결정 — v5.0: 중립밴드 도입 (약신호 neutral 허용) ────────────
   let direction;
-  if      (bi >= 57) direction = 'bullish';
-  else if (bi <= 43) direction = 'bearish';
-  else direction = bullish > bearish ? 'bullish'
-                 : bearish > bullish ? 'bearish'
-                 : (avgScore < 0 ? 'bearish' : 'bullish');
+  if (bi >= 58) {
+    direction = 'bullish';
+  } else if (bi <= 42) {
+    direction = 'bearish';
+  } else {
+    // 중립밴드 (43-57): 신호가 약하면 neutral 허용
+    const margin = bullish - bearish;
+    if (Math.abs(avgScore) < 0.4 && Math.abs(margin) <= 1) {
+      // avgScore가 거의 0이고 뉴스 방향도 박빙 → neutral
+      direction = 'neutral';
+    } else {
+      direction = margin > 0 ? 'bullish'
+                : margin < 0 ? 'bearish'
+                : (avgScore < 0 ? 'bearish' : avgScore > 0 ? 'bullish' : 'neutral');
+    }
+  }
 
   // ── [v4.0] Confirmation Logic — 신호 상태 분류 ───────────────────────────
   const signalState = getSignalState(bi, macroCtx);
