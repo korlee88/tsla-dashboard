@@ -3623,7 +3623,7 @@ function VideoScriptPage({ onBack }) {
       <p className="text-4xl mb-4">🎬</p>
       <p className="text-lg font-bold text-gray-300 mb-2">아직 생성된 각본이 없습니다</p>
       <p className="text-sm text-gray-600 mb-4">매일 KST 09:00 GitHub Actions가 자동으로 각본을 생성합니다.</p>
-      <a href={}
+      <a href={`https://github.com/${gCfg.repo}/actions/workflows/weekly-video.yml`}
         target="_blank" rel="noopener noreferrer"
         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
         style={{ background: '#7c3aed' }}>
@@ -3685,20 +3685,20 @@ function VideoScriptPage({ onBack }) {
           style={{ background: wfBadge.color + '18', border: `1px solid ${wfBadge.color}40`, color: wfBadge.color }}>
           <span>{wfBadge.icon}</span>
           <span>{wfBadge.text}</span>
-          <a href={}
+          <a href={`https://github.com/${gCfg.repo}/actions/workflows/weekly-video.yml`}
             target="_blank" rel="noopener noreferrer"
             className="ml-auto underline opacity-70">Actions 확인</a>
         </div>
       )}
       {/* 액션 버튼 바 */}
       <div className="flex gap-2 mb-4">
-        <a href={}
+        <a href={`https://github.com/${gCfg.repo}/actions/workflows/weekly-video.yml`}
           target="_blank" rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold text-white"
           style={{ background: '#7c3aed', border: '1px solid #9c5cf0' }}>
           ▶ 영상 생성 실행
         </a>
-        <a href={}
+        <a href={`https://github.com/${gCfg.repo}/actions/workflows/weekly-video.yml`}
           target="_blank" rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold"
           style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#60a5fa' }}>
