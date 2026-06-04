@@ -2147,16 +2147,128 @@
       "match": true,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-05-25",
+      "weekEnd": "2026-05-31",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 주식 10억 달러 상당 매입 공개 후 주가 상승",
+          "source": "Reuters",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 투자 확대로 2026년 지출 계획 상향 조정",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라 자율주행 로보택시 출시 일정에 대한 새로운 발언",
+          "source": "TheStreet",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 2026년 600달러 도달 가능성에 대한 분석",
+          "source": "24/7 Wall St.",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크의 '조용한 기간' 언급 속 테슬라-스페이스X 합병 소문 증폭",
+          "source": "Stocktwits",
+          "category": "Musk"
+        },
+        {
+          "title": "테슬라 주가, 2026년 하반기 급등 가능성: Optimus Gen 3 공개 기대",
+          "source": "The Motley Fool",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 주가, 스페이스X와의 잠재적 합병 보도에 상승",
+          "source": "Morningstar",
+          "category": "Musk"
+        },
+        {
+          "title": "기술적 분석에 따르면 테슬라 주가 8월 말 520달러 도달 가능성",
+          "source": "Cryptonews.net",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가, 화요일 상승 마감하며 4거래일 연속 상승",
+          "source": "StockInvest.us",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 9,
+      "analysis": {
+        "avgScore": 1.9,
+        "buyIndex": 67,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 0,
+        "neutral": 2,
+        "topRules": [
+          "R25",
+          "R24",
+          "R19"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 69,
+          "optimusBoost": 8,
+          "r24Discount": -7,
+          "strongAmp": 2,
+          "macdTrend": 1,
+          "bbHigh": -3,
+          "wtiDown": -3
+        },
+        "macroCtx": {
+          "spyChg": 0.86,
+          "qqqChg": 1.7,
+          "vixClose": 15.319999694824219,
+          "wtiChg": -6.95,
+          "cnyChg": -0.22,
+          "bydChg": -2.28,
+          "bydRelStrength": 3.57,
+          "prevTslaChg": 1.61,
+          "tslaTrend3w": 9.17,
+          "rsi": 52.1,
+          "macd": {
+            "macd": 3.4306545352969806,
+            "signal": -0.8291286634254527,
+            "hist": 4.259783198722433,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 459.43,
+            "middle": 403.36,
+            "lower": 347.29,
+            "pos": 0.789
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 1.29,
+        "actual": "neutral",
+        "open": 430.26,
+        "close": 435.79
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-05-25 04:25 KST",
+  "generatedAt": "2026-06-03 06:18 KST",
   "stats": {
-    "totalWeeks": 20,
-    "analyzedWeeks": 20,
-    "accuracy": 50,
+    "totalWeeks": 21,
+    "analyzedWeeks": 21,
+    "accuracy": 48,
     "strongAccuracy": 33,
-    "avgScore": 0.9,
-    "modelVersion": "5.0"
+    "avgScore": 0.9
   },
   "lastRescored": "2026-06-02 11:31 KST"
 }
