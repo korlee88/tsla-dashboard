@@ -6,6 +6,10 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { loadTickerConfig } = require('./lib/prompt');
+
+const cfg    = loadTickerConfig();
+const TICKER = cfg.ticker;
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -49,20 +53,16 @@ async function fetchCalendarEvents() {
   endDate.setMonth(endDate.getMonth() + 3);
   const endStr  = endDate.toISOString().split('T')[0];
 
+  const categories = cfg.calendar_event_categories || ['실적발표', '제품출시', '주주총회', '컨퍼런스', '규제', '기타'];
+
   const prompt = `[필수 규칙] title과 description은 반드시 한국어(Korean)로 작성. titleEn과 source만 영어 유지.
 
-Today is ${today} (KST). Search for ALL confirmed and expected Tesla (TSLA) corporate events from ${today} to ${endStr}.
+Today is ${today} (KST). Search for ALL confirmed and expected ${cfg.company_en} (${TICKER}) corporate events from ${today} to ${endStr}.
 
-Search sources: ir.tesla.com, SEC EDGAR (8-K filings, DEF 14A), Tesla press releases, Bloomberg, Reuters, Electrek, The Verge, CNBC, MarketWatch.
+Search sources: SEC EDGAR (8-K filings, DEF 14A), ${cfg.company_en} press releases, Bloomberg, Reuters, CNBC, MarketWatch.
 
 Find events in these categories:
-- 실적발표 (Earnings): 분기 실적 발표, 어닝 콜
-- 인도량발표 (Delivery): 분기 인도량/생산량 발표
-- 제품출시 (Product): 신차 공개, FSD 마일스톤, Optimus 데모, 제품 이벤트
-- 주주총회 (Shareholder): 연간 주주총회, 투자자의 날
-- 컨퍼런스 (Conference): CEO 컨퍼런스 참가, 테슬라 공식 이벤트
-- 규제 (Regulatory): NHTSA 청문회, SEC 마감일, 리콜 발표, 정부 승인
-- 기타 (Other): 공장 개장, 주요 파트너십
+${categories.map(c => `- ${c}`).join('\n')}
 
 Return ONLY a JSON array (no markdown, no explanation):
 [
@@ -70,24 +70,23 @@ Return ONLY a JSON array (no markdown, no explanation):
     "date": "YYYY-MM-DD",
     "title": "한국어 이벤트 제목",
     "titleEn": "English event title",
-    "category": "실적발표",
+    "category": "${categories[0]}",
     "categoryEn": "Earnings",
     "time": "HH:MM",
     "timezone": "ET",
     "confirmed": true,
-    "source": "Tesla IR",
-    "sourceUrl": "https://ir.tesla.com",
+    "source": "${cfg.company_en} IR",
+    "sourceUrl": null,
     "description": "한국어 1문장 설명",
     "importance": "high"
   }
 ]
 
 Rules:
-- category must be one of: 실적발표, 인도량발표, 제품출시, 주주총회, 컨퍼런스, 규제, 기타
-- categoryEn must be one of: Earnings, Delivery, Product, Shareholder, Conference, Regulatory, Other
-- confirmed=true ONLY if officially announced by Tesla or SEC filing
+- category must be one of: ${categories.join(', ')}
+- confirmed=true ONLY if officially announced by ${cfg.company_en} or SEC filing
 - confirmed=false for analyst estimates or widely expected but unconfirmed dates
-- importance=high: 실적발표, 인도량발표, 주주총회, 주요 제품출시
+- importance=high: 실적발표, 주주총회, 주요 제품출시${categories.includes('인도량발표') ? ', 인도량발표' : ''}
 - importance=medium: 컨퍼런스, 규제
 - importance=low: minor announcements, speculative
 - time and timezone: null if unknown
@@ -124,7 +123,7 @@ async function main() {
   const endDate = new Date(nowKST);
   endDate.setMonth(endDate.getMonth() + 3);
 
-  console.log(`\n📅 테슬라 캘린더 업데이트 시작: ${kstStr}`);
+  console.log(`\n📅 ${TICKER} 캘린더 업데이트 시작: ${kstStr}`);
   console.log('━'.repeat(60));
 
   // 1. 이벤트 수집

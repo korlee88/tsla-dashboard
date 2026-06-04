@@ -1,5 +1,5 @@
 /**
- * TSLA 자동 뉴스 수집 & 분석 스크립트
+ * 자동 뉴스 수집 & 분석 스크립트 (멀티 종목 지원)
  * GitHub Actions에서 하루 4회 실행 (KST 03:00 / 09:00 / 15:00 / 21:00)
  * Node.js 20+ 내장 fetch 사용 (별도 패키지 불필요)
  */
@@ -7,6 +7,12 @@
 const fs   = require('fs');
 const path = require('path');
 const { loadMacroData, buildMacroContext, calculateEnhancedScore, fetchOptionsIV, fetchShortInterest } = require('./lib/scoring');
+const { loadTickerConfig, loadRulesConfig, buildSystemPrompt } = require('./lib/prompt');
+
+const cfg      = loadTickerConfig();
+const rulesData = loadRulesConfig();
+const TICKER    = cfg.ticker;
+const COMPANY_KO = cfg.company_ko;
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -22,86 +28,9 @@ const GEMINI_URL = makeUrl(MODELS[0]); // 기본값 (하위 호환용)
 const DATA_FILE  = path.join(__dirname, '..', 'data', 'auto-sessions.json');
 const MAX_SESSIONS = 90; // 최대 90개 (약 3주치)
 
-// ─── 시스템 프롬프트 ─────────────────────────────────────────────────────────
+// ─── 시스템 프롬프트 (config/rules.json + config/ticker.json 기반 동적 생성) ──
 
-const SYSTEM_PROMPT = `You are a financial analyst specializing in Tesla (TSLA) stock impact assessment.
-Analyze the given news and return ONLY valid JSON in this exact format:
-{
-  "impact_score": <integer -5 to +5>,
-  "direction": "<bullish|bearish|neutral>",
-  "confidence": "<high|medium|low>",
-  "triggered_rules": ["R01","R02"],
-  "reasoning": "<one sentence explanation in Korean>",
-  "key_factors": ["<factor1>", "<factor2>"]
-}
-
-Rule reference:
-R01=delivery miss(>5%), R02=EPS miss(>10%), R03=guidance cut, R04=recall(>50K),
-R05=SEC/DOJ investigation, R06=major competitor EV launch, R07=factory shutdown/fire,
-R08=musk SNS controversy(DOGE/politics), R09=subsidy reduction/removal, R10=price cut(>5%),
-R11=delivery beat(>5%), R12=EPS beat(>10%), R13=new product/FSD milestone,
-R14=EV incentive expansion, R15=large energy storage deal, R16=new market entry(India/SEA),
-R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buyback/positive statement,
-R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
-R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE),
-R25=optimus/humanoid robot production scale-up or commercialization(B2B contract/factory ramp/shipment confirmed),
-R26=vehicle production cut/pause for robot factory transition(bullish if paired with R25, bearish offset)
-
-STRICT SCORE GUIDELINES (backtesting: previous scores were systematically too high — apply conservatively):
-
-±5: CATASTROPHIC or HISTORIC only — bankruptcy risk, >30% delivery miss confirmed, historic fraud
-    Frequency: 1–2 times per year at most. Almost never appropriate.
-
-±3~4: REQUIRES hard confirmed numbers — NOT speculation, NOT analyst opinion, NOT rumors
-    ✓ Actual quarterly delivery report published (beat/miss >5% vs consensus with official numbers)
-    ✓ Actual EPS reported with verified figures
-    ✓ Factory confirmed shutdown/fire with operational impact
-    ✗ "Expected to beat" / "analysts expect" / "reportedly" → MAX ±2
-    ✗ Analyst upgrades, price target changes → MAX ±2 (use R17, cap at ±2)
-    ✗ Follow-up or repeated story about already-known event → subtract 1 or score 0
-    Frequency target: 1–2 items per 10-article batch
-
-±2: Moderate confirmed news with clear, specific Tesla impact
-    ✓ Official partnership/deal announced with specific terms
-    ✓ Verified monthly sales data (China CPCA, etc.)
-    ✓ Regulatory decision directly affecting Tesla products
-    Frequency target: 3–4 items per 10-article batch
-
-±1: Minor, indirect, or speculative news
-    ✓ Analyst commentary/speculation without hard data
-    ✓ Industry trend with TSLA mention
-    ✓ Incremental product/software update
-    Frequency target: 3–4 items per 10-article batch
-
-0: Irrelevant, fully priced-in, or pure noise
-    ✓ Repeated/rehashed known information (same story >3 days old)
-    ✓ General market commentary without TSLA catalyst
-    Frequency target: 1–2 items per 10-article batch
-
-CONSERVATIVE SCORING RULES (mandatory):
-1. DEFAULT: When uncertain between two scores, ALWAYS choose the LOWER magnitude.
-2. SPECULATION: Any rumor, forecast, analyst view, or "reportedly" = MAX ±2.
-3. ALREADY KNOWN: Event/trend in news >3 days → subtract 1 from initial score.
-4. SELF-CHECK: Before assigning ±3 or higher, confirm: "Does this article contain officially published, quantified data?" If NO → reduce to ±2.
-
-Per-rule CAPS (hard limits regardless of context):
-- R08 (Musk SNS/DOGE): MAX ±2
-- R09 (subsidy reduction): MAX ±2 unless specific law confirmed
-- R13 (FSD/new product): MAX ±3; ±4 only if hardware shipping with date confirmed
-- R17 (analyst upgrade/downgrade): MAX ±2
-- R18 (fed rate signal): MAX ±1
-- R19 (Musk positive statement): MAX ±2
-- R20 (China sales): MAX ±2 unless official quarterly data published
-- R22 (short seller report): MAX ±2
-- R23 (recession fear): MAX -1
-- R24 (Musk ventures spillover): MAX ±2
-- R25 (Optimus/robot scale-up): MAX +4; +3 if confirmed ramp plan, +4 only if shipment/B2B contract confirmed
-  NOTE: R25 is BULLISH even when co-occurring with R07 (factory shutdown for robot pivot).
-        When R25+R07 together: score R25 as +3~+4, score R07 as -1 only (pivot context overrides shutdown penalty)
-- R26 (vehicle production cut for robot transition): score -1 to -2 standalone; score 0 if R25 present (pivot rationale neutralizes)
-
-DIRECTION: bullish if score>0, bearish if score<0, neutral ONLY if score=0.
-CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
+const SYSTEM_PROMPT = buildSystemPrompt(cfg, rulesData);
 
 // ─── 유틸 ────────────────────────────────────────────────────────────────────
 
@@ -159,11 +88,12 @@ async function geminiPost(body, retries = 7) {
 
 async function collectNews() {
   const today = new Date().toISOString().split('T')[0];
+  const keyPeopleStr = (cfg.key_people || []).join(' and ');
   const data = await geminiPost({
     tools: [{ google_search: {} }],
     contents: [{
       role: 'user',
-      parts: [{ text: `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성. 영어 원문은 한국어로 번역할 것. source·category만 영어 유지.\n\nSearch for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 10 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"(한국어 번역 제목 예: 테슬라, 1분기 인도량 예상치 하회)","summary":"(한국어 2~3문장 요약 예: 테슬라가 2026년 1분기...)","source":"Reuters","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\n⚠️ title·summary에 영어 사용 절대 금지. 반드시 한국어로만 작성.\nReturn ONLY the JSON array, no other text.` }],
+      parts: [{ text: `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성. 영어 원문은 한국어로 번역할 것. source·category만 영어 유지.\n\nSearch for the latest ${cfg.company_en} (${TICKER}) and ${keyPeopleStr} news from today or past 24 hours that could impact ${TICKER} stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 10 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"(한국어 번역 제목 예: ${cfg.company_ko}, 1분기 실적 예상치 하회)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Macro|Energy|Market|Legal"}]\n⚠️ title·summary에 영어 사용 절대 금지. 반드시 한국어로만 작성.\nReturn ONLY the JSON array, no other text.` }],
     }],
     generationConfig: { maxOutputTokens: 8192, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
   });
@@ -179,7 +109,7 @@ async function collectNews() {
 // ─── 개별 뉴스 분석 ──────────────────────────────────────────────────────────
 
 async function analyzeNewsItem(newsItem) {
-  const userContent = `Analyze this Tesla-related news for TSLA stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
+  const userContent = `Analyze this ${cfg.company_en}-related news for ${TICKER} stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
   const data = await geminiPost({
     system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
     contents: [{ role: 'user', parts: [{ text: userContent }] }],
@@ -198,16 +128,18 @@ async function analyzeNewsItem(newsItem) {
   return JSON.parse(m[0]);
 }
 
-// ─── 머스크 X 센티먼트 수집 (Gemini Search Grounding) ────────────────────────
-// Grok 제안 #1: 머스크 X 포스트 센티먼트를 별도 신호로 활용
+// ─── 핵심 인물 X 센티먼트 수집 (Gemini Search Grounding) ─────────────────────
 
-async function collectMuskXSentiment(dateStr) {
+async function collectKeyPersonSentiment(dateStr) {
+  const people    = cfg.key_people || ['Elon Musk'];
+  const handles   = people.map(p => `@${p.replace(/\s+/g, '')}`).join(', ');
+  const topics    = `${cfg.ticker}, ${cfg.company_en}, stock`;
   try {
     const data = await geminiPost({
       tools: [{ google_search: {} }],
       contents: [{
         role: 'user',
-        parts: [{ text: `Search X (Twitter) and web for @elonmusk posts from the past 7 days (around ${dateStr}) related to Tesla, TSLA, electric vehicles, Robotaxi, FSD, Optimus, energy storage, or Tesla business strategy.\nAnalyze the overall tone and sentiment of Elon Musk's recent public communications about Tesla.\nReturn ONLY JSON:\n{"posts":[{"date":"YYYY-MM-DD","content":"(한국어 내용 요약)","sentiment":"bullish|bearish|neutral","engagement":"high|medium|low"}],"overall_sentiment":"bullish|bearish|neutral","sentiment_score":<integer -3 to +3>,"post_count":<number of found posts>,"reasoning":"(한국어 한 문장 설명)"}\nCRITICAL: Return ONLY the JSON object.` }],
+        parts: [{ text: `Search X (Twitter) and web for ${handles} posts from the past 7 days (around ${dateStr}) related to ${topics}.\nAnalyze the overall tone and sentiment of their recent public communications about ${cfg.company_en}.\nReturn ONLY JSON:\n{"posts":[{"date":"YYYY-MM-DD","content":"(한국어 내용 요약)","sentiment":"bullish|bearish|neutral","engagement":"high|medium|low"}],"overall_sentiment":"bullish|bearish|neutral","sentiment_score":<integer -3 to +3>,"post_count":<number of found posts>,"reasoning":"(한국어 한 문장 설명)"}\nCRITICAL: Return ONLY the JSON object.` }],
       }],
       generationConfig: { maxOutputTokens: 1024, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
     });
@@ -217,10 +149,10 @@ async function collectMuskXSentiment(dateStr) {
     const m = clean.match(/\{[\s\S]*\}/);
     if (!m) return null;
     const result = JSON.parse(m[0]);
-    console.log(`   🐦 머스크 X: 센티먼트 ${result.overall_sentiment} (${result.sentiment_score >= 0 ? '+' : ''}${result.sentiment_score}) | 포스트 ${result.post_count || '?'}건`);
+    console.log(`   🐦 ${people[0]} X: 센티먼트 ${result.overall_sentiment} (${result.sentiment_score >= 0 ? '+' : ''}${result.sentiment_score}) | 포스트 ${result.post_count || '?'}건`);
     return result;
   } catch (e) {
-    console.warn(`   ⚠ 머스크 X 센티먼트 수집 실패: ${e.message}`);
+    console.warn(`   ⚠ 핵심 인물 X 센티먼트 수집 실패: ${e.message}`);
     return null;
   }
 }
@@ -303,14 +235,14 @@ DO NOT predict all 5 days uniformly positive.`
     }
 
     const data = await geminiPost({
-      system_instruction: { parts: [{ text: 'You are a TSLA stock prediction AI. Return ONLY valid JSON with no explanation.' }] },
-      contents: [{ role: 'user', parts: [{ text: `TSLA Analysis (${dateStr}):
+      system_instruction: { parts: [{ text: `You are a ${TICKER} stock prediction AI. Return ONLY valid JSON with no explanation.` }] },
+      contents: [{ role: 'user', parts: [{ text: `${TICKER} Analysis (${dateStr}):
 - buyIndex: ${buyIndex}/100 (≥65=bullish, 45-64=neutral, ≤44=bearish)
 - avgNewsScore: ${avgScore >= 0 ? '+' : ''}${avgScore} (range -5 to +5)
 - Macro: ${macroSummary}
 ${trendRule}
 
-Predict TSLA daily closing price change % for the next 5 trading days (skip weekends).
+Predict ${TICKER} daily closing price change % for the next 5 trading days (skip weekends).
 Rules: Be conservative — typical daily range is -3% to +3%. Use ±1~2% for normal signals.
 Negative days are realistic — include them when trend warrants.
 signal: "매수" if change_pct > 0.8, "매도" if change_pct < -0.8, else "관망"
@@ -351,7 +283,7 @@ async function main() {
   const dateStr = nowKST.toISOString().split('T')[0];
   const timeStr = nowKST.toISOString().slice(11, 16);
 
-  console.log(`\n🚀 TSLA 자동 분석 시작: ${kstStr}`);
+  console.log(`\n🚀 ${TICKER} 자동 분석 시작: ${kstStr}`);
   console.log('━'.repeat(60));
 
   // 1. 뉴스 수집
@@ -359,9 +291,9 @@ async function main() {
   const newsItems = await collectNews();
   console.log(`   ✅ ${newsItems.length}건 수집 완료`);
 
-  // 1-2. 머스크 X 센티먼트 수집
-  console.log('\n🐦 머스크 X 센티먼트 수집 중...');
-  const muskXData = await collectMuskXSentiment(dateStr);
+  // 1-2. 핵심 인물 X 센티먼트 수집
+  console.log('\n🐦 핵심 인물 X 센티먼트 수집 중...');
+  const muskXData = await collectKeyPersonSentiment(dateStr);
   console.log('');
 
   // 1-3. 구글 트렌드 수집
@@ -419,27 +351,29 @@ async function main() {
 
   // ── 다층 강화 채점 모델 v3.0 (백테스트 ±2% 이상 주 72%) ─────────────────
   let macroCtx = null;
-  let latestTslaPrice = null;   // dailyForecasts basePrice 계산용
+  let latestPrice = null;   // dailyForecasts basePrice 계산용
   try {
-    console.log('   📊 매크로 컨텍스트 로드 중 (SPY/QQQ/VIX/TSLA/WTI/CNY)...');
-    const macroData = await loadMacroData();
-    macroCtx = buildMacroContext(macroData, dateStr);
-    // TSLA 최신 주봉 종가 → 일별 예측 기준가로 사용
-    if (macroData.tsla?.length) {
-      latestTslaPrice = Math.round(macroData.tsla[macroData.tsla.length - 1].close * 100) / 100;
+    console.log(`   📊 매크로 컨텍스트 로드 중 (SPY/QQQ/VIX/${TICKER}/WTI/CNY)...`);
+    const macroData = await loadMacroData(cfg);
+    macroCtx = buildMacroContext(macroData, dateStr, cfg);
+    // 최신 주봉 종가 → 일별 예측 기준가로 사용
+    const assetArr = macroData.asset || macroData.tsla || [];
+    if (assetArr.length) {
+      latestPrice = Math.round(assetArr[assetArr.length - 1].close * 100) / 100;
     }
-    const wtiStr = macroCtx.wtiChg >= 0 ? '+' : '';
-    const cnyStr = macroCtx.cnyChg >= 0 ? '+' : '';
+    const wtiStr  = macroCtx.wtiChg >= 0 ? '+' : '';
+    const cnyStr  = macroCtx.cnyChg >= 0 ? '+' : '';
     const macdStr = macroCtx.macd?.crossover ? `MACD ${macroCtx.macd.crossover}` : `MACD ${macroCtx.macd?.trend || '-'}`;
     const bbStr   = macroCtx.bb ? `BB:${Math.round(macroCtx.bb.pos*100)}%` : '';
-    const bydStr  = macroCtx.bydRelStrength !== null && macroCtx.bydRelStrength !== undefined
-      ? ` BYD-RS:${macroCtx.bydRelStrength >= 0 ? '+' : ''}${macroCtx.bydRelStrength}%` : '';
-    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}${bydStr}${latestTslaPrice ? ` TSLA:$${latestTslaPrice}` : ''}`);
+    const compRS  = macroCtx.competitorRelStrength ?? macroCtx.bydRelStrength;
+    const compStr = compRS !== null && compRS !== undefined
+      ? ` ${cfg.competitor_ticker || 'COMP'}-RS:${compRS >= 0 ? '+' : ''}${compRS}%` : '';
+    console.log(`   ✅ SPY:${macroCtx.spyChg >= 0 ? '+' : ''}${macroCtx.spyChg}% QQQ:${macroCtx.qqqChg >= 0 ? '+' : ''}${macroCtx.qqqChg}% VIX:${macroCtx.vixClose} WTI:${wtiStr}${macroCtx.wtiChg}% CNY:${cnyStr}${macroCtx.cnyChg}% RSI:${macroCtx.rsi} ${macdStr} ${bbStr}${compStr}${latestPrice ? ` ${TICKER}:$${latestPrice}` : ''}`);
 
     // ── 라이브 전용 스냅샷: 옵션 IV + 공매도 비율 (과거 데이터 없어 백테스트 미적용) ──
     const [atmIV, shortPercent] = await Promise.all([
-      fetchOptionsIV('TSLA'),
-      fetchShortInterest('TSLA'),
+      fetchOptionsIV(TICKER),
+      fetchShortInterest(TICKER),
     ]);
     if (atmIV !== null)        macroCtx.atmIV = atmIV;
     if (shortPercent !== null) macroCtx.shortPercent = shortPercent;
@@ -458,7 +392,7 @@ async function main() {
     console.log(`   🐦 머스크 X 보정: ${muskXAdj >= 0 ? '+' : ''}${muskXAdj}pt (원점수: ${muskXData.sentiment_score})`);
   }
 
-  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx, newsCategories });
+  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx, newsCategories }, cfg);
 
   // 구글 트렌드 보정 (소매 관심도 신호 — 방향 증폭기)
   let trendsAdj = 0;
@@ -503,6 +437,7 @@ async function main() {
   // 4-b. 일별 예측 생성 (D+1~D+5) — 예측 정확도 추적용
   console.log('\n🔮 일별 예측 생성 중 (D+1~D+5)...');
   const dailyForecasts = await generateDailyForecast(buyIndex, avgScore, macroCtx, dateStr, recentBuyIndexes);
+
   console.log('');
 
   // 4. 세션 객체
@@ -529,12 +464,13 @@ async function main() {
     newsCategories,
     macroCtx,
     scoringLayers,
-    latestTslaPrice,
+    latestPrice,                 // 신규 범용 필드
+    latestTslaPrice: latestPrice, // 하위 호환 alias
     dailyForecasts: (dailyForecasts || []).map(f => ({
       ...f,
-      basePrice: latestTslaPrice,
-      predictedPrice: latestTslaPrice != null && f.change_pct != null
-        ? Math.round(latestTslaPrice * (1 + f.change_pct / 100) * 100) / 100
+      basePrice: latestPrice,
+      predictedPrice: latestPrice != null && f.change_pct != null
+        ? Math.round(latestPrice * (1 + f.change_pct / 100) * 100) / 100
         : null,
     })),
     modelVersion: '3.1',

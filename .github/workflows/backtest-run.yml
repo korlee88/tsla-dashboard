@@ -1,4 +1,4 @@
-name: 테슬라 백테스트 실행 (매일 자동 + 수동)
+name: 백테스트 실행 (매일 자동 + 수동)
 
 on:
   workflow_dispatch:
@@ -36,14 +36,15 @@ jobs:
 
       - name: 결과 커밋 & 푸시
         run: |
+          TICKER=$(node -e "console.log(require('./config/ticker.json').ticker)")
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "TSLA Backtest Bot"
+          git config --local user.name "${TICKER} Backtest Bot"
           git add data/backtest-results-*.json
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
             YEAR=$(TZ='Asia/Seoul' date +'%Y')
-            git commit -m "backtest: ${YEAR}년 백테스트 일일 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            git commit -m "backtest: ${TICKER} ${YEAR}년 백테스트 일일 업데이트 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
             git pull --rebase origin master
             git push
           fi

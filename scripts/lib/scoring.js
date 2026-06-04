@@ -1,13 +1,13 @@
 /**
- * TSLA 다층 강화 채점 모델 v5.0 (편향보정·증폭재조정·중립밴드)
+ * 다층 강화 채점 모델 v5.0 (편향보정·증폭재조정·중립밴드) — 멀티 종목 지원
  *
  * 레이어 구조:
  *   [Base] 원본 매수지수 (avgScore → buyIndex)
- *   [14] R25 Optimus/로봇 생산·상업화 부스트 (+8pt, R07 동반 시 +5 추가)
- *   [1]  R24 단독 발동 노이즈 할인 (+9pt)
+ *   [14] R25 종목고유 부스트 (+8pt, R07 동반 시 +5 추가) — TSLA: Optimus
+ *   [1]  R24 단독 발동 노이즈 할인
  *   [2]  강한신호 증폭 (±20 이탈 시 ×1.08 — v5.0: 1.15→1.08 과열억제)
- *   [3]  매크로 오버레이 (SPY+QQQ 평균 × beta 2.0 — v5.0: 2.5→2.0 편향보정)
- *   [4]  전주 TSLA momentum (mean reversion — v5.0: >7% 단계 추가)
+ *   [3]  매크로 오버레이 (SPY+QQQ 평균 × beta — v5.0: cfg.beta_coefficient 사용)
+ *   [4]  전주 자산 momentum (mean reversion)
  *   [5]  VIX regime (>30 공포장 → 신호 강도 ×0.8)
  *   [6]  RSI 14주 (과매도/과매수 보정)
  *   [7]  중립밴드 도입 — v5.0: bi 43-57 약신호는 neutral 출력 허용
@@ -17,11 +17,10 @@
  *   [11] CNY/USD 환율
  *   [12] 분기 인도량/실적 발표주 신호 증폭 (v5.0: 1.35→1.15 과신억제)
  *   [13] 뉴스 카테고리 가중치 (Financial > Tech > Market)
- *   [15] BYD 상대강도 (중국 EV 경쟁) — 백테스트 적용 (Yahoo 주봉)
+ *   [15] 경쟁사 상대강도 (cfg.competitor_ticker) — 백테스트 적용 (Yahoo 주봉)
  *   [16] 옵션 ATM IV 감쇠 — 라이브 전용 (과거 IV 없음 → 백테스트 skip)
  *   [17] 공매도 비율 숏스퀴즈 증폭 — 라이브 전용 (백테스트 skip)
  *   [18] 추세 필터 (v5.0 NEW) — 뉴스 감성과 독립된 3주 가격추세 신호
- *        하락추세에서 약한 호재는 가격에 반영 안 됨 → bullish 할인
  *        backtest 동시검증: 2025 57→65%, 2026 40→50% (깨진 예측 0건)
  */
 
@@ -54,23 +53,32 @@ async function fetchYahooWeekly(symbol) {
   throw new Error(`${symbol} 주봉 로드 실패`);
 }
 
-async function loadMacroData() {
-  const [spy, qqq, vix, tsla, wti, cny] = await Promise.all([
+/**
+ * @param {Object} cfg - ticker.json 설정 (ticker, competitor_ticker 사용)
+ */
+async function loadMacroData(cfg = {}) {
+  const ticker     = cfg.ticker            || 'TSLA';
+  const competitorTicker = cfg.competitor_ticker || null;
+
+  const [spy, qqq, vix, asset, wti, cny] = await Promise.all([
     fetchYahooWeekly('SPY'),
     fetchYahooWeekly('QQQ'),
     fetchYahooWeekly('^VIX'),
-    fetchYahooWeekly('TSLA'),
-    fetchYahooWeekly('CL=F'),   // WTI 원유 (EV 수요 연관)
-    fetchYahooWeekly('CNY=X'),  // CNY/USD 환율 (중국 매출 영향)
+    fetchYahooWeekly(ticker),
+    fetchYahooWeekly('CL=F'),   // WTI 원유
+    fetchYahooWeekly('CNY=X'),  // CNY/USD 환율
   ]);
-  // BYD(중국 EV 최대 경쟁사)는 선택적 — 실패해도 기존 파이프라인 유지
-  let byd = [];
-  try {
-    byd = await fetchYahooWeekly('BYDDY');   // BYD ADR (US OTC)
-  } catch {
-    try { byd = await fetchYahooWeekly('BYDDF'); } catch {}  // 폴백: 보통주
+
+  let competitor = [];
+  if (competitorTicker) {
+    try {
+      competitor = await fetchYahooWeekly(competitorTicker);
+    } catch {
+      // 경쟁사 데이터는 선택적 — 실패해도 파이프라인 유지
+    }
   }
-  return { spy, qqq, vix, tsla, wti, cny, byd };
+  // 하위 호환: 기존 코드가 macroData.tsla / macroData.byd로 접근하는 경우를 위해
+  return { spy, qqq, vix, asset, competitor, wti, cny, tsla: asset, byd: competitor };
 }
 
 // ─── 라이브 전용 스냅샷 (과거 데이터 없음 → 백테스트 미적용) ──────────────────
@@ -184,33 +192,36 @@ function calcRSI(arr, idx, period = 14) {
   return Math.round((100 - 100 / (1 + rs)) * 10) / 10;
 }
 
-// ─── 분기 인도량 발표주 판별 ─────────────────────────────────────────────────
+// ─── 분기 발표주 판별 ────────────────────────────────────────────────────────
 
 /**
- * 해당 주가 테슬라 분기 인도량 발표 주간인지 확인
- * (매 분기 1~5영업일 = 1월 첫주, 4월 첫주, 7월 첫주, 10월 첫주)
+ * 해당 주가 분기 인도량 발표 주간인지 확인.
+ * cfg.has_delivery_reports=false 이면 항상 false (비EV 종목 대응).
  */
-function isDeliveryWeek(weekStart) {
-  const d   = new Date(weekStart + 'T00:00:00Z');
-  const mo  = d.getUTCMonth() + 1; // 1~12
-  const day = d.getUTCDate();
-  // 분기 첫 주 (1·4·7·10월의 1~7일)
-  return [1, 4, 7, 10].includes(mo) && day <= 7;
-}
-
-/**
- * 해당 주가 테슬라 실적 발표(EPS) 주간인지 확인
- * (1월 마지막 주 ~ 2월 첫째 주, 4월 마지막 주, 7월 마지막 주, 10월 마지막 주)
- */
-function isEarningsWeek(weekStart) {
+function isDeliveryWeek(weekStart, cfg = {}) {
+  if (!cfg.has_delivery_reports) return false;
   const d   = new Date(weekStart + 'T00:00:00Z');
   const mo  = d.getUTCMonth() + 1;
   const day = d.getUTCDate();
-  return (mo === 1  && day >= 22) ||  // Q4 EPS: 1월 말
-         (mo === 2  && day <= 7)  ||  // Q4 EPS 이어지는 경우
-         (mo === 4  && day >= 18) ||  // Q1 EPS: 4월 말
-         (mo === 7  && day >= 18) ||  // Q2 EPS: 7월 말
-         (mo === 10 && day >= 15);    // Q3 EPS: 10월 중하순
+  // 분기 첫 주 (earnings_months 또는 기본값 [1,4,7,10]의 1~7일)
+  const months = cfg.earnings_months || [1, 4, 7, 10];
+  return months.includes(mo) && day <= 7;
+}
+
+/**
+ * 해당 주가 실적 발표(EPS) 주간인지 확인.
+ * cfg.earnings_months 를 사용하며, 1월 실적의 2월 초 스필오버도 처리.
+ */
+function isEarningsWeek(weekStart, cfg = {}) {
+  const months = cfg.earnings_months || [1, 4, 7, 10];
+  const d   = new Date(weekStart + 'T00:00:00Z');
+  const mo  = d.getUTCMonth() + 1;
+  const day = d.getUTCDate();
+  // 1월 실적이 2월 초로 이어지는 경우 (Q4 EPS 발표 패턴)
+  if (months.includes(1) && mo === 2 && day <= 7) return true;
+  if (!months.includes(mo)) return false;
+  if (mo === 1)  return day >= 22;  // Q4 EPS: 1월 말
+  return day >= 18;                  // Q1/Q2/Q3 EPS: 월 중하순
 }
 
 // ─── 매크로 컨텍스트 빌더 ────────────────────────────────────────────────────
@@ -233,52 +244,57 @@ function pctChange(bar) {
 
 /**
  * 주어진 주에 대한 전체 매크로 컨텍스트 계산
+ * @param {Object} macroData - loadMacroData() 반환값
+ * @param {string} weekStart - 'YYYY-MM-DD'
+ * @param {Object} cfg       - ticker.json 설정 (has_delivery_reports, earnings_months 등)
  */
-function buildMacroContext(macroData, weekStart) {
-  const { spy, qqq, vix, tsla, wti = [], cny = [], byd = [] } = macroData;
+function buildMacroContext(macroData, weekStart, cfg = {}) {
+  // 신규 키(asset/competitor) + 하위호환 구키(tsla/byd) 모두 지원
+  const asset      = macroData.asset      || macroData.tsla      || [];
+  const competitor = macroData.competitor || macroData.byd        || [];
+  const { spy, qqq, vix, wti = [], cny = [] } = macroData;
 
-  const spyBar = findClosestBar(spy,  weekStart);
-  const qqqBar = findClosestBar(qqq,  weekStart);
-  const vixBar = findClosestBar(vix,  weekStart);
-  const wtiBar = findClosestBar(wti,  weekStart);
-  const cnyBar = findClosestBar(cny,  weekStart);
-  const bydBar = findClosestBar(byd,  weekStart);
+  const spyBar        = findClosestBar(spy,        weekStart);
+  const qqqBar        = findClosestBar(qqq,        weekStart);
+  const vixBar        = findClosestBar(vix,        weekStart);
+  const wtiBar        = findClosestBar(wti,        weekStart);
+  const cnyBar        = findClosestBar(cny,        weekStart);
+  const competitorBar = findClosestBar(competitor, weekStart);
 
-  // TSLA 인덱스
-  const tslaTs = new Date(weekStart + 'T00:00:00Z').getTime();
+  // 자산 인덱스
+  const assetTs = new Date(weekStart + 'T00:00:00Z').getTime();
   let tIdx = -1, minD = Infinity;
-  for (let i = 0; i < tsla.length; i++) {
-    const d = Math.abs(tsla[i].ts - tslaTs);
+  for (let i = 0; i < asset.length; i++) {
+    const d = Math.abs(asset[i].ts - assetTs);
     if (d < minD) { minD = d; tIdx = i; }
   }
   if (minD > 8 * 86400000) tIdx = -1;
 
-  // BYD 상대강도: TSLA 주간 등락 − BYD 주간 등락 (양수 = TSLA 경쟁우위)
-  const tslaChg = tIdx >= 0 ? pctChange(tsla[tIdx]) : null;
-  const bydChg  = bydBar ? pctChange(bydBar) : null;
-  const bydRelStrength = (tslaChg !== null && bydChg !== null)
-    ? Math.round((tslaChg - bydChg) * 100) / 100
+  // 경쟁사 상대강도: 자산 등락 − 경쟁사 등락 (양수 = 자산 경쟁우위)
+  const assetChg       = tIdx >= 0 ? pctChange(asset[tIdx]) : null;
+  const competitorChg  = competitorBar ? pctChange(competitorBar) : null;
+  const competitorRelStrength = (assetChg !== null && competitorChg !== null)
+    ? Math.round((assetChg - competitorChg) * 100) / 100
     : null;
 
   // MACD / 볼린저밴드 (충분한 데이터 있을 때만)
   let macd = null, bb = null;
   if (tIdx >= 26) {
-    const macds = calcMACD(tsla);
+    const macds = calcMACD(asset);
     macd = macds[tIdx];
   }
   if (tIdx >= 20) {
-    const bbs = calcBollingerBands(tsla);
+    const bbs = calcBollingerBands(asset);
     bb = bbs[tIdx];
   }
 
   // 3주 추세 (현재 주 진입 직전 3주간 누적 등락) — lookahead 없음
-  // (tsla[tIdx-3].open → tsla[tIdx-1].close), 현재 주(tIdx)는 제외
-  let tslaTrend3w = null;
+  let assetTrend3w = null;
   if (tIdx >= 3) {
-    const baseOpen = tsla[tIdx - 3].open;
-    const lastClose = tsla[tIdx - 1].close;
+    const baseOpen  = asset[tIdx - 3].open;
+    const lastClose = asset[tIdx - 1].close;
     if (baseOpen > 0) {
-      tslaTrend3w = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
+      assetTrend3w = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
     }
   }
 
@@ -288,15 +304,20 @@ function buildMacroContext(macroData, weekStart) {
     vixClose:    vixBar  ? vixBar.close        : null,
     wtiChg:      wtiBar  ? pctChange(wtiBar)  : 0,
     cnyChg:      cnyBar  ? pctChange(cnyBar)  : 0,
-    bydChg,                  // BYD 주간 등락 (%)
-    bydRelStrength,          // TSLA−BYD 상대강도 (양수=TSLA 우위)
-    prevTslaChg: tIdx > 0 ? pctChange(tsla[tIdx - 1]) : 0,
-    tslaTrend3w,             // 진입 직전 3주 누적 등락 (%) — 추세 필터용
-    rsi:         tIdx > 14 ? calcRSI(tsla, tIdx - 1) : null,
+    competitorChg,               // 경쟁사 주간 등락 (%)
+    competitorRelStrength,       // 자산−경쟁사 상대강도 (양수=자산 우위)
+    prevAssetChg: tIdx > 0 ? pctChange(asset[tIdx - 1]) : 0,
+    assetTrend3w,                // 진입 직전 3주 누적 등락 (%) — 추세 필터용
+    rsi:          tIdx > 14 ? calcRSI(asset, tIdx - 1) : null,
     macd,   // { macd, signal, hist, crossover, trend }
     bb,     // { upper, middle, lower, pos }
-    isDeliveryWeek: isDeliveryWeek(weekStart),
-    isEarningsWeek: isEarningsWeek(weekStart),
+    isDeliveryWeek: isDeliveryWeek(weekStart, cfg),
+    isEarningsWeek: isEarningsWeek(weekStart, cfg),
+    // 하위 호환 alias (기존 저장 세션 참조용)
+    bydChg:           competitorChg,
+    bydRelStrength:   competitorRelStrength,
+    prevTslaChg:      tIdx > 0 ? pctChange(asset[tIdx - 1]) : 0,
+    tslaTrend3w:      assetTrend3w,
   };
 }
 
@@ -350,11 +371,12 @@ const SIGNAL_STATE_LABELS = {
 // ─── 핵심 채점 함수 ──────────────────────────────────────────────────────────
 
 /**
- * 다층 강화 모델 v4.0 매수지수 계산
+ * 다층 강화 모델 v5.0 매수지수 계산
  * @param {Object} input { avgScore, topRules, bullish, bearish, macroCtx, newsCategories }
+ * @param {Object} cfg   ticker.json 설정 (beta_coefficient 등)
  * @returns {Object} { buyIndex, direction, signalState, layers }
  */
-function calculateEnhancedScore(input) {
+function calculateEnhancedScore(input, cfg = {}) {
   const {
     avgScore,
     topRules    = [],
@@ -433,22 +455,24 @@ function calculateEnhancedScore(input) {
 
   // ── 매크로 컨텍스트 레이어 ────────────────────────────────────────────────
   if (macroCtx) {
-    // ── [3] SPY+QQQ 매크로 오버레이 (v5.0: beta 2.5→2.0 — 강세장 편향 보정) ──
+    // ── [3] SPY+QQQ 매크로 오버레이 (beta: cfg.beta_coefficient) ────────────
+    const beta     = cfg.beta_coefficient ?? 2.0;
     const macroAvg = ((macroCtx.spyChg || 0) + (macroCtx.qqqChg || 0)) / 2;
     if (Math.abs(macroAvg) >= 1.5) {
       const before = bi;
-      bi = Math.max(0, Math.min(100, bi + Math.round(macroAvg * 2.0)));
+      bi = Math.max(0, Math.min(100, bi + Math.round(macroAvg * beta)));
       layers.macroOverlay = bi - before;
     }
 
-    // ── [4] 전주 TSLA momentum (mean reversion — v5.0: >7% 단계 추가) ────────
-    // 하락 반등: 고VIX 공황장(VIX>25)에서는 반등 신호 억제 — 매크로 공포 지속 가능
+    // ── [4] 전주 자산 momentum (mean reversion) ──────────────────────────────
+    // 하위 호환: 신규 prevAssetChg, 또는 구키 prevTslaChg
+    const prevChg = macroCtx.prevAssetChg ?? macroCtx.prevTslaChg ?? 0;
     const highVix = macroCtx.vixClose && macroCtx.vixClose > 25;
-    if      (macroCtx.prevTslaChg < -10 && !highVix) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
-    else if (macroCtx.prevTslaChg < -10 &&  highVix) { bi = Math.min(100, bi + 4);  layers.meanReversion = +4;  }
-    else if (macroCtx.prevTslaChg < -5  && !highVix) { bi = Math.min(100, bi + 5);  layers.meanReversion = +5;  }
-    else if (macroCtx.prevTslaChg > 12)               { bi = Math.max(0,   bi - 8);  layers.meanReversion = -8;  }
-    else if (macroCtx.prevTslaChg > 7)                { bi = Math.max(0,   bi - 5);  layers.meanReversion = -5;  }
+    if      (prevChg < -10 && !highVix) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
+    else if (prevChg < -10 &&  highVix) { bi = Math.min(100, bi + 4);  layers.meanReversion = +4;  }
+    else if (prevChg < -5  && !highVix) { bi = Math.min(100, bi + 5);  layers.meanReversion = +5;  }
+    else if (prevChg > 12)               { bi = Math.max(0,   bi - 8);  layers.meanReversion = -8;  }
+    else if (prevChg > 7)                { bi = Math.max(0,   bi - 5);  layers.meanReversion = -5;  }
 
     // ── [5] VIX Adaptive Weighting (v4.0 강화) ─────────────────────────────
     // VIX>30: 기술지표 비중 -20%, 매크로 오버레이 비중 +40%
@@ -499,11 +523,12 @@ function calculateEnhancedScore(input) {
       else if (macroCtx.cnyChg < -0.8){ bi = Math.min(100, bi + 2); layers.cnyStrong = +2; }
     }
 
-    // ── [15] BYD 상대강도 (중국 EV 경쟁) — 백테스트 적용 ─────────────────────
-    // TSLA가 BYD 대비 크게 약세 = 경쟁 열위 신호, 크게 강세 = 경쟁 우위
-    if (macroCtx.bydRelStrength !== null && macroCtx.bydRelStrength !== undefined) {
-      if      (macroCtx.bydRelStrength <= -5) { bi = Math.max(0,   bi - 3); layers.bydUnderperform = -3; }
-      else if (macroCtx.bydRelStrength >=  5) { bi = Math.min(100, bi + 2); layers.bydOutperform   = +2; }
+    // ── [15] 경쟁사 상대강도 (cfg.competitor_ticker) ────────────────────────
+    // 하위 호환: 신규 competitorRelStrength, 또는 구키 bydRelStrength
+    const compRS = macroCtx.competitorRelStrength ?? macroCtx.bydRelStrength ?? null;
+    if (compRS !== null) {
+      if      (compRS <= -5) { bi = Math.max(0,   bi - 3); layers.competitorUnderperform = -3; }
+      else if (compRS >=  5) { bi = Math.min(100, bi + 2); layers.competitorOutperform   = +2; }
     }
 
     // ── [16] 옵션 IV (라이브 전용 — 백테스트엔 atmIV 없음 → 자동 skip) ───────
@@ -545,15 +570,14 @@ function calculateEnhancedScore(input) {
     }
 
     // ── [18] 추세 필터 (v5.0 — 뉴스 감성과 독립된 가격 추세 신호) ────────────
-    // 뉴스는 항상 낙관적이지만 주가가 다중주 하락추세면 호재가 가격에 반영 안 됨.
-    // 강한 호재(avgScore≥2)는 예외 — 추세 반전 촉매일 수 있음.
-    // 2025·2026 백테스트 동시 검증: 깨진 예측 0건, 개선 +3건.
-    if (macroCtx.tslaTrend3w !== null && macroCtx.tslaTrend3w !== undefined) {
-      const t = macroCtx.tslaTrend3w;
+    // 하위 호환: 신규 assetTrend3w, 또는 구키 tslaTrend3w
+    const trend3w = macroCtx.assetTrend3w ?? macroCtx.tslaTrend3w ?? null;
+    if (trend3w !== null) {
+      const t = trend3w;
       const before = bi;
-      if      (t < -5 && avgScore < 2)   { bi = Math.max(0, bi - 12); }  // 강한 하락추세
-      else if (t < -3 && avgScore < 1.5) { bi = Math.max(0, bi - 6);  }  // 완만한 하락추세
-      else if (t > 10)                   { bi = Math.max(0, bi - 6);  }  // 과열 상승 (조정 위험)
+      if      (t < -5 && avgScore < 2)   { bi = Math.max(0, bi - 12); }
+      else if (t < -3 && avgScore < 1.5) { bi = Math.max(0, bi - 6);  }
+      else if (t > 10)                   { bi = Math.max(0, bi - 6);  }
       if (bi !== before) layers.trendFilter = bi - before;
     }
   }
@@ -585,6 +609,18 @@ function calculateEnhancedScore(input) {
   return { buyIndex: bi, direction, signalState, layers };
 }
 
+// ─── 설정 로더 (Node.js 전용) ──────────────────────────────────────────────
+
+function loadTickerConfig(cfgPath) {
+  const { loadTickerConfig: _load } = require('./prompt');
+  return _load(cfgPath);
+}
+
+function loadRulesConfig(cfgPath) {
+  const { loadRulesConfig: _load } = require('./prompt');
+  return _load(cfgPath);
+}
+
 module.exports = {
   fetchYahooWeekly,
   loadMacroData,
@@ -602,4 +638,6 @@ module.exports = {
   isEarningsWeek,
   findClosestBar,
   pctChange,
+  loadTickerConfig,
+  loadRulesConfig,
 };

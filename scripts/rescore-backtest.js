@@ -10,6 +10,9 @@
 const fs   = require('fs');
 const path = require('path');
 const { calculateEnhancedScore } = require('./lib/scoring');
+const { loadTickerConfig } = require('./lib/prompt');
+
+const cfg = loadTickerConfig();
 
 const args  = process.argv.slice(2);
 const write = args.includes('--write');
@@ -32,7 +35,9 @@ function rescoreYear(year) {
       const baseOpen  = analyzed[i - 3].movement.open;
       const lastClose = analyzed[i - 1].movement.close;
       if (baseOpen > 0) {
-        mc.tslaTrend3w = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
+        const val = Math.round((lastClose - baseOpen) / baseOpen * 100 * 100) / 100;
+        mc.tslaTrend3w  = val;
+        mc.assetTrend3w = val;
       }
     }
   }
@@ -51,7 +56,7 @@ function rescoreYear(year) {
     const oldBi    = w.analysis.buyIndex;
     const oldMatch = (oldDir === actual);
 
-    const enh     = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
+    const enh     = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx }, cfg);
     const newDir  = enh.direction;
     const newBi   = enh.buyIndex;
     const newMatch = (newDir === actual);

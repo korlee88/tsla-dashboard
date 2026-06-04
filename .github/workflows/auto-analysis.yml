@@ -1,4 +1,4 @@
-name: TSLA 자동 분석 (하루 4회)
+name: 자동 분석 (하루 4회)
 
 # KST(UTC+9) 기준 스케줄
 # KST 03:00 = UTC 18:00 (전날)
@@ -43,20 +43,21 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python scripts/youtube_sentiment.py
 
-      - name: TSLA 뉴스 수집 & 분석
+      - name: 뉴스 수집 & 분석
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/auto-analysis.js
 
       - name: 결과 커밋 & 푸시
         run: |
+          TICKER=$(node -e "console.log(require('./config/ticker.json').ticker)")
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "TSLA Auto Bot"
+          git config --local user.name "${TICKER} Auto Bot"
           git add data/auto-sessions.json data/youtube-sentiment.json
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
-            git commit -m "auto: TSLA 분석 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
+            git commit -m "auto: ${TICKER} 분석 $(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M KST')"
             git pull --rebase origin master
             git push
           fi

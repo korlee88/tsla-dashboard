@@ -1,4 +1,4 @@
-name: TSLA 주간 영상 자료 생성
+name: 주간 영상 자료 생성
 
 # 주 1회 금요일(KST) 생성 — 한 주를 마무리하며 다음주 전망을 담는다.
 # 1차: 금 KST 05:15 (목 UTC 20:15) — 주요 실행
@@ -75,8 +75,9 @@ jobs:
       - name: 대본·이미지 커밋 & 푸시
         if: steps.guard.outputs.skip != 'true'
         run: |
+          TICKER=$(node -e "console.log(require('./config/ticker.json').ticker)")
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "TSLA Auto Bot"
+          git config --local user.name "${TICKER} Auto Bot"
           git add data/weekly-report/
           # 대용량 MP3/MP4는 커밋 제외
           git restore --staged 'data/weekly-report/**/*.mp3' 2>/dev/null || true
@@ -84,7 +85,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
-            git commit -m "auto: TSLA 주간 영상 자료 $(TZ='Asia/Seoul' date +'%Y-%m-%d KST')"
+            git commit -m "auto: ${TICKER} 주간 영상 자료 $(TZ='Asia/Seoul' date +'%Y-%m-%d KST')"
             git pull --rebase origin master
             git push
           fi
@@ -94,7 +95,7 @@ jobs:
         if: steps.guard.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: tsla-weekly-video-${{ env.TODAY }}
+          name: ${{ env.TODAY }}-weekly-video
           path: data/weekly-report/*/video.mp4
           retention-days: 30
           if-no-files-found: warn
