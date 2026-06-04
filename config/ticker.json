@@ -6,7 +6,13 @@
   "brand_label": "TSLA WEEKLY",
   "repo": "korlee88/tsla-dashboard",
   "data_source": "yahoo",
-  "beta_coefficient": 2.5,
+  "beta_coefficient": 2.0,
+
+  "competitor_ticker": "BYDDY",
+  "key_people": ["Elon Musk"],
+  "has_delivery_reports": true,
+  "earnings_months": [1, 4, 7, 10],
+  "calendar_event_categories": ["실적발표", "인도량발표", "제품출시", "주주총회", "컨퍼런스", "규제", "기타"],
 
   "scene_wiki_articles": [
     ["Tesla Model 3", "Tesla Autopilot", "Tesla, Inc."],

@@ -11,7 +11,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>Tesla TSLA 주가 영향 분석 대시보드</title>
+  <title>주가 영향 분석 대시보드</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -190,6 +190,56 @@ const RULES_META = {
   R26:{cat:'Robot', label:'차량생산 조정',   color:'#f59e0b',bg:'rgba(245,158,11,0.15)'},
 };
 
+// ─── 멀티 종목 설정 로드 (config/ticker.json + config/rules.json) ──────────────
+
+let gCfg = {
+  ticker: 'TSLA', company_en: 'Tesla', company_ko: '테슬라',
+  repo: 'korlee88/tsla-dashboard',
+  beta_coefficient: 2.0, has_delivery_reports: true, earnings_months: [1,4,7,10],
+  key_people: ['Elon Musk'],
+};
+let gSystemPrompt = null;  // null → falls back to SYSTEM_PROMPT constant
+let gRulesMeta    = null;  // null → falls back to RULES_META constant
+
+function buildSystemPromptBrowser(cfg, rulesData) {
+  if (!cfg || !rulesData) return null;
+  const sub = (str) => str.replace(/\{company_en\}/g, cfg.company_en).replace(/\{ticker\}/g, cfg.ticker);
+  const ruleRef = rulesData.rules.map(r => `${r.id}=${r.desc}`).join(', ');
+  return [sub(rulesData.system_prompt_intro),'','Rule reference:',ruleRef,'',sub(rulesData.scoring_guidelines),'',rulesData.per_rule_caps,'',rulesData.direction_rule].join('\n');
+}
+
+function buildRulesMetaFromCfg(rulesData) {
+  if (!rulesData?.rules) return null;
+  const meta = {};
+  rulesData.rules.forEach(r => { meta[r.id] = { cat: r.cat, label: r.name_ko, color: r.color, bg: r.bg }; });
+  return meta;
+}
+
+function getRM() { return gRulesMeta || RULES_META; }
+
+async function initAppConfig() {
+  try {
+    const [cfgRes, rulesRes] = await Promise.allSettled([
+      fetch('./config/ticker.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('./config/rules.json').then(r => r.ok ? r.json() : null).catch(() => null),
+    ]);
+    if (cfgRes.status === 'fulfilled' && cfgRes.value) gCfg = cfgRes.value;
+    if (rulesRes.status === 'fulfilled' && rulesRes.value) {
+      gSystemPrompt = buildSystemPromptBrowser(gCfg, rulesRes.value);
+      gRulesMeta    = buildRulesMetaFromCfg(rulesRes.value);
+    }
+    // Update mutable globals that depend on gCfg
+    const t = gCfg.ticker.toLowerCase();
+    AUTO_SESSIONS_URL = `https://raw.githubusercontent.com/${gCfg.repo}/master/data/auto-sessions.json`;
+    CALENDAR_DATA_URL = `https://raw.githubusercontent.com/${gCfg.repo}/master/data/calendar.json`;
+    PRICE_CACHE_KEY   = `${t}_price_cache_v2`;
+    DAILY_CACHE_KEY   = `${t}_daily_cache_v1`;
+    if (document.title) document.title = `${gCfg.company_en} ${gCfg.ticker} 주가 영향 분석 대시보드`;
+  } catch {}
+}
+
+initAppConfig();
+
 // ─── 캘린더 카테고리 메타 ─────────────────────────────────────────────────────
 const CAL_CATEGORY_META = {
   '실적발표':   { color: '#22c55e', bg: 'rgba(34,197,94,0.15)',   border: 'rgba(34,197,94,0.35)',   dot: '💰' },
@@ -327,10 +377,10 @@ async function geminiPostWithRetry(apiKey, body, retries = 6) {
 }
 
 async function analyzeNews(apiKey, newsItem) {
-  const userContent = `Analyze this Tesla-related news for TSLA stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
+  const userContent = `Analyze this ${gCfg.company_en}-related news for ${gCfg.ticker} stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
 
   const body = {
-    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+    system_instruction: { parts: [{ text: gSystemPrompt || SYSTEM_PROMPT }] },
     contents: [{ role: 'user', parts: [{ text: userContent }] }],
     generationConfig: {
       responseMimeType: 'application/json',
@@ -398,7 +448,7 @@ function RuleBadges({ rules }) {
   return (
     <div className="flex flex-wrap gap-1 mt-2">
       {rules.map(r => {
-        const meta = RULES_META[r];
+        const meta = getRM()[r];
         if (!meta) return null;
         return (
           <span
@@ -580,7 +630,7 @@ function SummaryPanel({ results }) {
           <p className="text-xs text-gray-500 mb-2">주요 트리거 룰</p>
           <div className="flex flex-wrap gap-1">
             {topRules.map(([rule, cnt]) => {
-              const meta = RULES_META[rule];
+              const meta = getRM()[rule];
               return meta ? (
                 <span key={rule} className="badge-rule" style={{ color: meta.color, borderColor: meta.color, background: meta.bg }}>
                   {rule} ×{cnt}
@@ -616,7 +666,7 @@ function RuleEnginePanel({ open, onToggle }) {
       </button>
       {open && (
         <div className="px-4 pb-4 grid grid-cols-2 md:grid-cols-4 gap-1.5">
-          {Object.entries(RULES_META).map(([r, meta]) => (
+          {Object.entries(getRM()).map(([r, meta]) => (
             <div key={r} className="flex items-center gap-1.5 p-1.5 rounded" style={{ background: '#14171e' }}>
               <span className="badge-rule" style={{ color: meta.color, borderColor: meta.color, background: meta.bg }}>{r}</span>
               <span className="text-xs text-gray-400 truncate">{meta.label}</span>
@@ -686,8 +736,8 @@ const APP_VERSION = {
 
 // ─── 자동 세션 로드 (GitHub repo data/auto-sessions.json) ────────────────────
 
-const AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
-const CALENDAR_DATA_URL   = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
+let AUTO_SESSIONS_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/auto-sessions.json';
+let CALENDAR_DATA_URL  = 'https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/calendar.json';
 const BACKTEST_START_YEAR = 2025;
 const BACKTEST_YEARS = (() => {
   const currentYear = new Date(Date.now() + 9 * 3600000).getUTCFullYear();
@@ -695,10 +745,10 @@ const BACKTEST_YEARS = (() => {
   return Array.from({ length: lastYear - BACKTEST_START_YEAR + 1 }, (_, i) => BACKTEST_START_YEAR + i);
 })();
 const DEFAULT_BACKTEST_YEAR = BACKTEST_YEARS[BACKTEST_YEARS.length - 1];
-const backtestUrl = (year) => `https://raw.githubusercontent.com/korlee88/tsla-dashboard/master/data/backtest-results-${year}.json`;
-const PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
-const DAILY_CACHE_KEY    = 'tsla_daily_cache_v1';
-const backtestCacheKey = (year) => `tsla_backtest_v3_${year}`;
+const backtestUrl = (year) => `https://raw.githubusercontent.com/${gCfg.repo}/master/data/backtest-results-${year}.json`;
+let PRICE_CACHE_KEY    = 'tsla_price_cache_v2';
+let DAILY_CACHE_KEY    = 'tsla_daily_cache_v1';
+const backtestCacheKey = (year) => `${gCfg.ticker.toLowerCase()}_backtest_v3_${year}`;
 function loadBacktest(year)       { try { return JSON.parse(localStorage.getItem(backtestCacheKey(year)) || 'null'); } catch { return null; } }
 function saveBacktest(year, data) { try { localStorage.setItem(backtestCacheKey(year), JSON.stringify({ ...data, savedAt: Date.now() })); } catch {} }
 
@@ -908,7 +958,7 @@ async function collectTodayNews(apiKey) {
     tools: [{ google_search: {} }],
     contents: [{
       role: 'user',
-      parts: [{ text: `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성. 영어 원문은 한국어로 번역할 것. source·category만 영어 유지.\n\nSearch for the latest Tesla (TSLA) and Elon Musk news from today or past 24 hours that could impact Tesla stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 10 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"(한국어 번역 제목 예: 테슬라, 1분기 인도량 예상치 하회)","summary":"(한국어 2~3문장 요약 예: 테슬라가 2026년 1분기...)","source":"Reuters","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\n⚠️ title·summary에 영어 사용 절대 금지. 반드시 한국어로만 작성.\nReturn ONLY the JSON array, no other text.` }]
+      parts: [{ text: `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성. 영어 원문은 한국어로 번역할 것. source·category만 영어 유지.\n\nSearch for the latest ${gCfg.company_en} (${gCfg.ticker})${gCfg.key_people?.[0] ? ` and ${gCfg.key_people[0]}` : ''} news from today or past 24 hours that could impact ${gCfg.ticker} stock.\nOnly include articles from major financial/tech news outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Seeking Alpha, Electrek, The Verge, TechCrunch, Forbes, CNN Business, Fox Business.\nReturn ONLY a JSON array of exactly 10 most market-impactful items, strictly no duplicates, each from a different angle or event:\n[{"id":1,"title":"(한국어 번역 제목)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${today}","category":"Earnings|Delivery|Product|Competition|Regulatory|Macro|Energy|Market|Legal"}]\n⚠️ title·summary에 영어 사용 절대 금지. 반드시 한국어로만 작성.\nReturn ONLY the JSON array, no other text.` }]
     }],
     generationConfig: { maxOutputTokens: 8192, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } }
   };
@@ -925,11 +975,11 @@ async function collectTodayNews(apiKey) {
   return items.slice(0, 10).map((n, i) => ({ ...n, id: Date.now() + i }));
 }
 
-// ─── 실시간 TSLA 52주 주봉 (Yahoo Finance v8 → 다중 프록시 폴백) ──────────
+// ─── 실시간 주봉 (Yahoo Finance v8 → 다중 프록시 폴백) ────────────────────
 
 async function fetchTSLAWeeklyData() {
-  const YF = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=1y&interval=1wk&includePrePost=false';
-  const YF2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=1y&interval=1wk&includePrePost=false';
+  const YF = `https://query1.finance.yahoo.com/v8/finance/chart/${gCfg.ticker}?range=1y&interval=1wk&includePrePost=false`;
+  const YF2 = `https://query2.finance.yahoo.com/v8/finance/chart/${gCfg.ticker}?range=1y&interval=1wk&includePrePost=false`;
 
   function parseYahooJSON(json) {
     const result = json?.chart?.result?.[0];
@@ -995,7 +1045,7 @@ async function fetchPriceViaGemini(apiKey) {
   const today = new Date().toISOString().split('T')[0];
   const data = await geminiPostWithRetry(apiKey, {
     tools: [{ google_search: {} }],
-    contents: [{ role: 'user', parts: [{ text: `What is the current TSLA Tesla stock price as of ${today}? Reply with ONLY a single decimal number like 247.50. No text, no dollar sign, just the number.` }] }],
+    contents: [{ role: 'user', parts: [{ text: `What is the current ${gCfg.ticker} ${gCfg.company_en} stock price as of ${today}? Reply with ONLY a single decimal number like 247.50. No text, no dollar sign, just the number.` }] }],
     generationConfig: { maxOutputTokens: 30, temperature: 0, thinkingConfig: { thinkingBudget: 0 } },
   });
   const parts = data.candidates?.[0]?.content?.parts || [];
@@ -1160,7 +1210,7 @@ function seedAccuracyFromAutoSessions(autoSessions) {
       if (targetDate < cutoff) return; // 너무 오래된 것 제외
       // 중복 방지
       if (db.records.some(r => r.forecastDate === forecastDate && r.targetDate === targetDate && r.source === 'auto')) return;
-      const basePrice = df.basePrice ?? session.latestTslaPrice ?? null;
+      const basePrice = df.basePrice ?? session.latestPrice ?? session.latestTslaPrice ?? null;
       const predictedPrice = df.predictedPrice ?? (
         basePrice != null && df.change_pct != null
           ? Math.round(basePrice * (1 + df.change_pct / 100) * 100) / 100
@@ -1273,7 +1323,7 @@ Macro Context:
   ${macroCtx?.isEarningsWeek ? '🔔 EARNINGS WEEK — Base score amplified ×1.5' : ''}${macroCtx?.isDeliveryWeek ? '🔔 DELIVERY WEEK — Signal amplified ×1.25' : ''}`;
   }
 
-  return `# Role: Quantitative Tesla (TSLA) Stock Strategy Analyst
+  return `# Role: Quantitative ${gCfg.company_en} (${gCfg.ticker}) Stock Strategy Analyst
 
 ## Task
 You are given pre-computed quantitative signals from a v4.0 multi-layer model (13 layers: news sentiment, macro overlay, technical indicators, volatility regime, momentum). Synthesize ALL signals into a unified investment forecast.
@@ -1336,7 +1386,7 @@ async function generateForecast(apiKey, items, currentPrice = 247, calendarEvent
 
   const body = {
     system_instruction: { parts: [{ text: makeForecastPrompt(currentPrice, calendarEvents, scoringCtx, recentBuyIndexes) }] },
-    contents: [{ role: 'user', parts: [{ text: `[TSLA 뉴스 분석 결과 — ${items.length}건]${calNote}\n\n${summary}\n\n위 데이터를 바탕으로 Chain-of-Thought 방식으로 분석 후 JSON 전망을 생성하세요.` }] }],
+    contents: [{ role: 'user', parts: [{ text: `[${gCfg.ticker} 뉴스 분석 결과 — ${items.length}건]${calNote}\n\n${summary}\n\n위 데이터를 바탕으로 Chain-of-Thought 방식으로 분석 후 JSON 전망을 생성하세요.` }] }],
     generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192, temperature: 0.25, thinkingConfig: { thinkingBudget: 0 } },
   };
   const data = await geminiPostWithRetry(apiKey, body);
@@ -1365,8 +1415,8 @@ function aggregateMonthly(weeklyData) {
 
 // ─── 일봉 데이터 fetch (3개월) ──────────────────────────────────────────────
 async function fetchTSLADailyData() {
-  const BASE = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=3mo&interval=1d&includePrePost=false';
-  const BASE2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=3mo&interval=1d&includePrePost=false';
+  const BASE = `https://query1.finance.yahoo.com/v8/finance/chart/${gCfg.ticker}?range=3mo&interval=1d&includePrePost=false`;
+  const BASE2 = `https://query2.finance.yahoo.com/v8/finance/chart/${gCfg.ticker}?range=3mo&interval=1d&includePrePost=false`;
 
   function parse(json) {
     const r = json?.chart?.result?.[0];
@@ -1395,8 +1445,8 @@ async function fetchTSLADailyData() {
 // ─── 백테스트용 함수들 ──────────────────────────────────────────────────────
 
 async function fetchTSLA2YearWeekly() {
-  const BASE  = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=2y&interval=1wk&includePrePost=false';
-  const BASE2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=2y&interval=1wk&includePrePost=false';
+  const BASE  = `https://query1.finance.yahoo.com/v8/finance/chart/${gCfg.ticker}?range=2y&interval=1wk&includePrePost=false`;
+  const BASE2 = `https://query2.finance.yahoo.com/v8/finance/chart/${gCfg.ticker}?range=2y&interval=1wk&includePrePost=false`;
   function parse(json) {
     const r = json?.chart?.result?.[0];
     if (!r) throw new Error('파싱 실패');
@@ -1440,9 +1490,9 @@ async function fetchYahooWeeklyBrowser(symbol) {
 
 async function loadMacroDataBrowser() {
   try {
-    const [spy,qqq,vix,tsla] = await Promise.all([fetchYahooWeeklyBrowser('SPY'),fetchYahooWeeklyBrowser('QQQ'),fetchYahooWeeklyBrowser('^VIX'),fetchYahooWeeklyBrowser('TSLA')]);
+    const [spy,qqq,vix,asset] = await Promise.all([fetchYahooWeeklyBrowser('SPY'),fetchYahooWeeklyBrowser('QQQ'),fetchYahooWeeklyBrowser('^VIX'),fetchYahooWeeklyBrowser(gCfg.ticker)]);
     if (!spy.length || !qqq.length) return null;
-    return { spy, qqq, vix, tsla };
+    return { spy, qqq, vix, asset, tsla: asset };  // tsla alias for backward compat
   } catch { return null; }
 }
 
@@ -1462,22 +1512,25 @@ function buildMacroCtxBrowser(macroData, weekStart) {
     if (l===0) return 100;
     return Math.round((100-100/(1+(g/n)/(l/n)))*10)/10;
   };
+  const assetArr = macroData.asset || macroData.tsla || [];
   const spyB = find(macroData.spy, weekStart);
   const qqqB = find(macroData.qqq, weekStart);
   const vixB = find(macroData.vix, weekStart);
-  const tslaTs = new Date(weekStart+'T00:00:00Z').getTime();
+  const assetTs = new Date(weekStart+'T00:00:00Z').getTime();
   let tIdx = -1, minD = Infinity;
-  for (let i=0; i<macroData.tsla.length; i++) {
-    const d = Math.abs(macroData.tsla[i].ts - tslaTs);
+  for (let i=0; i<assetArr.length; i++) {
+    const d = Math.abs(assetArr[i].ts - assetTs);
     if (d < minD) { minD = d; tIdx = i; }
   }
   if (minD > 8*86400000) tIdx = -1;
+  const prevAssetChg = (tIdx > 0) ? pct(assetArr[tIdx-1]) : 0;
   return {
-    spyChg:      spyB ? pct(spyB) : 0,
-    qqqChg:      qqqB ? pct(qqqB) : 0,
-    vixClose:    vixB ? vixB.close : null,
-    prevTslaChg: (tIdx > 0) ? pct(macroData.tsla[tIdx-1]) : 0,
-    rsi:         (tIdx > 14) ? calcRSI(macroData.tsla, tIdx-1) : null,
+    spyChg:       spyB ? pct(spyB) : 0,
+    qqqChg:       qqqB ? pct(qqqB) : 0,
+    vixClose:     vixB ? vixB.close : null,
+    prevAssetChg,
+    prevTslaChg:  prevAssetChg,  // backward compat
+    rsi:          (tIdx > 14) ? calcRSI(assetArr, tIdx-1) : null,
   };
 }
 
@@ -1491,8 +1544,9 @@ function calcEnhancedScoreBrowser({ avgScore, topRules=[], bullish=0, bearish=0,
   if (macroCtx) {
     const macro = ((macroCtx.spyChg||0) + (macroCtx.qqqChg||0)) / 2;
     if (Math.abs(macro) >= 1.5) { const b=bi; bi = Math.max(0, Math.min(100, bi + Math.round(macro * 2.5))); layers.macroOverlay = bi - b; }
-    if (macroCtx.prevTslaChg < -10) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
-    else if (macroCtx.prevTslaChg > 12) { bi = Math.max(0, bi - 6); layers.meanReversion = -6; }
+    const prevChg = macroCtx.prevAssetChg ?? macroCtx.prevTslaChg ?? 0;
+    if (prevChg < -10) { bi = Math.min(100, bi + 10); layers.meanReversion = +10; }
+    else if (prevChg > 12) { bi = Math.max(0, bi - 6); layers.meanReversion = -6; }
     if (macroCtx.vixClose && macroCtx.vixClose > 30) { const b=bi; bi = Math.round(50 + (bi-50)*0.8); layers.vixDamping = bi - b; }
     if (macroCtx.rsi !== null && macroCtx.rsi !== undefined) {
       if (macroCtx.rsi < 30) { bi = Math.min(100, bi + 6); layers.rsiAdjust = +6; }
@@ -1511,7 +1565,7 @@ async function collectHistoricalWeekNews(apiKey, weekStart, weekEnd) {
   const data = await geminiPostWithRetry(apiKey, {
     tools: [{ google_search: {} }],
     contents: [{ role: 'user', parts: [{ text:
-      `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성.\n\nSearch for the 10 most impactful Tesla (TSLA) and Elon Musk news articles published during the week of ${weekStart} to ${weekEnd} that could have affected Tesla stock price.\nOnly include articles from major outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Electrek, The Verge, TechCrunch, Forbes, CNN Business.\nReturn ONLY a JSON array of up to 10 items:\n[{"id":1,"title":"(한국어 번역 제목)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${weekStart}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\ntitle·summary는 반드시 한국어. Return ONLY the JSON array, no other text.`
+      `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성.\n\nSearch for the 10 most impactful ${gCfg.company_en} (${gCfg.ticker})${gCfg.key_people?.[0] ? " and " + gCfg.key_people[0] : ""} news articles published during the week of ${weekStart} to ${weekEnd} that could have affected ${gCfg.ticker} stock price.\nOnly include articles from major outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Electrek, The Verge, TechCrunch, Forbes, CNN Business.\nReturn ONLY a JSON array of up to 10 items:\n[{"id":1,"title":"(한국어 번역 제목)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${weekStart}","category":"Earnings|Delivery|Product|Competition|Regulatory|Macro|Energy|Market|Legal"}]\ntitle·summary는 반드시 한국어. Return ONLY the JSON array, no other text.`
     }] }],
     generationConfig: { maxOutputTokens: 4096, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
   });
@@ -2170,7 +2224,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
       {/* 52주 주봉 */}
       <div className="px-5 pt-3">
         <div className="flex items-center gap-2 mb-2">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TSLA 실제 캔들차트 <span className="text-gray-700 font-normal normal-case">(주봉 / 월봉)</span></p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{gCfg.ticker} 실제 캔들차트 <span className="text-gray-700 font-normal normal-case">(주봉 / 월봉)</span></p>
           {weeklyLoading && <span className="text-xs text-blue-400 animate-pulse">로딩 중…</span>}
           {weeklyData && <span className="text-xs text-gray-600">출처: Yahoo Finance · 1년</span>}
         </div>
@@ -2474,7 +2528,7 @@ function ForecastPanel({ forecast, loading, error, onRetry, weeklyData, weeklyLo
                 ) : (
                   <div className="space-y-2">
                     {topRules.map(([rule, cnt]) => {
-                      const meta = RULES_META[rule] || { label: rule, color: '#6b7280', bg: 'rgba(107,114,128,0.1)', cat: '' };
+                      const meta = getRM()[rule] || { label: rule, color: '#6b7280', bg: 'rgba(107,114,128,0.1)', cat: '' };
                       const maxCnt = topRules[0][1];
                       const pct   = (cnt / maxCnt) * 100;
                       const isBull = ['R11','R12','R13','R14','R15','R16','R17','R18','R19','R20','R21'].includes(rule);
@@ -2776,7 +2830,7 @@ function TrendChart({ sessions, prediction, prediction7, weeklyData, dailyData, 
       })}
 
       <text x={10} y={P.t + cH / 2} textAnchor="middle" fill="#6b7280" fontSize="9" transform={`rotate(-90,10,${P.t + cH / 2})`}>매수지수</text>
-      {hasPriceData && <text x={W - 8} y={P.t + cH / 2} textAnchor="middle" fill="#06b6d4" fontSize="9" opacity="0.7" transform={`rotate(-90,${W - 8},${P.t + cH / 2})`}>TSLA 주가</text>}
+      {hasPriceData && <text x={W - 8} y={P.t + cH / 2} textAnchor="middle" fill="#06b6d4" fontSize="9" opacity="0.7" transform={`rotate(-90,${W - 8},${P.t + cH / 2})`}>{gCfg.ticker} 주가</text>}
       {/* 주가 로딩 중 스피너 (우상단) */}
       {priceLoading && (
         <g>
@@ -3130,7 +3184,7 @@ function SignalPage({ forecast, forecastLoading, forecastError, onRetryForecast,
                       )}
                       <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                         {it.rules?.slice(0, 3).map(r => {
-                          const m = RULES_META[r];
+                          const m = getRM()[r];
                           return m
                             ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span>
                             : null;
@@ -3266,7 +3320,7 @@ function SettingsPage({ onBack,
         {ytData?.collected_at && (
           <div className="rounded-lg p-3 mb-3" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs text-gray-500">Tesla YouTube 관심 지수</span>
+              <span className="text-xs text-gray-500">{gCfg.company_en} YouTube 관심 지수</span>
               <span className="text-xs font-black" style={{
                 color: ytData.score > 0 ? '#22c55e' : ytData.score < 0 ? '#ef4444' : '#9ca3af'
               }}>{ytData.score >= 0 ? '+' : ''}{ytData.score} / 3</span>
@@ -3505,7 +3559,7 @@ function SettingsPage({ onBack,
             </div>
           ))}
         </div>
-        <p className="text-xs text-gray-700 mt-3">TSLA Dashboard · korlee88/tsla-dashboard</p>
+        <p className="text-xs text-gray-700 mt-3">{gCfg.ticker} Dashboard · {gCfg.repo}</p>
       </div>
     </div>
   );
@@ -3525,7 +3579,7 @@ function VideoScriptPage({ onBack }) {
 
   // GitHub Actions 최신 weekly-video 실행 상태 조회
   useEffect(() => {
-    fetch('https://api.github.com/repos/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml/runs?per_page=3', {
+    fetch(`https://api.github.com/repos/${gCfg.repo}/actions/workflows/weekly-video.yml/runs?per_page=3`, {
       headers: { Accept: 'application/vnd.github+json' }
     })
       .then(r => r.ok ? r.json() : null)
@@ -3569,7 +3623,7 @@ function VideoScriptPage({ onBack }) {
       <p className="text-4xl mb-4">🎬</p>
       <p className="text-lg font-bold text-gray-300 mb-2">아직 생성된 각본이 없습니다</p>
       <p className="text-sm text-gray-600 mb-4">매일 KST 09:00 GitHub Actions가 자동으로 각본을 생성합니다.</p>
-      <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+      <a href={}
         target="_blank" rel="noopener noreferrer"
         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white"
         style={{ background: '#7c3aed' }}>
@@ -3631,20 +3685,20 @@ function VideoScriptPage({ onBack }) {
           style={{ background: wfBadge.color + '18', border: `1px solid ${wfBadge.color}40`, color: wfBadge.color }}>
           <span>{wfBadge.icon}</span>
           <span>{wfBadge.text}</span>
-          <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+          <a href={}
             target="_blank" rel="noopener noreferrer"
             className="ml-auto underline opacity-70">Actions 확인</a>
         </div>
       )}
       {/* 액션 버튼 바 */}
       <div className="flex gap-2 mb-4">
-        <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+        <a href={}
           target="_blank" rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold text-white"
           style={{ background: '#7c3aed', border: '1px solid #9c5cf0' }}>
           ▶ 영상 생성 실행
         </a>
-        <a href="https://github.com/korlee88/tsla-dashboard/actions/workflows/weekly-video.yml"
+        <a href={}
           target="_blank" rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold"
           style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#60a5fa' }}>
@@ -3860,7 +3914,7 @@ function VideoScriptPage({ onBack }) {
               ['MACD', sc.meta.technical.macd_signal],
               ['볼린저밴드', sc.meta.technical.bb_position],
               ['VIX', sc.meta.technical.vix],
-              ['전일 TSLA', `${sc.meta.technical.prev_tsla_chg >= 0 ? '+' : ''}${sc.meta.technical.prev_tsla_chg}%`],
+              [`전일 ${gCfg.ticker}`, `${sc.meta.technical.prev_tsla_chg >= 0 ? '+' : ''}${sc.meta.technical.prev_tsla_chg}%`],
               ['현재가', sum.latest_price != null ? `$${sum.latest_price}` : '─'],
             ].map(([k, v]) => (
               <div key={k} className="flex items-center justify-between px-3 py-2 rounded-lg" style={{ background: '#14171e', border: '1px solid #2A2D35' }}>
@@ -4006,7 +4060,7 @@ function MobileNewsCard({ news, result, loading, error, onAnalyze, apiKey }) {
               {dir === 'bullish' ? '📈 상승' : dir === 'bearish' ? '📉 하락' : '➡ 중립'}
             </span>
             {result.triggered_rules?.slice(0, 3).map(r => {
-              const m = RULES_META[r];
+              const m = getRM()[r];
               return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null;
             })}
           </div>
@@ -4019,7 +4073,7 @@ function MobileNewsCard({ news, result, loading, error, onAnalyze, apiKey }) {
             <p className="text-xs text-gray-500 italic leading-relaxed">💬 {result.reasoning}</p>
             <div className="flex flex-wrap gap-1 mt-1">
               {result.triggered_rules?.map(r => {
-                const m = RULES_META[r];
+                const m = getRM()[r];
                 return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null;
               })}
             </div>
@@ -4067,7 +4121,7 @@ function MobileDashboard({
           <div className="w-7 h-7 rounded flex items-center justify-center font-black text-white text-sm shrink-0"
             style={{ background: '#E31937' }}>T</div>
           <div>
-            <p className="text-sm font-bold text-white leading-tight tracking-tight">TSLA 주가 영향 분석</p>
+            <p className="text-sm font-bold text-white leading-tight tracking-tight">{gCfg.ticker} 주가 영향 분석</p>
             <p className="text-xs text-gray-600 leading-tight">
               {currentPrice ? <span className="text-gray-400">${currentPrice}</span> : null}
               {currentPrice ? ' · ' : ''}{new Date().toLocaleDateString('ko-KR')}
@@ -4767,7 +4821,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
           <div className="flex items-center gap-2">
             <button onClick={onBack} className="text-xs px-2.5 py-1.5 rounded-lg text-gray-400 hover:text-white transition-colors shrink-0" style={{ background: '#252830', border: '1px solid #2A2D35' }}>← 뒤로</button>
             <div>
-              <h1 className="text-base md:text-xl font-bold text-white tracking-tight leading-tight">TSLA 매수지수 트렌드</h1>
+              <h1 className="text-base md:text-xl font-bold text-white tracking-tight leading-tight">{gCfg.ticker} 매수지수 트렌드</h1>
               <p className="text-xs text-gray-600 leading-tight hidden md:block">
                 종합 수집 타임라인 DB · 이력 분석
               </p>
@@ -5118,7 +5172,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
             {/* 헤더 요약 */}
             <div className="rounded-xl p-3 border" style={{ background: '#1C1F26', borderColor: '#2A2D35' }}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-400">Tesla YouTube 관심 지수</span>
+                <span className="text-xs font-semibold text-gray-400">{gCfg.company_en} YouTube 관심 지수</span>
                 <span className="text-xs font-bold" style={{ color: ytData.score > 0 ? '#22c55e' : ytData.score < 0 ? '#ef4444' : '#9ca3af' }}>
                   {ytData.score >= 0 ? '+' : ''}{ytData.score} / 3
                 </span>
@@ -5280,7 +5334,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                     <div className="flex-1 flex items-center gap-1.5 flex-wrap overflow-hidden">
                       {s.overallSignal && <span className="text-xs font-bold px-1.5 py-0.5 rounded shrink-0" style={{ color: sig.color, background: sig.bg, border: `1px solid ${sig.color}30` }}>{sig.emoji} {s.overallSignal}</span>}
                       <div className="hidden sm:flex gap-1 flex-wrap">
-                        {s.topRules?.map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
+                        {s.topRules?.map(r => { const m = getRM()[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
                       </div>
                     </div>
                     {!editMode && <span className="text-gray-600 text-sm shrink-0">{isExp ? '▲' : '▼'}</span>}
@@ -5298,7 +5352,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
                             </div>
                             {a && <div className="shrink-0 flex items-center gap-1.5">
                               <span className="text-xs font-bold" style={{ color: a.impact_score >= 0 ? '#22c55e' : '#ef4444' }}>{a.impact_score >= 0 ? '+' : ''}{a.impact_score}</span>
-                              {a.triggered_rules?.slice(0, 2).map(r => { const m = RULES_META[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
+                              {a.triggered_rules?.slice(0, 2).map(r => { const m = getRM()[r]; return m ? <span key={r} className="badge-rule" style={{ color: m.color, borderColor: m.color, background: m.bg }}>{r}</span> : null; })}
                             </div>}
                           </div>
                         );
@@ -5377,7 +5431,7 @@ function TrendPage({ onBack, onPullFromDrive, onPushToDrive, driveSyncing, drive
       </div>
       </Section>{/* /Section 6 */}
 
-      <p className="text-center text-xs text-gray-700 mt-2 mb-4">TSLA Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
+      <p className="text-center text-xs text-gray-700 mt-2 mb-4">{gCfg.ticker} Impact Analyzer v2.0 · 최대 60세션 저장 · 본 도구는 투자 조언이 아닙니다</p>
     </div>
   );
 }
@@ -5586,7 +5640,7 @@ function BacktestPage({ apiKey }) {
           🔬 AI 예측 누적 검증
           <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: '#1C1F26', border: '1px solid #2A2D35', color: '#9ca3af' }}>매일 자동 갱신</span>
         </h2>
-        <p className="text-xs text-gray-500 mt-1">주간 뉴스를 AI로 분석하고 실제 TSLA 주가 움직임과 비교해 예측 정확도를 누적 검증합니다. 매주 새 데이터가 추가되어 모델 정확도가 시간이 갈수록 정교해집니다.</p>
+        <p className="text-xs text-gray-500 mt-1">주간 뉴스를 AI로 분석하고 실제 {gCfg.ticker} 주가 움직임과 비교해 예측 정확도를 누적 검증합니다. 매주 새 데이터가 추가되어 모델 정확도가 시간이 갈수록 정교해집니다.</p>
       </div>
 
       {/* 컨트롤 패널 */}
@@ -5934,7 +5988,7 @@ function DeployBanner() {
   const [run, setRun] = useState(null);
 
   useEffect(() => {
-    const REPO = 'korlee88/tsla-dashboard';
+    const REPO = gCfg.repo;
     const check = () =>
       fetch(`https://api.github.com/repos/${REPO}/actions/runs?per_page=5`, {
         headers: { Accept: 'application/vnd.github+json' },
@@ -6433,7 +6487,7 @@ function App() {
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-lg" style={{ background: '#E31937' }}>T</div>
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight">TSLA 주가 영향 분석</h1>
+          <h1 className="text-xl font-bold text-white tracking-tight">{gCfg.ticker} 주가 영향 분석</h1>
           <p className="text-xs text-gray-500">Tesla / Elon Musk · Rule Engine R01~R26</p>
         </div>
       </div>
@@ -6618,7 +6672,7 @@ function App() {
             <div className="px-3 pt-2.5 pb-1">
               <p className="text-xs font-semibold mb-1.5" style={{ color: '#ef4444' }}>▼ 하락 신호</p>
               {['R01','R02','R03','R04','R05','R06','R07','R08','R09','R10','R22','R23','R24'].map(r => {
-                const m = RULES_META[r];
+                const m = getRM()[r];
                 const score = {R01:-3,R02:-3,R03:-3,R04:-2,R05:-3,R06:-2,R07:-3,R08:-2,R09:-2,R10:-1,R22:-2,R23:-2,R24:-2}[r];
                 return (
                   <div key={r} className="flex items-center gap-1.5 py-0.5">
@@ -6634,7 +6688,7 @@ function App() {
             <div className="px-3 pb-2.5">
               <p className="text-xs font-semibold mb-1.5" style={{ color: '#22c55e' }}>▲ 상승 신호</p>
               {['R11','R12','R13','R14','R15','R16','R17','R18','R19','R20','R21'].map(r => {
-                const m = RULES_META[r];
+                const m = getRM()[r];
                 const score = {R11:+3,R12:+3,R13:+3,R14:+2,R15:+2,R16:+2,R17:+2,R18:+1,R19:+2,R20:+2,R21:+1}[r];
                 return (
                   <div key={r} className="flex items-center gap-1.5 py-0.5">
@@ -6675,7 +6729,7 @@ function App() {
         </ul>
       </div>
       <p className="text-center text-xs text-gray-700 mt-6">
-        Powered by Google Gemini 2.5 Flash · TSLA Impact Analyzer v2.0 · 본 도구는 투자 조언이 아닙니다
+        Powered by Google Gemini 2.5 Flash · {gCfg.ticker} Impact Analyzer v2.0 · 본 도구는 투자 조언이 아닙니다
       </p>
     </div>
     </div>

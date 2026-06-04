@@ -1,0 +1,40 @@
+{
+  "ticker": "GOOGL",
+  "company_en": "Alphabet",
+  "company_ko": "알파벳",
+  "industry_ko": "AI·검색·광고·클라우드",
+  "brand_label": "GOOGL WEEKLY",
+  "repo": "korlee88/googl-dashboard",
+  "data_source": "yahoo",
+  "beta_coefficient": 1.2,
+
+  "competitor_ticker": "META",
+  "key_people": ["Sundar Pichai"],
+  "has_delivery_reports": false,
+  "earnings_months": [1, 4, 7, 10],
+  "calendar_event_categories": ["실적발표", "Google I/O", "제품출시", "규제/소송", "주주총회", "기타"],
+
+  "scene_wiki_articles": [
+    ["Google", "Alphabet Inc.", "Google Search"],
+    ["Google DeepMind", "Gemini (language model)"],
+    ["Google Cloud Platform", "Waymo", "Alphabet Inc."]
+  ],
+
+  "scene_static_bg_files": [
+    null,
+    "bg_scene_02.jpg",
+    null
+  ],
+
+  "youtube_search_queries": [
+    "Alphabet GOOGL stock",
+    "Google earnings",
+    "Google AI Gemini"
+  ],
+
+  "google_trends_keywords": ["구글", "알파벳", "GOOGL", "AI검색"],
+
+  "video_title_template": "{ticker} 주간 분석 {date} | 참고지수 {bi}점 {signal}",
+  "video_tags": ["알파벳", "구글", "GOOGL", "주식", "AI", "Shorts"],
+  "email_subject_template": "{ticker} 주간 브리핑 {date} | 참고지수 {bi}점 ({signal})"
+}

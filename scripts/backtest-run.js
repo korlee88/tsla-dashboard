@@ -1,5 +1,5 @@
 /**
- * TSLA 백테스트 데이터 수집 스크립트
+ * 백테스트 데이터 수집 스크립트 (멀티 종목 지원)
  * 연도별 주간 뉴스 수집 + AI 분석 + 실제 주가 방향 매칭
  * GitHub Actions에서 workflow_dispatch 또는 cron으로 실행
  * 매일 실행 시 이미 분석된 주는 skip, 새로 완료된 주만 추가
@@ -14,6 +14,11 @@ const fs            = require('fs');
 const path          = require('path');
 const { execSync }  = require('child_process');
 const { loadMacroData, buildMacroContext, calculateEnhancedScore } = require('./lib/scoring');
+const { loadTickerConfig, loadRulesConfig, buildSystemPrompt } = require('./lib/prompt');
+
+const cfg       = loadTickerConfig();
+const rulesData = loadRulesConfig();
+const TICKER    = cfg.ticker;
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) { console.error('❌ GEMINI_API_KEY 환경변수가 없습니다.'); process.exit(1); }
@@ -31,45 +36,9 @@ const makeUrl    = m => `https://generativelanguage.googleapis.com/v1beta/models
 const GEMINI_URL = makeUrl(MODELS[0]);
 const DATA_FILE  = path.join(__dirname, '..', 'data', `backtest-results-${YEAR}.json`);
 
-// ─── 시스템 프롬프트 (auto-analysis.js 와 동일) ──────────────────────────────
+// ─── 시스템 프롬프트 (config/rules.json + config/ticker.json 기반 동적 생성) ──
 
-const SYSTEM_PROMPT = `You are a financial analyst specializing in Tesla (TSLA) stock impact assessment.
-Analyze the given news and return ONLY valid JSON in this exact format:
-{
-  "impact_score": <integer -5 to +5>,
-  "direction": "<bullish|bearish|neutral>",
-  "confidence": "<high|medium|low>",
-  "triggered_rules": ["R01","R02"],
-  "reasoning": "<one sentence explanation in Korean>",
-  "key_factors": ["<factor1>", "<factor2>"]
-}
-
-Rule reference:
-R01=delivery miss(>5%), R02=EPS miss(>10%), R03=guidance cut, R04=recall(>50K),
-R05=SEC/DOJ investigation, R06=major competitor EV launch, R07=factory shutdown/fire,
-R08=musk SNS controversy(DOGE/politics), R09=subsidy reduction/removal, R10=price cut(>5%),
-R11=delivery beat(>5%), R12=EPS beat(>10%), R13=new product/FSD milestone,
-R14=EV incentive expansion, R15=large energy storage deal, R16=new market entry(India/SEA),
-R17=analyst target upgrade(>20%), R18=fed rate cut signal, R19=musk share buyback/positive statement,
-R20=china sales growth/gov cooperation, R21=major lawsuit win, R22=short seller report,
-R23=recession fear intensification, R24=musk other ventures risk spillover(SpaceX/X/DOGE),
-R25=optimus/robot production milestone or commercial expansion,
-R26=vehicle production cut or factory retooling (without R25 offset)
-
-Score guidelines:
-±5: Extreme event (confirmed bankruptcy risk, historic milestone)
-±3~4: Major confirmed event (earnings beat/miss, delivery report, product launch)
-±1~2: Minor event (analyst note, speculation, rumor, incremental news)
-0: Neutral/irrelevant
-
-IMPORTANT score caps (backtesting showed these rules cause noise when over-weighted):
-- R08 (Musk SNS/DOGE controversy): MAX impact_score = ±2. Short-term sentiment noise, reverts quickly.
-- R24 (Musk other ventures spillover): MAX impact_score = ±2 when appearing alone without R08.
-- R23 (recession fear): MAX impact_score = -1. Macro, not Tesla-specific.
-- Use "neutral" direction when confidence is "low" OR when news has mixed/minor impact (score 0 or ±1).
-  Use "bullish"/"bearish" for clear directional events with score ±2 or higher.
-
-CRITICAL: Return ONLY the raw JSON object. No markdown, no explanation, no extra text.`;
+const SYSTEM_PROMPT = buildSystemPrompt(cfg, rulesData);
 
 // ─── 유틸 ────────────────────────────────────────────────────────────────────
 
@@ -81,7 +50,7 @@ function gitCommitProgress(label) {
     const diff = execSync('git diff --staged --name-only', { stdio: 'pipe' }).toString().trim();
     if (!diff) { console.log(`   ⏭  ${label} — 변경 없음, 커밋 건너뜀`); return; }
     const nowKST = new Date(Date.now() + 9 * 3600000).toISOString().replace('T',' ').slice(0,16) + ' KST';
-    execSync(`git commit -m "backtest: ${label} 완료 (${nowKST})"`, { stdio: 'pipe' });
+    execSync(`git commit -m "backtest: ${TICKER} ${label} 완료 (${nowKST})"`, { stdio: 'pipe' });
     execSync('git pull --rebase origin master', { stdio: 'pipe' });
     execSync('git push', { stdio: 'pipe' });
     console.log(`   ✅ ${label} 중간 커밋 & 푸시 완료`);
@@ -122,9 +91,9 @@ async function geminiPost(body, retries = 7) {
 
 // ─── 주가 데이터 (Yahoo Finance 2년 주봉) ────────────────────────────────────
 
-async function fetchTSLA2YearWeekly() {
-  const URL1 = 'https://query1.finance.yahoo.com/v8/finance/chart/TSLA?range=2y&interval=1wk&includePrePost=false';
-  const URL2 = 'https://query2.finance.yahoo.com/v8/finance/chart/TSLA?range=2y&interval=1wk&includePrePost=false';
+async function fetchAsset2YearWeekly() {
+  const URL1 = `https://query1.finance.yahoo.com/v8/finance/chart/${TICKER}?range=2y&interval=1wk&includePrePost=false`;
+  const URL2 = `https://query2.finance.yahoo.com/v8/finance/chart/${TICKER}?range=2y&interval=1wk&includePrePost=false`;
 
   function parse(json) {
     const r = json?.chart?.result?.[0];
@@ -177,7 +146,8 @@ function getActualMovement(weekStart, prices) {
 // ─── 뉴스 수집 (Google Search Grounding) ────────────────────────────────────
 
 async function collectWeekNews(weekStart, weekEnd) {
-  const prompt = `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성.\n\nSearch for the 10 most impactful Tesla (TSLA) and Elon Musk news articles published during the week of ${weekStart} to ${weekEnd} that could have affected Tesla stock price.\nOnly include articles from major outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Electrek, The Verge, TechCrunch, Forbes, CNN Business.\nReturn ONLY a JSON array of up to 10 items:\n[{"id":1,"title":"(한국어 번역 제목)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${weekStart}","category":"Earnings|Delivery|Product|Competition|Regulatory|Musk|Macro|Energy|Market|Legal"}]\ntitle·summary는 반드시 한국어. Return ONLY the JSON array, no other text.`;
+  const keyPeopleStr = (cfg.key_people || []).join(' and ');
+  const prompt = `[필수 규칙] title과 summary는 반드시 한국어(Korean)로 작성.\n\nSearch for the 10 most impactful ${cfg.company_en} (${TICKER}) and ${keyPeopleStr} news articles published during the week of ${weekStart} to ${weekEnd} that could have affected ${TICKER} stock price.\nOnly include articles from major outlets: Reuters, Bloomberg, CNBC, Wall Street Journal, Financial Times, Associated Press, MarketWatch, Barron's, Electrek, The Verge, TechCrunch, Forbes, CNN Business.\nReturn ONLY a JSON array of up to 10 items:\n[{"id":1,"title":"(한국어 번역 제목)","summary":"(한국어 2~3문장 요약)","source":"Reuters","date":"${weekStart}","category":"Earnings|Delivery|Product|Competition|Regulatory|Macro|Energy|Market|Legal"}]\ntitle·summary는 반드시 한국어. Return ONLY the JSON array, no other text.`;
 
   const data = await geminiPost({
     tools: [{ google_search: {} }],
@@ -197,7 +167,7 @@ async function collectWeekNews(weekStart, weekEnd) {
 // ─── 개별 뉴스 분석 ──────────────────────────────────────────────────────────
 
 async function analyzeNewsItem(newsItem) {
-  const userContent = `Analyze this Tesla-related news for TSLA stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
+  const userContent = `Analyze this ${cfg.company_en}-related news for ${TICKER} stock impact:\n\nTitle: ${newsItem.title}\n\nSummary: ${newsItem.summary}\n\nSource: ${newsItem.source} | Date: ${newsItem.date} | Category: ${newsItem.category}`;
   const data = await geminiPost({
     system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
     contents: [{ role: 'user', parts: [{ text: userContent }] }],
@@ -239,8 +209,8 @@ async function analyzeWeekBatch(newsItems, macroCtx = null) {
   analyses.forEach(a => (a.triggered_rules || []).forEach(r => { ruleCnt[r] = (ruleCnt[r] || 0) + 1; }));
   const topRules = Object.entries(ruleCnt).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([r]) => r);
 
-  // ── 다층 강화 채점 모델 v2.0 ──────────────────────────────────────────
-  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx });
+  // ── 다층 강화 채점 모델 v5.0 ──────────────────────────────────────────
+  const enhanced = calculateEnhancedScore({ avgScore, topRules, bullish, bearish, macroCtx }, cfg);
   return {
     avgScore,
     buyIndex:  enhanced.buyIndex,
@@ -314,16 +284,17 @@ async function main() {
   }
 
   // ── 3. 주가 데이터 로드 ──
-  console.log('\n📈 Yahoo Finance 2년 주봉 로드 중...');
-  const prices = await fetchTSLA2YearWeekly();
+  console.log(`\n📈 Yahoo Finance ${TICKER} 2년 주봉 로드 중...`);
+  const prices = await fetchAsset2YearWeekly();
   console.log(`   ✅ ${prices.length}개 주봉 로드 완료`);
 
-  // ── 4. 매크로 데이터 로드 (SPY, QQQ, VIX, TSLA) ──
-  console.log('\n📊 매크로 데이터 로드 중 (SPY/QQQ/VIX/TSLA)...');
+  // ── 4. 매크로 데이터 로드 ──
+  console.log(`\n📊 매크로 데이터 로드 중 (SPY/QQQ/VIX/${TICKER})...`);
   let macroData = null;
   try {
-    macroData = await loadMacroData();
-    console.log(`   ✅ SPY:${macroData.spy.length}, QQQ:${macroData.qqq.length}, VIX:${macroData.vix.length}, TSLA:${macroData.tsla.length} 주봉`);
+    macroData = await loadMacroData(cfg);
+    const assetLen = (macroData.asset || macroData.tsla || []).length;
+    console.log(`   ✅ SPY:${macroData.spy.length}, QQQ:${macroData.qqq.length}, VIX:${macroData.vix.length}, ${TICKER}:${assetLen} 주봉`);
   } catch (e) {
     console.warn(`   ⚠ 매크로 데이터 로드 실패 — 기본 채점만 적용: ${e.message}`);
   }
@@ -351,7 +322,7 @@ async function main() {
     if (newsItems.length > 0) {
       console.log(`   🔍 AI 분석 중...`);
       try {
-        const macroCtx = macroData ? buildMacroContext(macroData, weekStart) : null;
+        const macroCtx = macroData ? buildMacroContext(macroData, weekStart, cfg) : null;
         analysis = await analyzeWeekBatch(newsItems, macroCtx);
       } catch (e) {
         error = 'AI 분석 실패: ' + e.message;
