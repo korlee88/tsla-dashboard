@@ -1,0 +1,234 @@
+{
+  "generated_at": "2026-06-05",
+  "generated_by": "Claude Opus 4",
+  "title": "이번주 테슬라 *-5.03%*, $418.6예요",
+  "subtitle": "2026-05-28 ~ 2026-06-05 · 테슬라, 모델 S 및 모델 X 생산 중단하고 로봇에 집",
+  "summary": {
+    "week_start": "2026-05-28",
+    "week_end": "2026-06-05",
+    "session_count": 34,
+    "buy_indices": [
+      56,
+      62,
+      62,
+      63,
+      47,
+      62,
+      53,
+      62,
+      83,
+      76,
+      56,
+      62,
+      60,
+      63,
+      57,
+      45,
+      58,
+      46,
+      59,
+      63,
+      61,
+      76,
+      59,
+      60,
+      65,
+      58,
+      56,
+      60,
+      54,
+      55,
+      44,
+      58,
+      69,
+      57
+    ],
+    "avg_buy_index": 60,
+    "latest_buy_index": 56,
+    "price_start": 440.78,
+    "price_end": 418.6,
+    "latest_price": 418.6,
+    "today_price": 418.6,
+    "today_change_pct": -1.2,
+    "week_change_pct": -5.03,
+    "biggest_impact": {
+      "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇에 집중",
+      "score": 4,
+      "reason": "테슬라가 모델 S 및 X 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중한다는 일론 머스크의 발표는 로봇 사업의 중요한 진전을 나타내며, 이는 차량 생산 중단으로 인한 부정적 영향을 상쇄하고도 남을 긍정적인 변화입니다.",
+      "source": "Fox Business",
+      "date": "2026-06-02",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 모델 S 및 모델 X 생산 중단하고 로봇에 집중",
+        "score": 4,
+        "reason": "테슬라가 모델 S 및 X 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중한다는 일론 머스크의 발표는 로봇 사업의 중요한 진전을 나타내며, 이는 차량 생산 중단으로 인한 부정적 영향을 상쇄하고도 남을 긍정적인 변화입니다.",
+        "source": "Fox Business",
+        "date": "2026-06-02",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 1분기 실적 예상치 상회 및 로보택시, 옵티머스 생산 계획",
+        "score": 4,
+        "reason": "테슬라가 1분기 EPS와 매출 예상치를 상회했으며, 로보택시와 옵티머스 생산 계획 및 대규모 투자 발표로 미래 성장 동력을 제시하여 주가에 긍정적인 영향을 미칠 것입니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings"
+      },
+      {
+        "title": "테슬라, 2026년 1분기 실적 발표: EPS 및 매출 예상치 상회",
+        "score": 4,
+        "reason": "테슬라가 2026년 1분기 주당순이익(EPS)과 매출 모두 시장 예상치를 상회하며 강력한 실적을 발표했고, 자동차 및 에너지 저장 마진이 개선되어 긍정적인 영향을 미칠 것입니다.",
+        "source": "Investing.com",
+        "date": "2026-04-23",
+        "category": "Earnings"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 2025년 1분기 생산량 대비 인도량 크게 하회",
+        "score": -4,
+        "reason": "테슬라의 2025년 1분기 인도량이 생산량에 크게 못 미치고 전년 동기 대비 13% 감소하여 부정적인 영향을 미칠 것으로 예상됩니다.",
+        "source": "Reddit",
+        "date": "2025-04-02",
+        "category": "Delivery"
+      },
+      {
+        "title": "테슬라, 1분기 재고 41% 증가 및 판매량보다 5만대 더 생산",
+        "score": -3,
+        "reason": "테슬라의 1분기 재고가 41% 증가하고 생산량이 판매량보다 5만대 많아 수요 둔화 우려가 커지면서 주가에 부정적인 영향을 미칠 수 있습니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-05-26",
+        "category": "Delivery|Market"
+      },
+      {
+        "title": "테슬라, 1분기 인도량보다 생산량 초과",
+        "score": -3,
+        "reason": "테슬라의 1분기 인도량이 생산량보다 적어 재고가 증가했으며, 이는 시장 예상치에 미달할 가능성이 있어 부정적인 영향을 미칩니다.",
+        "source": "TradingView",
+        "date": "2026-05-30",
+        "category": "Delivery"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "6/5(금)",
+        "change_pct": 0.9,
+        "signal": "매수",
+        "basePrice": 418.6,
+        "predictedPrice": 422.37
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/8(월)",
+        "change_pct": 0.2,
+        "signal": "관망",
+        "basePrice": 418.6,
+        "predictedPrice": 419.44
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/9(화)",
+        "change_pct": -0.7,
+        "signal": "관망",
+        "basePrice": 418.6,
+        "predictedPrice": 415.67
+      },
+      {
+        "day": 4,
+        "label": "D+4",
+        "date": "6/10(수)",
+        "change_pct": 1.1,
+        "signal": "매수",
+        "basePrice": 418.6,
+        "predictedPrice": 423.2
+      },
+      {
+        "day": 5,
+        "label": "D+5",
+        "date": "6/11(목)",
+        "change_pct": -0.3,
+        "signal": "관망",
+        "basePrice": 418.6,
+        "predictedPrice": 417.34
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-06-05",
+        418.6
+      ],
+      [
+        "2026-06-04",
+        423.7
+      ],
+      [
+        "2026-06-03",
+        423.74
+      ],
+      [
+        "2026-06-02",
+        415.88
+      ],
+      [
+        "2026-06-01",
+        435.79
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "테슬라(TSLA) 주가의 2026년 5월 28일부터 6월 5일 기간 하락에 영향을 미친 주요 원인은 다음과 같습니다.\n\n전기차 수요 둔화 / 생산량 대비 판매 부진 / 대규모 투자 부담\n\n주요 원인 분석:\n*   **전기차 수요 둔화**: 2026년 글로벌 전기차 시장은 보조금 축소 및 정책 변화 등으로 성장세가 둔화하고 있으며, 특히 미국과 중국 시장에서 수요 위축 현상이 두드러지고 있습니다. 이는 테슬라의 핵심 사업 부문에 직접적인 영향을 미쳤습니다.\n*   **생산량 대비 판매 부진**: 2026년 1분기 테슬라는 약 41만 대의 차량을 생산했지만, 실제 판매량은 약 35만 8천 대에 그쳐 5만 대 이상의 재고가 쌓였습니다. 이는 회사 역사상 가장 큰 생산과 판매 간의 격차로, 재고 증가와 이익률 압박으로 이어졌습니다.\n*   **대규모 투자 부담**: 테슬라는 공장 확장, AI 인프라 구축, 로보택시 및 옵티머스 제품 출시를 위해 2026년에 250억 달러 이상의 대규모 자본 지출을 계획하고 있으며, 이로 인해 올해 남은 기간 동안 잉여 현금 흐름이 마이너스를 기록할 것으로 예상됩니다. 이러한 고비용 투자는 단기적인 재무 건전성에 대한 우려를 키웠습니다."
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "이번주",
+      "lines": [
+        "이번주 테슬라 *-5.03%*, $418.6예요",
+        "1분기 재고 *5만대* 쌓인 게 발목 잡았죠",
+        "머스크, *옵티머스 로봇* 대량생산 선언!",
+        "전기차 수요 둔화에 *13% 인도 감소*네요"
+      ],
+      "body": "이번주 테슬라 *-5.03%*, $418.6예요\n1분기 재고 *5만대* 쌓인 게 발목 잡았죠\n머스크, *옵티머스 로봇* 대량생산 선언!\n전기차 수요 둔화에 *13% 인도 감소*네요"
+    },
+    {
+      "index": 1,
+      "title": "호재분석",
+      "lines": [
+        "카테고리: *옵티머스 로봇* 대량생산 전환",
+        "↳ 배경: 모델 S·X 생산 중단, *2026년* 본격화",
+        "↳ 데이터: AI·로봇에 *$250억* 투자 계획이에요",
+        "↳ 임팩트: 6/1 장중 *$435.79* 터치했죠",
+        "↳ 비교: 1분기 EPS·매출 *예상치 상회*했어요",
+        "↳ 로봇 사업이 새 성장축이 될지 지켜봐요"
+      ],
+      "body": "카테고리: *옵티머스 로봇* 대량생산 전환\n   ↳ 배경: 모델 S·X 생산 중단, *2026년* 본격화\n   ↳ 데이터: AI·로봇에 *$250억* 투자 계획이에요\n   ↳ 임팩트: 6/1 장중 *$435.79* 터치했죠\n   ↳ 비교: 1분기 EPS·매출 *예상치 상회*했어요\n   ↳ 로봇 사업이 새 성장축이 될지 지켜봐요"
+    },
+    {
+      "index": 2,
+      "title": "다음주",
+      "lines": [
+        "다음주는 *큰 이벤트 없이* 잔잔해요",
+        "*옵티머스·로보택시* 뉴스가 관전포인트죠",
+        "누적 *-0.3%*, 도달가 *$417* 예상돼요",
+        "*3일 상승·2일 하락* 흐름이 점쳐져요",
+        "전기차 수요 둔화 지표가 변수예요",
+        "함께해 주셔서 감사해요!"
+      ],
+      "body": "다음주는 *큰 이벤트 없이* 잔잔해요\n*옵티머스·로보택시* 뉴스가 관전포인트죠\n누적 *-0.3%*, 도달가 *$417* 예상돼요\n*3일 상승·2일 하락* 흐름이 점쳐져요\n전기차 수요 둔화 지표가 변수예요\n함께해 주셔서 감사해요!"
+    }
+  ],
+  "image_prompts": {
+    "0": "A cinematic 16:9 landscape view of Seoul's Han River at night, featuring a sleek Tesla autonomous electric vehicle gliding along an illuminated futuristic highway, with N Seoul Tower, 63 Building, and Lotte Tower glowing in the skyline. Deep purple and violet hues dominate the scene, evoking a K-tech analytics mood with holographic data streams faintly visible, glowing city lights bokeh, reflective river surface, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek station and another speeding across the bridge. Lush riverside parks, blue sky with soft clouds, Korean K-tech eco-friendly infrastructure shining brightly, optimistic and energetic atmosphere, green and emerald tones dominate, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "A breathtaking 9:16 vertical futuristic Korean cityscape featuring Seoul's Han River night view, glowing skyline, and Gwanghwamun Square as backdrop, with an autonomous Tesla vehicle parked beside a sleek Optimus humanoid robot standing tall. Magenta and gold inspirational future mood, golden sunlight breaking through clouds, starlight sparkles, advanced K-tech urban scenery, holographic glow, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}

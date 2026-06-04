@@ -1,0 +1,30 @@
+SCENE_0_TITLE: 이번주
+SCENE_0:
+이번주 테슬라 *-5.03%*, $418.6예요
+1분기 재고 *5만대* 쌓인 게 발목 잡았죠
+머스크, *옵티머스 로봇* 대량생산 선언!
+전기차 수요 둔화에 *13% 인도 감소*네요
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+카테고리: *옵티머스 로봇* 대량생산 전환
+   ↳ 배경: 모델 S·X 생산 중단, *2026년* 본격화
+   ↳ 데이터: AI·로봇에 *$250억* 투자 계획이에요
+   ↳ 임팩트: 6/1 장중 *$435.79* 터치했죠
+   ↳ 비교: 1분기 EPS·매출 *예상치 상회*했어요
+   ↳ 로봇 사업이 새 성장축이 될지 지켜봐요
+
+SCENE_2_TITLE: 다음주
+SCENE_2:
+다음주는 *큰 이벤트 없이* 잔잔해요
+*옵티머스·로보택시* 뉴스가 관전포인트죠
+누적 *-0.3%*, 도달가 *$417* 예상돼요
+*3일 상승·2일 하락* 흐름이 점쳐져요
+전기차 수요 둔화 지표가 변수예요
+함께해 주셔서 감사해요!
+
+IMAGE_PROMPT_0: A cinematic 16:9 landscape view of Seoul's Han River at night, featuring a sleek Tesla autonomous electric vehicle gliding along an illuminated futuristic highway, with N Seoul Tower, 63 Building, and Lotte Tower glowing in the skyline. Deep purple and violet hues dominate the scene, evoking a K-tech analytics mood with holographic data streams faintly visible, glowing city lights bokeh, reflective river surface, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek station and another speeding across the bridge. Lush riverside parks, blue sky with soft clouds, Korean K-tech eco-friendly infrastructure shining brightly, optimistic and energetic atmosphere, green and emerald tones dominate, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: A breathtaking 9:16 vertical futuristic Korean cityscape featuring Seoul's Han River night view, glowing skyline, and Gwanghwamun Square as backdrop, with an autonomous Tesla vehicle parked beside a sleek Optimus humanoid robot standing tall. Magenta and gold inspirational future mood, golden sunlight breaking through clouds, starlight sparkles, advanced K-tech urban scenery, holographic glow, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo

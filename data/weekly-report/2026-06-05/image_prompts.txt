@@ -1,0 +1,11 @@
+# TSLA 주간 배경 이미지 프롬프트 — 2026-06-05
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 주간브리핑
+A cinematic 16:9 landscape view of Seoul's Han River at night, featuring a sleek Tesla autonomous electric vehicle gliding along an illuminated futuristic highway, with N Seoul Tower, 63 Building, and Lotte Tower glowing in the skyline. Deep purple and violet hues dominate the scene, evoking a K-tech analytics mood with holographic data streams faintly visible, glowing city lights bokeh, reflective river surface, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+## 씬1 호재심층
+A vibrant 16:9 landscape scene of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing growth and bullish momentum, with a modern Tesla electric vehicle charging at a sleek station and another speeding across the bridge. Lush riverside parks, blue sky with soft clouds, Korean K-tech eco-friendly infrastructure shining brightly, optimistic and energetic atmosphere, green and emerald tones dominate, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+## 씬2 다음주전망
+A breathtaking 9:16 vertical futuristic Korean cityscape featuring Seoul's Han River night view, glowing skyline, and Gwanghwamun Square as backdrop, with an autonomous Tesla vehicle parked beside a sleek Optimus humanoid robot standing tall. Magenta and gold inspirational future mood, golden sunlight breaking through clouds, starlight sparkles, advanced K-tech urban scenery, holographic glow, cinematic depth, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
