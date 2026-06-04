@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.07,
+  "velocity": 0.08,
   "velocity_label": "급감 (×0.1)",
-  "reason": "조회수 속도 급감 (×0.1) | 최근 3일 253,721회 / 이전 4~7일 3,798,625회 | 총 4,052,346회 (44개 영상)",
-  "video_count": 44,
-  "total_views": 4052346,
-  "hot_views": 253721,
-  "baseline_views": 3798625,
+  "reason": "조회수 속도 급감 (×0.1) | 최근 3일 307,439회 / 이전 4~7일 3,788,756회 | 총 4,096,195회 (43개 영상)",
+  "video_count": 43,
+  "total_views": 4096195,
+  "hot_views": 307439,
+  "baseline_views": 3788756,
   "top_videos": [
     {
       "title": "特斯拉只發布了一條機器人跑步視頻，卻讓科技圈集體失聲？ 一條視頻告訴你特斯拉機器人牛在哪#特斯拉",
       "channel": "TTTop汽車部",
       "publishedAt": "2026-06-01T04:02:51Z",
-      "viewCount": 1360858
+      "viewCount": 1445356
     },
     {
       "title": "손가락 모터 다 빼!&quot; 삼성 엔지니어들이 선택한 사람 힘줄(텐던)의 소름 돋는 비밀",
       "channel": "머스크의 모든 것",
       "publishedAt": "2026-06-01T08:22:31Z",
-      "viewCount": 581245
+      "viewCount": 585619
     },
     {
       "title": "껍데기만 화려한 로봇 기업들 뼈 때린 일론 머스크 &quot;옵티머스 빼고 제대로 된 로봇은 단 하나도 없습니다&quot;",
       "channel": "머스크의 모든 것",
       "publishedAt": "2026-05-29T13:40:55Z",
-      "viewCount": 392519
+      "viewCount": 394414
     },
     {
       "title": "Elon Musk says Optimus could become the biggest product in human history… #elonmusk #ai #podcast",
       "channel": "Macetarie",
       "publishedAt": "2026-05-28T22:30:05Z",
-      "viewCount": 340982
+      "viewCount": 347194
     },
     {
       "title": "미래엔 화폐 대신 이것만 남는다. 머스크가 지목한 진짜 자산",
       "channel": "알고싶은경제학",
       "publishedAt": "2026-05-31T10:00:30Z",
-      "viewCount": 187552
+      "viewCount": 195181
     }
   ],
-  "collected_at": "2026-06-04T09:57:23Z"
+  "collected_at": "2026-06-04T15:19:36Z"
 }
