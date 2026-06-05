@@ -8,5 +8,6 @@ Pillow
 edge-tts
 moviepy
 numpy
+pydub
 pytrends
 yt-dlp
