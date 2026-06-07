@@ -2260,13 +2260,134 @@
       "match": false,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-06-01",
+      "weekEnd": "2026-06-07",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "테슬라-스페이스X 합병, 일론 머스크의 1조 달러 보상 패키지 발동 가능성",
+          "source": "Electrek",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 2026년 말까지 수십만 대의 자율주행 테슬라 차량 예상",
+          "source": "Stocktwits",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라와 스페이스X 합병 초기 논의 중",
+          "source": "CNBC",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 2026년 AI 로봇 및 미래 제품 공개",
+          "source": "YouTube (Carros Show)",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 휴머노이드 로봇에 집중",
+          "source": "KFI AM 640",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 스페이스X IPO 관련 질문 회피하며 미래 비전 제시",
+          "source": "Bloomberg",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라-스페이스X 합병 루머 확산, TSLA 주가에 영향 미칠까?",
+          "source": "Action Network",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 저가형 자동차 계획 폐기 보도에 '거짓말' 반박",
+          "source": "Fox Business",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 2026년 2분기 사이버캡 생산 시작 예정",
+          "source": "EV",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라, 중국 공급업체로부터 29억 달러 규모 태양광 장비 구매 계획",
+          "source": "Reuters",
+          "category": "Energy"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.9,
+        "buyIndex": 54,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 3,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R13",
+          "R25"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 59,
+          "optimusBoost": 8,
+          "r24Discount": -4,
+          "macroOverlay": -7,
+          "macdTrend": 1,
+          "competitorUnderperform": -3
+        },
+        "macroCtx": {
+          "spyChg": -2.36,
+          "qqqChg": -4.34,
+          "vixClose": 21.510000228881836,
+          "wtiChg": 2.31,
+          "cnyChg": 0.11,
+          "competitorChg": -2.93,
+          "competitorRelStrength": -5.61,
+          "prevAssetChg": 1.29,
+          "assetTrend3w": 3.23,
+          "rsi": 55.7,
+          "macd": {
+            "macd": 1.8193722937242,
+            "signal": -0.29942847199552214,
+            "hist": 2.118800765719722,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 455.07,
+            "middle": 401.04,
+            "lower": 347,
+            "pos": 0.407
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false,
+          "bydChg": -2.93,
+          "bydRelStrength": -5.61,
+          "prevTslaChg": 1.29,
+          "tslaTrend3w": 3.23
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -8.54,
+        "actual": "bearish",
+        "open": 427.49,
+        "close": 391
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-06-03 06:18 KST",
+  "generatedAt": "2026-06-08 04:41 KST",
   "stats": {
-    "totalWeeks": 21,
-    "analyzedWeeks": 21,
-    "accuracy": 48,
+    "totalWeeks": 22,
+    "analyzedWeeks": 22,
+    "accuracy": 45,
     "strongAccuracy": 33,
     "avgScore": 0.9
   },
