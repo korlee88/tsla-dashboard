@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.08,
+  "velocity": 0.1,
   "velocity_label": "급감 (×0.1)",
-  "reason": "조회수 속도 급감 (×0.1) | 최근 3일 289,275회 / 이전 4~7일 3,643,592회 | 총 3,932,867회 (44개 영상)",
+  "reason": "조회수 속도 급감 (×0.1) | 최근 3일 345,817회 / 이전 4~7일 3,604,092회 | 총 3,949,909회 (44개 영상)",
   "video_count": 44,
-  "total_views": 3932867,
-  "hot_views": 289275,
-  "baseline_views": 3643592,
+  "total_views": 3949909,
+  "hot_views": 345817,
+  "baseline_views": 3604092,
   "top_videos": [
     {
       "title": "特斯拉只發布了一條機器人跑步視頻，卻讓科技圈集體失聲？ 一條視頻告訴你特斯拉機器人牛在哪#特斯拉",
       "channel": "TTTop汽車部",
       "publishedAt": "2026-06-01T04:02:51Z",
-      "viewCount": 1834092
+      "viewCount": 1847848
     },
     {
       "title": "손가락 모터 다 빼!&quot; 삼성 엔지니어들이 선택한 사람 힘줄(텐던)의 소름 돋는 비밀",
       "channel": "머스크의 모든 것",
       "publishedAt": "2026-06-01T08:22:31Z",
-      "viewCount": 621734
+      "viewCount": 625571
     },
     {
       "title": "Yolopark Transformers Optimus Prime Stopmotion Build#transformers #stopmotion #optimusprime",
       "channel": "ZB Hobby",
       "publishedAt": "2026-06-03T04:50:25Z",
-      "viewCount": 187256
+      "viewCount": 189705
     },
     {
       "title": "The iPhone Moment for Robots Just Happened",
       "channel": "Farzad",
       "publishedAt": "2026-06-01T12:00:39Z",
-      "viewCount": 183628
+      "viewCount": 184000
     },
     {
       "title": "Elon Musk: This Will Be Bigger Than Cars #technology #elonmusk",
       "channel": "Macetarie",
       "publishedAt": "2026-06-04T19:30:08Z",
-      "viewCount": 85491
+      "viewCount": 95164
     }
   ],
-  "collected_at": "2026-06-07T13:56:48Z"
+  "collected_at": "2026-06-07T19:00:47Z"
 }
