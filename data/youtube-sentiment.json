@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.33,
-  "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 370,071회 / 이전 4~7일 1,117,477회 | 총 1,487,548회 (44개 영상)",
+  "velocity": 0.19,
+  "velocity_label": "급감 (×0.2)",
+  "reason": "조회수 속도 급감 (×0.2) | 최근 3일 232,222회 / 이전 4~7일 1,213,173회 | 총 1,445,395회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1487548,
-  "hot_views": 370071,
-  "baseline_views": 1117477,
+  "total_views": 1445395,
+  "hot_views": 232222,
+  "baseline_views": 1213173,
   "top_videos": [
     {
       "title": "Yolopark Transformers Optimus Prime Stopmotion Build#transformers #stopmotion #optimusprime",
       "channel": "ZB Hobby",
       "publishedAt": "2026-06-03T04:50:25Z",
-      "viewCount": 195938
+      "viewCount": 196197
     },
     {
       "title": "Elon Musk: This Will Be Bigger Than Cars #technology #elonmusk",
       "channel": "Macetarie",
       "publishedAt": "2026-06-04T19:30:08Z",
-      "viewCount": 151774
+      "viewCount": 155361
+    },
+    {
+      "title": "테슬라 &#39;옵티머스&#39; 양산 임박 속 숨겨진 병목현상, 기회는 어디에?",
+      "channel": "PLUS TV (플러스 TV)",
+      "publishedAt": "2026-06-09T08:00:07Z",
+      "viewCount": 118724
     },
     {
       "title": "EL T800 YA ESTÁ AQUÍ: PRODUCCIÓN MASIVA DE ROBOTS HUMANOIDES",
       "channel": "PaleTecno",
       "publishedAt": "2026-06-03T08:48:20Z",
-      "viewCount": 101697
+      "viewCount": 105593
     },
     {
       "title": "Tesla &amp; SpaceX Will Merge After IPO | Here&#39;s What They&#39;re Not Telling You",
       "channel": "Ryan Shaw",
       "publishedAt": "2026-06-06T16:00:22Z",
-      "viewCount": 99018
-    },
-    {
-      "title": "#transformers #robot #optimusprime #riseofthebeasts",
-      "channel": "Jilin Wang",
-      "publishedAt": "2026-06-03T01:47:50Z",
-      "viewCount": 80488
+      "viewCount": 101960
     }
   ],
-  "collected_at": "2026-06-09T14:55:27Z"
+  "collected_at": "2026-06-09T19:51:18Z"
 }
