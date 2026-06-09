@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.33,
+  "velocity": 0.34,
   "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 387,355회 / 이전 4~7일 1,172,343회 | 총 1,559,698회 (44개 영상)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 372,579회 / 이전 4~7일 1,100,902회 | 총 1,473,481회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1559698,
-  "hot_views": 387355,
-  "baseline_views": 1172343,
+  "total_views": 1473481,
+  "hot_views": 372579,
+  "baseline_views": 1100902,
   "top_videos": [
     {
       "title": "Yolopark Transformers Optimus Prime Stopmotion Build#transformers #stopmotion #optimusprime",
       "channel": "ZB Hobby",
       "publishedAt": "2026-06-03T04:50:25Z",
-      "viewCount": 194092
+      "viewCount": 195324
     },
     {
       "title": "Elon Musk: This Will Be Bigger Than Cars #technology #elonmusk",
       "channel": "Macetarie",
       "publishedAt": "2026-06-04T19:30:08Z",
-      "viewCount": 127552
-    },
-    {
-      "title": "Elon Musk&#39;s First Prototype of Flying Tesla Robotaxi &quot;SkyCab&quot; Shocked the Industry",
-      "channel": "Carros Show",
-      "publishedAt": "2026-06-01T19:12:26Z",
-      "viewCount": 90555
+      "viewCount": 144082
     },
     {
       "title": "Tesla &amp; SpaceX Will Merge After IPO | Here&#39;s What They&#39;re Not Telling You",
       "channel": "Ryan Shaw",
       "publishedAt": "2026-06-06T16:00:22Z",
-      "viewCount": 82374
+      "viewCount": 93874
     },
     {
       "title": "EL T800 YA ESTÁ AQUÍ: PRODUCCIÓN MASIVA DE ROBOTS HUMANOIDES",
       "channel": "PaleTecno",
       "publishedAt": "2026-06-03T08:48:20Z",
-      "viewCount": 76583
+      "viewCount": 93176
+    },
+    {
+      "title": "My name is Optimus Prime. 10/10 Scene, the perfect introduction. #transformers #optimusprime #4k",
+      "channel": "BR STUDIOS",
+      "publishedAt": "2026-06-03T18:00:15Z",
+      "viewCount": 78400
     }
   ],
-  "collected_at": "2026-06-08T15:55:51Z"
+  "collected_at": "2026-06-09T04:16:15Z"
 }
