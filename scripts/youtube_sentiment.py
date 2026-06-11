@@ -63,7 +63,7 @@ def collect_videos(youtube) -> list[dict]:
                 relevanceLanguage="en",
             ).execute()
         except HttpError as e:
-            print(f"   ⚠ YouTube search 오류 ({query}): {e}", file=sys.stderr)
+            print(f"   ⚠ YouTube search 오류 ({query}): HTTP {e.resp.status}", file=sys.stderr)
             continue
 
         for item in response.get("items", []):
@@ -95,7 +95,7 @@ def fetch_statistics(youtube, video_items: list[dict]) -> list[dict]:
                 id=",".join(batch),
             ).execute()
         except HttpError as e:
-            print(f"   ⚠ YouTube videos.list 오류: {e}", file=sys.stderr)
+            print(f"   ⚠ YouTube videos.list 오류: HTTP {e.resp.status}", file=sys.stderr)
             continue
 
         meta = {v["id"]: v for v in video_items}

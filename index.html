@@ -12,10 +12,16 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>주가 영향 분석 대시보드</title>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+          integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+          integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"
+          integrity="sha384-x/ilTFv/u/eu6YSmkFDZl5V5Mm/pkxxcVv2cVJOrr1J0rvILhMvRBCy6yA75wYBj"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://accounts.google.com/gsi/client" async></script>
   <script>
@@ -718,9 +724,10 @@ async function getDriveAppDataSize(token) {
 
 // ─── 앱 버전 ──────────────────────────────────────────────────────────────────
 const APP_VERSION = {
-  version: '2.6.0',
-  date: '2026-06-02 KST',
+  version: '2.6.1',
+  date: '2026-06-11 KST',
   changelog: [
+    { v: '2.6.1', date: '2026-06-11 KST', label: '보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거' },
     { v: '2.6.0', date: '2026-06-02 KST', label: 'scoring v5.0 — 중립밴드 · 증폭 재조정 · 편향보정 · 추세필터(3주 가격추세, 뉴스독립) 도입 · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건)' },
     { v: '2.5.0', date: '2026-05-29 KST', label: '영상 생성 주 1회 금요일로 전환(매일→주간) · 씬2 "다음주 전망" 개편 · AI 가격 예측(dailyForecasts) 활용 · Phase 1 종료' },
     { v: '2.4.0', date: '2026-05-27 KST', label: '종합 매매 신호 가중 합성(매수지수 60% + AI전망 40%) · 합성 산식 표시 · 지표 종합 해석 안내 정정' },
