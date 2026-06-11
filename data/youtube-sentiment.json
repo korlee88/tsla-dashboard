@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.35,
-  "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 382,812회 / 이전 4~7일 1,099,434회 | 총 1,482,246회 (44개 영상)",
+  "velocity": 0.38,
+  "velocity_label": "급감 (×0.4)",
+  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 418,435회 / 이전 4~7일 1,105,757회 | 총 1,524,192회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1482246,
-  "hot_views": 382812,
-  "baseline_views": 1099434,
+  "total_views": 1524192,
+  "hot_views": 418435,
+  "baseline_views": 1105757,
   "top_videos": [
     {
       "title": "테슬라 &#39;옵티머스&#39; 양산 임박 속 숨겨진 병목현상, 기회는 어디에?",
       "channel": "PLUS TV (플러스 TV)",
       "publishedAt": "2026-06-09T08:00:07Z",
-      "viewCount": 229611
+      "viewCount": 244729
     },
     {
       "title": "Elon Musk: This Will Be Bigger Than Cars #technology #elonmusk",
       "channel": "Macetarie",
       "publishedAt": "2026-06-04T19:30:08Z",
-      "viewCount": 172944
+      "viewCount": 178020
     },
     {
       "title": "Tesla &amp; SpaceX Will Merge After IPO | Here&#39;s What They&#39;re Not Telling You",
       "channel": "Ryan Shaw",
       "publishedAt": "2026-06-06T16:00:22Z",
-      "viewCount": 120149
+      "viewCount": 126109
     },
     {
       "title": "SpaceX May Send Robots to Mars Before Humans — Starship’s Biggest Test Yet",
       "channel": "Cosmic Cartography",
       "publishedAt": "2026-06-05T19:30:11Z",
-      "viewCount": 100606
+      "viewCount": 104660
     },
     {
       "title": "Might SpaceX Buy Tesla at 2x The Price?",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-06-04T19:24:14Z",
-      "viewCount": 85948
+      "viewCount": 86720
     }
   ],
-  "collected_at": "2026-06-10T20:05:52Z"
+  "collected_at": "2026-06-11T04:49:50Z"
 }
