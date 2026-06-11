@@ -324,6 +324,12 @@ Opus API 호출 실패 시 (`Your credit balance is too low`) 자동으로 Gemin
 MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 영상은 GitHub Actions artifact로 30일 보관 후 자동 삭제.
 
+### ffmpeg/ffprobe 누락 (2026-06-12)
+`weekly_video_make.py`의 `gen_audio()`가 `pydub.AudioSegment.from_mp3()`로 TTS MP3를 합치는데,
+`ubuntu-latest` 러너 이미지에 `ffmpeg`(`ffprobe` 포함)가 더 이상 기본 설치되어 있지 않아
+`FileNotFoundError: ffprobe`로 STEP 2가 실패할 수 있음 (STEP 1은 정상 완료, STEP 3~5는 skip됨).
+→ 워크플로우의 "한글 폰트 설치" 단계에서 `ffmpeg`도 함께 `apt-get install`하여 해결.
+
 ---
 
 ## 대본 스타일 가이드
@@ -344,7 +350,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.6.0** | 2026-06-02 KST | scoring.js v5.0 — 중립밴드 · 증폭재조정(×1.35→×1.15) · 편향보정(beta 2.5→2.0) · **추세필터[18]** (3주 가격추세, 뉴스독립) · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건) |
+| **v2.6.1** | 2026-06-11 KST | 보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거 |
+| v2.6.0 | 2026-06-02 KST | scoring.js v5.0 — 중립밴드 · 증폭재조정(×1.35→×1.15) · 편향보정(beta 2.5→2.0) · **추세필터[18]** (3주 가격추세, 뉴스독립) · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건) |
 | v2.5.0 | 2026-05-29 KST | 영상 생성 주 1회 금요일로 전환(매일→주간) · 씬2 "다음주 전망" 개편 · AI 가격 예측(dailyForecasts) 활용 · Phase 1 종료 |
 | v2.4.0 | 2026-05-27 KST | 종합 매매 신호 가중 합성(매수지수 60% + AI전망 40%) |
 | v2.3.0 | 2026-05-25 KST | 인트로 씬 제거 → 3씬(브리핑·호재·미래) · 주간 변동률 표시 · 점수 라벨 제거 · 호재 씬 라운드 폰트(NanumSquareRound) |

@@ -372,7 +372,7 @@ def main():
     # ── 3. Gmail 다이제스트 ──────────────────────────────────────────────────
     if GMAIL_USER and GMAIL_APP_PASSWORD and GMAIL_TO:
         try:
-            print(f"  📧 Gmail 발송 중 → {GMAIL_TO}")
+            print(f"  📧 Gmail 발송 중...")
             send_gmail_digest(report_dir, meta, youtube_url)
             print(f"  ✅ Gmail 발송 완료")
         except Exception as e:
