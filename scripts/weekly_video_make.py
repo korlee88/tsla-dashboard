@@ -19,6 +19,7 @@ REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
 VOICE         = "ko-KR-SunHiNeural"    # 밝은 여성 — 친근 튜닝 (edge-tts 지원 검증 음성)
 RATE          = "+8%"                   # 대화하듯 자연스러운 속도
 PITCH         = "+6Hz"                  # 살짝 올려 밝고 친근한 톤
+LINE_PAUSE_MS = 1000                    # 줄 사이 휴지 (1초) — 너무 빨리 읽히지 않도록
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
@@ -125,14 +126,14 @@ def _clean_line(line: str) -> str:
     return line.strip()
 
 
-def build_scene_tts_text(idx: int, lines: list) -> str:
-    """씬별 대본 + 친근한 구어체 브리지 문장으로 나레이션 구성.
+def build_scene_tts_segments(idx: int, lines: list) -> list:
+    """씬별 대본을 줄 단위 세그먼트 리스트로 반환. 세그먼트 사이에 1초 휴지가 들어간다.
 
     옆에서 다정하게 이야기해 주는 톤 — 따뜻하고 자연스러운 말투로 전달한다.
     """
     cleaned = [c for c in (_clean_line(l) for l in lines) if c]
     if not cleaned:
-        return ""
+        return []
 
     if idx == 0:
         # 주간 브리핑 — 4줄(헤드라인·원인·호재·리스크) + 친근한 연결
@@ -140,42 +141,63 @@ def build_scene_tts_text(idx: int, lines: list) -> str:
         reason  = cleaned[1] if len(cleaned) > 1 else ""
         bull    = cleaned[2] if len(cleaned) > 2 else ""
         bear    = cleaned[3] if len(cleaned) > 3 else ""
-        parts = []
-        if head:   parts.append(head)
-        if reason: parts.append("왜 이렇게 움직였는지 같이 볼까요? " + reason)
-        if bull:   parts.append("좋은 소식도 있어요. " + bull)
-        if bear:   parts.append("다만 이런 점은 살짝 걱정되는 부분이죠. " + bear)
-        text = " ".join(parts)
+        segs = []
+        if head:   segs.append(head)
+        if reason: segs.append("왜 이렇게 움직였는지 같이 볼까요? " + reason)
+        if bull:   segs.append("좋은 소식도 있어요. " + bull)
+        if bear:   segs.append("다만 이런 점은 살짝 걱정되는 부분이죠. " + bear)
+        return segs
 
-    elif idx == 1:
-        # 호재 심층 — 헤드라인 + 친근한 브리지 + 세부 내용 전체
-        headline = cleaned[0]
-        details  = " ".join(cleaned[1:])
-        text     = headline
-        if details:
-            text += " 조금 더 자세히 들여다볼게요. " + details
+    if idx == 1:
+        # 호재 심층 — 헤드라인 + 세부 줄들 (각 줄 사이 휴지)
+        segs = [cleaned[0]]
+        if len(cleaned) > 1:
+            segs.append("조금 더 자세히 들여다볼게요. " + cleaned[1])
+            segs.extend(cleaned[2:])
+        return segs
 
-    elif idx == 2:
-        # 클로징(다음주 전망) — 6줄: 일정·시나리오·가격예측·흐름·변수·마무리
-        head = cleaned[0] if cleaned else ""
-        rest = cleaned[1:]
-        parts = []
-        if head:
-            parts.append("자, 다음 주는 어떨까요? " + head)
-        parts.extend(rest)
-        text = " ".join(parts)
+    if idx == 2:
+        # 클로징(다음주 전망) — 인트로 + 나머지 줄들
+        segs = ["자, 다음 주는 어떨까요? " + cleaned[0]]
+        segs.extend(cleaned[1:])
+        return segs
 
-    else:
-        text = " ".join(cleaned)
-
-    return text
+    return cleaned
 
 # ── TTS ───────────────────────────────────────────────────────────────────────
 
-async def gen_audio(text, path):
+async def gen_audio(segments, path):
+    """세그먼트 리스트(또는 문자열)를 TTS로 합성. 줄 사이 LINE_PAUSE_MS 무음 삽입."""
     import edge_tts
-    comm = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
-    await comm.save(str(path))
+
+    if isinstance(segments, str):
+        segments = [segments]
+    segments = [s for s in segments if s and s.strip()]
+    if not segments:
+        return
+
+    if len(segments) == 1:
+        comm = edge_tts.Communicate(segments[0], VOICE, rate=RATE, pitch=PITCH)
+        await comm.save(str(path))
+        return
+
+    from pydub import AudioSegment
+
+    temp_files = []
+    for i, text in enumerate(segments):
+        tmp = path.parent / f".{path.stem}_seg{i:02d}.mp3"
+        comm = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
+        await comm.save(str(tmp))
+        temp_files.append(tmp)
+
+    silence  = AudioSegment.silent(duration=LINE_PAUSE_MS)
+    combined = AudioSegment.from_mp3(temp_files[0])
+    for tf in temp_files[1:]:
+        combined += silence + AudioSegment.from_mp3(tf)
+    combined.export(str(path), format="mp3")
+
+    for tf in temp_files:
+        tf.unlink(missing_ok=True)
 
 # ── 로봇 마스코트 ─────────────────────────────────────────────────────────────
 
@@ -422,11 +444,11 @@ async def process_scene(scene, report_dir):
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
-    # 전체 줄 + 씬별 브리지 문장으로 풍부한 나레이션 구성
-    tts_text = build_scene_tts_text(idx, lines) or title
-    audio_path = report_dir / f"scene_{idx:02d}.mp3"
-    print(f"   🎙 씬 {idx} [{title[:20]}] 나레이션 생성...")
-    await gen_audio(tts_text, audio_path)
+    # 전체 줄 + 씬별 브리지 문장으로 풍부한 나레이션 구성 (줄 사이 1초 휴지)
+    tts_segments = build_scene_tts_segments(idx, lines) or [title]
+    audio_path   = report_dir / f"scene_{idx:02d}.mp3"
+    print(f"   🎙 씬 {idx} [{title[:20]}] 나레이션 생성 ({len(tts_segments)}줄, 줄 사이 {LINE_PAUSE_MS}ms)...")
+    await gen_audio(tts_segments, audio_path)
 
     audio = AudioFileClip(str(audio_path))
     dur   = max(audio.duration, MIN_SCENE_SEC)

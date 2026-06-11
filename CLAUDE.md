@@ -213,11 +213,13 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 
 **TTS 설정**:
 ```python
-VOICE = "ko-KR-SunHiNeural"  # 밝은 여성 — 친근 튜닝
-RATE  = "+8%"                 # 대화하듯 자연스러운 속도
-PITCH = "+6Hz"                # 살짝 올려 밝고 친근한 톤
+VOICE         = "ko-KR-SunHiNeural"  # 밝은 여성 — 친근 튜닝
+RATE          = "+8%"                 # 대화하듯 자연스러운 속도
+PITCH         = "+6Hz"                # 살짝 올려 밝고 친근한 톤
+LINE_PAUSE_MS = 1000                  # 줄 사이 휴지 (1초)
 ```
-> 나레이션은 옆에서 다정하게 이야기해 주는 친근한 구어체 톤. `build_scene_tts_text()`의 브리지 문장도 구어체("같이 볼까요?", "자세히 들여다볼게요").
+> 나레이션은 옆에서 다정하게 이야기해 주는 친근한 구어체 톤. `build_scene_tts_segments()`의 브리지 문장도 구어체("같이 볼까요?", "자세히 들여다볼게요").
+> 줄 단위로 edge-tts MP3를 따로 만들고 `pydub`으로 1초 무음을 끼워 합쳐서 자연스러운 호흡을 만든다 — 너무 빨리 다음 줄로 넘어가지 않도록.
 
 **애니메이션 시스템** (moviepy 2.x `VideoClip`):
 - `fx_ken_burns()` — 배경 이미지 줌인/줌아웃 + 패닝 (씬별 다른 방향, 7% 줌)
