@@ -1,43 +1,43 @@
 {
-  "score": -1,
-  "velocity": 0.59,
-  "velocity_label": "소폭 감소 (×0.6)",
-  "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 658,862회 / 이전 4~7일 1,123,429회 | 총 1,782,291회 (44개 영상)",
+  "score": 0,
+  "velocity": 0.73,
+  "velocity_label": "보합 (×0.7)",
+  "reason": "조회수 속도 보합 (×0.7) | 최근 3일 740,919회 / 이전 4~7일 1,021,076회 | 총 1,761,995회 (44개 영상)",
   "video_count": 44,
-  "total_views": 1782291,
-  "hot_views": 658862,
-  "baseline_views": 1123429,
+  "total_views": 1761995,
+  "hot_views": 740919,
+  "baseline_views": 1021076,
   "top_videos": [
     {
       "title": "테슬라 &#39;옵티머스&#39; 양산 임박 속 숨겨진 병목현상, 기회는 어디에?",
       "channel": "PLUS TV (플러스 TV)",
       "publishedAt": "2026-06-09T08:00:07Z",
-      "viewCount": 267131
+      "viewCount": 296522
     },
     {
       "title": "Optimus Prime Noir #transformers #optimusprime",
       "channel": "Rhashad Carter",
       "publishedAt": "2026-06-10T14:11:49Z",
-      "viewCount": 216850
+      "viewCount": 256420
     },
     {
       "title": "Elon Musk: This Will Be Bigger Than Cars #technology #elonmusk",
       "channel": "Macetarie",
       "publishedAt": "2026-06-04T19:30:08Z",
-      "viewCount": 180452
-    },
-    {
-      "title": "Tesla &amp; SpaceX Will Merge After IPO | Here&#39;s What They&#39;re Not Telling You",
-      "channel": "Ryan Shaw",
-      "publishedAt": "2026-06-06T16:00:22Z",
-      "viewCount": 127789
+      "viewCount": 182231
     },
     {
       "title": "SpaceX May Send Robots to Mars Before Humans — Starship’s Biggest Test Yet",
       "channel": "Cosmic Cartography",
       "publishedAt": "2026-06-05T19:30:11Z",
-      "viewCount": 106314
+      "viewCount": 107726
+    },
+    {
+      "title": "Might SpaceX Buy Tesla at 2x The Price?",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-06-04T19:24:14Z",
+      "viewCount": 87770
     }
   ],
-  "collected_at": "2026-06-11T10:26:47Z"
+  "collected_at": "2026-06-11T16:05:38Z"
 }
