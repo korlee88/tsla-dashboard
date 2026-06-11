@@ -324,6 +324,12 @@ Opus API 호출 실패 시 (`Your credit balance is too low`) 자동으로 Gemin
 MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 영상은 GitHub Actions artifact로 30일 보관 후 자동 삭제.
 
+### ffmpeg/ffprobe 누락 (2026-06-12)
+`weekly_video_make.py`의 `gen_audio()`가 `pydub.AudioSegment.from_mp3()`로 TTS MP3를 합치는데,
+`ubuntu-latest` 러너 이미지에 `ffmpeg`(`ffprobe` 포함)가 더 이상 기본 설치되어 있지 않아
+`FileNotFoundError: ffprobe`로 STEP 2가 실패할 수 있음 (STEP 1은 정상 완료, STEP 3~5는 skip됨).
+→ 워크플로우의 "한글 폰트 설치" 단계에서 `ffmpeg`도 함께 `apt-get install`하여 해결.
+
 ---
 
 ## 대본 스타일 가이드
