@@ -1473,6 +1473,23 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             # 폴백 자리 비움 (다음 단계 좌표 보존)
             SLIM_H = 0
 
+        # ── AI 생성 고지 (마지막 씬 최하단, 화면 표기 전용) ─────────────
+        # script.json lines에 포함되지 않으므로 TTS 나레이션은 읽지 않는다.
+        from PIL import Image as PILImage
+        NOTICE_LINES = [
+            "본 영상은 AI 분석 툴로 수집한 뉴스 자료를 분석해",
+            "핵심 내용을 요약·정리한 영상물입니다",
+        ]
+        band_h = 118
+        strip = img.crop((0, H - band_h, W, H)).convert("RGBA")
+        shade = PILImage.new("RGBA", (W, band_h), (10, 14, 26, 205))
+        img.paste(PILImage.alpha_composite(strip, shade).convert("RGB"), (0, H - band_h))
+        draw = ImageDraw.Draw(img)
+        ny = H - band_h + 24
+        for nl in NOTICE_LINES:
+            draw.text((W // 2, ny), nl, font=f_xs, fill=(170, 180, 202), anchor="mt")
+            ny += 38
+
         # CTA 텍스트 없음 (나레이션으로 대체)
 
         return _apply_frame_overlay(img)
