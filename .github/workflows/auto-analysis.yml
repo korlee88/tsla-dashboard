@@ -1,16 +1,10 @@
-name: 자동 분석 (하루 4회)
+name: 자동 분석 (1일 1회)
 
 # KST(UTC+9) 기준 스케줄
-# KST 03:00 = UTC 18:00 (전날)
-# KST 09:00 = UTC 00:00
-# KST 15:00 = UTC 06:00
-# KST 21:00 = UTC 12:00
+# KST 08:00 = UTC 23:00 (전날)
 on:
   schedule:
-    - cron: '0 18 * * *'   # KST 03:00
-    - cron: '0 0 * * *'    # KST 09:00
-    - cron: '0 6 * * *'    # KST 15:00
-    - cron: '0 12 * * *'   # KST 21:00
+    - cron: '0 23 * * *'   # KST 08:00
   workflow_dispatch:        # 수동 실행 (테스트용)
 
 jobs:

@@ -64,7 +64,7 @@ git clone https://github.com/korlee88/nvda-dashboard
 tsla-dashboard/
 ├── .github/workflows/
 │   ├── weekly-video.yml       # 주 1회 금요일 자동 실행 + workflow_dispatch
-│   ├── auto-analysis.yml      # 하루 4회 자동 분석
+│   ├── auto-analysis.yml      # 1일 1회 자동 분석 (KST 08:00)
 │   ├── backtest-run.yml       # 백테스트 (매일 자동 + 수동)
 │   └── calendar-update.yml    # 매주 일정 갱신
 ├── config/
@@ -351,7 +351,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.6.1** | 2026-06-11 KST | 보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거 |
+| **v2.6.2** | 2026-06-12 KST | 자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신 |
+| v2.6.1 | 2026-06-11 KST | 보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거 |
 | v2.6.0 | 2026-06-02 KST | scoring.js v5.0 — 중립밴드 · 증폭재조정(×1.35→×1.15) · 편향보정(beta 2.5→2.0) · **추세필터[18]** (3주 가격추세, 뉴스독립) · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건) |
 | v2.5.0 | 2026-05-29 KST | 영상 생성 주 1회 금요일로 전환(매일→주간) · 씬2 "다음주 전망" 개편 · AI 가격 예측(dailyForecasts) 활용 · Phase 1 종료 |
 | v2.4.0 | 2026-05-27 KST | 종합 매매 신호 가중 합성(매수지수 60% + AI전망 40%) |
