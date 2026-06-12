@@ -1,0 +1,229 @@
+{
+  "generated_at": "2026-06-12",
+  "generated_by": "Claude Opus 4",
+  "title": "이번주 테슬라 *-4.88%*, $399예요",
+  "subtitle": "2026-06-05 ~ 2026-06-12 · 일론 머스크, 테슬라 모델 S 및 모델 X 생산 중단하",
+  "summary": {
+    "week_start": "2026-06-05",
+    "week_end": "2026-06-12",
+    "session_count": 29,
+    "buy_indices": [
+      49,
+      38,
+      39,
+      51,
+      48,
+      41,
+      57,
+      75,
+      74,
+      70,
+      52,
+      53,
+      55,
+      48,
+      53,
+      59,
+      47,
+      48,
+      49,
+      47,
+      34,
+      46,
+      50,
+      46,
+      70,
+      58,
+      70,
+      56,
+      62
+    ],
+    "avg_buy_index": 53,
+    "latest_buy_index": 49,
+    "price_start": 419.61,
+    "price_end": 399.15,
+    "latest_price": 399.15,
+    "today_price": 399.15,
+    "today_change_pct": 4.6,
+    "week_change_pct": -4.88,
+    "biggest_impact": {
+      "title": "일론 머스크, 테슬라 모델 S 및 모델 X 생산 중단하고 로봇에 집중 발표",
+      "score": 4,
+      "reason": "테슬라가 모델 S 및 모델 X 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중한다는 일론 머스크의 발표는 로봇 사업의 중요한 전환점을 의미하며, 이는 장기적인 성장 잠재력에 긍정적입니다.",
+      "source": "Fox Business",
+      "date": "2026-06-09",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "일론 머스크, 테슬라 모델 S 및 모델 X 생산 중단하고 로봇에 집중 발표",
+        "score": 4,
+        "reason": "테슬라가 모델 S 및 모델 X 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중한다는 일론 머스크의 발표는 로봇 사업의 중요한 전환점을 의미하며, 이는 장기적인 성장 잠재력에 긍정적입니다.",
+        "source": "Fox Business",
+        "date": "2026-06-09",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇에 집중할 예정",
+        "score": 3,
+        "reason": "테슬라가 모델 S 및 모델 X 생산을 중단하고 옵티머스 로봇의 대량 생산에 집중하기로 한 결정은 장기적인 성장 동력 전환을 시사하며, 로봇 사업의 잠재력을 강조합니다.",
+        "source": "Fox Business",
+        "date": "2026-06-11",
+        "category": "Product"
+      },
+      {
+        "title": "일론 머스크, 테슬라 휴머노이드 로봇 내년 말까지 판매 가능성 언급",
+        "score": 3,
+        "reason": "일론 머스크가 테슬라의 옵티머스 휴머노이드 로봇이 2027년 말까지 판매될 수 있다고 언급하여 로봇 사업의 상업화 가능성에 대한 긍정적인 전망을 제시했습니다.",
+        "source": "Fox Business",
+        "date": "2026-06-11",
+        "category": "Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 2026년 1분기 매출 160억 달러 기록했으나 EPS 성장률 1%에 그쳐",
+        "score": -3,
+        "reason": "테슬라가 2026년 1분기에 매출은 성장했으나 주당 순이익(EPS) 성장률이 1%에 그쳐 수익성 악화 우려를 불러일으키며, 이는 에너지 저장 부문의 경쟁 심화와 관련이 있습니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-06-01",
+        "category": "Earnings"
+      },
+      {
+        "title": "테슬라, 2026년 1분기 실적 부진 및 에너지 저장 부문 경쟁 심화",
+        "score": -3,
+        "reason": "테슬라의 2026년 1분기 EPS 성장이 1%에 그쳐 수익성 레버리지가 제한적임을 보여주었으며, 에너지 저장 부문에서 경쟁 심화로 성장 동력이 약화되고 있습니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-06-01",
+        "category": "Earnings|Competition"
+      },
+      {
+        "title": "블룸버그, 오스틴에서 테슬라 로보택시 테스트 결과 보고",
+        "score": -2,
+        "reason": "블룸버그의 테슬라 로보택시 테스트 결과는 긴 대기 시간, 예약 중단, 차량 고장 등 신뢰성 문제를 지적하며 로보택시 서비스의 초기 단계에서의 어려움을 보여줍니다.",
+        "source": "TradingView",
+        "date": "2026-06-11",
+        "category": "Product"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "6/12(금)",
+        "change_pct": 0.7,
+        "signal": "관망",
+        "basePrice": 399.15,
+        "predictedPrice": 401.94
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/15(월)",
+        "change_pct": -0.5,
+        "signal": "관망",
+        "basePrice": 399.15,
+        "predictedPrice": 397.15
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/16(화)",
+        "change_pct": 1.1,
+        "signal": "매수",
+        "basePrice": 399.15,
+        "predictedPrice": 403.54
+      },
+      {
+        "day": 4,
+        "label": "D+4",
+        "date": "6/17(수)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 399.15,
+        "predictedPrice": 395.56
+      },
+      {
+        "day": 5,
+        "label": "D+5",
+        "date": "6/18(목)",
+        "change_pct": 0.6,
+        "signal": "관망",
+        "basePrice": 399.15,
+        "predictedPrice": 401.54
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-06-12",
+        399.15
+      ],
+      [
+        "2026-06-11",
+        381.59
+      ],
+      [
+        "2026-06-10",
+        396.68
+      ],
+      [
+        "2026-06-09",
+        402.48
+      ],
+      [
+        "2026-06-08",
+        391
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "테슬라(TSLA) 주가는 2026년 6월 5일부터 6월 12일 기간 동안 여러 긍정적인 요인으로 인해 상승세를 보였습니다. 주요 원인으로는 다음과 같습니다.\n\nFSD 및 로보택시 기대 / 스페이스X 상장 및 가치 / JP모건 목표가 상향\n\n*   **FSD 및 로보택시 기대**: 테슬라의 완전자율주행(FSD) 소프트웨어의 유럽 및 중국 시장 확장 소식과 네바다주에서 최대 5,000대의 로보택시 운영을 위한 자율주행 차량 네트워크 회사 허가 신청이 주가 상승에 긍정적인 영향을 미쳤습니다. 또한, JP모건은 테슬라의 자율주행 및 휴머노이드 로봇공학 가치를 높게 평가하며 투자의견을 상향 조정했습니다.\n*   **스페이스X 상장 및 가치**: 일론 머스크가 이끄는 스페이스X의 높은 가치 전망(론 바론은 10조~30조 달러로 예상)과 6월 12일로 예정된 기업공개(IPO)가 테슬라 주가에도 긍정적인 '머스크 후광 효과'를 주었을 것으로 분석됩니다. 테슬라와 스페이스X의 잠재적 합병에 대한 추측도 투자 심리에 영향을 미쳤습니다.\n*   **JP모건 목표가 상향**: JP모건이 테슬라에 대한 투자의견을 '비중 축소(Underweight)'에서 '중립(Neutral)'으로 상향 조정하고 목표 주가를 145달러에서 475달러로 대폭 올린 점은 주가 상승의 주요 원인 중 하나입니다."
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "이번주",
+      "lines": [
+        "이번주 테슬라 *-4.88%*, $399예요",
+        "JP모건 목표가 *$475*로 상향됐죠",
+        "옵티머스 *2027년 판매* 언급 나왔어요",
+        "1분기 EPS 성장 *1%*로 아쉬웠죠"
+      ],
+      "body": "이번주 테슬라 *-4.88%*, $399예요\nJP모건 목표가 *$475*로 상향됐죠\n옵티머스 *2027년 판매* 언급 나왔어요\n1분기 EPS 성장 *1%*로 아쉬웠죠"
+    },
+    {
+      "index": 1,
+      "title": "호재분석",
+      "lines": [
+        "카테고리: JP모건 *목표가 대폭 상향*",
+        "↳ 배경: 자율주행·로봇 가치 *재평가* 흐름",
+        "↳ 데이터: 목표가 *$145→$475* 3배 점프",
+        "↳ 임팩트: 투자의견 *비중축소→중립* 격상",
+        "↳ 비교: 현재가 $399 대비 *19% 상단* 여력",
+        "↳ 로봇·FSD 모멘텀이 관전 포인트예요"
+      ],
+      "body": "카테고리: JP모건 *목표가 대폭 상향*\n   ↳ 배경: 자율주행·로봇 가치 *재평가* 흐름\n   ↳ 데이터: 목표가 *$145→$475* 3배 점프\n   ↳ 임팩트: 투자의견 *비중축소→중립* 격상\n   ↳ 비교: 현재가 $399 대비 *19% 상단* 여력\n   ↳ 로봇·FSD 모멘텀이 관전 포인트예요"
+    },
+    {
+      "index": 2,
+      "title": "다음주전망",
+      "lines": [
+        "다음주는 *큰 일정 없이* 모니터링 주간",
+        "FSD·로보택시 뉴스 *흐름 체크* 포인트죠",
+        "예상 도달가 *$402*, *+0.6%* 흐름이에요",
+        "*3일 상승·2일 하락* 혼조 예상돼요",
+        "로보택시 신뢰성 이슈는 변수가 될 수 있죠",
+        "함께해 주셔서 감사해요!"
+      ],
+      "body": "다음주는 *큰 일정 없이* 모니터링 주간\nFSD·로보택시 뉴스 *흐름 체크* 포인트죠\n예상 도달가 *$402*, *+0.6%* 흐름이에요\n*3일 상승·2일 하락* 혼조 예상돼요\n로보택시 신뢰성 이슈는 변수가 될 수 있죠\n함께해 주셔서 감사해요!"
+    }
+  ],
+  "image_prompts": {
+    "0": "A breathtaking 16:9 landscape view of Seoul's Han River night skyline with Namsan Tower, 63 Building, and Lotte Tower glowing under a deep purple violet sky, futuristic Tesla autonomous electric vehicles cruising along illuminated highways, K-tech advanced city atmosphere with holographic data streams floating in the air, cinematic bokeh of city lights reflecting on the river, moody analytical violet purple tone, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "A vibrant 16:9 landscape image of Seoul's Banpo Bridge bathed in fresh green morning light symbolizing growth and bullish momentum, sleek Tesla electric vehicles charging at modern Korean eco-friendly stations while others speed across the bridge, lush riverside greenery, sunlit clouds, K-tech green infrastructure with futuristic charging towers, energetic optimistic atmosphere, glowing green and emerald hues, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "A stunning 9:16 vertical futuristic Korean cityscape featuring Han River night view, Seoul skyline, and Gwanghwamun Square as backdrop, autonomous Tesla vehicles gliding through neon-lit streets alongside humanoid Optimus robots walking on sidewalks, advanced K-tech urban scenery with floating holograms, magenta and gold inspirational future mood, golden sunlight rays, sparkling stars, glittering particles in the air, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}
