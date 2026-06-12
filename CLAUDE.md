@@ -191,6 +191,7 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 | 2 | 다음주 전망 (클로징, 6줄: 일정·시나리오·가격예측·흐름·변수·마무리, `dailyForecasts` 예측 활용) | 9:16 full | Magenta | celebrating |
 
 > 인트로(충격속보)·리스크·시장반응 씬은 제거됨. 미국장 휴장일에도 무리 없도록 호재 위주 3씬으로 단순화.
+> 마지막 씬(idx 2) 최하단에 AI 생성 고지 밴드 표시 — "AI 분석 툴로 뉴스 자료를 분석해 요약한 영상물" 문구. 화면 표기 전용으로 `prep.py`에 하드코딩되어 있어 TTS가 읽지 않음.
 > 배경은 Nano Banana AI 이미지가 1순위, 실패 시 Wikipedia 폴백.
 > 점수(+N점)는 내부 지표이므로 대본·화면에 노출하지 않는다("호재"/"리스크"로만 표현).
 > 호재 심층 씬(idx 1)은 `NanumSquareRound`(둥근 폰트)로 부드러운 톤 — CI는 `fonts-nanum-extra` 필요.
