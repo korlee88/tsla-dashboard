@@ -19,7 +19,9 @@ REPORT_BASE   = ROOT_DIR / "data" / "weekly-report"
 VOICE         = "ko-KR-SunHiNeural"    # 밝은 여성 — 친근 튜닝 (edge-tts 지원 검증 음성)
 RATE          = "+8%"                   # 대화하듯 자연스러운 속도
 PITCH         = "+6Hz"                  # 살짝 올려 밝고 친근한 톤
-LINE_PAUSE_MS = 1000                    # 줄 사이 휴지 (1초) — 너무 빨리 읽히지 않도록
+LINE_PAUSE_MS = 600                     # 대본 줄(세그먼트) 사이 무음 휴지 (ms)
+TRIM_DB       = -42.0                   # 세그먼트 가장자리 무음 판정 임계 (dBFS)
+TRIM_KEEP_MS  = 60                      # 트리밍 후 가장자리에 남길 무음 (ms)
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
@@ -166,6 +168,23 @@ def build_scene_tts_segments(idx: int, lines: list) -> list:
 
 # ── TTS ───────────────────────────────────────────────────────────────────────
 
+def _trim_edge_silence(piece):
+    """edge-tts가 세그먼트 앞뒤에 자체로 붙이는 무음(특히 꼬리 ~0.5초+)을 잘라낸다.
+
+    안 자르면 삽입 무음(LINE_PAUSE_MS)과 겹쳐 줄 사이 간격이 의도보다 훨씬 길어진다.
+    """
+    try:
+        from pydub.silence import detect_leading_silence
+        lead = detect_leading_silence(piece, silence_threshold=TRIM_DB)
+        tail = detect_leading_silence(piece.reverse(), silence_threshold=TRIM_DB)
+        start = max(0, lead - TRIM_KEEP_MS)
+        end   = len(piece) - max(0, tail - TRIM_KEEP_MS)
+        if end - start >= 100:  # 전체가 무음 판정되는 등 과도 트리밍 방지
+            return piece[start:end]
+    except Exception:
+        pass
+    return piece
+
 async def gen_audio(segments, path):
     """세그먼트 리스트(또는 문자열)를 TTS로 합성. 줄 사이 LINE_PAUSE_MS 무음 삽입."""
     import edge_tts
@@ -191,9 +210,11 @@ async def gen_audio(segments, path):
         temp_files.append(tmp)
 
     silence  = AudioSegment.silent(duration=LINE_PAUSE_MS)
-    combined = AudioSegment.from_mp3(temp_files[0])
+    combined = _trim_edge_silence(AudioSegment.from_mp3(temp_files[0]))
     for tf in temp_files[1:]:
-        combined += silence + AudioSegment.from_mp3(tf)
+        combined += silence + _trim_edge_silence(AudioSegment.from_mp3(tf))
+    # 씬 페이드와 간섭하지 않도록 앞 200ms·뒤 300ms 무음 패딩
+    combined = AudioSegment.silent(duration=200) + combined + AudioSegment.silent(duration=300)
     combined.export(str(path), format="mp3")
 
     for tf in temp_files:

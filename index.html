@@ -724,9 +724,10 @@ async function getDriveAppDataSize(token) {
 
 // ─── 앱 버전 ──────────────────────────────────────────────────────────────────
 const APP_VERSION = {
-  version: '2.6.2',
+  version: '2.6.3',
   date: '2026-06-12 KST',
   changelog: [
+    { v: '2.6.3', date: '2026-06-12 KST', label: 'TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍 + LINE_PAUSE_MS 1000→600ms로 체감 간격 ~720ms 균일화' },
     { v: '2.6.2', date: '2026-06-12 KST', label: '자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신' },
     { v: '2.6.1', date: '2026-06-11 KST', label: '보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거' },
     { v: '2.6.0', date: '2026-06-02 KST', label: 'scoring v5.0 — 중립밴드 · 증폭 재조정 · 편향보정 · 추세필터(3주 가격추세, 뉴스독립) 도입 · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건)' },

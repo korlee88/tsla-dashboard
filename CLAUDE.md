@@ -217,10 +217,13 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 VOICE         = "ko-KR-SunHiNeural"  # 밝은 여성 — 친근 튜닝
 RATE          = "+8%"                 # 대화하듯 자연스러운 속도
 PITCH         = "+6Hz"                # 살짝 올려 밝고 친근한 톤
-LINE_PAUSE_MS = 1000                  # 줄 사이 휴지 (1초)
+LINE_PAUSE_MS = 600                   # 줄 사이 휴지 (ms)
+TRIM_DB       = -42.0                 # 세그먼트 가장자리 무음 판정 임계 (dBFS)
+TRIM_KEEP_MS  = 60                    # 트리밍 후 가장자리에 남길 무음 (ms)
 ```
 > 나레이션은 옆에서 다정하게 이야기해 주는 친근한 구어체 톤. `build_scene_tts_segments()`의 브리지 문장도 구어체("같이 볼까요?", "자세히 들여다볼게요").
-> 줄 단위로 edge-tts MP3를 따로 만들고 `pydub`으로 1초 무음을 끼워 합쳐서 자연스러운 호흡을 만든다 — 너무 빨리 다음 줄로 넘어가지 않도록.
+> 줄 단위로 edge-tts MP3를 따로 만들고 `pydub`으로 줄 사이 무음을 끼워 합쳐서 자연스러운 호흡을 만든다 — 너무 빨리 다음 줄로 넘어가지 않도록.
+> **줄 간격 보정**: edge-tts가 각 세그먼트 꼬리에 ~0.5초+ 자체 무음을 붙여서, 1000ms 삽입 무음과 겹치면 체감 간격이 1.5초+로 늘어난다. `_trim_edge_silence()`가 `pydub.silence.detect_leading_silence`로 앞·뒤(`piece.reverse()`) 무음을 측정해 `TRIM_KEEP_MS`만 남기고 잘라낸다(전체 무음 판정 시 원본 유지하는 과도 트리밍 가드 포함). 트리밍 + `LINE_PAUSE_MS=600`으로 체감 간격을 ~720ms로 일정하게 맞춘다. 합성 결과 앞 200ms·뒤 300ms 무음을 더해 씬 페이드와의 간섭을 막는다.
 
 **애니메이션 시스템** (moviepy 2.x `VideoClip`):
 - `fx_ken_burns()` — 배경 이미지 줌인/줌아웃 + 패닝 (씬별 다른 방향, 7% 줌)
@@ -351,7 +354,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.6.2** | 2026-06-12 KST | 자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신 |
+| **v2.6.3** | 2026-06-12 KST | TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍(`_trim_edge_silence`) + `LINE_PAUSE_MS` 1000→600ms (체감 간격 ~720ms 균일화) |
+| v2.6.2 | 2026-06-12 KST | 자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신 |
 | v2.6.1 | 2026-06-11 KST | 보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거 |
 | v2.6.0 | 2026-06-02 KST | scoring.js v5.0 — 중립밴드 · 증폭재조정(×1.35→×1.15) · 편향보정(beta 2.5→2.0) · **추세필터[18]** (3주 가격추세, 뉴스독립) · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건) |
 | v2.5.0 | 2026-05-29 KST | 영상 생성 주 1회 금요일로 전환(매일→주간) · 씬2 "다음주 전망" 개편 · AI 가격 예측(dailyForecasts) 활용 · Phase 1 종료 |
