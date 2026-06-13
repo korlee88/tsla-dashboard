@@ -1,0 +1,30 @@
+SCENE_0_TITLE: 이번주
+SCENE_0:
+테슬라가 *+4.21%* 올라 *$406.43*예요
+로보택시·등급 상향이 *상승* 이끌었죠
+모델S·X 중단, *옵티머스 집중* 발표요
+1분기 EPS 성장률 *1%*는 아쉬워요
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+카테고리: *옵티머스 로봇* 대량생산 전환
+   ↳ 배경: *2026년*부터 모델S·X 생산 중단
+   ↳ 데이터: 휴머노이드 *2027년 말* 판매 가능
+   ↳ 임팩트: 발표 후 주가 *+4.21%* 반응
+   ↳ 비교: 6/11 저점 *$381*서 빠른 회복
+   ↳ 장기 성장 동력 전환이 눈에 띄네요
+
+SCENE_2_TITLE: 다음주전망
+SCENE_2:
+특별한 *예정 이벤트*는 없어요
+로봇·로보택시 *뉴스 흐름*이 관전 포인트죠
+다음주 *+0.5%*, *$408* 부근 예상돼요
+*3일 상승·2일 하락* 흐름이 점쳐져요
+*수익성 우려*가 변수로 남아있어요
+오늘도 함께해 주셔서 감사해요
+
+IMAGE_PROMPT_0: A cinematic 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte Tower glowing under a deep purple violet sky, a sleek Tesla autonomous electric vehicle gliding across a futuristic illuminated bridge, K-tech analytics holographic light particles floating in the air, reflective river surface with city light bokeh, moody analytical atmosphere, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: A vibrant 16:9 landscape image of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing bullish growth and upward momentum, a modern Tesla electric vehicle charging at a sleek green energy station while another Tesla speeds along the riverside expressway, lush Han River greenery, Korean eco-friendly K-tech infrastructure, optimistic vibrant energy, glowing emerald highlights, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: A breathtaking 9:16 vertical futuristic Korean cityscape showing Seoul's Han River night view, illuminated skyline, and Gwanghwamun Square in the background, an autonomous Tesla vehicle parked beside a sleek Optimus humanoid robot standing tall, advanced K-tech urban scenery with magenta and gold inspirational future mood, golden sunlight rays, starlight sparkles and glowing particles floating, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo

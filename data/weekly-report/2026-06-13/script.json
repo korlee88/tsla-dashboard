@@ -1,0 +1,226 @@
+{
+  "generated_at": "2026-06-13",
+  "generated_by": "Claude Opus 4",
+  "title": "테슬라가 *+4.21%* 올라 *$406.43*예요",
+  "subtitle": "2026-06-06 ~ 2026-06-13 · 일론 머스크, 테슬라 모델 S 및 모델 X 생산 중단하",
+  "summary": {
+    "week_start": "2026-06-06",
+    "week_end": "2026-06-13",
+    "session_count": 26,
+    "buy_indices": [
+      45,
+      53,
+      49,
+      38,
+      39,
+      51,
+      48,
+      41,
+      57,
+      75,
+      74,
+      70,
+      52,
+      53,
+      55,
+      48,
+      53,
+      59,
+      47,
+      48,
+      49,
+      47,
+      34,
+      46,
+      50,
+      46
+    ],
+    "avg_buy_index": 51,
+    "latest_buy_index": 45,
+    "price_start": 390.02,
+    "price_end": 406.43,
+    "latest_price": 406.43,
+    "today_price": 406.43,
+    "today_change_pct": 1.82,
+    "week_change_pct": 4.21,
+    "biggest_impact": {
+      "title": "일론 머스크, 테슬라 모델 S 및 모델 X 생산 중단하고 로봇에 집중 발표",
+      "score": 4,
+      "reason": "테슬라가 모델 S 및 모델 X 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중한다는 일론 머스크의 발표는 로봇 사업의 중요한 전환점을 의미하며, 이는 장기적인 성장 잠재력에 긍정적입니다.",
+      "source": "Fox Business",
+      "date": "2026-06-09",
+      "category": "Product",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "일론 머스크, 테슬라 모델 S 및 모델 X 생산 중단하고 로봇에 집중 발표",
+        "score": 4,
+        "reason": "테슬라가 모델 S 및 모델 X 생산을 중단하고 2026년부터 옵티머스 로봇 대량 생산에 집중한다는 일론 머스크의 발표는 로봇 사업의 중요한 전환점을 의미하며, 이는 장기적인 성장 잠재력에 긍정적입니다.",
+        "source": "Fox Business",
+        "date": "2026-06-09",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 로봇에 집중할 예정",
+        "score": 3,
+        "reason": "테슬라가 모델 S 및 모델 X 생산을 중단하고 옵티머스 로봇의 대량 생산에 집중하기로 한 결정은 장기적인 성장 동력 전환을 시사하며, 로봇 사업의 잠재력을 강조합니다.",
+        "source": "Fox Business",
+        "date": "2026-06-11",
+        "category": "Product"
+      },
+      {
+        "title": "일론 머스크, 테슬라 휴머노이드 로봇 내년 말까지 판매 가능성 언급",
+        "score": 3,
+        "reason": "일론 머스크가 테슬라의 옵티머스 휴머노이드 로봇이 2027년 말까지 판매될 수 있다고 언급하여 로봇 사업의 상업화 가능성에 대한 긍정적인 전망을 제시했습니다.",
+        "source": "Fox Business",
+        "date": "2026-06-11",
+        "category": "Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 2026년 1분기 매출 160억 달러 기록했으나 EPS 성장률 1%에 그쳐",
+        "score": -3,
+        "reason": "테슬라가 2026년 1분기에 매출은 성장했으나 주당 순이익(EPS) 성장률이 1%에 그쳐 수익성 악화 우려를 불러일으키며, 이는 에너지 저장 부문의 경쟁 심화와 관련이 있습니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-06-01",
+        "category": "Earnings"
+      },
+      {
+        "title": "테슬라, 2026년 1분기 실적 부진 및 에너지 저장 부문 경쟁 심화",
+        "score": -3,
+        "reason": "테슬라의 2026년 1분기 EPS 성장이 1%에 그쳐 수익성 레버리지가 제한적임을 보여주었으며, 에너지 저장 부문에서 경쟁 심화로 성장 동력이 약화되고 있습니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-06-01",
+        "category": "Earnings|Competition"
+      },
+      {
+        "title": "테슬라, 로보택시 공개에도 불구하고 투자자들 실망",
+        "score": -2,
+        "reason": "테슬라의 로보택시 공개 행사가 출시 시기와 수익성에 대한 불확실성으로 인해 투자자들을 실망시켰습니다.",
+        "source": "Fox Business",
+        "date": "2024-10-24",
+        "category": "Product"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "6/15(월)",
+        "change_pct": 0.7,
+        "signal": "관망",
+        "basePrice": 406.43,
+        "predictedPrice": 409.28
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/16(화)",
+        "change_pct": -0.3,
+        "signal": "관망",
+        "basePrice": 406.43,
+        "predictedPrice": 405.21
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/17(수)",
+        "change_pct": 1.1,
+        "signal": "매수",
+        "basePrice": 406.43,
+        "predictedPrice": 410.9
+      },
+      {
+        "day": 4,
+        "label": "D+4",
+        "date": "6/18(목)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 406.43,
+        "predictedPrice": 402.77
+      },
+      {
+        "day": 5,
+        "label": "D+5",
+        "date": "6/19(금)",
+        "change_pct": 0.5,
+        "signal": "관망",
+        "basePrice": 406.43,
+        "predictedPrice": 408.46
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-06-13",
+        406.43
+      ],
+      [
+        "2026-06-12",
+        399.15
+      ],
+      [
+        "2026-06-11",
+        381.59
+      ],
+      [
+        "2026-06-10",
+        396.68
+      ],
+      [
+        "2026-06-09",
+        402.48
+      ]
+    ],
+    "overall_signal": "중립",
+    "trends": null,
+    "next_events": [],
+    "movement_reason": "2026년 6월 6일부터 6월 13일까지 테슬라(TSLA) 주가 상승의 주요 원인은 다음과 같습니다:\n\n스페이스X 관련 기대감 / 애널리스트 등급 상향 / 자율주행/로보택시 진전"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "이번주",
+      "lines": [
+        "테슬라가 *+4.21%* 올라 *$406.43*예요",
+        "로보택시·등급 상향이 *상승* 이끌었죠",
+        "모델S·X 중단, *옵티머스 집중* 발표요",
+        "1분기 EPS 성장률 *1%*는 아쉬워요"
+      ],
+      "body": "테슬라가 *+4.21%* 올라 *$406.43*예요\n로보택시·등급 상향이 *상승* 이끌었죠\n모델S·X 중단, *옵티머스 집중* 발표요\n1분기 EPS 성장률 *1%*는 아쉬워요"
+    },
+    {
+      "index": 1,
+      "title": "호재분석",
+      "lines": [
+        "카테고리: *옵티머스 로봇* 대량생산 전환",
+        "↳ 배경: *2026년*부터 모델S·X 생산 중단",
+        "↳ 데이터: 휴머노이드 *2027년 말* 판매 가능",
+        "↳ 임팩트: 발표 후 주가 *+4.21%* 반응",
+        "↳ 비교: 6/11 저점 *$381*서 빠른 회복",
+        "↳ 장기 성장 동력 전환이 눈에 띄네요"
+      ],
+      "body": "카테고리: *옵티머스 로봇* 대량생산 전환\n   ↳ 배경: *2026년*부터 모델S·X 생산 중단\n   ↳ 데이터: 휴머노이드 *2027년 말* 판매 가능\n   ↳ 임팩트: 발표 후 주가 *+4.21%* 반응\n   ↳ 비교: 6/11 저점 *$381*서 빠른 회복\n   ↳ 장기 성장 동력 전환이 눈에 띄네요"
+    },
+    {
+      "index": 2,
+      "title": "다음주전망",
+      "lines": [
+        "특별한 *예정 이벤트*는 없어요",
+        "로봇·로보택시 *뉴스 흐름*이 관전 포인트죠",
+        "다음주 *+0.5%*, *$408* 부근 예상돼요",
+        "*3일 상승·2일 하락* 흐름이 점쳐져요",
+        "*수익성 우려*가 변수로 남아있어요",
+        "오늘도 함께해 주셔서 감사해요"
+      ],
+      "body": "특별한 *예정 이벤트*는 없어요\n로봇·로보택시 *뉴스 흐름*이 관전 포인트죠\n다음주 *+0.5%*, *$408* 부근 예상돼요\n*3일 상승·2일 하락* 흐름이 점쳐져요\n*수익성 우려*가 변수로 남아있어요\n오늘도 함께해 주셔서 감사해요"
+    }
+  ],
+  "image_prompts": {
+    "0": "A cinematic 16:9 landscape view of Seoul's Han River night skyline featuring Namsan Tower, 63 Building, and Lotte Tower glowing under a deep purple violet sky, a sleek Tesla autonomous electric vehicle gliding across a futuristic illuminated bridge, K-tech analytics holographic light particles floating in the air, reflective river surface with city light bokeh, moody analytical atmosphere, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "A vibrant 16:9 landscape image of Seoul's Banpo Bridge bathed in fresh green sunlight, symbolizing bullish growth and upward momentum, a modern Tesla electric vehicle charging at a sleek green energy station while another Tesla speeds along the riverside expressway, lush Han River greenery, Korean eco-friendly K-tech infrastructure, optimistic vibrant energy, glowing emerald highlights, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "A breathtaking 9:16 vertical futuristic Korean cityscape showing Seoul's Han River night view, illuminated skyline, and Gwanghwamun Square in the background, an autonomous Tesla vehicle parked beside a sleek Optimus humanoid robot standing tall, advanced K-tech urban scenery with magenta and gold inspirational future mood, golden sunlight rays, starlight sparkles and glowing particles floating, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}
