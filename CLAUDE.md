@@ -74,11 +74,13 @@ tsla-dashboard/
 │   ├── weekly_video_make.py   # STEP 2: TTS + 애니메이션 영상
 │   ├── gws_publish.py         # STEP 5: YouTube/Sheets/Gmail 게시
 │   ├── setup_gws_auth.py      # OAuth2 토큰 생성 헬퍼 (로컬 1회)
+│   ├── make_bgm.py            # 원본 BGM(data/bgm.mp3) 합성기 (재생성용)
 │   └── youtube_sentiment.py   # YouTube 검색·관심도 수집
 ├── data/
 │   ├── auto-sessions.json     # 최근 7일 세션 데이터 (원본)
 │   ├── backtest-results-2025.json  # 2025 백테스트 (완료)
 │   ├── backtest-results-2026.json  # 2026 백테스트 (매일 증분 업데이트)
+│   ├── bgm.mp3                # 영상 배경음악 (원본 합성·커밋, 빌드 네트워크 0)
 │   ├── scene-backgrounds/     # 씬 2~4 고정 배경 이미지 (jpg)
 │   └── weekly-report/
 │       └── YYYY-MM-DD/
@@ -220,10 +222,23 @@ PITCH         = "+6Hz"                # 살짝 올려 밝고 친근한 톤
 LINE_PAUSE_MS = 600                   # 줄 사이 휴지 (ms)
 TRIM_DB       = -42.0                 # 세그먼트 가장자리 무음 판정 임계 (dBFS)
 TRIM_KEEP_MS  = 60                    # 트리밍 후 가장자리에 남길 무음 (ms)
+SCENE_LEAD_MS = 500                   # 씬 시작~첫 나레이션 사이 여유 무음 (씬 전환 딜레이)
+SCENE_TAIL_MS = 300                   # 씬 끝 여유 무음 (ms)
 ```
 > 나레이션은 옆에서 다정하게 이야기해 주는 친근한 구어체 톤. `build_scene_tts_segments()`의 브리지 문장도 구어체("같이 볼까요?", "자세히 들여다볼게요").
 > 줄 단위로 edge-tts MP3를 따로 만들고 `pydub`으로 줄 사이 무음을 끼워 합쳐서 자연스러운 호흡을 만든다 — 너무 빨리 다음 줄로 넘어가지 않도록.
-> **줄 간격 보정**: edge-tts가 각 세그먼트 꼬리에 ~0.5초+ 자체 무음을 붙여서, 1000ms 삽입 무음과 겹치면 체감 간격이 1.5초+로 늘어난다. `_trim_edge_silence()`가 `pydub.silence.detect_leading_silence`로 앞·뒤(`piece.reverse()`) 무음을 측정해 `TRIM_KEEP_MS`만 남기고 잘라낸다(전체 무음 판정 시 원본 유지하는 과도 트리밍 가드 포함). 트리밍 + `LINE_PAUSE_MS=600`으로 체감 간격을 ~720ms로 일정하게 맞춘다. 합성 결과 앞 200ms·뒤 300ms 무음을 더해 씬 페이드와의 간섭을 막는다.
+> **줄 간격 보정**: edge-tts가 각 세그먼트 꼬리에 ~0.5초+ 자체 무음을 붙여서, 1000ms 삽입 무음과 겹치면 체감 간격이 1.5초+로 늘어난다. `_trim_edge_silence()`가 `pydub.silence.detect_leading_silence`로 앞·뒤(`piece.reverse()`) 무음을 측정해 `TRIM_KEEP_MS`만 남기고 잘라낸다(전체 무음 판정 시 원본 유지하는 과도 트리밍 가드 포함). 트리밍 + `LINE_PAUSE_MS=600`으로 체감 간격을 ~720ms로 일정하게 맞춘다.
+> **씬 전환 딜레이**: `gen_audio()`가 합성한 씬 오디오 앞에 `SCENE_LEAD_MS`(0.5초), 뒤에 `SCENE_TAIL_MS`(0.3초) 무음을 더한다 — 씬 전환(크로스페이드) 직후 나레이션이 곧바로 시작되지 않고 한 박자 쉬어 간다. **단일 세그먼트 씬도 동일 적용**(이전엔 단일 줄 씬이 lead 무음 없이 바로 시작됐다).
+
+**BGM** (배경음악):
+```python
+BGM_VOLUME = 0.10                      # 나레이션 아래 배경음 (10%)
+BGM_CACHE  = data/bgm.mp3              # 저장소에 커밋된 음원
+```
+> 배경음악은 **저장소에 커밋된 `data/bgm.mp3`** 만 사용한다 → 빌드 시 네트워크 의존 0. `download_bgm()`은 이 파일을 반환만 하며 외부 다운로드(yt-dlp 등)는 하지 않는다.
+> 음원은 `scripts/make_bgm.py`가 합성한 **원본 앰비언트 패드**(C–Am–F–G maj7 + 아르페지오 + 약한 잔향, 이음매 없는 ~63초 루프)라 저작권·출처 표기 의무가 없다. 외부 CC0 사이트는 빌드 환경에서 불안정(FreePD=JS 렌더링, archive.org=CC0 검색 비고, yt-dlp+YouTube=러너 IP 봇 차단)해서 직접 합성·커밋으로 확정했다.
+> 재생성: `pip install numpy lameenc && python scripts/make_bgm.py` (결정론적 합성 — 출력 동일). 교체하려면 `data/bgm.mp3`만 원하는 트랙으로 바꿔 커밋.
+> 믹싱은 루프 횟수만큼 **새 `AudioFileClip` 인스턴스를 만들어** `concatenate_audioclips`로 이어 붙인다(같은 인스턴스 재사용 시 리더 start가 공유돼 루프가 깨짐). `write_videofile` **전에 BGM 클립을 close하지 않는다**(리더 끊김 방지) — 프로세스 종료 시 정리.
 
 **애니메이션 시스템** (moviepy 2.x `VideoClip`):
 - `fx_ken_burns()` — 배경 이미지 줌인/줌아웃 + 패닝 (씬별 다른 방향, 7% 줌)
@@ -329,7 +344,7 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 영상은 GitHub Actions artifact로 30일 보관 후 자동 삭제.
 
 ### ffmpeg/ffprobe 누락 (2026-06-12)
-`weekly_video_make.py`의 `gen_audio()`가 `pydub.AudioSegment.from_mp3()`로 TTS MP3를 합치는데,
+`weekly_video_make.py`의 `gen_audio()`가 `pydub.AudioSegment.from_file()`로 TTS MP3를 합치는데,
 `ubuntu-latest` 러너 이미지에 `ffmpeg`(`ffprobe` 포함)가 더 이상 기본 설치되어 있지 않아
 `FileNotFoundError: ffprobe`로 STEP 2가 실패할 수 있음 (STEP 1은 정상 완료, STEP 3~5는 skip됨).
 → 워크플로우의 "한글 폰트 설치" 단계에서 `ffmpeg`도 함께 `apt-get install`하여 해결.
@@ -354,7 +369,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.6.3** | 2026-06-12 KST | TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍(`_trim_edge_silence`) + `LINE_PAUSE_MS` 1000→600ms (체감 간격 ~720ms 균일화) |
+| **v2.6.4** | 2026-06-14 KST | 영상 BGM 복구·풍성화(원본 합성 `data/bgm.mp3` 커밋·`make_bgm.py`, yt-dlp 외부 다운로드 제거) · BGM 루프 믹싱 버그 수정(루프마다 새 클립·write 전 close 금지) · 씬 전환 0.5초 딜레이(`SCENE_LEAD_MS`/`SCENE_TAIL_MS`, 단일 세그먼트 씬 포함) |
+| v2.6.3 | 2026-06-12 KST | TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍(`_trim_edge_silence`) + `LINE_PAUSE_MS` 1000→600ms (체감 간격 ~720ms 균일화) |
 | v2.6.2 | 2026-06-12 KST | 자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신 |
 | v2.6.1 | 2026-06-11 KST | 보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거 |
 | v2.6.0 | 2026-06-02 KST | scoring.js v5.0 — 중립밴드 · 증폭재조정(×1.35→×1.15) · 편향보정(beta 2.5→2.0) · **추세필터[18]** (3주 가격추세, 뉴스독립) · backtest 2025: 57%→65%, 2026: 40%→50% (회귀 0건) |
