@@ -22,6 +22,8 @@ PITCH         = "+6Hz"                  # 살짝 올려 밝고 친근한 톤
 LINE_PAUSE_MS = 600                     # 대본 줄(세그먼트) 사이 무음 휴지 (ms)
 TRIM_DB       = -42.0                   # 세그먼트 가장자리 무음 판정 임계 (dBFS)
 TRIM_KEEP_MS  = 60                      # 트리밍 후 가장자리에 남길 무음 (ms)
+SCENE_LEAD_MS = 500                     # 씬 시작~첫 나레이션 사이 여유 무음 (씬 전환 딜레이)
+SCENE_TAIL_MS = 300                     # 씬 끝 여유 무음 (ms)
 FPS           = 24
 W, H          = 1080, 1920
 PHOTO_Y       = 500                     # 헤더 아래 사진 시작 Y (prep.py의 HEADER_H와 동일)
@@ -35,12 +37,13 @@ ACCENT_COLORS = [
 ]
 SCENE_MOODS = ["focused", "happy", "celebrating"]   # 차분 분석 톤에 맞춘 마스코트
 
-# ── BGM 설정 (YouTube Audio Library · CC0) ────────────────────────────────────
-# Kevin MacLeod "Bright Wish" — 무료·저작권 무료 (Attribution 3.0)
-# YouTube Audio Library에서 제공되는 배경 음악
-BGM_TRACK_ID = "jS5fsa_H2Lo"
-BGM_VOLUME   = 0.10           # 나레이션 아래 배경음 (10%)
-BGM_CACHE    = ROOT_DIR / "data" / "bgm.mp3"
+# ── BGM 설정 (원본 합성 · CC0/로열티프리) ────────────────────────────────────
+# 배경음악은 저장소에 커밋된 data/bgm.mp3 를 사용한다 → 빌드 시 네트워크 의존 0.
+# 이 파일은 scripts/make_bgm.py 가 생성한 '원본' 앰비언트 패드라 저작권·출처 표기 의무가 없다.
+# (외부 CC0 사이트는 빌드 환경에서 불안정: FreePD는 JS 렌더링이라 스크래핑 불가,
+#  archive.org는 CC0 검색이 비고, yt-dlp+YouTube는 러너 IP 봇 차단 → 직접 합성·커밋으로 확정.)
+BGM_VOLUME = 0.10                            # 나레이션 아래 배경음 (10%)
+BGM_CACHE  = ROOT_DIR / "data" / "bgm.mp3"
 
 # ── 유틸 ──────────────────────────────────────────────────────────────────────
 
@@ -56,29 +59,15 @@ def find_latest_report():
 
 
 def download_bgm() -> "Path | None":
-    """YouTube Audio Library BGM 다운로드 (캐시 사용). 실패 시 None 반환."""
+    """저장소에 커밋된 BGM(data/bgm.mp3)을 반환. 없으면 None → 음악 없이 진행.
+
+    음원은 scripts/make_bgm.py 로 미리 생성·커밋한다(원본·로열티프리). 빌드 중 네트워크 0.
+    교체하려면 data/bgm.mp3 를 원하는 트랙으로 바꿔 커밋하면 된다.
+    """
     if BGM_CACHE.exists():
-        print("   🎵 BGM 캐시 사용")
+        print(f"   🎵 BGM 사용: {BGM_CACHE.name}")
         return BGM_CACHE
-    BGM_CACHE.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        import subprocess
-        print(f"   🎵 BGM 다운로드 중 (YouTube Audio Library: {BGM_TRACK_ID})...")
-        result = subprocess.run(
-            [
-                "yt-dlp", "-x", "--audio-format", "mp3", "--audio-quality", "5",
-                "--no-playlist", "-o", str(BGM_CACHE),
-                f"https://www.youtube.com/watch?v={BGM_TRACK_ID}",
-            ],
-            capture_output=True, text=True, timeout=120,
-        )
-        if result.returncode == 0 and BGM_CACHE.exists():
-            print(f"   ✅ BGM 다운로드 완료")
-            return BGM_CACHE
-        print(f"   ⚠ BGM 다운로드 실패 (yt-dlp exit {result.returncode}) — 음악 없이 진행",
-              file=sys.stderr)
-    except Exception as e:
-        print(f"   ⚠ BGM 예외: {e} — 음악 없이 진행", file=sys.stderr)
+    print("   ⚠ data/bgm.mp3 없음 — 음악 없이 진행", file=sys.stderr)
     return None
 
 
@@ -186,7 +175,14 @@ def _trim_edge_silence(piece):
     return piece
 
 async def gen_audio(segments, path):
-    """세그먼트 리스트(또는 문자열)를 TTS로 합성. 줄 사이 LINE_PAUSE_MS 무음 삽입."""
+    """세그먼트(줄)별로 TTS한 뒤 LINE_PAUSE_MS 무음을 끼워 하나의 mp3로 합성.
+
+    세그먼트 가장자리 무음을 트리밍하므로 줄 사이 간격은
+    TRIM_KEEP_MS + LINE_PAUSE_MS + TRIM_KEEP_MS 로 일정하게 유지된다.
+    씬 맨 앞에는 SCENE_LEAD_MS 무음을 둬, 씬 전환(크로스페이드) 직후
+    나레이션이 곧바로 시작되지 않고 ~0.5초 쉬어 가게 한다(단일 세그먼트 씬 포함).
+    pydub/ffmpeg 미가용 등 실패 시 공백으로 이어붙인 단일 TTS로 폴백.
+    """
     import edge_tts
 
     if isinstance(segments, str):
@@ -195,30 +191,28 @@ async def gen_audio(segments, path):
     if not segments:
         return
 
-    if len(segments) == 1:
-        comm = edge_tts.Communicate(segments[0], VOICE, rate=RATE, pitch=PITCH)
-        await comm.save(str(path))
-        return
-
-    from pydub import AudioSegment
-
-    temp_files = []
-    for i, text in enumerate(segments):
-        tmp = path.parent / f".{path.stem}_seg{i:02d}.mp3"
+    async def _tts(text, out):
         comm = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
-        await comm.save(str(tmp))
-        temp_files.append(tmp)
+        await comm.save(str(out))
 
-    silence  = AudioSegment.silent(duration=LINE_PAUSE_MS)
-    combined = _trim_edge_silence(AudioSegment.from_mp3(temp_files[0]))
-    for tf in temp_files[1:]:
-        combined += silence + _trim_edge_silence(AudioSegment.from_mp3(tf))
-    # 씬 페이드와 간섭하지 않도록 앞 200ms·뒤 300ms 무음 패딩
-    combined = AudioSegment.silent(duration=200) + combined + AudioSegment.silent(duration=300)
-    combined.export(str(path), format="mp3")
-
-    for tf in temp_files:
-        tf.unlink(missing_ok=True)
+    try:
+        from pydub import AudioSegment
+        line_gap = AudioSegment.silent(duration=LINE_PAUSE_MS)
+        combined = None
+        for i, seg in enumerate(segments):
+            tmp = path.parent / f".{path.stem}_seg{i:02d}.mp3"
+            await _tts(seg, tmp)
+            piece = _trim_edge_silence(AudioSegment.from_file(tmp))
+            combined = piece if combined is None else (combined + line_gap + piece)
+            try: tmp.unlink()
+            except Exception: pass
+        # 씬 시작 SCENE_LEAD_MS·끝 SCENE_TAIL_MS 여유 무음 — 씬 전환 직후 나레이션이 바로 붙지 않게
+        combined = (AudioSegment.silent(duration=SCENE_LEAD_MS)
+                    + combined + AudioSegment.silent(duration=SCENE_TAIL_MS))
+        combined.export(str(path), format="mp3")
+    except Exception as e:
+        print(f"   ⚠ 세그먼트 합성 실패({e}) → 단일 TTS 폴백", file=sys.stderr)
+        await _tts(" ".join(segments), path)
 
 # ── 로봇 마스코트 ─────────────────────────────────────────────────────────────
 
@@ -524,14 +518,19 @@ async def build_video_async(report_dir):
         try:
             from moviepy import AudioFileClip as _AFC, CompositeAudioClip, concatenate_audioclips
             from moviepy.audio.fx import MultiplyVolume
-            bgm = _AFC(str(bgm_path)).with_effects([MultiplyVolume(BGM_VOLUME)])
-            # 영상 길이만큼 루프
-            n_loops = math.ceil(final.duration / max(bgm.duration, 0.1))
-            bgm_looped = concatenate_audioclips([bgm] * n_loops).with_duration(final.duration)
+            # 길이 측정용 1회 로드 후 닫기
+            _probe = _AFC(str(bgm_path))
+            bgm_dur = max(_probe.duration, 0.1)
+            _probe.close()
+            n_loops = max(1, math.ceil(final.duration / bgm_dur))
+            # 같은 인스턴스를 재사용하면 리더 start가 공유돼 루프가 깨지므로 루프마다 새 클립 생성
+            bgm_clips = [_AFC(str(bgm_path)).with_effects([MultiplyVolume(BGM_VOLUME)])
+                         for _ in range(n_loops)]
+            bgm_looped = (concatenate_audioclips(bgm_clips) if n_loops > 1
+                          else bgm_clips[0]).with_duration(final.duration)
             if final.audio:
-                mixed = CompositeAudioClip([final.audio, bgm_looped])
-                final = final.with_audio(mixed)
-            bgm.close()
+                final = final.with_audio(CompositeAudioClip([final.audio, bgm_looped]))
+            # write 이후 프로세스 종료 시 정리 — write 전 close 금지(리더 끊김 방지)
             print(f"   🎵 BGM 믹싱 완료 (볼륨 {int(BGM_VOLUME*100)}%)")
         except Exception as e:
             print(f"   ⚠ BGM 믹싱 실패: {e} — 음악 없이 진행", file=sys.stderr)
