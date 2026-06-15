@@ -1,43 +1,43 @@
 {
-  "score": -2,
-  "velocity": 0.31,
-  "velocity_label": "급감 (×0.3)",
-  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 425,799회 / 이전 4~7일 1,395,950회 | 총 1,821,749회 (43개 영상)",
-  "video_count": 43,
-  "total_views": 1821749,
-  "hot_views": 425799,
-  "baseline_views": 1395950,
+  "score": -1,
+  "velocity": 0.42,
+  "velocity_label": "소폭 감소 (×0.4)",
+  "reason": "조회수 속도 소폭 감소 (×0.4) | 최근 3일 579,816회 / 이전 4~7일 1,367,743회 | 총 1,947,559회 (44개 영상)",
+  "video_count": 44,
+  "total_views": 1947559,
+  "hot_views": 579816,
+  "baseline_views": 1367743,
   "top_videos": [
-    {
-      "title": "Optimus Prime Noir #transformers #optimusprime",
-      "channel": "Rhashad Carter",
-      "publishedAt": "2026-06-10T14:11:49Z",
-      "viewCount": 415310
-    },
     {
       "title": "테슬라 &#39;옵티머스&#39; 양산 임박 속 숨겨진 병목현상, 기회는 어디에?",
       "channel": "PLUS TV (플러스 TV)",
       "publishedAt": "2026-06-09T08:00:07Z",
-      "viewCount": 412125
+      "viewCount": 450154
+    },
+    {
+      "title": "Optimus Prime Noir #transformers #optimusprime",
+      "channel": "Rhashad Carter",
+      "publishedAt": "2026-06-10T14:11:49Z",
+      "viewCount": 445929
     },
     {
       "title": "Elon Musk vs Ambani: The Shocking One-Day Earnings Comparison! 😱💰",
       "channel": "FACTS KA NOTIS",
       "publishedAt": "2026-06-13T00:30:38Z",
-      "viewCount": 172637
+      "viewCount": 289644
     },
     {
       "title": "The Company That Beat Tesla on EVs Is Now Building Humanoid Robots",
       "channel": "Jason Lowe on AI",
       "publishedAt": "2026-06-08T16:56:02Z",
-      "viewCount": 87982
+      "viewCount": 96598
     },
     {
-      "title": "The SpaceX IPO Opportunity Explained",
+      "title": "Will SPCX and TSLA stocks breakout?",
       "channel": "Brighter with Herbert",
-      "publishedAt": "2026-06-09T19:13:00Z",
-      "viewCount": 79281
+      "publishedAt": "2026-06-11T22:37:11Z",
+      "viewCount": 65702
     }
   ],
-  "collected_at": "2026-06-14T00:02:42Z"
+  "collected_at": "2026-06-15T00:05:17Z"
 }
