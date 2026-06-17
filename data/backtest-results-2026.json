@@ -2381,13 +2381,136 @@
       "match": false,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-06-08",
+      "weekEnd": "2026-06-14",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "SpaceX IPO로 일론 머스크, 세계 최초의 억만장자 등극",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "SpaceX 사장, 테슬라와의 합병 가능성 시사",
+          "source": "CNBC",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 주가, SpaceX IPO 앞두고 상승",
+          "source": "Barron's",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크의 순자산, 테슬라 주가 하락에도 500억 달러 감소",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "G7 반대 시위대, 제네바에서 테슬라 차량 방화",
+          "source": "Reuters",
+          "category": "Regulatory"
+        },
+        {
+          "title": "테슬라, 모델 S 및 모델 X 생산 중단 및 휴머노이드 로봇으로 전환",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라 차량의 오토파일럿 기능 옹호",
+          "source": "Associated Press",
+          "category": "Product"
+        },
+        {
+          "title": "SpaceX IPO, 캘리포니아에 막대한 세금 수입 안겨줄 것",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 일론 머스크 회사들과 5억 7,300만 달러 규모의 거래 공개",
+          "source": "Electrek",
+          "category": "Market"
+        },
+        {
+          "title": "예측 시장, 테슬라와 SpaceX 합병 가능성 증가에 베팅",
+          "source": "Seeking Alpha",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.7,
+        "buyIndex": 54,
+        "direction": "bullish",
+        "bullish": 7,
+        "bearish": 2,
+        "neutral": 1,
+        "topRules": [
+          "R24",
+          "R25",
+          "R26"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 57,
+          "optimusBoost": 8,
+          "r24Discount": -4,
+          "meanReversion": 5,
+          "macdTrend": 1,
+          "wtiDown": -3,
+          "competitorOutperform": 2,
+          "trendFilter": -12
+        },
+        "macroCtx": {
+          "spyChg": -0.22,
+          "qqqChg": 0.49,
+          "vixClose": 17.68000030517578,
+          "wtiChg": -8.73,
+          "cnyChg": 0.15,
+          "competitorChg": -2.48,
+          "competitorRelStrength": 5.03,
+          "prevAssetChg": -8.54,
+          "assetTrend3w": -6.74,
+          "rsi": 47.7,
+          "macd": {
+            "macd": 1.7669567330109999,
+            "signal": 0.11364026712551409,
+            "hist": 1.6533164658854858,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 448.36,
+            "middle": 398.91,
+            "lower": 349.45,
+            "pos": 0.576
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false,
+          "bydChg": -2.48,
+          "bydRelStrength": 5.03,
+          "prevTslaChg": -8.54,
+          "tslaTrend3w": -6.74
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": 2.55,
+        "actual": "bullish",
+        "open": 396.33,
+        "close": 406.43
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-06-08 04:41 KST",
+  "generatedAt": "2026-06-15 04:46 KST",
   "stats": {
-    "totalWeeks": 22,
-    "analyzedWeeks": 22,
-    "accuracy": 45,
+    "totalWeeks": 23,
+    "analyzedWeeks": 23,
+    "accuracy": 48,
     "strongAccuracy": 33,
     "avgScore": 0.9
   },
