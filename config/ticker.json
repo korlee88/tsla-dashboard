@@ -3,6 +3,7 @@
   "company_en": "Tesla",
   "company_ko": "테슬라",
   "industry_ko": "전기차·미래기술",
+  "image_future_tech_en": "FSD robotaxi autonomous driving, Optimus humanoid robot, 4680 battery cells, megapack energy storage, Dojo supercomputer",
   "brand_label": "TSLA WEEKLY",
   "repo": "korlee88/tsla-dashboard",
   "data_source": "yahoo",

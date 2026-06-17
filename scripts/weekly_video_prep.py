@@ -17,6 +17,7 @@ TICKER_CONFIG     = json.loads((ROOT_DIR / "config" / "ticker.json").read_text(e
 TICKER            = TICKER_CONFIG["ticker"]
 COMPANY_KO        = TICKER_CONFIG["company_ko"]
 INDUSTRY_KO       = TICKER_CONFIG.get("industry_ko", "")
+FUTURE_TECH_EN    = TICKER_CONFIG.get("image_future_tech_en", "")
 BRAND_LABEL       = TICKER_CONFIG["brand_label"]
 REPO              = TICKER_CONFIG["repo"]
 
@@ -432,11 +433,12 @@ SCENE_2:
 === 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 3개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "ultra-high resolution".
 {company_ko}·{industry_ko} 관련 시각 요소 포함. 씬별 색감 지정.
+★ 각 이미지에 {company_ko}의 미래 기술·사업계획을 시각적으로 반영하라(핵심 제품/로드맵): {future_tech}.
 ※ 씬 0·1은 16:9 landscape (horizontal strip), 씬 2는 9:16 vertical (full screen) — 프롬프트에 비율 명시.
 
-IMAGE_PROMPT_0: [씬0 — 16:9 landscape · 서울 한강 야경 배경 테슬라 자율주행 전기차, 남산타워·63빌딩·롯데타워 도심 스카이라인, K-tech 첨단 도시 보라빛 미래적 분석 분위기, Korean futuristic city Seoul skyline Tesla purple violet tech analytics, glowing city lights bokeh, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
-IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 한강 반포 다리 초록빛 성장 상승 이미지, 서울 테슬라 전기차 충전·고속 주행, K-tech 친환경 인프라 밝고 활기찬 분위기, Korean city Seoul Tesla green growth bullish energy vibrant, sunlit modern bridge electric vehicle charging, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
-IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 한국 미래 도시: 한강 야경·서울 스카이라인·광화문 광장 배경의 자율주행 테슬라 차량·옵티머스 로봇, 첨단 K-tech 도시 풍경, 마젠타·골드빛 영감적 미래 무드, 황금빛 태양·별빛·반짝임, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
+IMAGE_PROMPT_0: [씬0 — 16:9 landscape · 서울 한강 야경 배경 테슬라 자율주행 전기차, {future_tech}, 남산타워·63빌딩·롯데타워 도심 스카이라인, K-tech 첨단 도시 보라빛 미래적 분석 분위기, Korean futuristic city Seoul skyline Tesla purple violet tech analytics, glowing city lights bokeh, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 한강 반포 다리 초록빛 성장 상승 이미지, 서울 테슬라 전기차 충전·고속 주행, {future_tech}, K-tech 친환경 인프라 밝고 활기찬 분위기, Korean city Seoul Tesla green growth bullish energy vibrant, sunlit modern bridge electric vehicle charging, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 한국 미래 도시: 한강 야경·서울 스카이라인·광화문 광장 배경의 자율주행 테슬라 차량·옵티머스 로봇 + 미래 비전({future_tech}), 첨단 K-tech 도시 풍경, 마젠타·골드빛 영감적 미래 무드, 황금빛 태양·별빛·반짝임, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
 
 
 def _build_prompt(summary):
@@ -488,6 +490,7 @@ def _build_prompt(summary):
         ticker=TICKER,
         company_ko=COMPANY_KO,
         industry_ko=INDUSTRY_KO,
+        future_tech=FUTURE_TECH_EN,
         week_start=summary["week_start"],
         week_end=summary["week_end"],
         price=summary["latest_price"],
@@ -1203,19 +1206,21 @@ def parse_news_line(line):
     return "뉴스", main.strip(), source
 
 
-def draw_up_arrow(draw, cx, y_top, y_bot, color, width=10):
-    """세로 ↑ 화살표 (삼각형 머리 + 직선 몸체)."""
-    body_top = y_top + 36
-    draw.rectangle([cx - width // 2, body_top, cx + width // 2, y_bot], fill=color)
-    head_pts = [(cx, y_top), (cx - 18, body_top), (cx + 18, body_top)]
-    draw.polygon(head_pts, fill=color)
+def draw_check(draw, x, y, size, color, width=None):
+    """체크표시 ✓ (두 선분) — (x, y)는 좌상단, size는 한 변 기준."""
+    w = width or max(3, size // 7)
+    p1 = (x + size * 0.08, y + size * 0.52)
+    p2 = (x + size * 0.38, y + size * 0.82)
+    p3 = (x + size * 0.92, y + size * 0.14)
+    draw.line([p1, p2], fill=color, width=w)
+    draw.line([p2, p3], fill=color, width=w)
 
 
 def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
                             source, date, accent, fnt_bold, fnt_content,
                             fnt_source, fnt_content_xl=None, fnt_content_sm=None,
                             category=""):
-    """호재 심층 히어로 카드 — BEST 배지 + ↑ 화살표 + 카테고리 라벨 + 스토리텔링."""
+    """호재 심층 히어로 카드 — BEST 배지 + ✓ 체크 머리기호 + 카테고리 라벨 + 스토리텔링."""
     from PIL import ImageDraw
 
     HEADER_H = 90
@@ -1245,21 +1250,16 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
               "BEST", font=fnt_bold, fill=KEY, anchor="mm",
               stroke_width=1, stroke_fill=STROKE)
 
-    # ↑ 화살표 (카드 왼쪽)
-    arrow_cx  = x + 30
-    arrow_top = y + HEADER_H + 20
-    arrow_bot = y + h - FOOTER_H - 20
-    draw_up_arrow(draw, arrow_cx, arrow_top, arrow_bot, GREEN, width=10)
-
-    # 본문 영역 (화살표 오른쪽)
-    content_x    = x + 60
+    # 본문 영역 — 각 호재 줄 앞에 초록 체크(✓) 머리기호
+    content_x    = x + 28
     content_y    = y + HEADER_H + 16
-    content_max_w = w - 60 - 22
+    content_max_w = w - 28 - 22
     content_area_h = h - HEADER_H - FOOTER_H - 32
+    CHECK_W      = 44   # 체크 + 여백 폭
 
     all_lines = [headline] + [d for d in details if d.strip()]
 
-    # 헤드라인은 항상 xl(62px), 본문은 항상 content(50px) — 일관된 크기 계층
+    # 헤드라인은 항상 xl(62px), 본문은 항상 content(46px) — 일관된 크기 계층
     headline_font = fnt_content_xl if fnt_content_xl else fnt_bold
     body_font     = fnt_content
 
@@ -1271,14 +1271,19 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
     for i, ln in enumerate(all_lines[:6]):   # 헤드라인+5details
         if not ln.strip() or cy + char_h > y + h - FOOTER_H - 8:
             continue
-        use_font = headline_font if i == 0 else body_font
-        use_col  = WHITE         if i == 0 else LGRAY
-        sw       = 2             if i == 0 else 1
-        wrapped  = wrap_runs(draw, split_runs(strip_emoji(ln)), use_font, content_max_w)
-        for line_runs in wrapped[:2]:
+        use_font  = headline_font if i == 0 else body_font
+        use_col   = WHITE         if i == 0 else LGRAY
+        sw        = 2             if i == 0 else 1
+        is_detail = i >= 1                       # 헤드라인 제외, 호재 항목에만 체크
+        text_x    = content_x + (CHECK_W if is_detail else 0)
+        wrap_w    = content_max_w - (CHECK_W if is_detail else 0)
+        wrapped   = wrap_runs(draw, split_runs(strip_emoji(ln)), use_font, wrap_w)
+        for j, line_runs in enumerate(wrapped[:2]):
             if cy + char_h > y + h - FOOTER_H - 8:
                 break
-            draw_rich_line(draw, content_x, cy, line_runs, use_font, use_col, KEY,
+            if is_detail and j == 0:             # 줄 첫 행에만 ✓
+                draw_check(draw, content_x, cy + char_h * 0.12, char_h, GREEN)
+            draw_rich_line(draw, text_x, cy, line_runs, use_font, use_col, KEY,
                            stroke_width=sw, stroke_fill=STROKE)
             cy += line_h
 
@@ -1364,7 +1369,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     soft_reg  = soft_reg  or font_reg
     soft_bold = soft_bold or font_bold
     sf_ch        = fnt(soft_bold, 48)
-    sf_ct        = fnt(soft_reg,  50)
+    sf_ct        = fnt(soft_reg,  46)
     sf_ct_xl     = fnt(soft_reg,  62)
     sf_ct_sm     = fnt(soft_reg,  42)
     sf_src       = fnt(soft_reg,  30)

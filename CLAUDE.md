@@ -36,6 +36,7 @@ git clone https://github.com/korlee88/nvda-dashboard
 | `company_en` | `"Tesla"` | `"Nvidia"` |
 | `company_ko` | `"테슬라"` | `"엔비디아"` |
 | `industry_ko` | `"전기차·미래기술"` | `"AI 반도체"` |
+| `image_future_tech_en` | `"FSD robotaxi..., Optimus..., 4680..., megapack..., Dojo..."` | `"H100/Blackwell GPU, CUDA AI platform, ..."` |
 | `brand_label` | `"TSLA WEEKLY"` | `"NVDA WEEKLY"` |
 | `repo` | `"korlee88/tsla-dashboard"` | `"korlee88/nvda-dashboard"` |
 | `beta_coefficient` | `2.5` | `1.7` |
@@ -195,8 +196,9 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 > 인트로(충격속보)·리스크·시장반응 씬은 제거됨. 미국장 휴장일에도 무리 없도록 호재 위주 3씬으로 단순화.
 > 마지막 씬(idx 2) 최하단에 AI 생성 고지 밴드 표시 — "AI 분석 툴로 뉴스 자료를 분석해 요약한 영상물" 문구. 화면 표기 전용으로 `prep.py`에 하드코딩되어 있어 TTS가 읽지 않음.
 > 배경은 Nano Banana AI 이미지가 1순위, 실패 시 Wikipedia 폴백.
+> 이미지 프롬프트에는 `config/ticker.json`의 `image_future_tech_en`(미래 기술·사업계획 영문 키워드)을 `{future_tech}`로 주입 — `weekly_video_prep.py`의 `FUTURE_TECH_EN` 상수.
 > 점수(+N점)는 내부 지표이므로 대본·화면에 노출하지 않는다("호재"/"리스크"로만 표현).
-> 호재 심층 씬(idx 1)은 `NanumSquareRound`(둥근 폰트)로 부드러운 톤 — CI는 `fonts-nanum-extra` 필요.
+> 호재 심층 씬(idx 1)은 `NanumSquareRound`(둥근 폰트)로 부드러운 톤 — CI는 `fonts-nanum-extra` 필요. 본문 머리기호는 초록 ✓ 체크(`draw_check`, 줄 첫 행에만 표시), 본문 폰트는 `sf_ct` 46px.
 
 **레이아웃 (MBC 뉴스 쇼츠 스타일, 1080×1920)**:
 - 헤더 (y=0~500): 네이비 그라데이션 + 브랜드 라벨 + 두 줄 헤드라인
@@ -369,7 +371,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.6.4** | 2026-06-14 KST | 영상 BGM 복구·풍성화(원본 합성 `data/bgm.mp3` 커밋·`make_bgm.py`, yt-dlp 외부 다운로드 제거) · BGM 루프 믹싱 버그 수정(루프마다 새 클립·write 전 close 금지) · 씬 전환 0.5초 딜레이(`SCENE_LEAD_MS`/`SCENE_TAIL_MS`, 단일 세그먼트 씬 포함) |
+| **v2.7.0** | 2026-06-17 KST | 뉴스 출처 국적·신뢰도 태그(`SOURCE_INFO`/`CRED_TIER`/`sourceMeta()`/`SourceTag`, 메인·모바일 카드+세션 상세에 표시) · 이미지 프롬프트에 미래 기술·사업계획 반영(`image_future_tech_en`/`FUTURE_TECH_EN`/`{future_tech}`) · 호재 씬 ↑화살표 → ✓체크 머리기호(`draw_check`) + 본문 폰트 축소(50→46) |
+| v2.6.4 | 2026-06-14 KST | 영상 BGM 복구·풍성화(원본 합성 `data/bgm.mp3` 커밋·`make_bgm.py`, yt-dlp 외부 다운로드 제거) · BGM 루프 믹싱 버그 수정(루프마다 새 클립·write 전 close 금지) · 씬 전환 0.5초 딜레이(`SCENE_LEAD_MS`/`SCENE_TAIL_MS`, 단일 세그먼트 씬 포함) |
 | v2.6.3 | 2026-06-12 KST | TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍(`_trim_edge_silence`) + `LINE_PAUSE_MS` 1000→600ms (체감 간격 ~720ms 균일화) |
 | v2.6.2 | 2026-06-12 KST | 자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신 |
 | v2.6.1 | 2026-06-11 KST | 보안 강화 — CDN 버전 고정+SRI(react/react-dom/babel 프로덕션 전환, tailwind 고정) · YouTube HttpError 로그 키 노출 차단 · Gmail 수신자 로그 제거 |
