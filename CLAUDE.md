@@ -10,7 +10,7 @@
 ## 프로젝트 개요
 
 GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
-주 1회 금요일 KST 새벽 GitHub Actions가 자동으로 영상 자료를 생성한다 (한 주 마무리 + 다음주 전망).
+격일(월·수·금) KST 새벽 GitHub Actions가 자동으로 영상 자료를 생성한다 (한 주 마무리 + 다음주 전망). 영상마다 오프닝 훅·분석 관점·색상 테마를 바꿔 양산형 느낌을 줄인다.
 
 - **저장소**: `korlee88/tsla-dashboard`
 - **기본 브랜치**: `master` (보호됨)
@@ -64,7 +64,7 @@ git clone https://github.com/korlee88/nvda-dashboard
 ```
 tsla-dashboard/
 ├── .github/workflows/
-│   ├── weekly-video.yml       # 주 1회 금요일 자동 실행 + workflow_dispatch
+│   ├── weekly-video.yml       # 격일(월·수·금) 자동 실행 + workflow_dispatch
 │   ├── auto-analysis.yml      # 1일 1회 자동 분석 (KST 08:00)
 │   ├── backtest-run.yml       # 백테스트 (매일 자동 + 수동)
 │   └── calendar-update.yml    # 매주 일정 갱신
@@ -312,8 +312,13 @@ sudo apt-get install -y fonts-nanum
 **파일**: `.github/workflows/weekly-video.yml`
 
 **트리거**:
-- 자동: 주 1회 금요일 KST 05:15 (1차) / 07:15 (2차 재시도). UTC 기준 목요일 cron `'15 20 * * 4'`, `'15 22 * * 4'`
+- 자동: 격일(월·수·금) KST 05:15 (1차) / 07:15 (2차 재시도). UTC 기준 일·화·목 cron `'15 20 * * 0,2,4'`, `'15 22 * * 0,2,4'`. 같은 날 이미 생성됐으면 자동 skip
 - 수동: GitHub Actions 탭 → `workflow_dispatch`
+
+> **양산형 탈피** (v2.8.0): 격일 생성으로 영상이 잦아진 만큼 매 영상이 비슷해 보이지 않도록 생성일(KST 날짜) 시드로 변형한다.
+> - **오프닝 훅 8종**(`HOOK_STYLES`/`pick_hook`, prep.py): 질문·충격수치·역발상·결론선공개·스토리·비교·호기심·임팩트 — `_build_prompt`가 `week_end` 시드로 골라 `{hook_style}`로 프롬프트에 주입. "오늘의 뉴스"·"N건 분석" 식 고정 오프닝 금지.
+> - **차별화 관점 1줄**(프롬프트 "오프닝 훅 & 차별화" 블록): 시장 컨센서스·통념과 다른 분석가만의 시각 1줄 의무(단순 요약·낭독 금지), 씬1 향후전망 또는 씬2에 배치.
+> - **색상 테마 3종**(`ACCENT_THEMES`/`_theme_idx`, prep.py·make.py **양쪽 동일**): 보라·시안·인디고 계열 로테이션. 씬1(호재)은 의미상 항상 초록 유지. 두 파일이 같은 `_theme_idx(date_str)`로 계산해 정적 이미지(prep)와 애니메이션(make) 색상이 동기화된다 — prep는 `main()`에서 `SCENE_ACCENTS`를 today로, make는 `build_video_async`에서 `ACCENT_COLORS`를 `report_dir.name`(날짜)으로 재할당.
 
 **주요 단계**:
 1. Python 3.11 + pip 캐시 설정
@@ -371,7 +376,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.7.0** | 2026-06-17 KST | 뉴스 출처 국적·신뢰도 태그(`SOURCE_INFO`/`CRED_TIER`/`sourceMeta()`/`SourceTag`, 메인·모바일 카드+세션 상세에 표시) · 이미지 프롬프트에 미래 기술·사업계획 반영(`image_future_tech_en`/`FUTURE_TECH_EN`/`{future_tech}`) · 호재 씬 ↑화살표 → ✓체크 머리기호(`draw_check`) + 본문 폰트 축소(50→46) |
+| **v2.8.0** | 2026-06-18 KST | 영상 격일 생성(주1회 → 월·수·금 KST, cron `'15 20 * * 0,2,4'`/`'15 22 * * 0,2,4'`) · 양산형 탈피: 오프닝 훅 8종 로테이션(`HOOK_STYLES`/`pick_hook`, 고정 오프닝 제거) · 차별화 관점 1줄 의무 · 색상 테마 3종 로테이션(`ACCENT_THEMES`/`_theme_idx`, prep·make 동기화, 씬1 호재는 초록 유지) |
+| v2.7.0 | 2026-06-17 KST | 뉴스 출처 국적·신뢰도 태그(`SOURCE_INFO`/`CRED_TIER`/`sourceMeta()`/`SourceTag`, 메인·모바일 카드+세션 상세에 표시) · 이미지 프롬프트에 미래 기술·사업계획 반영(`image_future_tech_en`/`FUTURE_TECH_EN`/`{future_tech}`) · 호재 씬 ↑화살표 → ✓체크 머리기호(`draw_check`) + 본문 폰트 축소(50→46) |
 | v2.6.4 | 2026-06-14 KST | 영상 BGM 복구·풍성화(원본 합성 `data/bgm.mp3` 커밋·`make_bgm.py`, yt-dlp 외부 다운로드 제거) · BGM 루프 믹싱 버그 수정(루프마다 새 클립·write 전 close 금지) · 씬 전환 0.5초 딜레이(`SCENE_LEAD_MS`/`SCENE_TAIL_MS`, 단일 세그먼트 씬 포함) |
 | v2.6.3 | 2026-06-12 KST | TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍(`_trim_edge_silence`) + `LINE_PAUSE_MS` 1000→600ms (체감 간격 ~720ms 균일화) |
 | v2.6.2 | 2026-06-12 KST | 자동 분석 스케줄 하루 4회 → 1일 1회(KST 08:00)로 전환 · API 사용량 추정치 갱신 |

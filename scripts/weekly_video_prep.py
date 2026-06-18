@@ -8,7 +8,7 @@
 종목 설정: config/ticker.json
 """
 
-import os, json, sys, re, urllib.request, urllib.parse
+import os, json, sys, re, random, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -64,6 +64,33 @@ CARD_PURPLE = (42, 20, 78)     # 보라 카드
 BADGE_BG    = (20, 26, 48)     # 배지·푸터 배경
 
 SCENE_ACCENTS = [PURPLE, GREEN, (236, 72, 153)]  # 브리핑/호재/미래비전 (인트로·시장반응 제거)
+
+# ── 양산형 탈피: 영상마다 변형 (생성일 시드로 결정 → 격일 생성 시 매번 달라짐) ──
+# 인트로/클로징(썸네일) 색상 테마 2~3종 로테이션. 씬1(호재)은 의미상 항상 초록 유지.
+ACCENT_THEMES = [
+    [(167, 139, 250), GREEN, (236, 72, 153)],  # A 보라·초록·마젠타 (기존)
+    [(56, 189, 248),  GREEN, (251, 146, 60)],  # B 시안·초록·오렌지
+    [(129, 140, 248), GREEN, (250, 204, 21)],  # C 인디고·초록·골드
+]
+
+def _theme_idx(date_str):
+    """생성일 문자열로 결정적 테마 인덱스 (prep·make 동일 함수 → 색상 동기화)."""
+    return sum(ord(c) for c in (date_str or "")) % len(ACCENT_THEMES)
+
+# 오프닝 훅 스타일 풀 — 매 영상 다른 첫 줄로 '오늘의 뉴스' 식 고정 오프닝 탈피.
+HOOK_STYLES = [
+    "질문형 — 시청자에게 질문을 던지며 시작 (예: '이번주 OO, 무슨 일이 있었을까요?')",
+    "충격 수치형 — 이번주 가장 큰 등락률·수치를 앞세워 강하게 시작",
+    "역발상형 — 통념을 뒤집는 한마디로 시작 (예: '다들 걱정했지만, 의외로…')",
+    "결론 선공개형 — 핵심 결론을 먼저 던지고 근거로 이어가기",
+    "스토리·장면형 — 한 장면을 묘사하듯 몰입감 있게 시작",
+    "비교형 — 경쟁사·지난주 대비로 대조를 주며 시작",
+    "호기심 유발형 — '왜 갑자기?' 식으로 궁금증을 자극하며 시작",
+    "임팩트형 — 이번주 최대 이슈 한 방으로 훅을 걸며 시작",
+]
+
+def pick_hook(seed):
+    return random.Random(str(seed)).choice(HOOK_STYLES)
 
 SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
 GOOGLE_TRENDS_KEYWORDS = TICKER_CONFIG.get("google_trends_keywords", [])
@@ -365,6 +392,12 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 한 줄에 강조는 최대 1~2개만. 문장 전체를 감싸지 말고 핵심 수치/단어만 감싼다
 • 별표로 감싼 부분은 화면에서 강조색(골드)으로 표시되니, 정말 눈에 띄어야 할 수치·키워드에만 사용한다
 
+=== 오프닝 훅 & 차별화 (반드시 준수) ===
+• 오프닝(SCENE_0_TITLE·씬0 줄1)은 매 영상 달라야 한다. 이번 영상 오프닝 훅 스타일 → {hook_style}
+  ※ "오늘의 뉴스"·"이번주 뉴스 N건 분석했어요" 같은 고정·상투적 오프닝 금지(분석 규모는 뒷줄에 자연스럽게 녹여도 됨).
+• 차별화 관점 1줄(필수): 단순 뉴스 요약·낭독을 넘어, 시장 컨센서스·통념과 다른 분석가만의 시각을 한 줄 넣는다
+  (예: "시장은 X를 우려하지만, 정작 중요한 건 Y예요"). 씬1 '향후 전망' 또는 씬2에 자연스럽게 배치.
+
 === 주간 데이터 ({week_start} ~ {week_end}) ===
 - {ticker} 현재 주가: ${price}
 - 1주 전 대비 변동률: {week_change_pct_str}
@@ -381,7 +414,7 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 === 씬 구성 (총 3씬) ===
 
 【씬 0 — 주간 브리핑】 (4줄, 한 줄 30자 이내, 핵심 정보만 응축)
-- 줄1: 1주 전 대비 변동률·현재 주가로 이번주 흐름 요약 (30자 이내, 수치 필수)
+- 줄1: 위 '오프닝 훅 스타일'로 시작하는 강렬한 첫 줄 — 변동률·현재 주가 등 핵심 수치를 자연스럽게 녹인다 (30자 이내, 수치 필수). 고정·상투 멘트 금지
 - 줄2: 주가 변동 원인 핵심 한 줄 (movement_reason 활용, 30자 이내, 수치 포함)
 - 줄3: 이번주 가장 큰 호재 핵심 한 줄 (30자 이내, 수치 포함, 점수 금지)
 - 줄4: 이번주 가장 큰 리스크 한 줄 (30자 이내, 수치 포함, 점수 금지)
@@ -486,11 +519,13 @@ def _build_prompt(summary):
     # 다음주 가격 예측 요약 (dailyForecasts 기반, 매매신호 단어 제외)
     next_week_str = build_next_week_outlook(summary.get("forecasts", []))
 
+    hook_style = pick_hook(summary.get("week_end") or summary.get("week_start") or "")
     return SCRIPT_PROMPT_TEMPLATE.format(
         ticker=TICKER,
         company_ko=COMPANY_KO,
         industry_ko=INDUSTRY_KO,
         future_tech=FUTURE_TECH_EN,
+        hook_style=hook_style,
         week_start=summary["week_start"],
         week_end=summary["week_end"],
         price=summary["latest_price"],
@@ -1731,6 +1766,11 @@ def main():
     today   = datetime.now(KST).strftime("%Y-%m-%d")   # KST 기준 날짜
     out_dir = OUTPUT_BASE / today
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # 양산형 탈피: 생성일 시드로 인트로/클로징(썸네일) 색상 테마 로테이션 (씬1 호재는 초록 유지)
+    global SCENE_ACCENTS
+    SCENE_ACCENTS = ACCENT_THEMES[_theme_idx(today)]
+    print(f"   🎨 색상 테마 #{_theme_idx(today)} 적용 (격일 생성마다 변형)")
 
     print("📊 주간 세션 로드...")
     sessions = load_week_sessions()

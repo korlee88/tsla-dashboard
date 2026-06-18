@@ -35,6 +35,17 @@ ACCENT_COLORS = [
     (34,  197,  94),  # scene 1 green   - 호재 심층
     (236,  72, 153),  # scene 2 magenta - 미래 비전 (클로징)
 ]
+
+# 색상 테마 로테이션 (prep.py와 동일 — 생성일 시드로 동기화). 씬1(호재)은 항상 초록.
+ACCENT_THEMES = [
+    [(167, 139, 250), (34, 197, 94), (236, 72, 153)],  # A 보라·초록·마젠타 (기존)
+    [(56, 189, 248),  (34, 197, 94), (251, 146, 60)],  # B 시안·초록·오렌지
+    [(129, 140, 248), (34, 197, 94), (250, 204, 21)],  # C 인디고·초록·골드
+]
+
+def _theme_idx(date_str):
+    """생성일 문자열로 결정적 테마 인덱스 (prep.py와 동일 함수 → 색상 동기화)."""
+    return sum(ord(c) for c in (date_str or "")) % len(ACCENT_THEMES)
 SCENE_MOODS = ["focused", "happy", "celebrating"]   # 차분 분석 톤에 맞춘 마스코트
 
 # ── BGM 설정 (원본 합성 · CC0/로열티프리) ────────────────────────────────────
@@ -487,6 +498,10 @@ async def process_scene(scene, report_dir):
 async def build_video_async(report_dir):
     from moviepy import concatenate_videoclips
     from moviepy.video.fx import CrossFadeIn
+
+    # 색상 테마 로테이션 — prep.py와 같은 생성일 시드로 동기화 (썸네일/씬 색상 변형)
+    global ACCENT_COLORS
+    ACCENT_COLORS = ACCENT_THEMES[_theme_idx(report_dir.name)]
 
     script = json.loads((report_dir / "script.json").read_text(encoding="utf-8"))
     scenes = script.get("scenes", [])
