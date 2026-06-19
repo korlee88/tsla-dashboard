@@ -10,7 +10,7 @@
 ## 프로젝트 개요
 
 GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
-격일(월·수·금) KST 새벽 GitHub Actions가 자동으로 영상 자료를 생성한다 (한 주 마무리 + 다음주 전망). 영상마다 오프닝 훅·분석 관점·색상 테마를 바꿔 양산형 느낌을 줄인다.
+격일(월·수·금) KST 새벽 GitHub Actions가 자동으로 영상 자료를 생성한다 (최근 동향 정리 + 앞으로 전망). 영상마다 오프닝 훅·분석 관점·색상 테마를 바꿔 양산형 느낌을 줄인다.
 
 - **저장소**: `korlee88/tsla-dashboard`
 - **기본 브랜치**: `master` (보호됨)
@@ -46,7 +46,7 @@ git clone https://github.com/korlee88/nvda-dashboard
 | `video_tags` | `["테슬라", "TSLA", ...]` | `["엔비디아", "NVDA", ...]` |
 
 ### 3. 씬 배경 이미지 교체
-`data/scene-backgrounds/bg_scene_02.jpg`, `bg_scene_03.jpg`, `bg_scene_04.jpg`를 새 종목에 맞게 교체.
+`data/scene-backgrounds/bg_scene_02.jpg`를 새 종목에 맞게 교체 (`config/ticker.json`의 `scene_static_bg_files`가 참조하는 유일한 정적 배경 — 나머지 씬은 Wikipedia/AI 생성 배경을 사용해 교체 불필요).
 
 ### 4. GitHub Secrets 재설정
 새 저장소에 `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `YOUTUBE_API_KEY` 등 동일하게 설정.
@@ -71,7 +71,7 @@ tsla-dashboard/
 ├── config/
 │   └── ticker.json            # 종목 설정 (TSLA/NVDA/AAPL 등 분기점)
 ├── scripts/
-│   ├── weekly_video_prep.py   # STEP 1: 대본 + 씬 이미지 4장
+│   ├── weekly_video_prep.py   # STEP 1: 대본 + 씬 이미지 3장
 │   ├── weekly_video_make.py   # STEP 2: TTS + 애니메이션 영상
 │   ├── gws_publish.py         # STEP 5: YouTube/Sheets/Gmail 게시
 │   ├── setup_gws_auth.py      # OAuth2 토큰 생성 헬퍼 (로컬 1회)
@@ -89,10 +89,9 @@ tsla-dashboard/
 │           ├── script.txt     # 대본 원문
 │           ├── image_prompts.txt  # Imagen 프롬프트 (Imagen 복붙용)
 │           ├── meta.json      # 요약 데이터 (gws_publish가 사용)
-│           ├── scene_01.png   # 씬 이미지 4장 (커밋됨)
+│           ├── scene_00.png   # 씬 이미지 3장 (커밋됨, 0-based)
+│           ├── scene_01.png
 │           ├── scene_02.png
-│           ├── scene_03.png
-│           ├── scene_04.png
 │           ├── *.mp3          # TTS 오디오 (커밋 제외)
 │           └── video.mp4      # 최종 영상 (커밋 제외, artifact 업로드)
 ├── requirements.txt           # Python 의존성 (pip 캐시용)
@@ -189,9 +188,9 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 **씬 구성 (3씬 — YouTube Shorts 세로 포맷, idx 0-based)**:
 | idx | 주제 | 배경 비율 | 색상 | 로봇 무드 |
 |-----|------|----------|------|--------|
-| 0 | 주간 브리핑 (1주 변동률·원인·호재·리스크) | 16:9 strip | Purple | focused |
+| 0 | 동향 브리핑 (1주 변동률·원인·호재·리스크) | 16:9 strip | Purple | focused |
 | 1 | 호재 심층 1건 (BEST, 라운드 폰트) | 16:9 strip | Green | happy |
-| 2 | 다음주 전망 (클로징, 6줄: 일정·시나리오·가격예측·흐름·변수·마무리, `dailyForecasts` 예측 활용) | 9:16 full | Magenta | celebrating |
+| 2 | 앞으로 전망 (클로징, 6줄: 일정·시나리오·가격예측·흐름·변수·마무리, `dailyForecasts` 예측 활용) | 9:16 full | Magenta | celebrating |
 
 > 인트로(충격속보)·리스크·시장반응 씬은 제거됨. 미국장 휴장일에도 무리 없도록 호재 위주 3씬으로 단순화.
 > 마지막 씬(idx 2) 최하단에 AI 생성 고지 밴드 표시 — "AI 분석 툴로 뉴스 자료를 분석해 요약한 영상물" 문구. 화면 표기 전용으로 `prep.py`에 하드코딩되어 있어 TTS가 읽지 않음.
@@ -264,8 +263,8 @@ BGM_CACHE  = data/bgm.mp3              # 저장소에 커밋된 음원
 **역할**: 생성된 video.mp4를 YouTube/Sheets/Gmail로 배포
 
 - **YouTube**: OAuth2로 비공개 업로드(`unlisted`) → 직접 공개 전환 가능
-- **Sheets**: Service Account로 주간 행 추가 (날짜·참고지수·주가·시그널·세션수·YouTube URL)
-- **Gmail**: SMTP 587/STARTTLS, HTML 본문 + 씬 이미지 4장 CID 인라인
+- **Sheets**: Service Account로 행 추가 (날짜·참고지수·주가·시그널·세션수·YouTube URL)
+- **Gmail**: SMTP 587/STARTTLS, HTML 본문 + 씬 이미지 3장 CID 인라인
 
 ---
 
@@ -324,7 +323,7 @@ sudo apt-get install -y fonts-nanum
 1. Python 3.11 + pip 캐시 설정
 2. 한글 폰트 설치 (`fonts-nanum`)
 3. `pip install -r requirements.txt`
-4. STEP 1: `weekly_video_prep.py` (대본 + 씬 이미지 4장)
+4. STEP 1: `weekly_video_prep.py` (대본 + 씬 이미지 3장)
 5. STEP 2: `weekly_video_make.py` (TTS + 영상)
 6. STEP 3: 대본/이미지 커밋 (MP3/MP4 제외)
 7. STEP 4: video.mp4 → artifact 업로드 (30일 보관)
@@ -376,7 +375,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.8.0** | 2026-06-18 KST | 영상 격일 생성(주1회 → 월·수·금 KST, cron `'15 20 * * 0,2,4'`/`'15 22 * * 0,2,4'`) · 양산형 탈피: 오프닝 훅 8종 로테이션(`HOOK_STYLES`/`pick_hook`, 고정 오프닝 제거) · 차별화 관점 1줄 의무 · 색상 테마 3종 로테이션(`ACCENT_THEMES`/`_theme_idx`, prep·make 동기화, 씬1 호재는 초록 유지) |
+| **v2.8.1** | 2026-06-19 KST | 격일(월·수·금) 전환 후 남아있던 "주간"/"매일" 표기 정리(워크플로 이름·각본 페이지·TTS 나레이션·이메일 제목/본문·코드 주석, `weekly_video_prep.py`/`weekly_video_make.py`/`gws_publish.py`/`ticker.json`/`index.html`) · `rules.json` R24 설명 갱신(SpaceX는 2026-06-13경 상장돼 더 이상 "비상장 벤처"가 아님 — "X/DOGE" 스필오버와 분리해 독립 평가하도록 수정) · Gmail 다이제스트 시그널 색상이 항상 회색으로만 표시되던 버그 수정(`signal_color` 딕셔너리 키가 실제 반환값과 불일치) · Gmail 씬 캡션이 구버전 6씬 라벨(충격인트로 등)을 쓰던 버그 수정(현재 3씬에 맞게 교체) · 각본 페이지 이미지 프롬프트 드롭다운 버그 수정(씬0 프롬프트 미표시·씬1-2 오라벨링·씬3-4 무효 항목, 0-based 3씬에 맞게 수정) |
+| v2.8.0 | 2026-06-18 KST | 영상 격일 생성(주1회 → 월·수·금 KST, cron `'15 20 * * 0,2,4'`/`'15 22 * * 0,2,4'`) · 양산형 탈피: 오프닝 훅 8종 로테이션(`HOOK_STYLES`/`pick_hook`, 고정 오프닝 제거) · 차별화 관점 1줄 의무 · 색상 테마 3종 로테이션(`ACCENT_THEMES`/`_theme_idx`, prep·make 동기화, 씬1 호재는 초록 유지) |
 | v2.7.0 | 2026-06-17 KST | 뉴스 출처 국적·신뢰도 태그(`SOURCE_INFO`/`CRED_TIER`/`sourceMeta()`/`SourceTag`, 메인·모바일 카드+세션 상세에 표시) · 이미지 프롬프트에 미래 기술·사업계획 반영(`image_future_tech_en`/`FUTURE_TECH_EN`/`{future_tech}`) · 호재 씬 ↑화살표 → ✓체크 머리기호(`draw_check`) + 본문 폰트 축소(50→46) |
 | v2.6.4 | 2026-06-14 KST | 영상 BGM 복구·풍성화(원본 합성 `data/bgm.mp3` 커밋·`make_bgm.py`, yt-dlp 외부 다운로드 제거) · BGM 루프 믹싱 버그 수정(루프마다 새 클립·write 전 close 금지) · 씬 전환 0.5초 딜레이(`SCENE_LEAD_MS`/`SCENE_TAIL_MS`, 단일 세그먼트 씬 포함) |
 | v2.6.3 | 2026-06-12 KST | TTS 줄 간격 보정 — edge-tts 세그먼트 가장자리 무음 트리밍(`_trim_edge_silence`) + `LINE_PAUSE_MS` 1000→600ms (체감 간격 ~720ms 균일화) |

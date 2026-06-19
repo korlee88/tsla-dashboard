@@ -35,7 +35,7 @@
 
   "google_trends_keywords": ["테슬라", "TSLA", "일론머스크", "전기차"],
 
-  "video_title_template": "{ticker} 주간 분석 {date} | 참고지수 {bi}점 {signal}",
+  "video_title_template": "{ticker} 분석 {date} | 참고지수 {bi}점 {signal}",
   "video_tags": ["테슬라", "TSLA", "주식", "전기차", "Shorts"],
-  "email_subject_template": "{ticker} 주간 브리핑 {date} | 참고지수 {bi}점 ({signal})"
+  "email_subject_template": "{ticker} 브리핑 {date} | 참고지수 {bi}점 ({signal})"
 }

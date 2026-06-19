@@ -34,7 +34,7 @@
 
   "google_trends_keywords": ["구글", "알파벳", "GOOGL", "AI검색"],
 
-  "video_title_template": "{ticker} 주간 분석 {date} | 참고지수 {bi}점 {signal}",
+  "video_title_template": "{ticker} 분석 {date} | 참고지수 {bi}점 {signal}",
   "video_tags": ["알파벳", "구글", "GOOGL", "주식", "AI", "Shorts"],
-  "email_subject_template": "{ticker} 주간 브리핑 {date} | 참고지수 {bi}점 ({signal})"
+  "email_subject_template": "{ticker} 브리핑 {date} | 참고지수 {bi}점 ({signal})"
 }

@@ -1,4 +1,4 @@
-name: 주간 영상 자료 생성
+name: 격일 영상 자료 생성
 
 # 격일(월·수·금 KST 새벽) 생성 — 최근 흐름을 더 자주 다루고 양산형 탈피(영상마다 훅·관점·색상 변형).
 # 1차: 월·수·금 KST 05:15 (UTC 일·화·목 20:15) — 주요 실행
@@ -59,7 +59,7 @@ jobs:
         run: pip install -r requirements.txt --quiet
 
       # ── STEP 1: 대본 + 씬 이미지 생성 ──────────────────────────────────────
-      - name: 주간 대본 및 이미지 생성
+      - name: 대본 및 이미지 생성
         if: steps.guard.outputs.skip != 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -85,7 +85,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"
           else
-            git commit -m "auto: ${TICKER} 주간 영상 자료 $(TZ='Asia/Seoul' date +'%Y-%m-%d KST')"
+            git commit -m "auto: ${TICKER} 영상 자료 $(TZ='Asia/Seoul' date +'%Y-%m-%d KST')"
             git pull --rebase origin master
             git push
           fi

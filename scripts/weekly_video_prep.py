@@ -1,5 +1,5 @@
 """
-주간 영상 자료 생성 스크립트
+영상 자료 생성 스크립트 (격일: 월·수·금)
 - 최근 7일 auto-sessions.json 데이터 기반
 - Gemini API → 한국어 영상 대본(4 씬)
 - Pillow → 씬별 1080×1920 카드 이미지 (YouTube Shorts 세로 포맷)
@@ -79,14 +79,14 @@ def _theme_idx(date_str):
 
 # 오프닝 훅 스타일 풀 — 매 영상 다른 첫 줄로 '오늘의 뉴스' 식 고정 오프닝 탈피.
 HOOK_STYLES = [
-    "질문형 — 시청자에게 질문을 던지며 시작 (예: '이번주 OO, 무슨 일이 있었을까요?')",
-    "충격 수치형 — 이번주 가장 큰 등락률·수치를 앞세워 강하게 시작",
+    "질문형 — 시청자에게 질문을 던지며 시작 (예: '최근 OO, 무슨 일이 있었을까요?')",
+    "충격 수치형 — 최근 가장 큰 등락률·수치를 앞세워 강하게 시작",
     "역발상형 — 통념을 뒤집는 한마디로 시작 (예: '다들 걱정했지만, 의외로…')",
     "결론 선공개형 — 핵심 결론을 먼저 던지고 근거로 이어가기",
     "스토리·장면형 — 한 장면을 묘사하듯 몰입감 있게 시작",
-    "비교형 — 경쟁사·지난주 대비로 대조를 주며 시작",
+    "비교형 — 경쟁사·지난 분석 대비로 대조를 주며 시작",
     "호기심 유발형 — '왜 갑자기?' 식으로 궁금증을 자극하며 시작",
-    "임팩트형 — 이번주 최대 이슈 한 방으로 훅을 걸며 시작",
+    "임팩트형 — 최근 최대 이슈 한 방으로 훅을 걸며 시작",
 ]
 
 def pick_hook(seed):
@@ -181,7 +181,7 @@ def summarize(sessions):
         except (ValueError, TypeError):
             pass
 
-    # ── 주간 브리핑용: 1주 전 대비 변동률 ──
+    # ── 동향 브리핑용: 1주 전 대비 변동률 ──
     week_change_pct = None
     try:
         p_start = float(prices[-1]) if prices else None
@@ -191,7 +191,7 @@ def summarize(sessions):
     except (ValueError, TypeError):
         pass
 
-    # ── 인트로용: 이번주 가장 큰 영향 사건 ──
+    # ── 인트로용: 최근 가장 큰 영향 사건 ──
     biggest_impact = None
     bull_top = bullish[0] if bullish else None
     bear_top = bearish[0] if bearish else None
@@ -233,7 +233,7 @@ def summarize(sessions):
 
 
 def search_movement_reason(summary):
-    """Gemini + Google Search grounding으로 이번주 주가 변동 원인 검색."""
+    """Gemini + Google Search grounding으로 최근 주가 변동 원인 검색."""
     if not GEMINI_API_KEY:
         return None
     try:
@@ -329,14 +329,14 @@ def load_next_events(days=14, max_n=3):
 
 
 def build_next_week_outlook(forecasts):
-    """dailyForecasts(일별 가격 예측)를 '다음주 전망' 한 단락으로 요약.
+    """dailyForecasts(일별 가격 예측)를 '앞으로 전망' 한 단락으로 요약.
 
     YouTube 정책상 매수/매도 같은 신호 단어는 제외하고
     가격·변동률 추세만 참고용으로 정리한다.
     change_pct는 '현재가 대비' 누적 예측치(일별 증감 아님).
     """
     if not forecasts:
-        return "예측 데이터 없음 — 다음주 일정·이벤트 중심으로 전망"
+        return "예측 데이터 없음 — 향후 일정·이벤트 중심으로 전망"
 
     def _pct(f):
         try:
@@ -359,7 +359,7 @@ def build_next_week_outlook(forecasts):
     parts = []
     if cum is not None:
         sign = "+" if cum >= 0 else ""
-        parts.append(f"다음 주말 예상 변동률 {sign}{cum}% (현재가 대비)")
+        parts.append(f"앞으로 예상 변동률 {sign}{cum}% (현재가 대비)")
     if end:
         parts.append(f"예상 도달가 약 ${end:,.0f}")
     parts.append(f"현재가보다 높게 예측된 날 {up}일 / 낮은 날 {down}일")
@@ -374,7 +374,7 @@ def build_next_week_outlook(forecasts):
 
 # ── 대본 생성 ─────────────────────────────────────────────────────────────
 
-SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 YouTube Shorts 나레이션 대본을 작성해줘.
+SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 최근 데이터를 바탕으로 YouTube Shorts 나레이션 대본을 작성해줘.
 **친근한 사람이 옆에서 다정하게 이야기해 주는 톤**으로, 구독자에게 말 걸듯 따뜻하고 자연스러운 구어체로 작성한다.
 
 === 톤 가이드 (반드시 준수) ===
@@ -398,13 +398,13 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 • 차별화 관점 1줄(필수): 단순 뉴스 요약·낭독을 넘어, 시장 컨센서스·통념과 다른 분석가만의 시각을 한 줄 넣는다
   (예: "시장은 X를 우려하지만, 정작 중요한 건 Y예요"). 씬1 '향후 전망' 또는 씬2에 자연스럽게 배치.
 
-=== 주간 데이터 ({week_start} ~ {week_end}) ===
+=== 최근 데이터 ({week_start} ~ {week_end}) ===
 - {ticker} 현재 주가: ${price}
 - 1주 전 대비 변동률: {week_change_pct_str}
 - 주가 변동 원인: {movement_reason_str}
 - 검색량 트렌드: {trends_str}
-- 다음주 예정 이벤트: {next_events_str}
-- 다음주 가격 예측(AI 모델, 참고용·매매신호 아님): {next_week_str}
+- 앞으로 예정 이벤트: {next_events_str}
+- 앞으로 가격 예측(AI 모델, 참고용·매매신호 아님): {next_week_str}
 {daily_prices_txt}
 - 주요 호재 (점수 표기 금지, 내용만 활용):
 {b_txt}
@@ -413,11 +413,11 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 
 === 씬 구성 (총 3씬) ===
 
-【씬 0 — 주간 브리핑】 (4줄, 한 줄 30자 이내, 핵심 정보만 응축)
+【씬 0 — 동향 브리핑】 (4줄, 한 줄 30자 이내, 핵심 정보만 응축)
 - 줄1: 위 '오프닝 훅 스타일'로 시작하는 강렬한 첫 줄 — 변동률·현재 주가 등 핵심 수치를 자연스럽게 녹인다 (30자 이내, 수치 필수). 고정·상투 멘트 금지
 - 줄2: 주가 변동 원인 핵심 한 줄 (movement_reason 활용, 30자 이내, 수치 포함)
-- 줄3: 이번주 가장 큰 호재 핵심 한 줄 (30자 이내, 수치 포함, 점수 금지)
-- 줄4: 이번주 가장 큰 리스크 한 줄 (30자 이내, 수치 포함, 점수 금지)
+- 줄3: 최근 가장 큰 호재 핵심 한 줄 (30자 이내, 수치 포함, 점수 금지)
+- 줄4: 최근 가장 큰 리스크 한 줄 (30자 이내, 수치 포함, 점수 금지)
 
 【씬 1 — 호재 심층 분석 (BEST 1건)】 (6줄, 한 줄 30자 이내, 모든 줄에 수치 필수)
 - 줄1: "카테고리: 호재 핵심 (25자 이내)"
@@ -427,18 +427,18 @@ SCRIPT_PROMPT_TEMPLATE = """아래 {ticker} 주간 데이터를 바탕으로 You
 - 줄5: "   ↳ 비교: 경쟁사·과거 대비 (30자 이내, 수치)"
 - 줄6: "   ↳ 향후 전망 (30자 이내, 단정적 권유 금지)"
 
-【씬 2 — 다음주 전망 (클로징)】 (6줄, 구어체, 다음주 예측 중심·수치 의무)
-※ 이 씬은 한 주를 마무리하며 "다음주에 무슨 일이 있고, 어떻게 움직일지" 예측하는 마지막 씬이다.
-- 줄1: 다음주 핵심 일정·이벤트 1건 — next_events 활용 (실적·규제 결정·신제품 등, 25자 이내)
+【씬 2 — 앞으로 전망 (클로징)】 (6줄, 구어체, 향후 예측 중심·수치 의무)
+※ 이 씬은 최근 흐름을 정리하며 "앞으로 무슨 일이 있고, 어떻게 움직일지" 예측하는 마지막 씬이다.
+- 줄1: 향후 핵심 일정·이벤트 1건 — next_events 활용 (실적·규제 결정·신제품 등, 25자 이내)
 - 줄2: → 그 이벤트로 예상되는 시나리오·관전 포인트 (25자 이내, 가능하면 수치)
-- 줄3: 다음주 가격 흐름 예측 요약 — 누적 예측 변동률·예상 도달가 활용 (25자 이내, 수치 필수, 단정 금지·"~예상돼요"·"~흐름이 점쳐져요" 톤)
+- 줄3: 향후 가격 흐름 예측 요약 — 누적 예측 변동률·예상 도달가 활용 (25자 이내, 수치 필수, 단정 금지·"~예상돼요"·"~흐름이 점쳐져요" 톤)
 - 줄4: → 상승/하락 예측 일수 등 흐름 부연 — "며칠은 오르고 며칠은…" 식 (25자 이내, 수치)
 - 줄5: 신중하게 봐야 할 변수 1건 — 예측을 흔들 수 있는 리스크 (25자 이내)
 - 줄6: 따뜻한 마무리 인사 한 문장 — 날짜·요일에 무관하게 언제든 자연스럽게 쓸 수 있는 표현 ("다음에 또 만나요", "또 봐요!", "함께해 주셔서 감사해요" 등, "다음 주" 표현 금지, 20자 이내)
 
 === 출력 형식 (반드시 준수) ===
 ※ 핵심 수치·키워드는 *별표*로 감싸 강조한다 (각 줄 최대 1~2개).
-SCENE_0_TITLE: [6자 이내, 친근한 단어 예: "이번주" "한주요약"]
+SCENE_0_TITLE: [6자 이내, 친근한 단어 예: "최근동향" "근황"]
 SCENE_0:
 [줄1 — 변동률·주가 요약, 핵심 수치 *별표* 강조]
 [줄2 — 변동 원인 핵심, 핵심 *별표* 강조]
@@ -454,11 +454,11 @@ SCENE_1:
    ↳ 비교: 경쟁사·과거 대비 (*별표* 강조)
    ↳ 향후 전망 한 문장
 
-SCENE_2_TITLE: [6자 이내, "다음주" "전망" 같은 단어]
+SCENE_2_TITLE: [6자 이내, "앞으로" "전망" 같은 단어]
 SCENE_2:
-[줄1 — 다음주 핵심 일정·이벤트, 핵심 *별표* 강조]
+[줄1 — 앞으로 핵심 일정·이벤트, 핵심 *별표* 강조]
 [줄2 — → 예상 시나리오·관전 포인트, *별표* 강조]
-[줄3 — 다음주 가격 흐름 예측 요약, 누적 변동률·도달가 *별표* 강조]
+[줄3 — 앞으로 가격 흐름 예측 요약, 누적 변동률·도달가 *별표* 강조]
 [줄4 — → 상승/하락 예측 흐름 부연, 수치 *별표* 강조]
 [줄5 — 신중히 볼 변수 1건]
 [줄6 — 따뜻한 마무리 인사]
@@ -489,7 +489,7 @@ def _build_prompt(summary):
     else:
         daily_prices_txt = ""
 
-    # 주간 브리핑용 변동률 문자열 (1주 전 대비)
+    # 동향 브리핑용 변동률 문자열 (1주 전 대비)
     wcp = summary.get("week_change_pct")
     if wcp is not None:
         sign = "+" if wcp >= 0 else ""
@@ -504,7 +504,7 @@ def _build_prompt(summary):
     else:
         trends_str = "데이터 없음"
 
-    # 다음주 이벤트
+    # 향후 이벤트
     next_events = summary.get("next_events", [])
     if next_events:
         next_events_str = "; ".join(
@@ -516,7 +516,7 @@ def _build_prompt(summary):
     movement_reason = summary.get("movement_reason")
     movement_reason_str = movement_reason if movement_reason else "데이터 수집 중"
 
-    # 다음주 가격 예측 요약 (dailyForecasts 기반, 매매신호 단어 제외)
+    # 향후 가격 예측 요약 (dailyForecasts 기반, 매매신호 단어 제외)
     next_week_str = build_next_week_outlook(summary.get("forecasts", []))
 
     hook_style = pick_hook(summary.get("week_end") or summary.get("week_start") or "")
@@ -582,7 +582,7 @@ def generate_script(summary):
 
 def parse_script(raw):
     scenes = []
-    SCENE_RANGE = range(0, 3)   # 씬 0(주간브리핑)~씬 2(미래비전) · 인트로·시장반응 씬 제거
+    SCENE_RANGE = range(0, 3)   # 씬 0(동향브리핑)~씬 2(미래비전) · 인트로·시장반응 씬 제거
     # 본문이 넘어가면 안 되는 경계 마커 (특히 마지막 씬이 이미지 프롬프트/섹션을 흡수하는 것 방지)
     BOUNDARY_MARKERS = ("IMAGE_PROMPT_", "=== 배경", "===")
     for i in SCENE_RANGE:
@@ -1270,7 +1270,7 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
     draw.rectangle([x, y + HEADER_H - 14, x + w, y + HEADER_H], fill=accent)
 
     # 헤더 왼쪽: 카테고리 또는 소스 라벨 ("+4pt" 대신 — 시청자에게 의미 있는 정보)
-    header_label = (category or source or "이번주 HOT")[:14]
+    header_label = (category or source or "최근 HOT")[:14]
     draw.text((x + 22, y + HEADER_H // 2), header_label,
               font=fnt_bold, fill=BADGE_BG, anchor="lm",
               stroke_width=2, stroke_fill=(0, 60, 0))
@@ -1415,7 +1415,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     news_lines = [l for l in lines if l.strip() and not l.startswith("SCENE")]
 
     # ╔══════════════════════════════════════════════════════════════════╗
-    # ║ 씬 2 — 다음주 전망 (클로징, custom layout)                         ║
+    # ║ 씬 2 — 앞으로 전망 (클로징, custom layout)                         ║
     # ╚══════════════════════════════════════════════════════════════════╝
     if idx == 2:
         # ① AI 배경 이미지를 풀스크린으로 깔기 (미래 비전 이미지)
@@ -1443,21 +1443,21 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
                     int(35 + 60 * t), int(10 + 28 * t), int(58 + 90 * t)
                 ))
 
-        # ── 헤더: 다음주 전망 ─────────────────────────────────────────
-        draw.text((W // 2, 80), "다음주 전망",
+        # ── 헤더: 앞으로 전망 ─────────────────────────────────────────
+        draw.text((W // 2, 80), "앞으로 전망",
                   font=f_huge_sub, fill=WHITE, anchor="mt",
                   stroke_width=3, stroke_fill=STROKE)
         draw.line([(W // 2 - 200, 162), (W // 2 + 200, 162)],
                   fill=accent, width=4)
 
         # ── 3개 메시지 카드 (비전·예상·믿음) ─────────────────────────
-        # news_lines: [0]=비전계획, [1]=→예상결과, [2]=다음주포인트, [3]=→기대결과, [4]=추가이벤트, [5]=마무리
+        # news_lines: [0]=비전계획, [1]=→예상결과, [2]=향후포인트, [3]=→기대결과, [4]=추가이벤트, [5]=마무리
         def _nl(i, fallback):
             return strip_emoji(news_lines[i]) if len(news_lines) > i else fallback
 
         # 카드별 (label, lines[], col, bgcol, max_body_lines)
         MSG_CARDS = [
-            ("다음주 일정",  [_nl(0, "다음 주 핵심 이벤트를 주목하세요"),
+            ("앞으로 일정",  [_nl(0, "앞으로 핵심 이벤트를 주목하세요"),
                               _nl(1, "")],
              KEY,    CARD_AMBER,  2),
             ("가격 전망",    [_nl(2, "변동성 흐름을 지켜봐요"),
@@ -1494,7 +1494,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             last_cy_bottom = cy + card_h
             cy = last_cy_bottom + MSG_GAP
 
-        # ── 다음주 이벤트 한 줄 (있을 때만, 슬림 띠) ─────────────────
+        # ── 향후 이벤트 한 줄 (있을 때만, 슬림 띠) ─────────────────
         next_events = summary.get("next_events", []) or []
         SLIM_Y = last_cy_bottom + MSG_GAP + 6
         if next_events:
@@ -1537,7 +1537,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
     # ── 씬별 헤드라인 텍스트 결정 (MBC 스타일) ──────────────────────────
     if idx == 0:
         # 메인: 대본 첫 줄 그대로. 큰따옴표 추가.
-        first = strip_markup(news_lines[0] if news_lines else f"이번 주 {COMPANY_KO}").strip()
+        first = strip_markup(news_lines[0] if news_lines else f"최근 {COMPANY_KO}").strip()
         if not (first.startswith('"') or first.startswith("'")):
             first = f'"{first}"'
         head_main = first
@@ -1551,12 +1551,12 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         if wc is not None:
             arrow = "▲" if wc >= 0 else "▼"
             sign  = "+" if wc >= 0 else ""
-            chg_s = f"주간 {arrow} {sign}{wc}%"
+            chg_s = f"1주 {arrow} {sign}{wc}%"
             head_sub = f"{price_s} · {chg_s}" if price_s else chg_s
         else:
-            head_sub = price_s or "주간 브리핑"
+            head_sub = price_s or "최근 브리핑"
     elif idx == 1:
-        head_main = '"이번 주 빅 호재"'
+        head_main = '"최근 빅 호재"'
         top_bull = (summary.get("top_bullish") or [{}])[0]
         ch, _, _ = parse_news_line(news_lines[0]) if news_lines else ("", "", "")
         cat = top_bull.get("category", "") or ch
@@ -1577,7 +1577,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
 
     # 푸터 텍스트는 자막+UI에 가려지므로 제거
 
-    # ── 씬 0: 주간 브리핑 — 본문 영역 (4줄 대본 → 3카드 레이아웃) ──────────
+    # ── 씬 0: 동향 브리핑 — 본문 영역 (4줄 대본 → 3카드 레이아웃) ──────────
     CONTENT_Y = START_Y + 40   # 사진 하단과 본문 사이 40px 여백
     if idx == 0:
         FC_W = COL_W - PAD
@@ -1606,7 +1606,7 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
         # ─ 변동 원인 카드 — movement_reason(Google Search) 우선, 없으면 script line 2
         draw.rounded_rectangle([PAD, CONTENT_Y, PAD + FC_W, CONTENT_Y + REASON_H],
                                radius=14, fill=CARD_BG, outline=accent, width=3)
-        draw.text((PAD + 20, CONTENT_Y + 14), "이번주 변동 원인",
+        draw.text((PAD + 20, CONTENT_Y + 14), "최근 변동 원인",
                   font=f_sm, fill=accent, anchor="lt")
         if movement_reason:
             ky = CONTENT_Y + 66
@@ -1772,7 +1772,7 @@ def main():
     SCENE_ACCENTS = ACCENT_THEMES[_theme_idx(today)]
     print(f"   🎨 색상 테마 #{_theme_idx(today)} 적용 (격일 생성마다 변형)")
 
-    print("📊 주간 세션 로드...")
+    print("📊 최근 세션 로드...")
     sessions = load_week_sessions()
     if not sessions:
         print("⚠ 최근 7일 세션 없음 — 종료", file=sys.stderr)
@@ -1793,7 +1793,7 @@ def main():
     # ── Calendar 이벤트 ──
     summary["next_events"] = load_next_events()
     if summary["next_events"]:
-        print(f"   다음주 이벤트 {len(summary['next_events'])}건 발견")
+        print(f"   향후 이벤트 {len(summary['next_events'])}건 발견")
 
     # ── 주가 변동 원인 (Google Search grounding) ──
     print("🔍 주가 변동 원인 검색 중...")
@@ -1810,7 +1810,7 @@ def main():
         scenes = parse_script(raw)
         img_prompts = parse_image_prompts(raw)
 
-        # 대시보드용 title/subtitle — 씬0(주간브리핑) 첫 줄에서 추출
+        # 대시보드용 title/subtitle — 씬0(동향브리핑) 첫 줄에서 추출
         script_title = ""
         script_subtitle = f"{summary['week_start']} ~ {summary['week_end']}"
         scene1 = next((s for s in scenes if s["index"] == 0), None)
@@ -1837,9 +1837,9 @@ def main():
 
         # ── 이미지 프롬프트 별도 저장 (Imagen 복붙용) ──
         if img_prompts:
-            lines = [f"# {TICKER} 주간 배경 이미지 프롬프트 — {today}",
+            lines = [f"# {TICKER} 배경 이미지 프롬프트 — {today}",
                      "# Gemini Imagen에 씬별로 붙여넣기 하세요.\n"]
-            scene_names = {0: "씬0 주간브리핑", 1: "씬1 호재심층", 2: "씬2 다음주전망"}
+            scene_names = {0: "씬0 동향브리핑", 1: "씬1 호재심층", 2: "씬2 향후전망"}
             for i in range(0, 3):
                 if i in img_prompts:
                     lines.append(f"## {scene_names[i]}")
@@ -1868,8 +1868,8 @@ def main():
         }, f, ensure_ascii=False, indent=2)
 
     print(f"\n✅ 완료: data/weekly-report/{today}/")
-    print(f"   📄 script.txt  — 영상 대본 (5씬, 인트로+클로징 포함)")
-    print(f"   🖼 scene_00~04.png — 씬별 배경 카드 이미지 (1080×1920, YouTube Shorts 세로 포맷)")
+    print(f"   📄 script.txt  — 영상 대본 (3씬)")
+    print(f"   🖼 scene_00~02.png — 씬별 배경 카드 이미지 (1080×1920, YouTube Shorts 세로 포맷)")
 
 
 if __name__ == "__main__":

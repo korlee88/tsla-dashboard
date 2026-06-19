@@ -25,7 +25,7 @@
     { "id": "R21", "name_ko": "소송 승리",           "desc": "major lawsuit win",                                               "direction": "bullish", "cat": "Legal",       "color": "#22c55e", "bg": "rgba(34,197,94,0.15)" },
     { "id": "R22", "name_ko": "공매도 보고서",       "desc": "short seller report",                                             "direction": "bearish", "cat": "Market",      "color": "#f97316", "bg": "rgba(249,115,22,0.15)" },
     { "id": "R23", "name_ko": "경기침체 우려",       "desc": "recession fear intensification",                                  "direction": "bearish", "cat": "Macro",       "color": "#eab308", "bg": "rgba(234,179,8,0.15)" },
-    { "id": "R24", "name_ko": "머스크 사업 리스크",  "desc": "musk other ventures risk spillover(SpaceX/X/DOGE)",               "direction": "bearish", "cat": "Musk",        "color": "#f59e0b", "bg": "rgba(245,158,11,0.15)" },
+    { "id": "R24", "name_ko": "머스크 사업 리스크",  "desc": "musk other private ventures risk spillover(X/DOGE) — SpaceX is now publicly listed(SPCX), score its news independently rather than as spillover risk", "direction": "bearish", "cat": "Musk",        "color": "#f59e0b", "bg": "rgba(245,158,11,0.15)" },
     { "id": "R25", "name_ko": "옵티머스 상업화",     "desc": "optimus/humanoid robot production scale-up or commercialization(B2B contract/factory ramp/shipment confirmed)", "direction": "bullish", "cat": "Product", "color": "#a78bfa", "bg": "rgba(167,139,250,0.2)" },
     { "id": "R26", "name_ko": "차량 생산 축소",      "desc": "vehicle production cut/pause for robot factory transition(bullish if paired with R25, bearish offset)",       "direction": "mixed",   "cat": "Operations", "color": "#9ca3af", "bg": "rgba(156,163,175,0.1)" }
   ],
