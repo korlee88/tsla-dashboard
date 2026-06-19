@@ -1494,21 +1494,27 @@ def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None 
             last_cy_bottom = cy + card_h
             cy = last_cy_bottom + MSG_GAP
 
-        # ── 향후 이벤트 한 줄 (있을 때만, 슬림 띠) ─────────────────
+        # ── 향후 이벤트 (있을 때만, 슬림 카드 — 날짜·제목 줄바꿔 겹침 방지) ──
         next_events = summary.get("next_events", []) or []
         SLIM_Y = last_cy_bottom + MSG_GAP + 6
         if next_events:
             ev = next_events[0]
             date_s = ev.get("date", "")
-            title_s = strip_emoji(ev.get("title", "")[:30])
-            SLIM_H = 80
+            title_s = strip_emoji(ev.get("title", "")[:40])
+            title_lines = wrap_text(draw, title_s, f_sm, W - PAD * 2 - 40)[:2]
+            LINE_H_SLIM = 44
+            SLIM_H = 24 + LINE_H_SLIM * (1 + len(title_lines))
             draw.rounded_rectangle([PAD, SLIM_Y, W - PAD, SLIM_Y + SLIM_H],
                                    radius=14, fill=(38, 22, 62), outline=AMBER, width=2)
-            draw.text((PAD + 20, SLIM_Y + SLIM_H // 2), f"▶ {date_s}",
-                      font=f_sm, fill=AMBER, anchor="lm")
-            draw.text((W - PAD - 20, SLIM_Y + SLIM_H // 2), title_s,
-                      font=f_sm, fill=WHITE, anchor="rm",
-                      stroke_width=1, stroke_fill=STROKE)
+            ty = SLIM_Y + 16
+            draw.text((PAD + 20, ty), f"▶ {date_s}",
+                      font=f_sm, fill=AMBER, anchor="lt")
+            ty += LINE_H_SLIM
+            for tl in title_lines:
+                draw.text((PAD + 20, ty), tl,
+                          font=f_sm, fill=WHITE, anchor="lt",
+                          stroke_width=1, stroke_fill=STROKE)
+                ty += LINE_H_SLIM
         else:
             # 폴백 자리 비움 (다음 단계 좌표 보존)
             SLIM_H = 0
