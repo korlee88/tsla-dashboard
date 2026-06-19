@@ -1,5 +1,5 @@
 """
-주간 나레이션 영상 생성 (moviepy 2.x + 애니메이션)
+영상 나레이션 생성 (moviepy 2.x + 애니메이션)
 weekly_video_prep.py 실행 후 사용.
 script.json + scene_XX.png → edge-tts MP3 → 애니메이션 MP4
 출력: 1080×1920 (YouTube Shorts 세로 포맷)
@@ -31,7 +31,7 @@ PHOTO_H       = 500                     # 사진 영역 높이 (prep.py의 PHOTO
 MIN_SCENE_SEC = 5.0
 
 ACCENT_COLORS = [
-    (167, 139, 250),  # scene 0 purple  - 주간 브리핑
+    (167, 139, 250),  # scene 0 purple  - 동향 브리핑
     (34,  197,  94),  # scene 1 green   - 호재 심층
     (236,  72, 153),  # scene 2 magenta - 미래 비전 (클로징)
 ]
@@ -138,7 +138,7 @@ def build_scene_tts_segments(idx: int, lines: list) -> list:
         return []
 
     if idx == 0:
-        # 주간 브리핑 — 4줄(헤드라인·원인·호재·리스크) + 친근한 연결
+        # 동향 브리핑 — 4줄(헤드라인·원인·호재·리스크) + 친근한 연결
         head    = cleaned[0] if cleaned else ""
         reason  = cleaned[1] if len(cleaned) > 1 else ""
         bull    = cleaned[2] if len(cleaned) > 2 else ""
@@ -159,8 +159,8 @@ def build_scene_tts_segments(idx: int, lines: list) -> list:
         return segs
 
     if idx == 2:
-        # 클로징(다음주 전망) — 인트로 + 나머지 줄들
-        segs = ["자, 다음 주는 어떨까요? " + cleaned[0]]
+        # 클로징(앞으로 전망) — 인트로 + 나머지 줄들
+        segs = ["자, 앞으로는 어떨까요? " + cleaned[0]]
         segs.extend(cleaned[1:])
         return segs
 
@@ -429,7 +429,7 @@ def make_anime_frame(t, base_arr, accent, dur, scene_idx):
     from PIL import Image
     img = Image.fromarray(base_arr).copy()
 
-    is_intro   = (scene_idx == 0)   # 주간 브리핑(첫 씬) — 부드러운 페이드인
+    is_intro   = (scene_idx == 0)   # 동향 브리핑(첫 씬) — 부드러운 페이드인
     is_closing = (scene_idx == 2)   # 미래 비전(마지막 씬) — 페이드아웃
 
     # Ken Burns 효과 제거 — 정적 이미지 유지
@@ -466,7 +466,7 @@ async def process_scene(scene, report_dir):
 
     idx      = scene["index"]
     lines    = [l for l in scene.get("lines", []) if l.strip()]
-    accent   = ACCENT_COLORS[idx]   # 0-based: 0=주간브리핑, 1=호재심층, 2=미래비전
+    accent   = ACCENT_COLORS[idx]   # 0-based: 0=동향브리핑, 1=호재심층, 2=미래비전
     title    = scene.get("title", f"씬 {idx}")
     img_path = report_dir / f"scene_{idx:02d}.png"
 
@@ -505,7 +505,7 @@ async def build_video_async(report_dir):
 
     script = json.loads((report_dir / "script.json").read_text(encoding="utf-8"))
     scenes = script.get("scenes", [])
-    title  = script.get("title", f"{TICKER} 주간 분석")
+    title  = script.get("title", f"{TICKER} 분석")
 
     print(f"📽 {len(scenes)}개 씬 처리 (애니메이션 모드, 음성: {VOICE})")
     print(f"   제목: {title}")
