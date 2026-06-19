@@ -1,13 +1,14 @@
 {
   "generated_at": "2026-06-19",
   "generated_by": "Claude Opus 4",
-  "title": "어, 테슬라가 왜 *+2.61%* 올랐죠?",
-  "subtitle": "2026-06-11 ~ 2026-06-18 · 테슬라, 스티어링 휠 없는 사이버캡 출시 및 로보택시 ",
+  "title": "다들 우려했지만, 한 주 *+3.53%* 올랐어요",
+  "subtitle": "2026-06-12 ~ 2026-06-19 · 테슬라, 스티어링 휠 없는 사이버캡 출시 및 로보택시 ",
   "summary": {
-    "week_start": "2026-06-11",
-    "week_end": "2026-06-18",
-    "session_count": 13,
+    "week_start": "2026-06-12",
+    "week_end": "2026-06-19",
+    "session_count": 10,
     "buy_indices": [
+      39,
       46,
       42,
       51,
@@ -16,20 +17,16 @@
       45,
       53,
       49,
-      38,
-      39,
-      51,
-      48,
-      41
+      38
     ],
-    "avg_buy_index": 47,
-    "latest_buy_index": 46,
-    "price_start": 386.29,
-    "price_end": 396.38,
-    "latest_price": 396.38,
-    "today_price": 396.38,
-    "today_change_pct": -2.05,
-    "week_change_pct": 2.61,
+    "avg_buy_index": 48,
+    "latest_buy_index": 39,
+    "price_start": 386.85,
+    "price_end": 400.49,
+    "latest_price": 400.49,
+    "today_price": 400.49,
+    "today_change_pct": 1.04,
+    "week_change_pct": 3.53,
     "biggest_impact": {
       "title": "테슬라, 스티어링 휠 없는 사이버캡 출시 및 로보택시 서비스 확장",
       "score": 3,
@@ -96,50 +93,54 @@
       {
         "day": 1,
         "label": "내일",
-        "date": "6/19(금)",
-        "change_pct": -0.7,
-        "signal": "관망",
-        "basePrice": 396.38,
-        "predictedPrice": 393.61
+        "date": "6/22(월)",
+        "change_pct": -1.2,
+        "signal": "매도",
+        "basePrice": 400.49,
+        "predictedPrice": 395.68
       },
       {
         "day": 2,
         "label": "D+2",
-        "date": "6/22(월)",
-        "change_pct": 0.3,
+        "date": "6/23(화)",
+        "change_pct": -0.7,
         "signal": "관망",
-        "basePrice": 396.38,
-        "predictedPrice": 397.57
+        "basePrice": 400.49,
+        "predictedPrice": 397.69
       },
       {
         "day": 3,
         "label": "D+3",
-        "date": "6/23(화)",
-        "change_pct": -1.1,
-        "signal": "매도",
-        "basePrice": 396.38,
-        "predictedPrice": 392.02
+        "date": "6/24(수)",
+        "change_pct": 0.1,
+        "signal": "관망",
+        "basePrice": 400.49,
+        "predictedPrice": 400.89
       },
       {
         "day": 4,
         "label": "D+4",
-        "date": "6/24(수)",
-        "change_pct": 0.9,
-        "signal": "매수",
-        "basePrice": 396.38,
-        "predictedPrice": 399.95
+        "date": "6/25(목)",
+        "change_pct": 0.5,
+        "signal": "관망",
+        "basePrice": 400.49,
+        "predictedPrice": 402.49
       },
       {
         "day": 5,
         "label": "D+5",
-        "date": "6/25(목)",
-        "change_pct": -0.5,
-        "signal": "관망",
-        "basePrice": 396.38,
-        "predictedPrice": 394.4
+        "date": "6/26(금)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 400.49,
+        "predictedPrice": 396.89
       }
     ],
     "daily_prices": [
+      [
+        "2026-06-19",
+        400.49
+      ],
       [
         "2026-06-18",
         396.38
@@ -154,10 +155,6 @@
       ],
       [
         "2026-06-15",
-        406.43
-      ],
-      [
-        "2026-06-14",
         406.43
       ]
     ],
@@ -180,50 +177,50 @@
         "id": "cal-2026-07-01-q2-2026-vehicle-production-deliveries-re"
       }
     ],
-    "movement_reason": "테슬라(TSLA) 주가 하락의 주요 원인은 다음과 같습니다.\n\n자율주행 규제 강화 / 스페이스X 상장 임박 / 높은 자본 지출 부담"
+    "movement_reason": "2026년 6월 12일부터 2026년 6월 19일 기간 동안 테슬라(TSLA) 주가 상승의 주요 원인은 다음과 같습니다.\n\n*   머스크 지분 확대\n*   AI 자율주행 기대\n*   골드만삭스 전망 상향\n\n일론 머스크의 주식 옵션 행사로 인한 테슬라 의결권 20% 확대는 투자자들에게 긍정적인 신호로 작용했습니다. 또한, 테슬라의 인공지능(AI), 로보택시, 완전자율주행(FSD) 및 Optimus 관련 기술 발전 기대감이 지속적으로 투자 심리를 견인했습니다. 마지막으로, 골드만삭스가 2분기 전기차 인도량 전망치를 상향 조정한 것이 주가 상승에 기여했습니다."
   },
   "scenes": [
     {
       "index": 0,
-      "title": "이번주",
+      "title": "테슬라근황",
       "lines": [
-        "어, 테슬라가 왜 *+2.61%* 올랐죠?",
-        "*FSD 규제* 우려에도 $396 마감",
-        "*사이버캡 3만 달러* 공개됐어요",
-        "상원의 *FSD 안전 조사* 요청도"
+        "다들 우려했지만, 한 주 *+3.53%* 올랐어요",
+        "머스크 의결권 *20% 확대*가 힘이 됐죠",
+        "*3만 달러 미만* 사이버캡 공개도 호재예요",
+        "미 상원이 *FSD 안전성 조사*를 요청했어요"
       ],
-      "body": "어, 테슬라가 왜 *+2.61%* 올랐죠?\n*FSD 규제* 우려에도 $396 마감\n*사이버캡 3만 달러* 공개됐어요\n상원의 *FSD 안전 조사* 요청도"
+      "body": "다들 우려했지만, 한 주 *+3.53%* 올랐어요\n머스크 의결권 *20% 확대*가 힘이 됐죠\n*3만 달러 미만* 사이버캡 공개도 호재예요\n미 상원이 *FSD 안전성 조사*를 요청했어요"
     },
     {
       "index": 1,
       "title": "호재분석",
       "lines": [
-        "카테고리: *스티어링 없는 사이버캡* 출시",
-        "↳ 배경: *2027년 이전* 출시 로드맵 확정",
-        "↳ 데이터: 가격 *3만 달러 미만* 공식 발표",
-        "↳ 임팩트: 주중 한때 *$411*까지 터치",
-        "↳ 비교: 모델3 *$4만대* 대비 파격가",
-        "↳ FSD 대중화의 분기점이 될 수 있어요"
+        "카테고리: *사이버캡* 본격 출시 임박",
+        "↳ 배경: *2027년 이전* 출시 일정 공식화",
+        "↳ 데이터: 가격 *3만 달러 미만*으로 책정",
+        "↳ 임팩트: 한 주 주가 *+3.53%* 견인",
+        "↳ 비교: 모델3 초기가 대비 *약 30%* 저렴",
+        "↳ 대중화 전기차 시장의 판도가 흔들릴 수 있어요"
       ],
-      "body": "카테고리: *스티어링 없는 사이버캡* 출시\n   ↳ 배경: *2027년 이전* 출시 로드맵 확정\n   ↳ 데이터: 가격 *3만 달러 미만* 공식 발표\n   ↳ 임팩트: 주중 한때 *$411*까지 터치\n   ↳ 비교: 모델3 *$4만대* 대비 파격가\n   ↳ FSD 대중화의 분기점이 될 수 있어요"
+      "body": "카테고리: *사이버캡* 본격 출시 임박\n   ↳ 배경: *2027년 이전* 출시 일정 공식화\n   ↳ 데이터: 가격 *3만 달러 미만*으로 책정\n   ↳ 임팩트: 한 주 주가 *+3.53%* 견인\n   ↳ 비교: 모델3 초기가 대비 *약 30%* 저렴\n   ↳ 대중화 전기차 시장의 판도가 흔들릴 수 있어요"
     },
     {
       "index": 2,
-      "title": "다음주전망",
+      "title": "앞으로전망",
       "lines": [
-        "*7월 1일 2분기 인도량* 발표예요",
-        "*컨센서스 상회* 여부가 관건이죠",
-        "주말 예상가 *약 $394* 흐름이에요",
-        "*상승 2일·하락 3일* 혼조 예상돼요",
-        "시장은 인도량만 보지만 *FSD 조사*가 변수",
+        "*7월 1일* 2분기 인도량 발표예요",
+        "골드만삭스 *전망 상향*이 관전 포인트죠",
+        "5일 뒤 *약 $397*, *-0.9%* 흐름이 점쳐져요",
+        "오르는 날 *2일*, 내리는 날 *3일* 예상돼요",
+        "시장은 경쟁을 보지만, 핵심은 *FSD 규제*예요",
         "함께해 주셔서 감사해요!"
       ],
-      "body": "*7월 1일 2분기 인도량* 발표예요\n*컨센서스 상회* 여부가 관건이죠\n주말 예상가 *약 $394* 흐름이에요\n*상승 2일·하락 3일* 혼조 예상돼요\n시장은 인도량만 보지만 *FSD 조사*가 변수\n함께해 주셔서 감사해요!"
+      "body": "*7월 1일* 2분기 인도량 발표예요\n골드만삭스 *전망 상향*이 관전 포인트죠\n5일 뒤 *약 $397*, *-0.9%* 흐름이 점쳐져요\n오르는 날 *2일*, 내리는 날 *3일* 예상돼요\n시장은 경쟁을 보지만, 핵심은 *FSD 규제*예요\n함께해 주셔서 감사해요!"
     }
   ],
   "image_prompts": {
-    "0": "A cinematic 16:9 landscape view of Seoul's Han River night skyline with Namsan Tower, 63 Building, and Lotte Tower glowing in deep purple violet hues, featuring a sleek Tesla FSD robotaxi autonomous driving vehicle cruising along an elevated highway, an Optimus humanoid robot standing near the riverside, holographic 4680 battery cells floating, megapack energy storage units illuminated, Dojo supercomputer data streams visualized as glowing particles, K-tech futuristic Korean city analytics atmosphere, purple violet tech mood, glowing city lights bokeh, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
-    "1": "A vibrant 16:9 landscape image of Seoul's Banpo Bridge bathed in fresh green bullish growth light during golden sunrise, a Tesla electric vehicle fast-charging at a modern station, FSD robotaxi autonomous driving showcase, Optimus humanoid robot assisting pedestrians, glowing 4680 battery cells displayed, megapack energy storage powering the city, Dojo supercomputer cluster visualization, K-tech eco-friendly infrastructure with lush green energy aura, bright optimistic uplifting mood, Korean city Seoul Tesla green growth bullish vibrant scene, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
-    "2": "A breathtaking 9:16 vertical composition of futuristic Korean city Seoul at night, Han River reflections and Gwanghwamun Square in the background, a sleek autonomous Tesla Cybercab driving through illuminated streets, an Optimus humanoid robot walking gracefully, holographic FSD robotaxi autonomous driving visuals, glowing 4680 battery cells, megapack energy storage towers, Dojo supercomputer light streams, advanced K-tech cityscape, magenta and gold inspirational futuristic mood, golden sunlight, starlight sparkles, dreamy aspirational atmosphere, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+    "0": "Seoul Han River night view with Tesla autonomous electric vehicles cruising on illuminated highways, FSD robotaxi autonomous driving sensors glowing, Optimus humanoid robot standing by the riverside, 4680 battery cells subtly visualized, megapack energy storage units, Dojo supercomputer holographic display, Namsan Tower, 63 Building, Lotte Tower city skyline, K-tech advanced futuristic urban purple violet analytics mood, glowing city lights bokeh reflections on water, cinematic depth, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "Seoul Banpo Bridge with vibrant green growth bullish energy ascending lights, Tesla electric vehicles fast charging and driving at high speed, FSD robotaxi autonomous driving fleet, Optimus humanoid robot assisting at charging station, 4680 battery cells glowing, megapack energy storage along the riverside, Dojo supercomputer data streams, K-tech eco-friendly infrastructure bright lively atmosphere, Korean city Seoul Tesla green vibrant sunlit modern bridge electric vehicle charging hubs, dynamic motion blur, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "Korean futuristic city vertical view with Han River night scene, Seoul skyline and Gwanghwamun Square backdrop featuring autonomous Tesla Cybercab vehicles and Optimus humanoid robots walking, future vision elements including FSD robotaxi autonomous driving lanes, 4680 battery cells visualization, megapack energy storage towers, Dojo supercomputer holographic interface, advanced K-tech cityscape, magenta and gold inspirational futuristic mood, golden sunlight starlight sparkles, cinematic vertical composition, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
   }
 }
