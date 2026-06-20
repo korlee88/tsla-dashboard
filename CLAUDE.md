@@ -178,6 +178,8 @@ STEP 5: gws_publish.py ← 신규 (YouTube · Sheets · Gmail)
 2. Gemini 1.5 Flash — `GEMINI_API_KEY` 필요
 3. 둘 다 없으면 RuntimeError
 
+**대본 2단계 생성** (v2.8.2): 1차 생성(`generate_script`) → 재검수(`review_script`) 2단계로 진행. 재검수 단계는 반복 표현·어색한 문구를 다듬고, 미래 기술·사업방향(`{future_tech}`) 전달력이 막연하면 더 구체적으로 보강하도록 같은 LLM(Opus→Gemini 폴백, `_call_llm` 공용 헬퍼)에 한 번 더 요청한다. 검수 결과가 `SCENE_*`/`IMAGE_PROMPT_*` 마커 형식을 깨거나 호출 자체가 실패하면 1차 초안을 그대로 사용(파이프라인 보호) — `script.txt`/`script.json`에 기록되는 텍스트는 항상 이 2단계를 거친 최종본이다.
+
 **Gemini SDK**: `google-genai` (신규 SDK, NOT `google-generativeai`)
 ```python
 from google import genai
@@ -237,7 +239,8 @@ BGM_VOLUME = 0.10                      # 나레이션 아래 배경음 (10%)
 BGM_CACHE  = data/bgm.mp3              # 저장소에 커밋된 음원
 ```
 > 배경음악은 **저장소에 커밋된 `data/bgm.mp3`** 만 사용한다 → 빌드 시 네트워크 의존 0. `download_bgm()`은 이 파일을 반환만 하며 외부 다운로드(yt-dlp 등)는 하지 않는다.
-> 음원은 `scripts/make_bgm.py`가 합성한 **원본 앰비언트 패드**(C–Am–F–G maj7 + 아르페지오 + 약한 잔향, 이음매 없는 ~63초 루프)라 저작권·출처 표기 의무가 없다. 외부 CC0 사이트는 빌드 환경에서 불안정(FreePD=JS 렌더링, archive.org=CC0 검색 비고, yt-dlp+YouTube=러너 IP 봇 차단)해서 직접 합성·커밋으로 확정했다.
+> 음원은 `scripts/make_bgm.py`가 합성한 **원본 앰비언트 패드**(C–Am–F–G maj7 + 아르페지오 + 약한 잔향, 이음매 없는 ~63초 루프, 스테레오)라 저작권·출처 표기 의무가 없다. 외부 CC0 사이트는 빌드 환경에서 불안정(FreePD=JS 렌더링, archive.org=CC0 검색 비고, yt-dlp+YouTube=러너 IP 봇 차단)해서 직접 합성·커밋으로 확정했다.
+> **밋밋함 개선** (v2.8.2): 기존 버전은 완전 모노 + 4회 반복 사이클이 전부 동일한 아르페지오·다이내믹스라 ~63초 루프 전체를 들어도 변화가 없었다. 좌우 채널을 몇 센트 디튠한 코러스 패드(`grain_stereo`)로 스테레오 폭을 만들고, 사이클별로 다른 아르페지오 편성(`ARP_PATTERNS` — 사이클0 패드만(도입)→1 절반 밀도(빌드업)→2 원곡 풀 패턴→3 변형 패턴(클라이맥스))과 결정론적(seed=42) 하이엔드 스파클(`SPARKLE_COUNTS`, 사이클마다 0→2→3→5개로 증가)을 더해 빌드업/클라이맥스 아크를 만들었다. 아르페지오는 핑퐁 패닝(`PAN_STEPS`)으로 움직이고, 기존 진폭 트레몰로(~8.3초 주기)와는 별개로 ~22초 주기의 스테레오 폭 "숨쉬기" 변조(mid/side 블렌드)를 추가했다. 루프 크로스페이드가 실제 파형을 블렌딩하므로 사이클3(클라이맥스)→사이클0(도입) 밀도 차이도 자연스러운 릴리즈처럼 이어진다.
 > 재생성: `pip install numpy lameenc && python scripts/make_bgm.py` (결정론적 합성 — 출력 동일). 교체하려면 `data/bgm.mp3`만 원하는 트랙으로 바꿔 커밋.
 > 믹싱은 루프 횟수만큼 **새 `AudioFileClip` 인스턴스를 만들어** `concatenate_audioclips`로 이어 붙인다(같은 인스턴스 재사용 시 리더 start가 공유돼 루프가 깨짐). `write_videofile` **전에 BGM 클립을 close하지 않는다**(리더 끊김 방지) — 프로세스 종료 시 정리.
 
@@ -375,7 +378,8 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 
 | 버전 | 날짜 | 주요 변경 |
 |------|------|---------|
-| **v2.8.1** | 2026-06-19 KST | 격일(월·수·금) 전환 후 남아있던 "주간"/"매일" 표기 정리(워크플로 이름·각본 페이지·TTS 나레이션·이메일 제목/본문·코드 주석, `weekly_video_prep.py`/`weekly_video_make.py`/`gws_publish.py`/`ticker.json`/`index.html`) · `rules.json` R24 설명 갱신(SpaceX는 2026-06-13경 상장돼 더 이상 "비상장 벤처"가 아님 — "X/DOGE" 스필오버와 분리해 독립 평가하도록 수정) · Gmail 다이제스트 시그널 색상이 항상 회색으로만 표시되던 버그 수정(`signal_color` 딕셔너리 키가 실제 반환값과 불일치) · Gmail 씬 캡션이 구버전 6씬 라벨(충격인트로 등)을 쓰던 버그 수정(현재 3씬에 맞게 교체) · 각본 페이지 이미지 프롬프트 드롭다운 버그 수정(씬0 프롬프트 미표시·씬1-2 오라벨링·씬3-4 무효 항목, 0-based 3씬에 맞게 수정) |
+| **v2.8.2** | 2026-06-20 KST | 마지막 씬(idx 2) 캘린더 일정 카드 날짜·제목 텍스트 겹침 수정(`next_events` 슬림 카드 — 같은 줄에 고정 30자 절단하던 방식 → `wrap_text()` 기반 폭 계산으로 제목을 날짜 아래 별도 줄에 배치, 카드 높이 동적 계산) · BGM "밋밋함" 근본 수정(`make_bgm.py` — 기존엔 완전 모노+사이클 4회 전부 동일한 아르페지오/다이내믹스라 반복재생 체감이 평평했음 → 좌우 채널 디튠 코러스 패드, 사이클별 빌드업·클라이맥스 편성(`ARP_PATTERNS`: 패드만→절반 밀도→풀 텍스처→변형+스파클), 아르페지오 핑퐁 패닝, 결정론적 하이엔드 스파클(`SPARKLE_COUNTS`), 진폭 트레몰로와 별개 주기(~22초)의 스테레오 폭 "숨쉬기" 변조 추가, MP3 stereo 출력 전환·`data/bgm.mp3` 재생성) · 대본 생성 파이프라인에 재검수 단계 신규 추가(`weekly_video_prep.py` — 1차 생성 직후 `review_script()`가 반복 표현·어색한 문구를 다듬고 미래 기술·사업방향(`{future_tech}`) 전달력을 보강하도록 2차 LLM 호출, 기존 Opus→Gemini 폴백 로직은 `_call_llm()` 공용 헬퍼로 추출해 1차 생성·재검수 양쪽에서 재사용, 검수 결과가 형식(SCENE/IMAGE_PROMPT 마커)을 깨거나 호출 자체가 실패하면 1차 초안을 그대로 사용해 파이프라인 보호) |
+| v2.8.1 | 2026-06-19 KST | 격일(월·수·금) 전환 후 남아있던 "주간"/"매일" 표기 정리(워크플로 이름·각본 페이지·TTS 나레이션·이메일 제목/본문·코드 주석, `weekly_video_prep.py`/`weekly_video_make.py`/`gws_publish.py`/`ticker.json`/`index.html`) · `rules.json` R24 설명 갱신(SpaceX는 2026-06-13경 상장돼 더 이상 "비상장 벤처"가 아님 — "X/DOGE" 스필오버와 분리해 독립 평가하도록 수정) · Gmail 다이제스트 시그널 색상이 항상 회색으로만 표시되던 버그 수정(`signal_color` 딕셔너리 키가 실제 반환값과 불일치) · Gmail 씬 캡션이 구버전 6씬 라벨(충격인트로 등)을 쓰던 버그 수정(현재 3씬에 맞게 교체) · 각본 페이지 이미지 프롬프트 드롭다운 버그 수정(씬0 프롬프트 미표시·씬1-2 오라벨링·씬3-4 무효 항목, 0-based 3씬에 맞게 수정) |
 | v2.8.0 | 2026-06-18 KST | 영상 격일 생성(주1회 → 월·수·금 KST, cron `'15 20 * * 0,2,4'`/`'15 22 * * 0,2,4'`) · 양산형 탈피: 오프닝 훅 8종 로테이션(`HOOK_STYLES`/`pick_hook`, 고정 오프닝 제거) · 차별화 관점 1줄 의무 · 색상 테마 3종 로테이션(`ACCENT_THEMES`/`_theme_idx`, prep·make 동기화, 씬1 호재는 초록 유지) |
 | v2.7.0 | 2026-06-17 KST | 뉴스 출처 국적·신뢰도 태그(`SOURCE_INFO`/`CRED_TIER`/`sourceMeta()`/`SourceTag`, 메인·모바일 카드+세션 상세에 표시) · 이미지 프롬프트에 미래 기술·사업계획 반영(`image_future_tech_en`/`FUTURE_TECH_EN`/`{future_tech}`) · 호재 씬 ↑화살표 → ✓체크 머리기호(`draw_check`) + 본문 폰트 축소(50→46) |
 | v2.6.4 | 2026-06-14 KST | 영상 BGM 복구·풍성화(원본 합성 `data/bgm.mp3` 커밋·`make_bgm.py`, yt-dlp 외부 다운로드 제거) · BGM 루프 믹싱 버그 수정(루프마다 새 클립·write 전 close 금지) · 씬 전환 0.5초 딜레이(`SCENE_LEAD_MS`/`SCENE_TAIL_MS`, 단일 세그먼트 씬 포함) |

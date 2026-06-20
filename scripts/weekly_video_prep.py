@@ -562,22 +562,80 @@ def generate_script_gemini(prompt):
 
 _last_model = "AI"
 
-def generate_script(summary):
+def _call_llm(prompt, label="대본"):
+    """Opus 우선 → 실패 시 Gemini 폴백 (1차 생성·재검수 공용)."""
     global _last_model
-    prompt = _build_prompt(summary)
     if ANTHROPIC_API_KEY:
         try:
-            print("   🤖 Claude Opus 4로 대본 생성 중...")
+            print(f"   🤖 Claude Opus 4로 {label} 생성 중...")
             result = generate_script_opus(prompt)
             _last_model = "Claude Opus 4"
             return result
         except Exception as e:
             print(f"   ⚠ Opus 실패 ({e}) — Gemini로 전환", file=sys.stderr)
     if GEMINI_API_KEY:
-        print("   🤖 Gemini Flash로 대본 생성 중...")
+        print(f"   🤖 Gemini Flash로 {label} 생성 중...")
         _last_model = "Gemini Flash"
         return generate_script_gemini(prompt)
     raise RuntimeError("ANTHROPIC_API_KEY 또는 GEMINI_API_KEY 필요")
+
+
+def generate_script(summary):
+    return _call_llm(_build_prompt(summary), label="대본")
+
+
+REVIEW_PROMPT_TEMPLATE = """아래는 {ticker} YouTube Shorts 나레이션 대본 1차 초안이다. 게시 전 마지막 검수·다듬기를 진행해줘.
+
+=== 검수 체크리스트 ===
+1. 반복 표현 정리: 씬 사이·줄 사이에서 같은 단어·어미·문장 구조가 부자연스럽게 반복되면 동의어·다른 어미로 다듬는다
+2. 어색한 문구 교정: 번역체·어순이 부자연스러운 부분을 사람이 실제로 말하듯 자연스러운 구어체로 고친다
+3. 미래 비전 전달력 보강: {company_ko}의 미래 기술·사업 방향({future_tech})이 막연한 나열에 머물지 않고 시청자가 구체적인 장면을 그릴 수 있도록 생생하게 표현되는지 확인한다. 특히 씬1의 "↳ 향후 전망" 줄이나 씬2가 추상적이면 더 구체적으로 보강한다
+4. 사실 왜곡 금지: 새로운 수치·사실을 지어내지 않는다 — 원문에 있는 수치·사실의 표현만 다듬는다
+5. 좋은 부분은 유지: 문제가 없는 줄은 그대로 둔다 — 차이를 만들기 위한 불필요한 수정은 하지 않는다
+
+=== 원본 작성 규칙 (검수 후에도 반드시 유지) ===
+- 친근한 구어체 어미("~예요"·"~네요"·"~죠"·"~봐요" 등), 보고서 말투·클릭베이트 추임새 금지
+- 매수·매도·관망 등 단정적 투자 권유 표현 금지, 내부 점수(+N점) 표기 금지
+- 씬0 4줄·씬1 6줄·씬2 6줄 구조와 각 줄 글자수 제한(약 20~30자) 그대로 유지
+- 각 줄 핵심 수치·키워드 1~2개는 *별표*로 감싸 강조(이미 있는 강조 마커 위치도 자유롭게 다듬어도 됨)
+- 씬2 마지막 줄(마무리 인사)에 "다음 주" 표현 금지
+- IMAGE_PROMPT_0~2는 영어 그대로 유지(필요 시에만 다듬고, 형식·비율 표기는 그대로 유지)
+
+=== 검수할 대본 (원본 형식 그대로) ===
+{draft}
+
+=== 출력 형식 ===
+원본과 동일한 형식(SCENE_0_TITLE/SCENE_0/SCENE_1_TITLE/SCENE_1/SCENE_2_TITLE/SCENE_2/IMAGE_PROMPT_0/IMAGE_PROMPT_1/IMAGE_PROMPT_2)으로 최종 대본 전체를 빠짐없이 출력한다.
+설명·주석·마크다운 코드블록 없이 raw 텍스트만 반환한다."""
+
+
+def review_script(raw, summary):
+    """1차 생성 대본을 재검수해 반복·어색한 문구를 다듬고 미래 비전 전달력을 보강.
+
+    검수 호출이 실패하거나 결과가 형식을 깨면 1차 초안을 그대로 반환해 파이프라인을 보호한다.
+    """
+    global _last_model
+    gen_model = _last_model
+    prompt = REVIEW_PROMPT_TEMPLATE.format(
+        ticker=TICKER,
+        company_ko=COMPANY_KO,
+        future_tech=FUTURE_TECH_EN,
+        draft=raw,
+    )
+    try:
+        revised = _call_llm(prompt, label="대본 검수")
+    except Exception as e:
+        print(f"   ⚠ 대본 검수 실패 ({e}) — 1차 초안 유지", file=sys.stderr)
+        _last_model = gen_model
+        return raw
+    required = ([f"SCENE_{i}_TITLE:" for i in range(3)]
+                + [f"SCENE_{i}:" for i in range(3)]
+                + [f"IMAGE_PROMPT_{i}:" for i in range(3)])
+    if all(m in revised for m in required):
+        return revised
+    print("   ⚠ 검수 결과 형식 불완전 — 1차 초안 유지", file=sys.stderr)
+    _last_model = gen_model
+    return raw
 
 
 def parse_script(raw):
@@ -1812,7 +1870,9 @@ def main():
         scenes = [{"index": i, "title": f"씬 {i}", "lines": [], "body": ""} for i in range(0, 3)]
     else:
         print("✍ 대본 생성 중...")
-        raw    = generate_script(summary)
+        raw = generate_script(summary)
+        print("🔍 대본 재검수 중 (반복·어색한 문구·미래비전 전달력)...")
+        raw = review_script(raw, summary)
         scenes = parse_script(raw)
         img_prompts = parse_image_prompts(raw)
 
