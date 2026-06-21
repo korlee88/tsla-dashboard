@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.09,
-  "velocity_label": "급감 (×0.1)",
-  "reason": "조회수 속도 급감 (×0.1) | 최근 3일 171,572회 / 이전 4~7일 1,812,110회 | 총 1,983,682회 (43개 영상)",
-  "video_count": 43,
-  "total_views": 1983682,
-  "hot_views": 171572,
-  "baseline_views": 1812110,
+  "velocity": 0.37,
+  "velocity_label": "급감 (×0.4)",
+  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 364,632회 / 이전 4~7일 981,327회 | 총 1,345,959회 (42개 영상)",
+  "video_count": 42,
+  "total_views": 1345959,
+  "hot_views": 364632,
+  "baseline_views": 981327,
   "top_videos": [
     {
       "title": "테슬라 독주 막으려는 구글! 그래서 선택한 한국 기업",
       "channel": "좋은미래만들기",
       "publishedAt": "2026-06-14T11:00:16Z",
-      "viewCount": 325853
+      "viewCount": 342606
     },
     {
       "title": "Elon Musk vs Ambani: The Shocking One-Day Earnings Comparison! 😱💰",
-      "channel": "FACTS KA NOTIS",
-      "publishedAt": "2026-06-13T00:30:38Z",
-      "viewCount": 319689
+      "channel": "FACTS KA FILES",
+      "publishedAt": "2026-06-14T23:18:49Z",
+      "viewCount": 82093
     },
     {
-      "title": "Tesla Roadster Reservation: The Most Expensive Mistake I Ever Made?",
-      "channel": "MisAdventure Lab",
-      "publishedAt": "2026-06-13T00:52:59Z",
-      "viewCount": 302531
+      "title": "Elon Is Building 7 Megafactories At Once",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-06-14T18:30:01Z",
+      "viewCount": 78126
     },
     {
-      "title": "🤖테슬라 옵티머스 대박 나면 일론 머스크보다 돈 더 벌 국내 주식은? (골드만삭스 로봇 보고서 분석)로보티즈 HL만도",
-      "channel": "제이 레포츠 TV",
-      "publishedAt": "2026-06-13T09:00:33Z",
-      "viewCount": 101839
+      "title": "SpaceX Is Public. Tesla&#39;s Turn Starts Now",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-06-15T13:30:12Z",
+      "viewCount": 74172
     },
     {
-      "title": "How Tesla Builds A Car Every 5 Seconds | This Is Insane",
-      "channel": "Ryan Shaw",
-      "publishedAt": "2026-06-13T16:00:25Z",
-      "viewCount": 92916
+      "title": "Tesla Merger with Spacex? A New Clue!",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-06-14T13:30:26Z",
+      "viewCount": 60343
     }
   ],
-  "collected_at": "2026-06-20T00:05:09Z"
+  "collected_at": "2026-06-21T00:02:38Z"
 }
