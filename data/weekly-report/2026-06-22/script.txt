@@ -1,0 +1,30 @@
+SCENE_0_TITLE: 테슬라근황
+SCENE_0:
+다들 걱정했지만 *-1.46%*면 선방했죠
+*고평가 논란*에 신제품 지연까지 겹쳤어요
+*3만 달러* 사이버캡 공개는 반가운 소식
+2분기 인도량 *-13%* 부진은 아쉽네요
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+신제품: *사이버캡* 3만 달러로 공개
+   ↳ 배경: 머스크가 *2027년* 내 출시 못 박았죠
+   ↳ 데이터: 가격 *$30,000* 미만 공식화
+   ↳ 임팩트: 6/17 종가 *$404.66* 회복
+   ↳ 비교: 웨이모 대비 *절반 이하* 가격대
+   ↳ 핸들 없는 로보택시 양산 속도가 관건이에요
+
+SCENE_2_TITLE: 앞으로전망
+SCENE_2:
+*7/1* 2분기 인도량 발표가 코앞이에요
+→ 시장은 *38만대* 회복 여부에 주목하죠
+누적 변동률 *0.0%*, 도달가 *$400* 예상
+→ *2일 상승 2일 하락* 횡보 흐름이네요
+인도량 너머 *FSD 규제* 향방이 진짜 변수
+함께해 주셔서 감사해요
+
+IMAGE_PROMPT_0: Seoul Han River night view with Tesla autonomous electric vehicles cruising on illuminated highways, FSD robotaxi autonomous driving sensors glowing, Optimus humanoid robot standing near charging station, 4680 battery cells visualization floating, megapack energy storage units, Dojo supercomputer holographic display, Namsan Tower and 63 Building and Lotte Tower skyline backdrop, K-tech futuristic city atmosphere with purple violet analytical mood, glowing city lights bokeh, cinematic depth, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: Seoul Banpo Bridge with vibrant green growth bullish energy at sunrise, Tesla Cybercab prototype driving across modern bridge with FSD robotaxi autonomous driving active, Optimus humanoid robot assembling components, 4680 battery cells glowing blue, megapack energy storage along riverside, Dojo supercomputer data streams, Korean K-tech eco-friendly infrastructure bright and lively atmosphere, sunlit electric vehicle charging stations, fresh emerald and lime accents, optimistic upward momentum, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: Korean futuristic vertical cityscape at twilight, Han River night view with Seoul skyline and Gwanghwamun Square backdrop, Tesla autonomous Cybercab vehicles streaming through streets, Optimus humanoid robot walking among citizens, FSD robotaxi autonomous driving network visualization, 4680 battery cells glowing, megapack energy storage towers, Dojo supercomputer holographic core, advanced K-tech metropolis vision, magenta and gold inspirational futuristic mood, golden sunrays starlight sparkles bokeh, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
