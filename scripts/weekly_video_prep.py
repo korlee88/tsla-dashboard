@@ -26,6 +26,7 @@ GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY", "")
 AUTO_SESSIONS     = ROOT_DIR / "data" / "auto-sessions.json"
 OUTPUT_BASE       = ROOT_DIR / "data" / "weekly-report"
 LOOKBACK_DAYS     = 7
+RECENT_NEWS_DAYS  = 2   # 호재/악재 BEST 픽 — 당일~이 기간 이내 뉴스를 점수와 무관하게 우선
 
 # ── 팔레트 ────────────────────────────────────────────────────────────────
 BG      = (24, 32, 54)         # 14,17,23 → 밝은 미드나이트 네이비
@@ -143,19 +144,26 @@ def summarize(sessions):
                 bearish.append({"title": title, "score": score, "reason": reason,
                                 "source": source, "date": date, "category": category})
 
-    # 최신 뉴스가 같은 점수라면 우선 노출 (recency 가중치)
-    def _bull_sort_key(n):
-        score = n.get("score", 0)
+    # 최근(RECENT_NEWS_DAYS일 이내) 뉴스는 점수와 무관하게 최우선 노출, 그 외엔 점수 순.
+    # (예전엔 recency가 점수에 소폭(+0.5) 가산만 돼서 한 번 크게 터진 과거 뉴스가 몇 주씩
+    #  BEST 자리를 계속 차지하는 고착 현상이 있었음 — 악재는 가산조차 없어 더 심했음)
+    def _days_ago(date_s):
         try:
             from datetime import datetime as _dt2
-            days_ago = (_dt2.now() - _dt2.strptime(n.get("date", "")[:10], "%Y-%m-%d")).days
-            recency  = max(0.0, (14 - days_ago) / 28.0)  # 2주 이내 최대 +0.5
+            return (_dt2.now() - _dt2.strptime(date_s[:10], "%Y-%m-%d")).days
         except Exception:
-            recency = 0.0
-        return score + recency
+            return 999
+
+    def _bull_sort_key(n):
+        is_recent = 1 if _days_ago(n.get("date", "")) <= RECENT_NEWS_DAYS else 0
+        return (is_recent, n.get("score", 0))
+
+    def _bear_sort_key(n):
+        is_recent = 1 if _days_ago(n.get("date", "")) <= RECENT_NEWS_DAYS else 0
+        return (is_recent, -n.get("score", 0))  # 악재는 점수가 낮을수록(더 부정적) 우선
 
     bullish.sort(key=_bull_sort_key, reverse=True)
-    bearish.sort(key=lambda x: x["score"])
+    bearish.sort(key=_bear_sort_key, reverse=True)
 
     # 최근 5일 (date, price) 쌍 수집
     seen_dates = {}
