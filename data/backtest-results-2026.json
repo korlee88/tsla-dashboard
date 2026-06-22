@@ -2504,13 +2504,132 @@
       "match": true,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-06-15",
+      "weekEnd": "2026-06-21",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 테슬라 로봇 및 로보택시 생산 속도에 대한 기대치 낮춰",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라 지분 확대 및 SpaceX 합병 논의 재점화",
+          "source": "Electrek",
+          "category": "Market"
+        },
+        {
+          "title": "골드만삭스, 테슬라 2분기 인도량 전망치 상향 조정",
+          "source": "Teslarati",
+          "category": "Delivery"
+        },
+        {
+          "title": "SpaceX IPO 이후 테슬라-SpaceX 합병 가능성 증대",
+          "source": "MarketBeat",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, AI6 칩으로 웨이퍼당 최대 가용 컴퓨팅 기록 목표",
+          "source": "digitimes",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 생산 속도 한계 인정",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크의 재산, 취약한 시장 기반에 의존 - Forbes",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "SpaceX IPO, 테슬라에 대한 시장의 기대치 변화",
+          "source": "Saxo Bank",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, AI 및 로봇 꿈을 위한 2026년 지출 계획 25% 증액",
+          "source": "Reuters",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 테슬라의 완전 자율 주행 기술 발전 확인",
+          "source": "YouTube",
+          "category": "Product"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.6,
+        "buyIndex": 44,
+        "direction": "bullish",
+        "bullish": 6,
+        "bearish": 4,
+        "neutral": 0,
+        "topRules": [
+          "R24",
+          "R13",
+          "R19"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 56,
+          "r24Discount": -1,
+          "macdTrend": 1,
+          "trendFilter": -12
+        },
+        "macroCtx": {
+          "spyChg": -0.68,
+          "qqqChg": 0.34,
+          "vixClose": 16.399999618530273,
+          "wtiChg": -4.74,
+          "cnyChg": 0.04,
+          "competitorChg": -6.45,
+          "competitorRelStrength": 3.57,
+          "prevAssetChg": 2.55,
+          "assetTrend3w": -5.54,
+          "rsi": 51.9,
+          "macd": {
+            "macd": 1.2304997126977355,
+            "signal": 0.33504703963558996,
+            "hist": 0.8954526730621455,
+            "crossover": null,
+            "trend": "bullish"
+          },
+          "bb": {
+            "upper": 444.73,
+            "middle": 397.41,
+            "lower": 350.09,
+            "pos": 0.533
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false,
+          "bydChg": -6.45,
+          "bydRelStrength": 3.57,
+          "prevTslaChg": 2.55,
+          "tslaTrend3w": -5.54
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -2.88,
+        "actual": "bearish",
+        "open": 412.37,
+        "close": 400.49
+      },
+      "match": false,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-06-15 04:46 KST",
+  "generatedAt": "2026-06-22 04:53 KST",
   "stats": {
-    "totalWeeks": 23,
-    "analyzedWeeks": 23,
-    "accuracy": 48,
+    "totalWeeks": 24,
+    "analyzedWeeks": 24,
+    "accuracy": 46,
     "strongAccuracy": 33,
     "avgScore": 0.9
   },

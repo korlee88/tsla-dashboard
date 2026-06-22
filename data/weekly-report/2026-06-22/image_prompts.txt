@@ -1,0 +1,11 @@
+# TSLA 배경 이미지 프롬프트 — 2026-06-22
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 동향브리핑
+Seoul Han River night view with Tesla autonomous electric vehicles cruising on illuminated highways, FSD robotaxi autonomous driving sensors glowing, Optimus humanoid robot standing near charging station, 4680 battery cells visualization floating, megapack energy storage units, Dojo supercomputer holographic display, Namsan Tower and 63 Building and Lotte Tower skyline backdrop, K-tech futuristic city atmosphere with purple violet analytical mood, glowing city lights bokeh, cinematic depth, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+## 씬1 호재심층
+Seoul Banpo Bridge with vibrant green growth bullish energy at sunrise, Tesla Cybercab prototype driving across modern bridge with FSD robotaxi autonomous driving active, Optimus humanoid robot assembling components, 4680 battery cells glowing blue, megapack energy storage along riverside, Dojo supercomputer data streams, Korean K-tech eco-friendly infrastructure bright and lively atmosphere, sunlit electric vehicle charging stations, fresh emerald and lime accents, optimistic upward momentum, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+## 씬2 향후전망
+Korean futuristic vertical cityscape at twilight, Han River night view with Seoul skyline and Gwanghwamun Square backdrop, Tesla autonomous Cybercab vehicles streaming through streets, Optimus humanoid robot walking among citizens, FSD robotaxi autonomous driving network visualization, 4680 battery cells glowing, megapack energy storage towers, Dojo supercomputer holographic core, advanced K-tech metropolis vision, magenta and gold inspirational futuristic mood, golden sunrays starlight sparkles bokeh, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
