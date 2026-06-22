@@ -1,43 +1,43 @@
 {
-  "score": -2,
-  "velocity": 0.37,
-  "velocity_label": "급감 (×0.4)",
-  "reason": "조회수 속도 급감 (×0.4) | 최근 3일 364,632회 / 이전 4~7일 981,327회 | 총 1,345,959회 (42개 영상)",
+  "score": 0,
+  "velocity": 0.7,
+  "velocity_label": "보합 (×0.7)",
+  "reason": "조회수 속도 보합 (×0.7) | 최근 3일 455,759회 / 이전 4~7일 648,778회 | 총 1,104,537회 (42개 영상)",
   "video_count": 42,
-  "total_views": 1345959,
-  "hot_views": 364632,
-  "baseline_views": 981327,
+  "total_views": 1104537,
+  "hot_views": 455759,
+  "baseline_views": 648778,
   "top_videos": [
     {
-      "title": "테슬라 독주 막으려는 구글! 그래서 선택한 한국 기업",
-      "channel": "좋은미래만들기",
-      "publishedAt": "2026-06-14T11:00:16Z",
-      "viewCount": 342606
+      "title": "An AUTOBOT Symbol That TRANSFORMS Into OPTIMUS PRIME! Transformers ICONS Voyager Class REVIEW!",
+      "channel": "PrimeVsPrime",
+      "publishedAt": "2026-06-19T20:15:37Z",
+      "viewCount": 94290
     },
     {
-      "title": "Elon Musk vs Ambani: The Shocking One-Day Earnings Comparison! 😱💰",
-      "channel": "FACTS KA FILES",
-      "publishedAt": "2026-06-14T23:18:49Z",
-      "viewCount": 82093
-    },
-    {
-      "title": "Elon Is Building 7 Megafactories At Once",
+      "title": "Elon Just Told TSLA Holders What Comes Next",
       "channel": "Brighter with Herbert",
-      "publishedAt": "2026-06-14T18:30:01Z",
-      "viewCount": 78126
+      "publishedAt": "2026-06-20T18:30:35Z",
+      "viewCount": 75627
     },
     {
       "title": "SpaceX Is Public. Tesla&#39;s Turn Starts Now",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-06-15T13:30:12Z",
-      "viewCount": 74172
+      "viewCount": 74413
     },
     {
-      "title": "Tesla Merger with Spacex? A New Clue!",
-      "channel": "Brighter with Herbert",
-      "publishedAt": "2026-06-14T13:30:26Z",
-      "viewCount": 60343
+      "title": "Tesla&#39;s Optimus Factory Just Hit 4 Floors — 27,000 Robots/Day by 2027",
+      "channel": "Tech Revolution",
+      "publishedAt": "2026-06-19T22:00:28Z",
+      "viewCount": 58299
+    },
+    {
+      "title": "보스턴 다이내믹스가 휴머노이드 판을 뒤집은 이유 | 공경철 카이스트 교수 | 킥",
+      "channel": "한국경제TV",
+      "publishedAt": "2026-06-19T02:09:28Z",
+      "viewCount": 57969
     }
   ],
-  "collected_at": "2026-06-21T00:02:38Z"
+  "collected_at": "2026-06-22T00:07:19Z"
 }
