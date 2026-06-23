@@ -1,0 +1,223 @@
+{
+  "generated_at": "2026-06-24",
+  "generated_by": "Claude Opus 4",
+  "title": "걱정 많았는데 *-2.59%* 선방했네요",
+  "subtitle": "2026-06-16 ~ 2026-06-22 · 테슬라, 2025년 2분기 실적 발표: 매출 감소 및 ",
+  "summary": {
+    "week_start": "2026-06-16",
+    "week_end": "2026-06-22",
+    "session_count": 7,
+    "buy_indices": [
+      49,
+      38,
+      44,
+      39,
+      46,
+      42,
+      51
+    ],
+    "avg_buy_index": 44,
+    "latest_buy_index": 49,
+    "price_start": 411.15,
+    "price_end": 400.49,
+    "latest_price": 400.49,
+    "today_price": 400.49,
+    "today_change_pct": 0.0,
+    "week_change_pct": -2.59,
+    "biggest_impact": {
+      "title": "테슬라, 2025년 2분기 실적 발표: 매출 감소 및 인도량 하락",
+      "score": -4,
+      "reason": "테슬라가 2025년 2분기 매출이 전년 대비 12% 감소하고 차량 인도량이 13% 감소한 384,122대를 기록하며 저조한 재무 실적을 발표했습니다.",
+      "source": "StockTitan",
+      "date": "2025-07-23",
+      "category": "Earnings",
+      "direction_ko": "악재",
+      "emoji": "⚠"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 스티어링 휠 없는 사이버캡 출시 및 로보택시 서비스 확장",
+        "score": 3,
+        "reason": "테슬라가 스티어링 휠 없는 사이버캡을 출시하고 로보택시 서비스를 확장하는 것은 신제품 및 FSD 기술의 중요한 진전을 나타내며, 이는 투자자들에게 긍정적인 영향을 미칠 수 있습니다.",
+        "source": "TradingView",
+        "date": "2026-06-18",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라, 모델 S 및 X 생산 종료 및 로봇 제조로 전환",
+        "score": 3,
+        "reason": "테슬라가 모델 S 및 X 생산을 중단하고 프레몬트 공장을 옵티머스 로봇 제조 시설로 전환하는 것은 로봇 사업으로의 전략적 전환을 나타내며, 이는 장기적으로 긍정적이지만 단기적으로는 차량 생산 감소를 의미합니다.",
+        "source": "Briefs Finance",
+        "date": "2026-01-28",
+        "category": "Product"
+      },
+      {
+        "title": "테슬라 사이버캡 로보택시 세부 사양 공개",
+        "score": 2,
+        "reason": "테슬라의 사이버캡 로보택시 세부 사양 공개는 신제품 개발의 진전을 보여주며 잠재적인 미래 수익원에 대한 기대를 높입니다.",
+        "source": "YouTube (Miss GoElectric)",
+        "date": "2026-06-21",
+        "category": "Product"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 2025년 2분기 실적 발표: 매출 감소 및 인도량 하락",
+        "score": -4,
+        "reason": "테슬라가 2025년 2분기 매출이 전년 대비 12% 감소하고 차량 인도량이 13% 감소한 384,122대를 기록하며 저조한 재무 실적을 발표했습니다.",
+        "source": "StockTitan",
+        "date": "2025-07-23",
+        "category": "Earnings"
+      },
+      {
+        "title": "테슬라, 2025년 1분기 실적 발표: 모델 Y 생산 업데이트로 매출 9% 감소",
+        "score": -4,
+        "reason": "테슬라의 2025년 1분기 매출이 모델 Y 생산 라인 변경으로 인해 9% 감소했으며, 차량 인도량도 13% 감소하여 부정적인 영향을 미쳤습니다.",
+        "source": "StockTitan",
+        "date": "2025-04-22",
+        "category": "Earnings"
+      },
+      {
+        "title": "테슬라, EU에서 FSD 기술에 대한 규제 직면",
+        "score": -2,
+        "reason": "테슬라가 유럽 연합에서 FSD 기술에 대한 규제 문제에 직면했으며, 스웨덴이 속도 제한 문제로 FSD 금지를 촉구하고 있어 잠재적인 시장 확장에 부정적인 영향을 미 미칠 수 있습니다.",
+        "source": "Reuters",
+        "date": "2026-06-18",
+        "category": "Regulatory"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "6/23(화)",
+        "change_pct": 0.9,
+        "signal": "매수",
+        "basePrice": 400.49,
+        "predictedPrice": 404.09
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/24(수)",
+        "change_pct": -0.7,
+        "signal": "관망",
+        "basePrice": 400.49,
+        "predictedPrice": 397.69
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/25(목)",
+        "change_pct": 1.1,
+        "signal": "매수",
+        "basePrice": 400.49,
+        "predictedPrice": 404.9
+      },
+      {
+        "day": 4,
+        "label": "D+4",
+        "date": "6/26(금)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 400.49,
+        "predictedPrice": 396.89
+      },
+      {
+        "day": 5,
+        "label": "D+5",
+        "date": "6/29(월)",
+        "change_pct": 0.6,
+        "signal": "관망",
+        "basePrice": 400.49,
+        "predictedPrice": 402.89
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-06-22",
+        400.49
+      ],
+      [
+        "2026-06-21",
+        400.49
+      ],
+      [
+        "2026-06-20",
+        400.49
+      ],
+      [
+        "2026-06-19",
+        400.49
+      ],
+      [
+        "2026-06-18",
+        396.38
+      ]
+    ],
+    "overall_signal": "신중",
+    "trends": null,
+    "next_events": [
+      {
+        "date": "2026-07-02",
+        "title": "Model Y L 미국 출시 발표 (예상)",
+        "titleEn": "Model Y L US Launch Announcement (Expected)",
+        "category": "제품출시",
+        "categoryEn": "Product Launch",
+        "time": null,
+        "timezone": null,
+        "confirmed": false,
+        "source": "basenor, TeslaNewswire (rumor)",
+        "sourceUrl": null,
+        "description": "소문에 따르면 테슬라가 7월 2일에 미국 시장에 Model Y L을 발표할 수 있으며, 8월 또는 9월에 첫 인도가 시작될 것으로 예상됩니다.",
+        "importance": "medium",
+        "id": "cal-2026-07-02-model-y-l-us-launch-announcement-expecte"
+      }
+    ],
+    "movement_reason": "테슬라(TSLA) 주가의 2026년 6월 16일~2026년 6월 22일 기간 하락 주요 원인은 다음과 같다.\n\n스페이스X 관련 우려 / 전기차 수요 둔화 / 자율주행 기술 논란"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "테슬라근황",
+      "lines": [
+        "걱정 많았는데 *-2.59%* 선방했네요",
+        "수요 둔화 우려로 *$400.49* 약보합이죠",
+        "*사이버캡* 로보택시 확장 소식 주목돼요",
+        "2분기 인도량 *13% 감소*는 아쉬워요"
+      ],
+      "body": "걱정 많았는데 *-2.59%* 선방했네요\n수요 둔화 우려로 *$400.49* 약보합이죠\n*사이버캡* 로보택시 확장 소식 주목돼요\n2분기 인도량 *13% 감소*는 아쉬워요"
+    },
+    {
+      "index": 1,
+      "title": "호재분석",
+      "lines": [
+        "호재: *사이버캡* 로보택시 본격 확장",
+        "↳ 배경: *핸들 없는* 무인 차량 첫 공개",
+        "↳ 데이터: *6월 18일* 세부 사양 공개됐죠",
+        "↳ 임팩트: FSD 기대감에 *$396→$400* 반등",
+        "↳ 비교: 웨이모와 달리 *대량생산* 가능해요",
+        "↳ 전망: 도심을 누비는 *무인 택시 시대* 성큼"
+      ],
+      "body": "호재: *사이버캡* 로보택시 본격 확장\n   ↳ 배경: *핸들 없는* 무인 차량 첫 공개\n   ↳ 데이터: *6월 18일* 세부 사양 공개됐죠\n   ↳ 임팩트: FSD 기대감에 *$396→$400* 반등\n   ↳ 비교: 웨이모와 달리 *대량생산* 가능해요\n   ↳ 전망: 도심을 누비는 *무인 택시 시대* 성큼"
+    },
+    {
+      "index": 2,
+      "title": "앞으로전망",
+      "lines": [
+        "*7월 2일* 모델Y L 미국 출시돼요",
+        "*신형 SUV*가 수요 회복 불씨 될까요?",
+        "누적 *+0.6%*, *$403* 흐름 예상돼요",
+        "*3일 상승·2일 하락* 혼조세로 보여요",
+        "수요 걱정 너머, 진짜 핵심은 *FSD*죠",
+        "끝까지 봐주셔서 고마워요!"
+      ],
+      "body": "*7월 2일* 모델Y L 미국 출시돼요\n*신형 SUV*가 수요 회복 불씨 될까요?\n누적 *+0.6%*, *$403* 흐름 예상돼요\n*3일 상승·2일 하락* 혼조세로 보여요\n수요 걱정 너머, 진짜 핵심은 *FSD*죠\n끝까지 봐주셔서 고마워요!"
+    }
+  ],
+  "image_prompts": {
+    "0": "Cinematic ultra-high resolution 16:9 landscape view of Seoul Han River night skyline with Namsan Tower, 63 Building, and Lotte Tower glowing under a deep purple violet sky, featuring a sleek Tesla FSD robotaxi autonomous driving along illuminated highways, Optimus humanoid robot standing near the riverside, 4680 battery cells and megapack energy storage units glowing softly, Dojo supercomputer holographic data streams floating above, Korean futuristic K-tech city atmosphere with analytical purple violet tones, glowing city lights bokeh, moody reflective mood, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "Vibrant ultra-high resolution 16:9 landscape image of Seoul Banpo Bridge bathed in fresh green bullish growth light, Tesla electric vehicles charging and driving at high speed across the modern sunlit bridge, FSD robotaxi autonomous driving through clean streets, Optimus humanoid robot assisting at charging station, glowing 4680 battery cells, megapack energy storage arrays lining the riverside, Dojo supercomputer holographic interface, Korean K-tech eco-friendly infrastructure bright and energetic atmosphere, lush greenery, sunlit modern architecture, optimistic uplifting mood, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "Inspirational ultra-high resolution 9:16 vertical full-screen scene of a Korean futuristic city featuring Han River night view, Seoul skyline, and Gwanghwamun Square backdrop, with autonomous Tesla FSD robotaxi vehicles cruising and Optimus humanoid robots walking gracefully, glowing 4680 battery cells displayed prominently, megapack energy storage installations powering the city, Dojo supercomputer visualizations in the sky, advanced K-tech cityscape with magenta and gold inspirational futuristic mood, golden sunlight rays, starlight, sparkling reflections on water, dreamy hopeful atmosphere, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}
