@@ -366,6 +366,19 @@ MP3/MP4는 git에 커밋하지 않음 (`git restore --staged` 로 unstage).
 `FileNotFoundError: ffprobe`로 STEP 2가 실패할 수 있음 (STEP 1은 정상 완료, STEP 3~5는 skip됨).
 → 워크플로우의 "한글 폰트 설치" 단계에서 `ffmpeg`도 함께 `apt-get install`하여 해결.
 
+### 자동 커밋 워크플로 push 경쟁 실패 (2026-06-24)
+5개 자동 커밋 워크플로(`weekly-video`·`auto-analysis`·`backtest-run`·`calendar-update`·`generate-frame`)가
+모두 `git commit` 후 `git pull --rebase origin master` → `git push`를 **재시도·충돌 처리 없이** 단발 실행했음.
+체크아웃 시점과 push 시점 사이에 origin/master가 전진하면(다른 자동 워크플로 커밋, 또는 PR 머지) push가
+non-fast-forward로 거부되거나, **같은 파일이 동시 수정된 경우 `git pull --rebase`가 충돌로 실패**(특히 바이너리
+PNG는 3-way 병합 불가)해 워크플로가 exit 1로 죽었다. 실제 사례: 6/24 `weekly-video` 강제 재생성(`force=true`)이
+구버전 master(`512fe2d`)에서 시작해 씬 PNG를 재생성·커밋하던 중, PR #67·#68 머지로 origin/master가 전진 →
+동일 `scene_*.png` 바이너리 충돌로 rebase 실패(생성 커밋은 push 안 돼 손실, master는 무손상).
+→ 5개 워크플로의 커밋&푸시 단계를 **`git fetch origin master` → `git rebase FETCH_HEAD` → `git push origin HEAD:master`
+최대 5회 재시도 루프**로 교체. push가 non-ff로 거부되면(다른 커밋 선반영) 재fetch·재rebase 후 재시도해
+경쟁 상황을 자가 치유하고, rebase가 **실제 내용 충돌**(같은 파일 동시 수정)로 실패하면 자동 병합하지 않고
+`::error::`로 중단해 사람이 어느 쪽이 맞는지 판단하도록 한다(구버전 코드 산출물이 수정본을 덮어쓰는 사고 방지).
+
 ---
 
 ## 대본 스타일 가이드
