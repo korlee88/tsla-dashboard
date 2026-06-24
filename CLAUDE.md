@@ -201,6 +201,7 @@ response = client.models.generate_content(model="gemini-1.5-flash", contents=pro
 > 배경은 Nano Banana AI 이미지가 1순위, 실패 시 Wikipedia 폴백.
 > 이미지 프롬프트에는 `config/ticker.json`의 `image_future_tech_en`(미래 기술·사업계획 영문 키워드)을 `{future_tech}`로 주입 — `weekly_video_prep.py`의 `FUTURE_TECH_EN` 상수.
 > **배경 비주얼 월드 로테이션** (v2.8.4): 배경의 장소·구도·무드는 생성일 시드로 `SCENE_VISUAL_WORLDS`(8종)에서 `pick_visual_world()`가 결정적으로 회전 선택해 `IMAGE_PROMPT_0~2` 템플릿의 `{visual_0/1/2}`로 주입된다. 한 월드가 3씬의 세계관을 공유(예: 사막 기가팩토리·해안 절벽·네온 도시·오로라…)하되 씬 의미(씬0 분석/씬1 초록 호재/씬2 미래비전 세로)는 유지. 회전 키는 `date.toordinal() % 8`이라 격일(간격 2~3일) 생성 시 인접 영상 배경이 반복되지 않는다(이전엔 템플릿이 서울 한강·남산타워 등으로 고정돼 매 영상 같은 배경처럼 보였음). 같은 날 재시도는 같은 월드 유지.
+> **배경 콘텐츠 신호 반영** (v2.8.4): 비주얼 월드만으로는 장소만 바뀔 뿐 "이번 회차" 내용과 무관할 수 있어, `_build_prompt()`가 씬별 실제 데이터를 "이번 회차 신호"로 프롬프트에 추가 주입한다 — 씬0=`movement_reason_str`(이번 주 주가 변동 원인), 씬1=`best_bullish_str`(`summary["top_bullish"][0]`, 이번 회차 선정 BEST 호재), 씬2=`next_events_str`(예정 일정·후순위 스케줄). LLM이 이 신호를 글자·숫자 없이 상징적 시각 요소(사물·행동·분위기)로 녹여 `IMAGE_PROMPT_0~2`를 작성하도록 지시 — 배경이 장소만 다양해지는 게 아니라 그 주 실제 분석 내용(+ `{future_tech}` 로드맵)을 반영하게 됨. 호재 없는 주는 "특별한 호재 없음 — 전반적 안정세"로 자연 폴백.
 > 점수(+N점)는 내부 지표이므로 대본·화면에 노출하지 않는다("호재"/"리스크"로만 표현).
 > 호재 심층 씬(idx 1)은 `NanumSquareRound`(둥근 폰트)로 부드러운 톤 — CI는 `fonts-nanum-extra` 필요. 본문 머리기호는 초록 ✓ 체크(`draw_check`, 줄 첫 행에만 표시), 본문 폰트는 `sf_ct` 46px.
 
@@ -325,6 +326,7 @@ sudo apt-get install -y fonts-nanum
 > - **차별화 관점 1줄**(프롬프트 "오프닝 훅 & 차별화" 블록): 시장 컨센서스·통념과 다른 분석가만의 시각 1줄 의무(단순 요약·낭독 금지), 씬1 향후전망 또는 씬2에 배치.
 > - **색상 테마 3종**(`ACCENT_THEMES`/`_theme_idx`, prep.py·make.py **양쪽 동일**): 보라·시안·인디고 계열 로테이션. 씬1(호재)은 의미상 항상 초록 유지. 두 파일이 같은 `_theme_idx(date_str)`로 계산해 정적 이미지(prep)와 애니메이션(make) 색상이 동기화된다 — prep는 `main()`에서 `SCENE_ACCENTS`를 today로, make는 `build_video_async`에서 `ACCENT_COLORS`를 `report_dir.name`(날짜)으로 재할당.
 > - **배경 비주얼 월드 8종**(`SCENE_VISUAL_WORLDS`/`pick_visual_world`, prep.py, v2.8.4): 배경 장소·시간대·구도·무드를 회전(서울 야경·사막 기가팩토리·해안 절벽·네온 도시·알프스·항구·시험주행장·오로라). `_build_prompt`가 `week_end`의 `date.toordinal() % 8`로 골라 `{visual_0/1/2}`로 주입. 색상 테마(`_theme_idx`, mod 3)와 **다른 키**라 색·배경이 독립 변형. 이전엔 이미지 프롬프트가 서울 한강·남산타워 등으로 고정돼 영상마다 같은 배경처럼 보이던 문제를 해결.
+> - **배경 콘텐츠 신호**(`best_bullish_str`/`movement_reason_str`/`next_events_str`, prep.py, v2.8.4): 비주얼 월드(장소)와는 별개로, 씬별 실제 이번 회차 데이터(씬0 변동원인·씬1 BEST호재·씬2 예정일정)를 상징적 시각 요소로 녹이도록 LLM에 지시 — 장소만 바뀌는 게 아니라 그 주 실제 분석 내용을 반영한 배경이 되도록 함.
 
 **주요 단계**:
 1. Python 3.11 + pip 캐시 설정

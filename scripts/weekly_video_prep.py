@@ -540,10 +540,14 @@ SCENE_2:
 ★ 각 이미지에 {company_ko}의 미래 기술·사업계획을 시각적으로 반영하라(핵심 제품/로드맵): {future_tech}.
 ※ 씬 0·1은 16:9 landscape (horizontal strip), 씬 2는 9:16 vertical (full screen) — 프롬프트에 비율 명시.
 ※ 아래 각 씬의 배경 설정(영상마다 자동 변형됨)을 토대로 묘사를 더 생생하게 확장하되, 주어진 장소·시간대·무드는 그대로 유지한다 — 임의의 다른 장소로 바꾸지 말 것.
+★★ 매 영상이 실제 이번 회차 콘텐츠를 반영하도록, 아래 '이번 회차 신호'를 장면 속 상징적 시각 요소(사물·행동·분위기)로 녹여라 — 글자·숫자·로고로 직접 표기하지 말고 그 사건을 은유하는 디테일로 표현한다:
+  - 씬0 신호 (이번 주 주가 변동 원인 — 선순위 뉴스): {movement_reason_str}
+  - 씬1 신호 (이번 회차 선정 BEST 호재 — 선순위 뉴스): {best_bullish_str}
+  - 씬2 신호 (앞으로 예정된 일정 — 후순위 스케줄): {next_events_str}
 
-IMAGE_PROMPT_0: [씬0 — 16:9 landscape · {visual_0} · {future_tech} 요소를 장면에 자연스럽게 녹여라, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
-IMAGE_PROMPT_1: [씬1 — 16:9 landscape · {visual_1} · {future_tech} 반영, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
-IMAGE_PROMPT_2: [씬2 — 9:16 vertical · {visual_2} · {future_tech} 미래 비전 반영, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
+IMAGE_PROMPT_0: [씬0 — 16:9 landscape · {visual_0} · 위 씬0 신호를 상징하는 시각적 디테일을 자연스럽게 더하라 · {future_tech} 요소도 녹여라, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_1: [씬1 — 16:9 landscape · {visual_1} · 위 씬1 신호(BEST 호재)를 상징하는 시각적 디테일을 자연스럽게 더하라 · {future_tech} 반영, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_2: [씬2 — 9:16 vertical · {visual_2} · 위 씬2 신호(예정 일정)를 상징하는 시각적 디테일을 자연스럽게 더하라 · {future_tech} 미래 비전 반영, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
 
 
 def _build_prompt(summary):
@@ -553,6 +557,13 @@ def _build_prompt(summary):
         for n in summary["top_bullish"]
     ) or "  없음"
     r_txt = "\n".join(f"  - {n['title']}: {n['reason'][:70]}" for n in summary["top_bearish"]) or "  없음"
+
+    # 씬1 배경 이미지용 — 이번 회차에 실제 선정된 BEST 호재(top_bullish[0], 선순위 뉴스)
+    top_bull = summary["top_bullish"][0] if summary.get("top_bullish") else None
+    best_bullish_str = (
+        f"{top_bull['title']} ({top_bull['reason'][:60]})" if top_bull
+        else "특별한 호재 없음 — 전반적 안정세"
+    )
 
     daily_prices = summary.get("daily_prices", [])
     if daily_prices:
@@ -603,6 +614,7 @@ def _build_prompt(summary):
         visual_0=world["scene0"],
         visual_1=world["scene1"],
         visual_2=world["scene2"],
+        best_bullish_str=best_bullish_str,
         week_start=summary["week_start"],
         week_end=summary["week_end"],
         price=summary["latest_price"],
