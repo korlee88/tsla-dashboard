@@ -1,30 +1,30 @@
 SCENE_0_TITLE: 테슬라근황
 SCENE_0:
-걱정 많았는데 *-2.59%* 선방했네요
-수요 둔화 우려로 *$400.49* 약보합이죠
-*사이버캡* 로보택시 확장 소식 주목돼요
-2분기 인도량 *13% 감소*는 아쉬워요
+한 주 새 *-5.7%*, $381.61로 밀렸어요
+*자율주행 사고 조사*가 분위기를 눌렀죠
+*사이버캡 공개*는 든든한 호재예요
+*250억 달러* 자본 지출은 부담이네요
 
 SCENE_1_TITLE: 호재분석
 SCENE_1:
-호재: *사이버캡* 로보택시 본격 확장
-   ↳ 배경: *핸들 없는* 무인 차량 첫 공개
-   ↳ 데이터: *6월 18일* 세부 사양 공개됐죠
-   ↳ 임팩트: FSD 기대감에 *$396→$400* 반등
-   ↳ 비교: 웨이모와 달리 *대량생산* 가능해요
-   ↳ 전망: 도심을 누비는 *무인 택시 시대* 성큼
+호재: *핸들 없는 사이버캡* 첫 공개
+   ↳ 배경: *2026년 6월* 로보택시 확장 예고
+   ↳ 데이터: 운전석도 비운 *완전 무인차*
+   ↳ 임팩트: FSD가 *상용화 문턱*에 닿았죠
+   ↳ 비교: 웨이모 대비 *대량생산* 강점이 커요
+   ↳ 사고 조사 너머, 진짜 핵심은 *로보택시 수익화*예요
 
 SCENE_2_TITLE: 앞으로전망
 SCENE_2:
-*7월 2일* 모델Y L 미국 출시돼요
-*신형 SUV*가 수요 회복 불씨 될까요?
-누적 *+0.6%*, *$403* 흐름 예상돼요
-*3일 상승·2일 하락* 혼조세로 보여요
-수요 걱정 너머, 진짜 핵심은 *FSD*죠
-끝까지 봐주셔서 고마워요!
+*7월 2일* 모델 Y L 출시가 다가와요
+→ 미국 판매 *반등 기대*가 실리네요
+단기엔 *-0.4%*, $380 부근 흐름이 예상돼요
+→ *5일 중 4일*은 하락 신호가 잡혔어요
+*NHTSA 조사 결과*가 최대 변수죠
+함께해 주셔서 감사해요!
 
-IMAGE_PROMPT_0: Cinematic ultra-high resolution 16:9 landscape view of Seoul Han River night skyline with Namsan Tower, 63 Building, and Lotte Tower glowing under a deep purple violet sky, featuring a sleek Tesla FSD robotaxi autonomous driving along illuminated highways, Optimus humanoid robot standing near the riverside, 4680 battery cells and megapack energy storage units glowing softly, Dojo supercomputer holographic data streams floating above, Korean futuristic K-tech city atmosphere with analytical purple violet tones, glowing city lights bokeh, moody reflective mood, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+IMAGE_PROMPT_0: Seoul Han River night view with futuristic Tesla autonomous electric vehicles cruising on illuminated highways, FSD robotaxi autonomous driving cars, Optimus humanoid robot standing on rooftop, 4680 battery cells glowing, megapack energy storage units, Dojo supercomputer hologram, Namsan Tower N Seoul Tower, 63 Building, Lotte World Tower skyline, K-tech advanced city, deep purple violet analytical mood, glowing city lights bokeh, cinematic atmosphere, ultra-high resolution, 16:9 landscape horizontal strip, no text, no letters, no watermark, no logo
 
-IMAGE_PROMPT_1: Vibrant ultra-high resolution 16:9 landscape image of Seoul Banpo Bridge bathed in fresh green bullish growth light, Tesla electric vehicles charging and driving at high speed across the modern sunlit bridge, FSD robotaxi autonomous driving through clean streets, Optimus humanoid robot assisting at charging station, glowing 4680 battery cells, megapack energy storage arrays lining the riverside, Dojo supercomputer holographic interface, Korean K-tech eco-friendly infrastructure bright and energetic atmosphere, lush greenery, sunlit modern architecture, optimistic uplifting mood, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+IMAGE_PROMPT_1: Seoul Banpo Bridge with vibrant green growth bullish energy, Tesla electric vehicles charging and driving fast across modern highway, FSD robotaxi autonomous driving fleet, Optimus humanoid robot assembling parts, 4680 battery cells glowing emerald, megapack energy storage farms, Dojo supercomputer data center, K-tech eco-friendly infrastructure, bright sunlit cheerful atmosphere, Korean city Seoul Tesla green bullish vibrant, modern electric vehicle charging stations, lush green rooftops, ultra-high resolution, 16:9 landscape horizontal strip, no text, no letters, no watermark, no logo
 
-IMAGE_PROMPT_2: Inspirational ultra-high resolution 9:16 vertical full-screen scene of a Korean futuristic city featuring Han River night view, Seoul skyline, and Gwanghwamun Square backdrop, with autonomous Tesla FSD robotaxi vehicles cruising and Optimus humanoid robots walking gracefully, glowing 4680 battery cells displayed prominently, megapack energy storage installations powering the city, Dojo supercomputer visualizations in the sky, advanced K-tech cityscape with magenta and gold inspirational futuristic mood, golden sunlight rays, starlight, sparkling reflections on water, dreamy hopeful atmosphere, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
+IMAGE_PROMPT_2: Korean futuristic city vertical panorama: Han River night view, Seoul skyline, Gwanghwamun Square backdrop with autonomous Tesla vehicles and Optimus humanoid robots walking among citizens, future vision elements FSD robotaxi autonomous driving, 4680 battery cells, megapack energy storage towers, Dojo supercomputer pillars, advanced K-tech cityscape, magenta and gold inspirational futuristic mood, golden sunlight, starry sky, sparkling lights, dreamy cinematic atmosphere, ultra-high resolution, 9:16 vertical full screen, no text, no letters, no watermark, no logo
