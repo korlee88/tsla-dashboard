@@ -1528,14 +1528,47 @@ def _load_frame_overlay():
     return _frame_overlay_cache
 
 
+def _frame_safe_box(ov):
+    """프레임 오버레이의 투명(중앙) 영역 bounding box (left, top, right, bottom)를
+    알파 채널에서 계산한다. 콘텐츠가 실제로 보이는 안전 영역. 실패 시 None."""
+    try:
+        alpha = ov.getchannel("A")
+        # 투명(알파 < 8) 픽셀만 255로 만든 마스크의 bbox = 보더 안쪽 안전 영역
+        transparent = alpha.point(lambda a: 255 if a < 8 else 0)
+        return transparent.getbbox()
+    except Exception:
+        return None
+
+
 def _apply_frame_overlay(img):
-    """씬 이미지 위에 통일 브랜드 프레임 오버레이 합성 (있을 때만)."""
+    """씬 이미지 위에 통일 브랜드 프레임 오버레이 합성 (있을 때만).
+
+    프레임은 가장자리 ~90px가 불투명 보더이고 중앙만 투명하다. 콘텐츠를 그대로
+    합성하면 PAD(40px) 기준으로 그려진 가장자리 텍스트(카드 라벨·본문 첫 글자 등)가
+    보더에 가려 잘려 보였다(예: "최근"→"근", "사이버캡"→"이버캡"). 이를 막기 위해
+    콘텐츠 전체를 프레임의 투명 안전 영역 크기에 맞게 자동 축소(레터박스)한 뒤
+    합성한다 — 모든 씬에 일괄 적용되며 향후 레이아웃이 바뀌어도 안전 영역만 지키면 됨."""
     ov = _load_frame_overlay()
     if ov is None:
         return img
     from PIL import Image as PILImage
-    base = img.convert("RGBA")
-    return PILImage.alpha_composite(base, ov).convert("RGB")
+    box = _frame_safe_box(ov)
+    if box is None:
+        # 투명 영역을 못 찾으면 기존 방식(단순 합성)으로 폴백
+        return PILImage.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
+    sx0, sy0, sx1, sy1 = box
+    safe_w, safe_h = sx1 - sx0, sy1 - sy0
+    # 비율 유지 축소 — 안전 영역 안에 완전히 들어가도록 (크롭 금지)
+    scale = min(safe_w / W, safe_h / H, 1.0)
+    nw, nh = max(1, round(W * scale)), max(1, round(H * scale))
+    scaled = img.convert("RGBA").resize((nw, nh), PILImage.LANCZOS)
+    # 씬 배경색(BG)으로 채운 캔버스 중앙(안전 영역 기준)에 배치 — 레터박스 여백이
+    # 콘텐츠 가장자리와 같은 네이비라 티 안 남
+    canvas = PILImage.new("RGBA", (W, H), BG + (255,))
+    ox = sx0 + (safe_w - nw) // 2
+    oy = sy0 + (safe_h - nh) // 2
+    canvas.paste(scaled, (ox, oy), scaled)
+    return PILImage.alpha_composite(canvas, ov).convert("RGB")
 
 
 def build_scene_image(scene, summary, font_reg, font_bold, bg_path: Path | None = None):
