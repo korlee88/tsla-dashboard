@@ -93,6 +93,70 @@ HOOK_STYLES = [
 def pick_hook(seed):
     return random.Random(str(seed)).choice(HOOK_STYLES)
 
+# 씬 배경 비주얼 월드 풀 — 매 영상 다른 장소·시간대·구도·무드로 배경 양산형 탈피.
+# (기존엔 IMAGE_PROMPT 템플릿이 '서울 한강·남산타워·반포대교·광화문'으로 고정돼 영상마다
+#  배경이 사실상 동일했다 — Nano Banana가 매번 새 픽셀을 만들어도 같은 장소·구도라 반복돼 보임.)
+# 한 월드는 3씬의 '세계관'을 공유하되 씬 의미는 유지: 씬0 분석 브리핑(차분·와이드),
+# 씬1 호재(밝은 초록·상승), 씬2 미래비전(세로·로봇/로보택시·마젠타·골드). {future_tech}는
+# 템플릿 꼬리에서 별도 주입돼 모든 월드에 테슬라 로드맵 요소가 함께 반영된다.
+SCENE_VISUAL_WORLDS = [
+    {   # 0 — 서울 K-테크 야경 (기존 룩)
+        "scene0": "Seoul Han River night skyline with Namsan Tower and Lotte Tower glowing, sleek autonomous electric vehicles cruising illuminated bridges, deep violet analytical night mood, city-light bokeh on the water, cinematic aerial perspective",
+        "scene1": "Seoul Banpo Bridge at fresh green sunrise, electric vehicles fast-charging and speeding along the riverside, lush green riverside, bright bullish emerald growth energy",
+        "scene2": "futuristic Seoul vertical cityscape at twilight, Gwanghwamun Square and skyline backdrop, autonomous robotaxis and humanoid robots on the streets, magenta and gold inspirational future mood, starlight sparkles",
+    },
+    {   # 1 — 미국 사막 고속도로 · 기가팩토리
+        "scene0": "vast open desert highway at blue-hour dusk, a fleet of electric vehicles streaming toward a distant glowing gigafactory, deep indigo analytical sky, long cinematic vanishing-point perspective",
+        "scene1": "bright sunlit gigafactory production floor, glowing battery assembly lines and robotic arms in motion, fresh green efficiency accents, optimistic upward bullish momentum",
+        "scene2": "towering futuristic Texas megacity skyline at golden hour, vertical composition, autonomous robotaxis and humanoid robots on elevated roads, warm gold and magenta visionary glow",
+    },
+    {   # 2 — 태평양 해안 절벽 도로
+        "scene0": "winding Pacific coastal cliff highway at dawn, electric vehicles gliding above the ocean, soft violet morning haze over the sea, cinematic aerial drone view",
+        "scene1": "sunlit green coastal hills with a modern solar-powered charging hub, electric vehicles charging, sparkling ocean below, vibrant emerald renewable-energy optimism",
+        "scene2": "futuristic seaside eco-city at sunset, vertical skyline rising from the coast, autonomous vehicles and robots, magenta-gold horizon, glittering reflections on the water",
+    },
+    {   # 3 — 네온 사이버펑크 메트로폴리스 (비)
+        "scene0": "rain-slicked neon downtown at night, aerial view of autonomous electric vehicles weaving through glowing streets, moody violet and cyan reflections, cinematic atmosphere",
+        "scene1": "vibrant green-lit electric charging megahub in a futuristic city, electric vehicles fast-charging under emerald light, energetic bullish neon glow",
+        "scene2": "colossal vertical sci-fi skyline piercing the clouds, robotaxis and humanoid robots on skybridges, magenta and gold holographic future mood, drifting light particles",
+    },
+    {   # 4 — 알프스 산악 고개
+        "scene0": "alpine mountain pass at frosty dawn, electric vehicles winding through snow-dusted peaks, cool violet morning light, sweeping wide landscape",
+        "scene1": "sunlit green alpine valley with a sleek supercharger station, electric vehicles charging amid pine forests, crisp bright bullish energy",
+        "scene2": "futuristic mountaintop observatory city above the clouds at twilight, vertical composition, autonomous vehicles and robots, magenta-gold visionary sky, starfield sparkle",
+    },
+    {   # 5 — 미래형 항구 워터프런트
+        "scene0": "futuristic night harbor with electric vehicles on a glowing waterfront promenade, cranes and megapack energy banks, deep violet industrial-analytical mood, reflections on the bay",
+        "scene1": "bright morning waterfront with green energy-storage arrays and solar piers, electric vehicles charging, sparkling water, vibrant emerald growth",
+        "scene2": "vertical futuristic port-city skyline at golden dusk, autonomous ships and robotaxis, humanoid robots on the docks, magenta-gold aspirational glow, floating light motes",
+    },
+    {   # 6 — 자동차 프루빙 그라운드(시험 주행장)
+        "scene0": "expansive automotive proving ground at dusk, electric prototypes racing across banked curves leaving sensor light trails, indigo-violet analytical twilight, dynamic aerial angle",
+        "scene1": "sunlit test track with electric vehicles accelerating past telemetry holograms, bright green performance energy, optimistic forward motion",
+        "scene2": "futuristic vertical R&D campus at night with glowing wind tunnels and robotics labs, autonomous vehicles and humanoid robots, magenta-gold innovation mood, sparkling particles",
+    },
+    {   # 7 — 오로라 · 북방 프런티어
+        "scene0": "northern highway under a shimmering aurora, electric vehicles crossing a frozen plain, ethereal violet and green polar light, vast cinematic night sky",
+        "scene1": "bright snowfield solar-and-charging outpost at midday, electric vehicles charging under crisp sun, vivid green clean-energy vitality",
+        "scene2": "futuristic arctic frontier city under the aurora, vertical glowing towers, autonomous vehicles and humanoid robots, magenta-gold-green celestial future mood, starlight sparkle",
+    },
+]
+
+def pick_visual_world(seed):
+    """생성일(주 종료일) 기준으로 비주얼 월드를 결정적으로 회전 선택.
+
+    날짜 ordinal을 인덱스로 써서 연속 생성분이 같은 월드로 반복되지 않게 한다.
+    (random.choice는 인접 날짜라도 우연히 같은 월드가 여러 번 겹칠 수 있어 — 바로
+     '배경이 매번 똑같다'는 문제의 재발 — 결정적 회전으로 인접 반복을 차단한다.
+     격일(월·수·금, 간격 2~3일) 생성에선 인덱스가 매번 달라진다.)
+    같은 날 재시도(05:15→07:15)는 같은 날짜라 같은 월드를 써 일관성을 유지한다."""
+    seed = str(seed)
+    try:
+        ordinal = datetime.strptime(seed[:10], "%Y-%m-%d").toordinal()
+    except (ValueError, TypeError):
+        ordinal = sum(ord(c) for c in seed)   # 날짜 파싱 실패 시 폴백
+    return SCENE_VISUAL_WORLDS[ordinal % len(SCENE_VISUAL_WORLDS)]
+
 SCENE_WIKI_ARTICLES = TICKER_CONFIG["scene_wiki_articles"]
 GOOGLE_TRENDS_KEYWORDS = TICKER_CONFIG.get("google_trends_keywords", [])
 
@@ -473,13 +537,13 @@ SCENE_2:
 
 === 배경 이미지 프롬프트 (Gemini Imagen용, 영어, 3개) ===
 각 60단어 이상. 반드시 포함: "no text, no letters, no watermark, no logo", "ultra-high resolution".
-{company_ko}·{industry_ko} 관련 시각 요소 포함. 씬별 색감 지정.
 ★ 각 이미지에 {company_ko}의 미래 기술·사업계획을 시각적으로 반영하라(핵심 제품/로드맵): {future_tech}.
 ※ 씬 0·1은 16:9 landscape (horizontal strip), 씬 2는 9:16 vertical (full screen) — 프롬프트에 비율 명시.
+※ 아래 각 씬의 배경 설정(영상마다 자동 변형됨)을 토대로 묘사를 더 생생하게 확장하되, 주어진 장소·시간대·무드는 그대로 유지한다 — 임의의 다른 장소로 바꾸지 말 것.
 
-IMAGE_PROMPT_0: [씬0 — 16:9 landscape · 서울 한강 야경 배경 테슬라 자율주행 전기차, {future_tech}, 남산타워·63빌딩·롯데타워 도심 스카이라인, K-tech 첨단 도시 보라빛 미래적 분석 분위기, Korean futuristic city Seoul skyline Tesla purple violet tech analytics, glowing city lights bokeh, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
-IMAGE_PROMPT_1: [씬1 — 16:9 landscape · 한강 반포 다리 초록빛 성장 상승 이미지, 서울 테슬라 전기차 충전·고속 주행, {future_tech}, K-tech 친환경 인프라 밝고 활기찬 분위기, Korean city Seoul Tesla green growth bullish energy vibrant, sunlit modern bridge electric vehicle charging, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
-IMAGE_PROMPT_2: [씬2 — 9:16 vertical · 한국 미래 도시: 한강 야경·서울 스카이라인·광화문 광장 배경의 자율주행 테슬라 차량·옵티머스 로봇 + 미래 비전({future_tech}), 첨단 K-tech 도시 풍경, 마젠타·골드빛 영감적 미래 무드, 황금빛 태양·별빛·반짝임, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
+IMAGE_PROMPT_0: [씬0 — 16:9 landscape · {visual_0} · {future_tech} 요소를 장면에 자연스럽게 녹여라, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_1: [씬1 — 16:9 landscape · {visual_1} · {future_tech} 반영, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo]
+IMAGE_PROMPT_2: [씬2 — 9:16 vertical · {visual_2} · {future_tech} 미래 비전 반영, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo]"""
 
 
 def _build_prompt(summary):
@@ -527,13 +591,18 @@ def _build_prompt(summary):
     # 향후 가격 예측 요약 (dailyForecasts 기반, 매매신호 단어 제외)
     next_week_str = build_next_week_outlook(summary.get("forecasts", []))
 
-    hook_style = pick_hook(summary.get("week_end") or summary.get("week_start") or "")
+    seed = summary.get("week_end") or summary.get("week_start") or ""
+    hook_style = pick_hook(seed)
+    world = pick_visual_world(seed)   # 영상마다 배경 장소·무드 변형 (양산형 탈피)
     return SCRIPT_PROMPT_TEMPLATE.format(
         ticker=TICKER,
         company_ko=COMPANY_KO,
         industry_ko=INDUSTRY_KO,
         future_tech=FUTURE_TECH_EN,
         hook_style=hook_style,
+        visual_0=world["scene0"],
+        visual_1=world["scene1"],
+        visual_2=world["scene2"],
         week_start=summary["week_start"],
         week_end=summary["week_end"],
         price=summary["latest_price"],
