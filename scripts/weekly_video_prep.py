@@ -1398,6 +1398,25 @@ def draw_check(draw, x, y, size, color, width=None):
     draw.line([p2, p3], fill=color, width=w)
 
 
+def fit_label_width(draw, text, font, max_w, min_size=None, step=2):
+    """카테고리·출처처럼 줄바꿈이 어색한 한 줄 라벨이 max_w를 넘으면 폰트 크기를 단계적으로
+    줄여서 맞춘다(배지·헤더 라벨용 — 본문은 wrap_text/wrap_runs로 줄바꿈 처리). 최소 크기에서도
+    넘치면 말줄임표(…)로 잘라 프레임 밖으로 벗어나지 않게 한다. (text, font) 튜플 반환."""
+    base_size = getattr(font, "size", None)
+    if not text or base_size is None or draw.textlength(text, font=font) <= max_w:
+        return text, font
+    min_size = min_size or max(16, int(base_size * 0.6))
+    size, f = base_size, font
+    while draw.textlength(text, font=f) > max_w and size > min_size:
+        size -= step
+        f = font.font_variant(size=size)
+    if draw.textlength(text, font=f) > max_w:
+        while text and draw.textlength(text + "…", font=f) > max_w:
+            text = text[:-1]
+        text = (text + "…") if text else "…"
+    return text, f
+
+
 def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
                             source, date, accent, fnt_bold, fnt_content,
                             fnt_source, fnt_content_xl=None, fnt_content_sm=None,
@@ -1416,21 +1435,28 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
     draw.rounded_rectangle([x, y, x + w, y + HEADER_H], radius=14, fill=accent)
     draw.rectangle([x, y + HEADER_H - 14, x + w, y + HEADER_H], fill=accent)
 
-    # 헤더 왼쪽: 카테고리 또는 소스 라벨 ("+4pt" 대신 — 시청자에게 의미 있는 정보)
-    header_label = (category or source or "최근 HOT")[:14]
-    draw.text((x + 22, y + HEADER_H // 2), header_label,
-              font=fnt_bold, fill=BADGE_BG, anchor="lm",
-              stroke_width=2, stroke_fill=(0, 60, 0))
-
-    # 헤더 오른쪽: "BEST" 배지
+    # 헤더 오른쪽: "BEST" 배지 (먼저 배치 — 왼쪽 라벨의 가용폭 계산에 필요)
+    # fnt_bold가 큰 사이즈(예: 48px)로 전달되면 "BEST" 자체가 110px 배지보다 넓어져
+    # 글자 끝("T")이 배지 밖으로 잘려 보일 수 있어 배지 폭 기준으로도 자동 축소한다.
     badge_w, badge_h = 110, 52
     bx = x + w - badge_w - 16
     by = y + (HEADER_H - badge_h) // 2
     draw.rounded_rectangle([bx, by, bx + badge_w, by + badge_h],
                            radius=10, fill=BADGE_BG)
+    badge_text, badge_font = fit_label_width(draw, "BEST", fnt_bold, badge_w - 16)
     draw.text((bx + badge_w // 2, by + badge_h // 2),
-              "BEST", font=fnt_bold, fill=KEY, anchor="mm",
+              badge_text, font=badge_font, fill=KEY, anchor="mm",
               stroke_width=1, stroke_fill=STROKE)
+
+    # 헤더 왼쪽: 카테고리 또는 소스 라벨 ("+4pt" 대신 — 시청자에게 의미 있는 정보)
+    # 영문 카테고리 등으로 길어지면 BEST 배지와 겹치거나 카드 밖으로 밀려날 수 있어
+    # 폭 기준으로 폰트를 자동 축소(넘치면 말줄임표)해 항상 프레임 안에 들어오게 한다.
+    header_label = category or source or "최근 HOT"
+    label_max_w = bx - (x + 22) - 16
+    header_label, header_font = fit_label_width(draw, header_label, fnt_bold, label_max_w)
+    draw.text((x + 22, y + HEADER_H // 2), header_label,
+              font=header_font, fill=BADGE_BG, anchor="lm",
+              stroke_width=2, stroke_fill=(0, 60, 0))
 
     # 본문 영역 — 각 호재 줄 앞에 초록 체크(✓) 머리기호
     content_x    = x + 28
@@ -1469,12 +1495,13 @@ def draw_bullish_hero_card(draw, img, x, y, w, h, headline, details, score,
                            stroke_width=sw, stroke_fill=STROKE)
             cy += line_h
 
-    # 하단 출처 바 (source · date)
+    # 하단 출처 바 (source · date) — 길어지면 폰트 자동 축소(넘치면 말줄임표)
     footer_y = y + h - FOOTER_H
     draw.rounded_rectangle([x, footer_y - 6, x + w, y + h], radius=14, fill=BADGE_BG)
     footer_text = " · ".join(filter(None, [source, date])) or "출처 미상"
-    draw.text((x + 18, footer_y + FOOTER_H // 2), footer_text[:50],
-              font=fnt_source, fill=KEY, anchor="lm",
+    footer_text, footer_font = fit_label_width(draw, footer_text, fnt_source, w - 36)
+    draw.text((x + 18, footer_y + FOOTER_H // 2), footer_text,
+              font=footer_font, fill=KEY, anchor="lm",
               stroke_width=1, stroke_fill=STROKE)
 
 
