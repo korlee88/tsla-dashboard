@@ -1,0 +1,30 @@
+SCENE_0_TITLE: 테슬라근황
+SCENE_0:
+한 주 새 *-5.7%*, $381.61로 밀렸어요
+*자율주행 사고 조사*가 분위기를 눌렀죠
+*사이버캡 공개*는 든든한 호재예요
+*250억 달러* 자본 지출은 부담이네요
+
+SCENE_1_TITLE: 호재분석
+SCENE_1:
+호재: *핸들 없는 사이버캡* 첫 공개
+   ↳ 배경: *2026년 6월* 로보택시 확장 예고
+   ↳ 데이터: 운전석도 비운 *완전 무인차*
+   ↳ 임팩트: FSD가 *상용화 문턱*에 닿았죠
+   ↳ 비교: 웨이모 대비 *대량생산* 강점이 커요
+   ↳ 사고 조사 너머, 진짜 핵심은 *로보택시 수익화*예요
+
+SCENE_2_TITLE: 앞으로전망
+SCENE_2:
+*7월 2일* 모델 Y L 출시가 다가와요
+→ 미국 판매 *반등 기대*가 실리네요
+단기엔 *-0.4%*, $380 부근 흐름이 예상돼요
+→ *5일 중 4일*은 하락 신호가 잡혔어요
+*NHTSA 조사 결과*가 최대 변수죠
+함께해 주셔서 감사해요!
+
+IMAGE_PROMPT_0: Seoul Han River night view with futuristic Tesla autonomous electric vehicles cruising on illuminated highways, FSD robotaxi autonomous driving cars, Optimus humanoid robot standing on rooftop, 4680 battery cells glowing, megapack energy storage units, Dojo supercomputer hologram, Namsan Tower N Seoul Tower, 63 Building, Lotte World Tower skyline, K-tech advanced city, deep purple violet analytical mood, glowing city lights bokeh, cinematic atmosphere, ultra-high resolution, 16:9 landscape horizontal strip, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: Seoul Banpo Bridge with vibrant green growth bullish energy, Tesla electric vehicles charging and driving fast across modern highway, FSD robotaxi autonomous driving fleet, Optimus humanoid robot assembling parts, 4680 battery cells glowing emerald, megapack energy storage farms, Dojo supercomputer data center, K-tech eco-friendly infrastructure, bright sunlit cheerful atmosphere, Korean city Seoul Tesla green bullish vibrant, modern electric vehicle charging stations, lush green rooftops, ultra-high resolution, 16:9 landscape horizontal strip, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: Korean futuristic city vertical panorama: Han River night view, Seoul skyline, Gwanghwamun Square backdrop with autonomous Tesla vehicles and Optimus humanoid robots walking among citizens, future vision elements FSD robotaxi autonomous driving, 4680 battery cells, megapack energy storage towers, Dojo supercomputer pillars, advanced K-tech cityscape, magenta and gold inspirational futuristic mood, golden sunlight, starry sky, sparkling lights, dreamy cinematic atmosphere, ultra-high resolution, 9:16 vertical full screen, no text, no letters, no watermark, no logo
