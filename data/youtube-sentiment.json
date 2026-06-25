@@ -1,43 +1,43 @@
 {
   "score": -2,
-  "velocity": 0.13,
-  "velocity_label": "급감 (×0.1)",
-  "reason": "조회수 속도 급감 (×0.1) | 최근 3일 133,335회 / 이전 4~7일 1,028,912회 | 총 1,162,247회 (43개 영상)",
+  "velocity": 0.26,
+  "velocity_label": "급감 (×0.3)",
+  "reason": "조회수 속도 급감 (×0.3) | 최근 3일 269,357회 / 이전 4~7일 1,051,982회 | 총 1,321,339회 (43개 영상)",
   "video_count": 43,
-  "total_views": 1162247,
-  "hot_views": 133335,
-  "baseline_views": 1028912,
+  "total_views": 1321339,
+  "hot_views": 269357,
+  "baseline_views": 1051982,
   "top_videos": [
     {
       "title": "An AUTOBOT Symbol That TRANSFORMS Into OPTIMUS PRIME! Transformers ICONS Voyager Class REVIEW!",
       "channel": "PrimeVsPrime",
       "publishedAt": "2026-06-19T20:15:37Z",
-      "viewCount": 141909
+      "viewCount": 152651
     },
     {
       "title": "Elon Just Told TSLA Holders What Comes Next",
       "channel": "Brighter with Herbert",
       "publishedAt": "2026-06-20T18:30:35Z",
-      "viewCount": 89591
+      "viewCount": 91268
     },
     {
       "title": "SHOCKING SpaceX Merger Price For Tesla Stock?",
       "channel": "Jo Bhakdi",
       "publishedAt": "2026-06-22T20:49:14Z",
-      "viewCount": 75205
+      "viewCount": 85387
     },
     {
-      "title": "Tesla Is The New Data Center King | SpaceX Merger Is Coming",
-      "channel": "Ryan Shaw",
-      "publishedAt": "2026-06-20T16:00:11Z",
-      "viewCount": 74699
+      "title": "When Will SpaceX Acquire Tesla? Grok Did the Math",
+      "channel": "Brighter with Herbert",
+      "publishedAt": "2026-06-21T18:30:10Z",
+      "viewCount": 81886
     },
     {
-      "title": "보스턴 다이내믹스가 휴머노이드 판을 뒤집은 이유 | 공경철 카이스트 교수 | 킥",
-      "channel": "한국경제TV",
-      "publishedAt": "2026-06-19T02:09:28Z",
-      "viewCount": 74138
+      "title": "Tesla&#39;s Optimus Factory Just Hit 4 Floors — 27,000 Robots/Day by 2027",
+      "channel": "Tech Revolution",
+      "publishedAt": "2026-06-19T22:00:28Z",
+      "viewCount": 75762
     }
   ],
-  "collected_at": "2026-06-23T23:52:40Z"
+  "collected_at": "2026-06-25T00:05:45Z"
 }

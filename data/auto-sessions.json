@@ -1,6 +1,384 @@
 {
   "sessions": [
     {
+      "id": "auto-1782346062227",
+      "date": "2026-06-25",
+      "displayDate": "2026.06.25",
+      "kstTime": "09:05",
+      "source": "auto",
+      "newsCount": 10,
+      "analyzedCount": 10,
+      "news": [
+        {
+          "id": 1782345955217,
+          "title": "테슬라, 유럽 에너지 저장 프로젝트 위해 NatPower와 25GWh 이상 계약 체결",
+          "summary": "테슬라가 유럽에서 25GWh 이상의 에너지 저장 프로젝트를 위해 NatPower와 계약을 체결했다. 이는 테슬라의 에너지 사업 확장에 중요한 발판이 될 것으로 보인다.",
+          "source": "RTTNews",
+          "date": "2026-06-25",
+          "category": "Energy"
+        },
+        {
+          "id": 1782345955218,
+          "title": "테슬라, 텍사스 주택 충돌 사고로 NHTSA의 새로운 조사 직면",
+          "summary": "테슬라 모델 3가 텍사스 주택에 충돌하는 사고가 발생하여 미국 도로교통안전국(NHTSA)의 새로운 조사를 받게 되었다. 이는 테슬라의 자율주행 시스템 안전성에 대한 우려를 다시 불러일으킬 수 있다.",
+          "source": "Seeking Alpha",
+          "date": "2026-06-25",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1782345955219,
+          "title": "일론 머스크, 테슬라 FSD에 우버 운전사처럼 지시할 수 있는 기능 3개월 내 출시 예고",
+          "summary": "일론 머스크는 테슬라의 완전자율주행(FSD) 시스템에 Grok 기반의 새로운 기능이 약 3개월 내에 추가될 것이라고 밝혔다. 이 기능을 통해 운전자는 우버 운전사에게 지시하듯이 FSD에 자연어로 경로 변경이나 하차 요청을 할 수 있게 될 것이다.",
+          "source": "Stocktwits",
+          "date": "2026-06-24",
+          "category": "Product"
+        },
+        {
+          "id": 1782345955220,
+          "title": "BYD와 테슬라, 5월 유럽 자동차 판매량 증가로 시장 점유율 확대",
+          "summary": "BYD와 테슬라가 5월 유럽 자동차 시장에서 전기차 수요 강세에 힘입어 판매량이 증가하며 시장 점유율을 확대했다. 이는 유럽 시장에서 전기차의 지속적인 성장을 보여준다.",
+          "source": "Seeking Alpha",
+          "date": "2026-06-25",
+          "category": "Competition"
+        },
+        {
+          "id": 1782345955221,
+          "title": "애플, 테슬라 문서, 타타 해킹으로 유출 보고",
+          "summary": "타타 그룹 해킹으로 애플과 테슬라 관련 문서가 유출되었다는 보도가 나왔다. 이는 기업 정보 보안에 대한 우려를 제기할 수 있다.",
+          "source": "Seeking Alpha",
+          "date": "2026-06-24",
+          "category": "Market"
+        },
+        {
+          "id": 1782345955222,
+          "title": "테슬라 주가, 화요일 하락세 기록",
+          "summary": "테슬라 주가가 화요일에 하락세를 보였다. 이는 거대 기술주 및 소프트웨어 주식 약세의 영향을 받은 것으로 분석된다.",
+          "source": "The Motley Fool",
+          "date": "2026-06-24",
+          "category": "Market"
+        },
+        {
+          "id": 1782345955223,
+          "title": "테슬라, 유럽 월별 판매량 두 배 이상 증가",
+          "summary": "테슬라가 유럽에서 월별 판매량이 두 배 이상 증가하며 강세를 보였다. 이는 유럽 시장에서 테슬라의 성장세를 나타낸다.",
+          "source": "WSJ",
+          "date": "2026-06-24",
+          "category": "Delivery"
+        },
+        {
+          "id": 1782345955224,
+          "title": "일론 머스크, 세계 최초의 억만장자 등극",
+          "summary": "스페이스X의 IPO로 일론 머스크의 순자산이 1조 달러를 돌파하며 세계 최초의 억만장자가 되었다. 이는 그의 재산과 영향력에 대한 주목을 받고 있다.",
+          "source": "Stocktwits",
+          "date": "2026-06-23",
+          "category": "Market"
+        },
+        {
+          "id": 1782345955225,
+          "title": "테슬라, 스웨덴의 FSD 기술 금지 촉구로 EU 규제 난관 직면",
+          "summary": "스웨덴이 속도 제한 문제로 테슬라의 완전자율주행(FSD) 기술 금지를 촉구하면서 테슬라가 유럽연합(EU) 규제에 난관을 겪고 있다. 이는 테슬라의 유럽 시장 확장에 영향을 미칠 수 있다.",
+          "source": "Reuters",
+          "date": "2026-06-22",
+          "category": "Regulatory"
+        },
+        {
+          "id": 1782345955226,
+          "title": "Sunrun과 Renew Home, 테슬라와 16기가와트 이상의 유연한 에너지 용량 통합 계약 발표",
+          "summary": "Sunrun과 Renew Home이 테슬라와 16기가와트 이상의 유연한 에너지 용량을 통합하는 계약을 발표했다. 이 파트너십은 분산형 에너지 자원의 확장에 기여할 것으로 예상된다.",
+          "source": "Investing.com",
+          "date": "2026-06-25",
+          "category": "Energy"
+        }
+      ],
+      "analyses": {
+        "1782345955217": {
+          "impact_score": 3,
+          "direction": "bullish",
+          "confidence": "high",
+          "triggered_rules": [
+            "R15"
+          ],
+          "reasoning": "테슬라가 유럽에서 25GWh 이상의 대규모 에너지 저장 프로젝트 계약을 체결하여 에너지 사업 확장에 긍정적인 영향을 미칠 것입니다.",
+          "key_factors": [
+            "대규모 에너지 저장 계약",
+            "유럽 시장 확장"
+          ]
+        },
+        "1782345955218": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라 모델 3의 주택 충돌 사고로 인한 NHTSA의 새로운 조사는 자율주행 시스템의 안전성 우려를 다시 불러일으켜 주가에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "NHTSA 조사",
+            "자율주행 시스템 안전성 우려"
+          ]
+        },
+        "1782345955219": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R13"
+          ],
+          "reasoning": "일론 머스크가 3개월 내에 Grok 기반의 자연어 명령 기능을 FSD에 추가할 것이라고 예고하여 FSD 기술 발전에 대한 긍정적인 기대감을 높입니다.",
+          "key_factors": [
+            "FSD 기능 개선",
+            "Grok 통합",
+            "사용자 경험 향상"
+          ]
+        },
+        "1782345955220": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라가 5월 유럽 자동차 시장에서 판매량 증가와 시장 점유율 확대를 기록하며 전기차 수요 강세에 힘입어 긍정적인 영향을 받을 것으로 예상된다.",
+          "key_factors": [
+            "유럽 판매량 증가",
+            "시장 점유율 확대",
+            "전기차 수요 강세"
+          ]
+        },
+        "1782345955221": {
+          "impact_score": -1,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "타타 그룹 해킹으로 테슬라 관련 문서가 유출되었다는 보도는 기업 정보 보안에 대한 우려를 제기할 수 있습니다.",
+          "key_factors": [
+            "데이터 유출",
+            "기업 보안 우려"
+          ]
+        },
+        "1782345955222": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "테슬라 주가 하락은 거대 기술주 및 소프트웨어 주식 약세의 영향을 받은 것으로, 테슬라 자체의 특정 부정적 소식은 없으므로 중립적입니다.",
+          "key_factors": [
+            "거대 기술주 약세",
+            "소프트웨어 주식 약세"
+          ]
+        },
+        "1782345955223": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "테슬라의 유럽 월별 판매량이 두 배 이상 증가하여 유럽 시장에서의 성장세를 보여주며 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "유럽 판매량 증가",
+            "시장 성장세"
+          ]
+        },
+        "1782345955224": {
+          "impact_score": 0,
+          "direction": "neutral",
+          "confidence": "high",
+          "triggered_rules": [],
+          "reasoning": "이 뉴스는 일론 머스크의 개인적인 재산 증가에 관한 것으로, 테슬라 주식에 직접적인 영향을 미치지 않으며 스페이스X는 별도로 상장된 회사로 간주된다.",
+          "key_factors": [
+            "일론 머스크 개인 재산",
+            "스페이스X IPO"
+          ]
+        },
+        "1782345955225": {
+          "impact_score": -2,
+          "direction": "bearish",
+          "confidence": "medium",
+          "triggered_rules": [],
+          "reasoning": "스웨덴이 속도 제한 문제로 테슬라의 FSD 기술 금지를 촉구하여 테슬라의 유럽 시장 확장 및 규제 준수에 부정적인 영향을 미칠 수 있습니다.",
+          "key_factors": [
+            "FSD 기술 금지 촉구",
+            "EU 규제 난관",
+            "유럽 시장 확장 영향"
+          ]
+        },
+        "1782345955226": {
+          "impact_score": 2,
+          "direction": "bullish",
+          "confidence": "medium",
+          "triggered_rules": [
+            "R15"
+          ],
+          "reasoning": "테슬라가 Sunrun 및 Renew Home과 16기가와트 이상의 유연한 에너지 용량 통합 계약을 체결하여 에너지 저장 사업 부문에 긍정적인 영향을 미칠 것으로 예상됩니다.",
+          "key_factors": [
+            "에너지 저장 계약",
+            "분산형 에너지 자원"
+          ]
+        }
+      },
+      "avgScore": 0.6,
+      "buyIndex": 46,
+      "direction": "bullish",
+      "topRules": [
+        "R15",
+        "R13"
+      ],
+      "bullish": 5,
+      "bearish": 3,
+      "neutral": 2,
+      "muskXSentiment": null,
+      "googleTrends": {
+        "current_score": 50,
+        "week_avg": 55,
+        "trend": "falling",
+        "spike": false,
+        "top_queries": [
+          "Tesla Model 3",
+          "Tesla stock",
+          "Elon Musk",
+          "Cybertruck",
+          "Tesla price"
+        ],
+        "reasoning": "지난주에 비해 검색 관심도가 약간 하락했지만, 여전히 'Tesla' 키워드에 대한 검색 관심도는 보통 수준을 유지하고 있습니다."
+      },
+      "youtubeInterest": {
+        "score": -2,
+        "velocity": 0.26,
+        "velocity_label": "급감 (×0.3)",
+        "reason": "조회수 속도 급감 (×0.3) | 최근 3일 269,357회 / 이전 4~7일 1,051,982회 | 총 1,321,339회 (43개 영상)",
+        "video_count": 43,
+        "total_views": 1321339,
+        "hot_views": 269357,
+        "baseline_views": 1051982,
+        "top_videos": [
+          {
+            "title": "An AUTOBOT Symbol That TRANSFORMS Into OPTIMUS PRIME! Transformers ICONS Voyager Class REVIEW!",
+            "channel": "PrimeVsPrime",
+            "publishedAt": "2026-06-19T20:15:37Z",
+            "viewCount": 152651
+          },
+          {
+            "title": "Elon Just Told TSLA Holders What Comes Next",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-06-20T18:30:35Z",
+            "viewCount": 91268
+          },
+          {
+            "title": "SHOCKING SpaceX Merger Price For Tesla Stock?",
+            "channel": "Jo Bhakdi",
+            "publishedAt": "2026-06-22T20:49:14Z",
+            "viewCount": 85387
+          },
+          {
+            "title": "When Will SpaceX Acquire Tesla? Grok Did the Math",
+            "channel": "Brighter with Herbert",
+            "publishedAt": "2026-06-21T18:30:10Z",
+            "viewCount": 81886
+          },
+          {
+            "title": "Tesla&#39;s Optimus Factory Just Hit 4 Floors — 27,000 Robots/Day by 2027",
+            "channel": "Tech Revolution",
+            "publishedAt": "2026-06-19T22:00:28Z",
+            "viewCount": 75762
+          }
+        ],
+        "collected_at": "2026-06-25T00:05:45Z"
+      },
+      "newsCategories": {
+        "total": 10,
+        "Energy": 2,
+        "Regulatory": 2,
+        "Product": 1,
+        "Competition": 1,
+        "Market": 3,
+        "Delivery": 1
+      },
+      "macroCtx": {
+        "spyChg": -0.26,
+        "qqqChg": -0.58,
+        "vixClose": 18.6299991607666,
+        "wtiChg": 0.06,
+        "cnyChg": 0,
+        "competitorChg": 0,
+        "competitorRelStrength": -1.18,
+        "prevAssetChg": -3.35,
+        "assetTrend3w": -3.71,
+        "rsi": 52.7,
+        "macd": {
+          "macd": -2.7090574405399366,
+          "signal": -0.4461708457240807,
+          "hist": -2.262886594815856,
+          "crossover": null,
+          "trend": "bearish"
+        },
+        "bb": {
+          "upper": 440.91,
+          "middle": 393.84,
+          "lower": 346.77,
+          "pos": 0.306
+        },
+        "isDeliveryWeek": false,
+        "isEarningsWeek": false,
+        "bydChg": 0,
+        "bydRelStrength": -1.18,
+        "prevTslaChg": -3.35,
+        "tslaTrend3w": -3.71
+      },
+      "scoringLayers": {
+        "base": 56,
+        "macdTrend": -1,
+        "trendFilter": -6,
+        "googleTrends": -1,
+        "youtubeInterest": -2
+      },
+      "latestPrice": 375.53,
+      "latestTslaPrice": 375.53,
+      "dailyForecasts": [
+        {
+          "day": 1,
+          "label": "내일",
+          "date": "6/26(금)",
+          "change_pct": -0.7,
+          "signal": "관망",
+          "basePrice": 375.53,
+          "predictedPrice": 372.9
+        },
+        {
+          "day": 2,
+          "label": "D+2",
+          "date": "6/29(월)",
+          "change_pct": -0.9,
+          "signal": "매도",
+          "basePrice": 375.53,
+          "predictedPrice": 372.15
+        },
+        {
+          "day": 3,
+          "label": "D+3",
+          "date": "6/30(화)",
+          "change_pct": 0.5,
+          "signal": "관망",
+          "basePrice": 375.53,
+          "predictedPrice": 377.41
+        },
+        {
+          "day": 4,
+          "label": "D+4",
+          "date": "7/1(수)",
+          "change_pct": 0.2,
+          "signal": "관망",
+          "basePrice": 375.53,
+          "predictedPrice": 376.28
+        },
+        {
+          "day": 5,
+          "label": "D+5",
+          "date": "7/2(목)",
+          "change_pct": -0.6,
+          "signal": "관망",
+          "basePrice": 375.53,
+          "predictedPrice": 373.28
+        }
+      ],
+      "modelVersion": "3.1",
+      "timestamp": 1782346062227
+    },
+    {
       "id": "auto-1782258797779",
       "date": "2026-06-24",
       "displayDate": "2026.06.24",
@@ -35788,415 +36166,7 @@
       ],
       "modelVersion": "3.1",
       "timestamp": 1779543608335
-    },
-    {
-      "id": "auto-1779508922660",
-      "date": "2026-05-23",
-      "displayDate": "2026.05.23",
-      "kstTime": "13:00",
-      "source": "auto",
-      "newsCount": 10,
-      "analyzedCount": 10,
-      "news": [
-        {
-          "id": 1779508849203,
-          "title": "스페이스X, 1.75조 달러 가치로 IPO 추진 중",
-          "summary": "일론 머스크가 이끄는 스페이스X가 1.75조 달러의 가치로 기업공개(IPO)를 추진하고 있으며, 이는 역사상 가장 큰 규모의 IPO가 될 수 있다. 스페이스X는 2026년 6월까지 나스닥 상장을 목표로 하고 있으며, 머스크는 이중 클래스 주식 구조를 통해 의결권의 85.1%를 유지할 예정이다.",
-          "source": "Reuters",
-          "date": "2026-05-22",
-          "category": "Musk|Market"
-        },
-        {
-          "id": 1779508849204,
-          "title": "테슬라, 2026년 AI 및 로봇 투자에 250억 달러 추가 지출 계획",
-          "summary": "테슬라가 일론 머스크의 AI 야망을 지원하기 위해 올해 250억 달러를 추가로 지출할 계획이라고 밝혔다. 이는 로보택시 및 옵티머스 로봇 생산 라인 확장을 위한 투자이며, 회사는 이를 통해 장기적인 성장 동력을 확보할 것으로 기대하고 있다.",
-          "source": "Bloomberg",
-          "date": "2026-04-23",
-          "category": "Product|AI|Market"
-        },
-        {
-          "id": 1779508849205,
-          "title": "일론 머스크, 연말까지 미국 전역에 완전 자율주행 테슬라 확대 약속",
-          "summary": "일론 머스크는 텔아비브 정상회담에서 연말까지 미국 전역에 '광범위한' 자율주행 테슬라를 선보일 것이라고 약속했다. 현재 텍사스에서 안전 모니터 없이 자율주행 테슬라가 운행 중이며, 이는 테슬라 주가에 긍정적인 영향을 미칠 수 있는 대담한 발언으로 평가된다.",
-          "source": "TheStreet",
-          "date": "2026-05-20",
-          "category": "Product|Musk"
-        },
-        {
-          "id": 1779508849206,
-          "title": "스페이스X IPO 서류, Anthropic이 컴퓨팅 사용료로 월 12.5억 달러 지불 계약 공개",
-          "summary": "스페이스X의 IPO 서류에서 Anthropic이 2029년 5월까지 컴퓨팅 액세스 비용으로 스페이스X에 월 12.5억 달러, 총 450억 달러를 지불하기로 합의한 사실이 밝혀졌다. 이는 스페이스X의 재무 상태에 상당한 영향을 미칠 수 있는 중요한 계약이다.",
-          "source": "AI News Today",
-          "date": "2026-05-21",
-          "category": "Musk|Energy|Market"
-        },
-        {
-          "id": 1779508849207,
-          "title": "테슬라, 1분기 실적 예상치 상회 및 EV 수요 회복 시사",
-          "summary": "테슬라가 1분기 조정 주당순이익(EPS) 0.41달러를 기록하며 월스트리트 예상치인 0.34달러를 상회했다. 또한 아시아-태평양 및 남미 지역의 차량 수요가 지속적으로 성장하고 북미 및 유럽-중동 지역에서 수요가 회복되고 있다고 밝혀, 전기차 시장의 회복 가능성을 시사했다.",
-          "source": "Bloomberg",
-          "date": "2026-04-22",
-          "category": "Earnings|Delivery|Market"
-        },
-        {
-          "id": 1779508849208,
-          "title": "테슬라, 2026년 잉여현금흐름 439억 달러 감소 예상, 투자자 경고",
-          "summary": "테슬라가 2026년 잉여현금흐름이 이전 예상치보다 439억 달러 감소할 것으로 전망하며, 이는 회사의 재무 전망이 긍정에서 부정으로 전환되었음을 의미한다. 공격적인 자본 지출과 생산 라인 업그레이드 등이 주요 원인으로 지목된다.",
-          "source": "Markets.com",
-          "date": "2026-04-19",
-          "category": "Earnings|Market"
-        },
-        {
-          "id": 1779508849209,
-          "title": "GSA Capital Partners LLP, 테슬라 주식 보유량 축소",
-          "summary": "GSA Capital Partners LLP가 지난 분기 동안 테슬라 주식 4,514주를 매도하여 보유량을 축소했다. 이는 기관 투자자들의 테슬라 주식에 대한 포지션 변화를 보여주는 사례 중 하나이다.",
-          "source": "MarketBeat",
-          "date": "2026-05-20",
-          "category": "Market"
-        },
-        {
-          "id": 1779508849210,
-          "title": "테슬라, 단순한 자동차 제조업체 이상으로 변모 중",
-          "summary": "모건 스탠리에 따르면 테슬라는 단순한 전기차 제조업체를 넘어 소프트웨어/커넥티드 차량 서비스 제공업체로 변모하고 있으며, 이는 장기적으로 주가 상승을 이끌 수 있는 요인이다. 자율주행, GPS, 엔터테인먼트 등 서비스 사업의 성장이 기대된다.",
-          "source": "Fox Business",
-          "date": "2020-11-18",
-          "category": "Product|Market"
-        },
-        {
-          "id": 1779508849211,
-          "title": "테슬라, 1분기 인도량 예상치 크게 하회하며 주가 하락",
-          "summary": "테슬라의 1분기 차량 인도량이 예상치를 크게 밑돌면서 주가가 급락했다. 이는 전기차 수요 둔화에 대한 우려를 증폭시키고 있으며, 포드, GM, 메르세데스 등 경쟁사들과 중국 전기차 업체들의 경쟁 심화도 영향을 미치고 있다.",
-          "source": "Fox Business",
-          "date": "2024-04-02",
-          "category": "Delivery|Competition|Market"
-        },
-        {
-          "id": 1779508849212,
-          "title": "테슬라 주가 기술적 분석: 5월 22일 주요 지지 및 저항선",
-          "summary": "테슬라 주가에 대한 기술적 분석에 따르면, 5월 22일 기준 주요 지지선과 저항선이 제시되었다. 408.05달러 이상 유지 시 453.91달러까지 상승 가능성이 있으며, 381.49달러 이하로 마감 시 349.97달러까지 하락할 수 있다.",
-          "source": "YouTube (Wicked Stocks)",
-          "date": "2026-05-21",
-          "category": "Market"
-        }
-      ],
-      "analyses": {
-        "1779508849203": {
-          "impact_score": -1,
-          "direction": "bearish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R24"
-          ],
-          "reasoning": "일론 머스크가 이끄는 스페이스X의 대규모 IPO 추진 소식은 머스크의 관심과 자원이 테슬라 외 다른 벤처로 분산될 수 있다는 우려를 불러일으킬 수 있습니다.",
-          "key_factors": [
-            "스페이스X IPO",
-            "머스크의 관심 분산",
-            "역사상 최대 규모 IPO"
-          ]
-        },
-        "1779508849204": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R25"
-          ],
-          "reasoning": "테슬라가 AI 및 로봇 생산 라인 확장을 위해 250억 달러를 추가 지출할 계획이라고 밝히면서 장기적인 성장 동력 확보에 대한 기대감이 커지고 있습니다.",
-          "key_factors": [
-            "AI 투자",
-            "로보택시",
-            "옵티머스 로봇 생산"
-          ]
-        },
-        "1779508849205": {
-          "impact_score": 2,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [
-            "R13"
-          ],
-          "reasoning": "일론 머스크의 연말까지 미국 전역에 완전 자율주행 테슬라 확대 약속은 FSD 기술 발전에 대한 긍정적인 신호로 해석될 수 있습니다.",
-          "key_factors": [
-            "FSD 확대 약속",
-            "일론 머스크 발언"
-          ]
-        },
-        "1779508849206": {
-          "impact_score": 0,
-          "direction": "neutral",
-          "confidence": "high",
-          "triggered_rules": [],
-          "reasoning": "이 뉴스는 스페이스X의 재무 상태에 긍정적이지만, 테슬라 주식에 직접적인 영향을 미치는 정보는 아니며, 머스크의 다른 벤처 리스크 전이(R24)로 간주하기에는 긍정적인 소식이라 중립으로 평가됩니다.",
-          "key_factors": [
-            "SpaceX IPO",
-            "Anthropic 계약",
-            "Musk의 다른 벤처"
-          ]
-        },
-        "1779508849207": {
-          "impact_score": 3,
-          "direction": "bullish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R12"
-          ],
-          "reasoning": "테슬라가 1분기 조정 주당순이익(EPS)이 월스트리트 예상치를 10% 이상 상회하며 전기차 수요 회복 가능성을 시사하여 긍정적인 영향을 미칠 것으로 예상됩니다.",
-          "key_factors": [
-            "EPS beat",
-            "EV demand recovery"
-          ]
-        },
-        "1779508849208": {
-          "impact_score": -2,
-          "direction": "bearish",
-          "confidence": "medium",
-          "triggered_rules": [],
-          "reasoning": "테슬라의 2026년 잉여현금흐름이 이전 예상치보다 439억 달러 감소할 것으로 전망되어 재무 전망이 부정적으로 전환될 수 있다는 분석이 나왔습니다.",
-          "key_factors": [
-            "잉여현금흐름 감소 전망",
-            "공격적인 자본 지출",
-            "생산 라인 업그레이드"
-          ]
-        },
-        "1779508849209": {
-          "impact_score": -1,
-          "direction": "bearish",
-          "confidence": "medium",
-          "triggered_rules": [],
-          "reasoning": "GSA Capital Partners LLP가 지난 분기 테슬라 주식 보유량을 축소한 것은 기관 투자자들의 부정적인 포지션 변화를 시사합니다.",
-          "key_factors": [
-            "기관 투자자 매도",
-            "보유량 축소"
-          ]
-        },
-        "1779508849210": {
-          "impact_score": 1,
-          "direction": "bullish",
-          "confidence": "medium",
-          "triggered_rules": [],
-          "reasoning": "모건 스탠리는 테슬라가 단순한 자동차 제조업체를 넘어 소프트웨어 및 커넥티드 차량 서비스 제공업체로 변모하고 있다고 분석했으며, 이는 장기적인 주가 상승 요인으로 작용할 수 있습니다.",
-          "key_factors": [
-            "소프트웨어/커넥티드 차량 서비스",
-            "자율주행 및 엔터테인먼트 서비스 성장"
-          ]
-        },
-        "1779508849211": {
-          "impact_score": -4,
-          "direction": "bearish",
-          "confidence": "high",
-          "triggered_rules": [
-            "R01",
-            "R06"
-          ],
-          "reasoning": "테슬라의 1분기 차량 인도량이 예상치를 크게 하회하여 전기차 수요 둔화 우려와 경쟁 심화가 주가 하락을 야기했습니다.",
-          "key_factors": [
-            "1분기 인도량 예상치 하회",
-            "전기차 수요 둔화 우려",
-            "경쟁 심화"
-          ]
-        },
-        "1779508849212": {
-          "impact_score": 1,
-          "direction": "bullish",
-          "confidence": "low",
-          "triggered_rules": [],
-          "reasoning": "테슬라 주가에 대한 기술적 분석은 잠재적인 상승 가능성을 제시하지만, 이는 분석가의 의견이며 확정된 정보가 아니므로 영향은 제한적입니다.",
-          "key_factors": [
-            "기술적 지지선",
-            "기술적 저항선"
-          ]
-        }
-      },
-      "avgScore": 0.2,
-      "buyIndex": 61,
-      "direction": "bullish",
-      "topRules": [
-        "R24",
-        "R25",
-        "R13",
-        "R12",
-        "R01"
-      ],
-      "bullish": 5,
-      "bearish": 4,
-      "neutral": 1,
-      "muskXSentiment": {
-        "posts": [
-          {
-            "date": "2026-05-18",
-            "content": "Elon Musk는 5월 18일 Smart Mobility Summit에서 2026년 말까지 완전 자율 주행 Tesla 차량이 미국 전역에 '아마도 널리 보급될 것'이라고 언급하며 로보택시에 대한 공격적인 일정을 제시했습니다.",
-            "sentiment": "bullish",
-            "engagement": "high"
-          },
-          {
-            "date": "2026-05-21",
-            "content": "Tesla는 5월 21일 Fremont 공장을 연간 100만 대 생산을 목표로 하는 휴머노이드 로봇 생산 라인으로 전환하고, 중국에서 FSD 시스템을 출시할 계획을 발표했습니다.",
-            "sentiment": "bullish",
-            "engagement": "high"
-          },
-          {
-            "date": "2026-05-22",
-            "content": "5월 22일, SpaceX의 IPO 서류에서 Elon Musk의 미디어 관심, 정치적 발언 및 관련 벤처가 주주 및 주가에 중대한 위험을 초래할 수 있다고 명시적으로 공개되었습니다.",
-            "sentiment": "bearish",
-            "engagement": "medium"
-          }
-        ],
-        "overall_sentiment": "neutral",
-        "sentiment_score": 0,
-        "post_count": 3,
-        "reasoning": "Elon Musk는 로보택시와 Optimus 로봇에 대한 낙관적인 전망을 제시했지만, SpaceX IPO 서류에서 그의 행동이 Tesla 주가에 위험이 될 수 있다는 점이 언급되어 전반적인 분위기는 중립적입니다."
-      },
-      "googleTrends": {
-        "current_score": 75,
-        "week_avg": 70,
-        "trend": "rising",
-        "spike": true,
-        "top_queries": [
-          "Tesla Model Y price increase",
-          "Tesla stock",
-          "Elon Musk"
-        ],
-        "reasoning": "지난주 Tesla Model Y 가격 인상과 Elon Musk 관련 뉴스로 인해 검색 관심도가 증가했습니다."
-      },
-      "youtubeInterest": {
-        "score": -1,
-        "velocity": 0.55,
-        "velocity_label": "소폭 감소 (×0.6)",
-        "reason": "조회수 속도 소폭 감소 (×0.6) | 최근 3일 355,262회 / 이전 4~7일 644,982회 | 총 1,000,244회 (42개 영상)",
-        "video_count": 42,
-        "total_views": 1000244,
-        "hot_views": 355262,
-        "baseline_views": 644982,
-        "top_videos": [
-          {
-            "title": "Tesla Unleashes 8 BILLION-Mile &quot;AI Beast&quot;: Why Musk is Now Untouchable!",
-            "channel": "Tech Revolution",
-            "publishedAt": "2026-05-16T15:01:34Z",
-            "viewCount": 134211
-          },
-          {
-            "title": "How investors can trade AI after Nvidia&#39;s earnings report",
-            "channel": "CNBC Television",
-            "publishedAt": "2026-05-21T18:33:33Z",
-            "viewCount": 77548
-          },
-          {
-            "title": "Did you noticed this in transformers?",
-            "channel": "We Coocked",
-            "publishedAt": "2026-05-17T19:17:49Z",
-            "viewCount": 70580
-          },
-          {
-            "title": "Elon Just Revealed Why Optimus Will Crush China’s Humanoids #elonmusk #optimus #tesla #future #ai",
-            "channel": "Growth Engine TV",
-            "publishedAt": "2026-05-17T08:52:15Z",
-            "viewCount": 66139
-          },
-          {
-            "title": "Optimus Prime transformation that might break #transformers #shorts",
-            "channel": "MechaZeeShorts",
-            "publishedAt": "2026-05-20T11:00:46Z",
-            "viewCount": 64486
-          }
-        ],
-        "collected_at": "2026-05-23T04:00:38Z"
-      },
-      "newsCategories": {
-        "total": 10,
-        "Musk|Market": 1,
-        "Product|AI|Market": 1,
-        "Product|Musk": 1,
-        "Musk|Energy|Market": 1,
-        "Earnings|Delivery|Market": 1,
-        "Earnings|Market": 1,
-        "Market": 2,
-        "Product|Market": 1,
-        "Delivery|Competition|Market": 1
-      },
-      "macroCtx": {
-        "spyChg": -0.08,
-        "qqqChg": -0.07,
-        "vixClose": 16.700000762939453,
-        "wtiChg": -1.02,
-        "cnyChg": 0,
-        "prevTslaChg": 1.61,
-        "rsi": 52.1,
-        "macd": {
-          "macd": 2.6499243580449274,
-          "signal": -0.9859852839790556,
-          "hist": 3.635909642023983,
-          "crossover": null,
-          "trend": "bullish"
-        },
-        "bb": {
-          "upper": 457.96,
-          "middle": 402.87,
-          "lower": 347.78,
-          "pos": 0.71
-        },
-        "isDeliveryWeek": false,
-        "isEarningsWeek": false
-      },
-      "scoringLayers": {
-        "base": 52,
-        "optimusBoost": 8,
-        "r24Discount": -2,
-        "macdTrend": 2,
-        "bbHigh": -2,
-        "googleTrends": 4,
-        "youtubeInterest": -1
-      },
-      "latestTslaPrice": 426.01,
-      "dailyForecasts": [
-        {
-          "day": 1,
-          "label": "내일",
-          "date": "5/25(월)",
-          "change_pct": 0.9,
-          "signal": "매수",
-          "basePrice": 426.01,
-          "predictedPrice": 429.84
-        },
-        {
-          "day": 2,
-          "label": "D+2",
-          "date": "5/25(월)",
-          "change_pct": -0.2,
-          "signal": "관망",
-          "basePrice": 426.01,
-          "predictedPrice": 425.16
-        },
-        {
-          "day": 3,
-          "label": "D+3",
-          "date": "5/26(화)",
-          "change_pct": 1.1,
-          "signal": "매수",
-          "basePrice": 426.01,
-          "predictedPrice": 430.7
-        },
-        {
-          "day": 4,
-          "label": "D+4",
-          "date": "5/27(수)",
-          "change_pct": -0.5,
-          "signal": "관망",
-          "basePrice": 426.01,
-          "predictedPrice": 423.88
-        },
-        {
-          "day": 5,
-          "label": "D+5",
-          "date": "5/28(목)",
-          "change_pct": 0.7,
-          "signal": "관망",
-          "basePrice": 426.01,
-          "predictedPrice": 428.99
-        }
-      ],
-      "modelVersion": "3.1",
-      "timestamp": 1779508922660
     }
   ],
-  "lastUpdated": "2026-06-24 08:52 KST"
+  "lastUpdated": "2026-06-25 09:05 KST"
 }
