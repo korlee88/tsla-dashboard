@@ -1,0 +1,223 @@
+{
+  "generated_at": "2026-06-26",
+  "generated_by": "Claude Opus 4",
+  "title": "테슬라 *-5.26%* 밀려 *$375*예요",
+  "subtitle": "2026-06-18 ~ 2026-06-25 · 테슬라, 유럽 에너지 저장 프로젝트 위해 NatPowe",
+  "summary": {
+    "week_start": "2026-06-18",
+    "week_end": "2026-06-25",
+    "session_count": 7,
+    "buy_indices": [
+      46,
+      41,
+      49,
+      38,
+      44,
+      39,
+      46
+    ],
+    "avg_buy_index": 43,
+    "latest_buy_index": 46,
+    "price_start": 396.38,
+    "price_end": 375.53,
+    "latest_price": 375.53,
+    "today_price": 375.53,
+    "today_change_pct": -1.59,
+    "week_change_pct": -5.26,
+    "biggest_impact": {
+      "title": "테슬라, 유럽 에너지 저장 프로젝트 위해 NatPower와 25GWh 이상 계약 체결",
+      "score": 3,
+      "reason": "테슬라가 유럽에서 25GWh 이상의 대규모 에너지 저장 프로젝트 계약을 체결하여 에너지 사업 확장에 긍정적인 영향을 미칠 것입니다.",
+      "source": "RTTNews",
+      "date": "2026-06-25",
+      "category": "Energy",
+      "direction_ko": "호재",
+      "emoji": "🚀"
+    },
+    "top_bullish": [
+      {
+        "title": "테슬라, 유럽 에너지 저장 프로젝트 위해 NatPower와 25GWh 이상 계약 체결",
+        "score": 3,
+        "reason": "테슬라가 유럽에서 25GWh 이상의 대규모 에너지 저장 프로젝트 계약을 체결하여 에너지 사업 확장에 긍정적인 영향을 미칠 것입니다.",
+        "source": "RTTNews",
+        "date": "2026-06-25",
+        "category": "Energy"
+      },
+      {
+        "title": "일론 머스크, 테슬라 FSD에 우버 운전사처럼 지시할 수 있는 기능 3개월 내 출시 예고",
+        "score": 2,
+        "reason": "일론 머스크가 3개월 내에 Grok 기반의 자연어 명령 기능을 FSD에 추가할 것이라고 예고하여 FSD 기술 발전에 대한 긍정적인 기대감을 높입니다.",
+        "source": "Stocktwits",
+        "date": "2026-06-24",
+        "category": "Product"
+      },
+      {
+        "title": "BYD와 테슬라, 5월 유럽 자동차 판매량 증가로 시장 점유율 확대",
+        "score": 2,
+        "reason": "테슬라가 5월 유럽 자동차 시장에서 판매량 증가와 시장 점유율 확대를 기록하며 전기차 수요 강세에 힘입어 긍정적인 영향을 받을 것으로 예상된다.",
+        "source": "Seeking Alpha",
+        "date": "2026-06-25",
+        "category": "Competition"
+      }
+    ],
+    "top_bearish": [
+      {
+        "title": "테슬라, 텍사스 주택 충돌 사고로 NHTSA의 새로운 조사 직면",
+        "score": -2,
+        "reason": "테슬라 모델 3의 주택 충돌 사고로 인한 NHTSA의 새로운 조사는 자율주행 시스템의 안전성 우려를 다시 불러일으켜 주가에 부정적인 영향을 미칠 수 있습니다.",
+        "source": "Seeking Alpha",
+        "date": "2026-06-25",
+        "category": "Regulatory"
+      },
+      {
+        "title": "테슬라, 텍사스 주택 충돌 사고 후 특별 조사 착수",
+        "score": -2,
+        "reason": "미국 규제 당국이 테슬라 차량의 주택 충돌 사망 사고에 대해 특별 조사를 시작하여 주가에 부정적인 영향을 미쳤습니다.",
+        "source": "Google Finance",
+        "date": "2026-06-23",
+        "category": "Regulatory"
+      },
+      {
+        "title": "테슬라 주가, 치명적인 충돌 사고 조사 및 스페이스X 하락으로 타격",
+        "score": -2,
+        "reason": "치명적인 충돌 사고 조사는 테슬라의 안전 및 자율주행 기술에 대한 우려를 높일 수 있으며, 스페이스X의 주가 하락은 머스크 관련 기업의 전반적인 투자 심리에 부정적인 영향을 미칠 수 있습니다.",
+        "source": "Barron's",
+        "date": "2026-06-23",
+        "category": "Market"
+      }
+    ],
+    "forecasts": [
+      {
+        "day": 1,
+        "label": "내일",
+        "date": "6/26(금)",
+        "change_pct": -0.7,
+        "signal": "관망",
+        "basePrice": 375.53,
+        "predictedPrice": 372.9
+      },
+      {
+        "day": 2,
+        "label": "D+2",
+        "date": "6/29(월)",
+        "change_pct": -0.9,
+        "signal": "매도",
+        "basePrice": 375.53,
+        "predictedPrice": 372.15
+      },
+      {
+        "day": 3,
+        "label": "D+3",
+        "date": "6/30(화)",
+        "change_pct": 0.5,
+        "signal": "관망",
+        "basePrice": 375.53,
+        "predictedPrice": 377.41
+      },
+      {
+        "day": 4,
+        "label": "D+4",
+        "date": "7/1(수)",
+        "change_pct": 0.2,
+        "signal": "관망",
+        "basePrice": 375.53,
+        "predictedPrice": 376.28
+      },
+      {
+        "day": 5,
+        "label": "D+5",
+        "date": "7/2(목)",
+        "change_pct": -0.6,
+        "signal": "관망",
+        "basePrice": 375.53,
+        "predictedPrice": 373.28
+      }
+    ],
+    "daily_prices": [
+      [
+        "2026-06-25",
+        375.53
+      ],
+      [
+        "2026-06-24",
+        381.61
+      ],
+      [
+        "2026-06-22",
+        400.49
+      ],
+      [
+        "2026-06-21",
+        400.49
+      ],
+      [
+        "2026-06-20",
+        400.49
+      ]
+    ],
+    "overall_signal": "신중",
+    "trends": null,
+    "next_events": [
+      {
+        "date": "2026-07-02",
+        "title": "Model Y L 미국 출시 발표 (예상)",
+        "titleEn": "Model Y L US Launch Announcement (Expected)",
+        "category": "제품출시",
+        "categoryEn": "Product Launch",
+        "time": null,
+        "timezone": null,
+        "confirmed": false,
+        "source": "basenor, TeslaNewswire (rumor)",
+        "sourceUrl": null,
+        "description": "소문에 따르면 테슬라가 7월 2일에 미국 시장에 Model Y L을 발표할 수 있으며, 8월 또는 9월에 첫 인도가 시작될 것으로 예상됩니다.",
+        "importance": "medium",
+        "id": "cal-2026-07-02-model-y-l-us-launch-announcement-expecte"
+      }
+    ],
+    "movement_reason": "2026년 6월 18일부터 6월 25일까지 테슬라(TSLA) 주가 하락의 주요 원인은 다음과 같습니다.\n\n스페이스X 주가 급락 / 기술주 전반 약세 / 밸류에이션 우려"
+  },
+  "scenes": [
+    {
+      "index": 0,
+      "title": "테슬라근황",
+      "lines": [
+        "테슬라 *-5.26%* 밀려 *$375*예요",
+        "스페이스X 급락에 *기술주 약세*까지",
+        "유럽서 *25GWh* 에너지 계약 따냈죠",
+        "텍사스 충돌로 *NHTSA 조사* 착수됐네요"
+      ],
+      "body": "테슬라 *-5.26%* 밀려 *$375*예요\n스페이스X 급락에 *기술주 약세*까지\n유럽서 *25GWh* 에너지 계약 따냈죠\n텍사스 충돌로 *NHTSA 조사* 착수됐네요"
+    },
+    {
+      "index": 1,
+      "title": "에너지호재",
+      "lines": [
+        "카테고리: 유럽 *25GWh 메가팩* 공급",
+        "↳ 배경: NatPower와 *대형 ESS* 손잡아요",
+        "↳ 데이터: *25GWh 이상* 저장량 확보",
+        "↳ 임팩트: 에너지 부문 *매출 다변화* 발판",
+        "↳ 비교: 단일 계약 기준 *최대급* 규모",
+        "↳ 향후 전망: 메가팩이 유럽 전력망 *백본*으로"
+      ],
+      "body": "카테고리: 유럽 *25GWh 메가팩* 공급\n   ↳ 배경: NatPower와 *대형 ESS* 손잡아요\n   ↳ 데이터: *25GWh 이상* 저장량 확보\n   ↳ 임팩트: 에너지 부문 *매출 다변화* 발판\n   ↳ 비교: 단일 계약 기준 *최대급* 규모\n   ↳ 향후 전망: 메가팩이 유럽 전력망 *백본*으로"
+    },
+    {
+      "index": 2,
+      "title": "앞으로전망",
+      "lines": [
+        "*7월 2일* Model Y L 미국 공개돼요",
+        "*수요 회복* 신호가 관전 포인트죠",
+        "누적 *-0.6%*, *$373* 부근서 횡보 중",
+        "*2일 상승·3일 하락* 흐름 엇갈려요",
+        "충돌조사 우려 속 핵심은 *에너지·FSD*",
+        "함께해 주셔서 감사해요!"
+      ],
+      "body": "*7월 2일* Model Y L 미국 공개돼요\n*수요 회복* 신호가 관전 포인트죠\n누적 *-0.6%*, *$373* 부근서 횡보 중\n*2일 상승·3일 하락* 흐름 엇갈려요\n충돌조사 우려 속 핵심은 *에너지·FSD*\n함께해 주셔서 감사해요!"
+    }
+  ],
+  "image_prompts": {
+    "0": "Seoul Han River night skyline with Namsan Tower and Lotte Tower glowing under a deep violet analytical night mood, sleek autonomous FSD robotaxis cruising illuminated bridges, city-light bokeh shimmering on the water, cinematic aerial perspective, faint distant rocket contrail fading into clouds symbolizing tech sector weakness, dimmed neon reflections hinting valuation concerns, subtle Optimus humanoid silhouette on a rooftop observing, Dojo supercomputer glow in a far tower, 4680 battery cells faint hologram, megapack storage shadows along riverbank, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "1": "Seoul Banpo Bridge at fresh green sunrise with electric vehicles fast-charging and speeding along the riverside, lush green riverside trees glowing emerald, bright bullish growth energy, massive megapack energy storage units lined elegantly along the river symbolizing a 25GWh European contract, glowing 4680 battery cells stacked like architecture, FSD robotaxis gliding silently, Optimus humanoid robots assisting installation, Dojo supercomputer tower pulsing in the distance, wind turbines on horizon, sunrise rays piercing clouds, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo",
+    "2": "Futuristic Seoul vertical cityscape at twilight with Gwanghwamun Square and skyline backdrop, magenta and gold inspirational future mood, autonomous robotaxis and humanoid Optimus robots walking the streets, a sleek elongated family-style electric SUV unveiled on a glowing pedestal symbolizing an upcoming model launch, crowd silhouettes gathered around, 4680 battery cells floating as holograms, megapack energy storage glowing softly, Dojo supercomputer light beams piercing the sky, starlight sparkles drifting, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo"
+  }
+}

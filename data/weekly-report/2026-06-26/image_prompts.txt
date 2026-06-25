@@ -1,0 +1,11 @@
+# TSLA 배경 이미지 프롬프트 — 2026-06-26
+# Gemini Imagen에 씬별로 붙여넣기 하세요.
+
+## 씬0 동향브리핑
+Seoul Han River night skyline with Namsan Tower and Lotte Tower glowing under a deep violet analytical night mood, sleek autonomous FSD robotaxis cruising illuminated bridges, city-light bokeh shimmering on the water, cinematic aerial perspective, faint distant rocket contrail fading into clouds symbolizing tech sector weakness, dimmed neon reflections hinting valuation concerns, subtle Optimus humanoid silhouette on a rooftop observing, Dojo supercomputer glow in a far tower, 4680 battery cells faint hologram, megapack storage shadows along riverbank, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+## 씬1 호재심층
+Seoul Banpo Bridge at fresh green sunrise with electric vehicles fast-charging and speeding along the riverside, lush green riverside trees glowing emerald, bright bullish growth energy, massive megapack energy storage units lined elegantly along the river symbolizing a 25GWh European contract, glowing 4680 battery cells stacked like architecture, FSD robotaxis gliding silently, Optimus humanoid robots assisting installation, Dojo supercomputer tower pulsing in the distance, wind turbines on horizon, sunrise rays piercing clouds, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+## 씬2 향후전망
+Futuristic Seoul vertical cityscape at twilight with Gwanghwamun Square and skyline backdrop, magenta and gold inspirational future mood, autonomous robotaxis and humanoid Optimus robots walking the streets, a sleek elongated family-style electric SUV unveiled on a glowing pedestal symbolizing an upcoming model launch, crowd silhouettes gathered around, 4680 battery cells floating as holograms, megapack energy storage glowing softly, Dojo supercomputer light beams piercing the sky, starlight sparkles drifting, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
