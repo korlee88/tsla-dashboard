@@ -1,0 +1,30 @@
+SCENE_0_TITLE: 테슬라근황
+SCENE_0:
+테슬라 *-5.26%* 밀려 *$375*예요
+스페이스X 급락에 *기술주 약세*까지
+유럽서 *25GWh* 에너지 계약 따냈죠
+텍사스 충돌로 *NHTSA 조사* 착수됐네요
+
+SCENE_1_TITLE: 에너지호재
+SCENE_1:
+카테고리: 유럽 *25GWh 메가팩* 공급
+   ↳ 배경: NatPower와 *대형 ESS* 손잡아요
+   ↳ 데이터: *25GWh 이상* 저장량 확보
+   ↳ 임팩트: 에너지 부문 *매출 다변화* 발판
+   ↳ 비교: 단일 계약 기준 *최대급* 규모
+   ↳ 향후 전망: 메가팩이 유럽 전력망 *백본*으로
+   
+SCENE_2_TITLE: 앞으로전망
+SCENE_2:
+*7월 2일* Model Y L 미국 공개돼요
+*수요 회복* 신호가 관전 포인트죠
+누적 *-0.6%*, *$373* 부근서 횡보 중
+*2일 상승·3일 하락* 흐름 엇갈려요
+충돌조사 우려 속 핵심은 *에너지·FSD*
+함께해 주셔서 감사해요!
+
+IMAGE_PROMPT_0: Seoul Han River night skyline with Namsan Tower and Lotte Tower glowing under a deep violet analytical night mood, sleek autonomous FSD robotaxis cruising illuminated bridges, city-light bokeh shimmering on the water, cinematic aerial perspective, faint distant rocket contrail fading into clouds symbolizing tech sector weakness, dimmed neon reflections hinting valuation concerns, subtle Optimus humanoid silhouette on a rooftop observing, Dojo supercomputer glow in a far tower, 4680 battery cells faint hologram, megapack storage shadows along riverbank, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_1: Seoul Banpo Bridge at fresh green sunrise with electric vehicles fast-charging and speeding along the riverside, lush green riverside trees glowing emerald, bright bullish growth energy, massive megapack energy storage units lined elegantly along the river symbolizing a 25GWh European contract, glowing 4680 battery cells stacked like architecture, FSD robotaxis gliding silently, Optimus humanoid robots assisting installation, Dojo supercomputer tower pulsing in the distance, wind turbines on horizon, sunrise rays piercing clouds, ultra-high resolution, 16:9 landscape, no text, no letters, no watermark, no logo
+
+IMAGE_PROMPT_2: Futuristic Seoul vertical cityscape at twilight with Gwanghwamun Square and skyline backdrop, magenta and gold inspirational future mood, autonomous robotaxis and humanoid Optimus robots walking the streets, a sleek elongated family-style electric SUV unveiled on a glowing pedestal symbolizing an upcoming model launch, crowd silhouettes gathered around, 4680 battery cells floating as holograms, megapack energy storage glowing softly, Dojo supercomputer light beams piercing the sky, starlight sparkles drifting, ultra-high resolution, 9:16 vertical, no text, no letters, no watermark, no logo
