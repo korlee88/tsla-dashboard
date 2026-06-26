@@ -16,6 +16,13 @@ GitHub Pages 기반 Tesla(TSLA) 주간 분석 대시보드.
 - **기본 브랜치**: `master` (보호됨)
 - **개발 브랜치**: `claude/fix-news-collection-errors-48epy`
 
+> ⏸ **자동 파이프라인 일시 중지 (2026-06-26)**: 영상 제작에서 반복적으로 문제가 발생해
+> RKLB 대시보드를 기준으로 파이프라인을 재작업할 예정. 그동안 충돌·자동 회귀를 막기 위해
+> `weekly-video.yml`(뉴스 기반 영상 제작)·`auto-analysis.yml`(뉴스 수집·분석) 두 워크플로의
+> `schedule` 트리거를 주석 처리해 자동 실행을 멈췄다(`workflow_dispatch` 수동 실행은 유지).
+> `backtest-run.yml`·`calendar-update.yml`은 영향 없이 계속 자동 실행됨.
+> 재개하려면 두 워크플로 파일의 주석 처리된 `schedule` 블록을 해제할 것.
+
 ---
 
 ## 다른 종목으로 포크하기
