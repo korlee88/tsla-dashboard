@@ -2,9 +2,12 @@ name: 자동 분석 (1일 1회)
 
 # KST(UTC+9) 기준 스케줄
 # KST 08:00 = UTC 23:00 (전날)
+#
+# ⏸ 자동 스케줄 일시 중지 (2026-06-26): RKLB 대시보드 기준으로 파이프라인
+# 재작업 중. 재개하려면 아래 schedule 블록 주석 해제.
 on:
-  schedule:
-    - cron: '0 23 * * *'   # KST 08:00
+  # schedule:
+  #   - cron: '0 23 * * *'   # KST 08:00
   workflow_dispatch:        # 수동 실행 (테스트용)
 
 jobs:
