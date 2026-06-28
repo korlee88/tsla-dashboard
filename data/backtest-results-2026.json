@@ -2623,13 +2623,135 @@
       "match": false,
       "strongSignal": false,
       "error": null
+    },
+    {
+      "weekStart": "2026-06-22",
+      "weekEnd": "2026-06-28",
+      "quarter": "q2",
+      "news": [
+        {
+          "title": "일론 머스크, 스페이스X와 테슬라 합병 가능성 시사",
+          "source": "Forbes",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라, 텍사스 충돌 사고로 연방 및 법적 조사 직면",
+          "source": "Associated Press",
+          "category": "Legal"
+        },
+        {
+          "title": "일론 머스크, '조만간' 로보택시 및 옵티머스 로봇 생산 속도 조절 시사",
+          "source": "24/7 Wall St.",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 세계 최초 '조만장자' 지위 상실",
+          "source": "London Daily News",
+          "category": "Market"
+        },
+        {
+          "title": "테슬라 세미 트럭, 예상 뛰어넘는 효율성으로 주목",
+          "source": "The Motley Fool",
+          "category": "Product"
+        },
+        {
+          "title": "테슬라 모델 3, 6년 연속 '가장 미국적인 차' 선정",
+          "source": "Forbes",
+          "category": "Product"
+        },
+        {
+          "title": "스페이스X의 전력 수요 증가, 테슬라 에너지 사업에 기회",
+          "source": "Barron's",
+          "category": "Energy"
+        },
+        {
+          "title": "테슬라, 2026년 자본 지출 250억 달러 이상으로 증액",
+          "source": "Reuters",
+          "category": "Market"
+        },
+        {
+          "title": "일론 머스크, AI가 '선택적' 노동과 '무의미한' 돈을 가져올 것이라고 예측",
+          "source": "Associated Press",
+          "category": "Product"
+        },
+        {
+          "title": "일론 머스크, 2018년 테슬라 보상 패키지 행사로 1,160억 달러 상당의 주식 취득",
+          "source": "Electrek",
+          "category": "Market"
+        }
+      ],
+      "newsCount": 10,
+      "analysis": {
+        "avgScore": 0.6,
+        "buyIndex": 33,
+        "direction": "bearish",
+        "bullish": 6,
+        "bearish": 3,
+        "neutral": 1,
+        "topRules": [
+          "R25",
+          "R05",
+          "R24"
+        ],
+        "failCount": 0,
+        "scoringLayers": {
+          "base": 56,
+          "optimusBoost": 8,
+          "r24Discount": -3,
+          "macroOverlay": -7,
+          "macdCross": -6,
+          "wtiDown": -3,
+          "trendFilter": -12
+        },
+        "macroCtx": {
+          "spyChg": -2.5,
+          "qqqChg": -4.78,
+          "vixClose": 18.40999984741211,
+          "wtiChg": -12.29,
+          "cnyChg": 0.32,
+          "competitorChg": -6.39,
+          "competitorRelStrength": 2.56,
+          "prevAssetChg": -2.88,
+          "assetTrend3w": -6.32,
+          "rsi": 51.8,
+          "macd": {
+            "macd": -0.8647793040231591,
+            "signal": 0.08923751004451946,
+            "hist": -0.9540168140676786,
+            "crossover": "bearish",
+            "trend": "bearish"
+          },
+          "bb": {
+            "upper": 443.32,
+            "middle": 395.84,
+            "lower": 348.36,
+            "pos": 0.33
+          },
+          "isDeliveryWeek": false,
+          "isEarningsWeek": false,
+          "bydChg": -6.39,
+          "bydRelStrength": 2.56,
+          "prevTslaChg": -2.88,
+          "tslaTrend3w": -6.32
+        },
+        "modelVersion": "2.0"
+      },
+      "movement": {
+        "pctChange": -3.83,
+        "actual": "bearish",
+        "open": 394.85,
+        "close": 379.71
+      },
+      "match": true,
+      "strongSignal": false,
+      "error": null
     }
   ],
-  "generatedAt": "2026-06-22 04:53 KST",
+  "generatedAt": "2026-06-29 04:40 KST",
   "stats": {
-    "totalWeeks": 24,
-    "analyzedWeeks": 24,
-    "accuracy": 46,
+    "totalWeeks": 25,
+    "analyzedWeeks": 25,
+    "accuracy": 48,
     "strongAccuracy": 33,
     "avgScore": 0.9
   },
